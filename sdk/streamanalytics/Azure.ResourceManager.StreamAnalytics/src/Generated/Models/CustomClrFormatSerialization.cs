@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes how data from an input is serialized or how data is serialized when written to an output in custom format. </summary>
     public partial class CustomClrFormatSerialization : StreamAnalyticsDataSerialization
     {
-        /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomClrFormatSerialization"/>. </summary>
         public CustomClrFormatSerialization()
         {
             EventSerializationType = EventSerializationType.CustomClr;
         }
 
-        /// <summary> Initializes a new instance of CustomClrFormatSerialization. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomClrFormatSerialization"/>. </summary>
         /// <param name="eventSerializationType"> Indicates the type of serialization that the input or output uses. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serializationDllPath"> The serialization library path. </param>
         /// <param name="serializationClassName"> The serialization class name. </param>
-        internal CustomClrFormatSerialization(EventSerializationType eventSerializationType, string serializationDllPath, string serializationClassName) : base(eventSerializationType)
+        internal CustomClrFormatSerialization(EventSerializationType eventSerializationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serializationDllPath, string serializationClassName) : base(eventSerializationType, serializedAdditionalRawData)
         {
             SerializationDllPath = serializationDllPath;
             SerializationClassName = serializationClassName;

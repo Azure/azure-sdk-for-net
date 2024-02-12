@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>
     public partial class CdnManagedHttpsContent : CustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of CdnManagedHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnManagedHttpsContent"/>. </summary>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateSourceParameters"/> is null. </exception>
@@ -25,15 +26,21 @@ namespace Azure.ResourceManager.Cdn.Models
             CertificateSource = CertificateSource.Cdn;
         }
 
-        /// <summary> Initializes a new instance of CdnManagedHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnManagedHttpsContent"/>. </summary>
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </param>
-        internal CdnManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, CdnCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        internal CdnManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, CdnCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = certificateSource;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CdnManagedHttpsContent"/> for deserialization. </summary>
+        internal CdnManagedHttpsContent()
+        {
         }
 
         /// <summary> Defines the certificate source parameters using CDN managed certificate for enabling SSL. </summary>

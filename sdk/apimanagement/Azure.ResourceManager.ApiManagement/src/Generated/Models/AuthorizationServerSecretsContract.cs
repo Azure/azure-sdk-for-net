@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> OAuth Server Secrets Contract. </summary>
     public partial class AuthorizationServerSecretsContract
     {
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         internal AuthorizationServerSecretsContract()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthorizationServerSecretsContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="AuthorizationServerSecretsContract"/>. </summary>
         /// <param name="clientSecret"> oAuth Authorization Server Secrets. </param>
         /// <param name="resourceOwnerUsername"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner username. </param>
         /// <param name="resourceOwnerPassword"> Can be optionally specified when resource owner password grant type is supported by this authorization server. Default resource owner password. </param>
-        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AuthorizationServerSecretsContract(string clientSecret, string resourceOwnerUsername, string resourceOwnerPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientSecret = clientSecret;
             ResourceOwnerUsername = resourceOwnerUsername;
             ResourceOwnerPassword = resourceOwnerPassword;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> oAuth Authorization Server Secrets. </summary>

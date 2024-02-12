@@ -30,6 +30,7 @@ namespace Azure.Identity
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal MsalPublicClient Client { get; }
         internal string DefaultScope { get; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking
@@ -96,6 +97,7 @@ namespace Azure.Identity
             DefaultScope = AzureAuthorityHosts.GetDefaultScope(options?.AuthorityHost ?? AzureAuthorityHosts.GetDefault());
             Client = client ?? new MsalPublicClient(_pipeline, tenantId, clientId, null, options);
 
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The Sybase table dataset. </summary>
     public partial class SybaseTableDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SybaseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SybaseTableDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
         public SybaseTableDataset(LinkedServiceReference linkedServiceName) : base(linkedServiceName)
@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SybaseTable";
         }
 
-        /// <summary> Initializes a new instance of SybaseTableDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SybaseTableDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

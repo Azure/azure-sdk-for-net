@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The external security solution properties for ATA solutions. </summary>
     public partial class AtaSolutionProperties : ExternalSecuritySolutionProperties
     {
-        /// <summary> Initializes a new instance of AtaSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaSolutionProperties"/>. </summary>
         public AtaSolutionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AtaSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AtaSolutionProperties"/>. </summary>
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>

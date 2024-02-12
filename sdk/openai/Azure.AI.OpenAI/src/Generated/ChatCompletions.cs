@@ -19,7 +19,39 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletions
     {
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -41,11 +73,11 @@ namespace Azure.AI.OpenAI
             Id = id;
             Created = created;
             Choices = choices.ToList();
-            PromptFilterResults = new ChangeTrackingList<PromptFilterResult>();
+            PromptFilterResults = new ChangeTrackingList<ContentFilterResultsForPrompt>();
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of ChatCompletions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
         /// The first timestamp associated with generation activity for this completions response,
@@ -60,14 +92,26 @@ namespace Azure.AI.OpenAI
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
         /// </param>
+        /// <param name="systemFingerprint">
+        /// Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that
+        /// might impact determinism.
+        /// </param>
         /// <param name="usage"> Usage information for tokens processed and generated as part of this completions operation. </param>
-        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<PromptFilterResult> promptFilterResults, CompletionsUsage usage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ChatCompletions(string id, DateTimeOffset created, IReadOnlyList<ChatChoice> choices, IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults, string systemFingerprint, CompletionsUsage usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Created = created;
             Choices = choices;
             PromptFilterResults = promptFilterResults;
+            SystemFingerprint = systemFingerprint;
             Usage = usage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletions"/> for deserialization. </summary>
+        internal ChatCompletions()
+        {
         }
 
         /// <summary> A unique identifier associated with this chat completions response. </summary>
@@ -87,7 +131,12 @@ namespace Azure.AI.OpenAI
         /// Content filtering results for zero or more prompts in the request. In a streaming request,
         /// results for different prompts may arrive at different times or in different orders.
         /// </summary>
-        public IReadOnlyList<PromptFilterResult> PromptFilterResults { get; }
+        public IReadOnlyList<ContentFilterResultsForPrompt> PromptFilterResults { get; }
+        /// <summary>
+        /// Can be used in conjunction with the `seed` request parameter to understand when backend changes have been made that
+        /// might impact determinism.
+        /// </summary>
+        public string SystemFingerprint { get; }
         /// <summary> Usage information for tokens processed and generated as part of this completions operation. </summary>
         public CompletionsUsage Usage { get; }
     }

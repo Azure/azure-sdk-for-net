@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Data Lake Store linked service. </summary>
     public partial class AzureDataLakeStoreLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
         /// <param name="dataLakeStoreUri"> Data Lake Store service URI. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataLakeStoreUri"/> is null. </exception>
         public AzureDataLakeStoreLinkedService(object dataLakeStoreUri)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDataLakeStore";
         }
 
-        /// <summary> Initializes a new instance of AzureDataLakeStoreLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

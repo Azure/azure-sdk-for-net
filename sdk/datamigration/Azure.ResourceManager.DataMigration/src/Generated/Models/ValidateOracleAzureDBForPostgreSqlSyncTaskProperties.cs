@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates a migration for Oracle to Azure Database for PostgreSQL for online migrations. </summary>
     public partial class ValidateOracleAzureDBForPostgreSqlSyncTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         public ValidateOracleAzureDBForPostgreSqlSyncTaskProperties()
         {
             Output = new ChangeTrackingList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput>();
             TaskType = TaskType.ValidateOracleAzureDBPostgreSqlSync;
         }
 
-        /// <summary> Initializes a new instance of ValidateOracleAzureDBForPostgreSqlSyncTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -30,9 +31,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Input for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations. </param>
         /// <param name="output"> An array containing a single validation error response object. </param>
-        internal ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MigrateOracleAzureDBPostgreSqlSyncTaskInput input, IReadOnlyList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData)
+        internal ValidateOracleAzureDBForPostgreSqlSyncTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateOracleAzureDBPostgreSqlSyncTaskInput input, IReadOnlyList<ValidateOracleAzureDBPostgreSqlSyncTaskOutput> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

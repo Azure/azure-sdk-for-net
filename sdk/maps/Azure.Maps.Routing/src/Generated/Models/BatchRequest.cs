@@ -13,10 +13,17 @@ namespace Azure.Maps.Routing.Models
     /// <summary> This type represents the request body for the Batch service. </summary>
     internal partial class BatchRequest
     {
-        /// <summary> Initializes a new instance of BatchRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
         public BatchRequest()
         {
             BatchItems = new ChangeTrackingList<BatchRequestItem>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <param name="batchItems"> The list of queries to process. </param>
+        internal BatchRequest(IList<BatchRequestItem> batchItems)
+        {
+            BatchItems = batchItems;
         }
 
         /// <summary> The list of queries to process. </summary>

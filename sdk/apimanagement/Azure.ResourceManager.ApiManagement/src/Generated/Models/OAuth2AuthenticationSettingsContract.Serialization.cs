@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable
+    public partial class OAuth2AuthenticationSettingsContract : IUtf8JsonSerializable, IJsonModel<OAuth2AuthenticationSettingsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OAuth2AuthenticationSettingsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OAuth2AuthenticationSettingsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AuthorizationServerId))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(JsonElement element)
+        OAuth2AuthenticationSettingsContract IJsonModel<OAuth2AuthenticationSettingsContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOAuth2AuthenticationSettingsContract(document.RootElement, options);
+        }
+
+        internal static OAuth2AuthenticationSettingsContract DeserializeOAuth2AuthenticationSettingsContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> authorizationServerId = default;
             Optional<string> scope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizationServerId"u8))
@@ -48,8 +90,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     scope = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OAuth2AuthenticationSettingsContract(authorizationServerId.Value, scope.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OAuth2AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OAuth2AuthenticationSettingsContract IPersistableModel<OAuth2AuthenticationSettingsContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OAuth2AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOAuth2AuthenticationSettingsContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OAuth2AuthenticationSettingsContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OAuth2AuthenticationSettingsContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

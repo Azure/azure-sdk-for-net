@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HDInsight Hive activity type. </summary>
     public partial class HDInsightHiveActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightHiveActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightHiveActivity(string name) : base(name)
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HDInsightHive";
         }
 
-        /// <summary> Initializes a new instance of HDInsightHiveActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

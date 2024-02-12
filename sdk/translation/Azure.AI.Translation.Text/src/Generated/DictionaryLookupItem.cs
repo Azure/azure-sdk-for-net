@@ -15,7 +15,39 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Lookup Element. </summary>
     public partial class DictionaryLookupItem
     {
-        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -39,7 +71,7 @@ namespace Azure.AI.Translation.Text
             Translations = translations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -51,11 +83,18 @@ namespace Azure.AI.Translation.Text
         /// spelling of the name: "John".
         /// </param>
         /// <param name="translations"> A list of translations for the source term. </param>
-        internal DictionaryLookupItem(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryLookupItem(string normalizedSource, string displaySource, IReadOnlyList<DictionaryTranslation> translations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NormalizedSource = normalizedSource;
             DisplaySource = displaySource;
             Translations = translations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryLookupItem"/> for deserialization. </summary>
+        internal DictionaryLookupItem()
+        {
         }
 
         /// <summary>

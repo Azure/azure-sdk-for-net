@@ -64,10 +64,18 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -86,10 +94,18 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateLinkHubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapsePrivateLinkHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapsePrivateLinkHubPrivateLinkHubsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -108,10 +124,18 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -130,10 +154,18 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseWorkspaceWorkspacesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -152,14 +184,22 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(e), SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -173,14 +213,22 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <term>Operation Id</term>
         /// <description>KustoPools_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoPoolSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPoolSkuDescription> GetSkusKustoPools(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SynapseKustoPoolKustoPoolsRestClient.CreateListSkusRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription, SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => KustoPoolSkuDescription.DeserializeKustoPoolSkuDescription(e), SynapseKustoPoolKustoPoolsClientDiagnostics, Pipeline, "MockableSynapseSubscriptionResource.GetSkusKustoPools", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -193,6 +241,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +284,14 @@ namespace Azure.ResourceManager.Synapse.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KustoPools_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseKustoPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

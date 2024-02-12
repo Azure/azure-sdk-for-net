@@ -140,7 +140,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies
 
-            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies();
+            Pageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPolicies(cancellationToken: default);
             foreach (Page<ExceptionPolicy> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
             {
                 foreach (ExceptionPolicy? policy in asPage.Values)

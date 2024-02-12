@@ -5,31 +5,111 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeIotAddon : IUtf8JsonSerializable
+    public partial class EdgeIotAddon : IUtf8JsonSerializable, IJsonModel<EdgeIotAddon>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeIotAddon>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeIotAddon>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("ioTDeviceDetails"u8);
             writer.WriteObjectValue(IotDeviceDetails);
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
             writer.WriteObjectValue(IotEdgeDeviceDetails);
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
+            {
+                writer.WritePropertyName("hostPlatform"u8);
+                writer.WriteStringValue(HostPlatform.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
+            {
+                writer.WritePropertyName("hostPlatformType"u8);
+                writer.WriteStringValue(HostPlatformType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeIotAddon DeserializeEdgeIotAddon(JsonElement element)
+        EdgeIotAddon IJsonModel<EdgeIotAddon>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeIotAddon(document.RootElement, options);
+        }
+
+        internal static EdgeIotAddon DeserializeEdgeIotAddon(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +125,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<DataBoxEdgeOSPlatformType> hostPlatform = default;
             Optional<HostPlatformType> hostPlatformType = default;
             Optional<DataBoxEdgeRoleAddonProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -130,8 +212,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeIotAddon(id, name, type, systemData.Value, kind, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeIotAddon(id, name, type, systemData.Value, kind, serializedAdditionalRawData, iotDeviceDetails, iotEdgeDeviceDetails, version.Value, Optional.ToNullable(hostPlatform), Optional.ToNullable(hostPlatformType), Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<EdgeIotAddon>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdgeIotAddon IPersistableModel<EdgeIotAddon>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeIotAddon>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeIotAddon(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeIotAddon)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeIotAddon>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

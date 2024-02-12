@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Query filter option for listing runs. </summary>
     public partial class RunQueryFilter
     {
-        /// <summary> Initializes a new instance of RunQueryFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunQueryFilter"/>. </summary>
         /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="operator"> Operator to be used for filter. </param>
         /// <param name="values"> List of filter values. </param>
@@ -27,6 +27,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Operand = operand;
             Operator = @operator;
             Values = values.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunQueryFilter"/>. </summary>
+        /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
+        /// <param name="operator"> Operator to be used for filter. </param>
+        /// <param name="values"> List of filter values. </param>
+        internal RunQueryFilter(RunQueryFilterOperand operand, RunQueryFilterOperator @operator, IList<string> values)
+        {
+            Operand = operand;
+            Operator = @operator;
+            Values = values;
         }
 
         /// <summary> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </summary>

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Shared;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
@@ -91,7 +92,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(null)]
         [TestCase("")]
-        [TestCase("sb://test.place.com")]
+        [TestCase("[192.168.1.1]")]
         public void ConstructorValidatesTheNamespace(string constructorArgument)
         {
             var credential = new Mock<EventHubTokenCredential>(Mock.Of<TokenCredential>());
@@ -390,6 +391,51 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var actual = ((BasicRetryPolicy)policy).Options;
             Assert.That(actual.IsEquivalentTo(expected), Is.True, "The default retry policy should be based on the default retry options.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void TokenCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = Mock.Of<TokenCredential>();
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var producer = new EventHubProducerClient(namespaceUri, "eventHub", credential);
+
+            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SharedKeyCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = new AzureNamedKeyCredential("key", "value");
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var producer = new EventHubProducerClient(namespaceUri, "eventHub", credential);
+
+            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        public void SasCredentialConstructorParsesNamespaceFromUri()
+        {
+            var credential = new AzureSasCredential(new SharedAccessSignature("sb://this.is.Fake/blah", "key", "value").Value);
+            var host = "mynamespace.servicebus.windows.net";
+            var namespaceUri = $"sb://{ host }";
+            var producer = new EventHubProducerClient(namespaceUri, "eventHub", credential);
+
+            Assert.That(producer.FullyQualifiedNamespace, Is.EqualTo(host), "The constructor should parse the namespace from the URI");
         }
 
         /// <summary>
@@ -2870,7 +2916,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true)
             {
                 InnerClientMock = new Mock<TransportClient>();
 

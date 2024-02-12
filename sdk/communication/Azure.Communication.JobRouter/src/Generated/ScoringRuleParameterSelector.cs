@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> Supported parameters for scoring workers. </summary>
+    /// <summary> Supported parameters for scoring workers used with BestWorkerMode. </summary>
     public readonly partial struct ScoringRuleParameterSelector : IEquatable<ScoringRuleParameterSelector>
     {
         private readonly string _value;
@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Parameter to add job labels to scoring payload.  Property is sent as `job`. </summary>
         public static ScoringRuleParameterSelector JobLabels { get; } = new ScoringRuleParameterSelector(JobLabelsValue);
-        /// <summary> Parameter to add worker selectors from the job to scoring payload.  Property is sent as `selectors`. </summary>
+        /// <summary> Parameter to add worker selectors from a job to scoring payload.  Property is sent as `selectors`. </summary>
         public static ScoringRuleParameterSelector WorkerSelectors { get; } = new ScoringRuleParameterSelector(WorkerSelectorsValue);
         /// <summary> Determines if two <see cref="ScoringRuleParameterSelector"/> values are the same. </summary>
         public static bool operator ==(ScoringRuleParameterSelector left, ScoringRuleParameterSelector right) => left.Equals(right);

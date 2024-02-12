@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsPrivateCloudResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsPrivateCloudResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsPrivateCloudResource"/> object. </returns>
         public virtual AvsPrivateCloudResource GetAvsPrivateCloudResource(ResourceIdentifier id)
         {
             AvsPrivateCloudResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsPrivateCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsPrivateCloudClusterResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudClusterResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsPrivateCloudClusterResource"/> object. </returns>
         public virtual AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(ResourceIdentifier id)
         {
             AvsPrivateCloudClusterResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsPrivateCloudDatastoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsPrivateCloudDatastoreResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudDatastoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudDatastoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudDatastoreResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudDatastoreResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsPrivateCloudDatastoreResource"/> object. </returns>
         public virtual AvsPrivateCloudDatastoreResource GetAvsPrivateCloudDatastoreResource(ResourceIdentifier id)
         {
             AvsPrivateCloudDatastoreResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HcxEnterpriseSiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HcxEnterpriseSiteResource.CreateResourceIdentifier" /> to create a <see cref="HcxEnterpriseSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HcxEnterpriseSiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HcxEnterpriseSiteResource.CreateResourceIdentifier" /> to create a <see cref="HcxEnterpriseSiteResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HcxEnterpriseSiteResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HcxEnterpriseSiteResource"/> object. </returns>
         public virtual HcxEnterpriseSiteResource GetHcxEnterpriseSiteResource(ResourceIdentifier id)
         {
             HcxEnterpriseSiteResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ExpressRouteAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ExpressRouteAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ExpressRouteAuthorizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExpressRouteAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="ExpressRouteAuthorizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ExpressRouteAuthorizationResource"/> object. </returns>
         public virtual ExpressRouteAuthorizationResource GetExpressRouteAuthorizationResource(ResourceIdentifier id)
         {
             ExpressRouteAuthorizationResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="GlobalReachConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GlobalReachConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GlobalReachConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="GlobalReachConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GlobalReachConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GlobalReachConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GlobalReachConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="GlobalReachConnectionResource"/> object. </returns>
         public virtual GlobalReachConnectionResource GetGlobalReachConnectionResource(ResourceIdentifier id)
         {
             GlobalReachConnectionResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public virtual WorkloadNetworkResource GetWorkloadNetworkResource(ResourceIdentifier id)
         {
             WorkloadNetworkResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkSegmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkSegmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkSegmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkSegmentResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkSegmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkSegmentResource"/> object. </returns>
         public virtual WorkloadNetworkSegmentResource GetWorkloadNetworkSegmentResource(ResourceIdentifier id)
         {
             WorkloadNetworkSegmentResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkDhcpResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkDhcpResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDhcpResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkDhcpResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkDhcpResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDhcpResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkDhcpResource"/> object. </returns>
         public virtual WorkloadNetworkDhcpResource GetWorkloadNetworkDhcpResource(ResourceIdentifier id)
         {
             WorkloadNetworkDhcpResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkGatewayResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkGatewayResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkGatewayResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkGatewayResource"/> object. </returns>
         public virtual WorkloadNetworkGatewayResource GetWorkloadNetworkGatewayResource(ResourceIdentifier id)
         {
             WorkloadNetworkGatewayResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkPortMirroringProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkPortMirroringProfileResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPortMirroringProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkPortMirroringProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkPortMirroringProfileResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPortMirroringProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkPortMirroringProfileResource"/> object. </returns>
         public virtual WorkloadNetworkPortMirroringProfileResource GetWorkloadNetworkPortMirroringProfileResource(ResourceIdentifier id)
         {
             WorkloadNetworkPortMirroringProfileResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVmGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkVmGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkVmGroupResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVmGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkVmGroupResource"/> object. </returns>
         public virtual WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(ResourceIdentifier id)
         {
             WorkloadNetworkVmGroupResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkVirtualMachineResource"/> object. </returns>
         public virtual WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(ResourceIdentifier id)
         {
             WorkloadNetworkVirtualMachineResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkDnsServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkDnsServiceResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkDnsServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkDnsServiceResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkDnsServiceResource"/> object. </returns>
         public virtual WorkloadNetworkDnsServiceResource GetWorkloadNetworkDnsServiceResource(ResourceIdentifier id)
         {
             WorkloadNetworkDnsServiceResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkDnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkDnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkDnsZoneResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkDnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkDnsZoneResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkDnsZoneResource"/> object. </returns>
         public virtual WorkloadNetworkDnsZoneResource GetWorkloadNetworkDnsZoneResource(ResourceIdentifier id)
         {
             WorkloadNetworkDnsZoneResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkloadNetworkPublicIPResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkPublicIPResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPublicIPResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WorkloadNetworkPublicIPResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkloadNetworkPublicIPResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkPublicIPResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WorkloadNetworkPublicIPResource"/> object. </returns>
         public virtual WorkloadNetworkPublicIPResource GetWorkloadNetworkPublicIPResource(ResourceIdentifier id)
         {
             WorkloadNetworkPublicIPResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsCloudLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsCloudLinkResource.CreateResourceIdentifier" /> to create an <see cref="AvsCloudLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsCloudLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsCloudLinkResource.CreateResourceIdentifier" /> to create an <see cref="AvsCloudLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsCloudLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsCloudLinkResource"/> object. </returns>
         public virtual AvsCloudLinkResource GetAvsCloudLinkResource(ResourceIdentifier id)
         {
             AvsCloudLinkResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsPrivateCloudAddonResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsPrivateCloudAddonResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudAddonResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudAddonResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudAddonResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsPrivateCloudAddonResource"/> object. </returns>
         public virtual AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(ResourceIdentifier id)
         {
             AvsPrivateCloudAddonResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AvsPrivateCloudClusterVirtualMachineResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AvsPrivateCloudClusterVirtualMachineResource.CreateResourceIdentifier" /> to create an <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> object. </returns>
         public virtual AvsPrivateCloudClusterVirtualMachineResource GetAvsPrivateCloudClusterVirtualMachineResource(ResourceIdentifier id)
         {
             AvsPrivateCloudClusterVirtualMachineResource.ValidateResourceId(id);
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlacementPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlacementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PlacementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PlacementPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlacementPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PlacementPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlacementPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PlacementPolicyResource"/> object. </returns>
         public virtual PlacementPolicyResource GetPlacementPolicyResource(ResourceIdentifier id)
         {
             PlacementPolicyResource.ValidateResourceId(id);
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScriptPackageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScriptPackageResource.CreateResourceIdentifier" /> to create a <see cref="ScriptPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScriptPackageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScriptPackageResource.CreateResourceIdentifier" /> to create a <see cref="ScriptPackageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptPackageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScriptPackageResource"/> object. </returns>
         public virtual ScriptPackageResource GetScriptPackageResource(ResourceIdentifier id)
         {
             ScriptPackageResource.ValidateResourceId(id);
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScriptCmdletResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScriptCmdletResource.CreateResourceIdentifier" /> to create a <see cref="ScriptCmdletResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScriptCmdletResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScriptCmdletResource.CreateResourceIdentifier" /> to create a <see cref="ScriptCmdletResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptCmdletResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScriptCmdletResource"/> object. </returns>
         public virtual ScriptCmdletResource GetScriptCmdletResource(ResourceIdentifier id)
         {
             ScriptCmdletResource.ValidateResourceId(id);
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Avs.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScriptExecutionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScriptExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ScriptExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScriptExecutionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScriptExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ScriptExecutionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptExecutionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScriptExecutionResource"/> object. </returns>
         public virtual ScriptExecutionResource GetScriptExecutionResource(ResourceIdentifier id)
         {
             ScriptExecutionResource.ValidateResourceId(id);

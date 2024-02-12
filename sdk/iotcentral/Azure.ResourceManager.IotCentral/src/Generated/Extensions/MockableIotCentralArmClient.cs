@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotCentralAppResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotCentralAppResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralAppResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralAppResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralAppResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralAppResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotCentralAppResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotCentralAppResource"/> object. </returns>
         public virtual IotCentralAppResource GetIotCentralAppResource(ResourceIdentifier id)
         {
             IotCentralAppResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotCentralPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotCentralPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotCentralPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotCentralPrivateEndpointConnectionResource"/> object. </returns>
         public virtual IotCentralPrivateEndpointConnectionResource GetIotCentralPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             IotCentralPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.IotCentral.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="IotCentralPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="IotCentralPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotCentralPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotCentralPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="IotCentralPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="IotCentralPrivateLinkResource"/> object. </returns>
         public virtual IotCentralPrivateLinkResource GetIotCentralPrivateLinkResource(ResourceIdentifier id)
         {
             IotCentralPrivateLinkResource.ValidateResourceId(id);

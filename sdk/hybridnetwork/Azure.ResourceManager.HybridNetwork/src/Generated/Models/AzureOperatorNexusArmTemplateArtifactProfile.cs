@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -12,15 +14,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Azure Operator Distributed Services vhd artifact profile properties. </summary>
     public partial class AzureOperatorNexusArmTemplateArtifactProfile : ArtifactProfile
     {
-        /// <summary> Initializes a new instance of AzureOperatorNexusArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateArtifactProfile"/>. </summary>
         public AzureOperatorNexusArmTemplateArtifactProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureOperatorNexusArmTemplateArtifactProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusArmTemplateArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateArtifactProfile"> Template artifact profile. </param>
-        internal AzureOperatorNexusArmTemplateArtifactProfile(WritableSubResource artifactStore, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore)
+        internal AzureOperatorNexusArmTemplateArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             TemplateArtifactProfile = templateArtifactProfile;
         }

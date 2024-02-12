@@ -16,7 +16,7 @@ namespace Azure.AI.Translation.Document.Models
     /// <summary> Translation job submission batch request. </summary>
     internal partial class StartTranslationDetails
     {
-        /// <summary> Initializes a new instance of StartTranslationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
         /// <param name="inputs"> The input list of documents or folders containing documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         public StartTranslationDetails(IEnumerable<DocumentTranslationInput> inputs)
@@ -24,6 +24,13 @@ namespace Azure.AI.Translation.Document.Models
             Argument.AssertNotNull(inputs, nameof(inputs));
 
             Inputs = inputs.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StartTranslationDetails"/>. </summary>
+        /// <param name="inputs"> The input list of documents or folders containing documents. </param>
+        internal StartTranslationDetails(IList<DocumentTranslationInput> inputs)
+        {
+            Inputs = inputs;
         }
 
         /// <summary> The input list of documents or folders containing documents. </summary>

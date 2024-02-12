@@ -102,10 +102,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("semanticConfiguration"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
-            if (Optional.IsDefined(SemanticErrorHandling))
+            if (Optional.IsDefined(SemanticErrorMode))
             {
                 writer.WritePropertyName("semanticErrorHandling"u8);
-                writer.WriteStringValue(SemanticErrorHandling.Value.ToString());
+                writer.WriteStringValue(SemanticErrorMode.Value.ToString());
             }
             if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
             {
@@ -189,10 +189,10 @@ namespace Azure.Search.Documents
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VectorFilterMode))
+            if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("vectorFilterMode"u8);
-                writer.WriteStringValue(VectorFilterMode.Value.ToString());
+                writer.WriteStringValue(FilterMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -218,7 +218,7 @@ namespace Azure.Search.Documents
             Optional<string> scoringProfile = default;
             Optional<string> semanticQuery = default;
             Optional<string> semanticConfiguration = default;
-            Optional<SemanticErrorHandling> semanticErrorHandling = default;
+            Optional<SemanticErrorMode> semanticErrorHandling = default;
             Optional<int?> semanticMaxWaitInMilliseconds = default;
             Optional<QueryDebugMode> debug = default;
             Optional<string> search = default;
@@ -351,7 +351,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    semanticErrorHandling = new SemanticErrorHandling(property.Value.GetString());
+                    semanticErrorHandling = new SemanticErrorMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("semanticMaxWaitInMilliseconds"u8))

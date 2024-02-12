@@ -67,6 +67,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="domainName"> Name of the domain. </param>
@@ -89,6 +97,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,6 +136,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the namespace. </param>
@@ -143,6 +167,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Namespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="namespaceName"> Name of the namespace. </param>
@@ -156,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         }
 
         /// <summary> Gets an object representing a PartnerConfigurationResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
-        /// <returns> Returns a <see cref="PartnerConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfiguration()
         {
             return new PartnerConfigurationResource(Client, Id.AppendProviderResource("Microsoft.EventGrid", "partnerConfigurations", "default"));
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerDestinations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerDestinationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerDestinationName"> Name of the partner destination. </param>
@@ -202,6 +242,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerDestinations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerDestinationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,6 +281,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerNamespaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerNamespaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerNamespaceName"> Name of the partner namespace. </param>
@@ -255,6 +311,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerNamespaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerNamespaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +350,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerRegistrationName"> Name of the partner registration. </param>
@@ -308,6 +380,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -339,6 +419,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>PartnerTopics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
@@ -361,6 +449,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PartnerTopics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,6 +488,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>SystemTopics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="systemTopicName"> Name of the system topic. </param>
@@ -414,6 +518,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SystemTopics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SystemTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -445,6 +557,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> Name of the topic. </param>
@@ -467,6 +587,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

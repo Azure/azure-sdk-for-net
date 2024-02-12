@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryLinkedServiceProperties : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownLinkedService))]
+    public partial class DataFactoryLinkedServiceProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryLinkedServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryLinkedServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryLinkedServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
@@ -75,8 +86,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element)
+        DataFactoryLinkedServiceProperties IJsonModel<DataFactoryLinkedServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryLinkedServiceProperties DeserializeDataFactoryLinkedServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -147,6 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Impala": return ImpalaLinkedService.DeserializeImpalaLinkedService(element);
                     case "Informix": return InformixLinkedService.DeserializeInformixLinkedService(element);
                     case "Jira": return JiraLinkedService.DeserializeJiraLinkedService(element);
+                    case "LakeHouse": return LakeHouseLinkedService.DeserializeLakeHouseLinkedService(element);
                     case "Magento": return MagentoLinkedService.DeserializeMagentoLinkedService(element);
                     case "MariaDB": return MariaDBLinkedService.DeserializeMariaDBLinkedService(element);
                     case "Marketo": return MarketoLinkedService.DeserializeMarketoLinkedService(element);
@@ -173,6 +199,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Salesforce": return SalesforceLinkedService.DeserializeSalesforceLinkedService(element);
                     case "SalesforceMarketingCloud": return SalesforceMarketingCloudLinkedService.DeserializeSalesforceMarketingCloudLinkedService(element);
                     case "SalesforceServiceCloud": return SalesforceServiceCloudLinkedService.DeserializeSalesforceServiceCloudLinkedService(element);
+                    case "SalesforceServiceCloudV2": return SalesforceServiceCloudV2LinkedService.DeserializeSalesforceServiceCloudV2LinkedService(element);
+                    case "SalesforceV2": return SalesforceV2LinkedService.DeserializeSalesforceV2LinkedService(element);
                     case "SapBW": return SapBWLinkedService.DeserializeSapBWLinkedService(element);
                     case "SapCloudForCustomer": return SapCloudForCustomerLinkedService.DeserializeSapCloudForCustomerLinkedService(element);
                     case "SapEcc": return SapEccLinkedService.DeserializeSapEccLinkedService(element);
@@ -186,6 +214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Shopify": return ShopifyLinkedService.DeserializeShopifyLinkedService(element);
                     case "Smartsheet": return SmartsheetLinkedService.DeserializeSmartsheetLinkedService(element);
                     case "Snowflake": return SnowflakeLinkedService.DeserializeSnowflakeLinkedService(element);
+                    case "SnowflakeV2": return SnowflakeV2LinkedService.DeserializeSnowflakeV2LinkedService(element);
                     case "Spark": return SparkLinkedService.DeserializeSparkLinkedService(element);
                     case "SqlServer": return SqlServerLinkedService.DeserializeSqlServerLinkedService(element);
                     case "Square": return SquareLinkedService.DeserializeSquareLinkedService(element);
@@ -194,6 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Teradata": return TeradataLinkedService.DeserializeTeradataLinkedService(element);
                     case "Twilio": return TwilioLinkedService.DeserializeTwilioLinkedService(element);
                     case "Vertica": return VerticaLinkedService.DeserializeVerticaLinkedService(element);
+                    case "Warehouse": return WarehouseLinkedService.DeserializeWarehouseLinkedService(element);
                     case "Web": return WebLinkedService.DeserializeWebLinkedService(element);
                     case "Xero": return XeroLinkedService.DeserializeXeroLinkedService(element);
                     case "Zendesk": return ZendeskLinkedService.DeserializeZendeskLinkedService(element);
@@ -202,5 +232,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return UnknownLinkedService.DeserializeUnknownLinkedService(element);
         }
+
+        BinaryData IPersistableModel<DataFactoryLinkedServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryLinkedServiceProperties IPersistableModel<DataFactoryLinkedServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryLinkedServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryLinkedServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryLinkedServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

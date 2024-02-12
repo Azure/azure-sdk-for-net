@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataReplicationRecoveryPointResource" /> and their operations.
-    /// Each <see cref="DataReplicationRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="DataReplicationProtectedItemResource" />.
-    /// To get a <see cref="DataReplicationRecoveryPointCollection" /> instance call the GetDataReplicationRecoveryPoints method from an instance of <see cref="DataReplicationProtectedItemResource" />.
+    /// A class representing a collection of <see cref="DataReplicationRecoveryPointResource"/> and their operations.
+    /// Each <see cref="DataReplicationRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="DataReplicationProtectedItemResource"/>.
+    /// To get a <see cref="DataReplicationRecoveryPointCollection"/> instance call the GetDataReplicationRecoveryPoints method from an instance of <see cref="DataReplicationProtectedItemResource"/>.
     /// </summary>
     public partial class DataReplicationRecoveryPointCollection : ArmCollection, IEnumerable<DataReplicationRecoveryPointResource>, IAsyncEnumerable<DataReplicationRecoveryPointResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataReplicationRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataReplicationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataReplicationRecoveryPointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataReplicationRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataReplicationRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataReplicationRecoveryPointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataReplicationRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

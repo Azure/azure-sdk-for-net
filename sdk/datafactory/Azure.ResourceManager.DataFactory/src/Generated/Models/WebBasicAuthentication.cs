@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint. </summary>
     public partial class WebBasicAuthentication : WebLinkedServiceTypeProperties
     {
-        /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
@@ -30,16 +31,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             AuthenticationType = WebAuthenticationType.Basic;
         }
 
-        /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/>. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
-        internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri, authenticationType)
+        internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri, authenticationType, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WebBasicAuthentication"/> for deserialization. </summary>
+        internal WebBasicAuthentication()
+        {
         }
 
         /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>

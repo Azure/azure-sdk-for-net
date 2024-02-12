@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Kubernetes role resources. </summary>
     public partial class EdgeKubernetesRoleResources
     {
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleResources. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/>. </summary>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="compute"/> is null. </exception>
         public EdgeKubernetesRoleResources(EdgeKubernetesRoleCompute compute)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Compute = compute;
         }
 
-        /// <summary> Initializes a new instance of EdgeKubernetesRoleResources. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/>. </summary>
         /// <param name="storage"> Kubernetes role storage resource. </param>
         /// <param name="compute"> Kubernetes role compute resource. </param>
         /// <param name="network"> Kubernetes role network resource. </param>
-        internal EdgeKubernetesRoleResources(EdgeKubernetesRoleStorage storage, EdgeKubernetesRoleCompute compute, EdgeKubernetesRoleNetwork network)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeKubernetesRoleResources(EdgeKubernetesRoleStorage storage, EdgeKubernetesRoleCompute compute, EdgeKubernetesRoleNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Storage = storage;
             Compute = compute;
             Network = network;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EdgeKubernetesRoleResources"/> for deserialization. </summary>
+        internal EdgeKubernetesRoleResources()
+        {
         }
 
         /// <summary> Kubernetes role storage resource. </summary>

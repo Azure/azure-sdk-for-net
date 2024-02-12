@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -68,14 +69,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrialsAsync(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
-        public virtual async Task<Operation<TrialMatcherResult>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<TrialMatcherResults>> MatchTrialsAsync(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
             Operation<BinaryData> response = await MatchTrialsAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary> Create Trial Matcher job. </summary>
@@ -85,14 +86,14 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="trialMatcherData"/> is null. </exception>
         /// <remarks> Creates a Trial Matcher job with the given request body. </remarks>
         /// <include file="Docs/ClinicalMatchingClient.xml" path="doc/members/member[@name='MatchTrials(WaitUntil,TrialMatcherData,CancellationToken)']/*" />
-        public virtual Operation<TrialMatcherResult> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
+        public virtual Operation<TrialMatcherResults> MatchTrials(WaitUntil waitUntil, TrialMatcherData trialMatcherData, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(trialMatcherData, nameof(trialMatcherData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = trialMatcherData.ToRequestContent();
             Operation<BinaryData> response = MatchTrials(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, TrialMatcherResult.FromResponse, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
+            return ProtocolOperationHelpers.Convert(response, FetchTrialMatcherResultsFromTrialMatcherResult, ClientDiagnostics, "ClinicalMatchingClient.MatchTrials");
         }
 
         /// <summary>
@@ -207,5 +208,11 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         private static ResponseClassifier _responseClassifier200202;
         private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
+
+        private TrialMatcherResults FetchTrialMatcherResultsFromTrialMatcherResult(Response response)
+        {
+            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("results");
+            return TrialMatcherResults.DeserializeTrialMatcherResults(resultJsonElement);
+        }
     }
 }

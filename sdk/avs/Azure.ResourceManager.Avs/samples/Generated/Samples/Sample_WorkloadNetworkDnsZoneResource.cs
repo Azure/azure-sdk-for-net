@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkloadNetworksGetDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_GetDnsZones.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetDnsZones.json
             // this example is just showing the usage of "WorkloadNetworks_GetDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_WorkloadNetworksUpdateDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_UpdateDnsZones.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_UpdateDnsZones.json
             // this example is just showing the usage of "WorkloadNetworks_UpdateDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,7 @@ IPAddress.Parse("1.1.1.1")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_WorkloadNetworksDeleteDnsZone()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_DeleteDnsZones.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_DeleteDnsZones.json
             // this example is just showing the usage of "WorkloadNetworks_DeleteDnsZone" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

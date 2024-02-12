@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execute spark job activity. </summary>
     public partial class SynapseSparkJobDefinitionActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="sparkJob"> Synapse spark job reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sparkJob"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SparkJob";
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkJobDefinitionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobDefinitionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

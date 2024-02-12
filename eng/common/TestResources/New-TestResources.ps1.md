@@ -15,21 +15,25 @@ Deploys live test resources defined for a service directory to Azure.
 ### Default (Default)
 ```
 New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
- [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
- [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>] [-Environment <String>]
- [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>]
- [-CI] [-Force] [-OutFile] [-SuppressVsoCommands] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-TestResourcesDirectory <String>] [-TestApplicationId <String>] [-TestApplicationSecret <String>]
+ [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
+ [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
+ [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### Provisioner
 ```
 New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-ServiceDirectory] <String>
- [-TestApplicationId <String>] [-TestApplicationSecret <String>] [-TestApplicationOid <String>]
- -TenantId <String> [-SubscriptionId <String>] -ProvisionerApplicationId <String>
+ [-TestResourcesDirectory <String>] [-TestApplicationId <String>] [-TestApplicationSecret <String>]
+ [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
+ -ProvisionerApplicationId <String> [-ProvisionerApplicationOid <String>]
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
- [-Environment <String>] [-ArmTemplateParameters <Hashtable>] [-AdditionalParameters <Hashtable>]
- [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile] [-SuppressVsoCommands] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+ [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
+ [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
+ [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -206,8 +210,10 @@ Accept wildcard characters: False
 A directory under 'sdk' in the repository root - optionally with subdirectories
 specified - in which to discover ARM templates named 'test-resources.json' and
 Bicep templates named 'test-resources.bicep'.
-This can also be an absolute path
+This can be an absolute path
 or specify parent directories.
+ServiceDirectory is also used for resource and
+environment variable naming.
 
 ```yaml
 Type: String
@@ -216,6 +222,24 @@ Aliases:
 
 Required: True
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TestResourcesDirectory
+An override directory in which to discover ARM templates named 'test-resources.json' and
+Bicep templates named 'test-resources.bicep'.
+This can be an absolute path
+or specify parent directories.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -376,6 +400,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ProvisionerApplicationOid
+{{ Fill ProvisionerApplicationOid Description }}
+
+```yaml
+Type: String
+Parameter Sets: Provisioner
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ProvisionerApplicationSecret
 A service principal secret (password) used to provision test resources when a
 provisioner is specified.
@@ -452,6 +491,21 @@ Aliases:
 Required: False
 Position: Named
 Default value: AzureCloud
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceType
+{{ Fill ResourceType Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Test
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -560,7 +614,7 @@ Accept wildcard characters: False
 ### -SuppressVsoCommands
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log
 commands that cause them to be redacted.
-For CI environments that don't support this (like 
+For CI environments that don't support this (like
 stress test clusters), this flag can be set to $false to avoid printing out these secrets to the logs.
 
 ```yaml
@@ -571,6 +625,46 @@ Aliases:
 Required: False
 Position: Named
 Default value: ($null -eq $env:SYSTEM_TEAMPROJECTID)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAuth
+Create the resource group and deploy the template using the signed in user's credentials.
+No service principal will be created or used.
+
+The environment file will be named for the test resources template that it was
+generated for.
+For ARM templates, it will be test-resources.json.env.
+For
+Bicep templates, test-resources.bicep.env.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewTestResourcesRemainingArguments
+Captures any arguments not declared here (no parameter errors)
+This enables backwards compatibility with old script versions in
+hotfix branches if and when the dynamic subscription configuration
+secrets get updated to add new parameters.
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -598,6 +692,21 @@ Prompts you for confirmation before running the cmdlet.
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
 
 Required: False
 Position: Named

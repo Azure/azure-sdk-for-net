@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,17 +15,50 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class StreamingLocatorData : IUtf8JsonSerializable
+    public partial class StreamingLocatorData : IUtf8JsonSerializable, IJsonModel<StreamingLocatorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingLocatorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingLocatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AssetName))
             {
                 writer.WritePropertyName("assetName"u8);
                 writer.WriteStringValue(AssetName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -77,11 +111,40 @@ namespace Azure.ResourceManager.Media
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StreamingLocatorData DeserializeStreamingLocatorData(JsonElement element)
+        StreamingLocatorData IJsonModel<StreamingLocatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingLocatorData(document.RootElement, options);
+        }
+
+        internal static StreamingLocatorData DeserializeStreamingLocatorData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -100,6 +163,8 @@ namespace Azure.ResourceManager.Media
             Optional<IList<StreamingLocatorContentKey>> contentKeys = default;
             Optional<string> alternativeMediaId = default;
             Optional<IList<string>> filters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -222,8 +287,44 @@ namespace Azure.ResourceManager.Media
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StreamingLocatorData(id, name, type, systemData.Value, assetName.Value, Optional.ToNullable(created), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(streamingLocatorId), streamingPolicyName.Value, defaultContentKeyPolicyName.Value, Optional.ToList(contentKeys), alternativeMediaId.Value, Optional.ToList(filters), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingLocatorData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StreamingLocatorData IPersistableModel<StreamingLocatorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingLocatorData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingLocatorData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingLocatorData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingLocatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

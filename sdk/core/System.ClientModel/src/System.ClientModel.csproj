@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Contains building blocks for clients that call cloud services.</Description>
+    <Version>1.1.0-beta.2</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <Nullable>enable</Nullable>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <!-- TODO: Remove warning suppression prior to GA release -->
+    <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
+    <PackageIcon>DotNetPackageIcon.png</PackageIcon>
+    <PackageIconPath>$(RepoEngPath)/images/$(PackageIcon)</PackageIconPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Text.Json" />
+  </ItemGroup>
+
+</Project>

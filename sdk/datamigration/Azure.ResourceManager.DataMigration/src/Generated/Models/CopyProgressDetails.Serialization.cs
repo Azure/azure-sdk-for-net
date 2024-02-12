@@ -6,15 +6,115 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class CopyProgressDetails
+    public partial class CopyProgressDetails : IUtf8JsonSerializable, IJsonModel<CopyProgressDetails>
     {
-        internal static CopyProgressDetails DeserializeCopyProgressDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CopyProgressDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CopyProgressDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProgressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TableName))
+            {
+                writer.WritePropertyName("tableName"u8);
+                writer.WriteStringValue(TableName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ParallelCopyType))
+            {
+                writer.WritePropertyName("parallelCopyType"u8);
+                writer.WriteStringValue(ParallelCopyType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsedParallelCopies))
+            {
+                writer.WritePropertyName("usedParallelCopies"u8);
+                writer.WriteNumberValue(UsedParallelCopies.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataRead))
+            {
+                writer.WritePropertyName("dataRead"u8);
+                writer.WriteNumberValue(DataRead.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataWritten))
+            {
+                writer.WritePropertyName("dataWritten"u8);
+                writer.WriteNumberValue(DataWritten.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RowsRead))
+            {
+                writer.WritePropertyName("rowsRead"u8);
+                writer.WriteNumberValue(RowsRead.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RowsCopied))
+            {
+                writer.WritePropertyName("rowsCopied"u8);
+                writer.WriteNumberValue(RowsCopied.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyStart))
+            {
+                writer.WritePropertyName("copyStart"u8);
+                writer.WriteStringValue(CopyStart.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
+            {
+                writer.WritePropertyName("copyThroughput"u8);
+                writer.WriteNumberValue(CopyThroughput.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
+            {
+                writer.WritePropertyName("copyDuration"u8);
+                writer.WriteNumberValue(CopyDuration.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CopyProgressDetails IJsonModel<CopyProgressDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProgressDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCopyProgressDetails(document.RootElement, options);
+        }
+
+        internal static CopyProgressDetails DeserializeCopyProgressDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -30,6 +130,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<DateTimeOffset> copyStart = default;
             Optional<double> copyThroughput = default;
             Optional<int> copyDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -119,8 +221,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     copyDuration = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CopyProgressDetails(tableName.Value, status.Value, parallelCopyType.Value, Optional.ToNullable(usedParallelCopies), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(rowsRead), Optional.ToNullable(rowsCopied), Optional.ToNullable(copyStart), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CopyProgressDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProgressDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CopyProgressDetails IPersistableModel<CopyProgressDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CopyProgressDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCopyProgressDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CopyProgressDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CopyProgressDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> NameAvailabilityRequest object. </param>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,10 +136,18 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EnergyServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EnergyServiceResource> GetEnergyServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -150,10 +166,18 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EnergyServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EnergyServiceResource> GetEnergyServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EnergyServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

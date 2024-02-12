@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCommandJobLimits : IUtf8JsonSerializable
+    public partial class MachineLearningCommandJobLimits : IUtf8JsonSerializable, IJsonModel<MachineLearningCommandJobLimits>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCommandJobLimits>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningCommandJobLimits>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCommandJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningCommandJobLimits)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("jobLimitsType"u8);
             writer.WriteStringValue(JobLimitsType.ToString());
@@ -30,17 +40,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("timeout");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningCommandJobLimits DeserializeMachineLearningCommandJobLimits(JsonElement element)
+        MachineLearningCommandJobLimits IJsonModel<MachineLearningCommandJobLimits>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCommandJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningCommandJobLimits)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningCommandJobLimits(document.RootElement, options);
+        }
+
+        internal static MachineLearningCommandJobLimits DeserializeMachineLearningCommandJobLimits(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             JobLimitsType jobLimitsType = default;
             Optional<TimeSpan?> timeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobLimitsType"u8))
@@ -58,8 +99,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningCommandJobLimits(jobLimitsType, Optional.ToNullable(timeout));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningCommandJobLimits(jobLimitsType, Optional.ToNullable(timeout), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningCommandJobLimits>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCommandJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCommandJobLimits)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningCommandJobLimits IPersistableModel<MachineLearningCommandJobLimits>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCommandJobLimits>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningCommandJobLimits(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCommandJobLimits)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningCommandJobLimits>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

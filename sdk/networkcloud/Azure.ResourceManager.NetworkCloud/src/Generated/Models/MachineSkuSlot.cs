@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,46 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> MachineSkuSlot represents a single SKU and rack slot associated with the machine. </summary>
     public partial class MachineSkuSlot
     {
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         internal MachineSkuSlot()
         {
             Disks = new ChangeTrackingList<MachineDisk>();
             NetworkInterfaces = new ChangeTrackingList<NetworkCloudNetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="bootstrapProtocol"> The type of bootstrap protocol used. </param>
         /// <param name="cpuCores"> The count of CPU cores for this machine. </param>
@@ -33,7 +66,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
         /// <param name="vendor"> The make of the machine. </param>
-        internal MachineSkuSlot(long? rackSlot, BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces, long? totalThreads, string vendor)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineSkuSlot(long? rackSlot, BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces, long? totalThreads, string vendor, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RackSlot = rackSlot;
             BootstrapProtocol = bootstrapProtocol;
@@ -47,6 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             NetworkInterfaces = networkInterfaces;
             TotalThreads = totalThreads;
             Vendor = vendor;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The position in the rack for the machine. </summary>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownDistributionConfiguration. </summary>
     internal partial class UnknownDistributionConfiguration : MachineLearningDistributionConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownDistributionConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDistributionConfiguration"/>. </summary>
         /// <param name="distributionType"> [Required] Specifies the type of distribution framework. </param>
-        internal UnknownDistributionConfiguration(DistributionType distributionType) : base(distributionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDistributionConfiguration(DistributionType distributionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(distributionType, serializedAdditionalRawData)
         {
             DistributionType = distributionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDistributionConfiguration"/> for deserialization. </summary>
+        internal UnknownDistributionConfiguration()
+        {
         }
     }
 }

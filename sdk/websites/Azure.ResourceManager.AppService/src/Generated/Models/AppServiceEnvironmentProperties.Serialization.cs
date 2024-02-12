@@ -5,17 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceEnvironmentProperties : IUtf8JsonSerializable
+    public partial class AppServiceEnvironmentProperties : IUtf8JsonSerializable, IJsonModel<AppServiceEnvironmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceEnvironmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceEnvironmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
             writer.WritePropertyName("virtualNetwork"u8);
             writer.WriteObjectValue(VirtualNetwork);
             if (Optional.IsDefined(InternalLoadBalancingMode))
@@ -28,6 +48,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("multiSize"u8);
                 writer.WriteStringValue(MultiSize);
             }
+            if (options.Format != "W" && Optional.IsDefined(MultiRoleCount))
+            {
+                writer.WritePropertyName("multiRoleCount"u8);
+                writer.WriteNumberValue(MultiRoleCount.Value);
+            }
             if (Optional.IsDefined(IPSslAddressCount))
             {
                 writer.WritePropertyName("ipsslAddressCount"u8);
@@ -38,10 +63,20 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
+            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfMachines))
+            {
+                writer.WritePropertyName("maximumNumberOfMachines"u8);
+                writer.WriteNumberValue(MaximumNumberOfMachines.Value);
+            }
             if (Optional.IsDefined(FrontEndScaleFactor))
             {
                 writer.WritePropertyName("frontEndScaleFactor"u8);
                 writer.WriteNumberValue(FrontEndScaleFactor.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsSuspended))
+            {
+                writer.WritePropertyName("suspended"u8);
+                writer.WriteBooleanValue(IsSuspended.Value);
             }
             if (Optional.IsCollectionDefined(ClusterSettings))
             {
@@ -63,6 +98,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(HasLinuxWorkers))
+            {
+                writer.WritePropertyName("hasLinuxWorkers"u8);
+                writer.WriteBooleanValue(HasLinuxWorkers.Value);
+            }
             if (Optional.IsDefined(DedicatedHostCount))
             {
                 writer.WritePropertyName("dedicatedHostCount"u8);
@@ -73,11 +113,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("zoneRedundant"u8);
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServiceEnvironmentProperties DeserializeAppServiceEnvironmentProperties(JsonElement element)
+        AppServiceEnvironmentProperties IJsonModel<AppServiceEnvironmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceEnvironmentProperties(document.RootElement, options);
+        }
+
+        internal static AppServiceEnvironmentProperties DeserializeAppServiceEnvironmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -98,6 +167,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool> hasLinuxWorkers = default;
             Optional<int> dedicatedHostCount = default;
             Optional<bool> zoneRedundant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -242,8 +313,44 @@ namespace Azure.ResourceManager.AppService.Models
                     zoneRedundant = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipSslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIPRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(status), virtualNetwork, Optional.ToNullable(internalLoadBalancingMode), multiSize.Value, Optional.ToNullable(multiRoleCount), Optional.ToNullable(ipSslAddressCount), dnsSuffix.Value, Optional.ToNullable(maximumNumberOfMachines), Optional.ToNullable(frontEndScaleFactor), Optional.ToNullable(suspended), Optional.ToList(clusterSettings), Optional.ToList(userWhitelistedIPRanges), Optional.ToNullable(hasLinuxWorkers), Optional.ToNullable(dedicatedHostCount), Optional.ToNullable(zoneRedundant), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceEnvironmentProperties IPersistableModel<AppServiceEnvironmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceEnvironmentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceEnvironmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

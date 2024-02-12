@@ -13,13 +13,13 @@ namespace Azure.Communication.Chat
     /// <summary> Result of the create chat thread operation. </summary>
     internal partial class CreateChatThreadResultInternal
     {
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         internal CreateChatThreadResultInternal()
         {
             InvalidParticipants = new ChangeTrackingList<ChatError>();
         }
 
-        /// <summary> Initializes a new instance of CreateChatThreadResultInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateChatThreadResultInternal"/>. </summary>
         /// <param name="chatThread"> Chat thread. </param>
         /// <param name="invalidParticipants"> The participants that failed to be added to the chat thread. </param>
         internal CreateChatThreadResultInternal(ChatThreadPropertiesInternal chatThread, IReadOnlyList<ChatError> invalidParticipants)

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownAssetReferenceBase. </summary>
     internal partial class UnknownAssetReferenceBase : MachineLearningAssetReferenceBase
     {
-        /// <summary> Initializes a new instance of UnknownAssetReferenceBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAssetReferenceBase"/>. </summary>
         /// <param name="referenceType"> [Required] Specifies the type of asset reference. </param>
-        internal UnknownAssetReferenceBase(ReferenceType referenceType) : base(referenceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAssetReferenceBase(ReferenceType referenceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(referenceType, serializedAdditionalRawData)
         {
             ReferenceType = referenceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAssetReferenceBase"/> for deserialization. </summary>
+        internal UnknownAssetReferenceBase()
+        {
         }
     }
 }

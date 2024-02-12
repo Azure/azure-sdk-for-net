@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger tree command. </summary>
     public partial class SwaggerCustomDynamicTreeCommand
     {
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeCommand"/>. </summary>
         public SwaggerCustomDynamicTreeCommand()
         {
             Parameters = new ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerCustomDynamicTreeCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerCustomDynamicTreeCommand"/>. </summary>
         /// <param name="operationId"> The path to an item property which defines the display name of the item. </param>
         /// <param name="itemsPath"> The path to an item property which defines the display name of the item. </param>
         /// <param name="itemValuePath"> The path to an item property which defines the display name of the item. </param>
@@ -28,7 +61,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="itemIsParent"> The path to an item property which defines the display name of the item. </param>
         /// <param name="selectableFilter"> The path to an item property which defines the display name of the item. </param>
         /// <param name="parameters"> Dictionary of &lt;SwaggerCustomDynamicTreeParameter&gt;. </param>
-        internal SwaggerCustomDynamicTreeCommand(string operationId, string itemsPath, string itemValuePath, string itemTitlePath, string itemFullTitlePath, string itemIsParent, string selectableFilter, IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SwaggerCustomDynamicTreeCommand(string operationId, string itemsPath, string itemValuePath, string itemTitlePath, string itemFullTitlePath, string itemIsParent, string selectableFilter, IDictionary<string, SwaggerCustomDynamicTreeParameterInfo> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             ItemsPath = itemsPath;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             ItemIsParent = itemIsParent;
             SelectableFilter = selectableFilter;
             Parameters = parameters;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The path to an item property which defines the display name of the item. </summary>

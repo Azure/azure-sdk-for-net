@@ -51,12 +51,12 @@ namespace Azure.Storage.DataMovement.JobPlan
         public string DestinationPath;
 
         /// <summary>
-        /// Whether the destination should be overriden or not.
+        /// The resource creation preference.
         /// </summary>
-        public bool Overwrite;
+        public StorageResourceCreationPreference CreatePreference;
 
         /// <summary>
-        /// Ths intial transfer size for the transfer.
+        /// Ths initial transfer size for the transfer.
         /// </summary>
         public long InitialTransferSize;
 
@@ -84,7 +84,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationTypeId,
             string sourcePath,
             string destinationPath,
-            bool overwrite,
+            StorageResourceCreationPreference createPreference,
             long initialTransferSize,
             long chunkSize,
             byte priority,
@@ -133,7 +133,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             DestinationTypeId = destinationTypeId;
             SourcePath = sourcePath;
             DestinationPath = destinationPath;
-            Overwrite = overwrite;
+            CreatePreference = createPreference;
             InitialTransferSize = initialTransferSize;
             ChunkSize = chunkSize;
             Priority = priority;
@@ -173,8 +173,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte[] destinationPathBytes = Encoding.UTF8.GetBytes(DestinationPath);
             writer.WriteVariableLengthFieldInfo(destinationPathBytes.Length, ref currentVariableLengthIndex);
 
-            // Overwrite
-            writer.Write(Overwrite);
+            // CreatePreference
+            writer.Write((byte)CreatePreference);
 
             // InitialTransferSize
             writer.Write(InitialTransferSize);
@@ -233,9 +233,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             int destinationPathOffset = reader.ReadInt32();
             int destinationPathLength = reader.ReadInt32();
 
-            // Overwrite
-            byte overwriteByte = reader.ReadByte();
-            bool overwrite = Convert.ToBoolean(overwriteByte);
+            // CreatePreference
+            StorageResourceCreationPreference createPreference = (StorageResourceCreationPreference)reader.ReadByte();
 
             // InitialTransferSize
             long initialTransferSize = reader.ReadInt64();
@@ -277,7 +276,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 destinationTypeId,
                 sourcePath,
                 destinationPath,
-                overwrite,
+                createPreference,
                 initialTransferSize,
                 chunkSize,
                 priority,
@@ -303,7 +302,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 (DestinationTypeId == other.DestinationTypeId) &&
                 (SourcePath == other.SourcePath) &&
                 (DestinationPath == other.DestinationPath) &&
-                (Overwrite == other.Overwrite) &&
+                (CreatePreference == other.CreatePreference) &&
                 (InitialTransferSize == other.InitialTransferSize) &&
                 (ChunkSize == other.ChunkSize) &&
                 (Priority == other.Priority) &&

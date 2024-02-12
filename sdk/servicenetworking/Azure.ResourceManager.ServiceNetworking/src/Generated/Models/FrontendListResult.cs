@@ -16,7 +16,39 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> The response of a Frontend list operation. </summary>
     internal partial class FrontendListResult
     {
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal FrontendListResult(IEnumerable<FrontendData> value)
@@ -26,13 +58,20 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of FrontendListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/>. </summary>
         /// <param name="value"> The Frontend items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontendListResult(IReadOnlyList<FrontendData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontendListResult"/> for deserialization. </summary>
+        internal FrontendListResult()
+        {
         }
 
         /// <summary> The Frontend items on this page. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> Result of the request to list resource usages. It contains a list of resource usages &amp; limits and a URL link to get the next set of results. </summary>
     internal partial class StorageCacheUsagesResult
     {
-        /// <summary> Initializes a new instance of StorageCacheUsagesResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsagesResult"/>. </summary>
         internal StorageCacheUsagesResult()
         {
             Value = new ChangeTrackingList<StorageCacheUsage>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheUsagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheUsagesResult"/>. </summary>
         /// <param name="nextLink"> URL to get the next set of resource usage list results if there are any. </param>
         /// <param name="value"> List of usages and limits for resources controlled by the Microsoft.StorageCache resource provider. </param>
-        internal StorageCacheUsagesResult(string nextLink, IReadOnlyList<StorageCacheUsage> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StorageCacheUsagesResult(string nextLink, IReadOnlyList<StorageCacheUsage> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> URL to get the next set of resource usage list results if there are any. </summary>

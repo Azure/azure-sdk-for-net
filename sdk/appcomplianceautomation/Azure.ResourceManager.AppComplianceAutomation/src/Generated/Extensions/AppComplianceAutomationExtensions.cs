@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReportResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ReportResource"/> object. </returns>
         public static ReportResource GetReportResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppComplianceAutomationArmClient(client).GetReportResource(id);
         }
 
@@ -55,9 +58,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
         public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableAppComplianceAutomationArmClient(client).GetSnapshotResource(id);
         }
 
@@ -69,9 +75,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of ReportResources and their operations over a ReportResource. </returns>
         public static ReportResourceCollection GetReportResources(this TenantResource tenantResource)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResources();
         }
 
@@ -86,6 +95,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -95,11 +112,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<ReportResource>> GetReportResourceAsync(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return await GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResourceAsync(reportName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -114,6 +133,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Report_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReportResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -123,11 +150,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="reportName"> Report Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="reportName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<ReportResource> GetReportResource(this TenantResource tenantResource, string reportName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableAppComplianceAutomationTenantResource(tenantResource).GetReportResource(reportName, cancellationToken);
         }
     }

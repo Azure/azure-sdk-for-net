@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
     public partial class KubernetesClusterNode
     {
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         internal KubernetesClusterNode()
         {
             Labels = new ChangeTrackingList<KubernetesLabel>();
@@ -21,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Taints = new ChangeTrackingList<KubernetesLabel>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         /// <param name="agentPoolId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
         /// <param name="availabilityZone"> The availability zone this node is running within. </param>
         /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts this node. </param>
@@ -40,7 +73,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="role"> The role of this node in the cluster. </param>
         /// <param name="taints"> The list of taints that have been assigned to the agent pool containing this node. </param>
         /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
-        internal KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IReadOnlyList<KubernetesLabel> labels, long? memorySizeGB, NetworkCloudAgentPoolMode? mode, string name, IReadOnlyList<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IReadOnlyList<KubernetesLabel> taints, string vmSkuName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IReadOnlyList<KubernetesLabel> labels, long? memorySizeGB, NetworkCloudAgentPoolMode? mode, string name, IReadOnlyList<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IReadOnlyList<KubernetesLabel> taints, string vmSkuName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentPoolId = agentPoolId;
             AvailabilityZone = availabilityZone;
@@ -60,6 +94,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Role = role;
             Taints = taints;
             VmSkuName = vmSkuName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </summary>

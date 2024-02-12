@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the resource. </param>
@@ -94,6 +98,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,10 +138,18 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
@@ -152,10 +168,18 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RecoveryServicesVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesVaultVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);

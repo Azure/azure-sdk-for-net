@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmDnsModelFactory
     {
-        /// <summary> Initializes a new instance of DnsZoneData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.Dns.Models
             registrationVirtualNetworks ??= new List<WritableSubResource>();
             resolutionVirtualNetworks ??= new List<WritableSubResource>();
 
-            return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList());
+            return new DnsZoneData(id, name, resourceType, systemData, tags, location, etag, maxNumberOfRecords, maxNumberOfRecordsPerRecord, numberOfRecords, nameServers?.ToList(), zoneType, registrationVirtualNetworks?.ToList(), resolutionVirtualNetworks?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DnsResourceReferenceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReferenceResult"/>. </summary>
         /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>
         /// <returns> A new <see cref="Models.DnsResourceReferenceResult"/> instance for mocking. </returns>
         public static DnsResourceReferenceResult DnsResourceReferenceResult(IEnumerable<DnsResourceReference> dnsResourceReferences = null)
         {
             dnsResourceReferences ??= new List<DnsResourceReference>();
 
-            return new DnsResourceReferenceResult(dnsResourceReferences?.ToList());
+            return new DnsResourceReferenceResult(dnsResourceReferences?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DnsResourceReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DnsResourceReference"/>. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
         /// <param name="targetResourceId"> A reference to an azure resource from where the dns resource value is taken. </param>
         /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dns.Models
         {
             dnsResources ??= new List<WritableSubResource>();
 
-            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null);
+            return new DnsResourceReference(dnsResources?.ToList(), targetResourceId != null ? ResourceManagerModelFactory.WritableSubResource(targetResourceId) : null, serializedAdditionalRawData: null);
         }
     }
 }

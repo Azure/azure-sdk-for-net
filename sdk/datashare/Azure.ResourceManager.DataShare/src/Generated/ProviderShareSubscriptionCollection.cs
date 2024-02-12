@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProviderShareSubscriptionResource" /> and their operations.
-    /// Each <see cref="ProviderShareSubscriptionResource" /> in the collection will belong to the same instance of <see cref="DataShareResource" />.
-    /// To get a <see cref="ProviderShareSubscriptionCollection" /> instance call the GetProviderShareSubscriptions method from an instance of <see cref="DataShareResource" />.
+    /// A class representing a collection of <see cref="ProviderShareSubscriptionResource"/> and their operations.
+    /// Each <see cref="ProviderShareSubscriptionResource"/> in the collection will belong to the same instance of <see cref="DataShareResource"/>.
+    /// To get a <see cref="ProviderShareSubscriptionCollection"/> instance call the GetProviderShareSubscriptions method from an instance of <see cref="DataShareResource"/>.
     /// </summary>
     public partial class ProviderShareSubscriptionCollection : ArmCollection, IEnumerable<ProviderShareSubscriptionResource>, IAsyncEnumerable<ProviderShareSubscriptionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_ListByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProviderShareSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProviderShareSubscriptionResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_ListByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation Token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProviderShareSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProviderShareSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProviderShareSubscriptionResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _providerShareSubscriptionRestClient.CreateListByShareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerShareSubscriptionId"> To locate shareSubscription. </param>
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +346,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderShareSubscriptions_GetByShare</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

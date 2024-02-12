@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class ManagedGrafanaPatchProperties : IUtf8JsonSerializable
+    public partial class ManagedGrafanaPatchProperties : IUtf8JsonSerializable, IJsonModel<ManagedGrafanaPatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedGrafanaPatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedGrafanaPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ZoneRedundancy))
             {
@@ -40,7 +51,203 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaIntegrations"u8);
                 writer.WriteObjectValue(GrafanaIntegrations);
             }
+            if (Optional.IsDefined(EnterpriseConfigurations))
+            {
+                writer.WritePropertyName("enterpriseConfigurations"u8);
+                writer.WriteObjectValue(EnterpriseConfigurations);
+            }
+            if (Optional.IsDefined(GrafanaConfigurations))
+            {
+                writer.WritePropertyName("grafanaConfigurations"u8);
+                writer.WriteObjectValue(GrafanaConfigurations);
+            }
+            if (Optional.IsCollectionDefined(GrafanaPlugins))
+            {
+                writer.WritePropertyName("grafanaPlugins"u8);
+                writer.WriteStartObject();
+                foreach (var item in GrafanaPlugins)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(GrafanaMajorVersion))
+            {
+                writer.WritePropertyName("grafanaMajorVersion"u8);
+                writer.WriteStringValue(GrafanaMajorVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ManagedGrafanaPatchProperties IJsonModel<ManagedGrafanaPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedGrafanaPatchProperties(document.RootElement, options);
+        }
+
+        internal static ManagedGrafanaPatchProperties DeserializeManagedGrafanaPatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<GrafanaZoneRedundancy> zoneRedundancy = default;
+            Optional<GrafanaApiKey> apiKey = default;
+            Optional<DeterministicOutboundIP> deterministicOutboundIP = default;
+            Optional<GrafanaPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<GrafanaIntegrations> grafanaIntegrations = default;
+            Optional<EnterpriseConfigurations> enterpriseConfigurations = default;
+            Optional<GrafanaConfigurations> grafanaConfigurations = default;
+            Optional<IDictionary<string, GrafanaPlugin>> grafanaPlugins = default;
+            Optional<string> grafanaMajorVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("zoneRedundancy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundancy = new GrafanaZoneRedundancy(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("apiKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    apiKey = new GrafanaApiKey(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("deterministicOutboundIP"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deterministicOutboundIP = new DeterministicOutboundIP(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new GrafanaPublicNetworkAccess(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("grafanaIntegrations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    grafanaIntegrations = GrafanaIntegrations.DeserializeGrafanaIntegrations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("enterpriseConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enterpriseConfigurations = EnterpriseConfigurations.DeserializeEnterpriseConfigurations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("grafanaConfigurations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    grafanaConfigurations = GrafanaConfigurations.DeserializeGrafanaConfigurations(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("grafanaPlugins"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, GrafanaPlugin> dictionary = new Dictionary<string, GrafanaPlugin>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value));
+                    }
+                    grafanaPlugins = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("grafanaMajorVersion"u8))
+                {
+                    grafanaMajorVersion = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedGrafanaPatchProperties(Optional.ToNullable(zoneRedundancy), Optional.ToNullable(apiKey), Optional.ToNullable(deterministicOutboundIP), Optional.ToNullable(publicNetworkAccess), grafanaIntegrations.Value, enterpriseConfigurations.Value, grafanaConfigurations.Value, Optional.ToDictionary(grafanaPlugins), grafanaMajorVersion.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ManagedGrafanaPatchProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedGrafanaPatchProperties IPersistableModel<ManagedGrafanaPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedGrafanaPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedGrafanaPatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedGrafanaPatchProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedGrafanaPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

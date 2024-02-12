@@ -5,24 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Workload Identity settings for the security profile. </summary>
+    /// <summary> Workload identity settings for the security profile. </summary>
     internal partial class ManagedClusterSecurityProfileWorkloadIdentity
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
         public ManagedClusterSecurityProfileWorkloadIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileWorkloadIdentity. </summary>
-        /// <param name="enabled"> Whether to enable Workload Identity. </param>
-        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? enabled)
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileWorkloadIdentity"/>. </summary>
+        /// <param name="isWorkloadIdentityEnabled"> Whether to enable workload identity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileWorkloadIdentity(bool? isWorkloadIdentityEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Enabled = enabled;
+            IsWorkloadIdentityEnabled = isWorkloadIdentityEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable Workload Identity. </summary>
-        public bool? Enabled { get; set; }
+        /// <summary> Whether to enable workload identity. </summary>
+        public bool? IsWorkloadIdentityEnabled { get; set; }
     }
 }

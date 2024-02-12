@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 
@@ -17,12 +18,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// </summary>
     public abstract partial class StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         protected StreamingJobInputProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamingJobInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingJobInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
-        internal StreamingJobInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             InputPropertiesType = inputPropertiesType;
             Serialization = serialization;
@@ -43,6 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Compression = compression;
             PartitionKey = partitionKey;
             WatermarkSettings = watermarkSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </summary>

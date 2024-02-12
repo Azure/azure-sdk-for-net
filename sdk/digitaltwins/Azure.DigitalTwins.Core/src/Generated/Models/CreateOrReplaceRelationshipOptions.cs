@@ -10,9 +10,20 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class CreateOrReplaceRelationshipOptions
     {
-        /// <summary> Initializes a new instance of CreateOrReplaceRelationshipOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceRelationshipOptions"/>. </summary>
         public CreateOrReplaceRelationshipOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateOrReplaceRelationshipOptions"/>. </summary>
+        /// <param name="traceParent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="traceState"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="ifNoneMatch"> Only perform the operation if the entity does not already exist. </param>
+        internal CreateOrReplaceRelationshipOptions(string traceParent, string traceState, string ifNoneMatch)
+        {
+            TraceParent = traceParent;
+            TraceState = traceState;
+            IfNoneMatch = ifNoneMatch;
         }
     }
 }

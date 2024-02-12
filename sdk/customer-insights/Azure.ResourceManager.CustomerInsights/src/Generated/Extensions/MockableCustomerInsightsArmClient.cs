@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HubResource.CreateResourceIdentifier" /> to create a <see cref="HubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HubResource.CreateResourceIdentifier" /> to create a <see cref="HubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="HubResource"/> object. </returns>
         public virtual HubResource GetHubResource(ResourceIdentifier id)
         {
             HubResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ProfileResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProfileResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ProfileResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProfileResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProfileResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ProfileResourceFormatResource"/> object. </returns>
         public virtual ProfileResourceFormatResource GetProfileResourceFormatResource(ResourceIdentifier id)
         {
             ProfileResourceFormatResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InteractionResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InteractionResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="InteractionResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="InteractionResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="InteractionResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="InteractionResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InteractionResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="InteractionResourceFormatResource"/> object. </returns>
         public virtual InteractionResourceFormatResource GetInteractionResourceFormatResource(ResourceIdentifier id)
         {
             InteractionResourceFormatResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelationshipResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelationshipResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelationshipResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelationshipResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelationshipResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelationshipResourceFormatResource"/> object. </returns>
         public virtual RelationshipResourceFormatResource GetRelationshipResourceFormatResource(ResourceIdentifier id)
         {
             RelationshipResourceFormatResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RelationshipLinkResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RelationshipLinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipLinkResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RelationshipLinkResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RelationshipLinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipLinkResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource"/> object. </returns>
         public virtual RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(ResourceIdentifier id)
         {
             RelationshipLinkResourceFormatResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AuthorizationPolicyResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AuthorizationPolicyResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationPolicyResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AuthorizationPolicyResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AuthorizationPolicyResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationPolicyResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource"/> object. </returns>
         public virtual AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(ResourceIdentifier id)
         {
             AuthorizationPolicyResourceFormatResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectorResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectorResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectorResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectorResourceFormatResource"/> object. </returns>
         public virtual ConnectorResourceFormatResource GetConnectorResourceFormatResource(ResourceIdentifier id)
         {
             ConnectorResourceFormatResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConnectorMappingResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConnectorMappingResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorMappingResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ConnectorMappingResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConnectorMappingResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorMappingResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource"/> object. </returns>
         public virtual ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(ResourceIdentifier id)
         {
             ConnectorMappingResourceFormatResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KpiResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KpiResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="KpiResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KpiResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KpiResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="KpiResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KpiResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KpiResourceFormatResource"/> object. </returns>
         public virtual KpiResourceFormatResource GetKpiResourceFormatResource(ResourceIdentifier id)
         {
             KpiResourceFormatResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WidgetTypeResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WidgetTypeResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="WidgetTypeResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="WidgetTypeResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WidgetTypeResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="WidgetTypeResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource"/> object. </returns>
         public virtual WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(ResourceIdentifier id)
         {
             WidgetTypeResourceFormatResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ViewResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ViewResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ViewResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ViewResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ViewResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ViewResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ViewResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ViewResourceFormatResource"/> object. </returns>
         public virtual ViewResourceFormatResource GetViewResourceFormatResource(ResourceIdentifier id)
         {
             ViewResourceFormatResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LinkResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="LinkResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LinkResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="LinkResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LinkResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LinkResourceFormatResource"/> object. </returns>
         public virtual LinkResourceFormatResource GetLinkResourceFormatResource(ResourceIdentifier id)
         {
             LinkResourceFormatResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RoleAssignmentResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RoleAssignmentResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="RoleAssignmentResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RoleAssignmentResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource"/> object. </returns>
         public virtual RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(ResourceIdentifier id)
         {
             RoleAssignmentResourceFormatResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PredictionResourceFormatResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PredictionResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="PredictionResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PredictionResourceFormatResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PredictionResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="PredictionResourceFormatResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PredictionResourceFormatResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PredictionResourceFormatResource"/> object. </returns>
         public virtual PredictionResourceFormatResource GetPredictionResourceFormatResource(ResourceIdentifier id)
         {
             PredictionResourceFormatResource.ValidateResourceId(id);

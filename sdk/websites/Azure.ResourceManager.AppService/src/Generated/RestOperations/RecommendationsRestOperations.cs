@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Disable all recommendations for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Disable all recommendations for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Reset all recommendation opt-out settings for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Reset all recommendation opt-out settings for an app. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="environmentName"> Name of the app. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="hostingEnvironmentName"/> or <paramref name="environmentName"/> is null. </exception>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Disables the specific rule for a web site permanently. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Description for Disables the specific rule for a web site permanently. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
-        /// <param name="hostingEnvironmentName"> The String to use. </param>
+        /// <param name="hostingEnvironmentName"> The <see cref="string"/> to use. </param>
         /// <param name="name"> Rule name. </param>
         /// <param name="environmentName"> Site name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

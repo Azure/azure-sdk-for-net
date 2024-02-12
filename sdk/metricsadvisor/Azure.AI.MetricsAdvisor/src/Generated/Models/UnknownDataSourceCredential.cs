@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The UnknownDataSourceCredential. </summary>
     internal partial class UnknownDataSourceCredential : DataSourceCredentialEntity
     {
-        /// <summary> Initializes a new instance of UnknownDataSourceCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataSourceCredential"/>. </summary>
         /// <param name="credentialKind"> Type of data source credential. </param>
         /// <param name="id"> Unique id of data source credential. </param>
         /// <param name="name"> Name of data source credential. </param>

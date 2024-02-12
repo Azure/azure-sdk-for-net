@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Storage.Models
     /// <summary> An object that defines the blob inventory rule filter conditions. For 'Blob' definition.objectType all filter properties are applicable, 'blobTypes' is required and others are optional. For 'Container' definition.objectType only prefixMatch is applicable and is optional. </summary>
     public partial class BlobInventoryPolicyFilter
     {
-        /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
         public BlobInventoryPolicyFilter()
         {
             IncludePrefix = new ChangeTrackingList<string>();
@@ -21,14 +54,15 @@ namespace Azure.ResourceManager.Storage.Models
             BlobTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of BlobInventoryPolicyFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobInventoryPolicyFilter"/>. </summary>
         /// <param name="includePrefix"> An array of strings with maximum 10 blob prefixes to be included in the inventory. </param>
         /// <param name="excludePrefix"> An array of strings with maximum 10 blob prefixes to be excluded from the inventory. </param>
         /// <param name="blobTypes"> An array of predefined enum values. Valid values include blockBlob, appendBlob, pageBlob. Hns accounts does not support pageBlobs. This field is required when definition.objectType property is set to 'Blob'. </param>
         /// <param name="includeBlobVersions"> Includes blob versions in blob inventory when value is set to true. The definition.schemaFields values 'VersionId and IsCurrentVersion' are required if this property is set to true, else they must be excluded. </param>
         /// <param name="includeSnapshots"> Includes blob snapshots in blob inventory when value is set to true. The definition.schemaFields value 'Snapshot' is required if this property is set to true, else it must be excluded. </param>
         /// <param name="includeDeleted"> For 'Container' definition.objectType the definition.schemaFields must include 'Deleted, Version, DeletedTime and RemainingRetentionDays'. For 'Blob' definition.objectType and HNS enabled storage accounts the definition.schemaFields must include 'DeletionId, Deleted, DeletedTime and RemainingRetentionDays' and for Hns disabled accounts the definition.schemaFields must include 'Deleted and RemainingRetentionDays', else it must be excluded. </param>
-        internal BlobInventoryPolicyFilter(IList<string> includePrefix, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobInventoryPolicyFilter(IList<string> includePrefix, IList<string> excludePrefix, IList<string> blobTypes, bool? includeBlobVersions, bool? includeSnapshots, bool? includeDeleted, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncludePrefix = includePrefix;
             ExcludePrefix = excludePrefix;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
             IncludeBlobVersions = includeBlobVersions;
             IncludeSnapshots = includeSnapshots;
             IncludeDeleted = includeDeleted;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> An array of strings with maximum 10 blob prefixes to be included in the inventory. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,55 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> The restriction details. </summary>
     public partial class AvailableLabServicesSkuRestrictions
     {
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         internal AvailableLabServicesSkuRestrictions()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableLabServicesSkuRestrictions"/>. </summary>
         /// <param name="labServicesSkuRestrictionType"> The type of restriction. </param>
         /// <param name="values"> The values of the restriction. </param>
         /// <param name="reasonCode"> The reason for the restriction. </param>
-        internal AvailableLabServicesSkuRestrictions(LabServicesSkuRestrictionType? labServicesSkuRestrictionType, IReadOnlyList<string> values, LabServicesSkuRestrictionReasonCode? reasonCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableLabServicesSkuRestrictions(LabServicesSkuRestrictionType? labServicesSkuRestrictionType, IReadOnlyList<string> values, LabServicesSkuRestrictionReasonCode? reasonCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LabServicesSkuRestrictionType = labServicesSkuRestrictionType;
             Values = values;
             ReasonCode = reasonCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of restriction. </summary>

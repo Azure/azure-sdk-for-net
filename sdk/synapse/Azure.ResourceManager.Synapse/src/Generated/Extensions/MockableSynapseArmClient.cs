@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseAadOnlyAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseAadOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAadOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseAadOnlyAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseAadOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAadOnlyAuthenticationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource"/> object. </returns>
         public virtual SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(ResourceIdentifier id)
         {
             SynapseAadOnlyAuthenticationResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseIPFirewallRuleInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseIPFirewallRuleInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource"/> object. </returns>
         public virtual SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(ResourceIdentifier id)
         {
             SynapseIPFirewallRuleInfoResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseKeyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseKeyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseKeyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKeyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseKeyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseKeyResource"/> object. </returns>
         public virtual SynapseKeyResource GetSynapseKeyResource(ResourceIdentifier id)
         {
             SynapseKeyResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource"/> object. </returns>
         public virtual SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             SynapsePrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkspacePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspacePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspacePrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource"/> object. </returns>
         public virtual SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(ResourceIdentifier id)
         {
             SynapseWorkspacePrivateLinkResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapsePrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapsePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapsePrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateLinkResource"/> object. </returns>
         public virtual SynapsePrivateLinkResource GetSynapsePrivateLinkResource(ResourceIdentifier id)
         {
             SynapsePrivateLinkResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapsePrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapsePrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateLinkHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkHubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource"/> object. </returns>
         public virtual SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(ResourceIdentifier id)
         {
             SynapsePrivateLinkHubResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource"/> object. </returns>
         public virtual SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(ResourceIdentifier id)
         {
             SynapsePrivateEndpointConnectionForPrivateLinkHubResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolResource"/> object. </returns>
         public virtual SynapseSqlPoolResource GetSynapseSqlPoolResource(ResourceIdentifier id)
         {
             SynapseSqlPoolResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseMetadataSyncConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseMetadataSyncConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMetadataSyncConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMetadataSyncConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMetadataSyncConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMetadataSyncConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource"/> object. </returns>
         public virtual SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(ResourceIdentifier id)
         {
             SynapseMetadataSyncConfigurationResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseGeoBackupPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseGeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseGeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseGeoBackupPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseGeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseGeoBackupPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource"/> object. </returns>
         public virtual SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(ResourceIdentifier id)
         {
             SynapseGeoBackupPolicyResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDataWarehouseUserActivityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataWarehouseUserActivityResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataWarehouseUserActivityResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource"/> object. </returns>
         public virtual SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(ResourceIdentifier id)
         {
             SynapseDataWarehouseUserActivityResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseRestorePointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRestorePointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorePointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseRestorePointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRestorePointResource"/> object. </returns>
         public virtual SynapseRestorePointResource GetSynapseRestorePointResource(ResourceIdentifier id)
         {
             SynapseRestorePointResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseReplicationLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseReplicationLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseReplicationLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseReplicationLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseReplicationLinkResource"/> object. </returns>
         public virtual SynapseReplicationLinkResource GetSynapseReplicationLinkResource(ResourceIdentifier id)
         {
             SynapseReplicationLinkResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseMaintenanceWindowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseMaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMaintenanceWindowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource"/> object. </returns>
         public virtual SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(ResourceIdentifier id)
         {
             SynapseMaintenanceWindowResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseMaintenanceWindowOptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseMaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseMaintenanceWindowOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseMaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource"/> object. </returns>
         public virtual SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(ResourceIdentifier id)
         {
             SynapseMaintenanceWindowOptionResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseTransparentDataEncryptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseTransparentDataEncryptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseTransparentDataEncryptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource"/> object. </returns>
         public virtual SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(ResourceIdentifier id)
         {
             SynapseTransparentDataEncryptionResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolBlobAuditingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public virtual SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(ResourceIdentifier id)
         {
             SynapseSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
@@ -253,11 +253,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSensitivityLabelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSensitivityLabelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSensitivityLabelResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSensitivityLabelResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSensitivityLabelResource"/> object. </returns>
         public virtual SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(ResourceIdentifier id)
         {
             SynapseSensitivityLabelResource.ValidateResourceId(id);
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource"/> object. </returns>
         public virtual SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(ResourceIdentifier id)
         {
             SynapseSqlPoolSchemaResource.ValidateResourceId(id);
@@ -277,11 +277,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolTableResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolTableResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolTableResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolTableResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolTableResource"/> object. </returns>
         public virtual SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(ResourceIdentifier id)
         {
             SynapseSqlPoolTableResource.ValidateResourceId(id);
@@ -289,11 +289,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolConnectionPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolConnectionPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolConnectionPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource"/> object. </returns>
         public virtual SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(ResourceIdentifier id)
         {
             SynapseSqlPoolConnectionPolicyResource.ValidateResourceId(id);
@@ -301,11 +301,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
             SynapseSqlPoolVulnerabilityAssessmentResource.ValidateResourceId(id);
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseVulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseVulnerabilityAssessmentScanRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseVulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="SynapseVulnerabilityAssessmentScanRecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource"/> object. </returns>
         public virtual SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(ResourceIdentifier id)
         {
             SynapseVulnerabilityAssessmentScanRecordResource.ValidateResourceId(id);
@@ -325,11 +325,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource"/> object. </returns>
         public virtual SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(ResourceIdentifier id)
         {
             SynapseSqlPoolSecurityAlertPolicyResource.ValidateResourceId(id);
@@ -337,11 +337,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource"/> object. </returns>
         public virtual SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier id)
         {
             SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.ValidateResourceId(id);
@@ -349,11 +349,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource"/> object. </returns>
         public virtual SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(ResourceIdentifier id)
         {
             SynapseExtendedSqlPoolBlobAuditingPolicyResource.ValidateResourceId(id);
@@ -361,11 +361,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDataMaskingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataMaskingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource"/> object. </returns>
         public virtual SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(ResourceIdentifier id)
         {
             SynapseDataMaskingPolicyResource.ValidateResourceId(id);
@@ -373,11 +373,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDataMaskingRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataMaskingRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource"/> object. </returns>
         public virtual SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(ResourceIdentifier id)
         {
             SynapseDataMaskingRuleResource.ValidateResourceId(id);
@@ -385,11 +385,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSqlPoolColumnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSqlPoolColumnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolColumnResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource"/> object. </returns>
         public virtual SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(ResourceIdentifier id)
         {
             SynapseSqlPoolColumnResource.ValidateResourceId(id);
@@ -397,11 +397,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkloadGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkloadGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkloadGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkloadGroupResource"/> object. </returns>
         public virtual SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(ResourceIdentifier id)
         {
             SynapseWorkloadGroupResource.ValidateResourceId(id);
@@ -409,11 +409,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkloadClassifierResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkloadClassifierResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadClassifierResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource"/> object. </returns>
         public virtual SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(ResourceIdentifier id)
         {
             SynapseWorkloadClassifierResource.ValidateResourceId(id);
@@ -421,11 +421,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerBlobAuditingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource"/> object. </returns>
         public virtual SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(ResourceIdentifier id)
         {
             SynapseServerBlobAuditingPolicyResource.ValidateResourceId(id);
@@ -433,11 +433,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseExtendedServerBlobAuditingPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedServerBlobAuditingPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource"/> object. </returns>
         public virtual SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(ResourceIdentifier id)
         {
             SynapseExtendedServerBlobAuditingPolicyResource.ValidateResourceId(id);
@@ -445,11 +445,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerSecurityAlertPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerSecurityAlertPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource"/> object. </returns>
         public virtual SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(ResourceIdentifier id)
         {
             SynapseServerSecurityAlertPolicyResource.ValidateResourceId(id);
@@ -457,11 +457,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseServerVulnerabilityAssessmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseServerVulnerabilityAssessmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerVulnerabilityAssessmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource"/> object. </returns>
         public virtual SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(ResourceIdentifier id)
         {
             SynapseServerVulnerabilityAssessmentResource.ValidateResourceId(id);
@@ -469,11 +469,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseEncryptionProtectorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseEncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseEncryptionProtectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseEncryptionProtectorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource"/> object. </returns>
         public virtual SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(ResourceIdentifier id)
         {
             SynapseEncryptionProtectorResource.ValidateResourceId(id);
@@ -481,11 +481,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseRecoverableSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseRecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRecoverableSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRecoverableSqlPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRecoverableSqlPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource"/> object. </returns>
         public virtual SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(ResourceIdentifier id)
         {
             SynapseRecoverableSqlPoolResource.ValidateResourceId(id);
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDedicatedSqlMinimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDedicatedSqlMinimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> object. </returns>
         public virtual SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(ResourceIdentifier id)
         {
             SynapseDedicatedSqlMinimalTlsSettingResource.ValidateResourceId(id);
@@ -505,11 +505,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceResource"/> object. </returns>
         public virtual SynapseWorkspaceResource GetSynapseWorkspaceResource(ResourceIdentifier id)
         {
             SynapseWorkspaceResource.ValidateResourceId(id);
@@ -517,11 +517,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkspaceAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource"/> object. </returns>
         public virtual SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(ResourceIdentifier id)
         {
             SynapseWorkspaceAdministratorResource.ValidateResourceId(id);
@@ -529,11 +529,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseWorkspaceSqlAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceSqlAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseWorkspaceSqlAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceSqlAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource"/> object. </returns>
         public virtual SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(ResourceIdentifier id)
         {
             SynapseWorkspaceSqlAdministratorResource.ValidateResourceId(id);
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseManagedIdentitySqlControlSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseManagedIdentitySqlControlSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource"/> object. </returns>
         public virtual SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(ResourceIdentifier id)
         {
             SynapseManagedIdentitySqlControlSettingResource.ValidateResourceId(id);
@@ -553,11 +553,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseRestorableDroppedSqlPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseRestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorableDroppedSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseRestorableDroppedSqlPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseRestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorableDroppedSqlPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource"/> object. </returns>
         public virtual SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(ResourceIdentifier id)
         {
             SynapseRestorableDroppedSqlPoolResource.ValidateResourceId(id);
@@ -565,11 +565,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseBigDataPoolInfoResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseBigDataPoolInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseBigDataPoolInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseBigDataPoolInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseBigDataPoolInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseBigDataPoolInfoResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource"/> object. </returns>
         public virtual SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(ResourceIdentifier id)
         {
             SynapseBigDataPoolInfoResource.ValidateResourceId(id);
@@ -577,11 +577,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseLibraryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseLibraryResource.CreateResourceIdentifier" /> to create a <see cref="SynapseLibraryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseLibraryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseLibraryResource.CreateResourceIdentifier" /> to create a <see cref="SynapseLibraryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseLibraryResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseLibraryResource"/> object. </returns>
         public virtual SynapseLibraryResource GetSynapseLibraryResource(ResourceIdentifier id)
         {
             SynapseLibraryResource.ValidateResourceId(id);
@@ -589,11 +589,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseIntegrationRuntimeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseIntegrationRuntimeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIntegrationRuntimeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource"/> object. </returns>
         public virtual SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(ResourceIdentifier id)
         {
             SynapseIntegrationRuntimeResource.ValidateResourceId(id);
@@ -601,11 +601,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseSparkConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseSparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSparkConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseSparkConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseSparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSparkConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseSparkConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseSparkConfigurationResource"/> object. </returns>
         public virtual SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(ResourceIdentifier id)
         {
             SynapseSparkConfigurationResource.ValidateResourceId(id);
@@ -613,11 +613,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseKustoPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseKustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKustoPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseKustoPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseKustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKustoPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseKustoPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseKustoPoolResource"/> object. </returns>
         public virtual SynapseKustoPoolResource GetSynapseKustoPoolResource(ResourceIdentifier id)
         {
             SynapseKustoPoolResource.ValidateResourceId(id);
@@ -625,11 +625,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseAttachedDatabaseConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAttachedDatabaseConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource"/> object. </returns>
         public virtual SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(ResourceIdentifier id)
         {
             SynapseAttachedDatabaseConfigurationResource.ValidateResourceId(id);
@@ -637,11 +637,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDatabaseResource"/> object. </returns>
         public virtual SynapseDatabaseResource GetSynapseDatabaseResource(ResourceIdentifier id)
         {
             SynapseDatabaseResource.ValidateResourceId(id);
@@ -649,11 +649,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDataConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDataConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDataConnectionResource"/> object. </returns>
         public virtual SynapseDataConnectionResource GetSynapseDataConnectionResource(ResourceIdentifier id)
         {
             SynapseDataConnectionResource.ValidateResourceId(id);
@@ -661,11 +661,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseClusterPrincipalAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseClusterPrincipalAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource"/> object. </returns>
         public virtual SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(ResourceIdentifier id)
         {
             SynapseClusterPrincipalAssignmentResource.ValidateResourceId(id);
@@ -673,11 +673,11 @@ namespace Azure.ResourceManager.Synapse.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SynapseDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SynapseDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SynapseDatabasePrincipalAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SynapseDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabasePrincipalAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource"/> object. </returns>
         public virtual SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(ResourceIdentifier id)
         {
             SynapseDatabasePrincipalAssignmentResource.ValidateResourceId(id);

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class EncoderPresetConfigurations : IUtf8JsonSerializable
+    public partial class EncoderPresetConfigurations : IUtf8JsonSerializable, IJsonModel<EncoderPresetConfigurations>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EncoderPresetConfigurations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EncoderPresetConfigurations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EncoderPresetConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EncoderPresetConfigurations)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Complexity))
             {
@@ -55,11 +66,40 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("minHeight"u8);
                 writer.WriteNumberValue(MinHeight.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element)
+        EncoderPresetConfigurations IJsonModel<EncoderPresetConfigurations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EncoderPresetConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EncoderPresetConfigurations)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEncoderPresetConfigurations(document.RootElement, options);
+        }
+
+        internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,6 +112,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<int> maxLayers = default;
             Optional<int> minBitrateBps = default;
             Optional<int> minHeight = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("complexity"u8))
@@ -146,8 +188,44 @@ namespace Azure.ResourceManager.Media.Models
                     minHeight = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EncoderPresetConfigurations(Optional.ToNullable(complexity), Optional.ToNullable(interleaveOutput), Optional.ToNullable(keyFrameIntervalInSeconds), Optional.ToNullable(maxBitrateBps), Optional.ToNullable(maxHeight), Optional.ToNullable(maxLayers), Optional.ToNullable(minBitrateBps), Optional.ToNullable(minHeight), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EncoderPresetConfigurations>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EncoderPresetConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EncoderPresetConfigurations)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EncoderPresetConfigurations IPersistableModel<EncoderPresetConfigurations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EncoderPresetConfigurations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEncoderPresetConfigurations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EncoderPresetConfigurations)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EncoderPresetConfigurations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

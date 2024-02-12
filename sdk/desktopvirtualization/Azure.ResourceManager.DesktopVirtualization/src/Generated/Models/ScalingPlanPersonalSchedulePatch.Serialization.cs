@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingPlanPersonalSchedulePatch : IUtf8JsonSerializable
+    public partial class ScalingPlanPersonalSchedulePatch : IUtf8JsonSerializable, IJsonModel<ScalingPlanPersonalSchedulePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingPlanPersonalSchedulePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalingPlanPersonalSchedulePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -153,7 +164,363 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteNumberValue(OffPeakMinutesToWaitOnLogoff.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ScalingPlanPersonalSchedulePatch IJsonModel<ScalingPlanPersonalSchedulePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingPlanPersonalSchedulePatch(document.RootElement, options);
+        }
+
+        internal static ScalingPlanPersonalSchedulePatch DeserializeScalingPlanPersonalSchedulePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<DesktopVirtualizationDayOfWeek>> daysOfWeek = default;
+            Optional<ScalingActionTime> rampUpStartTime = default;
+            Optional<StartupBehavior> rampUpAutoStartHosts = default;
+            Optional<SetStartVmOnConnect> rampUpStartVmOnConnect = default;
+            Optional<SessionHandlingOperation> rampUpActionOnDisconnect = default;
+            Optional<int> rampUpMinutesToWaitOnDisconnect = default;
+            Optional<SessionHandlingOperation> rampUpActionOnLogoff = default;
+            Optional<int> rampUpMinutesToWaitOnLogoff = default;
+            Optional<ScalingActionTime> peakStartTime = default;
+            Optional<SetStartVmOnConnect> peakStartVmOnConnect = default;
+            Optional<SessionHandlingOperation> peakActionOnDisconnect = default;
+            Optional<int> peakMinutesToWaitOnDisconnect = default;
+            Optional<SessionHandlingOperation> peakActionOnLogoff = default;
+            Optional<int> peakMinutesToWaitOnLogoff = default;
+            Optional<ScalingActionTime> rampDownStartTime = default;
+            Optional<SetStartVmOnConnect> rampDownStartVmOnConnect = default;
+            Optional<SessionHandlingOperation> rampDownActionOnDisconnect = default;
+            Optional<int> rampDownMinutesToWaitOnDisconnect = default;
+            Optional<SessionHandlingOperation> rampDownActionOnLogoff = default;
+            Optional<int> rampDownMinutesToWaitOnLogoff = default;
+            Optional<ScalingActionTime> offPeakStartTime = default;
+            Optional<SetStartVmOnConnect> offPeakStartVmOnConnect = default;
+            Optional<SessionHandlingOperation> offPeakActionOnDisconnect = default;
+            Optional<int> offPeakMinutesToWaitOnDisconnect = default;
+            Optional<SessionHandlingOperation> offPeakActionOnLogoff = default;
+            Optional<int> offPeakMinutesToWaitOnLogoff = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("daysOfWeek"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DesktopVirtualizationDayOfWeek> array = new List<DesktopVirtualizationDayOfWeek>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString().ToDesktopVirtualizationDayOfWeek());
+                            }
+                            daysOfWeek = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpStartTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpAutoStartHosts"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpAutoStartHosts = new StartupBehavior(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpStartVMOnConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpStartVmOnConnect = new SetStartVmOnConnect(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpActionOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpActionOnDisconnect = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpMinutesToWaitOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpMinutesToWaitOnDisconnect = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpActionOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpActionOnLogoff = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampUpMinutesToWaitOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampUpMinutesToWaitOnLogoff = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("peakStartTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("peakStartVMOnConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakStartVmOnConnect = new SetStartVmOnConnect(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("peakActionOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakActionOnDisconnect = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("peakMinutesToWaitOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakMinutesToWaitOnDisconnect = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("peakActionOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakActionOnLogoff = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("peakMinutesToWaitOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peakMinutesToWaitOnLogoff = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownStartTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownStartVMOnConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownStartVmOnConnect = new SetStartVmOnConnect(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownActionOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownActionOnDisconnect = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownMinutesToWaitOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownMinutesToWaitOnDisconnect = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownActionOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownActionOnLogoff = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("rampDownMinutesToWaitOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rampDownMinutesToWaitOnLogoff = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakStartTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakStartVMOnConnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakStartVmOnConnect = new SetStartVmOnConnect(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakActionOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakActionOnDisconnect = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakMinutesToWaitOnDisconnect"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakMinutesToWaitOnDisconnect = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakActionOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakActionOnLogoff = new SessionHandlingOperation(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("offPeakMinutesToWaitOnLogoff"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            offPeakMinutesToWaitOnLogoff = property0.Value.GetInt32();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScalingPlanPersonalSchedulePatch(Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpAutoStartHosts), Optional.ToNullable(rampUpStartVmOnConnect), Optional.ToNullable(rampUpActionOnDisconnect), Optional.ToNullable(rampUpMinutesToWaitOnDisconnect), Optional.ToNullable(rampUpActionOnLogoff), Optional.ToNullable(rampUpMinutesToWaitOnLogoff), peakStartTime.Value, Optional.ToNullable(peakStartVmOnConnect), Optional.ToNullable(peakActionOnDisconnect), Optional.ToNullable(peakMinutesToWaitOnDisconnect), Optional.ToNullable(peakActionOnLogoff), Optional.ToNullable(peakMinutesToWaitOnLogoff), rampDownStartTime.Value, Optional.ToNullable(rampDownStartVmOnConnect), Optional.ToNullable(rampDownActionOnDisconnect), Optional.ToNullable(rampDownMinutesToWaitOnDisconnect), Optional.ToNullable(rampDownActionOnLogoff), Optional.ToNullable(rampDownMinutesToWaitOnLogoff), offPeakStartTime.Value, Optional.ToNullable(offPeakStartVmOnConnect), Optional.ToNullable(offPeakActionOnDisconnect), Optional.ToNullable(offPeakMinutesToWaitOnDisconnect), Optional.ToNullable(offPeakActionOnLogoff), Optional.ToNullable(offPeakMinutesToWaitOnLogoff), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ScalingPlanPersonalSchedulePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScalingPlanPersonalSchedulePatch IPersistableModel<ScalingPlanPersonalSchedulePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPersonalSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalingPlanPersonalSchedulePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingPlanPersonalSchedulePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalingPlanPersonalSchedulePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

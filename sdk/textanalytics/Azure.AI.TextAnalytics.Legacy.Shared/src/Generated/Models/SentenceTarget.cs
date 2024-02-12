@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The SentenceTarget. </summary>
     internal partial class SentenceTarget
     {
-        /// <summary> Initializes a new instance of SentenceTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/>. </summary>
         /// <param name="sentiment"> Targeted sentiment in the sentence. </param>
         /// <param name="confidenceScores"> Target sentiment confidence scores for the target in the sentence. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>
@@ -38,7 +38,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Relations = relations.ToList();
         }
 
-        /// <summary> Initializes a new instance of SentenceTarget. </summary>
+        /// <summary> Initializes a new instance of <see cref="SentenceTarget"/>. </summary>
         /// <param name="sentiment"> Targeted sentiment in the sentence. </param>
         /// <param name="confidenceScores"> Target sentiment confidence scores for the target in the sentence. </param>
         /// <param name="offset"> The target offset from the start of the sentence. </param>

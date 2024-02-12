@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> MAB workload-specific job task details. </summary>
     public partial class MabBackupJobTaskDetails
     {
-        /// <summary> Initializes a new instance of MabBackupJobTaskDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
         public MabBackupJobTaskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of MabBackupJobTaskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
         /// <param name="startOn"> The start time. </param>
         /// <param name="endOn"> The end time. </param>
         /// <param name="duration"> Time elapsed for task. </param>
         /// <param name="status"> The status. </param>
-        internal MabBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MabBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TaskId = taskId;
             StartOn = startOn;
             EndOn = endOn;
             Duration = duration;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The task display name. </summary>

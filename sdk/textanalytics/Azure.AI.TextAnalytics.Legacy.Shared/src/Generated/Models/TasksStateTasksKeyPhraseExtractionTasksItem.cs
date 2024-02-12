@@ -13,14 +13,14 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
     /// <summary> The TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
     internal partial class TasksStateTasksKeyPhraseExtractionTasksItem : TaskState
     {
-        /// <summary> Initializes a new instance of TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksKeyPhraseExtractionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="status"></param>
         internal TasksStateTasksKeyPhraseExtractionTasksItem(DateTimeOffset lastUpdateDateTime, State status) : base(lastUpdateDateTime, status)
         {
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasksKeyPhraseExtractionTasksItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasksKeyPhraseExtractionTasksItem"/>. </summary>
         /// <param name="lastUpdateDateTime"></param>
         /// <param name="taskName"></param>
         /// <param name="status"></param>

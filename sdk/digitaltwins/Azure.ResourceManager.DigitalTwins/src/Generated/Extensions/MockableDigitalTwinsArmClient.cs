@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DigitalTwinsDescriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DigitalTwinsDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DigitalTwinsDescriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DigitalTwinsDescriptionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsDescriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource"/> object. </returns>
         public virtual DigitalTwinsDescriptionResource GetDigitalTwinsDescriptionResource(ResourceIdentifier id)
         {
             DigitalTwinsDescriptionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DigitalTwinsEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DigitalTwinsEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DigitalTwinsEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DigitalTwinsEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DigitalTwinsEndpointResource"/> object. </returns>
         public virtual DigitalTwinsEndpointResource GetDigitalTwinsEndpointResource(ResourceIdentifier id)
         {
             DigitalTwinsEndpointResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DigitalTwinsPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DigitalTwinsPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DigitalTwinsPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DigitalTwinsPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource"/> object. </returns>
         public virtual DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(ResourceIdentifier id)
         {
             DigitalTwinsPrivateLinkResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DigitalTwinsPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DigitalTwinsPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> object. </returns>
         public virtual DigitalTwinsPrivateEndpointConnectionResource GetDigitalTwinsPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             DigitalTwinsPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TimeSeriesDatabaseConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TimeSeriesDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="TimeSeriesDatabaseConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TimeSeriesDatabaseConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TimeSeriesDatabaseConnectionResource.CreateResourceIdentifier" /> to create a <see cref="TimeSeriesDatabaseConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource"/> object. </returns>
         public virtual TimeSeriesDatabaseConnectionResource GetTimeSeriesDatabaseConnectionResource(ResourceIdentifier id)
         {
             TimeSeriesDatabaseConnectionResource.ValidateResourceId(id);

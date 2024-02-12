@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         }
 
         /// <summary> Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource. </summary>
-        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics()
         {
             return new TrafficManagerUserMetricsResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerUserMetricsKeys", "default"));
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The Traffic Manager name parameters supplied to the CheckTrafficManagerNameAvailability operation. </param>
@@ -131,10 +147,18 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -152,10 +176,18 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficManagerProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficManagerProfileProfilesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

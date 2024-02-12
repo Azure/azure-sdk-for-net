@@ -1,16 +1,26 @@
 namespace Azure.ResourceManager.Support
 {
-    public partial class ChatTranscriptDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class ChatTranscriptDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>
     {
         public ChatTranscriptDetailData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties> Messages { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.Support.ChatTranscriptDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.ChatTranscriptDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ChatTranscriptDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FileWorkspaceDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class FileWorkspaceDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>
     {
         public FileWorkspaceDetailData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
+        Azure.ResourceManager.Support.FileWorkspaceDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.FileWorkspaceDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.FileWorkspaceDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProblemClassificationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.ProblemClassificationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.ProblemClassificationResource>, System.Collections.IEnumerable
     {
@@ -27,11 +37,16 @@ namespace Azure.ResourceManager.Support
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.ProblemClassificationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.ProblemClassificationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ProblemClassificationData : Azure.ResourceManager.Models.ResourceData
+    public partial class ProblemClassificationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>
     {
         internal ProblemClassificationData() { }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled> SecondaryConsentEnabled { get { throw null; } }
+        Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.ProblemClassificationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.ProblemClassificationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.ProblemClassificationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProblemClassificationResource : Azure.ResourceManager.ArmResource
     {
@@ -122,11 +137,16 @@ namespace Azure.ResourceManager.Support
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportAzureServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportAzureServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SupportAzureServiceData : Azure.ResourceManager.Models.ResourceData
+    public partial class SupportAzureServiceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>
     {
         internal SupportAzureServiceData() { }
         public string DisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ResourceTypes { get { throw null; } }
+        Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.SupportAzureServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportAzureServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupportAzureServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -175,13 +195,18 @@ namespace Azure.ResourceManager.Support
         public static Azure.ResourceManager.Support.TenantSupportTicketResource GetTenantSupportTicketResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Support.TenantSupportTicketCollection GetTenantSupportTickets(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
     }
-    public partial class SupportFileDetailData : Azure.ResourceManager.Models.ResourceData
+    public partial class SupportFileDetailData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>
     {
         public SupportFileDetailData() { }
         public float? ChunkSize { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public float? FileSize { get { throw null; } set { } }
         public float? NumberOfChunks { get { throw null; } set { } }
+        Azure.ResourceManager.Support.SupportFileDetailData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportFileDetailData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.SupportFileDetailData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportFileDetailData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupportTicketChatTranscriptCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketChatTranscriptResource>, System.Collections.IEnumerable
     {
@@ -225,7 +250,7 @@ namespace Azure.ResourceManager.Support
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Support.SupportTicketCommunicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketCommunicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SupportTicketCommunicationData : Azure.ResourceManager.Models.ResourceData
+    public partial class SupportTicketCommunicationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>
     {
         public SupportTicketCommunicationData() { }
         public string Body { get { throw null; } set { } }
@@ -234,6 +259,11 @@ namespace Azure.ResourceManager.Support
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Sender { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        Azure.ResourceManager.Support.SupportTicketCommunicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.SupportTicketCommunicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketCommunicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupportTicketCommunicationResource : Azure.ResourceManager.ArmResource
     {
@@ -247,7 +277,7 @@ namespace Azure.ResourceManager.Support
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketCommunicationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportTicketCommunicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Support.SupportTicketCommunicationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Support.SupportTicketCommunicationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SupportTicketData : Azure.ResourceManager.Models.ResourceData
+    public partial class SupportTicketData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>
     {
         public SupportTicketData() { }
         public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get { throw null; } set { } }
@@ -276,6 +306,11 @@ namespace Azure.ResourceManager.Support
         public string SupportTicketId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TechnicalTicketDetailsResourceId { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
+        Azure.ResourceManager.Support.SupportTicketData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.SupportTicketData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.SupportTicketData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.SupportTicketData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SupportTicketFileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.SupportTicketFileResource>, System.Collections.IEnumerable
     {
@@ -538,7 +573,7 @@ namespace Azure.ResourceManager.Support.Models
         public static Azure.ResourceManager.Support.SupportTicketCommunicationData SupportTicketCommunicationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Support.Models.SupportTicketCommunicationType? communicationType = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationType?), Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection? communicationDirection = default(Azure.ResourceManager.Support.Models.SupportTicketCommunicationDirection?), string sender = null, string subject = null, string body = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.Support.SupportTicketData SupportTicketData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string supportTicketId = null, string description = null, string problemClassificationId = null, string problemClassificationDisplayName = null, Azure.ResourceManager.Support.Models.SupportSeverityLevel? severity = default(Azure.ResourceManager.Support.Models.SupportSeverityLevel?), string enrollmentId = null, bool? require24X7Response = default(bool?), Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? advancedDiagnosticConsent = default(Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent?), string problemScopingQuestions = null, string supportPlanId = null, Azure.ResourceManager.Support.Models.SupportContactProfile contactDetails = null, Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement serviceLevelAgreement = null, string supportEngineerEmailAddress = null, string supportPlanType = null, string supportPlanDisplayName = null, string title = null, System.DateTimeOffset? problemStartOn = default(System.DateTimeOffset?), string serviceId = null, string serviceDisplayName = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string fileWorkspaceName = null, Azure.Core.ResourceIdentifier technicalTicketDetailsResourceId = null, Azure.ResourceManager.Support.Models.QuotaTicketDetails quotaTicketDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Support.Models.SecondaryConsent> secondaryConsent = null) { throw null; }
     }
-    public partial class ChatTranscriptMessageProperties
+    public partial class ChatTranscriptMessageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>
     {
         public ChatTranscriptMessageProperties(string body) { }
         public string Body { get { throw null; } set { } }
@@ -546,6 +581,11 @@ namespace Azure.ResourceManager.Support.Models
         public Azure.ResourceManager.Support.Models.TranscriptContentType? ContentType { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Sender { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.ChatTranscriptMessageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PreferredContactMethod : System.IEquatable<Azure.ResourceManager.Support.Models.PreferredContactMethod>
@@ -565,26 +605,41 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator !=(Azure.ResourceManager.Support.Models.PreferredContactMethod left, Azure.ResourceManager.Support.Models.PreferredContactMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QuotaTicketDetails
+    public partial class QuotaTicketDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>
     {
         public QuotaTicketDetails() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent> QuotaChangeRequests { get { throw null; } }
         public string QuotaChangeRequestSubType { get { throw null; } set { } }
         public string QuotaChangeRequestVersion { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.QuotaTicketDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.QuotaTicketDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.QuotaTicketDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecondaryConsent
+    public partial class SecondaryConsent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsent>
     {
         public SecondaryConsent() { }
         public string SecondaryConsentType { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.UserConsent? UserConsent { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.SecondaryConsent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SecondaryConsent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SecondaryConsentEnabled
+    public partial class SecondaryConsentEnabled : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>
     {
         internal SecondaryConsentEnabled() { }
         public string Description { get { throw null; } }
         public string SecondaryConsentEnabledType { get { throw null; } }
+        Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SecondaryConsentEnabled System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SecondaryConsentEnabled>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportContactProfile
+    public partial class SupportContactProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>
     {
         public SupportContactProfile(string firstName, string lastName, Azure.ResourceManager.Support.Models.PreferredContactMethod preferredContactMethod, string primaryEmailAddress, string preferredTimeZone, string country, string preferredSupportLanguage) { }
         public System.Collections.Generic.IList<string> AdditionalEmailAddresses { get { throw null; } }
@@ -596,8 +651,13 @@ namespace Azure.ResourceManager.Support.Models
         public string PreferredSupportLanguage { get { throw null; } set { } }
         public string PreferredTimeZone { get { throw null; } set { } }
         public string PrimaryEmailAddress { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.SupportContactProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportContactProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportContactProfileContent
+    public partial class SupportContactProfileContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>
     {
         public SupportContactProfileContent() { }
         public System.Collections.Generic.IList<string> AdditionalEmailAddresses { get { throw null; } }
@@ -609,37 +669,62 @@ namespace Azure.ResourceManager.Support.Models
         public string PreferredSupportLanguage { get { throw null; } set { } }
         public string PreferredTimeZone { get { throw null; } set { } }
         public string PrimaryEmailAddress { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.SupportContactProfileContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportContactProfileContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportContactProfileContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportNameAvailabilityContent
+    public partial class SupportNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>
     {
         public SupportNameAvailabilityContent(string name, Azure.ResourceManager.Support.Models.SupportResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.Support.Models.SupportResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportNameAvailabilityResult
+    public partial class SupportNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>
     {
         internal SupportNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportQuotaChangeContent
+    public partial class SupportQuotaChangeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>
     {
         public SupportQuotaChangeContent() { }
         public string Payload { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.SupportQuotaChangeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportQuotaChangeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportQuotaChangeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SupportResourceType
     {
         MicrosoftSupportSupportTickets = 0,
         MicrosoftSupportCommunications = 1,
     }
-    public partial class SupportServiceLevelAgreement
+    public partial class SupportServiceLevelAgreement : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>
     {
         public SupportServiceLevelAgreement() { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public int? SlaInMinutes { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+        Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.SupportServiceLevelAgreement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SupportSeverityLevel : System.IEquatable<Azure.ResourceManager.Support.Models.SupportSeverityLevel>
@@ -731,7 +816,7 @@ namespace Azure.ResourceManager.Support.Models
         public static bool operator !=(Azure.ResourceManager.Support.Models.TranscriptContentType left, Azure.ResourceManager.Support.Models.TranscriptContentType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UpdateSupportTicket
+    public partial class UpdateSupportTicket : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>
     {
         public UpdateSupportTicket() { }
         public Azure.ResourceManager.Support.Models.AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get { throw null; } set { } }
@@ -739,12 +824,22 @@ namespace Azure.ResourceManager.Support.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Support.Models.SecondaryConsent> SecondaryConsent { get { throw null; } }
         public Azure.ResourceManager.Support.Models.SupportSeverityLevel? Severity { get { throw null; } set { } }
         public Azure.ResourceManager.Support.Models.SupportTicketStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.UpdateSupportTicket System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.UpdateSupportTicket System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UpdateSupportTicket>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UploadFileContent
+    public partial class UploadFileContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UploadFileContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UploadFileContent>
     {
         public UploadFileContent() { }
         public float? ChunkIndex { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
+        Azure.ResourceManager.Support.Models.UploadFileContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Support.Models.UploadFileContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UploadFileContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Support.Models.UploadFileContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct UserConsent : System.IEquatable<Azure.ResourceManager.Support.Models.UserConsent>

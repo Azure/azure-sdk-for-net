@@ -40,12 +40,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public Tags Tags;
         private byte[] _tagsBytes;
 
-        /// <summary>
-        /// The encryption scope to use when uploading the destination blob.
-        /// </summary>
-        public string CpkScope;
-        private byte[] _cpkScopeBytes;
-
         public override int Length => CalculateLength();
 
         public BlobDestinationCheckpointData(
@@ -53,8 +47,7 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobHttpHeaders contentHeaders,
             AccessTier? accessTier,
             Metadata metadata,
-            Tags blobTags,
-            string cpkScope)
+            Tags blobTags)
             : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
         {
             ContentHeaders = contentHeaders;
@@ -68,8 +61,6 @@ namespace Azure.Storage.DataMovement.Blobs
             _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : Array.Empty<byte>();
             Tags = blobTags;
             _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : Array.Empty<byte>();
-            CpkScope = cpkScope;
-            _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : Array.Empty<byte>();
         }
 
         protected override void Serialize(Stream stream)
@@ -109,9 +100,6 @@ namespace Azure.Storage.DataMovement.Blobs
             // Tags offset/length
             writer.WriteVariableLengthFieldInfo(_tagsBytes.Length, ref currentVariableLengthIndex);
 
-            // CpkScope offset/length
-            writer.WriteVariableLengthFieldInfo(_cpkScopeBytes.Length, ref currentVariableLengthIndex);
-
             writer.Write(_contentTypeBytes);
             writer.Write(_contentEncodingBytes);
             writer.Write(_contentLanguageBytes);
@@ -119,7 +107,6 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write(_cacheControlBytes);
             writer.Write(_metadataBytes);
             writer.Write(_tagsBytes);
-            writer.Write(_cpkScopeBytes);
         }
 
         internal static BlobDestinationCheckpointData Deserialize(Stream stream)
@@ -173,10 +160,6 @@ namespace Azure.Storage.DataMovement.Blobs
             // Tags offset/length
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
-
-            // CpkScope offset/length
-            int cpkScopeOffset = reader.ReadInt32();
-            int cpkScopeLength = reader.ReadInt32();
 
             // ContentType
             string contentType = null;
@@ -234,14 +217,6 @@ namespace Azure.Storage.DataMovement.Blobs
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }
 
-            // CpkScope
-            string cpkScope = null;
-            if (cpkScopeOffset > 0)
-            {
-                reader.BaseStream.Position = cpkScopeOffset;
-                cpkScope = reader.ReadBytes(cpkScopeLength).AsString();
-            }
-
             BlobHttpHeaders contentHeaders = new BlobHttpHeaders()
             {
                 ContentType = contentType,
@@ -256,8 +231,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 contentHeaders,
                 accessTier,
                 metadataString.ToDictionary(nameof(metadataString)),
-                tagsString.ToDictionary(nameof(tagsString)),
-                cpkScope);
+                tagsString.ToDictionary(nameof(tagsString)));
         }
 
         private int CalculateLength()
@@ -271,7 +245,6 @@ namespace Azure.Storage.DataMovement.Blobs
             length += _cacheControlBytes.Length;
             length += _metadataBytes.Length;
             length += _tagsBytes.Length;
-            length += _cpkScopeBytes.Length;
             return length;
         }
     }

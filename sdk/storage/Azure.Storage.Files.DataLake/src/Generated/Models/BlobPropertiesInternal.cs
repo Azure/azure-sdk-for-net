@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> Properties of a blob. </summary>
     internal partial class BlobPropertiesInternal
     {
-        /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="etag"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Storage.Files.DataLake.Models
             Etag = etag;
         }
 
-        /// <summary> Initializes a new instance of BlobPropertiesInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobPropertiesInternal"/>. </summary>
         /// <param name="creationTime"></param>
         /// <param name="lastModified"></param>
         /// <param name="etag"></param>

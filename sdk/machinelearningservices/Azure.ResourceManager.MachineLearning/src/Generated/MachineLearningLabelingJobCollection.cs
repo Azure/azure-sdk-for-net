@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningLabelingJobResource" /> and their operations.
-    /// Each <see cref="MachineLearningLabelingJobResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningLabelingJobCollection" /> instance call the GetMachineLearningLabelingJobs method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningLabelingJobResource"/> and their operations.
+    /// Each <see cref="MachineLearningLabelingJobResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningLabelingJobCollection"/> instance call the GetMachineLearningLabelingJobs method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningLabelingJobCollection : ArmCollection, IEnumerable<MachineLearningLabelingJobResource>, IAsyncEnumerable<MachineLearningLabelingJobResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> The name and identifier for the LabelingJob. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,12 +256,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top"> Number of labeling jobs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningLabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningLabelingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningLabelingJobResource> GetAllAsync(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -248,12 +288,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top"> Number of labeling jobs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningLabelingJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningLabelingJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningLabelingJobResource> GetAll(string skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningLabelingJobLabelingJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -271,6 +319,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,6 +365,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> The name and identifier for the LabelingJob. </param>
@@ -345,6 +409,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -384,6 +456,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LabelingJobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningLabelingJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

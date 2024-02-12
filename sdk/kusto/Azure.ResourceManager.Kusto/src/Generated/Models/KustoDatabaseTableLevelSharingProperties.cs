@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Tables that will be included and excluded in the follower database. </summary>
     public partial class KustoDatabaseTableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         public KustoDatabaseTableLevelSharingProperties()
         {
             TablesToInclude = new ChangeTrackingList<string>();
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.Kusto.Models
             FunctionsToExclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of KustoDatabaseTableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="KustoDatabaseTableLevelSharingProperties"/>. </summary>
         /// <param name="tablesToInclude"> List of tables to include in the follower database. </param>
         /// <param name="tablesToExclude"> List of tables to exclude from the follower database. </param>
         /// <param name="externalTablesToInclude"> List of external tables to include in the follower database. </param>
@@ -35,7 +68,8 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="materializedViewsToExclude"> List of materialized views to exclude from the follower database. </param>
         /// <param name="functionsToInclude"> List of functions to include in the follower database. </param>
         /// <param name="functionsToExclude"> List of functions to exclude from the follower database. </param>
-        internal KustoDatabaseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude, IList<string> functionsToInclude, IList<string> functionsToExclude)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KustoDatabaseTableLevelSharingProperties(IList<string> tablesToInclude, IList<string> tablesToExclude, IList<string> externalTablesToInclude, IList<string> externalTablesToExclude, IList<string> materializedViewsToInclude, IList<string> materializedViewsToExclude, IList<string> functionsToInclude, IList<string> functionsToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TablesToInclude = tablesToInclude;
             TablesToExclude = tablesToExclude;
@@ -45,6 +79,7 @@ namespace Azure.ResourceManager.Kusto.Models
             MaterializedViewsToExclude = materializedViewsToExclude;
             FunctionsToInclude = functionsToInclude;
             FunctionsToExclude = functionsToExclude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of tables to include in the follower database. </summary>

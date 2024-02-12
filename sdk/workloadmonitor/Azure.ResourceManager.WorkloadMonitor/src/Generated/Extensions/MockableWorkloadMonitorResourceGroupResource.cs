@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -85,6 +93,14 @@ namespace Azure.ResourceManager.WorkloadMonitor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

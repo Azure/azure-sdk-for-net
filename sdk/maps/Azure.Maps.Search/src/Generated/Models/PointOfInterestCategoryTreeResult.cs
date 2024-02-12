@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> This object is returned from a successful POI Category Tree call. </summary>
     public partial class PointOfInterestCategoryTreeResult
     {
-        /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategoryTreeResult"/>. </summary>
         internal PointOfInterestCategoryTreeResult()
         {
             Categories = new ChangeTrackingList<PointOfInterestCategory>();
         }
 
-        /// <summary> Initializes a new instance of PointOfInterestCategoryTreeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PointOfInterestCategoryTreeResult"/>. </summary>
         /// <param name="categories"> Categories array. </param>
         internal PointOfInterestCategoryTreeResult(IReadOnlyList<PointOfInterestCategory> categories)
         {

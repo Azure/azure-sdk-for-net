@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Filtering criteria for querying threat intelligence indicators. </summary>
     public partial class ThreatIntelligenceFilteringCriteria
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceFilteringCriteria. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
         public ThreatIntelligenceFilteringCriteria()
         {
             SortBy = new ChangeTrackingList<ThreatIntelligenceSortingCriteria>();
@@ -23,6 +55,39 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ThreatTypes = new ChangeTrackingList<string>();
             Ids = new ChangeTrackingList<string>();
             Keywords = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceFilteringCriteria"/>. </summary>
+        /// <param name="pageSize"> Page size. </param>
+        /// <param name="minConfidence"> Minimum confidence. </param>
+        /// <param name="maxConfidence"> Maximum confidence. </param>
+        /// <param name="minValidUntil"> Start time for ValidUntil filter. </param>
+        /// <param name="maxValidUntil"> End time for ValidUntil filter. </param>
+        /// <param name="isIncludeDisabled"> Parameter to include/exclude disabled indicators. </param>
+        /// <param name="sortBy"> Columns to sort by and sorting order. </param>
+        /// <param name="sources"> Sources of threat intelligence indicators. </param>
+        /// <param name="patternTypes"> Pattern types. </param>
+        /// <param name="threatTypes"> Threat types of threat intelligence indicators. </param>
+        /// <param name="ids"> Ids of threat intelligence indicators. </param>
+        /// <param name="keywords"> Keywords for searching threat intelligence indicators. </param>
+        /// <param name="skipToken"> Skip token. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ThreatIntelligenceFilteringCriteria(int? pageSize, int? minConfidence, int? maxConfidence, DateTimeOffset? minValidUntil, DateTimeOffset? maxValidUntil, bool? isIncludeDisabled, IList<ThreatIntelligenceSortingCriteria> sortBy, IList<string> sources, IList<string> patternTypes, IList<string> threatTypes, IList<string> ids, IList<string> keywords, string skipToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PageSize = pageSize;
+            MinConfidence = minConfidence;
+            MaxConfidence = maxConfidence;
+            MinValidUntil = minValidUntil;
+            MaxValidUntil = maxValidUntil;
+            IsIncludeDisabled = isIncludeDisabled;
+            SortBy = sortBy;
+            Sources = sources;
+            PatternTypes = patternTypes;
+            ThreatTypes = threatTypes;
+            Ids = ids;
+            Keywords = keywords;
+            SkipToken = skipToken;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Page size. </summary>

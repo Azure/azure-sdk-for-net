@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity
@@ -14,8 +14,8 @@ namespace Azure.Identity
     internal class MsalPublicClient : MsalClientBase<IPublicClientApplication>
     {
         private Action<PublicClientApplicationBuilder> _beforeBuildClient;
-
         internal string RedirectUrl { get; }
+        internal bool IsProofOfPossessionRequired { get; }
 
         protected MsalPublicClient()
         { }
@@ -25,7 +25,11 @@ namespace Azure.Identity
         {
             RedirectUrl = redirectUrl;
 
-            _beforeBuildClient = (options as IMsalPublicClientInitializerOptions)?.BeforeBuildClient;
+            if (options is IMsalPublicClientInitializerOptions initializerOptions)
+            {
+                _beforeBuildClient = initializerOptions.BeforeBuildClient;
+                IsProofOfPossessionRequired = initializerOptions.IsProofOfPossessionRequired;
+            };
         }
 
         protected override ValueTask<IPublicClientApplication> CreateClientAsync(bool enableCae, bool async, CancellationToken cancellationToken)
@@ -90,9 +94,12 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenSilentCoreAsync(string[] scopes, string claims, IAccount account, string tenantId, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
-            var builder = client.AcquireTokenSilent(scopes, account)
-                .WithClaims(claims);
+            var builder = client.AcquireTokenSilent(scopes, account);
 
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
             if (tenantId != null)
             {
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
@@ -117,14 +124,19 @@ namespace Azure.Identity
             // if the user specified a TenantId when they created the client we want to authenticate to that tenant.
             // otherwise we should authenticate with the tenant specified by the authentication record since that's the tenant the
             // user authenticated to originally.
-            return await client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
-                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId)
-                .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
-                .ConfigureAwait(false);
+            var builder = client.AcquireTokenSilent(scopes, (AuthenticationAccount)record)
+                .WithAuthority(AuthorityHost.AbsoluteUri, TenantId ?? record.TenantId);
+
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
+
+            return await builder.ExecuteAsync(async, cancellationToken)
+                           .ConfigureAwait(false);
         }
 
-        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
+        public async ValueTask<AuthenticationResult> AcquireTokenInteractiveAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, PopTokenRequestContext popTokenRequestContext, bool async, CancellationToken cancellationToken)
         {
             if (Thread.CurrentThread.GetApartmentState() == ApartmentState.STA && !IdentityCompatSwitches.DisableInteractiveBrowserThreadpoolExecution)
             {
@@ -138,7 +150,7 @@ namespace Azure.Identity
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
                 return Task.Run(async () =>
                 {
-                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, true, cancellationToken).ConfigureAwait(false);
+                    var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, true, cancellationToken).ConfigureAwait(false);
                     LogAccountDetails(result);
                     return result;
                 }).GetAwaiter().GetResult();
@@ -147,20 +159,22 @@ namespace Azure.Identity
 
             AzureIdentityEventSource.Singleton.InteractiveAuthenticationExecutingInline();
 
-            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, async, cancellationToken).ConfigureAwait(false);
+            var result = await AcquireTokenInteractiveCoreAsync(scopes, claims, prompt, loginHint, tenantId, enableCae, browserOptions, popTokenRequestContext, async, cancellationToken).ConfigureAwait(false);
             LogAccountDetails(result);
             return result;
         }
 
-        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, bool async, CancellationToken cancellationToken)
+        protected virtual async ValueTask<AuthenticationResult> AcquireTokenInteractiveCoreAsync(string[] scopes, string claims, Prompt prompt, string loginHint, string tenantId, bool enableCae, BrowserCustomizationOptions browserOptions, PopTokenRequestContext popTokenRequestContext, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenInteractive(scopes)
-                .WithPrompt(prompt)
-                .WithClaims(claims)
-                .WithPrompt(prompt)
-                .WithClaims(claims);
+                .WithPrompt(prompt);
+
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
             if (loginHint != null)
             {
                 builder.WithLoginHint(loginHint);
@@ -180,6 +194,10 @@ namespace Azure.Identity
                     builder.WithSystemWebViewOptions(browserOptions.SystemBrowserOptions);
                 }
             }
+            if (IsProofOfPossessionRequired)
+            {
+                builder.WithProofOfPossession(popTokenRequestContext.ProofOfPossessionNonce, popTokenRequestContext.HttpMethod, popTokenRequestContext.Uri);
+            }
             return await builder
                 .ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
@@ -196,8 +214,12 @@ namespace Azure.Identity
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
             var builder = client
-                .AcquireTokenByUsernamePassword(scopes, username, password)
-                .WithClaims(claims);
+                .AcquireTokenByUsernamePassword(scopes, username, password);
+
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
             if (!string.IsNullOrEmpty(tenantId))
             {
                 builder.WithAuthority(AuthorityHost.AbsoluteUri, tenantId);
@@ -216,9 +238,14 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenWithDeviceCodeCoreAsync(string[] scopes, string claims, Func<DeviceCodeResult, Task> deviceCodeCallback, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
-            return await client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback)
-                .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
+            var builder = client.AcquireTokenWithDeviceCode(scopes, deviceCodeCallback);
+
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
+
+            return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
 
@@ -232,10 +259,15 @@ namespace Azure.Identity
         protected virtual async ValueTask<AuthenticationResult> AcquireTokenByRefreshTokenCoreAsync(string[] scopes, string claims, string refreshToken, AzureCloudInstance azureCloudInstance, string tenant, bool enableCae, bool async, CancellationToken cancellationToken)
         {
             IPublicClientApplication client = await GetClientAsync(enableCae, async, cancellationToken).ConfigureAwait(false);
-            return await ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken)
-                .WithAuthority(azureCloudInstance, tenant)
-                .WithClaims(claims)
-                .ExecuteAsync(async, cancellationToken)
+            var builder = ((IByRefreshToken)client).AcquireTokenByRefreshToken(scopes, refreshToken)
+                .WithAuthority(azureCloudInstance, tenant);
+
+            if (!string.IsNullOrEmpty(claims))
+            {
+                builder.WithClaims(claims);
+            }
+
+            return await builder.ExecuteAsync(async, cancellationToken)
                 .ConfigureAwait(false);
         }
 

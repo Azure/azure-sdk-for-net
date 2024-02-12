@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PartnerConfigurationsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_Get.json
             // this example is just showing the usage of "PartnerConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PartnerConfigurationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_CreateOrUpdate.json
             // this example is just showing the usage of "PartnerConfigurations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PartnerConfigurationsDelete()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_Delete.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_Delete.json
             // this example is just showing the usage of "PartnerConfigurations_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -132,7 +132,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PartnerConfigurationsUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_Update.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_Update.json
             // this example is just showing the usage of "PartnerConfigurations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +172,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPartnerConfigurations_PartnerConfigurationsListBySubscription()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_ListBySubscription.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_ListBySubscription.json
             // this example is just showing the usage of "PartnerConfigurations_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,7 +204,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AuthorizePartner_PartnerConfigurationsAuthorizePartner()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_AuthorizePartner.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_AuthorizePartner.json
             // this example is just showing the usage of "PartnerConfigurations_AuthorizePartner" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +240,7 @@ AuthorizationExpireOn = DateTimeOffset.Parse("2022-02-20T01:00:00.142Z"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UnauthorizePartner_PartnerConfigurationsUnauthorizePartner()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/PartnerConfigurations_UnauthorizePartner.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/PartnerConfigurations_UnauthorizePartner.json
             // this example is just showing the usage of "PartnerConfigurations_UnauthorizePartner" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

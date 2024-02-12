@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for adding participant to the call. </summary>
     internal partial class AddParticipantRequestInternal
     {
-        /// <summary> Initializes a new instance of AddParticipantRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
         /// <param name="participantToAdd"> The participant to invite. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="participantToAdd"/> is null. </exception>
         public AddParticipantRequestInternal(CommunicationIdentifierModel participantToAdd)
@@ -22,6 +22,37 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(participantToAdd, nameof(participantToAdd));
 
             ParticipantToAdd = participantToAdd;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddParticipantRequestInternal"/>. </summary>
+        /// <param name="sourceCallerIdNumber">
+        /// The source caller Id, a phone number, that's shown to the PSTN participant being invited.
+        /// Required only when inviting a PSTN participant.
+        /// </param>
+        /// <param name="sourceDisplayName">
+        /// (Optional) The display name of the source that is associated with this invite operation when
+        /// adding a PSTN participant or teams user.  Note: Will not update the display name in the roster.
+        /// </param>
+        /// <param name="participantToAdd"> The participant to invite. </param>
+        /// <param name="invitationTimeoutInSeconds">
+        /// Gets or sets the timeout to wait for the invited participant to pickup.
+        /// The maximum value of this is 180 seconds
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, CustomCallingContextInternal customCallingContext, string operationCallbackUri)
+        {
+            SourceCallerIdNumber = sourceCallerIdNumber;
+            SourceDisplayName = sourceDisplayName;
+            ParticipantToAdd = participantToAdd;
+            InvitationTimeoutInSeconds = invitationTimeoutInSeconds;
+            OperationContext = operationContext;
+            CustomCallingContext = customCallingContext;
+            OperationCallbackUri = operationCallbackUri;
         }
 
         /// <summary>
@@ -43,9 +74,12 @@ namespace Azure.Communication.CallAutomation
         public int? InvitationTimeoutInSeconds { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

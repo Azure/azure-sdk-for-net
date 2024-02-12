@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.ChatThreadCreatedWithUser event. </summary>
     public partial class AcsChatThreadCreatedWithUserEventData : AcsChatThreadEventBaseProperties
     {
-        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/>. </summary>
         internal AcsChatThreadCreatedWithUserEventData()
         {
             Properties = new ChangeTrackingDictionary<string, object>();
@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Participants = new ChangeTrackingList<AcsChatThreadParticipantProperties>();
         }
 
-        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsChatThreadCreatedWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
         /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
         /// <param name="threadId"> The chat thread id. </param>

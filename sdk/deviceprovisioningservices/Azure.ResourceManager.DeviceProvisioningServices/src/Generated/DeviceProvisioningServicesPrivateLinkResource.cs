@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary>
     /// A Class representing a DeviceProvisioningServicesPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DeviceProvisioningServicesPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDeviceProvisioningServicesPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource" /> using the GetDeviceProvisioningServicesPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceProvisioningServicesPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDeviceProvisioningServicesPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceProvisioningServiceResource"/> using the GetDeviceProvisioningServicesPrivateLinkResource method.
     /// </summary>
     public partial class DeviceProvisioningServicesPrivateLinkResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         private readonly IotDpsResourceRestOperations _deviceProvisioningServicesPrivateLinkResourceIotDpsResourceRestClient;
         private readonly DeviceProvisioningServicesPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResource"/> class for mocking. </summary>
         protected DeviceProvisioningServicesPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DeviceProvisioningServicesPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateLinkResource(ArmClient client, DeviceProvisioningServicesPrivateLinkResourceData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Devices/provisioningServices/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_GetPrivateLinkResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_GetPrivateLinkResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

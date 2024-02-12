@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AzureWebCategoryResource" /> and their operations.
-    /// Each <see cref="AzureWebCategoryResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="AzureWebCategoryCollection" /> instance call the GetAzureWebCategories method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="AzureWebCategoryResource"/> and their operations.
+    /// Each <see cref="AzureWebCategoryResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="AzureWebCategoryCollection"/> instance call the GetAzureWebCategories method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class AzureWebCategoryCollection : ArmCollection, IEnumerable<AzureWebCategoryResource>, IAsyncEnumerable<AzureWebCategoryResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,10 +157,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>WebCategories_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AzureWebCategoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AzureWebCategoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -163,10 +187,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>WebCategories_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AzureWebCategoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AzureWebCategoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AzureWebCategoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _azureWebCategoryWebCategoriesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -184,6 +216,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +261,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the azureWebCategory. </param>
@@ -256,6 +304,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,6 +350,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebCategories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureWebCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

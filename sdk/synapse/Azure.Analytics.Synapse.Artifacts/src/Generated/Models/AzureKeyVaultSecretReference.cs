@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Key Vault secret reference. </summary>
     public partial class AzureKeyVaultSecretReference : SecretBase
     {
-        /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretReference"/>. </summary>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="store"/> or <paramref name="secretName"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureKeyVaultSecret";
         }
 
-        /// <summary> Initializes a new instance of AzureKeyVaultSecretReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureKeyVaultSecretReference"/>. </summary>
         /// <param name="type"> Type of the secret. </param>
         /// <param name="store"> The Azure Key Vault linked service reference. </param>
         /// <param name="secretName"> The name of the secret in Azure Key Vault. Type: string (or Expression with resultType string). </param>

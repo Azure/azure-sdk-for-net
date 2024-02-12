@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for RequestScheme match conditions. </summary>
     public partial class RequestSchemeMatchCondition
     {
-        /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator)
@@ -24,19 +57,26 @@ namespace Azure.ResourceManager.Cdn.Models
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
         }
 
-        /// <summary> Initializes a new instance of RequestSchemeMatchCondition. </summary>
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
         /// <param name="conditionType"></param>
         /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
         /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
         /// <param name="transforms"> List of transforms. </param>
         /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
-        internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConditionType = conditionType;
             RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/> for deserialization. </summary>
+        internal RequestSchemeMatchCondition()
+        {
         }
 
         /// <summary> Gets or sets the condition type. </summary>

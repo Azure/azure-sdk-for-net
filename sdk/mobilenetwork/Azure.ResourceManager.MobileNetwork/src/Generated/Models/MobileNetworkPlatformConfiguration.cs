@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> The platform where the packet core is deployed. </summary>
     public partial class MobileNetworkPlatformConfiguration
     {
-        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         public MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType)
         {
@@ -22,14 +55,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             AzureStackEdgeDevices = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of MobileNetworkPlatformConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/>. </summary>
         /// <param name="platformType"> The platform type where packet core is deployed. </param>
         /// <param name="azureStackEdgeDevice"> The Azure Stack Edge device where the packet core is deployed. If the device is part of a fault tolerant pair, either device in the pair can be specified. </param>
         /// <param name="azureStackEdgeDevices"> The Azure Stack Edge devices where the packet core is deployed. If the packet core is deployed across multiple devices, all devices will appear in this list. </param>
         /// <param name="azureStackHciCluster"> The Azure Stack HCI cluster where the packet core is deployed. </param>
         /// <param name="connectedCluster"> Azure Arc connected cluster where the packet core is deployed. </param>
         /// <param name="customLocation"> Azure Arc custom location where the packet core is deployed. </param>
-        internal MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType, WritableSubResource azureStackEdgeDevice, IReadOnlyList<WritableSubResource> azureStackEdgeDevices, WritableSubResource azureStackHciCluster, WritableSubResource connectedCluster, WritableSubResource customLocation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MobileNetworkPlatformConfiguration(MobileNetworkPlatformType platformType, WritableSubResource azureStackEdgeDevice, IReadOnlyList<WritableSubResource> azureStackEdgeDevices, WritableSubResource azureStackHciCluster, WritableSubResource connectedCluster, WritableSubResource customLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlatformType = platformType;
             AzureStackEdgeDevice = azureStackEdgeDevice;
@@ -37,6 +71,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             AzureStackHciCluster = azureStackHciCluster;
             ConnectedCluster = connectedCluster;
             CustomLocation = customLocation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatformConfiguration"/> for deserialization. </summary>
+        internal MobileNetworkPlatformConfiguration()
+        {
         }
 
         /// <summary> The platform type where packet core is deployed. </summary>

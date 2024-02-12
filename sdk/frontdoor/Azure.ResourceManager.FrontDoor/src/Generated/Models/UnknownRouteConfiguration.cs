@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> The UnknownRouteConfiguration. </summary>
     internal partial class UnknownRouteConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownRouteConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/>. </summary>
         /// <param name="odataType"></param>
-        internal UnknownRouteConfiguration(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRouteConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRouteConfiguration"/> for deserialization. </summary>
+        internal UnknownRouteConfiguration()
+        {
         }
     }
 }

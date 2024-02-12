@@ -13,7 +13,7 @@ namespace Azure.Communication.Rooms
     /// <summary> The meeting room. </summary>
     public partial class CommunicationRoom
     {
-        /// <summary> Initializes a new instance of CommunicationRoom. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommunicationRoom"/>. </summary>
         /// <param name="id"> Unique identifier of a room. This id is server generated. </param>
         /// <param name="createdAt"> The timestamp when the room was created at the server. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="validFrom"> The timestamp from when the room is open for joining. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>

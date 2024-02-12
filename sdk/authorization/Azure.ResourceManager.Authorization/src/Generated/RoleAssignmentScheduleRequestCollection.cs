@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleAssignmentScheduleRequestResource" /> and their operations.
-    /// Each <see cref="RoleAssignmentScheduleRequestResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="RoleAssignmentScheduleRequestCollection" /> instance call the GetRoleAssignmentScheduleRequests method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="RoleAssignmentScheduleRequestResource"/> and their operations.
+    /// Each <see cref="RoleAssignmentScheduleRequestResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="RoleAssignmentScheduleRequestCollection"/> instance call the GetRoleAssignmentScheduleRequests method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class RoleAssignmentScheduleRequestCollection : ArmCollection, IEnumerable<RoleAssignmentScheduleRequestResource>, IAsyncEnumerable<RoleAssignmentScheduleRequestResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -95,6 +103,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -136,6 +152,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
@@ -172,6 +196,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,11 +242,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role assignment schedule requests requested by the current user. Use $filter=asTarget() to return all role assignment schedule requests created for the current user. Use $filter=asApprover() to return all role assignment schedule requests where the current user is an approver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleAssignmentScheduleRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleAssignmentScheduleRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleRequestResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
@@ -233,11 +273,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedule requests at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedule requests at, above or below the scope for the specified principal. Use $filter=asRequestor() to return all role assignment schedule requests requested by the current user. Use $filter=asTarget() to return all role assignment schedule requests created for the current user. Use $filter=asApprover() to return all role assignment schedule requests where the current user is an approver. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleAssignmentScheduleRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleAssignmentScheduleRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleRequestResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRequestRestClient.CreateListForScopeRequest(Id, filter);
@@ -255,6 +303,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +347,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
@@ -325,6 +389,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +434,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

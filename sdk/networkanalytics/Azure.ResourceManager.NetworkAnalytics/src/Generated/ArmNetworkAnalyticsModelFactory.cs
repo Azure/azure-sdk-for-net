@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkAnalyticsModelFactory
     {
-        /// <summary> Initializes a new instance of DataProductData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalytics.DataProductData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             owners ??= new List<string>();
             availableMinorVersions ??= new List<string>();
 
-            return new DataProductData(id, name, resourceType, systemData, tags, location, identity, resourceGuid, provisioningState, publisher, product, majorVersion, owners?.ToList(), redundancy, purviewAccount, purviewCollection, privateLinksEnabled, publicNetworkAccess, customerManagedKeyEncryptionEnabled, customerEncryptionKey, networkacls, managedResourceGroupConfiguration, availableMinorVersions?.ToList(), currentMinorVersion, documentation, consumptionEndpoints, keyVaultUri);
+            return new DataProductData(id, name, resourceType, systemData, tags, location, identity, resourceGuid, provisioningState, publisher, product, majorVersion, owners?.ToList(), redundancy, purviewAccount, purviewCollection, privateLinksEnabled, publicNetworkAccess, customerManagedKeyEncryptionEnabled, customerEncryptionKey, networkacls, managedResourceGroupConfiguration, availableMinorVersions?.ToList(), currentMinorVersion, documentation, consumptionEndpoints, keyVaultUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ConsumptionEndpointsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEndpointsProperties"/>. </summary>
         /// <param name="ingestionUri"> Ingestion url to upload the data. </param>
         /// <param name="ingestionResourceId"> Resource Id of ingestion endpoint. </param>
         /// <param name="fileAccessUri"> Url to consume file type. </param>
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <returns> A new <see cref="Models.ConsumptionEndpointsProperties"/> instance for mocking. </returns>
         public static ConsumptionEndpointsProperties ConsumptionEndpointsProperties(Uri ingestionUri = null, ResourceIdentifier ingestionResourceId = null, Uri fileAccessUri = null, ResourceIdentifier fileAccessResourceId = null, Uri queryUri = null, ResourceIdentifier queryResourceId = null)
         {
-            return new ConsumptionEndpointsProperties(ingestionUri, ingestionResourceId, fileAccessUri, fileAccessResourceId, queryUri, queryResourceId);
+            return new ConsumptionEndpointsProperties(ingestionUri, ingestionResourceId, fileAccessUri, fileAccessResourceId, queryUri, queryResourceId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataProductsCatalogData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkAnalytics.DataProductsCatalogData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         {
             publishers ??= new List<PublisherInformation>();
 
-            return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList());
+            return new DataProductsCatalogData(id, name, resourceType, systemData, provisioningState, publishers?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataProductDataType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DataProductDataType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -98,24 +98,18 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <returns> A new <see cref="Models.DataProductDataType"/> instance for mocking. </returns>
         public static DataProductDataType DataProductDataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, DataProductDataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
         {
-            return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
+            return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AccountSasToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AccountSasToken"/>. </summary>
         /// <param name="storageAccountSasToken"> Field to specify storage account sas token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageAccountSasToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.AccountSasToken"/> instance for mocking. </returns>
         public static AccountSasToken AccountSasToken(string storageAccountSasToken = null)
         {
-            if (storageAccountSasToken == null)
-            {
-                throw new ArgumentNullException(nameof(storageAccountSasToken));
-            }
-
-            return new AccountSasToken(storageAccountSasToken);
+            return new AccountSasToken(storageAccountSasToken, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoleAssignmentListResult"/>. </summary>
         /// <param name="count"> Count of role assignments. </param>
         /// <param name="roleAssignmentResponse"> list of role assignments. </param>
         /// <returns> A new <see cref="Models.RoleAssignmentListResult"/> instance for mocking. </returns>
@@ -123,7 +117,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         {
             roleAssignmentResponse ??= new List<RoleAssignmentDetail>();
 
-            return new RoleAssignmentListResult(count, roleAssignmentResponse?.ToList());
+            return new RoleAssignmentListResult(count, roleAssignmentResponse?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

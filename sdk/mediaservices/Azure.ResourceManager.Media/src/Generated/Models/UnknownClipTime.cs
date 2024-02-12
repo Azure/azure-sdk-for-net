@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownClipTime. </summary>
     internal partial class UnknownClipTime : ClipTime
     {
-        /// <summary> Initializes a new instance of UnknownClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownClipTime(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownClipTime(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownClipTime"/> for deserialization. </summary>
+        internal UnknownClipTime()
+        {
         }
     }
 }

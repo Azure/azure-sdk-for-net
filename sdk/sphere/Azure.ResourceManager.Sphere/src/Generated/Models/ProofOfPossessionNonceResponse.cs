@@ -6,50 +6,28 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Result of the action to generate a proof of possession nonce
-    /// Serialized Name: ProofOfPossessionNonceResponse
-    /// </summary>
+    /// <summary> Result of the action to generate a proof of possession nonce. </summary>
     public partial class ProofOfPossessionNonceResponse : SphereCertificateProperties
     {
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceResponse"/>. </summary>
         internal ProofOfPossessionNonceResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of ProofOfPossessionNonceResponse. </summary>
-        /// <param name="certificate">
-        /// The certificate as a UTF-8 encoded base 64 string.
-        /// Serialized Name: CertificateProperties.certificate
-        /// </param>
-        /// <param name="status">
-        /// The certificate status.
-        /// Serialized Name: CertificateProperties.status
-        /// </param>
-        /// <param name="subject">
-        /// The certificate subject.
-        /// Serialized Name: CertificateProperties.subject
-        /// </param>
-        /// <param name="thumbprint">
-        /// The certificate thumbprint.
-        /// Serialized Name: CertificateProperties.thumbprint
-        /// </param>
-        /// <param name="expiryUtc">
-        /// The certificate expiry date.
-        /// Serialized Name: CertificateProperties.expiryUtc
-        /// </param>
-        /// <param name="notBeforeUtc">
-        /// The certificate not before date.
-        /// Serialized Name: CertificateProperties.notBeforeUtc
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: CertificateProperties.provisioningState
-        /// </param>
-        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState)
+        /// <summary> Initializes a new instance of <see cref="ProofOfPossessionNonceResponse"/>. </summary>
+        /// <param name="certificate"> The certificate as a UTF-8 encoded base 64 string. </param>
+        /// <param name="status"> The certificate status. </param>
+        /// <param name="subject"> The certificate subject. </param>
+        /// <param name="thumbprint"> The certificate thumbprint. </param>
+        /// <param name="expiryUtc"> The certificate expiry date. </param>
+        /// <param name="notBeforeUtc"> The certificate not before date. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProofOfPossessionNonceResponse(string certificate, SphereCertificateStatus? status, string subject, string thumbprint, DateTimeOffset? expiryUtc, DateTimeOffset? notBeforeUtc, SphereProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(certificate, status, subject, thumbprint, expiryUtc, notBeforeUtc, provisioningState, serializedAdditionalRawData)
         {
         }
     }

@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
@@ -93,6 +101,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,10 +131,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -136,10 +160,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -157,10 +189,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -178,10 +218,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraClusterResource> GetCassandraClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -199,10 +247,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>MongoClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoClusterResource> GetMongoClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -221,10 +277,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>MongoClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MongoClusterResource> GetMongoClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
@@ -243,10 +307,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -264,10 +336,18 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);

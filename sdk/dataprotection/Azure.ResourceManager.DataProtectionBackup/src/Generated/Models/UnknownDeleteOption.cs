@@ -6,18 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownDeleteOption. </summary>
     internal partial class UnknownDeleteOption : DataProtectionBackupDeleteSetting
     {
-        /// <summary> Initializes a new instance of UnknownDeleteOption. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDeleteOption"/>. </summary>
         /// <param name="duration"> Duration of deletion after given timespan. </param>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal UnknownDeleteOption(TimeSpan duration, string objectType) : base(duration, objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDeleteOption(TimeSpan duration, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(duration, objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDeleteOption"/> for deserialization. </summary>
+        internal UnknownDeleteOption()
+        {
         }
     }
 }

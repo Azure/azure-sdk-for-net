@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The Flink cluster profile. </summary>
     public partial class FlinkProfile
     {
-        /// <summary> Initializes a new instance of FlinkProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/>. </summary>
         /// <param name="storage"> The storage profile. </param>
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
@@ -29,14 +62,15 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             TaskManager = taskManager;
         }
 
-        /// <summary> Initializes a new instance of FlinkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/>. </summary>
         /// <param name="storage"> The storage profile. </param>
         /// <param name="numReplicas"> The number of task managers. </param>
         /// <param name="jobManager"> Job Manager container/ process CPU and memory requirements. </param>
         /// <param name="historyServer"> History Server container/ process CPU and memory requirements. </param>
         /// <param name="taskManager"> Task Manager container/ process CPU and memory requirements. </param>
         /// <param name="catalogOptions"> Flink cluster catalog options. </param>
-        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceRequirement jobManager, ComputeResourceRequirement historyServer, ComputeResourceRequirement taskManager, FlinkCatalogOptions catalogOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FlinkProfile(FlinkStorageProfile storage, int? numReplicas, ComputeResourceRequirement jobManager, ComputeResourceRequirement historyServer, ComputeResourceRequirement taskManager, FlinkCatalogOptions catalogOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Storage = storage;
             NumReplicas = numReplicas;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             HistoryServer = historyServer;
             TaskManager = taskManager;
             CatalogOptions = catalogOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlinkProfile"/> for deserialization. </summary>
+        internal FlinkProfile()
+        {
         }
 
         /// <summary> The storage profile. </summary>

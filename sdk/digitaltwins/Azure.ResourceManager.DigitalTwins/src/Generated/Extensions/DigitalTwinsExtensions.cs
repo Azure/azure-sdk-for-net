@@ -45,9 +45,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DigitalTwinsDescriptionResource"/> object. </returns>
         public static DigitalTwinsDescriptionResource GetDigitalTwinsDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsDescriptionResource(id);
         }
 
@@ -61,9 +64,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsEndpointResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DigitalTwinsEndpointResource"/> object. </returns>
         public static DigitalTwinsEndpointResource GetDigitalTwinsEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsEndpointResource(id);
         }
 
@@ -77,9 +83,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DigitalTwinsPrivateLinkResource"/> object. </returns>
         public static DigitalTwinsPrivateLinkResource GetDigitalTwinsPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsPrivateLinkResource(id);
         }
 
@@ -93,9 +102,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DigitalTwinsPrivateEndpointConnectionResource"/> object. </returns>
         public static DigitalTwinsPrivateEndpointConnectionResource GetDigitalTwinsPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDigitalTwinsArmClient(client).GetDigitalTwinsPrivateEndpointConnectionResource(id);
         }
 
@@ -109,9 +121,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="TimeSeriesDatabaseConnectionResource"/> object. </returns>
         public static TimeSeriesDatabaseConnectionResource GetTimeSeriesDatabaseConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableDigitalTwinsArmClient(client).GetTimeSeriesDatabaseConnectionResource(id);
         }
 
@@ -123,9 +138,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DigitalTwinsDescriptionResources and their operations over a DigitalTwinsDescriptionResource. </returns>
         public static DigitalTwinsDescriptionCollection GetDigitalTwinsDescriptions(this ResourceGroupResource resourceGroupResource)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescriptions();
         }
 
@@ -140,6 +158,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,11 +175,13 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DigitalTwinsDescriptionResource>> GetDigitalTwinsDescriptionAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return await GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescriptionAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -168,6 +196,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -177,11 +213,13 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the DigitalTwinsInstance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DigitalTwinsDescriptionResource> GetDigitalTwinsDescription(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableDigitalTwinsResourceGroupResource(resourceGroupResource).GetDigitalTwinsDescription(resourceName, cancellationToken);
         }
 
@@ -196,6 +234,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -204,9 +250,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).GetDigitalTwinsDescriptionsAsync(cancellationToken);
         }
 
@@ -221,6 +270,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -229,9 +286,12 @@ namespace Azure.ResourceManager.DigitalTwins
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DigitalTwinsDescriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DigitalTwinsDescriptionResource> GetDigitalTwinsDescriptions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).GetDigitalTwinsDescriptions(cancellationToken);
         }
 
@@ -246,6 +306,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -256,9 +324,11 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DigitalTwinsNameResult>> CheckDigitalTwinsNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return await GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).CheckDigitalTwinsNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -273,6 +343,14 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -283,9 +361,11 @@ namespace Azure.ResourceManager.DigitalTwins
         /// <param name="location"> Location of DigitalTwinsInstance. </param>
         /// <param name="content"> Set the name parameter in the DigitalTwinsInstanceCheckName structure to the name of the DigitalTwinsInstance to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DigitalTwinsNameResult> CheckDigitalTwinsNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DigitalTwinsNameContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableDigitalTwinsSubscriptionResource(subscriptionResource).CheckDigitalTwinsNameAvailability(location, content, cancellationToken);
         }
     }

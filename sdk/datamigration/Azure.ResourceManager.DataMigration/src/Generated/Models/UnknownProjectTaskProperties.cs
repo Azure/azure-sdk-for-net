@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -12,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> The UnknownProjectTaskProperties. </summary>
     internal partial class UnknownProjectTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of UnknownProjectTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -22,9 +23,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        internal UnknownProjectTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData) : base(taskType, errors, state, commands, clientData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProjectTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProjectTaskProperties"/> for deserialization. </summary>
+        internal UnknownProjectTaskProperties()
+        {
         }
     }
 }

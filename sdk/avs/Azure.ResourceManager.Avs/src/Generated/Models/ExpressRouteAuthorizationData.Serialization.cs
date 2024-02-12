@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -12,24 +15,96 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ExpressRouteAuthorizationData : IUtf8JsonSerializable
+    public partial class ExpressRouteAuthorizationData : IUtf8JsonSerializable, IJsonModel<ExpressRouteAuthorizationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteAuthorizationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpressRouteAuthorizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationId))
+            {
+                writer.WritePropertyName("expressRouteAuthorizationId"u8);
+                writer.WriteStringValue(ExpressRouteAuthorizationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpressRouteAuthorizationKey))
+            {
+                writer.WritePropertyName("expressRouteAuthorizationKey"u8);
+                writer.WriteStringValue(ExpressRouteAuthorizationKey);
+            }
             if (Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteId"u8);
                 writer.WriteStringValue(ExpressRouteId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExpressRouteAuthorizationData DeserializeExpressRouteAuthorizationData(JsonElement element)
+        ExpressRouteAuthorizationData IJsonModel<ExpressRouteAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteAuthorizationData(document.RootElement, options);
+        }
+
+        internal static ExpressRouteAuthorizationData DeserializeExpressRouteAuthorizationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +117,8 @@ namespace Azure.ResourceManager.Avs
             Optional<ResourceIdentifier> expressRouteAuthorizationId = default;
             Optional<string> expressRouteAuthorizationKey = default;
             Optional<ResourceIdentifier> expressRouteId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -112,8 +189,44 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteAuthorizationData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), expressRouteAuthorizationId.Value, expressRouteAuthorizationKey.Value, expressRouteId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteAuthorizationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExpressRouteAuthorizationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteAuthorizationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

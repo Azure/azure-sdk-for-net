@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualMachineImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabVirtualMachineImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabVirtualMachineImageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabVirtualMachineImageResource"/> object. </returns>
         public virtual LabVirtualMachineImageResource GetLabVirtualMachineImageResource(ResourceIdentifier id)
         {
             LabVirtualMachineImageResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabPlanResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabPlanResource.CreateResourceIdentifier" /> to create a <see cref="LabPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabPlanResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabPlanResource.CreateResourceIdentifier" /> to create a <see cref="LabPlanResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabPlanResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabPlanResource"/> object. </returns>
         public virtual LabPlanResource GetLabPlanResource(ResourceIdentifier id)
         {
             LabPlanResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabResource.CreateResourceIdentifier" /> to create a <see cref="LabResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabResource.CreateResourceIdentifier" /> to create a <see cref="LabResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabResource"/> object. </returns>
         public virtual LabResource GetLabResource(ResourceIdentifier id)
         {
             LabResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabServicesScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabServicesScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabServicesScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabServicesScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabServicesScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabServicesScheduleResource"/> object. </returns>
         public virtual LabServicesScheduleResource GetLabServicesScheduleResource(ResourceIdentifier id)
         {
             LabServicesScheduleResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabUserResource.CreateResourceIdentifier" /> to create a <see cref="LabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabUserResource.CreateResourceIdentifier" /> to create a <see cref="LabUserResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabUserResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabUserResource"/> object. </returns>
         public virtual LabUserResource GetLabUserResource(ResourceIdentifier id)
         {
             LabUserResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.LabServices.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="LabVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabVirtualMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="LabVirtualMachineResource"/> object. </returns>
         public virtual LabVirtualMachineResource GetLabVirtualMachineResource(ResourceIdentifier id)
         {
             LabVirtualMachineResource.ValidateResourceId(id);

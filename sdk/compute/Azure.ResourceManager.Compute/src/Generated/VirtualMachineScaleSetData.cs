@@ -20,14 +20,46 @@ namespace Azure.ResourceManager.Compute
     /// </summary>
     public partial class VirtualMachineScaleSetData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetData"/>. </summary>
         /// <param name="location"> The location. </param>
         public VirtualMachineScaleSetData(AzureLocation location) : base(location)
         {
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,6 +71,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="identity"> The identity of the virtual machine scale set, if configured. </param>
         /// <param name="zones"> The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set. </param>
         /// <param name="extendedLocation"> The extended location of the Virtual Machine Scale Set. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="upgradePolicy"> The upgrade policy. </param>
         /// <param name="automaticRepairsPolicy"> Policy for automatic repairs. </param>
         /// <param name="virtualMachineProfile"> The virtual machine profile. </param>
@@ -58,13 +91,16 @@ namespace Azure.ResourceManager.Compute
         /// <param name="priorityMixPolicy"> Specifies the desired targets for mixing Spot and Regular priority VMs within the same VMSS Flex instance. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine Scale Set resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="isMaximumCapacityConstrained"> Optional property which must either be set to True or omitted. </param>
-        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="resiliencyPolicy"> Policy for Resiliency. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, ComputePlan plan, ManagedServiceIdentity identity, IList<string> zones, ExtendedLocation extendedLocation, string etag, VirtualMachineScaleSetUpgradePolicy upgradePolicy, AutomaticRepairsPolicy automaticRepairsPolicy, VirtualMachineScaleSetVmProfile virtualMachineProfile, string provisioningState, bool? overprovision, bool? doNotRunExtensionsOnOverprovisionedVms, string uniqueId, bool? singlePlacementGroup, bool? zoneBalance, int? platformFaultDomainCount, WritableSubResource proximityPlacementGroup, WritableSubResource hostGroup, AdditionalCapabilities additionalCapabilities, ScaleInPolicy scaleInPolicy, OrchestrationMode? orchestrationMode, SpotRestorePolicy spotRestorePolicy, VirtualMachineScaleSetPriorityMixPolicy priorityMixPolicy, DateTimeOffset? timeCreated, bool? isMaximumCapacityConstrained, ResiliencyPolicy resiliencyPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Plan = plan;
             Identity = identity;
             Zones = zones;
             ExtendedLocation = extendedLocation;
+            ETag = etag;
             UpgradePolicy = upgradePolicy;
             AutomaticRepairsPolicy = automaticRepairsPolicy;
             VirtualMachineProfile = virtualMachineProfile;
@@ -84,6 +120,13 @@ namespace Azure.ResourceManager.Compute
             PriorityMixPolicy = priorityMixPolicy;
             TimeCreated = timeCreated;
             IsMaximumCapacityConstrained = isMaximumCapacityConstrained;
+            ResiliencyPolicy = resiliencyPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetData"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetData()
+        {
         }
 
         /// <summary> The virtual machine scale set sku. </summary>
@@ -96,6 +139,8 @@ namespace Azure.ResourceManager.Compute
         public IList<string> Zones { get; }
         /// <summary> The extended location of the Virtual Machine Scale Set. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
+        /// <summary> Etag is property returned in Create/Update/Get response of the VMSS, so that customer can supply it in the header to ensure optimistic updates. </summary>
+        public string ETag { get; }
         /// <summary> The upgrade policy. </summary>
         public VirtualMachineScaleSetUpgradePolicy UpgradePolicy { get; set; }
         /// <summary> Policy for automatic repairs. </summary>
@@ -158,5 +203,7 @@ namespace Azure.ResourceManager.Compute
         public DateTimeOffset? TimeCreated { get; }
         /// <summary> Optional property which must either be set to True or omitted. </summary>
         public bool? IsMaximumCapacityConstrained { get; set; }
+        /// <summary> Policy for Resiliency. </summary>
+        public ResiliencyPolicy ResiliencyPolicy { get; set; }
     }
 }

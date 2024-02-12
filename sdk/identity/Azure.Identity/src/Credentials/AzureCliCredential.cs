@@ -50,6 +50,7 @@ namespace Azure.Identity
         internal string TenantId { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal bool _isChainedCredential;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Create an instance of <see cref="AzureCliCredential"/> class.
@@ -74,6 +75,7 @@ namespace Azure.Identity
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -231,8 +233,8 @@ namespace Azure.Identity
 
             JsonElement root = document.RootElement;
             string accessToken = root.GetProperty("accessToken").GetString();
-            DateTimeOffset expiresOn = root.TryGetProperty("expiresIn", out JsonElement expiresIn)
-                ? DateTimeOffset.UtcNow + TimeSpan.FromSeconds(expiresIn.GetInt64())
+            DateTimeOffset expiresOn = root.TryGetProperty("expires_on", out JsonElement expires_on)
+                ? DateTimeOffset.FromUnixTimeSeconds(expires_on.GetInt64())
                 : DateTimeOffset.ParseExact(root.GetProperty("expiresOn").GetString(), "yyyy-MM-dd HH:mm:ss.ffffff", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
 
             return new AccessToken(accessToken, expiresOn);

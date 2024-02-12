@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class ProcessInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProcessInfoData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
         public ProcessInfoData()
         {
             Children = new ChangeTrackingList<string>();
@@ -29,7 +61,7 @@ namespace Azure.ResourceManager.AppService
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of ProcessInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProcessInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -71,7 +103,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isWebjob"> Is this a Web Job?. </param>
         /// <param name="description"> Description of process. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -110,6 +143,7 @@ namespace Azure.ResourceManager.AppService
             IsWebjob = isWebjob;
             Description = description;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM Identifier for deployment. </summary>

@@ -15,14 +15,46 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Details of the Process Server. </summary>
     public partial class SiteRecoveryProcessServer
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServer"/>. </summary>
         internal SiteRecoveryProcessServer()
         {
             MobilityServiceUpdates = new ChangeTrackingList<MobilityServiceUpdate>();
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProcessServer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProcessServer"/>. </summary>
         /// <param name="friendlyName"> The Process Server's friendly name. </param>
         /// <param name="id"> The Process Server Id. </param>
         /// <param name="ipAddress"> The IP address of the server. </param>
@@ -59,7 +91,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="throughputStatus"> The throughput status. </param>
         /// <param name="marsCommunicationStatus"> The MARS communication status. </param>
         /// <param name="marsRegistrationStatus"> The MARS registration status. </param>
-        internal SiteRecoveryProcessServer(string friendlyName, string id, IPAddress ipAddress, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates, string hostId, string machineCount, string replicationPairCount, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string psServiceStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string osVersion, IReadOnlyList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryProtectionHealth? health, DateTimeOffset? psStatsRefreshOn, long? throughputUploadPendingDataInBytes, long? throughputInMBps, long? throughputInBytes, string throughputStatus, string marsCommunicationStatus, string marsRegistrationStatus)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProcessServer(string friendlyName, string id, IPAddress ipAddress, string osType, string agentVersion, DateTimeOffset? lastHeartbeatReceivedOn, string versionStatus, IReadOnlyList<MobilityServiceUpdate> mobilityServiceUpdates, string hostId, string machineCount, string replicationPairCount, string systemLoad, string systemLoadStatus, string cpuLoad, string cpuLoadStatus, long? totalMemoryInBytes, long? availableMemoryInBytes, string memoryUsageStatus, long? totalSpaceInBytes, long? availableSpaceInBytes, string spaceUsageStatus, string psServiceStatus, DateTimeOffset? sslCertExpireOn, int? sslCertExpiryRemainingDays, string osVersion, IReadOnlyList<SiteRecoveryHealthError> healthErrors, DateTimeOffset? agentExpireOn, SiteRecoveryVersionDetails agentVersionDetails, SiteRecoveryProtectionHealth? health, DateTimeOffset? psStatsRefreshOn, long? throughputUploadPendingDataInBytes, long? throughputInMBps, long? throughputInBytes, string throughputStatus, string marsCommunicationStatus, string marsRegistrationStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             Id = id;
@@ -97,6 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ThroughputStatus = throughputStatus;
             MarsCommunicationStatus = marsCommunicationStatus;
             MarsRegistrationStatus = marsRegistrationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Process Server's friendly name. </summary>

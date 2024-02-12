@@ -19,6 +19,9 @@ modelerfour:
   seal-single-value-enum-by-default: true
 model-factory-for-hlc:
 - ManagedIntegrationRuntime
+
+suppress-abstract-base-class:
+- Dataset
 ```
 
 ### Make Endpoint type as Uri

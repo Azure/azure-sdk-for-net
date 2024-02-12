@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppManagedEnvironmentStorageResource" /> and their operations.
-    /// Each <see cref="ContainerAppManagedEnvironmentStorageResource" /> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource" />.
-    /// To get a <see cref="ContainerAppManagedEnvironmentStorageCollection" /> instance call the GetContainerAppManagedEnvironmentStorages method from an instance of <see cref="ContainerAppManagedEnvironmentResource" />.
+    /// A class representing a collection of <see cref="ContainerAppManagedEnvironmentStorageResource"/> and their operations.
+    /// Each <see cref="ContainerAppManagedEnvironmentStorageResource"/> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
+    /// To get a <see cref="ContainerAppManagedEnvironmentStorageCollection"/> instance call the GetContainerAppManagedEnvironmentStorages method from an instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
     /// </summary>
     public partial class ContainerAppManagedEnvironmentStorageCollection : ArmCollection, IEnumerable<ContainerAppManagedEnvironmentStorageResource>, IAsyncEnumerable<ContainerAppManagedEnvironmentStorageResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentStorageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentStorageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppManagedEnvironmentStorageResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +281,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentStorageResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentStorageResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppManagedEnvironmentStorageResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentStorageManagedEnvironmentsStoragesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageName"> Name of the storage. </param>
@@ -331,6 +395,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +440,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentsStorages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentStorageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

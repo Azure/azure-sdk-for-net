@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the managed HSM Pool. </summary>
     public partial class ManagedHsmProperties
     {
-        /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmProperties"/>. </summary>
         public ManagedHsmProperties()
         {
             InitialAdminObjectIds = new ChangeTrackingList<string>();
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             PrivateEndpointConnections = new ChangeTrackingList<ManagedHsmPrivateEndpointConnectionItemData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedHsmProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedHsmProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </param>
         /// <param name="initialAdminObjectIds"> Array of initial administrators object ids for this managed hsm pool. </param>
         /// <param name="hsmUri"> The URI of the managed hsm pool for performing operations on keys. </param>
@@ -38,7 +70,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="publicNetworkAccess"> Control permission to the managed HSM from public networks. </param>
         /// <param name="scheduledPurgeOn"> The scheduled purge date in UTC. </param>
         /// <param name="securityDomainProperties"> Managed HSM security domain properties. </param>
-        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IList<ManagedHsmGeoReplicatedRegion> regions, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn, ManagedHSMSecurityDomainProperties securityDomainProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedHsmProperties(Guid? tenantId, IList<string> initialAdminObjectIds, Uri hsmUri, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enablePurgeProtection, ManagedHsmCreateMode? createMode, string statusMessage, ManagedHsmProvisioningState? provisioningState, ManagedHsmNetworkRuleSet networkRuleSet, IList<ManagedHsmGeoReplicatedRegion> regions, IReadOnlyList<ManagedHsmPrivateEndpointConnectionItemData> privateEndpointConnections, ManagedHsmPublicNetworkAccess? publicNetworkAccess, DateTimeOffset? scheduledPurgeOn, ManagedHSMSecurityDomainProperties securityDomainProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             InitialAdminObjectIds = initialAdminObjectIds;
@@ -55,6 +88,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             PublicNetworkAccess = publicNetworkAccess;
             ScheduledPurgeOn = scheduledPurgeOn;
             SecurityDomainProperties = securityDomainProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the managed HSM pool. </summary>

@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Protection profile custom data details. </summary>
     public partial class SiteRecoveryProtectionContainerProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerProperties"/>. </summary>
         internal SiteRecoveryProtectionContainerProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryProtectionContainerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryProtectionContainerProperties"/>. </summary>
         /// <param name="fabricFriendlyName"> Fabric friendly name. </param>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="fabricType"> The fabric type. </param>
@@ -23,7 +58,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="pairingStatus"> The pairing status of this cloud. </param>
         /// <param name="role"> The role of this cloud. </param>
         /// <param name="fabricSpecificDetails"> Fabric specific details. </param>
-        internal SiteRecoveryProtectionContainerProperties(string fabricFriendlyName, string friendlyName, string fabricType, int? protectedItemCount, string pairingStatus, string role, ProtectionContainerFabricSpecificDetails fabricSpecificDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryProtectionContainerProperties(string fabricFriendlyName, string friendlyName, string fabricType, int? protectedItemCount, string pairingStatus, string role, ProtectionContainerFabricSpecificDetails fabricSpecificDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FabricFriendlyName = fabricFriendlyName;
             FriendlyName = friendlyName;
@@ -32,6 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             PairingStatus = pairingStatus;
             Role = role;
             FabricSpecificDetails = fabricSpecificDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Fabric friendly name. </summary>

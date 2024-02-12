@@ -21,6 +21,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}: GuestConfigurationVmAssignment

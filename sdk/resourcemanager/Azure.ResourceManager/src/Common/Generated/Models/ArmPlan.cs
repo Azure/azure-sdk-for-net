@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Models
     [PropertyReferenceType]
     public partial class ArmPlan
     {
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Models
             Product = product;
         }
 
-        /// <summary> Initializes a new instance of ArmPlan. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/>. </summary>
         /// <param name="name"> A user defined name of the 3rd Party Artifact that is being procured. </param>
         /// <param name="publisher"> The publisher of the 3rd Party Artifact that is being bought. E.g. NewRelic. </param>
         /// <param name="product"> The 3rd Party artifact that is being procured. E.g. NewRelic. Product maps to the OfferID specified for the artifact at the time of Data Market onboarding. </param>
@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Models
             Product = product;
             PromotionCode = promotionCode;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ArmPlan"/> for deserialization. </summary>
+        internal ArmPlan()
+        {
         }
 
         /// <summary> A user defined name of the 3rd Party Artifact that is being procured. </summary>

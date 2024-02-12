@@ -14,7 +14,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterWorkerOfferIssued event. </summary>
     public partial class AcsRouterWorkerOfferIssuedEventData : AcsRouterWorkerEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterWorkerOfferIssuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/>. </summary>
         internal AcsRouterWorkerOfferIssuedEventData()
         {
             WorkerLabels = new ChangeTrackingDictionary<string, string>();
@@ -23,7 +23,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             JobTags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterWorkerOfferIssuedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterWorkerOfferIssuedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

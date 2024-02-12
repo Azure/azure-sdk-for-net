@@ -20,7 +20,7 @@ namespace Azure.Developer.DevCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironment_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironment_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironment_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironment_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -77,7 +77,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironment_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -102,7 +102,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalog_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -116,7 +116,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalog_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetCatalog_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -130,7 +130,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalog_AllParameters()
+        public void Example_EnvironmentClientOperations_GetCatalog_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -144,7 +144,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalog_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetCatalog_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -158,7 +158,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinition_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinition_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -174,7 +174,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinition_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinition_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -190,7 +190,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinition_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinition_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -217,7 +217,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinition_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinition_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -244,7 +244,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllEnvironments_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetAllEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -261,7 +261,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllEnvironments_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -278,7 +278,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllEnvironments_AllParameters()
+        public void Example_EnvironmentClientOperations_GetAllEnvironments_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -304,7 +304,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllEnvironments_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetAllEnvironments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -330,7 +330,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironments_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironments_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -347,7 +347,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironments_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -364,7 +364,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironments_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironments_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -390,7 +390,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironments_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -416,7 +416,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalogs_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetCatalogs_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -431,7 +431,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogs_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetCatalogs_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -446,7 +446,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetCatalogs_AllParameters()
+        public void Example_EnvironmentClientOperations_GetCatalogs_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -461,7 +461,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetCatalogs_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetCatalogs_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -476,7 +476,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitions_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -493,7 +493,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitions_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -510,7 +510,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitions_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitions_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -538,7 +538,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitions_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitions_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -566,7 +566,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitionsByCatalog_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -583,7 +583,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitionsByCatalog_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -600,7 +600,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentDefinitionsByCatalog_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -628,7 +628,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentDefinitionsByCatalog_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentDefinitionsByCatalog_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -656,7 +656,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentTypes_ShortVersion()
+        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -673,7 +673,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentTypes_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -690,7 +690,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetEnvironmentTypes_AllParameters()
+        public void Example_EnvironmentClientOperations_GetEnvironmentTypes_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -707,7 +707,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetEnvironmentTypes_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_GetEnvironmentTypes_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -724,7 +724,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEnvironment_ShortVersion()
+        public void Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -747,7 +747,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEnvironment_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -770,7 +770,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdateEnvironment_AllParameters()
+        public void Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -803,7 +803,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdateEnvironment_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_CreateOrUpdateEnvironment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -836,7 +836,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteEnvironment_ShortVersion()
+        public void Example_EnvironmentClientOperations_DeleteEnvironment_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -847,7 +847,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteEnvironment_ShortVersion_Async()
+        public async Task Example_EnvironmentClientOperations_DeleteEnvironment_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -858,7 +858,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteEnvironment_AllParameters()
+        public void Example_EnvironmentClientOperations_DeleteEnvironment_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -869,7 +869,7 @@ namespace Azure.Developer.DevCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteEnvironment_AllParameters_Async()
+        public async Task Example_EnvironmentClientOperations_DeleteEnvironment_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();

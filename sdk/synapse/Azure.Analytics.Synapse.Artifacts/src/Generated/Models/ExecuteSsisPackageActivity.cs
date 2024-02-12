@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Execute SSIS package activity. </summary>
     public partial class ExecuteSsisPackageActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="packageLocation"> SSIS package location. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "ExecuteSSISPackage";
         }
 
-        /// <summary> Initializes a new instance of ExecuteSsisPackageActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecuteSsisPackageActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -17,7 +17,6 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-using Castle.DynamicProxy;
 
 namespace Azure.Identity.Tests
 {
@@ -39,12 +38,16 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
+        public static (string Token, string Json) CreateTokenForAzureCliExpiresOn(DateTimeOffset expiresOn, bool includeExpiresOn)
         {
-            var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
+            const string expiresOnStringFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
+
+            var expiresOnString = expiresOn.ToLocalTime().ToString(expiresOnStringFormat);
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": {seconds} }}";
-            return (token, expiresOn, json);
+            var json = includeExpiresOn ?
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}", "expires_on": {{expiresOn.ToUnixTimeSeconds()}} }""" :
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}" }""";
+            return (token, json);
         }
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCli() => CreateTokenForAzureDeveloperCli(TimeSpan.FromSeconds(30));
@@ -483,7 +486,7 @@ namespace Azure.Identity.Tests
         {
             var uid = objectId ?? "myuid";
             var tid = tenantId ?? "myutid";
-            return CredentialTestHelpers.MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
+            return MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
         }
 
         public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId)
@@ -500,7 +503,7 @@ namespace Azure.Identity.Tests
                         "\"sub\": \"K4_SGGxKqW1SxUAmhg6C1F6VPiFzcx-Qd80ehIEdFus\"," +
                         "\"tid\": \"" + tenantId + "\"," +
                         "\"ver\": \"2.0\"}";
-            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", CredentialTestHelpers.MsalEncode(id));
+            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", MsalEncode(id));
         }
 
         public static bool ExtractMsalDisableInstanceDiscoveryProperty(TokenCredential cred)

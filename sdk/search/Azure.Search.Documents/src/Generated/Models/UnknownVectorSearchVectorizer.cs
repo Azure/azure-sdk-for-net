@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownVectorSearchVectorizer. </summary>
     internal partial class UnknownVectorSearchVectorizer : VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of UnknownVectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorSearchVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         internal UnknownVectorSearchVectorizer(string name, VectorSearchVectorizerKind kind) : base(name, kind)

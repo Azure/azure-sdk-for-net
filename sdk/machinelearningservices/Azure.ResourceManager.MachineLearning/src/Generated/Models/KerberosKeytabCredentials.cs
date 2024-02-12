@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The KerberosKeytabCredentials. </summary>
     public partial class KerberosKeytabCredentials : MachineLearningDatastoreCredentials
     {
-        /// <summary> Initializes a new instance of KerberosKeytabCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabCredentials"/>. </summary>
         /// <param name="secrets"> [Required] Keytab secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
         /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
@@ -33,19 +34,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             CredentialsType = CredentialsType.KerberosKeytab;
         }
 
-        /// <summary> Initializes a new instance of KerberosKeytabCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabCredentials"/>. </summary>
         /// <param name="credentialsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secrets"> [Required] Keytab secrets. </param>
         /// <param name="kerberosKdcAddress"> [Required] IP Address or DNS HostName. </param>
         /// <param name="kerberosPrincipal"> [Required] Kerberos Username. </param>
         /// <param name="kerberosRealm"> [Required] Domain over which a Kerberos authentication server has the authority to authenticate a user, host or service. </param>
-        internal KerberosKeytabCredentials(CredentialsType credentialsType, KerberosKeytabSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) : base(credentialsType)
+        internal KerberosKeytabCredentials(CredentialsType credentialsType, IDictionary<string, BinaryData> serializedAdditionalRawData, KerberosKeytabSecrets secrets, string kerberosKdcAddress, string kerberosPrincipal, string kerberosRealm) : base(credentialsType, serializedAdditionalRawData)
         {
             Secrets = secrets;
             KerberosKdcAddress = kerberosKdcAddress;
             KerberosPrincipal = kerberosPrincipal;
             KerberosRealm = kerberosRealm;
             CredentialsType = credentialsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KerberosKeytabCredentials"/> for deserialization. </summary>
+        internal KerberosKeytabCredentials()
+        {
         }
 
         /// <summary> [Required] Keytab secrets. </summary>

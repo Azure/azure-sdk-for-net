@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Rule to restrict incoming IP address. </summary>
     public partial class ContainerAppIPSecurityRestrictionRule
     {
-        /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIPSecurityRestrictionRule"/>. </summary>
         /// <param name="name"> Name for the IP restriction rule. </param>
         /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
         /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
@@ -28,17 +61,24 @@ namespace Azure.ResourceManager.AppContainers.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppIPSecurityRestrictionRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIPSecurityRestrictionRule"/>. </summary>
         /// <param name="name"> Name for the IP restriction rule. </param>
         /// <param name="description"> Describe the IP restriction rule that is being sent to the container-app. This is an optional field. </param>
         /// <param name="ipAddressRange"> CIDR notation to match incoming IP address. </param>
         /// <param name="action"> Allow or Deny rules to determine for incoming IP. Note: Rules can only consist of ALL Allow or ALL Deny. </param>
-        internal ContainerAppIPSecurityRestrictionRule(string name, string description, string ipAddressRange, ContainerAppIPRuleAction action)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppIPSecurityRestrictionRule(string name, string description, string ipAddressRange, ContainerAppIPRuleAction action, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
             IPAddressRange = ipAddressRange;
             Action = action;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppIPSecurityRestrictionRule"/> for deserialization. </summary>
+        internal ContainerAppIPSecurityRestrictionRule()
+        {
         }
 
         /// <summary> Name for the IP restriction rule. </summary>

@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="denyAssignmentId"> The ID of the deny assignment to get. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DenyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DenyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentName"> The name of the role assignment. It can be any valid GUID. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleDefinitionId"> The ID of the role definition. </param>
@@ -181,6 +221,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationRoleDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +259,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
@@ -233,6 +289,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +328,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
@@ -286,6 +358,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +397,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleRequestName"> The name (guid) of the role assignment schedule request to get. </param>
@@ -339,6 +427,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +466,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleName"> The name (guid) of the role eligibility schedule to get. </param>
@@ -392,6 +496,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilitySchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -423,6 +535,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleInstanceName"> The name (hash of schedule name + time) of the role eligibility schedule to get. </param>
@@ -445,6 +565,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,6 +604,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleEligibilityScheduleRequestName"> The name (guid) of the role eligibility schedule request to get. </param>
@@ -498,6 +634,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleEligibilityScheduleRequests_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleEligibilityScheduleRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,6 +673,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyName"> The name (guid) of the role management policy to get. </param>
@@ -551,6 +703,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -582,6 +742,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleManagementPolicyAssignmentName"> The name of format {guid_guid} the role management policy assignment to get. </param>
@@ -604,6 +772,14 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleManagementPolicyAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleManagementPolicyAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Maintenance.Models
     /// <summary> The ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
     public partial class ResourceGroupResourceGetApplyUpdatesByParentOptions
     {
-        /// <summary> Initializes a new instance of ResourceGroupResourceGetApplyUpdatesByParentOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetApplyUpdatesByParentOptions"/>. </summary>
         /// <param name="providerName"> Resource provider name. </param>
         /// <param name="resourceParentType"> Resource parent type. </param>
         /// <param name="resourceParentName"> Resource parent identifier. </param>
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ResourceType = resourceType;
             ResourceName = resourceName;
             ApplyUpdateName = applyUpdateName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceGetApplyUpdatesByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceGetApplyUpdatesByParentOptions()
+        {
         }
 
         /// <summary> Resource provider name. </summary>

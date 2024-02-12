@@ -13,7 +13,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> A listed file item. </summary>
     internal partial class FileItem
     {
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="properties"> File properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="properties"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of FileItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileItem"/>. </summary>
         /// <param name="name"></param>
         /// <param name="fileId"></param>
         /// <param name="properties"> File properties. </param>

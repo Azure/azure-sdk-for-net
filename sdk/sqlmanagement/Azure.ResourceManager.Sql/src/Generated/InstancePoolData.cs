@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class InstancePoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of InstancePoolData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public InstancePoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of InstancePoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -35,12 +68,23 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             SubnetId = subnetId;
             VCores = vCores;
             LicenseType = licenseType;
+            DnsZone = dnsZone;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolData"/> for deserialization. </summary>
+        internal InstancePoolData()
+        {
         }
 
         /// <summary> The name and tier of the SKU. </summary>
@@ -51,5 +95,9 @@ namespace Azure.ResourceManager.Sql
         public int? VCores { get; set; }
         /// <summary> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </summary>
         public InstancePoolLicenseType? LicenseType { get; set; }
+        /// <summary> The Dns Zone that the managed instance pool is in. </summary>
+        public string DnsZone { get; }
+        /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
     }
 }

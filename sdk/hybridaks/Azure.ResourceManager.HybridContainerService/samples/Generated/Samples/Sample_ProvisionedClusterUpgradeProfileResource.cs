@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 {
     public partial class Sample_ProvisionedClusterUpgradeProfileResource
     {
-        // GetUpgradeProfileForProvisionedCluster
+        // GetUpgradeProfileForProvisionedClusterInstance
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetUpgradeProfileForProvisionedCluster()
+        public async Task Get_GetUpgradeProfileForProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2022-09-01-preview/examples/ProvisionedClustersGetUpgradeProfile.json
-            // this example is just showing the usage of "ProvisionedClusters_GetUpgradeProfile" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ProvisionedClusterInstanceGetUpgradeProfile.json
+            // this example is just showing the usage of "provisionedClusterInstances_GetUpgradeProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,10 +31,8 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
 
             // this example assumes you already have this ProvisionedClusterUpgradeProfileResource created on azure
             // for more information of creating ProvisionedClusterUpgradeProfileResource, please refer to the document of ProvisionedClusterUpgradeProfileResource
-            string subscriptionId = "a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b";
-            string resourceGroupName = "test-arcappliance-resgrp";
-            string resourceName = "test-hybridakscluster";
-            ResourceIdentifier provisionedClusterUpgradeProfileResourceId = ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            string connectedClusterResourceUri = "subscriptions/fd3c3665-1729-4b7b-9a38-238e83b0f98b/resourceGroups/testrg/providers/Microsoft.Kubernetes/connectedClusters/test-hybridakscluster";
+            ResourceIdentifier provisionedClusterUpgradeProfileResourceId = ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier(connectedClusterResourceUri);
             ProvisionedClusterUpgradeProfileResource provisionedClusterUpgradeProfile = client.GetProvisionedClusterUpgradeProfileResource(provisionedClusterUpgradeProfileResourceId);
 
             // invoke the operation

@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownTrigger. </summary>
     internal partial class UnknownTrigger : Trigger
     {
-        /// <summary> Initializes a new instance of UnknownTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownTrigger"/>. </summary>
         /// <param name="type"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

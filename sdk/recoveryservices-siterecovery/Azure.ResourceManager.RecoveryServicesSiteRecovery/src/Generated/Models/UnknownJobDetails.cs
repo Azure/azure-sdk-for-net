@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -12,12 +13,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The UnknownJobDetails. </summary>
     internal partial class UnknownJobDetails : SiteRecoveryJobDetails
     {
-        /// <summary> Initializes a new instance of UnknownJobDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        internal UnknownJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails) : base(instanceType, affectedObjectDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownJobDetails"/> for deserialization. </summary>
+        internal UnknownJobDetails()
+        {
         }
     }
 }

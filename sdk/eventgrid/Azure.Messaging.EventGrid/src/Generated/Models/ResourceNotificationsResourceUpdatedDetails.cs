@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Describes the schema of the properties under resource info which are common across all ARN system topic events. </summary>
     public partial class ResourceNotificationsResourceUpdatedDetails
     {
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         internal ResourceNotificationsResourceUpdatedDetails()
         {
             ResourceTags = new ChangeTrackingDictionary<string, string>();
             Properties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceUpdatedDetails"/>. </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>

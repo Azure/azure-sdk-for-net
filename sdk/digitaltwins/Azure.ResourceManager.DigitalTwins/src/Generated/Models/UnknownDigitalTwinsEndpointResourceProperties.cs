@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
     /// <summary> The UnknownDigitalTwinsEndpointResourceProperties. </summary>
     internal partial class UnknownDigitalTwinsEndpointResourceProperties : DigitalTwinsEndpointResourceProperties
     {
-        /// <summary> Initializes a new instance of UnknownDigitalTwinsEndpointResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/>. </summary>
         /// <param name="endpointType"> The type of Digital Twins endpoint. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="createdOn"> Time when the Endpoint was added to DigitalTwinsInstance. </param>
@@ -20,9 +21,15 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <param name="deadLetterSecret"> Dead letter storage secret for key-based authentication. Will be obfuscated during read. </param>
         /// <param name="deadLetterUri"> Dead letter storage URL for identity-based authentication. </param>
         /// <param name="identity"> Managed identity properties for the endpoint. </param>
-        internal UnknownDigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDigitalTwinsEndpointResourceProperties(EndpointType endpointType, DigitalTwinsEndpointProvisioningState? provisioningState, DateTimeOffset? createdOn, DigitalTwinsAuthenticationType? authenticationType, string deadLetterSecret, Uri deadLetterUri, DigitalTwinsManagedIdentityReference identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData)
         {
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/> for deserialization. </summary>
+        internal UnknownDigitalTwinsEndpointResourceProperties()
+        {
         }
     }
 }

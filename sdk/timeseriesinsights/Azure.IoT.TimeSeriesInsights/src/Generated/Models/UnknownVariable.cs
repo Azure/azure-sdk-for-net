@@ -10,7 +10,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The UnknownVariable. </summary>
     internal partial class UnknownVariable : TimeSeriesVariable
     {
-        /// <summary> Initializes a new instance of UnknownVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownVariable"/>. </summary>
         /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
         /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
         internal UnknownVariable(string kind, TimeSeriesExpression filter) : base(kind, filter)

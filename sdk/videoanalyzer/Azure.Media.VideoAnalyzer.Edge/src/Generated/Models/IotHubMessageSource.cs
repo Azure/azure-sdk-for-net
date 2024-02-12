@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> IoT Hub Message source allows for the pipeline to consume messages from the IoT Edge Hub. Messages can be routed from other IoT modules via routes declared in the IoT Edge deployment manifest. </summary>
     public partial class IotHubMessageSource : SourceNodeBase
     {
-        /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public IotHubMessageSource(string name) : base(name)
@@ -23,7 +23,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.IotHubMessageSource";
         }
 
-        /// <summary> Initializes a new instance of IotHubMessageSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubMessageSource"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="hubInputName"> Name of the IoT Edge Hub input from which messages will be consumed. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,57 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> List of VM sizes being checked for creation on appliance along with corresponding result. </summary>
     public partial class VmPlacementRequestResult
     {
-        /// <summary> Initializes a new instance of VmPlacementRequestResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VmPlacementRequestResult"/>. </summary>
         public VmPlacementRequestResult()
         {
             VmSize = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VmPlacementRequestResult"/>. </summary>
+        /// <param name="vmSize"> List of VM sizes being checked. </param>
+        /// <param name="isFeasible"> Boolean value indicating if the VM(s) in VmSize can be created. </param>
+        /// <param name="messageCode"> MessageCode indicating reason for success or failure. </param>
+        /// <param name="message"> Localized message to be displayed to the user to explain the check result. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VmPlacementRequestResult(IList<string> vmSize, bool? isFeasible, string messageCode, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            VmSize = vmSize;
+            IsFeasible = isFeasible;
+            MessageCode = messageCode;
+            Message = message;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of VM sizes being checked. </summary>

@@ -19,9 +19,9 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing an AppServiceSourceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppServiceSourceControlResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppServiceSourceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetAppServiceSourceControl method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppServiceSourceControlResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppServiceSourceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetAppServiceSourceControl method.
     /// </summary>
     public partial class AppServiceSourceControlResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebSiteManagementRestOperations _appServiceSourceControlRestClient;
         private readonly AppServiceSourceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sourcecontrols";
+
         /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class for mocking. </summary>
         protected AppServiceSourceControlResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppServiceSourceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppServiceSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppServiceSourceControlResource(ArmClient client, AppServiceSourceControlData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sourcecontrols";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +178,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +224,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UpdateSourceControl</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

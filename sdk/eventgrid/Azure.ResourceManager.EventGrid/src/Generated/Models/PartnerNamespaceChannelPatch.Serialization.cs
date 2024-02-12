@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class PartnerNamespaceChannelPatch : IUtf8JsonSerializable
+    public partial class PartnerNamespaceChannelPatch : IUtf8JsonSerializable, IJsonModel<PartnerNamespaceChannelPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerNamespaceChannelPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PartnerNamespaceChannelPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +44,128 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteObjectValue(PartnerTopicInfo);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PartnerNamespaceChannelPatch IJsonModel<PartnerNamespaceChannelPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerNamespaceChannelPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerNamespaceChannelPatch(document.RootElement, options);
+        }
+
+        internal static PartnerNamespaceChannelPatch DeserializePartnerNamespaceChannelPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DateTimeOffset> expirationTimeIfNotActivatedUtc = default;
+            Optional<PartnerUpdateDestinationInfo> partnerDestinationInfo = default;
+            Optional<PartnerUpdateTopicInfo> partnerTopicInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("expirationTimeIfNotActivatedUtc"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expirationTimeIfNotActivatedUtc = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerDestinationInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerDestinationInfo = PartnerUpdateDestinationInfo.DeserializePartnerUpdateDestinationInfo(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerTopicInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerTopicInfo = PartnerUpdateTopicInfo.DeserializePartnerUpdateTopicInfo(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PartnerNamespaceChannelPatch(Optional.ToNullable(expirationTimeIfNotActivatedUtc), partnerDestinationInfo.Value, partnerTopicInfo.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PartnerNamespaceChannelPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PartnerNamespaceChannelPatch IPersistableModel<PartnerNamespaceChannelPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceChannelPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartnerNamespaceChannelPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartnerNamespaceChannelPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartnerNamespaceChannelPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about the Azure Container Registry which contains the images deployed to the cluster. </summary>
     public partial class ContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         internal ContainerRegistryCredentials()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentials"/>. </summary>
         /// <param name="loginServer"> The ACR login server name. User name is the first part of the FQDN. </param>
         /// <param name="password"> The ACR primary password. </param>
         /// <param name="password2"> The ACR secondary password. </param>
         /// <param name="username"> The ACR login username. </param>
-        internal ContainerRegistryCredentials(string loginServer, string password, string password2, string username)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryCredentials(string loginServer, string password, string password2, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoginServer = loginServer;
             Password = password;
             Password2 = password2;
             Username = username;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ACR login server name. User name is the first part of the FQDN. </summary>

@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
     /// A Class representing a LogAnalyticsQuery along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogAnalyticsQueryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogAnalyticsQueryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource" /> using the GetLogAnalyticsQuery method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogAnalyticsQueryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogAnalyticsQueryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogAnalyticsQueryPackResource"/> using the GetLogAnalyticsQuery method.
     /// </summary>
     public partial class LogAnalyticsQueryResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.OperationalInsights
         private readonly QueriesRestOperations _logAnalyticsQueryQueriesRestClient;
         private readonly LogAnalyticsQueryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks/queries";
+
         /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class for mocking. </summary>
         protected LogAnalyticsQueryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogAnalyticsQueryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogAnalyticsQueryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogAnalyticsQueryResource(ArmClient client, LogAnalyticsQueryData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.OperationalInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.OperationalInsights/queryPacks/queries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Queries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Queries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queries_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +223,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Queries_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -233,6 +265,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>Queries_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create a new query and add it to a Log Analytics QueryPack. </param>
@@ -266,6 +306,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Queries_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

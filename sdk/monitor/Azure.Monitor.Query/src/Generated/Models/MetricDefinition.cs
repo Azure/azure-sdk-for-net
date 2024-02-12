@@ -13,7 +13,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> Metric definition class specifies the metadata for a metric. </summary>
     public partial class MetricDefinition
     {
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         internal MetricDefinition()
         {
             SupportedAggregationTypes = new ChangeTrackingList<MetricAggregationType>();
@@ -21,7 +21,7 @@ namespace Azure.Monitor.Query.Models
             LocalizedDimensions = new ChangeTrackingList<LocalizableString>();
         }
 
-        /// <summary> Initializes a new instance of MetricDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricDefinition"/>. </summary>
         /// <param name="isDimensionRequired"> Flag to indicate whether the dimension is required. </param>
         /// <param name="resourceId"> the resource identifier of the resource that emitted the metric. </param>
         /// <param name="namespace"> the namespace the metric belongs to. </param>

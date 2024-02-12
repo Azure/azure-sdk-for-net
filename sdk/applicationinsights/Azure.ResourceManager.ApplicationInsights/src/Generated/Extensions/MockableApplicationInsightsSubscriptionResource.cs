@@ -67,10 +67,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationInsightsComponentComponentsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -89,10 +97,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Components_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponents(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ApplicationInsightsComponentComponentsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -111,10 +127,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebTestResource> GetWebTestsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebTestRestClient.CreateListRequest(Id.SubscriptionId);
@@ -133,10 +157,18 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>WebTests_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebTestResource> GetWebTests(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WebTestRestClient.CreateListRequest(Id.SubscriptionId);
@@ -155,13 +187,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MyWorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MyWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MyWorkbookResource> GetMyWorkbooksAsync(CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MyWorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
@@ -180,13 +220,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>MyWorkbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MyWorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MyWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MyWorkbookResource> GetMyWorkbooks(CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MyWorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
@@ -205,13 +253,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkbookResource> GetWorkbooksAsync(CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);
@@ -230,13 +286,21 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workbooks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="category"> Category of workbook to return. </param>
         /// <param name="tags"> Tags presents on each workbook returned. </param>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkbookResource> GetWorkbooks(CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => WorkbookRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, category, tags, canFetchContent);

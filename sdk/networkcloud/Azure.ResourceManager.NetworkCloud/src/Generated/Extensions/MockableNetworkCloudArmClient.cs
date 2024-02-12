@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudBareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBareMetalMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineResource"/> object. </returns>
         public virtual NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(ResourceIdentifier id)
         {
             NetworkCloudBareMetalMachineResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudCloudServicesNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudCloudServicesNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudCloudServicesNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudCloudServicesNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudCloudServicesNetworkResource"/> object. </returns>
         public virtual NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(ResourceIdentifier id)
         {
             NetworkCloudCloudServicesNetworkResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudClusterManagerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudClusterManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterManagerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterManagerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterManagerResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterManagerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudClusterManagerResource"/> object. </returns>
         public virtual NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(ResourceIdentifier id)
         {
             NetworkCloudClusterManagerResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudClusterResource"/> object. </returns>
         public virtual NetworkCloudClusterResource GetNetworkCloudClusterResource(ResourceIdentifier id)
         {
             NetworkCloudClusterResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudKubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudKubernetesClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudKubernetesClusterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudKubernetesClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudKubernetesClusterResource"/> object. </returns>
         public virtual NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(ResourceIdentifier id)
         {
             NetworkCloudKubernetesClusterResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudL2NetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudL2NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL2NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudL2NetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudL2NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL2NetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudL2NetworkResource"/> object. </returns>
         public virtual NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(ResourceIdentifier id)
         {
             NetworkCloudL2NetworkResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudL3NetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudL3NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL3NetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudL3NetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudL3NetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudL3NetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudL3NetworkResource"/> object. </returns>
         public virtual NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(ResourceIdentifier id)
         {
             NetworkCloudL3NetworkResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudRackSkuResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudRackSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudRackSkuResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudRackSkuResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudRackSkuResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudRackSkuResource"/> object. </returns>
         public virtual NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(ResourceIdentifier id)
         {
             NetworkCloudRackSkuResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudRackResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudRackResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudRackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudRackResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudRackResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudRackResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudRackResource"/> object. </returns>
         public virtual NetworkCloudRackResource GetNetworkCloudRackResource(ResourceIdentifier id)
         {
             NetworkCloudRackResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudStorageApplianceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudStorageApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudStorageApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudStorageApplianceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudStorageApplianceResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudStorageApplianceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudStorageApplianceResource"/> object. </returns>
         public virtual NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(ResourceIdentifier id)
         {
             NetworkCloudStorageApplianceResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudTrunkedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudTrunkedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudTrunkedNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudTrunkedNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudTrunkedNetworkResource"/> object. </returns>
         public virtual NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(ResourceIdentifier id)
         {
             NetworkCloudTrunkedNetworkResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineResource"/> object. </returns>
         public virtual NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(ResourceIdentifier id)
         {
             NetworkCloudVirtualMachineResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudVolumeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVolumeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVolumeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVolumeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudVolumeResource"/> object. </returns>
         public virtual NetworkCloudVolumeResource GetNetworkCloudVolumeResource(ResourceIdentifier id)
         {
             NetworkCloudVolumeResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudBareMetalMachineKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBareMetalMachineKeySetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBareMetalMachineKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBareMetalMachineKeySetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudBareMetalMachineKeySetResource"/> object. </returns>
         public virtual NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(ResourceIdentifier id)
         {
             NetworkCloudBareMetalMachineKeySetResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudBmcKeySetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudBmcKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBmcKeySetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudBmcKeySetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudBmcKeySetResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudBmcKeySetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudBmcKeySetResource"/> object. </returns>
         public virtual NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(ResourceIdentifier id)
         {
             NetworkCloudBmcKeySetResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudClusterMetricsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudClusterMetricsConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudClusterMetricsConfigurationResource"/> object. </returns>
         public virtual NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(ResourceIdentifier id)
         {
             NetworkCloudClusterMetricsConfigurationResource.ValidateResourceId(id);
@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudAgentPoolResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudAgentPoolResource"/> object. </returns>
         public virtual NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(ResourceIdentifier id)
         {
             NetworkCloudAgentPoolResource.ValidateResourceId(id);
@@ -241,11 +241,11 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineConsoleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NetworkCloudVirtualMachineConsoleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineConsoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NetworkCloudVirtualMachineConsoleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkCloudVirtualMachineConsoleResource.CreateResourceIdentifier" /> to create a <see cref="NetworkCloudVirtualMachineConsoleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NetworkCloudVirtualMachineConsoleResource"/> object. </returns>
         public virtual NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(ResourceIdentifier id)
         {
             NetworkCloudVirtualMachineConsoleResource.ValidateResourceId(id);

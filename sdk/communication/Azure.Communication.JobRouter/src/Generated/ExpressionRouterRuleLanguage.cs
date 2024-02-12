@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.JobRouter
 {
-    /// <summary> The available expression languages that can be configured. </summary>
+    /// <summary> Available expression languages that can be configured. </summary>
     internal readonly partial struct ExpressionRouterRuleLanguage : IEquatable<ExpressionRouterRuleLanguage>
     {
         private readonly string _value;

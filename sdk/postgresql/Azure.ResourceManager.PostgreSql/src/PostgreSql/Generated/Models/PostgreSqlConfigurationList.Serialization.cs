@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    public partial class PostgreSqlConfigurationList : IUtf8JsonSerializable
+    public partial class PostgreSqlConfigurationList : IUtf8JsonSerializable, IJsonModel<PostgreSqlConfigurationList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlConfigurationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlConfigurationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlConfigurationList)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
@@ -27,16 +37,47 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlConfigurationList DeserializePostgreSqlConfigurationList(JsonElement element)
+        PostgreSqlConfigurationList IJsonModel<PostgreSqlConfigurationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlConfigurationList)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlConfigurationList(document.RootElement, options);
+        }
+
+        internal static PostgreSqlConfigurationList DeserializePostgreSqlConfigurationList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<PostgreSqlConfigurationData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,8 +94,44 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlConfigurationList(Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlConfigurationList(Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostgreSqlConfigurationList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlConfigurationList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlConfigurationList IPersistableModel<PostgreSqlConfigurationList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlConfigurationList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlConfigurationList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlConfigurationList)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlConfigurationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

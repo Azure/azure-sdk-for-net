@@ -68,10 +68,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -90,10 +98,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlMigrationServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -112,15 +128,19 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -134,15 +154,19 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceSkus_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceSku> GetSkusResourceSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListSkusRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceSku.DeserializeResourceSku, ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceSku.DeserializeResourceSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetSkusResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -156,10 +180,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -178,10 +210,18 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataMigrationServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataMigrationServiceResource> GetDataMigrationServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataMigrationServiceServicesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -199,6 +239,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,6 +283,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -270,16 +326,20 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<Quota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -293,16 +353,20 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The Azure region of the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="Quota"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<Quota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, Quota.DeserializeQuota, UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Quota.DeserializeQuota(e), UsagesClientDiagnostics, Pipeline, "MockableDataMigrationSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

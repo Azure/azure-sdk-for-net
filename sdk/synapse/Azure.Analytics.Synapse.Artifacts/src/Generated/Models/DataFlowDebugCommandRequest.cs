@@ -10,9 +10,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Request body structure for data flow expression preview. </summary>
     public partial class DataFlowDebugCommandRequest
     {
-        /// <summary> Initializes a new instance of DataFlowDebugCommandRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandRequest"/>. </summary>
         public DataFlowDebugCommandRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandRequest"/>. </summary>
+        /// <param name="sessionId"> The ID of data flow debug session. </param>
+        /// <param name="command"> The command type. </param>
+        /// <param name="commandPayload"> The command payload object. </param>
+        internal DataFlowDebugCommandRequest(string sessionId, DataFlowDebugCommandType? command, DataFlowDebugCommandPayload commandPayload)
+        {
+            SessionId = sessionId;
+            Command = command;
+            CommandPayload = commandPayload;
         }
 
         /// <summary> The ID of data flow debug session. </summary>

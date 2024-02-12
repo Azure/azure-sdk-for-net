@@ -13,13 +13,13 @@ namespace Azure.Maps.Search.Models
     /// <summary> The address of the result. </summary>
     public partial class MapsAddress
     {
-        /// <summary> Initializes a new instance of MapsAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAddress"/>. </summary>
         internal MapsAddress()
         {
             RouteNumbers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MapsAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapsAddress"/>. </summary>
         /// <param name="buildingNumber"> The building number on the street. DEPRECATED, use streetNumber instead. </param>
         /// <param name="street"> The street name. DEPRECATED, use streetName instead. </param>
         /// <param name="crossStreet"> The name of the street being crossed. </param>

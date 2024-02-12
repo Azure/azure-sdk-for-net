@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Channel Configuration. </summary>
     public partial class AcsRouterChannelConfiguration
     {
-        /// <summary> Initializes a new instance of AcsRouterChannelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
         internal AcsRouterChannelConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of AcsRouterChannelConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterChannelConfiguration"/>. </summary>
         /// <param name="channelId"> Channel ID for Router Job. </param>
         /// <param name="capacityCostPerJob"> Capacity Cost Per Job for Router Job. </param>
         /// <param name="maxNumberOfJobs"> Max Number of Jobs for Router Job. </param>

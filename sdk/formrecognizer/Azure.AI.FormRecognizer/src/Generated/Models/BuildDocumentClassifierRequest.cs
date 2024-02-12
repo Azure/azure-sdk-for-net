@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Request body to build a new custom document classifier. </summary>
     internal partial class BuildDocumentClassifierRequest
     {
-        /// <summary> Initializes a new instance of BuildDocumentClassifierRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="docTypes"> List of document types to classify against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="docTypes"/> is null. </exception>
@@ -24,6 +24,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Argument.AssertNotNull(docTypes, nameof(docTypes));
 
             ClassifierId = classifierId;
+            DocTypes = docTypes;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BuildDocumentClassifierRequest"/>. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="docTypes"> List of document types to classify against. </param>
+        internal BuildDocumentClassifierRequest(string classifierId, string description, IDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        {
+            ClassifierId = classifierId;
+            Description = description;
             DocTypes = docTypes;
         }
 

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationRunbookCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class AutomationRunbookCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<AutomationRunbookCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRunbookCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationRunbookCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -71,7 +82,191 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteNumberValue(LogActivityTrace.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AutomationRunbookCreateOrUpdateContent IJsonModel<AutomationRunbookCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRunbookCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static AutomationRunbookCreateOrUpdateContent DeserializeAutomationRunbookCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<AzureLocation> location = default;
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<bool> logVerbose = default;
+            Optional<bool> logProgress = default;
+            AutomationRunbookType runbookType = default;
+            Optional<AutomationRunbookDraft> draft = default;
+            Optional<AutomationContentLink> publishContentLink = default;
+            Optional<string> description = default;
+            Optional<int> logActivityTrace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("logVerbose"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logVerbose = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("logProgress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logProgress = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("runbookType"u8))
+                        {
+                            runbookType = new AutomationRunbookType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("draft"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            draft = AutomationRunbookDraft.DeserializeAutomationRunbookDraft(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("publishContentLink"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            publishContentLink = AutomationContentLink.DeserializeAutomationContentLink(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("logActivityTrace"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logActivityTrace = property0.Value.GetInt32();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AutomationRunbookCreateOrUpdateContent(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(logVerbose), Optional.ToNullable(logProgress), runbookType, draft.Value, publishContentLink.Value, description.Value, Optional.ToNullable(logActivityTrace), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AutomationRunbookCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AutomationRunbookCreateOrUpdateContent IPersistableModel<AutomationRunbookCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationRunbookCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRunbookCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationRunbookCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

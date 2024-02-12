@@ -19,7 +19,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
+no-property-type-replacement: PrivateEndpoint
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -50,4 +52,29 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  PrivateEndpoint.id: stringId
+
+directive:
+  - from: attestation.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Attestation/attestationProviders/{providerName}/privateEndpointConnections/{privateEndpointConnectionName}'].delete
+    transform: >
+      $['responses'] = {
+          "200": {
+            "description": "OK -- Delete the private endpoint connection successfully."
+          },
+          "202": {
+            "description": "OK -- Delete the private endpoint connection successfully."
+          },
+          "204": {
+            "description": "No Content -- The private endpoint connection does not exist."
+          },
+          "default": {
+            "description": "Error response describing why the operation failed.",
+            "schema": {
+              "$ref": "#/definitions/CloudError"
+            }
+          }
+        }
+    reason: response status 202 missing
 ```

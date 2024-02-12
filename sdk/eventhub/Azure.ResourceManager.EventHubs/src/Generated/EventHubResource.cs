@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
     /// A Class representing an EventHub along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EventHubResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEventHubResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource" /> using the GetEventHub method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EventHubResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEventHubResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsNamespaceResource"/> using the GetEventHub method.
     /// </summary>
     public partial class EventHubResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.EventHubs
         private readonly EventHubsRestOperations _eventHubRestClient;
         private readonly EventHubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs";
+
         /// <summary> Initializes a new instance of the <see cref="EventHubResource"/> class for mocking. </summary>
         protected EventHubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EventHubResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EventHubResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubResource(ArmClient client, EventHubData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventHubs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -108,6 +108,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>EventHubs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventHubs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -161,6 +177,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>ConsumerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsConsumerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>ConsumerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsConsumerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consumerGroupName"> The consumer group name. </param>
@@ -206,6 +238,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,6 +279,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>EventHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventHubs_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>EventHubs_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -338,6 +402,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventHubs_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +448,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EventHubs_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Synapse notebook reference type. </summary>
     public partial class SynapseNotebookReference
     {
-        /// <summary> Initializes a new instance of SynapseNotebookReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseNotebookReference"/>. </summary>
         /// <param name="type"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>

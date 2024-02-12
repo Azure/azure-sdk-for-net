@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingSubscriptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingSubscriptionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingSubscriptionResource"/> object. </returns>
         public virtual BillingSubscriptionResource GetBillingSubscriptionResource(ResourceIdentifier id)
         {
             BillingSubscriptionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingSubscriptionAliasResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingSubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingSubscriptionAliasResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingSubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionAliasResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingSubscriptionAliasResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingSubscriptionAliasResource"/> object. </returns>
         public virtual BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(ResourceIdentifier id)
         {
             BillingSubscriptionAliasResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingPaymentMethodResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingPaymentMethodResource"/> object. </returns>
         public virtual BillingPaymentMethodResource GetBillingPaymentMethodResource(ResourceIdentifier id)
         {
             BillingPaymentMethodResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingAccountPaymentMethodResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingAccountPaymentMethodResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource"/> object. </returns>
         public virtual BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(ResourceIdentifier id)
         {
             BillingAccountPaymentMethodResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Billing.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BillingPaymentMethodLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource"/> object. </returns>
         public virtual BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(ResourceIdentifier id)
         {
             BillingPaymentMethodLinkResource.ValidateResourceId(id);

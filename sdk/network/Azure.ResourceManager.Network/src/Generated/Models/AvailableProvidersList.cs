@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> List of available countries with details. </summary>
     public partial class AvailableProvidersList
     {
-        /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/>. </summary>
         /// <param name="countries"> List of available countries. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="countries"/> is null. </exception>
         internal AvailableProvidersList(IEnumerable<AvailableProvidersListCountry> countries)
@@ -25,11 +57,18 @@ namespace Azure.ResourceManager.Network.Models
             Countries = countries.ToList();
         }
 
-        /// <summary> Initializes a new instance of AvailableProvidersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/>. </summary>
         /// <param name="countries"> List of available countries. </param>
-        internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvailableProvidersList(IReadOnlyList<AvailableProvidersListCountry> countries, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Countries = countries;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvailableProvidersList"/> for deserialization. </summary>
+        internal AvailableProvidersList()
+        {
         }
 
         /// <summary> List of available countries. </summary>

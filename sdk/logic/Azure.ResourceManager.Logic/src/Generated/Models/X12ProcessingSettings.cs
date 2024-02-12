@@ -5,12 +5,47 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Logic.Models
 {
     /// <summary> The X12 processing settings. </summary>
     public partial class X12ProcessingSettings
     {
-        /// <summary> Initializes a new instance of X12ProcessingSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12ProcessingSettings"/>. </summary>
         /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
         /// <param name="convertImpliedDecimal"> The value indicating whether to convert numerical type to implied decimal. </param>
         /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
@@ -25,6 +60,30 @@ namespace Azure.ResourceManager.Logic.Models
             SuspendInterchangeOnError = suspendInterchangeOnError;
             CreateEmptyXmlTagsForTrailingSeparators = createEmptyXmlTagsForTrailingSeparators;
             UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12ProcessingSettings"/>. </summary>
+        /// <param name="maskSecurityInfo"> The value indicating whether to mask security information. </param>
+        /// <param name="convertImpliedDecimal"> The value indicating whether to convert numerical type to implied decimal. </param>
+        /// <param name="preserveInterchange"> The value indicating whether to preserve interchange. </param>
+        /// <param name="suspendInterchangeOnError"> The value indicating whether to suspend interchange on error. </param>
+        /// <param name="createEmptyXmlTagsForTrailingSeparators"> The value indicating whether to create empty xml tags for trailing separators. </param>
+        /// <param name="useDotAsDecimalSeparator"> The value indicating whether to use dot as decimal separator. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12ProcessingSettings(bool maskSecurityInfo, bool convertImpliedDecimal, bool preserveInterchange, bool suspendInterchangeOnError, bool createEmptyXmlTagsForTrailingSeparators, bool useDotAsDecimalSeparator, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MaskSecurityInfo = maskSecurityInfo;
+            ConvertImpliedDecimal = convertImpliedDecimal;
+            PreserveInterchange = preserveInterchange;
+            SuspendInterchangeOnError = suspendInterchangeOnError;
+            CreateEmptyXmlTagsForTrailingSeparators = createEmptyXmlTagsForTrailingSeparators;
+            UseDotAsDecimalSeparator = useDotAsDecimalSeparator;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12ProcessingSettings"/> for deserialization. </summary>
+        internal X12ProcessingSettings()
+        {
         }
 
         /// <summary> The value indicating whether to mask security information. </summary>

@@ -15,7 +15,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> The BlobFlatListSegment. </summary>
     internal partial class BlobFlatListSegment
     {
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="blobItems"/> is null. </exception>
         internal BlobFlatListSegment(IEnumerable<BlobItemInternal> blobItems)
@@ -25,7 +25,7 @@ namespace Azure.Storage.Blobs.Models
             BlobItems = blobItems.ToList();
         }
 
-        /// <summary> Initializes a new instance of BlobFlatListSegment. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobFlatListSegment"/>. </summary>
         /// <param name="blobItems"></param>
         internal BlobFlatListSegment(IReadOnlyList<BlobItemInternal> blobItems)
         {

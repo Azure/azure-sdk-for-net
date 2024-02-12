@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    public partial class TrafficManagerEndpointSubnetInfo : IUtf8JsonSerializable
+    public partial class TrafficManagerEndpointSubnetInfo : IUtf8JsonSerializable, IJsonModel<TrafficManagerEndpointSubnetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerEndpointSubnetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TrafficManagerEndpointSubnetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(First))
             {
@@ -31,11 +42,40 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element)
+        TrafficManagerEndpointSubnetInfo IJsonModel<TrafficManagerEndpointSubnetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerEndpointSubnetInfo(document.RootElement, options);
+        }
+
+        internal static TrafficManagerEndpointSubnetInfo DeserializeTrafficManagerEndpointSubnetInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +83,8 @@ namespace Azure.ResourceManager.TrafficManager.Models
             Optional<IPAddress> first = default;
             Optional<IPAddress> last = default;
             Optional<int> scope = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("first"u8))
@@ -72,8 +114,44 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     scope = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrafficManagerEndpointSubnetInfo(first.Value, last.Value, Optional.ToNullable(scope), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrafficManagerEndpointSubnetInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TrafficManagerEndpointSubnetInfo IPersistableModel<TrafficManagerEndpointSubnetInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTrafficManagerEndpointSubnetInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TrafficManagerEndpointSubnetInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

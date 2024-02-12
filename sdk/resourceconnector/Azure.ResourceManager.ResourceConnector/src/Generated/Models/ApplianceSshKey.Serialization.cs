@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    public partial class ApplianceSshKey
+    public partial class ApplianceSshKey : IUtf8JsonSerializable, IJsonModel<ApplianceSshKey>
     {
-        internal static ApplianceSshKey DeserializeApplianceSshKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceSshKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplianceSshKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Certificate))
+            {
+                writer.WritePropertyName("certificate"u8);
+                writer.WriteStringValue(Certificate);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreationTimeStamp))
+            {
+                writer.WritePropertyName("creationTimeStamp"u8);
+                writer.WriteNumberValue(CreationTimeStamp.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTimeStamp))
+            {
+                writer.WritePropertyName("expirationTimeStamp"u8);
+                writer.WriteNumberValue(ExpirationTimeStamp.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateKey))
+            {
+                writer.WritePropertyName("privateKey"u8);
+                writer.WriteStringValue(PrivateKey);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicKey))
+            {
+                writer.WritePropertyName("publicKey"u8);
+                writer.WriteStringValue(PublicKey);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplianceSshKey IJsonModel<ApplianceSshKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplianceSshKey(document.RootElement, options);
+        }
+
+        internal static ApplianceSshKey DeserializeApplianceSshKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             Optional<long> expirationTimeStamp = default;
             Optional<string> privateKey = default;
             Optional<string> publicKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificate"u8))
@@ -58,8 +131,44 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     publicKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplianceSshKey(certificate.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(expirationTimeStamp), privateKey.Value, publicKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplianceSshKey(certificate.Value, Optional.ToNullable(creationTimeStamp), Optional.ToNullable(expirationTimeStamp), privateKey.Value, publicKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplianceSshKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplianceSshKey IPersistableModel<ApplianceSshKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceSshKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplianceSshKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceSshKey)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplianceSshKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

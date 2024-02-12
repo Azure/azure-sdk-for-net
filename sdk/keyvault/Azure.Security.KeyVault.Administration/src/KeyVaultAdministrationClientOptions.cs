@@ -11,6 +11,8 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultAdministrationClientOptions : ClientOptions
     {
+        internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
+
         /// <summary>
         /// The latest service version supported by this client library.
         /// For more information, see

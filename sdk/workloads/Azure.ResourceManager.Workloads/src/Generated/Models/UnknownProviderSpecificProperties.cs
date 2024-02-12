@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownProviderSpecificProperties. </summary>
     internal partial class UnknownProviderSpecificProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of UnknownProviderSpecificProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
-        internal UnknownProviderSpecificProperties(string providerType) : base(providerType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProviderSpecificProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(providerType, serializedAdditionalRawData)
         {
             ProviderType = providerType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificProperties"/> for deserialization. </summary>
+        internal UnknownProviderSpecificProperties()
+        {
         }
     }
 }

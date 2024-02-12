@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB SQL database resource object. </summary>
     public partial class RestorableSqlDatabasePropertiesResourceDatabase : CosmosDBSqlDatabaseResourceInfo
     {
-        /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         public RestorableSqlDatabasePropertiesResourceDatabase(string databaseName) : base(databaseName)
@@ -22,17 +23,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(databaseName, nameof(databaseName));
         }
 
-        /// <summary> Initializes a new instance of RestorableSqlDatabasePropertiesResourceDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/>. </summary>
         /// <param name="databaseName"> Name of the Cosmos DB SQL database. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="colls"> A system generated property that specified the addressable path of the collections resource. </param>
         /// <param name="users"> A system generated property that specifies the addressable path of the users resource. </param>
         /// <param name="self"> A system generated property that specifies the addressable path of the database resource. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, string colls, string users, string self, string rid, float? timestamp, ETag? etag) : base(databaseName, restoreParameters, createMode)
+        internal RestorableSqlDatabasePropertiesResourceDatabase(string databaseName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData, string colls, string users, string self, string rid, float? timestamp, ETag? etag) : base(databaseName, restoreParameters, createMode, serializedAdditionalRawData)
         {
             Colls = colls;
             Users = users;
@@ -40,6 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestorableSqlDatabasePropertiesResourceDatabase"/> for deserialization. </summary>
+        internal RestorableSqlDatabasePropertiesResourceDatabase()
+        {
         }
 
         /// <summary> A system generated property that specified the addressable path of the collections resource. </summary>

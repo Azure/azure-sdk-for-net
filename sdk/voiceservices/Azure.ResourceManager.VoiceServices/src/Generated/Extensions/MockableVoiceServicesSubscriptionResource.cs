@@ -60,10 +60,18 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VoiceServicesCommunicationsGatewayCommunicationsGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -82,10 +90,18 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VoiceServicesCommunicationsGatewayCommunicationsGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -103,6 +119,10 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +158,10 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NameAvailability_CheckLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
         /// </item>
         /// </list>
         /// </summary>

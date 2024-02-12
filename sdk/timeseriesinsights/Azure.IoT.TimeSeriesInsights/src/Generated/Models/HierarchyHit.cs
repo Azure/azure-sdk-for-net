@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> The hierarchy node which contains the instances matching the query based on the input. May be empty or null. </summary>
     internal partial class HierarchyHit
     {
-        /// <summary> Initializes a new instance of HierarchyHit. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchyHit"/>. </summary>
         internal HierarchyHit()
         {
         }
 
-        /// <summary> Initializes a new instance of HierarchyHit. </summary>
+        /// <summary> Initializes a new instance of <see cref="HierarchyHit"/>. </summary>
         /// <param name="name"> Name of the hierarchy node. May be empty, cannot be null. </param>
         /// <param name="cumulativeInstanceCount"> Total number of instances that belong to this node and it's subtrees matching the query. </param>
         /// <param name="hierarchyNodes"> Child hierarchy nodes of this node. May be empty or null. </param>

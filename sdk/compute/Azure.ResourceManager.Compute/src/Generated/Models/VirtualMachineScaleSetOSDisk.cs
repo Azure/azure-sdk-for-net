@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set operating system disk. </summary>
     public partial class VirtualMachineScaleSetOSDisk
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetOSDisk. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/>. </summary>
         /// <param name="createOption"> Specifies how the virtual machines in the scale set should be created. The only allowed value is: **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you  also use the plan element previously described. </param>
         public VirtualMachineScaleSetOSDisk(DiskCreateOptionType createOption)
         {
@@ -22,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             VhdContainers = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetOSDisk. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/>. </summary>
         /// <param name="name"> The disk name. </param>
         /// <param name="caching"> Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The default values are: **None for Standard storage. ReadOnly for Premium storage.**. </param>
         /// <param name="writeAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
@@ -34,7 +66,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vhdContainers"> Specifies the container urls that are used to store operating system disks for the scale set. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="deleteOption"> Specifies whether OS Disk should be deleted or detached upon VMSS Flex deletion (This feature is available for VMSS with Flexible OrchestrationMode only). &lt;br&gt;&lt;br&gt; Possible values: &lt;br&gt;&lt;br&gt; **Delete** If this value is used, the OS disk is deleted when VMSS Flex VM is deleted.&lt;br&gt;&lt;br&gt; **Detach** If this value is used, the OS disk is retained after VMSS Flex VM is deleted. &lt;br&gt;&lt;br&gt; The default value is set to **Delete**. For an Ephemeral OS Disk, the default value is set to **Delete**. User cannot change the delete option for Ephemeral OS Disk. </param>
-        internal VirtualMachineScaleSetOSDisk(string name, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, SupportedOperatingSystemType? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDisk managedDisk, DiskDeleteOptionType? deleteOption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetOSDisk(string name, CachingType? caching, bool? writeAcceleratorEnabled, DiskCreateOptionType createOption, DiffDiskSettings diffDiskSettings, int? diskSizeGB, SupportedOperatingSystemType? osType, VirtualHardDisk image, IList<string> vhdContainers, VirtualMachineScaleSetManagedDisk managedDisk, DiskDeleteOptionType? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Caching = caching;
@@ -47,6 +80,12 @@ namespace Azure.ResourceManager.Compute.Models
             VhdContainers = vhdContainers;
             ManagedDisk = managedDisk;
             DeleteOption = deleteOption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetOSDisk"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetOSDisk()
+        {
         }
 
         /// <summary> The disk name. </summary>

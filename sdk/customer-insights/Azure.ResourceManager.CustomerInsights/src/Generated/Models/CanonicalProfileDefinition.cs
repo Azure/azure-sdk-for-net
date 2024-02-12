@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     /// <summary> Definition of canonical profile. </summary>
     public partial class CanonicalProfileDefinition
     {
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         internal CanonicalProfileDefinition()
         {
             Properties = new ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem>();
         }
 
-        /// <summary> Initializes a new instance of CanonicalProfileDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="CanonicalProfileDefinition"/>. </summary>
         /// <param name="canonicalProfileId"> Canonical profile ID. </param>
         /// <param name="properties"> Properties of the canonical profile. </param>
-        internal CanonicalProfileDefinition(int? canonicalProfileId, IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CanonicalProfileDefinition(int? canonicalProfileId, IReadOnlyList<CanonicalProfileDefinitionPropertiesItem> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CanonicalProfileId = canonicalProfileId;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Canonical profile ID. </summary>

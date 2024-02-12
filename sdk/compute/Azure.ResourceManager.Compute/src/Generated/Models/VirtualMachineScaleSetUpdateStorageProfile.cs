@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,57 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set storage profile. </summary>
     public partial class VirtualMachineScaleSetUpdateStorageProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateStorageProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateStorageProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateStorageProfile()
         {
             DataDisks = new ChangeTrackingList<VirtualMachineScaleSetDataDisk>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateStorageProfile"/>. </summary>
+        /// <param name="imageReference"> The image reference. </param>
+        /// <param name="osDisk"> The OS disk. </param>
+        /// <param name="dataDisks"> The data disks. </param>
+        /// <param name="diskControllerType"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference, VirtualMachineScaleSetUpdateOSDisk osDisk, IList<VirtualMachineScaleSetDataDisk> dataDisks, string diskControllerType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ImageReference = imageReference;
+            OSDisk = osDisk;
+            DataDisks = dataDisks;
+            DiskControllerType = diskControllerType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The image reference. </summary>

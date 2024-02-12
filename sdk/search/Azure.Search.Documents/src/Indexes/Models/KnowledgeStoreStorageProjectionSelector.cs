@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     [CodeGenModel("SearchIndexerKnowledgeStoreBlobProjectionSelector")]
-    public abstract partial class KnowledgeStoreStorageProjectionSelector
+    public partial class KnowledgeStoreStorageProjectionSelector
     {
     }
 }

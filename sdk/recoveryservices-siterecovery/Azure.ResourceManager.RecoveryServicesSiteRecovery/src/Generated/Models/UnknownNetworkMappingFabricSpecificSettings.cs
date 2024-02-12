@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownNetworkMappingFabricSpecificSettings. </summary>
     internal partial class UnknownNetworkMappingFabricSpecificSettings : NetworkMappingFabricSpecificSettings
     {
-        /// <summary> Initializes a new instance of UnknownNetworkMappingFabricSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkMappingFabricSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal UnknownNetworkMappingFabricSpecificSettings(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNetworkMappingFabricSpecificSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkMappingFabricSpecificSettings"/> for deserialization. </summary>
+        internal UnknownNetworkMappingFabricSpecificSettings()
+        {
         }
     }
 }

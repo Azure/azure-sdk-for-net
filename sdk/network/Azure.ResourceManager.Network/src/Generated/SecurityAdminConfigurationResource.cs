@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a SecurityAdminConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecurityAdminConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecurityAdminConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource" /> using the GetSecurityAdminConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityAdminConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecurityAdminConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NetworkManagerResource"/> using the GetSecurityAdminConfiguration method.
     /// </summary>
     public partial class SecurityAdminConfigurationResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.Network
         private readonly SecurityAdminConfigurationsRestOperations _securityAdminConfigurationRestClient;
         private readonly SecurityAdminConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="SecurityAdminConfigurationResource"/> class for mocking. </summary>
         protected SecurityAdminConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecurityAdminConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecurityAdminConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecurityAdminConfigurationResource(ArmClient client, SecurityAdminConfigurationData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkManagers/securityAdminConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -108,6 +108,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>AdminRuleCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AdminRuleGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
@@ -153,6 +169,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,6 +249,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,6 +293,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -287,6 +335,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,6 +381,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SecurityAdminConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityAdminConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

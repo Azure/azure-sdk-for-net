@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EasmWorkspaceResource> GetEasmWorkspacesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.DefenderEasm.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EasmWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EasmWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EasmWorkspaceResource> GetEasmWorkspaces(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EasmWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

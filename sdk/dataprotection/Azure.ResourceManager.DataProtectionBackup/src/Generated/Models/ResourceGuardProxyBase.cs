@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> ResourceGuardProxyBase object, used in ResourceGuardProxyBaseResource. </summary>
     public partial class ResourceGuardProxyBase
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         public ResourceGuardProxyBase()
         {
             ResourceGuardOperationDetails = new ChangeTrackingList<ResourceGuardOperationDetail>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBase"/>. </summary>
         /// <param name="resourceGuardResourceId"></param>
         /// <param name="resourceGuardOperationDetails"></param>
         /// <param name="lastUpdatedTime"></param>
         /// <param name="description"></param>
-        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceGuardProxyBase(string resourceGuardResourceId, IList<ResourceGuardOperationDetail> resourceGuardOperationDetails, string lastUpdatedTime, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceGuardResourceId = resourceGuardResourceId;
             ResourceGuardOperationDetails = resourceGuardOperationDetails;
             LastUpdatedTime = lastUpdatedTime;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the resource guard resource id. </summary>

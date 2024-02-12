@@ -173,7 +173,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleCompletedCheck();
@@ -205,10 +208,13 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
-            await testEventsRaised.AssertSingleFailedCheck();
+            await testEventsRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
@@ -240,7 +246,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
@@ -356,7 +365,10 @@ namespace Azure.Storage.DataMovement.Tests
                 // Assert
                 Assert.NotNull(uploadedObjectInfo[i].DataTransfer);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
-                await uploadedObjectInfo[i].DataTransfer.WaitForCompletionAsync(tokenSource.Token);
+                await TestTransferWithTimeout.WaitForCompletionAsync(
+                    uploadedObjectInfo[i].DataTransfer,
+                    uploadedObjectInfo[i].EventsRaised,
+                    tokenSource.Token);
                 Assert.IsTrue(uploadedObjectInfo[i].DataTransfer.HasCompleted);
 
                 // Verify Upload
@@ -534,7 +546,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertSingleSkippedCheck();
@@ -589,7 +604,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource,
                 options);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transfer.WaitForCompletionAsync(cancellationTokenSource.Token);
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventRaised,
+                cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transfer);
@@ -597,7 +615,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
             Assert.IsTrue(await ExistsAsync(objectClient));
-            await testEventRaised.AssertSingleFailedCheck();
+            await testEventRaised.AssertSingleFailedCheck(1);
             Assert.NotNull(testEventRaised.FailedEvents.First().Exception, "Excepted failure: Overwrite failure was supposed to be raised during the test");
             Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
             // Verify Upload - That we skipped over and didn't reupload something new.

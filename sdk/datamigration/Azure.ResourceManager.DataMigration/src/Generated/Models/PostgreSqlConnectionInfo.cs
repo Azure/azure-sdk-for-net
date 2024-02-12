@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Information for connecting to PostgreSQL server. </summary>
     public partial class PostgreSqlConnectionInfo : ConnectionInfo
     {
-        /// <summary> Initializes a new instance of PostgreSqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConnectionInfo"/>. </summary>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="port"> Port for Server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
@@ -26,10 +27,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             ConnectionInfoType = "PostgreSqlConnectionInfo";
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConnectionInfo"/>. </summary>
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="dataSource"> Data source. </param>
         /// <param name="serverVersion"> server version. </param>
@@ -40,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="additionalSettings"> Additional connection settings. </param>
         /// <param name="serverBrandVersion"> server brand version. </param>
         /// <param name="authentication"> Authentication type to use for connection. </param>
-        internal PostgreSqlConnectionInfo(string connectionInfoType, string userName, string password, string serverName, string dataSource, string serverVersion, string databaseName, int port, bool? encryptConnection, bool? trustServerCertificate, string additionalSettings, string serverBrandVersion, AuthenticationType? authentication) : base(connectionInfoType, userName, password)
+        internal PostgreSqlConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData, string serverName, string dataSource, string serverVersion, string databaseName, int port, bool? encryptConnection, bool? trustServerCertificate, string additionalSettings, string serverBrandVersion, AuthenticationType? authentication) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             ServerName = serverName;
             DataSource = dataSource;
@@ -53,6 +55,11 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerBrandVersion = serverBrandVersion;
             Authentication = authentication;
             ConnectionInfoType = connectionInfoType ?? "PostgreSqlConnectionInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlConnectionInfo"/> for deserialization. </summary>
+        internal PostgreSqlConnectionInfo()
+        {
         }
 
         /// <summary> Name of the server. </summary>

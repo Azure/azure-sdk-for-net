@@ -14,17 +14,18 @@ namespace Azure.ResourceManager.Blueprint.Models
     /// <summary> The status of a blueprint assignment. This field is readonly. </summary>
     public partial class AssignmentStatus : BlueprintResourceStatusBase
     {
-        /// <summary> Initializes a new instance of AssignmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentStatus"/>. </summary>
         internal AssignmentStatus()
         {
             ManagedResources = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssignmentStatus"/>. </summary>
         /// <param name="timeCreated"> Creation time of this blueprint definition. </param>
         /// <param name="lastModified"> Last modified time of this blueprint definition. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="managedResources"> List of resources that were created by the blueprint assignment. </param>
-        internal AssignmentStatus(DateTimeOffset? timeCreated, DateTimeOffset? lastModified, IReadOnlyList<string> managedResources) : base(timeCreated, lastModified)
+        internal AssignmentStatus(DateTimeOffset? timeCreated, DateTimeOffset? lastModified, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<string> managedResources) : base(timeCreated, lastModified, serializedAdditionalRawData)
         {
             ManagedResources = managedResources;
         }

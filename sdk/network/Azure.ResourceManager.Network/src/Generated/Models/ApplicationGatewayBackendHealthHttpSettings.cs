@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Application gateway BackendHealthHttp settings. </summary>
     public partial class ApplicationGatewayBackendHealthHttpSettings
     {
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
         internal ApplicationGatewayBackendHealthHttpSettings()
         {
             Servers = new ChangeTrackingList<ApplicationGatewayBackendHealthServer>();
         }
 
-        /// <summary> Initializes a new instance of ApplicationGatewayBackendHealthHttpSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayBackendHealthHttpSettings"/>. </summary>
         /// <param name="backendHttpSettings"> Reference to an ApplicationGatewayBackendHttpSettings resource. </param>
         /// <param name="servers"> List of ApplicationGatewayBackendHealthServer resources. </param>
-        internal ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings, IReadOnlyList<ApplicationGatewayBackendHealthServer> servers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationGatewayBackendHealthHttpSettings(ApplicationGatewayBackendHttpSettings backendHttpSettings, IReadOnlyList<ApplicationGatewayBackendHealthServer> servers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackendHttpSettings = backendHttpSettings;
             Servers = servers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Reference to an ApplicationGatewayBackendHttpSettings resource. </summary>

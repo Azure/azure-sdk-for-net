@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement.Tests
             throw new NotImplementedException();
         }
 
-        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default)
+        protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceProperties(default, default, Buffer.Length, default));
+            return Task.FromResult(new StorageResourceItemProperties(Buffer.Length, new ETag("etag"), DateTimeOffset.UtcNow, default));
         }
 
         protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()

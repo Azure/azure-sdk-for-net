@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Text
@@ -13,7 +14,39 @@ namespace Azure.AI.Translation.Text
     /// <summary> Common properties of language script. </summary>
     public partial class CommonScriptModel
     {
-        /// <summary> Initializes a new instance of CommonScriptModel. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
@@ -30,6 +63,26 @@ namespace Azure.AI.Translation.Text
             Name = name;
             NativeName = nativeName;
             Dir = dir;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/>. </summary>
+        /// <param name="code"> Code identifying the script. </param>
+        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
+        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
+        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CommonScriptModel(string code, string name, string nativeName, string dir, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Code = code;
+            Name = name;
+            NativeName = nativeName;
+            Dir = dir;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CommonScriptModel"/> for deserialization. </summary>
+        internal CommonScriptModel()
+        {
         }
 
         /// <summary> Code identifying the script. </summary>

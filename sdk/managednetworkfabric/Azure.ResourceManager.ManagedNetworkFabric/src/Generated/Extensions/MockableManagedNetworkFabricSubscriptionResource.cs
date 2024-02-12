@@ -126,6 +126,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkDeviceSkuName"> Name of the Network Device SKU. </param>
@@ -148,6 +156,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkDeviceSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +195,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricSkus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkFabricSkuName"> Name of the Network Fabric SKU. </param>
@@ -201,6 +225,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricSkus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,10 +257,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricAccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlListsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -247,10 +287,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>AccessControlLists_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricAccessControlListResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricAccessControlListResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricAccessControlListResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricAccessControlListResource> GetNetworkFabricAccessControlLists(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricAccessControlListAccessControlListsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -269,10 +317,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGatewaysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -291,10 +347,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGateways_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricInternetGatewayResource> GetNetworkFabricInternetGateways(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayInternetGatewaysRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -313,10 +377,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -335,10 +407,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>InternetGatewayRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricInternetGatewayRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricInternetGatewayRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricInternetGatewayRuleResource> GetNetworkFabricInternetGatewayRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricInternetGatewayRuleInternetGatewayRulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -357,10 +437,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -379,10 +467,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricIPCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricIPCommunityResource> GetNetworkFabricIPCommunities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPCommunityIpCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -401,10 +497,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricIPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -423,10 +527,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpExtendedCommunities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPExtendedCommunityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricIPExtendedCommunityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricIPExtendedCommunityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricIPExtendedCommunityResource> GetNetworkFabricIPExtendedCommunities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPExtendedCommunityIpExtendedCommunitiesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -445,10 +557,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -467,10 +587,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>IpPrefixes_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricIPPrefixResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricIPPrefixResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricIPPrefixResource> GetNetworkFabricIPPrefixes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricIPPrefixIpPrefixesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -489,10 +617,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricL2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomainsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -511,10 +647,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L2IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL2IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricL2IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricL2IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricL2IsolationDomainResource> GetNetworkFabricL2IsolationDomains(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL2IsolationDomainL2IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -533,10 +677,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomainsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -555,10 +707,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>L3IsolationDomains_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricL3IsolationDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricL3IsolationDomainResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricL3IsolationDomainResource> GetNetworkFabricL3IsolationDomains(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricL3IsolationDomainL3IsolationDomainsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -577,10 +737,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricNeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -599,10 +767,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NeighborGroups_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricNeighborGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricNeighborGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricNeighborGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricNeighborGroupResource> GetNetworkFabricNeighborGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricNeighborGroupNeighborGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -621,10 +797,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkDeviceResource> GetNetworkDevicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkDeviceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -643,10 +827,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkDevices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkDeviceResource> GetNetworkDevices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkDeviceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -665,10 +857,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricControllerResource> GetNetworkFabricControllersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricControllerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -687,10 +887,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricControllerResource> GetNetworkFabricControllers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricControllerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -709,10 +917,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricResource> GetNetworkFabricsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -731,10 +947,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFabrics_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricResource> GetNetworkFabrics(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -753,10 +977,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkPacketBrokerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkPacketBrokerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkPacketBrokerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkPacketBrokerResource> GetNetworkPacketBrokersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -775,10 +1007,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkPacketBrokers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkPacketBrokerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkPacketBrokerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkPacketBrokerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkPacketBrokerResource> GetNetworkPacketBrokers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkPacketBrokerRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -797,10 +1037,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkRackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkRackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkRackResource> GetNetworkRacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkRackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -819,10 +1067,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkRacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkRackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkRackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkRackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkRackResource> GetNetworkRacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkRackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -841,10 +1097,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTapRuleResource> GetNetworkTapRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -863,10 +1127,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTapRuleResource> GetNetworkTapRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -885,10 +1157,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTapResource> GetNetworkTapsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -907,10 +1187,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkTaps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkTapResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkTapResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTapResource> GetNetworkTaps(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkTapRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -929,10 +1217,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePoliciesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -951,10 +1247,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         /// <term>Operation Id</term>
         /// <description>RoutePolicies_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricRoutePolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricRoutePolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricRoutePolicyResource> GetNetworkFabricRoutePolicies(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFabricRoutePolicyRoutePoliciesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

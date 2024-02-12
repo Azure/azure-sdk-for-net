@@ -5,18 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> The UnknownFirewallPolicyRule. </summary>
     internal partial class UnknownFirewallPolicyRule : FirewallPolicyRule
     {
-        /// <summary> Initializes a new instance of UnknownFirewallPolicyRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/>. </summary>
         /// <param name="name"> Name of the rule. </param>
         /// <param name="description"> Description of the rule. </param>
         /// <param name="ruleType"> Rule Type. </param>
-        internal UnknownFirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType) : base(name, description, ruleType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFirewallPolicyRule(string name, string description, FirewallPolicyRuleType ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, description, ruleType, serializedAdditionalRawData)
         {
             RuleType = ruleType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFirewallPolicyRule"/> for deserialization. </summary>
+        internal UnknownFirewallPolicyRule()
+        {
         }
     }
 }

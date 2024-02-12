@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Specifies a configuration for PlayReady licenses. </summary>
     public partial class ContentKeyPolicyPlayReadyConfiguration : ContentKeyPolicyConfiguration
     {
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyConfiguration"/>. </summary>
         /// <param name="licenses"> The PlayReady licenses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="licenses"/> is null. </exception>
         public ContentKeyPolicyPlayReadyConfiguration(IEnumerable<ContentKeyPolicyPlayReadyLicense> licenses)
@@ -26,15 +26,21 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyConfiguration"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="licenses"> The PlayReady licenses. </param>
         /// <param name="responseCustomData"> The custom response data. </param>
-        internal ContentKeyPolicyPlayReadyConfiguration(string odataType, IList<ContentKeyPolicyPlayReadyLicense> licenses, BinaryData responseCustomData) : base(odataType)
+        internal ContentKeyPolicyPlayReadyConfiguration(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ContentKeyPolicyPlayReadyLicense> licenses, BinaryData responseCustomData) : base(odataType, serializedAdditionalRawData)
         {
             Licenses = licenses;
             ResponseCustomData = responseCustomData;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyPlayReadyConfiguration";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyPlayReadyConfiguration"/> for deserialization. </summary>
+        internal ContentKeyPolicyPlayReadyConfiguration()
+        {
         }
 
         /// <summary> The PlayReady licenses. </summary>

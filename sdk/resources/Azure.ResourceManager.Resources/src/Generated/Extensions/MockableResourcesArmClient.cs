@@ -37,83 +37,11 @@ namespace Azure.ResourceManager.Resources.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArmDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TemplateSpecResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TemplateSpecResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmDeploymentResource" /> object. </returns>
-        public virtual ArmDeploymentResource GetArmDeploymentResource(ResourceIdentifier id)
-        {
-            ArmDeploymentResource.ValidateResourceId(id);
-            return new ArmDeploymentResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArmApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmApplicationResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmApplicationResource" /> object. </returns>
-        public virtual ArmApplicationResource GetArmApplicationResource(ResourceIdentifier id)
-        {
-            ArmApplicationResource.ValidateResourceId(id);
-            return new ArmApplicationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArmApplicationDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmApplicationDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmApplicationDefinitionResource" /> object. </returns>
-        public virtual ArmApplicationDefinitionResource GetArmApplicationDefinitionResource(ResourceIdentifier id)
-        {
-            ArmApplicationDefinitionResource.ValidateResourceId(id);
-            return new ArmApplicationDefinitionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="JitRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="JitRequestResource.CreateResourceIdentifier" /> to create a <see cref="JitRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="JitRequestResource" /> object. </returns>
-        public virtual JitRequestResource GetJitRequestResource(ResourceIdentifier id)
-        {
-            JitRequestResource.ValidateResourceId(id);
-            return new JitRequestResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArmDeploymentScriptResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArmDeploymentScriptResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArmDeploymentScriptResource" /> object. </returns>
-        public virtual ArmDeploymentScriptResource GetArmDeploymentScriptResource(ResourceIdentifier id)
-        {
-            ArmDeploymentScriptResource.ValidateResourceId(id);
-            return new ArmDeploymentScriptResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ScriptLogResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScriptLogResource.CreateResourceIdentifier" /> to create a <see cref="ScriptLogResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScriptLogResource" /> object. </returns>
-        public virtual ScriptLogResource GetScriptLogResource(ResourceIdentifier id)
-        {
-            ScriptLogResource.ValidateResourceId(id);
-            return new ScriptLogResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="TemplateSpecResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TemplateSpecResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TemplateSpecResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TemplateSpecResource"/> object. </returns>
         public virtual TemplateSpecResource GetTemplateSpecResource(ResourceIdentifier id)
         {
             TemplateSpecResource.ValidateResourceId(id);
@@ -121,15 +49,87 @@ namespace Azure.ResourceManager.Resources.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TemplateSpecVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TemplateSpecVersionResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="TemplateSpecVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TemplateSpecVersionResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="TemplateSpecVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="TemplateSpecVersionResource"/> object. </returns>
         public virtual TemplateSpecVersionResource GetTemplateSpecVersionResource(ResourceIdentifier id)
         {
             TemplateSpecVersionResource.ValidateResourceId(id);
             return new TemplateSpecVersionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArmDeploymentScriptResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmDeploymentScriptResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentScriptResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmDeploymentScriptResource"/> object. </returns>
+        public virtual ArmDeploymentScriptResource GetArmDeploymentScriptResource(ResourceIdentifier id)
+        {
+            ArmDeploymentScriptResource.ValidateResourceId(id);
+            return new ArmDeploymentScriptResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScriptLogResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScriptLogResource.CreateResourceIdentifier" /> to create a <see cref="ScriptLogResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScriptLogResource"/> object. </returns>
+        public virtual ScriptLogResource GetScriptLogResource(ResourceIdentifier id)
+        {
+            ScriptLogResource.ValidateResourceId(id);
+            return new ScriptLogResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArmDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmDeploymentResource"/> object. </returns>
+        public virtual ArmDeploymentResource GetArmDeploymentResource(ResourceIdentifier id)
+        {
+            ArmDeploymentResource.ValidateResourceId(id);
+            return new ArmDeploymentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArmApplicationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmApplicationResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmApplicationResource"/> object. </returns>
+        public virtual ArmApplicationResource GetArmApplicationResource(ResourceIdentifier id)
+        {
+            ArmApplicationResource.ValidateResourceId(id);
+            return new ArmApplicationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArmApplicationDefinitionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArmApplicationDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationDefinitionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArmApplicationDefinitionResource"/> object. </returns>
+        public virtual ArmApplicationDefinitionResource GetArmApplicationDefinitionResource(ResourceIdentifier id)
+        {
+            ArmApplicationDefinitionResource.ValidateResourceId(id);
+            return new ArmApplicationDefinitionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="JitRequestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="JitRequestResource.CreateResourceIdentifier" /> to create a <see cref="JitRequestResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="JitRequestResource"/> object. </returns>
+        public virtual JitRequestResource GetJitRequestResource(ResourceIdentifier id)
+        {
+            JitRequestResource.ValidateResourceId(id);
+            return new JitRequestResource(Client, id);
         }
     }
 }

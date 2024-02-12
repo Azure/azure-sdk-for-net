@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DataCollectionRuleStorageBlobDestination : IUtf8JsonSerializable
+    public partial class DataCollectionRuleStorageBlobDestination : IUtf8JsonSerializable, IJsonModel<DataCollectionRuleStorageBlobDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionRuleStorageBlobDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataCollectionRuleStorageBlobDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageBlobDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageBlobDestination)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ContainerName))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionRuleStorageBlobDestination DeserializeDataCollectionRuleStorageBlobDestination(JsonElement element)
+        DataCollectionRuleStorageBlobDestination IJsonModel<DataCollectionRuleStorageBlobDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageBlobDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageBlobDestination)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionRuleStorageBlobDestination(document.RootElement, options);
+        }
+
+        internal static DataCollectionRuleStorageBlobDestination DeserializeDataCollectionRuleStorageBlobDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> containerName = default;
             Optional<ResourceIdentifier> storageAccountResourceId = default;
             Optional<string> name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))
@@ -63,8 +105,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionRuleStorageBlobDestination(containerName.Value, storageAccountResourceId.Value, name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataCollectionRuleStorageBlobDestination(containerName.Value, storageAccountResourceId.Value, name.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataCollectionRuleStorageBlobDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageBlobDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageBlobDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataCollectionRuleStorageBlobDestination IPersistableModel<DataCollectionRuleStorageBlobDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageBlobDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataCollectionRuleStorageBlobDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageBlobDestination)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataCollectionRuleStorageBlobDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

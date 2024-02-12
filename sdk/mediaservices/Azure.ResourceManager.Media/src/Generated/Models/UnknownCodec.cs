@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownCodec. </summary>
     internal partial class UnknownCodec : MediaCodecBase
     {
-        /// <summary> Initializes a new instance of UnknownCodec. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCodec"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
-        internal UnknownCodec(string odataType, string label) : base(odataType, label)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCodec(string odataType, string label, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, label, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCodec"/> for deserialization. </summary>
+        internal UnknownCodec()
+        {
         }
     }
 }

@@ -19,29 +19,14 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<CommunicationIdentifierModel> participant = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -65,8 +50,23 @@ namespace Azure.Communication.CallAutomation
                     participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new RemoveParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, participant.Value);
+            return new RemoveParticipantSucceededInternal(operationContext.Value, resultInformation.Value, participant.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

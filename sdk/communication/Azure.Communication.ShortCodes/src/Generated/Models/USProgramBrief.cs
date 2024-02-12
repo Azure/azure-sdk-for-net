@@ -18,7 +18,7 @@ namespace Azure.Communication.ShortCodes.Models
     /// </summary>
     public partial class USProgramBrief
     {
-        /// <summary> Initializes a new instance of USProgramBrief. </summary>
+        /// <summary> Initializes a new instance of <see cref="USProgramBrief"/>. </summary>
         /// <param name="id"> Program Brief Id. </param>
         public USProgramBrief(Guid id)
         {
@@ -27,7 +27,7 @@ namespace Azure.Communication.ShortCodes.Models
             Costs = new ChangeTrackingList<ShortCodeCost>();
         }
 
-        /// <summary> Initializes a new instance of USProgramBrief. </summary>
+        /// <summary> Initializes a new instance of <see cref="USProgramBrief"/>. </summary>
         /// <param name="id"> Program Brief Id. </param>
         /// <param name="status"> Program Brief status e.g. 'submitted', 'approved', etc. </param>
         /// <param name="number"> Number provisioned for the Program Brief e.g. 555555, 'CONTOSO'. </param>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Script activity type. </summary>
     public partial class ScriptActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of ScriptActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ScriptActivity(string name) : base(name)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Script";
         }
 
-        /// <summary> Initializes a new instance of ScriptActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScriptActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

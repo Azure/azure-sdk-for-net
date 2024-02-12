@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.ManagementPartner.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PartnerResponseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PartnerResponseResource.CreateResourceIdentifier" /> to create a <see cref="PartnerResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PartnerResponseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PartnerResponseResource.CreateResourceIdentifier" /> to create a <see cref="PartnerResponseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PartnerResponseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PartnerResponseResource"/> object. </returns>
         public virtual PartnerResponseResource GetPartnerResponseResource(ResourceIdentifier id)
         {
             PartnerResponseResource.ValidateResourceId(id);

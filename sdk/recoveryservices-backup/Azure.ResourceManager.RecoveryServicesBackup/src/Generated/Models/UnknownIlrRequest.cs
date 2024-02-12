@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownIlrRequest. </summary>
     internal partial class UnknownIlrRequest : IlrContent
     {
-        /// <summary> Initializes a new instance of UnknownIlrRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownIlrRequest"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal UnknownIlrRequest(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownIlrRequest(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownIlrRequest"/> for deserialization. </summary>
+        internal UnknownIlrRequest()
+        {
         }
     }
 }

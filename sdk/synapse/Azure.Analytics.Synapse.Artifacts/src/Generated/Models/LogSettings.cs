@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Log settings. </summary>
     public partial class LogSettings
     {
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="logLocationSettings"/> is null. </exception>
         public LogSettings(LogLocationSettings logLocationSettings)
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             LogLocationSettings = logLocationSettings;
         }
 
-        /// <summary> Initializes a new instance of LogSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogSettings"/>. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>

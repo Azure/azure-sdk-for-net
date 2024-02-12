@@ -56,10 +56,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -78,10 +86,18 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeviceProvisioningServiceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeviceProvisioningServiceIotDpsResourceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -99,6 +115,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +157,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotDpsResource_CheckProvisioningServiceNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceProvisioningServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

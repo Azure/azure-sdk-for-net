@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkFeatureResource" /> and their operations.
-    /// Each <see cref="NetworkFeatureResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="NetworkFeatureCollection" /> instance call the GetNetworkFeatures method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="NetworkFeatureResource"/> and their operations.
+    /// Each <see cref="NetworkFeatureResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="NetworkFeatureCollection"/> instance call the GetNetworkFeatures method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class NetworkFeatureCollection : ArmCollection
     {
@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +151,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +281,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_ListNetworkFeaturesSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

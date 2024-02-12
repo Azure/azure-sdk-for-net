@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> This activity evaluates a boolean expression and executes either the activities under the ifTrueActivities property or the ifFalseActivities property depending on the result of the expression. </summary>
     public partial class IfConditionActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of IfConditionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="expression"/> is null. </exception>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "IfCondition";
         }
 
-        /// <summary> Initializes a new instance of IfConditionActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             IfTrueActivities = ifTrueActivities;
             IfFalseActivities = ifFalseActivities;
             ActivityType = activityType ?? "IfCondition";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IfConditionActivity"/> for deserialization. </summary>
+        internal IfConditionActivity()
+        {
         }
 
         /// <summary> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </summary>

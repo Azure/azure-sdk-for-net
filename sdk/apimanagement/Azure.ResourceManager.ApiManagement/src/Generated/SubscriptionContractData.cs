@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.ApiManagement
     /// </summary>
     public partial class SubscriptionContractData : ResourceData
     {
-        /// <summary> Initializes a new instance of SubscriptionContractData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionContractData"/>. </summary>
         public SubscriptionContractData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionContractData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionContractData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +89,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="secondaryKey"> Subscription secondary key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="stateComment"> Optional subscription comment added by an administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing is enabled. </param>
-        internal SubscriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownerId, string scope, string displayName, SubscriptionState? state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionContractData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string ownerId, string scope, string displayName, SubscriptionState? state, DateTimeOffset? createdOn, DateTimeOffset? startOn, DateTimeOffset? expireOn, DateTimeOffset? endOn, DateTimeOffset? notifiesOn, string primaryKey, string secondaryKey, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             OwnerId = ownerId;
             Scope = scope;
@@ -71,6 +105,7 @@ namespace Azure.ResourceManager.ApiManagement
             SecondaryKey = secondaryKey;
             StateComment = stateComment;
             AllowTracing = allowTracing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The user resource identifier of the subscription owner. The value is a valid relative URL in the format of /users/{userId} where {userId} is a user identifier. </summary>

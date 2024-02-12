@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> The UnknownInputSchemaMapping. </summary>
     internal partial class UnknownInputSchemaMapping : EventGridInputSchemaMapping
     {
-        /// <summary> Initializes a new instance of UnknownInputSchemaMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputSchemaMapping"/>. </summary>
         /// <param name="inputSchemaMappingType"> Type of the custom mapping. </param>
-        internal UnknownInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType) : base(inputSchemaMappingType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInputSchemaMapping(InputSchemaMappingType inputSchemaMappingType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inputSchemaMappingType, serializedAdditionalRawData)
         {
             InputSchemaMappingType = inputSchemaMappingType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownInputSchemaMapping"/> for deserialization. </summary>
+        internal UnknownInputSchemaMapping()
+        {
         }
     }
 }

@@ -14,11 +14,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageAzureV2 specific provider input. </summary>
     public partial class InMageAzureV2ReprotectContent : ReverseReplicationProviderSpecificContent
     {
-        /// <summary> Initializes a new instance of InMageAzureV2ReprotectContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReprotectContent"/>. </summary>
         public InMageAzureV2ReprotectContent()
         {
             DisksToInclude = new ChangeTrackingList<string>();
             InstanceType = "InMageAzureV2";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReprotectContent"/>. </summary>
+        /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="masterTargetId"> The Master target Id. </param>
+        /// <param name="processServerId"> The Process Server Id. </param>
+        /// <param name="storageAccountId"> The storage account id. </param>
+        /// <param name="runAsAccountId"> The CS account Id. </param>
+        /// <param name="policyId"> The Policy Id. </param>
+        /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        internal InMageAzureV2ReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, ResourceIdentifier policyId, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude) : base(instanceType, serializedAdditionalRawData)
+        {
+            MasterTargetId = masterTargetId;
+            ProcessServerId = processServerId;
+            StorageAccountId = storageAccountId;
+            RunAsAccountId = runAsAccountId;
+            PolicyId = policyId;
+            LogStorageAccountId = logStorageAccountId;
+            DisksToInclude = disksToInclude;
+            InstanceType = instanceType ?? "InMageAzureV2";
         }
 
         /// <summary> The Master target Id. </summary>

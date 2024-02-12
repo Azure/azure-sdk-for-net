@@ -6,28 +6,63 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of a certificate used for authenticating a token. </summary>
     public partial class ContainerRegistryTokenCertificate
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         public ContainerRegistryTokenCertificate()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTokenCertificate. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCertificate"/>. </summary>
         /// <param name="name"></param>
         /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
         /// <param name="encodedPemCertificate"> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </param>
-        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenCertificate(ContainerRegistryTokenCertificateName? name, DateTimeOffset? expireOn, string thumbprint, string encodedPemCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ExpireOn = expireOn;
             Thumbprint = thumbprint;
             EncodedPemCertificate = encodedPemCertificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name. </summary>

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Legacy reservation recommendation. </summary>
     public partial class ConsumptionLegacyReservationRecommendation : ConsumptionReservationRecommendation
     {
-        /// <summary> Initializes a new instance of ConsumptionLegacyReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         internal ConsumptionLegacyReservationRecommendation(string scope)
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Consumption.Models
             Kind = ReservationRecommendationKind.Legacy;
         }
 
-        /// <summary> Initializes a new instance of ConsumptionLegacyReservationRecommendation. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
         /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
         /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="firstUsageOn"> The usage date for looking back. </param>
         /// <param name="scope"> Shared or single recommendation. </param>
         /// <param name="skuProperties"> List of sku properties. </param>
-        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku)
+        internal ConsumptionLegacyReservationRecommendation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ReservationRecommendationKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, AzureLocation? location, string sku, IDictionary<string, BinaryData> serializedAdditionalRawData, string lookBackPeriod, float? instanceFlexibilityRatio, string instanceFlexibilityGroup, string normalizedSize, float? recommendedQuantityNormalized, Guid? meterId, string term, decimal? costWithNoReservedInstances, decimal? recommendedQuantity, decimal? totalCostWithReservedInstances, decimal? netSavings, DateTimeOffset? firstUsageOn, string scope, IReadOnlyList<ConsumptionSkuProperty> skuProperties) : base(id, name, resourceType, systemData, kind, etag, tags, location, sku, serializedAdditionalRawData)
         {
             LookBackPeriod = lookBackPeriod;
             InstanceFlexibilityRatio = instanceFlexibilityRatio;
@@ -69,6 +70,11 @@ namespace Azure.ResourceManager.Consumption.Models
             Scope = scope;
             SkuProperties = skuProperties;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionLegacyReservationRecommendation"/> for deserialization. </summary>
+        internal ConsumptionLegacyReservationRecommendation()
+        {
         }
 
         /// <summary> The number of days of usage to look back for recommendation. </summary>

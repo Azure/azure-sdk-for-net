@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> SSIS properties for managed integration runtime. </summary>
     public partial class IntegrationRuntimeSsisProperties
     {
-        /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisProperties"/>. </summary>
         public IntegrationRuntimeSsisProperties()
         {
             ExpressCustomSetupProperties = new ChangeTrackingList<CustomSetupBase>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of IntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeSsisProperties"/>. </summary>
         /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
         /// <param name="licenseType"> License type for bringing your own license scenario. </param>
         /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>

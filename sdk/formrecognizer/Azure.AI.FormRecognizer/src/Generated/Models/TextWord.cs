@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing a word. </summary>
     internal partial class TextWord
     {
-        /// <summary> Initializes a new instance of TextWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextWord"/>. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.AI.FormRecognizer.Models
             BoundingBox = boundingBox.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextWord"/>. </summary>
         /// <param name="text"> The text content of the word. </param>
         /// <param name="boundingBox"> Bounding box of an extracted word. </param>
         /// <param name="confidence"> Confidence value. </param>

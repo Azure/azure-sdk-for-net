@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Media;
@@ -14,21 +15,55 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The streaming endpoint list result. </summary>
     internal partial class StreamingEndpointListResult
     {
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         internal StreamingEndpointListResult()
         {
             Value = new ChangeTrackingList<StreamingEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of StreamingEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingEndpointListResult"/>. </summary>
         /// <param name="value"> The result of the List StreamingEndpoint operation. </param>
         /// <param name="odataCount"> The number of result. </param>
         /// <param name="odataNextLink"> The link to the next set of results. Not empty if value contains incomplete list of streaming endpoints. </param>
-        internal StreamingEndpointListResult(IReadOnlyList<StreamingEndpointData> value, int? odataCount, string odataNextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingEndpointListResult(IReadOnlyList<StreamingEndpointData> value, int? odataCount, string odataNextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             OdataCount = odataCount;
             OdataNextLink = odataNextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The result of the List StreamingEndpoint operation. </summary>

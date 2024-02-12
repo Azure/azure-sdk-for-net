@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ChangeAnalysis.Mocking;
 using Azure.ResourceManager.ChangeAnalysis.Models;
@@ -44,6 +45,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -55,9 +60,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableChangeAnalysisResourceGroupResource(resourceGroupResource).GetChangesByResourceGroupAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
@@ -72,6 +80,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -83,9 +95,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesByResourceGroup(this ResourceGroupResource resourceGroupResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
             return GetMockableChangeAnalysisResourceGroupResource(resourceGroupResource).GetChangesByResourceGroup(startTime, endTime, skipToken, cancellationToken);
         }
 
@@ -100,6 +115,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,9 +130,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetChangesBySubscriptionAsync(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableChangeAnalysisSubscriptionResource(subscriptionResource).GetChangesBySubscriptionAsync(startTime, endTime, skipToken, cancellationToken);
         }
 
@@ -128,6 +150,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>Changes_ListChangesBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -139,9 +165,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetChangesBySubscription(this SubscriptionResource subscriptionResource, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
             return GetMockableChangeAnalysisSubscriptionResource(subscriptionResource).GetChangesBySubscription(startTime, endTime, skipToken, cancellationToken);
         }
 
@@ -156,6 +185,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,10 +202,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="resourceId"/> is null. </exception>
+        /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DetectedChangeData> GetResourceChangesAsync(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableChangeAnalysisTenantResource(tenantResource).GetResourceChangesAsync(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
 
@@ -187,6 +222,10 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -200,10 +239,12 @@ namespace Azure.ResourceManager.ChangeAnalysis
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="resourceId"/> is null. </exception>
+        /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DetectedChangeData> GetResourceChanges(this TenantResource tenantResource, string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableChangeAnalysisTenantResource(tenantResource).GetResourceChanges(resourceId, startTime, endTime, skipToken, cancellationToken);
         }
     }

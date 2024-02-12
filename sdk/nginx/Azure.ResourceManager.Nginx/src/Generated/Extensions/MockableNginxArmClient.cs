@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NginxCertificateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NginxCertificateResource.CreateResourceIdentifier" /> to create a <see cref="NginxCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NginxCertificateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxCertificateResource.CreateResourceIdentifier" /> to create a <see cref="NginxCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NginxCertificateResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NginxCertificateResource"/> object. </returns>
         public virtual NginxCertificateResource GetNginxCertificateResource(ResourceIdentifier id)
         {
             NginxCertificateResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NginxConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NginxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NginxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NginxConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NginxConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NginxConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NginxConfigurationResource"/> object. </returns>
         public virtual NginxConfigurationResource GetNginxConfigurationResource(ResourceIdentifier id)
         {
             NginxConfigurationResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NginxDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="NginxDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="NginxDeploymentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NginxDeploymentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="NginxDeploymentResource"/> object. </returns>
         public virtual NginxDeploymentResource GetNginxDeploymentResource(ResourceIdentifier id)
         {
             NginxDeploymentResource.ValidateResourceId(id);

@@ -14,15 +14,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes a blob input data source that contains reference data. </summary>
     public partial class BlobReferenceInputDataSource : ReferenceInputDataSource
     {
-        /// <summary> Initializes a new instance of BlobReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceInputDataSource"/>. </summary>
         public BlobReferenceInputDataSource()
         {
             StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             ReferenceInputDataSourceType = "Microsoft.Storage/Blob";
         }
 
-        /// <summary> Initializes a new instance of BlobReferenceInputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlobReferenceInputDataSource"/>. </summary>
         /// <param name="referenceInputDataSourceType"> Indicates the type of input data source containing reference data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="storageAccounts"> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="container"> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="pathPattern"> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </param>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="sourcePartitionCount"> The partition count of the blob input data source. Range 1 - 256. </param>
         /// <param name="fullSnapshotRefreshInterval"> The refresh interval of the blob input data source. </param>
         /// <param name="deltaSnapshotRefreshInterval"> The interval that the user generates a delta snapshot of this reference blob input data source. </param>
-        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, TimeSpan? fullSnapshotRefreshInterval, TimeSpan? deltaSnapshotRefreshInterval) : base(referenceInputDataSourceType)
+        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, TimeSpan? fullSnapshotRefreshInterval, TimeSpan? deltaSnapshotRefreshInterval) : base(referenceInputDataSourceType, serializedAdditionalRawData)
         {
             StorageAccounts = storageAccounts;
             Container = container;

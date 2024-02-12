@@ -5,10 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Blobs.Batch.Tests;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -19,6 +17,7 @@ using Moq;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 using Azure.Core.TestFramework.Models;
+using Azure.Storage.Blobs.Batch.Models;
 
 namespace Azure.Storage.Blobs.Test
 {
@@ -27,7 +26,7 @@ namespace Azure.Storage.Blobs.Test
         private static Regex pattern = new Regex(@"sig=\S+\s", RegexOptions.Compiled);
 
         public BlobBatchClientTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Record /* RecordedTestMode.Record /* to re-record */)
         {
             // Batch delimiters are random so disable body comparison
             CompareBodies = false;
@@ -463,6 +462,54 @@ namespace Azure.Storage.Blobs.Test
 
             // Act
             await blobBatchClient.SubmitBatchAsync(batch, throwOnAnyFailure: true);
+        }
+
+        [RecordedTest]
+        public async Task Delete_Version()
+        {
+            await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+
+            // make some edits to create versions
+            foreach (var _ in Enumerable.Range(0, 2))
+            {
+                List<Task> tasks = new();
+                foreach (BlobClient blobClient in blobs)
+                {
+                    tasks.Add(blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(1024)), overwrite: true));
+                }
+                await Task.WhenAll(tasks);
+            }
+
+            // get all versions for all blobs
+            Dictionary<Uri, List<string>> versions = new();
+            foreach (BlobClient blobClient in blobs)
+            {
+                versions.Add(blobClient.Uri, await blobClient.GetBlobVersionsAsync());
+            }
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+
+            // batch a delete of the first version for all blobs
+            using BlobBatch batch = client.CreateBatch();
+            Response[] responses = new Response[blobs.Length];
+            for (int i = 0; i < blobs.Length; i++)
+            {
+                BlobClient blob = blobs[i];
+                responses[i] = batch.DeleteBlob(blob.BlobContainerName, blob.Name, new DeleteBlobOptions
+                {
+                    VersionID = versions[blob.Uri].First()
+                });
+            }
+            Response response = await client.SubmitBatchAsync(batch);
+
+            scenario.AssertStatus(202, response);
+            scenario.AssertStatus(202, responses);
+            foreach (BlobClient blob in blobs)
+            {
+                List<string> blobVersions = await blob.GetBlobVersionsAsync();
+                Assert.That(blobVersions.Count, Is.EqualTo(versions[blob.Uri].Count - 1));
+            }
         }
 
         [RecordedTest]

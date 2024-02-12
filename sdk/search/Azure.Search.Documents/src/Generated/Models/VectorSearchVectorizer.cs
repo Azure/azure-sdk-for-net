@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
-    /// Contains specific details for a vectorization method to be used during query time.
+    /// Specifies the vectorization method to be used during query time.
     /// Please note <see cref="VectorSearchVectorizer"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureOpenAIVectorizer"/> and <see cref="CustomVectorizer"/>.
     /// </summary>
     public abstract partial class VectorSearchVectorizer
     {
-        /// <summary> Initializes a new instance of VectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         protected VectorSearchVectorizer(string name)
@@ -27,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of VectorSearchVectorizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorSearchVectorizer"/>. </summary>
         /// <param name="name"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
         internal VectorSearchVectorizer(string name, VectorSearchVectorizerKind kind)

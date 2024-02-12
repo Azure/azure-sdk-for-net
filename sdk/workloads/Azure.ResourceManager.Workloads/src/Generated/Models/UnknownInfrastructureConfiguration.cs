@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownInfrastructureConfiguration. </summary>
     internal partial class UnknownInfrastructureConfiguration : InfrastructureConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownInfrastructureConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInfrastructureConfiguration"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         /// <param name="appResourceGroup"> The application resource group where SAP system resources will be deployed. </param>
-        internal UnknownInfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup) : base(deploymentType, appResourceGroup)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInfrastructureConfiguration(SapDeploymentType deploymentType, string appResourceGroup, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(deploymentType, appResourceGroup, serializedAdditionalRawData)
         {
             DeploymentType = deploymentType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownInfrastructureConfiguration"/> for deserialization. </summary>
+        internal UnknownInfrastructureConfiguration()
+        {
         }
     }
 }

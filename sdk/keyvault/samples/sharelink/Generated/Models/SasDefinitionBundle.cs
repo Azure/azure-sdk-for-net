@@ -13,13 +13,13 @@ namespace Azure.Security.KeyVault.Storage.Models
     /// <summary> A SAS definition bundle consists of key vault SAS definition details plus its attributes. </summary>
     public partial class SasDefinitionBundle
     {
-        /// <summary> Initializes a new instance of SasDefinitionBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionBundle"/>. </summary>
         internal SasDefinitionBundle()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of SasDefinitionBundle. </summary>
+        /// <summary> Initializes a new instance of <see cref="SasDefinitionBundle"/>. </summary>
         /// <param name="id"> The SAS definition id. </param>
         /// <param name="secretId"> Storage account SAS definition secret id. </param>
         /// <param name="templateUri"> The SAS definition token template signed with an arbitrary key.  Tokens created according to the SAS definition will have the same properties as the template. </param>

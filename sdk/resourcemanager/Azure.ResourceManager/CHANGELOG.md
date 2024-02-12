@@ -1,10 +1,44 @@
 # Release History
 
-## 1.8.1 (2023-11-07)
+## 1.11.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/38154) that sdk caches wrong subscription provider.
 
 ### Other Changes
 
-- Refines the `JsonConverter` of `ManagedServiceIdentityType` to include only its string literal value.
+## 1.10.1 (2024-01-26)
+
+### Bugs Fixed
+
+- Change the private ctor `OperationStatusResult` to protected.
+
+## 1.10.0 (2024-01-12)
+
+### Features Added
+
+- Add `GetEntities` operation.
+- Add `CheckResourceName` operation.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.9.0 (2023-11-14)
+
+### Features Added
+
+- Bump api-version of `Lock` to `2020-05-01`.
+
+### Bugs Fixed
+
+- Add the `Default` enum value back to `EnforcementMode`.
+
+### Other Changes
+
+- Refined some customization code to make the library more maintainable.
 
 ## 1.8.0 (2023-11-02)
 
@@ -22,8 +56,8 @@
 
 ### Other Changes
 
-- Bump api-version of `Subscription` to `2022-12-01`
-- Bump api-version of `Tenant` to `2022-12-01`
+- Bump api-version of `Subscription` to `2022-12-01`.
+- Bump api-version of `Tenant` to `2022-12-01`.
 
 ## 1.6.0 (2023-05-16)
 

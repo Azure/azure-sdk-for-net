@@ -22,9 +22,9 @@ using Azure.ResourceManager.StoragePool.Models;
 namespace Azure.ResourceManager.StoragePool
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DiskPoolResource" /> and their operations.
-    /// Each <see cref="DiskPoolResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DiskPoolCollection" /> instance call the GetDiskPools method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DiskPoolResource"/> and their operations.
+    /// Each <see cref="DiskPoolResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DiskPoolCollection"/> instance call the GetDiskPools method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DiskPoolCollection : ArmCollection, IEnumerable<DiskPoolResource>, IAsyncEnumerable<DiskPoolResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DiskPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DiskPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DiskPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="diskPoolName"> The name of the Disk Pool. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +444,14 @@ namespace Azure.ResourceManager.StoragePool
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiskPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiskPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

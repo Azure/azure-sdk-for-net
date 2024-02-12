@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Linked service for Quickbase. </summary>
     public partial class QuickbaseLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="url"> The url to connect Quickbase source. Type: string (or Expression with resultType string). </param>
         /// <param name="userToken">
         /// The user token for the Quickbase source.
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Quickbase";
         }
 
-        /// <summary> Initializes a new instance of QuickbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuickbaseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

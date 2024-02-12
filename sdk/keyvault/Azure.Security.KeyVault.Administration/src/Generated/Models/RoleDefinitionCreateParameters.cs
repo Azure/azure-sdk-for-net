@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role definition create parameters. </summary>
     internal partial class RoleDefinitionCreateParameters
     {
-        /// <summary> Initializes a new instance of RoleDefinitionCreateParameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleDefinitionCreateParameters"/>. </summary>
         /// <param name="properties"> Role definition properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public RoleDefinitionCreateParameters(RoleDefinitionProperties properties)

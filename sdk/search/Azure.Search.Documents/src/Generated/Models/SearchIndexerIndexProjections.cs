@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> Definition of additional projections to secondary search indexes. </summary>
     public partial class SearchIndexerIndexProjections
     {
-        /// <summary> Initializes a new instance of SearchIndexerIndexProjections. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjections"/>. </summary>
         /// <param name="selectors"> A list of projections to be performed to secondary search indexes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="selectors"/> is null. </exception>
         public SearchIndexerIndexProjections(IEnumerable<SearchIndexerIndexProjectionSelector> selectors)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Selectors = selectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerIndexProjections. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerIndexProjections"/>. </summary>
         /// <param name="selectors"> A list of projections to be performed to secondary search indexes. </param>
         /// <param name="parameters"> A dictionary of index projection-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
         internal SearchIndexerIndexProjections(IList<SearchIndexerIndexProjectionSelector> selectors, SearchIndexerIndexProjectionsParameters parameters)

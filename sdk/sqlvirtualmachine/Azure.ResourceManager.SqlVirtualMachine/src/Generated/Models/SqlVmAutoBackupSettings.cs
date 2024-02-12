@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     /// <summary> Configure backups for databases in your SQL virtual machine. </summary>
     public partial class SqlVmAutoBackupSettings
     {
-        /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupSettings"/>. </summary>
         public SqlVmAutoBackupSettings()
         {
             DaysOfWeek = new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>();
         }
 
-        /// <summary> Initializes a new instance of SqlVmAutoBackupSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlVmAutoBackupSettings"/>. </summary>
         /// <param name="isEnabled"> Enable or disable autobackup on SQL virtual machine. </param>
         /// <param name="isEncryptionEnabled"> Enable or disable encryption for backup on SQL virtual machine. </param>
         /// <param name="retentionPeriodInDays"> Retention period of backup: 1-90 days. </param>
@@ -35,7 +67,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="fullBackupStartHour"> Start time of a given day during which full backups can take place. 0-23 hours. </param>
         /// <param name="fullBackupWindowHours"> Duration of the time window of a given day during which full backups can take place. 1-23 hours. </param>
         /// <param name="logBackupFrequency"> Frequency of log backups. 5-60 minutes. </param>
-        internal SqlVmAutoBackupSettings(bool? isEnabled, bool? isEncryptionEnabled, int? retentionPeriodInDays, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? areSystemDbsIncludedInBackup, SqVmBackupScheduleType? backupScheduleType, SqlVmFullBackupFrequency? fullBackupFrequency, IList<SqlVmAutoBackupDayOfWeek> daysOfWeek, int? fullBackupStartHour, int? fullBackupWindowHours, int? logBackupFrequency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SqlVmAutoBackupSettings(bool? isEnabled, bool? isEncryptionEnabled, int? retentionPeriodInDays, Uri storageAccountUri, string storageContainerName, string storageAccessKey, string password, bool? areSystemDbsIncludedInBackup, SqVmBackupScheduleType? backupScheduleType, SqlVmFullBackupFrequency? fullBackupFrequency, IList<SqlVmAutoBackupDayOfWeek> daysOfWeek, int? fullBackupStartHour, int? fullBackupWindowHours, int? logBackupFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             IsEncryptionEnabled = isEncryptionEnabled;
@@ -51,6 +84,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             FullBackupStartHour = fullBackupStartHour;
             FullBackupWindowHours = fullBackupWindowHours;
             LogBackupFrequency = logBackupFrequency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable or disable autobackup on SQL virtual machine. </summary>

@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
     /// The security connector environment data.
     /// Please note <see cref="SecurityConnectorEnvironment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/> and <see cref="GithubScopeEnvironment"/>.
+    /// The available derived classes include <see cref="AwsEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/> and <see cref="GitlabScopeEnvironment"/>.
     /// </summary>
     public abstract partial class SecurityConnectorEnvironment
     {
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         protected SecurityConnectorEnvironment()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityConnectorEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityConnectorEnvironment"/>. </summary>
         /// <param name="environmentType"> The type of the environment data. </param>
-        internal SecurityConnectorEnvironment(EnvironmentType environmentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityConnectorEnvironment(EnvironmentType environmentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EnvironmentType = environmentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the environment data. </summary>

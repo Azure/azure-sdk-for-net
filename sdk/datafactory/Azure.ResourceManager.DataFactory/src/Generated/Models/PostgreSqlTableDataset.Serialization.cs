@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PostgreSqlTableDataset : IUtf8JsonSerializable
+    public partial class PostgreSqlTableDataset : IUtf8JsonSerializable, IJsonModel<PostgreSqlTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlTableDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -80,14 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TableName);
-#else
-                using (JsonDocument document = JsonDocument.Parse(TableName))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, TableName);
             }
             if (Optional.IsDefined(Table))
             {
@@ -115,8 +117,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlTableDataset DeserializePostgreSqlTableDataset(JsonElement element)
+        PostgreSqlTableDataset IJsonModel<PostgreSqlTableDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlTableDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlTableDataset(document.RootElement, options);
+        }
+
+        internal static PostgreSqlTableDataset DeserializePostgreSqlTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> tableName = default;
+            Optional<DataFactoryElement<string>> tableName = default;
             Optional<DataFactoryElement<string>> table = default;
             Optional<DataFactoryElement<string>> schema0 = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -228,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tableName = BinaryData.FromString(property0.Value.GetRawText());
+                            tableName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("table"u8))
@@ -257,5 +273,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new PostgreSqlTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, table.Value, schema0.Value);
         }
+
+        BinaryData IPersistableModel<PostgreSqlTableDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlTableDataset IPersistableModel<PostgreSqlTableDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlTableDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlTableDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

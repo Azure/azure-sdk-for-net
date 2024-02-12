@@ -57,10 +57,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -79,10 +87,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>Firewalls_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PaloAltoNetworksFirewallResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PaloAltoNetworksFirewallFirewallsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -101,10 +117,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LocalRulestackResource> GetLocalRulestacksAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -123,10 +147,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <term>Operation Id</term>
         /// <description>LocalRulestacks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LocalRulestackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocalRulestackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LocalRulestackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LocalRulestackResource> GetLocalRulestacks(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocalRulestackRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

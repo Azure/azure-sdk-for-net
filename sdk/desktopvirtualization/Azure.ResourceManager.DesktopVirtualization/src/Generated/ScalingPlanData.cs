@@ -20,7 +20,39 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// </summary>
     public partial class ScalingPlanData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="timeZone"> Timezone of the scaling plan. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> is null. </exception>
@@ -33,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             HostPoolReferences = new ChangeTrackingList<ScalingHostPoolReference>();
         }
 
-        /// <summary> Initializes a new instance of ScalingPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +86,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="identity"> Gets or sets the identity. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
-        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? scalingHostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ScalingPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, string timeZone, ScalingHostPoolType? scalingHostPoolType, string exclusionTag, IList<ScalingSchedule> schedules, IList<ScalingHostPoolReference> hostPoolReferences, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ObjectId = objectId;
             Description = description;
@@ -70,6 +103,12 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Identity = identity;
             Sku = sku;
             Plan = plan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScalingPlanData"/> for deserialization. </summary>
+        internal ScalingPlanData()
+        {
         }
 
         /// <summary> ObjectId of scaling plan. (internal use). </summary>

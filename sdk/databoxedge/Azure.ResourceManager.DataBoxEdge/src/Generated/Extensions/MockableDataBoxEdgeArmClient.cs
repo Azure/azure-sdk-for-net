@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeDeviceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeDeviceResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(ResourceIdentifier id)
         {
             DataBoxEdgeDeviceResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeAlertResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeAlertResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeAlertResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeAlertResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeAlertResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeAlertResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeAlertResource"/> object. </returns>
         public virtual DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(ResourceIdentifier id)
         {
             DataBoxEdgeAlertResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BandwidthScheduleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BandwidthScheduleResource.CreateResourceIdentifier" /> to create a <see cref="BandwidthScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="BandwidthScheduleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="BandwidthScheduleResource.CreateResourceIdentifier" /> to create a <see cref="BandwidthScheduleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BandwidthScheduleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="BandwidthScheduleResource"/> object. </returns>
         public virtual BandwidthScheduleResource GetBandwidthScheduleResource(ResourceIdentifier id)
         {
             BandwidthScheduleResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticProactiveLogCollectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticProactiveLogCollectionSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(ResourceIdentifier id)
         {
             DiagnosticProactiveLogCollectionSettingResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DiagnosticRemoteSupportSettingResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DiagnosticRemoteSupportSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticRemoteSupportSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DiagnosticRemoteSupportSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DiagnosticRemoteSupportSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticRemoteSupportSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(ResourceIdentifier id)
         {
             DiagnosticRemoteSupportSettingResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeJobResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeJobResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeJobResource"/> object. </returns>
         public virtual DataBoxEdgeJobResource GetDataBoxEdgeJobResource(ResourceIdentifier id)
         {
             DataBoxEdgeJobResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeOrderResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeOrderResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeOrderResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeOrderResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeOrderResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(ResourceIdentifier id)
         {
             DataBoxEdgeOrderResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeRoleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeRoleResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeRoleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeRoleResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeRoleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeRoleResource"/> object. </returns>
         public virtual DataBoxEdgeRoleResource GetDataBoxEdgeRoleResource(ResourceIdentifier id)
         {
             DataBoxEdgeRoleResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeRoleAddonResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeRoleAddonResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeRoleAddonResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeRoleAddonResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeRoleAddonResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeRoleAddonResource"/> object. </returns>
         public virtual DataBoxEdgeRoleAddonResource GetDataBoxEdgeRoleAddonResource(ResourceIdentifier id)
         {
             DataBoxEdgeRoleAddonResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringMetricConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringMetricConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringMetricConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitoringMetricConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoringMetricConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringMetricConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(ResourceIdentifier id)
         {
             MonitoringMetricConfigurationResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeShareResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeShareResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeShareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeShareResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeShareResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeShareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeShareResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeShareResource"/> object. </returns>
         public virtual DataBoxEdgeShareResource GetDataBoxEdgeShareResource(ResourceIdentifier id)
         {
             DataBoxEdgeShareResource.ValidateResourceId(id);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeStorageAccountCredentialResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeStorageAccountCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageAccountCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeStorageAccountCredentialResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountCredentialResource"/> object. </returns>
         public virtual DataBoxEdgeStorageAccountCredentialResource GetDataBoxEdgeStorageAccountCredentialResource(ResourceIdentifier id)
         {
             DataBoxEdgeStorageAccountCredentialResource.ValidateResourceId(id);
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeStorageAccountResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeStorageAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageAccountResource"/> object. </returns>
         public virtual DataBoxEdgeStorageAccountResource GetDataBoxEdgeStorageAccountResource(ResourceIdentifier id)
         {
             DataBoxEdgeStorageAccountResource.ValidateResourceId(id);
@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeStorageContainerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeStorageContainerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeStorageContainerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeStorageContainerResource"/> object. </returns>
         public virtual DataBoxEdgeStorageContainerResource GetDataBoxEdgeStorageContainerResource(ResourceIdentifier id)
         {
             DataBoxEdgeStorageContainerResource.ValidateResourceId(id);
@@ -205,11 +205,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeTriggerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeTriggerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeTriggerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeTriggerResource"/> object. </returns>
         public virtual DataBoxEdgeTriggerResource GetDataBoxEdgeTriggerResource(ResourceIdentifier id)
         {
             DataBoxEdgeTriggerResource.ValidateResourceId(id);
@@ -217,11 +217,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataBoxEdgeUserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataBoxEdgeUserResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeUserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DataBoxEdgeUserResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DataBoxEdgeUserResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxEdgeUserResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataBoxEdgeUserResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DataBoxEdgeUserResource"/> object. </returns>
         public virtual DataBoxEdgeUserResource GetDataBoxEdgeUserResource(ResourceIdentifier id)
         {
             DataBoxEdgeUserResource.ValidateResourceId(id);

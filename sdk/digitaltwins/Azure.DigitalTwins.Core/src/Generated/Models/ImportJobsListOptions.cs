@@ -10,9 +10,20 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsListOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsListOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJobsListOptions"/>. </summary>
         public ImportJobsListOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsListOptions"/>. </summary>
+        /// <param name="traceparent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="tracestate"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        /// <param name="maxItemsPerPage"> The maximum number of items to retrieve per request. The server may choose to return less than the requested number. </param>
+        internal ImportJobsListOptions(string traceparent, string tracestate, int? maxItemsPerPage)
+        {
+            Traceparent = traceparent;
+            Tracestate = tracestate;
+            MaxItemsPerPage = maxItemsPerPage;
         }
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>

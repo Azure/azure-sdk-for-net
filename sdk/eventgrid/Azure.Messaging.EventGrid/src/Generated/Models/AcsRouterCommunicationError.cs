@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Router Communication Error. </summary>
     internal partial class AcsRouterCommunicationError
     {
-        /// <summary> Initializes a new instance of AcsRouterCommunicationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         internal AcsRouterCommunicationError()
         {
             Details = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterCommunicationError. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         /// <param name="code"> Router Communication Error Code. </param>
         /// <param name="message"> Router Communication Error Message. </param>
         /// <param name="target"> Router Communication Error Target. </param>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,39 @@ namespace Azure.ResourceManager.ServiceFabric
     /// </summary>
     public partial class ServiceFabricServiceData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceFabricServiceData(AzureLocation location) : base(location)
         {
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabric
             ServicePlacementPolicies = new ChangeTrackingList<ServicePlacementPolicyDescription>();
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricServiceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,9 +82,15 @@ namespace Azure.ResourceManager.ServiceFabric
         /// The available derived classes include <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/> and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
-        /// <param name="serviceDnsName"> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </param>
+        /// <param name="serviceDnsName">
+        /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
+        /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
+        /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
+        ///
+        /// </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string placementConstraints, IList<ServiceCorrelationDescription> correlationScheme, IList<ServiceLoadMetricDescription> serviceLoadMetrics, IList<ServicePlacementPolicyDescription> servicePlacementPolicies, ApplicationMoveCost? defaultMoveCost, string provisioningState, ApplicationServiceKind? serviceKind, string serviceTypeName, PartitionSchemeDescription partitionDescription, ArmServicePackageActivationMode? servicePackageActivationMode, string serviceDnsName, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PlacementConstraints = placementConstraints;
             CorrelationScheme = correlationScheme;
@@ -65,6 +104,12 @@ namespace Azure.ResourceManager.ServiceFabric
             ServicePackageActivationMode = servicePackageActivationMode;
             ServiceDnsName = serviceDnsName;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricServiceData"/> for deserialization. </summary>
+        internal ServiceFabricServiceData()
+        {
         }
 
         /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </summary>
@@ -91,7 +136,12 @@ namespace Azure.ResourceManager.ServiceFabric
         public PartitionSchemeDescription PartitionDescription { get; set; }
         /// <summary> The activation Mode of the service package. </summary>
         public ArmServicePackageActivationMode? ServicePackageActivationMode { get; set; }
-        /// <summary> Dns name used for the service. If this is specified, then the service can be accessed via its DNS name instead of service name. </summary>
+        /// <summary>
+        /// Dns name used for the service. If this is specified, then the DNS name can be used to return the IP addresses of service endpoints for application layer protocols (e.g., HTTP).
+        /// When updating serviceDnsName, old name may be temporarily resolvable. However, rely on new name.
+        /// When removing serviceDnsName, removed name may temporarily be resolvable. Do not rely on the name being unresolvable.
+        ///
+        /// </summary>
         public string ServiceDnsName { get; set; }
         /// <summary> Azure resource etag. </summary>
         public ETag? ETag { get; }

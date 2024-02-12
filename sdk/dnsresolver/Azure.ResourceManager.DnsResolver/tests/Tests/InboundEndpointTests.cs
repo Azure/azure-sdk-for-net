@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                     Id = new ResourceIdentifier(DefaultSubnetID),
                 },
                 privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic, null)
             });
 
             // ACT
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                     Id = new ResourceIdentifier(DefaultSubnetID),
                 },
                 privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic, null)
             });
 
             await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                     Id = new ResourceIdentifier(DefaultSubnetID),
                 },
                 privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic, null)
             });
 
             var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                     Id = new ResourceIdentifier(DefaultSubnetID),
                 },
                 privateIPAddress: null,
-                InboundEndpointIPAllocationMethod.Dynamic)
+                InboundEndpointIPAllocationMethod.Dynamic, null)
             });
 
             var createdInboundEndpoint = await _dnsResolver.GetDnsResolverInboundEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, inboundEndpointName, inboundEndpointData);

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Event data for Microsoft.EventGrid.MQTTClientSessionConnected event. </summary>
     public partial class EventGridMqttClientSessionConnectedEventData : EventGridMqttClientEventData
     {
-        /// <summary> Initializes a new instance of EventGridMqttClientSessionConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
         internal EventGridMqttClientSessionConnectedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridMqttClientSessionConnectedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridMqttClientSessionConnectedEventData"/>. </summary>
         /// <param name="clientAuthenticationName"> Unique identifier for the MQTT client that the client presents to the service for authentication. This case-sensitive string can be up to 128 characters long, and supports UTF-8 characters. </param>
         /// <param name="clientName"> Name of the client resource in the Event Grid namespace. </param>
         /// <param name="namespaceName"> Name of the Event Grid namespace where the MQTT client was created or updated. </param>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ServicePrincipalCredential : IUtf8JsonSerializable
+    public partial class ServicePrincipalCredential : IUtf8JsonSerializable, IJsonModel<ServicePrincipalCredential>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServicePrincipalCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CredentialType);
@@ -52,14 +61,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ServicePrincipalId))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
@@ -69,14 +71,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tenant);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Tenant))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, Tenant);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -94,8 +89,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element)
+        ServicePrincipalCredential IJsonModel<ServicePrincipalCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalCredential(document.RootElement, options);
+        }
+
+        internal static ServicePrincipalCredential DeserializeServicePrincipalCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,9 +112,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             string type = default;
             Optional<string> description = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> servicePrincipalId = default;
+            Optional<DataFactoryElement<string>> servicePrincipalId = default;
             Optional<DataFactoryKeyVaultSecretReference> servicePrincipalKey = default;
-            Optional<BinaryData> tenant = default;
+            Optional<DataFactoryElement<string>> tenant = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -156,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
@@ -174,7 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tenant = BinaryData.FromString(property0.Value.GetRawText());
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -185,5 +194,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ServicePrincipalCredential(type, description.Value, Optional.ToList(annotations), additionalProperties, servicePrincipalId.Value, servicePrincipalKey, tenant.Value);
         }
+
+        BinaryData IPersistableModel<ServicePrincipalCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServicePrincipalCredential IPersistableModel<ServicePrincipalCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServicePrincipalCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalCredential)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServicePrincipalCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

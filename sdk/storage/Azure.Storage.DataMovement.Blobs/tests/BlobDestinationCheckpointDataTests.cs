@@ -21,7 +21,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
-        private const string DefaultCpkScope = "encryption-scope";
         private readonly Metadata DefaultMetadata = DataProvider.BuildMetadata();
         private readonly Tags DefaultTags = DataProvider.BuildTags();
 
@@ -39,8 +38,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 },
                 AccessTier.Hot,
                 DefaultMetadata,
-                DefaultTags,
-                DefaultCpkScope);
+                DefaultTags);
         }
 
         [Test]
@@ -58,7 +56,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, data.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
-            Assert.AreEqual(DefaultCpkScope, data.CpkScope);
         }
 
         [Test]
@@ -118,7 +115,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(AccessTier.Hot, deserialized.AccessTier);
             CollectionAssert.AreEquivalent(DefaultMetadata, deserialized.Metadata);
             CollectionAssert.AreEquivalent(DefaultTags, deserialized.Tags);
-            Assert.AreEqual(DefaultCpkScope, deserialized.CpkScope);
         }
     }
 }

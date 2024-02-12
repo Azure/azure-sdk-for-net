@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficControllerTrafficControllerInterfaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         /// <term>Operation Id</term>
         /// <description>TrafficControllerInterface_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TrafficControllerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrafficControllerResource> GetTrafficControllers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TrafficControllerTrafficControllerInterfaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

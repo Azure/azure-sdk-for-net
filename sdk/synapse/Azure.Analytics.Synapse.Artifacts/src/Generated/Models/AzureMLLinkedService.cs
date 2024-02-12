@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure ML Studio Web Service linked service. </summary>
     public partial class AzureMLLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="mlEndpoint"> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="apiKey">
         /// The API key for accessing the Azure ML model endpoint.
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureML";
         }
 
-        /// <summary> Initializes a new instance of AzureMLLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

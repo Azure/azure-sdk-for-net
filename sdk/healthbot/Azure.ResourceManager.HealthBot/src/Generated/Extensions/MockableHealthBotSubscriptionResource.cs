@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthBotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthBotResource> GetHealthBotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-24</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthBotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthBotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthBotResource> GetHealthBots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HealthBotBotsRestClient.CreateListRequest(Id.SubscriptionId);

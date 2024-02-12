@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes the result of the request to list Managed VM Sizes for Service Fabric Managed Clusters. </summary>
     public partial class ManagedAzResiliencyStatus
     {
-        /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedAzResiliencyStatus"/>. </summary>
         internal ManagedAzResiliencyStatus()
         {
             BaseResourceStatus = new ChangeTrackingList<ResourceAzStatus>();
         }
 
-        /// <summary> Initializes a new instance of ManagedAzResiliencyStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedAzResiliencyStatus"/>. </summary>
         /// <param name="baseResourceStatus"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
         /// <param name="isClusterZoneResilient"> URL to get the next set of Managed VM Sizes if there are any. </param>
-        internal ManagedAzResiliencyStatus(IReadOnlyList<ResourceAzStatus> baseResourceStatus, bool? isClusterZoneResilient)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedAzResiliencyStatus(IReadOnlyList<ResourceAzStatus> baseResourceStatus, bool? isClusterZoneResilient, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseResourceStatus = baseResourceStatus;
             IsClusterZoneResilient = isClusterZoneResilient;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Managed VM Sizes for Service Fabric Managed Clusters. </summary>

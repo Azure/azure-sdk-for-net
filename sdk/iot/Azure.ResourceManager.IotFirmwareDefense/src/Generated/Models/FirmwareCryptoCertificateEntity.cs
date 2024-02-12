@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Information on an entity (distinguished name) in a cryptographic certificate. </summary>
     public partial class FirmwareCryptoCertificateEntity
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateEntity"/>. </summary>
         internal FirmwareCryptoCertificateEntity()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateEntity"/>. </summary>
         /// <param name="commonName"> Common name of the certificate entity. </param>
         /// <param name="organization"> Organization of the certificate entity. </param>
         /// <param name="organizationalUnit"> The organizational unit of the certificate entity. </param>
         /// <param name="state"> Geographical state or province of the certificate entity. </param>
         /// <param name="country"> Country code of the certificate entity. </param>
-        internal FirmwareCryptoCertificateEntity(string commonName, string organization, string organizationalUnit, string state, string country)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCryptoCertificateEntity(string commonName, string organization, string organizationalUnit, string state, string country, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommonName = commonName;
             Organization = organization;
             OrganizationalUnit = organizationalUnit;
             State = state;
             Country = country;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Common name of the certificate entity. </summary>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownFileShareConfiguration. </summary>
     internal partial class UnknownFileShareConfiguration : FileShareConfiguration
     {
-        /// <summary> Initializes a new instance of UnknownFileShareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/>. </summary>
         /// <param name="configurationType"> The type of file share config. </param>
-        internal UnknownFileShareConfiguration(ConfigurationType configurationType) : base(configurationType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownFileShareConfiguration(ConfigurationType configurationType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(configurationType, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFileShareConfiguration"/> for deserialization. </summary>
+        internal UnknownFileShareConfiguration()
+        {
         }
     }
 }

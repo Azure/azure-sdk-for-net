@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.KeyVault.Models
     /// <summary> Properties of the vault. </summary>
     public partial class KeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/>. </summary>
         /// <param name="tenantId"> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="accessPolicies"> An array of 0 to 1024 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. When `createMode` is set to `recover`, access policies are not required. Otherwise, access policies are required. </param>
@@ -32,7 +64,8 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the key vault. </param>
         /// <param name="publicNetworkAccess"> Property to specify whether the vault will accept traffic from public internet. If set to 'disabled' all traffic except private endpoint traffic and that that originates from trusted services will be blocked. This will override the set firewall rules, meaning that even if the firewall rules are present we will not honor the rules. </param>
-        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, KeyVaultCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, KeyVaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal KeyVaultProperties(Guid tenantId, KeyVaultSku sku, IList<KeyVaultAccessPolicy> accessPolicies, Uri vaultUri, string hsmPoolResourceId, bool? enabledForDeployment, bool? enabledForDiskEncryption, bool? enabledForTemplateDeployment, bool? enableSoftDelete, int? softDeleteRetentionInDays, bool? enableRbacAuthorization, KeyVaultCreateMode? createMode, bool? enablePurgeProtection, KeyVaultNetworkRuleSet networkRuleSet, KeyVaultProvisioningState? provisioningState, IReadOnlyList<KeyVaultPrivateEndpointConnectionItemData> privateEndpointConnections, string publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             Sku = sku;
@@ -51,6 +84,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             ProvisioningState = provisioningState;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultProperties"/> for deserialization. </summary>
+        internal KeyVaultProperties()
+        {
         }
 
         /// <summary> The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. </summary>

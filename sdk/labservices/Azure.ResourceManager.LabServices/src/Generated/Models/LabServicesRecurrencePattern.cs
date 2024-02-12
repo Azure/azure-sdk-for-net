@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.LabServices.Models
     /// <summary> Recurrence pattern of a lab schedule. </summary>
     public partial class LabServicesRecurrencePattern
     {
-        /// <summary> Initializes a new instance of LabServicesRecurrencePattern. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesRecurrencePattern"/>. </summary>
         /// <param name="frequency"> The frequency of the recurrence. </param>
         /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
         public LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency, DateTimeOffset expireOn)
@@ -24,17 +56,24 @@ namespace Azure.ResourceManager.LabServices.Models
             ExpireOn = expireOn;
         }
 
-        /// <summary> Initializes a new instance of LabServicesRecurrencePattern. </summary>
+        /// <summary> Initializes a new instance of <see cref="LabServicesRecurrencePattern"/>. </summary>
         /// <param name="frequency"> The frequency of the recurrence. </param>
         /// <param name="weekDays"> The week days the schedule runs. Used for when the Frequency is set to Weekly. </param>
         /// <param name="interval"> The interval to invoke the schedule on. For example, interval = 2 and RecurrenceFrequency.Daily will run every 2 days. When no interval is supplied, an interval of 1 is used. </param>
         /// <param name="expireOn"> When the recurrence will expire. This date is inclusive. </param>
-        internal LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency, IList<LabServicesDayOfWeek> weekDays, int? interval, DateTimeOffset expireOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LabServicesRecurrencePattern(LabServicesRecurrenceFrequency frequency, IList<LabServicesDayOfWeek> weekDays, int? interval, DateTimeOffset expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Frequency = frequency;
             WeekDays = weekDays;
             Interval = interval;
             ExpireOn = expireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LabServicesRecurrencePattern"/> for deserialization. </summary>
+        internal LabServicesRecurrencePattern()
+        {
         }
 
         /// <summary> The frequency of the recurrence. </summary>

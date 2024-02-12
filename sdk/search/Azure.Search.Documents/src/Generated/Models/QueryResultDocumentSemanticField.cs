@@ -10,12 +10,12 @@ namespace Azure.Search.Documents.Models
     /// <summary> Description of fields that were sent to the semantic enrichment process, as well as how they were used. </summary>
     public partial class QueryResultDocumentSemanticField
     {
-        /// <summary> Initializes a new instance of QueryResultDocumentSemanticField. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSemanticField"/>. </summary>
         internal QueryResultDocumentSemanticField()
         {
         }
 
-        /// <summary> Initializes a new instance of QueryResultDocumentSemanticField. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryResultDocumentSemanticField"/>. </summary>
         /// <param name="name"> The name of the field that was sent to the semantic enrichment process. </param>
         /// <param name="state"> The way the field was used for the semantic enrichment process (fully used, partially used, or unused). </param>
         internal QueryResultDocumentSemanticField(string name, SemanticFieldState? state)

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    internal partial class MonitoringSettings : IUtf8JsonSerializable
+    internal partial class MonitoringSettings : IUtf8JsonSerializable, IJsonModel<MonitoringSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitoringSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
                 writer.WriteObjectValue(AzureMonitorAlertSettings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitoringSettings DeserializeMonitoringSettings(JsonElement element)
+        MonitoringSettings IJsonModel<MonitoringSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitoringSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitoringSettings(document.RootElement, options);
+        }
+
+        internal static MonitoringSettings DeserializeMonitoringSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AzureMonitorAlertSettings> azureMonitorAlertSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureMonitorAlertSettings"u8))
@@ -41,8 +83,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     azureMonitorAlertSettings = AzureMonitorAlertSettings.DeserializeAzureMonitorAlertSettings(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitoringSettings(azureMonitorAlertSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitoringSettings(azureMonitorAlertSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitoringSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MonitoringSettings IPersistableModel<MonitoringSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitoringSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitoringSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitoringSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitoringSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

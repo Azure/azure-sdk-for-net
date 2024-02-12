@@ -14,7 +14,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureEventHubsDataFeed. </summary>
     internal partial class AzureEventHubsDataFeed : DataFeedDetail
     {
-        /// <summary> Initializes a new instance of AzureEventHubsDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsDataFeed"/>. </summary>
         /// <param name="dataFeedName"> data feed name. </param>
         /// <param name="granularityName"> granularity of the time series. </param>
         /// <param name="metrics"> measure list. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             DataSourceType = DataFeedSourceKind.AzureEventHubs;
         }
 
-        /// <summary> Initializes a new instance of AzureEventHubsDataFeed. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureEventHubsDataFeed"/>. </summary>
         /// <param name="dataSourceType"> data source type. </param>
         /// <param name="dataFeedId"> data feed unique id. </param>
         /// <param name="dataFeedName"> data feed name. </param>

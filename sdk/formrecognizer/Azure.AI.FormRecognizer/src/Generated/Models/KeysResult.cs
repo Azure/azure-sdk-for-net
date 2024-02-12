@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Keys extracted by the custom model. </summary>
     internal partial class KeysResult
     {
-        /// <summary> Initializes a new instance of KeysResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeysResult"/>. </summary>
         /// <param name="clusters"> Object mapping clusterIds to a list of keys. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusters"/> is null. </exception>
         internal KeysResult(IReadOnlyDictionary<string, IList<string>> clusters)

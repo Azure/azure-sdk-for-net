@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationsGatewayName"> Unique identifier for this deployment. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.VoiceServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesCommunicationsGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

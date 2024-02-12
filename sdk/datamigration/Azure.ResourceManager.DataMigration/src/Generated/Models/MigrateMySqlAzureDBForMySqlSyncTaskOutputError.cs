@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateMySqlAzureDBForMySqlSyncTaskOutputError. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError : MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>. </summary>
         internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError()
         {
             ResultType = "ErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Migration error. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError(string id, string resultType, ReportableException error) : base(id, resultType)
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, ReportableException error) : base(id, resultType, serializedAdditionalRawData)
         {
             Error = error;
             ResultType = resultType ?? "ErrorOutput";

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotCentral
 {
     /// <summary>
-    /// A class representing a collection of <see cref="IotCentralPrivateLinkResource" /> and their operations.
-    /// Each <see cref="IotCentralPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="IotCentralAppResource" />.
-    /// To get an <see cref="IotCentralPrivateLinkResourceCollection" /> instance call the GetIotCentralPrivateLinkResources method from an instance of <see cref="IotCentralAppResource" />.
+    /// A class representing a collection of <see cref="IotCentralPrivateLinkResource"/> and their operations.
+    /// Each <see cref="IotCentralPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="IotCentralAppResource"/>.
+    /// To get an <see cref="IotCentralPrivateLinkResourceCollection"/> instance call the GetIotCentralPrivateLinkResources method from an instance of <see cref="IotCentralAppResource"/>.
     /// </summary>
     public partial class IotCentralPrivateLinkResourceCollection : ArmCollection, IEnumerable<IotCentralPrivateLinkResource>, IAsyncEnumerable<IotCentralPrivateLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IotCentralPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="IotCentralPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<IotCentralPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IotCentralPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="IotCentralPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<IotCentralPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _iotCentralPrivateLinkResourcePrivateLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

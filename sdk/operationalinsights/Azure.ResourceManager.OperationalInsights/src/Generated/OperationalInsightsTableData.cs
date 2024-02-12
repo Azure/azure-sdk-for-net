@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OperationalInsights.Models;
@@ -17,18 +19,50 @@ namespace Azure.ResourceManager.OperationalInsights
     /// </summary>
     public partial class OperationalInsightsTableData : ResourceData
     {
-        /// <summary> Initializes a new instance of OperationalInsightsTableData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableData"/>. </summary>
         public OperationalInsightsTableData()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsTableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="retentionInDays"> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </param>
-        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2555. Setting this property to -1 will default to table retention. </param>
+        /// <param name="totalRetentionInDays"> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </param>
         /// <param name="archiveRetentionInDays"> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </param>
         /// <param name="searchResults"> Parameters of the search job that initiated this table. </param>
         /// <param name="restoredLogs"> Parameters of the restore operation that initiated this table. </param>
@@ -37,9 +71,10 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <param name="lastPlanModifiedDate"> The timestamp that table plan was last modified (UTC). </param>
         /// <param name="schema"> Table schema. </param>
         /// <param name="provisioningState"> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </param>
-        /// <param name="retentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
-        /// <param name="totalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
-        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, RetentionInDaysAsDefaultState? retentionInDaysAsDefault, TotalRetentionInDaysAsDefaultState? totalRetentionInDaysAsDefault) : base(id, name, resourceType, systemData)
+        /// <param name="isRetentionInDaysAsDefault"> True - Value originates from workspace retention in days, False - Customer specific. </param>
+        /// <param name="isTotalRetentionInDaysAsDefault"> True - Value originates from retention in days, False - Customer specific. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsTableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? retentionInDays, int? totalRetentionInDays, int? archiveRetentionInDays, OperationalInsightsTableSearchResults searchResults, OperationalInsightsTableRestoredLogs restoredLogs, OperationalInsightsTableResultStatistics resultStatistics, OperationalInsightsTablePlan? plan, string lastPlanModifiedDate, OperationalInsightsSchema schema, OperationalInsightsTableProvisioningState? provisioningState, bool? isRetentionInDaysAsDefault, bool? isTotalRetentionInDaysAsDefault, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RetentionInDays = retentionInDays;
             TotalRetentionInDays = totalRetentionInDays;
@@ -51,13 +86,14 @@ namespace Azure.ResourceManager.OperationalInsights
             LastPlanModifiedDate = lastPlanModifiedDate;
             Schema = schema;
             ProvisioningState = provisioningState;
-            RetentionInDaysAsDefault = retentionInDaysAsDefault;
-            TotalRetentionInDaysAsDefault = totalRetentionInDaysAsDefault;
+            IsRetentionInDaysAsDefault = isRetentionInDaysAsDefault;
+            IsTotalRetentionInDaysAsDefault = isTotalRetentionInDaysAsDefault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The table retention in days, between 4 and 730. Setting this property to -1 will default to the workspace retention. </summary>
         public int? RetentionInDays { get; set; }
-        /// <summary> The table total retention in days, between 4 and 2555. Setting this property to -1 will default to table retention. </summary>
+        /// <summary> The table total retention in days, between 4 and 2556. Setting this property to -1 will default to table retention. </summary>
         public int? TotalRetentionInDays { get; set; }
         /// <summary> The table data archive retention in days. Calculated as (totalRetentionInDays-retentionInDays). </summary>
         public int? ArchiveRetentionInDays { get; }
@@ -76,8 +112,8 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <summary> Table's current provisioning state. If set to 'updating', indicates a resource lock due to ongoing operation, forbidding any update to the table until the ongoing operation is concluded. </summary>
         public OperationalInsightsTableProvisioningState? ProvisioningState { get; }
         /// <summary> True - Value originates from workspace retention in days, False - Customer specific. </summary>
-        public RetentionInDaysAsDefaultState? RetentionInDaysAsDefault { get; }
+        public bool? IsRetentionInDaysAsDefault { get; }
         /// <summary> True - Value originates from retention in days, False - Customer specific. </summary>
-        public TotalRetentionInDaysAsDefaultState? TotalRetentionInDaysAsDefault { get; }
+        public bool? IsTotalRetentionInDaysAsDefault { get; }
     }
 }

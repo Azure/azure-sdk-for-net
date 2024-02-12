@@ -36,7 +36,10 @@ namespace Azure.Messaging.ServiceBus.Amqp
         private const string WebSocketsPathSuffix = "/$servicebus/websocket/";
 
         /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
-        private const string WebSocketsUriScheme = "wss";
+        private const string WebSocketsSecureUriScheme = "wss";
+
+        /// <summary>The URI scheme to apply when using web sockets for service communication.</summary>
+        private const string WebSocketsInsecureUriScheme = "ws";
 
         /// <summary>The seed to use for initializing random number generated for a given thread-specific instance.</summary>
         private static int s_randomSeed = Environment.TickCount;
@@ -461,13 +464,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
             TimeSpan timeout)
         {
             var serviceHostName = serviceEndpoint.Host;
-            var connectionHostName = connectionEndpoint.Host;
             AmqpSettings amqpSettings = CreateAmpqSettings(AmqpVersion);
             AmqpConnectionSettings connectionSetings = CreateAmqpConnectionSettings(serviceHostName, scopeIdentifier, _connectionIdleTimeoutMilliseconds);
 
             TransportSettings transportSettings = transportType.IsWebSocketTransport()
-                ? CreateTransportSettingsForWebSockets(connectionHostName, proxy)
-                : CreateTransportSettingsforTcp(connectionHostName, connectionEndpoint.Port);
+                ? CreateTransportSettingsForWebSockets(connectionEndpoint, proxy)
+                : CreateTransportSettingsforTcp(connectionEndpoint);
 
             // Create and open the connection, respecting the timeout constraint
             // that was received.
@@ -1312,25 +1314,37 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with TCP.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
-        /// <param name="port">The port to use for connecting to the endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
-        private static TransportSettings CreateTransportSettingsforTcp(
-            string hostName,
-            int port)
+        private static TransportSettings CreateTransportSettingsforTcp(Uri connectionEndpoint)
         {
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+            var port = connectionEndpoint.Port < 0 ? (useTls ? AmqpConstants.DefaultSecurePort : AmqpConstants.DefaultPort) : connectionEndpoint.Port;
+
+            // Allow the host to control the size of the transport buffers for sending and
+            // receiving by setting the value to -1.  This results in much improved throughput
+            // across platforms, as different Linux distros have different needs to
+            // maximize efficiency, with Window having its own needs as well.
             var tcpSettings = new TcpTransportSettings
             {
-                Host = hostName,
-                Port = port < 0 ? AmqpConstants.DefaultSecurePort : port,
-                ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                Host = connectionEndpoint.Host,
+                Port = port,
+                ReceiveBufferSize = -1,
+                SendBufferSize = -1
             };
 
-            return new TlsTransportSettings(tcpSettings)
+            // If TLS is explicitly disabled, then use the TCP settings as-is.  Otherwise,
+            // wrap them for TLS usage.
+
+            return useTls switch
             {
-                TargetHost = hostName,
+                false => tcpSettings,
+
+                _ => new TlsTransportSettings(tcpSettings)
+                {
+                    TargetHost = connectionEndpoint.Host
+                }
             };
         }
 
@@ -1338,19 +1352,21 @@ namespace Azure.Messaging.ServiceBus.Amqp
         ///  Creates the transport settings for use with web sockets.
         /// </summary>
         ///
-        /// <param name="hostName">The host name of the Service Bus service endpoint.</param>
+        /// <param name="connectionEndpoint">The Event Hubs service endpoint to connect to.</param>
         /// <param name="proxy">The proxy to use for connecting to the endpoint.</param>
         ///
         /// <returns>The settings to use for transport.</returns>
         private static TransportSettings CreateTransportSettingsForWebSockets(
-            string hostName,
+            Uri connectionEndpoint,
             IWebProxy proxy)
         {
-            var uriBuilder = new UriBuilder(hostName)
+            var useTls = ShouldUseTls(connectionEndpoint.Scheme);
+
+            var uriBuilder = new UriBuilder(connectionEndpoint.Host)
             {
                 Path = WebSocketsPathSuffix,
-                Scheme = WebSocketsUriScheme,
-                Port = -1
+                Scheme = useTls ? WebSocketsSecureUriScheme : WebSocketsInsecureUriScheme,
+                Port = connectionEndpoint.Port < 0 ? -1 : connectionEndpoint.Port
             };
 
             return new WebSocketTransportSettings
@@ -1389,6 +1405,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
             return connectionSettings;
         }
+
+        /// <summary>
+        ///   Determines if the specified URL scheme should use TLS when creating an AMQP connection.
+        /// </summary>
+        ///
+        /// <param name="urlScheme">The URL scheme to consider.</param>
+        ///
+        /// <returns><c>true</c> if the connection should use TLS; otherwise, <c>false</c>.</returns>
+        ///
+        private static bool ShouldUseTls(string urlScheme) => urlScheme switch
+        {
+            "ws" => false,
+            "amqp" => false,
+            "http" => false,
+            _ => true
+        };
 
         /// <summary>
         ///   Validates the transport associated with the scope, throwing an argument exception

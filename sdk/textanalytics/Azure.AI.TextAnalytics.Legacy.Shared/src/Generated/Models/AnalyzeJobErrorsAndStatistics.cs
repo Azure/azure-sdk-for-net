@@ -13,13 +13,13 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The AnalyzeJobErrorsAndStatistics. </summary>
     internal partial class AnalyzeJobErrorsAndStatistics
     {
-        /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobErrorsAndStatistics"/>. </summary>
         internal AnalyzeJobErrorsAndStatistics()
         {
             Errors = new ChangeTrackingList<TextAnalyticsError>();
         }
 
-        /// <summary> Initializes a new instance of AnalyzeJobErrorsAndStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeJobErrorsAndStatistics"/>. </summary>
         /// <param name="errors"></param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         internal AnalyzeJobErrorsAndStatistics(IReadOnlyList<TextAnalyticsError> errors, RequestStatistics statistics)

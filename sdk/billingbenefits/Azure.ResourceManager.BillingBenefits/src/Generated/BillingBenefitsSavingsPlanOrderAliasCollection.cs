@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> and their operations.
-    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection" /> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> and their operations.
+    /// Each <see cref="BillingBenefitsSavingsPlanOrderAliasResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BillingBenefitsSavingsPlanOrderAliasCollection"/> instance call the GetBillingBenefitsSavingsPlanOrderAliases method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanOrderAliasCollection : ArmCollection
     {
@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +111,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -144,6 +160,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
@@ -180,6 +204,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +250,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
@@ -253,6 +293,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
@@ -287,6 +335,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,6 +380,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

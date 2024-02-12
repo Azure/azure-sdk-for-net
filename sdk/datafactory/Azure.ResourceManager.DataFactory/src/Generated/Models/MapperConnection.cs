@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -14,7 +15,39 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Source connection details. </summary>
     public partial class MapperConnection
     {
-        /// <summary> Initializes a new instance of MapperConnection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         public MapperConnection(MapperConnectionType connectionType)
         {
@@ -22,19 +55,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             CommonDslConnectorProperties = new ChangeTrackingList<MapperDslConnectorProperties>();
         }
 
-        /// <summary> Initializes a new instance of MapperConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperConnection"/>. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <param name="isInlineDataset"> A boolean indicating whether linked service is of type inline dataset. Currently only inline datasets are supported. </param>
         /// <param name="commonDslConnectorProperties"> List of name/value pairs for connection properties. </param>
-        internal MapperConnection(DataFactoryLinkedServiceReference linkedService, string linkedServiceType, MapperConnectionType connectionType, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MapperConnection(DataFactoryLinkedServiceReference linkedService, string linkedServiceType, MapperConnectionType connectionType, bool? isInlineDataset, IList<MapperDslConnectorProperties> commonDslConnectorProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinkedService = linkedService;
             LinkedServiceType = linkedServiceType;
             ConnectionType = connectionType;
             IsInlineDataset = isInlineDataset;
             CommonDslConnectorProperties = commonDslConnectorProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MapperConnection"/> for deserialization. </summary>
+        internal MapperConnection()
+        {
         }
 
         /// <summary> Linked service reference. </summary>

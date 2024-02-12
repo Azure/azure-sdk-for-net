@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownProviderSpecificRecoveryPointDetails. </summary>
     internal partial class UnknownProviderSpecificRecoveryPointDetails : ProviderSpecificRecoveryPointDetails
     {
-        /// <summary> Initializes a new instance of UnknownProviderSpecificRecoveryPointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificRecoveryPointDetails"/>. </summary>
         /// <param name="instanceType"> Gets the provider type. </param>
-        internal UnknownProviderSpecificRecoveryPointDetails(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProviderSpecificRecoveryPointDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificRecoveryPointDetails"/> for deserialization. </summary>
+        internal UnknownProviderSpecificRecoveryPointDetails()
+        {
         }
     }
 }

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckTrialAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
@@ -91,6 +95,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckTrialAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +132,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_CheckQuotaAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Azure region. </param>
@@ -154,6 +166,10 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckQuotaAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,10 +202,18 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudResource> GetAvsPrivateCloudsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);
@@ -208,10 +232,18 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateClouds_ListInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsPrivateCloudResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudResource> GetAvsPrivateClouds(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvsPrivateCloudPrivateCloudsRestClient.CreateListInSubscriptionRequest(Id.SubscriptionId);

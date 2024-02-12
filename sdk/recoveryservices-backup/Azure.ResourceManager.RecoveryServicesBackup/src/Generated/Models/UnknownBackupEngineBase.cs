@@ -5,12 +5,15 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownBackupEngineBase. </summary>
     internal partial class UnknownBackupEngineBase : BackupGenericEngine
     {
-        /// <summary> Initializes a new instance of UnknownBackupEngineBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupEngineBase"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the backup engine. </param>
         /// <param name="backupManagementType"> Type of backup management for the backup engine. </param>
         /// <param name="registrationStatus"> Registration status of the backup engine with the Recovery Services Vault. </param>
@@ -24,9 +27,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isAzureBackupAgentUpgradeAvailable"> To check if backup agent upgrade available. </param>
         /// <param name="isDpmUpgradeAvailable"> To check if backup engine upgrade available. </param>
         /// <param name="extendedInfo"> Extended info of the backupengine. </param>
-        internal UnknownBackupEngineBase(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, backupEngineType, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBackupEngineBase(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string backupEngineState, string healthStatus, BackupEngineType backupEngineType, bool? canReRegister, string backupEngineId, string dpmVersion, string azureBackupAgentVersion, bool? isAzureBackupAgentUpgradeAvailable, bool? isDpmUpgradeAvailable, BackupEngineExtendedInfo extendedInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(friendlyName, backupManagementType, registrationStatus, backupEngineState, healthStatus, backupEngineType, canReRegister, backupEngineId, dpmVersion, azureBackupAgentVersion, isAzureBackupAgentUpgradeAvailable, isDpmUpgradeAvailable, extendedInfo, serializedAdditionalRawData)
         {
             BackupEngineType = backupEngineType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupEngineBase"/> for deserialization. </summary>
+        internal UnknownBackupEngineBase()
+        {
         }
     }
 }

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TopicTypeResource" /> and their operations.
-    /// Each <see cref="TopicTypeResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="TopicTypeCollection" /> instance call the GetTopicTypes method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="TopicTypeResource"/> and their operations.
+    /// Each <see cref="TopicTypeResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TopicTypeCollection"/> instance call the GetTopicTypes method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TopicTypeCollection : ArmCollection, IEnumerable<TopicTypeResource>, IAsyncEnumerable<TopicTypeResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +155,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TopicTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TopicTypeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TopicTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TopicTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TopicTypeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListRequest();
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +256,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
@@ -250,6 +298,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +343,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

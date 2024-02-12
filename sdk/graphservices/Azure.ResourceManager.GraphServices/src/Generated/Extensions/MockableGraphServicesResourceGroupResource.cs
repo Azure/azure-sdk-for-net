@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GraphServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.GraphServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GraphServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

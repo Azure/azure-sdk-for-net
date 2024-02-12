@@ -10,7 +10,7 @@ namespace Azure.Search.Documents.Models
     /// <summary> The UnknownVectorQuery. </summary>
     internal partial class UnknownVectorQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of UnknownVectorQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownVectorQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>

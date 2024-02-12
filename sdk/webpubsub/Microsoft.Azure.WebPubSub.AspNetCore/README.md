@@ -37,12 +37,24 @@ In order to interact with the service, you'll need to provide the Web PubSub ser
 
 ### Configure Web PubSub service options
 
+Configure with connection string:
 ```C# Snippet:WebPubSubDependencyInjection
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddWebPubSub(o =>
     {
         o.ServiceEndpoint = new("<connection-string>");
+    }).AddWebPubSubServiceClient<SampleHub>();
+}
+```
+
+Configure with [Azure Identity](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity):
+```C# Snippet:WebPubSubDependencyInjectionWithAzureIdentity
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddWebPubSub(o =>
+    {
+        o.ServiceEndpoint = new WebPubSubServiceEndpoint(new Uri("<endpoint"), new DefaultAzureCredential());
     }).AddWebPubSubServiceClient<SampleHub>();
 }
 ```

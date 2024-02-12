@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Batch;
@@ -191,25 +192,71 @@ namespace Azure.Storage.Blobs.Specialized
         /// cannot be used until the batch has been submitted with
         /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
         /// </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteBlob(
             string blobContainerName,
             string blobName,
-            DeleteSnapshotsOption snapshotsOption = default,
-            BlobRequestConditions conditions = default)
+            DeleteSnapshotsOption snapshotsOption,
+            BlobRequestConditions conditions)
+        {
+            DeleteBlobOptions options = null;
+            if (snapshotsOption != DeleteSnapshotsOption.None ||
+                conditions != null)
+            {
+                options = new()
+                {
+                    SnapshotsOption = snapshotsOption,
+                    Conditions = conditions,
+                };
+            }
+            return DeleteBlob(blobContainerName, blobName, options);
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteBlob(string, string, DeleteBlobOptions)"/>
+        /// operation marks the specified blob or snapshot for  deletion. The
+        /// blob is later deleted during garbage collection which could take several minutes.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/> in <paramref name="options"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">Delete Blob</see>.
+        /// </summary>
+        /// <param name="blobContainerName">
+        /// The name of the container containing the blob to delete.
+        /// </param>
+        /// <param name="blobName">
+        /// The name of the blob to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters for the delete options.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.  The response
+        /// cannot be used until the batch has been submitted with
+        /// <see cref="BlobBatchClient.SubmitBatchAsync"/>.
+        /// </returns>
+        public virtual Response DeleteBlob(
+            string blobContainerName,
+            string blobName,
+            DeleteBlobOptions options = default)
         {
             SetBatchOperationType(BlobBatchOperationType.Delete);
 
             HttpMessage message = BlobRestClient.CreateDeleteRequest(
                 containerName: blobContainerName,
                 blob: blobName.EscapePath(),
+                versionId: options?.VersionID,
                 timeout: null,
-                leaseId: conditions?.LeaseId,
-                deleteSnapshots: snapshotsOption.ToDeleteSnapshotsOptionType(),
-                ifModifiedSince: conditions?.IfModifiedSince,
-                ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
-                ifMatch: conditions?.IfMatch?.ToString(),
-                ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
-                ifTags: conditions?.TagConditions,
+                leaseId: options?.Conditions?.LeaseId,
+                deleteSnapshots: options?.SnapshotsOption.ToDeleteSnapshotsOptionType(),
+                ifModifiedSince: options?.Conditions?.IfModifiedSince,
+                ifUnmodifiedSince: options?.Conditions?.IfUnmodifiedSince,
+                ifMatch: options?.Conditions?.IfMatch?.ToString(),
+                ifNoneMatch: options?.Conditions?.IfNoneMatch?.ToString(),
+                ifTags: options?.Conditions?.TagConditions,
                 blobDeleteType: null);
 
             _messages.Add(message);
@@ -318,6 +365,7 @@ namespace Azure.Storage.Blobs.Specialized
                 containerName: blobContainerName,
                 blob: blobName.EscapePath(),
                 accessTier.ToBatchAccessTier(),
+                versionId: null,
                 timeout: null,
                 rehydratePriority: rehydratePriority.ToBatchRehydratePriority(),
                 leaseId: leaseAccessConditions?.LeaseId,

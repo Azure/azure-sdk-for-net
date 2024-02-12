@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingJobFunctionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingJobFunctionResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobFunctionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobFunctionResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobFunctionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobFunctionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingJobFunctionResource"/> object. </returns>
         public virtual StreamingJobFunctionResource GetStreamingJobFunctionResource(ResourceIdentifier id)
         {
             StreamingJobFunctionResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingJobInputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingJobInputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobInputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobInputResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobInputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobInputResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobInputResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingJobInputResource"/> object. </returns>
         public virtual StreamingJobInputResource GetStreamingJobInputResource(ResourceIdentifier id)
         {
             StreamingJobInputResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingJobOutputResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingJobOutputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobOutputResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobOutputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobOutputResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobOutputResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingJobOutputResource"/> object. </returns>
         public virtual StreamingJobOutputResource GetStreamingJobOutputResource(ResourceIdentifier id)
         {
             StreamingJobOutputResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingJobResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingJobResource"/> object. </returns>
         public virtual StreamingJobResource GetStreamingJobResource(ResourceIdentifier id)
         {
             StreamingJobResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamingJobTransformationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamingJobTransformationResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobTransformationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamingJobTransformationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamingJobTransformationResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobTransformationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamingJobTransformationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamingJobTransformationResource"/> object. </returns>
         public virtual StreamingJobTransformationResource GetStreamingJobTransformationResource(ResourceIdentifier id)
         {
             StreamingJobTransformationResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamAnalyticsClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamAnalyticsClusterResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamAnalyticsClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamAnalyticsClusterResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamAnalyticsClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamAnalyticsClusterResource"/> object. </returns>
         public virtual StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(ResourceIdentifier id)
         {
             StreamAnalyticsClusterResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StreamAnalyticsPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StreamAnalyticsPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StreamAnalyticsPrivateEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StreamAnalyticsPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsPrivateEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource"/> object. </returns>
         public virtual StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(ResourceIdentifier id)
         {
             StreamAnalyticsPrivateEndpointResource.ValidateResourceId(id);

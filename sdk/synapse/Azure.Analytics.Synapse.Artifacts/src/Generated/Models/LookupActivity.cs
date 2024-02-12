@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Lookup activity. </summary>
     public partial class LookupActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of LookupActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookupActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="source">
         /// Dataset-specific source properties, same as copy activity source.
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Lookup";
         }
 
-        /// <summary> Initializes a new instance of LookupActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="LookupActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

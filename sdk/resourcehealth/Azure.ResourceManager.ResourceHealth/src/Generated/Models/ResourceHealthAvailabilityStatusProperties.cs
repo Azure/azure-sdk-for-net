@@ -14,14 +14,46 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Properties of availability state. </summary>
     public partial class ResourceHealthAvailabilityStatusProperties
     {
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
         internal ResourceHealthAvailabilityStatusProperties()
         {
             RecommendedActions = new ChangeTrackingList<ResourceHealthRecommendedAction>();
             ServiceImpactingEvents = new ChangeTrackingList<ServiceImpactingEvent>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthAvailabilityStatusProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthAvailabilityStatusProperties"/>. </summary>
         /// <param name="availabilityState"> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </param>
         /// <param name="title"> Title description of the availability status. </param>
         /// <param name="summary"> Summary description of the availability status. </param>
@@ -42,7 +74,8 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="recentlyResolved"> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </param>
         /// <param name="recommendedActions"> Lists actions the user can take based on the current availabilityState of the resource. </param>
         /// <param name="serviceImpactingEvents"> Lists the service impacting events that may be affecting the health of the resource. </param>
-        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceHealthAvailabilityStatusProperties(ResourceHealthAvailabilityStateValue? availabilityState, string title, string summary, string detailedStatus, string reasonType, string context, string category, string articleId, DateTimeOffset? rootCauseAttributionOn, string healthEventType, string healthEventCause, string healthEventCategory, string healthEventId, DateTimeOffset? resolutionEta, DateTimeOffset? occuredOn, ReasonChronicityType? reasonChronicity, DateTimeOffset? reportedOn, ResourceHealthAvailabilityStateRecentlyResolved recentlyResolved, IReadOnlyList<ResourceHealthRecommendedAction> recommendedActions, IReadOnlyList<ServiceImpactingEvent> serviceImpactingEvents, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AvailabilityState = availabilityState;
             Title = title;
@@ -64,6 +97,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             RecentlyResolved = recentlyResolved;
             RecommendedActions = recommendedActions;
             ServiceImpactingEvents = serviceImpactingEvents;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </summary>

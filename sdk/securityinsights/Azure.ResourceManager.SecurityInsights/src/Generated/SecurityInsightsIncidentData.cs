@@ -20,14 +20,46 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityInsightsIncidentData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentData"/>. </summary>
         public SecurityInsightsIncidentData()
         {
             Labels = new ChangeTrackingList<SecurityInsightsIncidentLabel>();
             RelatedAnalyticRuleIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="status"> The status of the incident. </param>
         /// <param name="title"> The title of the incident. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        internal SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsIncidentAdditionalInfo additionalInfo, SecurityInsightsIncidentClassification? classification, string classificationComment, SecurityInsightsIncidentClassificationReason? classificationReason, DateTimeOffset? createdOn, string description, DateTimeOffset? firstActivityOn, Uri incidentUri, int? incidentNumber, IList<SecurityInsightsIncidentLabel> labels, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, SecurityInsightsIncidentOwnerInfo owner, IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, string title, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecurityInsightsIncidentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsIncidentAdditionalInfo additionalInfo, SecurityInsightsIncidentClassification? classification, string classificationComment, SecurityInsightsIncidentClassificationReason? classificationReason, DateTimeOffset? createdOn, string description, DateTimeOffset? firstActivityOn, Uri incidentUri, int? incidentNumber, IList<SecurityInsightsIncidentLabel> labels, DateTimeOffset? lastActivityOn, DateTimeOffset? lastModifiedOn, SecurityInsightsIncidentOwnerInfo owner, IReadOnlyList<ResourceIdentifier> relatedAnalyticRuleIds, SecurityInsightsIncidentSeverity? severity, SecurityInsightsIncidentStatus? status, string title, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AdditionalInfo = additionalInfo;
             Classification = classification;
@@ -70,6 +103,7 @@ namespace Azure.ResourceManager.SecurityInsights
             Status = status;
             Title = title;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Additional data on the incident. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> Defines the parameters for the Url Signing action. </summary>
     public partial class UriSigningActionProperties
     {
-        /// <summary> Initializes a new instance of UriSigningActionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         public UriSigningActionProperties(UriSigningActionType actionType)
         {
@@ -21,15 +54,22 @@ namespace Azure.ResourceManager.Cdn.Models
             ParameterNameOverride = new ChangeTrackingList<UriSigningParamIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of UriSigningActionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/>. </summary>
         /// <param name="actionType"></param>
         /// <param name="algorithm"> Algorithm to use for URL signing. </param>
         /// <param name="parameterNameOverride"> Defines which query string parameters in the url to be considered for expires, key id etc. </param>
-        internal UriSigningActionProperties(UriSigningActionType actionType, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UriSigningActionProperties(UriSigningActionType actionType, UriSigningAlgorithm? algorithm, IList<UriSigningParamIdentifier> parameterNameOverride, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionType = actionType;
             Algorithm = algorithm;
             ParameterNameOverride = parameterNameOverride;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriSigningActionProperties"/> for deserialization. </summary>
+        internal UriSigningActionProperties()
+        {
         }
 
         /// <summary> Gets or sets the action type. </summary>

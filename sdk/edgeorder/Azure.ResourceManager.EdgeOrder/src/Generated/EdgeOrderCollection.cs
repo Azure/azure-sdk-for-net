@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EdgeOrderResource" /> and their operations.
-    /// Each <see cref="EdgeOrderResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="EdgeOrderCollection" /> instance call the GetEdgeOrders method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="EdgeOrderResource"/> and their operations.
+    /// Each <see cref="EdgeOrderResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="EdgeOrderCollection"/> instance call the GetEdgeOrders method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class EdgeOrderCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -174,6 +198,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -209,6 +241,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +287,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

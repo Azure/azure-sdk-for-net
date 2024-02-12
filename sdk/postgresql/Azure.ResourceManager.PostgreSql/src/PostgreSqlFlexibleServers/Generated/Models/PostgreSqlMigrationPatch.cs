@@ -14,13 +14,82 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Represents a migration resource for patch. </summary>
     public partial class PostgreSqlMigrationPatch
     {
-        /// <summary> Initializes a new instance of PostgreSqlMigrationPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
         public PostgreSqlMigrationPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             DbsToMigrate = new ChangeTrackingList<string>();
             DbsToTriggerCutoverOn = new ChangeTrackingList<string>();
             DbsToCancelMigrationOn = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlMigrationPatch"/>. </summary>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="sourceDbServerResourceId"> ResourceId of the source database server. </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName"> Source server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName"> Target server fully qualified domain name or ip. It is a optional value, if customer provide it, dms will always use it for connection. </param>
+        /// <param name="secretParameters"> Migration secret parameters. </param>
+        /// <param name="dbsToMigrate"> Number of databases to migrate. </param>
+        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup LogicalReplicationOnSourceDb, if needed. </param>
+        /// <param name="overwriteDbsInTarget"> Indicates whether the databases on the target server can be overwritten, if already present. If set to False, the migration workflow will wait for a confirmation, if it detects that the database already exists. </param>
+        /// <param name="migrationWindowStartTimeInUtc"> Start time in UTC for migration window. </param>
+        /// <param name="startDataMigration"> Indicates whether the data migration should start right away. </param>
+        /// <param name="triggerCutover"> To trigger cutover for entire migration we need to send this flag as True. </param>
+        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases send triggerCutover flag as True and database names in this array. </param>
+        /// <param name="cancel"> To trigger cancel for entire migration we need to send this flag as True. </param>
+        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases send cancel flag as True and database names in this array. </param>
+        /// <param name="migrationMode"> There are two types of migration modes Online and Offline. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlMigrationPatch(IDictionary<string, string> tags, ResourceIdentifier sourceDbServerResourceId, string sourceDbServerFullyQualifiedDomainName, string targetDbServerFullyQualifiedDomainName, PostgreSqlMigrationSecretParameters secretParameters, IList<string> dbsToMigrate, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget, DateTimeOffset? migrationWindowStartTimeInUtc, PostgreSqlMigrationStartDataMigration? startDataMigration, PostgreSqlMigrationTriggerCutover? triggerCutover, IList<string> dbsToTriggerCutoverOn, PostgreSqlMigrationCancel? cancel, IList<string> dbsToCancelMigrationOn, PostgreSqlMigrationMode? migrationMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            SourceDbServerResourceId = sourceDbServerResourceId;
+            SourceDbServerFullyQualifiedDomainName = sourceDbServerFullyQualifiedDomainName;
+            TargetDbServerFullyQualifiedDomainName = targetDbServerFullyQualifiedDomainName;
+            SecretParameters = secretParameters;
+            DbsToMigrate = dbsToMigrate;
+            SetupLogicalReplicationOnSourceDbIfNeeded = setupLogicalReplicationOnSourceDbIfNeeded;
+            OverwriteDbsInTarget = overwriteDbsInTarget;
+            MigrationWindowStartTimeInUtc = migrationWindowStartTimeInUtc;
+            StartDataMigration = startDataMigration;
+            TriggerCutover = triggerCutover;
+            DbsToTriggerCutoverOn = dbsToTriggerCutoverOn;
+            Cancel = cancel;
+            DbsToCancelMigrationOn = dbsToCancelMigrationOn;
+            MigrationMode = migrationMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>

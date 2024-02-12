@@ -8,10 +8,8 @@ using Azure.Core;
 
 namespace Azure.Identity
 {
-    internal static class TenantIdResolver
+    internal class TenantIdResolver : TenantIdResolverBase
     {
-        public static readonly string[] AllTenants = new string[] { "*" };
-
         /// <summary>
         /// Resolves the tenantId based on the supplied configuration values.
         /// </summary>
@@ -19,7 +17,7 @@ namespace Azure.Identity
         /// <param name="context">The <see cref="TokenRequestContext"/>.</param>
         /// <param name="additionallyAllowedTenantIds">Additional tenants the credential is configured to acquire tokens for.</param>
         /// <returns>The tenantId to be used for authorization.</returns>
-        public static string Resolve(string explicitTenantId, TokenRequestContext context, string[] additionallyAllowedTenantIds)
+        public override string Resolve(string explicitTenantId, TokenRequestContext context, string[] additionallyAllowedTenantIds)
         {
             bool disableMultiTenantAuth = IdentityCompatSwitches.DisableTenantDiscovery;
 
@@ -50,7 +48,7 @@ namespace Azure.Identity
             return resolvedTenantId;
         }
 
-        public static string[] ResolveAddionallyAllowedTenantIds(IList<string> additionallyAllowedTenants)
+        public override string[] ResolveAddionallyAllowedTenantIds(IList<string> additionallyAllowedTenants)
         {
             if (additionallyAllowedTenants == null || additionallyAllowedTenants.Count == 0)
             {

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The UnknownContentKeyPolicyRestrictionTokenKey. </summary>
     internal partial class UnknownContentKeyPolicyRestrictionTokenKey : ContentKeyPolicyRestrictionTokenKey
     {
-        /// <summary> Initializes a new instance of UnknownContentKeyPolicyRestrictionTokenKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyRestrictionTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownContentKeyPolicyRestrictionTokenKey(string odataType) : base(odataType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownContentKeyPolicyRestrictionTokenKey(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(odataType, serializedAdditionalRawData)
         {
             OdataType = odataType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownContentKeyPolicyRestrictionTokenKey"/> for deserialization. </summary>
+        internal UnknownContentKeyPolicyRestrictionTokenKey()
+        {
         }
     }
 }

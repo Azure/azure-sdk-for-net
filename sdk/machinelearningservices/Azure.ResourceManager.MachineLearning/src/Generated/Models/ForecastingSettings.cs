@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting specific parameters. </summary>
     public partial class ForecastingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
         {
             FeaturesUnknownAtForecastTime = new ChangeTrackingList<string>();
             TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         /// <param name="countryOrRegionForHolidays">
         /// Country or region for holidays for forecasting tasks.
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.
@@ -68,7 +101,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </param>
         /// <param name="useStl"> Configure STL Decomposition of the time-series target column. </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, IList<string> featuresUnknownAtForecastTime, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, IList<string> featuresUnknownAtForecastTime, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
@@ -84,6 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TimeColumnName = timeColumnName;
             TimeSeriesIdColumnNames = timeSeriesIdColumnNames;
             UseStl = useStl;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

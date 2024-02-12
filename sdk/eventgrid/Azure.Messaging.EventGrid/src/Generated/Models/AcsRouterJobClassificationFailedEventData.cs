@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassificationFailed event. </summary>
     public partial class AcsRouterJobClassificationFailedEventData : AcsRouterJobEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobClassificationFailedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
         internal AcsRouterJobClassificationFailedEventData()
         {
             ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobClassificationFailedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

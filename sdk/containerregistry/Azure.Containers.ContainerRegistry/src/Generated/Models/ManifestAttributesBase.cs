@@ -14,7 +14,7 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Manifest details. </summary>
     internal partial class ManifestAttributesBase
     {
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesBase"/>. </summary>
         /// <param name="digest"> Manifest. </param>
         /// <param name="createdOn"> Created time. </param>
         /// <param name="lastUpdatedOn"> Last update time. </param>
@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ManifestAttributesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManifestAttributesBase"/>. </summary>
         /// <param name="digest"> Manifest. </param>
         /// <param name="size"> Image size. </param>
         /// <param name="createdOn"> Created time. </param>

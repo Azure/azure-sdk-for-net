@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class BaselineAdjustedResult : IUtf8JsonSerializable
+    public partial class BaselineAdjustedResult : IUtf8JsonSerializable, IJsonModel<BaselineAdjustedResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaselineAdjustedResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BaselineAdjustedResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Baseline))
             {
@@ -66,11 +76,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BaselineAdjustedResult DeserializeBaselineAdjustedResult(JsonElement element)
+        BaselineAdjustedResult IJsonModel<BaselineAdjustedResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBaselineAdjustedResult(document.RootElement, options);
+        }
+
+        internal static BaselineAdjustedResult DeserializeBaselineAdjustedResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -79,6 +118,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
             Optional<IList<IList<string>>> resultsNotInBaseline = default;
             Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseline"u8))
@@ -151,8 +192,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     resultsOnlyInBaseline = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), Optional.ToList(resultsNotInBaseline), Optional.ToList(resultsOnlyInBaseline));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), Optional.ToList(resultsNotInBaseline), Optional.ToList(resultsOnlyInBaseline), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BaselineAdjustedResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BaselineAdjustedResult IPersistableModel<BaselineAdjustedResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBaselineAdjustedResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BaselineAdjustedResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

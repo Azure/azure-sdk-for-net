@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatadogMonitorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatadogMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatadogMonitorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatadogMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DatadogMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatadogMonitorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DatadogMonitorResource"/> object. </returns>
         public virtual DatadogMonitorResource GetDatadogMonitorResource(ResourceIdentifier id)
         {
             DatadogMonitorResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
         public virtual MonitoringTagRuleResource GetMonitoringTagRuleResource(ResourceIdentifier id)
         {
             MonitoringTagRuleResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Datadog.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DatadogSingleSignOnResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatadogSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DatadogSingleSignOnResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatadogSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatadogSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DatadogSingleSignOnResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatadogSingleSignOnResource" /> object. </returns>
+        /// <returns> Returns a <see cref="DatadogSingleSignOnResource"/> object. </returns>
         public virtual DatadogSingleSignOnResource GetDatadogSingleSignOnResource(ResourceIdentifier id)
         {
             DatadogSingleSignOnResource.ValidateResourceId(id);

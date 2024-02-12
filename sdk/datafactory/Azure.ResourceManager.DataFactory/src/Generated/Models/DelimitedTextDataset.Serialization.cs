@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DelimitedTextDataset : IUtf8JsonSerializable
+    public partial class DelimitedTextDataset : IUtf8JsonSerializable, IJsonModel<DelimitedTextDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DelimitedTextDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DelimitedTextDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -105,14 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CompressionLevel);
-#else
-                using (JsonDocument document = JsonDocument.Parse(CompressionLevel))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, CompressionLevel);
             }
             if (Optional.IsDefined(QuoteChar))
             {
@@ -150,8 +152,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DelimitedTextDataset DeserializeDelimitedTextDataset(JsonElement element)
+        DelimitedTextDataset IJsonModel<DelimitedTextDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDelimitedTextDataset(document.RootElement, options);
+        }
+
+        internal static DelimitedTextDataset DeserializeDelimitedTextDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -169,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> rowDelimiter = default;
             Optional<DataFactoryElement<string>> encodingName = default;
             Optional<DataFactoryElement<string>> compressionCodec = default;
-            Optional<BinaryData> compressionLevel = default;
+            Optional<DataFactoryElement<string>> compressionLevel = default;
             Optional<DataFactoryElement<string>> quoteChar = default;
             Optional<DataFactoryElement<string>> escapeChar = default;
             Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
@@ -315,7 +331,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compressionLevel = BinaryData.FromString(property0.Value.GetRawText());
+                            compressionLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("quoteChar"u8))
@@ -362,5 +378,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DelimitedTextDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, location.Value, columnDelimiter.Value, rowDelimiter.Value, encodingName.Value, compressionCodec.Value, compressionLevel.Value, quoteChar.Value, escapeChar.Value, firstRowAsHeader.Value, nullValue.Value);
         }
+
+        BinaryData IPersistableModel<DelimitedTextDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DelimitedTextDataset IPersistableModel<DelimitedTextDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DelimitedTextDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDelimitedTextDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DelimitedTextDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DelimitedTextDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

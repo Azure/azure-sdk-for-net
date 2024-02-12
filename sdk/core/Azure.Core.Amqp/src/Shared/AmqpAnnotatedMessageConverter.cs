@@ -91,11 +91,6 @@ namespace Azure.Core.Amqp.Shared
                     message.Header.Priority = sourceMessage.Header.Priority;
                 }
 
-                if (sourceMessage.Header.TimeToLive.HasValue)
-                {
-                    message.Header.Ttl = (uint?)sourceMessage.Header.TimeToLive.Value.TotalMilliseconds;
-                }
-
                 if (sourceMessage.Header.FirstAcquirer.HasValue)
                 {
                     message.Header.FirstAcquirer = sourceMessage.Header.FirstAcquirer;
@@ -249,6 +244,29 @@ namespace Azure.Core.Amqp.Shared
                 }
             }
 
+            // There is a loss of fidelity in the TTL header if larger than uint.MaxValue. As a workaround
+            // we set the AbsoluteExpiryTime and CreationTime on the message based on the TTL. These
+            // values are then used to reconstruct the accurate TTL for received messages.
+            if (sourceMessage.Header.TimeToLive.HasValue)
+            {
+                var ttl = sourceMessage.Header.TimeToLive.Value;
+
+                message.Header.Ttl = ttl.TotalMilliseconds > uint.MaxValue
+                    ? uint.MaxValue
+                    : (uint) ttl.TotalMilliseconds;
+
+                message.Properties.CreationTime = DateTime.UtcNow;
+
+                if (AmqpConstants.MaxAbsoluteExpiryTime - message.Properties.CreationTime.Value > ttl)
+                {
+                    message.Properties.AbsoluteExpiryTime = message.Properties.CreationTime.Value + ttl;
+                }
+                else
+                {
+                    message.Properties.AbsoluteExpiryTime = AmqpConstants.MaxAbsoluteExpiryTime;
+                }
+            }
+
             return message;
         }
 
@@ -311,10 +329,21 @@ namespace Azure.Core.Amqp.Shared
             {
                 if (source.Properties.AbsoluteExpiryTime.HasValue)
                 {
-                    message.Properties.AbsoluteExpiryTime =
-                        source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
-                            ? DateTimeOffset.MaxValue
-                            : source.Properties.AbsoluteExpiryTime;
+                    DateTimeOffset absoluteExpiryTime = source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
+                        ? DateTimeOffset.MaxValue
+                        : source.Properties.AbsoluteExpiryTime.Value;
+
+                    message.Properties.AbsoluteExpiryTime = absoluteExpiryTime;
+
+                    // The TTL from the header can be at most approximately 49 days (Uint32.MaxValue milliseconds) due
+                    // to the AMQP spec. In order to allow for larger TTLs set by the user, we take the difference of the AbsoluteExpiryTime
+                    // and the CreationTime (if both are set). If either of those properties is not set, we fall back to the
+                    // TTL from the header.
+
+                    if (source.Properties.CreationTime.HasValue)
+                    {
+                        message.Header.TimeToLive = absoluteExpiryTime- source.Properties.CreationTime.Value;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(source.Properties.ContentEncoding.Value))

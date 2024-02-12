@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownJobInput. </summary>
     internal partial class UnknownJobInput : MachineLearningJobInput
     {
-        /// <summary> Initializes a new instance of UnknownJobInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownJobInput"/>. </summary>
         /// <param name="description"> Description for the input. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
-        internal UnknownJobInput(string description, JobInputType jobInputType) : base(description, jobInputType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownJobInput(string description, JobInputType jobInputType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(description, jobInputType, serializedAdditionalRawData)
         {
             JobInputType = jobInputType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownJobInput"/> for deserialization. </summary>
+        internal UnknownJobInput()
+        {
         }
     }
 }

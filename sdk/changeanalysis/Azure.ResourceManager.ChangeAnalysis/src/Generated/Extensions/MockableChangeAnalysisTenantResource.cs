@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -64,14 +68,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DetectedChangeData> GetResourceChangesAsync(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisTenantResource.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ResourceChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisTenantResource.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceChanges_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
@@ -94,14 +102,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        /// <returns> A collection of <see cref="DetectedChangeData" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DetectedChangeData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DetectedChangeData> GetResourceChanges(string resourceId, DateTimeOffset startTime, DateTimeOffset endTime, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceId, nameof(resourceId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisTenantResource.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DetectedChangeData.DeserializeDetectedChangeData(e), ResourceChangesClientDiagnostics, Pipeline, "MockableChangeAnalysisTenantResource.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
     }
 }

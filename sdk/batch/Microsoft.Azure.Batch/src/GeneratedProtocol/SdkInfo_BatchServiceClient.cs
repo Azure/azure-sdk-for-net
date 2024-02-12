@@ -19,28 +19,19 @@ namespace Microsoft.Azure.Batch.Protocol
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("BatchServiceClient", "Account", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Application", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Certificate", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "ComputeNode", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "ComputeNodeExtension", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "File", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Job", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "JobSchedule", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Pool", "2023-05-01.17.0"),
-                new Tuple<string, string, string>("BatchServiceClient", "Task", "2023-05-01.17.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Account", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Application", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Certificate", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "ComputeNode", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "ComputeNodeExtension", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "File", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Job", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "JobSchedule", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Pool", "2023-11-01.18.0"),
+                new Tuple<string, string, string>("BatchServiceClient", "Task", "2023-11-01.18.0"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "2.0.4421";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4413";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/jingjlii-batch-Microsoft.Batch-2023-05-01.17.0/specification/batch/data-plane/README.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\\Users\\jingjli.FAREAST\\CodeBase\\azure-sdk-for-net\\sdk";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "jingjlii-batch-Microsoft.Batch-2023-05-01.17.0";
-      public static readonly String GithubCommidId = "c49575b5182614d6f8806942aa5ad49c5abf00ed";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
+     
   }
 }

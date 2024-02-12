@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Remediations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyRemediationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +148,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -155,6 +179,14 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Attestations_GetAtResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAttestationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,18 +212,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceRequest(scope, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -205,18 +244,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyTrackedResources_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-07-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyTrackedResourceType"> The name of the virtual resource under PolicyTrackedResources resource type; only "default" is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyTrackedResourceRecord"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(ResourceIdentifier scope, PolicyTrackedResourceType policyTrackedResourceType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceRequest(scope, policyTrackedResourceType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyTrackedResourcesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyTrackedResourceType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord, PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyTrackedResourceRecord.DeserializePolicyTrackedResourceRecord(e), PolicyTrackedResourcesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyTrackedResourceQueryResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,18 +276,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForResourceRequest(scope, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,18 +308,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyEvents_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyEventType"> The name of the virtual resource under PolicyEvents resource type; only "default" is allowed. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyEvent"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(ResourceIdentifier scope, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyEventsRestClient.CreateListQueryResultsForResourceRequest(scope, policyEventType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyEventsRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyEventType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyEvent.DeserializePolicyEvent, PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyEvent.DeserializePolicyEvent(e), PolicyEventsClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyEventQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -280,18 +340,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -305,18 +372,25 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_ListQueryResultsForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyStateType"> The virtual resource under PolicyStates resource type. In a given time range, 'latest' represents the latest policy state(s), whereas 'default' represents all policy state(s). </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicyState"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicyState> GetPolicyStateQueryResults(ResourceIdentifier scope, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateListQueryResultsForResourceRequest(scope, policyStateType, policyQuerySettings);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PolicyStatesRestClient.CreateListQueryResultsForResourceNextPageRequest(nextLink, scope, policyStateType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PolicyState.DeserializePolicyState, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PolicyState.DeserializePolicyState(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.GetPolicyStateQueryResults", "value", "@odata.nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -330,17 +404,24 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForResourceRequest(scope, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -354,24 +435,31 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>PolicyStates_SummarizeForResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scope"> The scope to use. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="policyStateSummaryType"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, 'latest' represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="policyQuerySettings"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <returns> A collection of <see cref="PolicySummary"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PolicySummary> SummarizePolicyStates(ResourceIdentifier scope, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(scope, nameof(scope));
+
             HttpMessage FirstPageRequest(int? pageSizeHint) => PolicyStatesRestClient.CreateSummarizeForResourceRequest(scope, policyStateSummaryType, policyQuerySettings);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicySummary.DeserializePolicySummary, PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicySummary.DeserializePolicySummary(e), PolicyStatesClientDiagnostics, Pipeline, "MockablePolicyInsightsArmClient.SummarizePolicyStates", "value", null, cancellationToken);
         }
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyRemediationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyRemediationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyRemediationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PolicyRemediationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyRemediationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyRemediationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyRemediationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PolicyRemediationResource"/> object. </returns>
         public virtual PolicyRemediationResource GetPolicyRemediationResource(ResourceIdentifier id)
         {
             PolicyRemediationResource.ValidateResourceId(id);
@@ -379,11 +467,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyMetadataResource.CreateResourceIdentifier" /> to create a <see cref="PolicyMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PolicyMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyMetadataResource.CreateResourceIdentifier" /> to create a <see cref="PolicyMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyMetadataResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PolicyMetadataResource"/> object. </returns>
         public virtual PolicyMetadataResource GetPolicyMetadataResource(ResourceIdentifier id)
         {
             PolicyMetadataResource.ValidateResourceId(id);
@@ -391,11 +479,11 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PolicyAttestationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PolicyAttestationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyAttestationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PolicyAttestationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PolicyAttestationResource.CreateResourceIdentifier" /> to create a <see cref="PolicyAttestationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PolicyAttestationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PolicyAttestationResource"/> object. </returns>
         public virtual PolicyAttestationResource GetPolicyAttestationResource(ResourceIdentifier id)
         {
             PolicyAttestationResource.ValidateResourceId(id);

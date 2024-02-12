@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureSqlDWTableDataset : IUtf8JsonSerializable
+    public partial class AzureSqlDWTableDataset : IUtf8JsonSerializable, IJsonModel<AzureSqlDWTableDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSqlDWTableDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureSqlDWTableDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDWTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -80,14 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TableName);
-#else
-                using (JsonDocument document = JsonDocument.Parse(TableName))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, TableName);
             }
             if (Optional.IsDefined(SchemaTypePropertiesSchema))
             {
@@ -115,8 +117,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AzureSqlDWTableDataset DeserializeAzureSqlDWTableDataset(JsonElement element)
+        AzureSqlDWTableDataset IJsonModel<AzureSqlDWTableDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDWTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureSqlDWTableDataset(document.RootElement, options);
+        }
+
+        internal static AzureSqlDWTableDataset DeserializeAzureSqlDWTableDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -129,7 +145,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> tableName = default;
+            Optional<DataFactoryElement<string>> tableName = default;
             Optional<DataFactoryElement<string>> schema0 = default;
             Optional<DataFactoryElement<string>> table = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -228,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            tableName = BinaryData.FromString(property0.Value.GetRawText());
+                            tableName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("schema"u8))
@@ -257,5 +273,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AzureSqlDWTableDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, tableName.Value, schema0.Value, table.Value);
         }
+
+        BinaryData IPersistableModel<AzureSqlDWTableDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDWTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureSqlDWTableDataset IPersistableModel<AzureSqlDWTableDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureSqlDWTableDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureSqlDWTableDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureSqlDWTableDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureSqlDWTableDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

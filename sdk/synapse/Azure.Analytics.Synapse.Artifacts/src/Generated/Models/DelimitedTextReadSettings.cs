@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Delimited text read settings. </summary>
     public partial class DelimitedTextReadSettings : FormatReadSettings
     {
-        /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
         public DelimitedTextReadSettings()
         {
             Type = "DelimitedTextReadSettings";
         }
 
-        /// <summary> Initializes a new instance of DelimitedTextReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="DelimitedTextReadSettings"/>. </summary>
         /// <param name="type"> The read setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>

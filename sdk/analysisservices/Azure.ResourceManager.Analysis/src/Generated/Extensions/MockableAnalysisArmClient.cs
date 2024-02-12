@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Analysis.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AnalysisServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AnalysisServerResource.CreateResourceIdentifier" /> to create an <see cref="AnalysisServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AnalysisServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AnalysisServerResource.CreateResourceIdentifier" /> to create an <see cref="AnalysisServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AnalysisServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AnalysisServerResource"/> object. </returns>
         public virtual AnalysisServerResource GetAnalysisServerResource(ResourceIdentifier id)
         {
             AnalysisServerResource.ValidateResourceId(id);

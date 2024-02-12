@@ -13,7 +13,7 @@ namespace Azure.Communication.Email
     /// <summary> Status of the long running operation. </summary>
     public partial class EmailSendResult
     {
-        /// <summary> Initializes a new instance of EmailSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailSendResult"/>. </summary>
         /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Communication.Email
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of EmailSendResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmailSendResult"/>. </summary>
         /// <param name="id"> The unique id of the operation. Use a UUID. </param>
         /// <param name="status"> Status of operation. </param>
         /// <param name="error"> Error details when status is a non-success terminal state. </param>

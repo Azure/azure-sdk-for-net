@@ -18,9 +18,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Storage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DeletedAccountResource" /> and their operations.
-    /// Each <see cref="DeletedAccountResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="DeletedAccountCollection" /> instance call the GetDeletedAccounts method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="DeletedAccountResource"/> and their operations.
+    /// Each <see cref="DeletedAccountResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedAccountCollection"/> instance call the GetDeletedAccounts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedAccountCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -99,6 +107,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +154,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -174,6 +198,14 @@ namespace Azure.ResourceManager.Storage
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted storage account. </param>
@@ -209,6 +241,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -247,6 +287,14 @@ namespace Azure.ResourceManager.Storage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

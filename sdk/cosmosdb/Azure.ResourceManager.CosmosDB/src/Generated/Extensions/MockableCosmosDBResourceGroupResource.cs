@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <term>Operation Id</term>
         /// <description>MongoClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MongoClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

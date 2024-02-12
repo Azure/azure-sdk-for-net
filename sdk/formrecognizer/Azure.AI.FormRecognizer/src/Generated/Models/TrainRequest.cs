@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Request parameter to train a new custom model. </summary>
     internal partial class TrainRequest
     {
-        /// <summary> Initializes a new instance of TrainRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainRequest"/>. </summary>
         /// <param name="source"> Source path containing the training documents. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
         public TrainRequest(string source)
@@ -22,6 +22,19 @@ namespace Azure.AI.FormRecognizer.Models
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TrainRequest"/>. </summary>
+        /// <param name="source"> Source path containing the training documents. </param>
+        /// <param name="sourceFilter"> Filter to apply to the documents in the source path for training. </param>
+        /// <param name="useLabelFile"> Use label file for training a model. </param>
+        /// <param name="modelName"> Optional user defined model name (max length: 1024). </param>
+        internal TrainRequest(string source, TrainingFileFilter sourceFilter, bool? useLabelFile, string modelName)
+        {
+            Source = source;
+            SourceFilter = sourceFilter;
+            UseLabelFile = useLabelFile;
+            ModelName = modelName;
         }
 
         /// <summary> Source path containing the training documents. </summary>

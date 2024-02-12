@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataWarehouseUserActivityResource" /> and their operations.
-    /// Each <see cref="DataWarehouseUserActivityResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="DataWarehouseUserActivityCollection" /> instance call the GetDataWarehouseUserActivities method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="DataWarehouseUserActivityResource"/> and their operations.
+    /// Each <see cref="DataWarehouseUserActivityResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="DataWarehouseUserActivityCollection"/> instance call the GetDataWarehouseUserActivities method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class DataWarehouseUserActivityCollection : ArmCollection, IEnumerable<DataWarehouseUserActivityResource>, IAsyncEnumerable<DataWarehouseUserActivityResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,10 +147,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataWarehouseUserActivityResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -153,10 +177,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataWarehouseUserActivityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataWarehouseUserActivityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataWarehouseUserActivityResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -174,6 +206,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +246,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
@@ -236,6 +284,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +325,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

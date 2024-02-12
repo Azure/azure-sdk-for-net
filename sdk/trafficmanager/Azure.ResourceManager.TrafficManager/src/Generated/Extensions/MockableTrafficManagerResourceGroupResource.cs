@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> The name of the Traffic Manager profile. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TrafficManagerProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

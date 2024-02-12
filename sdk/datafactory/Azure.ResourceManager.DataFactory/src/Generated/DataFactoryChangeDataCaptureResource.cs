@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactoryChangeDataCapture along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryChangeDataCaptureResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryChangeDataCaptureResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource" /> using the GetDataFactoryChangeDataCapture method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryChangeDataCaptureResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryChangeDataCaptureResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataFactoryResource"/> using the GetDataFactoryChangeDataCapture method.
     /// </summary>
     public partial class DataFactoryChangeDataCaptureResource : ArmResource
     {
@@ -39,12 +39,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly ChangeDataCaptureRestOperations _dataFactoryChangeDataCaptureChangeDataCaptureRestClient;
         private readonly DataFactoryChangeDataCaptureData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/adfcdcs";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryChangeDataCaptureResource"/> class for mocking. </summary>
         protected DataFactoryChangeDataCaptureResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryChangeDataCaptureResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryChangeDataCaptureResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryChangeDataCaptureResource(ArmClient client, DataFactoryChangeDataCaptureData data) : this(client, data.Id)
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataFactory
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories/adfcdcs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +225,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -234,6 +266,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -274,6 +314,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -313,6 +361,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -342,6 +398,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +437,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -402,6 +474,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Stop</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,6 +513,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Status</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -462,6 +550,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Status</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

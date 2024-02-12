@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> The PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>
     public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty
     {
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
@@ -26,15 +59,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
             Description = description;
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
-        internal PostgreSqlPrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlPrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Description = description;
             ActionsRequired = actionsRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkServiceConnectionStateProperty"/> for deserialization. </summary>
+        internal PostgreSqlPrivateLinkServiceConnectionStateProperty()
+        {
         }
 
         /// <summary> The private link service connection status. </summary>

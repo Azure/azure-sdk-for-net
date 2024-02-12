@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -29,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallMediaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-01-15-preview")
+        public CallMediaRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2023-10-03-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -133,7 +134,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
+        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
         public async Task<Response> StartTranscriptionAsync(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest, CancellationToken cancellationToken = default)
@@ -160,7 +161,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Starts transcription in the call. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="startTranscriptionRequest"> The StartTranscriptionRequest to use. </param>
+        /// <param name="startTranscriptionRequest"> The <see cref="StartTranscriptionRequestInternal"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="startTranscriptionRequest"/> is null. </exception>
         public Response StartTranscription(string callConnectionId, StartTranscriptionRequestInternal startTranscriptionRequest, CancellationToken cancellationToken = default)
@@ -541,7 +542,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateSendDtmfRequest(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest)
+        internal HttpMessage CreateSendDtmfTonesRequest(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -550,39 +551,46 @@ namespace Azure.Communication.CallAutomation
             uri.Reset(_endpoint);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath(":sendDtmf", false);
+            uri.AppendPath(":sendDtmfTones", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            request.Headers.Add("Repeatability-Request-ID", Guid.NewGuid());
+            request.Headers.Add("Repeatability-First-Sent", DateTimeOffset.Now, "R");
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfRequest);
+            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequest);
             request.Content = content;
             return message;
         }
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public async Task<Response> SendDtmfAsync(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public async Task<Response<SendDtmfTonesResult>> SendDtmfTonesAsync(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfRequest == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfRequest));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        SendDtmfTonesResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -590,26 +598,31 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Send dtmf tones. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="sendDtmfRequest"> The send dtmf request. </param>
+        /// <param name="sendDtmfTonesRequest"> The send dtmf tones request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfRequest"/> is null. </exception>
-        public Response SendDtmf(string callConnectionId, SendDtmfRequestInternal sendDtmfRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="sendDtmfTonesRequest"/> is null. </exception>
+        public Response<SendDtmfTonesResult> SendDtmfTones(string callConnectionId, SendDtmfTonesRequestInternal sendDtmfTonesRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
-            if (sendDtmfRequest == null)
+            if (sendDtmfTonesRequest == null)
             {
-                throw new ArgumentNullException(nameof(sendDtmfRequest));
+                throw new ArgumentNullException(nameof(sendDtmfTonesRequest));
             }
 
-            using var message = CreateSendDtmfRequest(callConnectionId, sendDtmfRequest);
+            using var message = CreateSendDtmfTonesRequest(callConnectionId, sendDtmfTonesRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
-                    return message.Response;
+                    {
+                        SendDtmfTonesResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = SendDtmfTonesResult.DeserializeSendDtmfTonesResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -637,7 +650,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> UpdateTranscription Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequest"> The updateTranscription request. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
@@ -665,7 +678,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> UpdateTranscription Api. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
-        /// <param name="updateTranscriptionRequest"> The updateTranscription request. </param>
+        /// <param name="updateTranscriptionRequest"> The UpdateTranscription request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>

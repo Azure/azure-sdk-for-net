@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The request payload for holding participant from the call. </summary>
     internal partial class StopHoldMusicRequestInternal
     {
-        /// <summary> Initializes a new instance of StopHoldMusicRequestInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="StopHoldMusicRequestInternal"/>. </summary>
         /// <param name="targetParticipant">
         /// Participants to be hold from the call.
         /// Only ACS Users are supported.
@@ -25,6 +25,18 @@ namespace Azure.Communication.CallAutomation
             Argument.AssertNotNull(targetParticipant, nameof(targetParticipant));
 
             TargetParticipant = targetParticipant;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StopHoldMusicRequestInternal"/>. </summary>
+        /// <param name="targetParticipant">
+        /// Participants to be hold from the call.
+        /// Only ACS Users are supported.
+        /// </param>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        internal StopHoldMusicRequestInternal(CommunicationIdentifierModel targetParticipant, string operationContext)
+        {
+            TargetParticipant = targetParticipant;
+            OperationContext = operationContext;
         }
 
         /// <summary>

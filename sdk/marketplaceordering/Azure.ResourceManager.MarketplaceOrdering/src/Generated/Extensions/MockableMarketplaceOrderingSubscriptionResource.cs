@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="offerType"> Offer Type, currently only virtualmachine type is supported. </param>
@@ -80,6 +88,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementTermResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,6 +130,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherId"> Publisher identifier string of image being deployed. </param>
@@ -138,6 +162,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_GetAgreement</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceAgreementResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

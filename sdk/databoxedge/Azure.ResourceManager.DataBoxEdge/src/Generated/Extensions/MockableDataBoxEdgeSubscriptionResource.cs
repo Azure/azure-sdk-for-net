@@ -58,15 +58,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailableDataBoxEdgeSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailableDataBoxEdgeSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(e), AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -80,15 +84,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableSkus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailableDataBoxEdgeSku"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailableDataBoxEdgeSku> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku(e), AvailableSkusClientDiagnostics, Pipeline, "MockableDataBoxEdgeSubscriptionResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,11 +110,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevicesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
@@ -125,11 +141,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>Devices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify $expand=details to populate additional fields related to the resource or Specify $skipToken=&lt;token&gt; to populate the next page in the list. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeDeviceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);

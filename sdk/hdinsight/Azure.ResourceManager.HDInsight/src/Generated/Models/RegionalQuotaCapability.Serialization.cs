@@ -5,15 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class RegionalQuotaCapability
+    public partial class RegionalQuotaCapability : IUtf8JsonSerializable, IJsonModel<RegionalQuotaCapability>
     {
-        internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionalQuotaCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RegionalQuotaCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("regionName"u8);
+                writer.WriteStringValue(Region.Value);
+            }
+            if (Optional.IsDefined(CoresUsed))
+            {
+                writer.WritePropertyName("coresUsed"u8);
+                writer.WriteNumberValue(CoresUsed.Value);
+            }
+            if (Optional.IsDefined(CoresAvailable))
+            {
+                writer.WritePropertyName("coresAvailable"u8);
+                writer.WriteNumberValue(CoresAvailable.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RegionalQuotaCapability IJsonModel<RegionalQuotaCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegionalQuotaCapability(document.RootElement, options);
+        }
+
+        internal static RegionalQuotaCapability DeserializeRegionalQuotaCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +82,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<AzureLocation> regionName = default;
             Optional<long> coresUsed = default;
             Optional<long> coresAvailable = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionName"u8))
@@ -50,8 +113,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     coresAvailable = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RegionalQuotaCapability(Optional.ToNullable(regionName), Optional.ToNullable(coresUsed), Optional.ToNullable(coresAvailable), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RegionalQuotaCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RegionalQuotaCapability IPersistableModel<RegionalQuotaCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegionalQuotaCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRegionalQuotaCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegionalQuotaCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegionalQuotaCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

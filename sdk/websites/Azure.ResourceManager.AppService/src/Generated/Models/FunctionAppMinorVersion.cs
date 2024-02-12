@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Function App stack minor version. </summary>
     public partial class FunctionAppMinorVersion
     {
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         internal FunctionAppMinorVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of FunctionAppMinorVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppMinorVersion"/>. </summary>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
-        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionAppMinorVersion(string displayText, string value, FunctionAppRuntimes stackSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DisplayText = displayText;
             Value = value;
             StackSettings = stackSettings;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Function App stack (display only). </summary>

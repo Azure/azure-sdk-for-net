@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,69 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for updating a container registry. </summary>
     public partial class ContainerRegistryPatch
     {
-        /// <summary> Initializes a new instance of ContainerRegistryPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
         public ContainerRegistryPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
+        /// <param name="identity"> The identity of the container registry. </param>
+        /// <param name="tags"> The tags for the container registry. </param>
+        /// <param name="sku"> The SKU of the container registry. </param>
+        /// <param name="isAdminUserEnabled"> The value that indicates whether the admin user is enabled. </param>
+        /// <param name="networkRuleSet"> The network rule set for a container registry. </param>
+        /// <param name="policies"> The policies for a container registry. </param>
+        /// <param name="encryption"> The encryption settings of container registry. </param>
+        /// <param name="isDataEndpointEnabled"> Enable a single data endpoint per region for serving data. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
+        /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Tags = tags;
+            Sku = sku;
+            IsAdminUserEnabled = isAdminUserEnabled;
+            NetworkRuleSet = networkRuleSet;
+            Policies = policies;
+            Encryption = encryption;
+            IsDataEndpointEnabled = isDataEndpointEnabled;
+            PublicNetworkAccess = publicNetworkAccess;
+            NetworkRuleBypassOptions = networkRuleBypassOptions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The identity of the container registry. </summary>

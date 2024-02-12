@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkFunctionModelFactory
     {
-        /// <summary> Initializes a new instance of AzureTrafficCollectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunction.AzureTrafficCollectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new Dictionary<string, string>();
             collectorPolicies ??= new List<SubResource>();
 
-            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState);
+            return new AzureTrafficCollectorData(id, name, resourceType, systemData, tags, location, etag, collectorPolicies?.ToList(), virtualHubId != null ? ResourceManagerModelFactory.SubResource(virtualHubId) : null, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CollectorPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunction.CollectorPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             tags ??= new Dictionary<string, string>();
             emissionPolicies ??= new List<EmissionPoliciesPropertiesFormat>();
 
-            return new CollectorPolicyData(id, name, resourceType, systemData, tags, location, etag, ingestionPolicy, emissionPolicies?.ToList(), provisioningState);
+            return new CollectorPolicyData(id, name, resourceType, systemData, tags, location, etag, ingestionPolicy, emissionPolicies?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

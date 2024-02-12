@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     /// <summary> The properties to create a new replica. </summary>
     public partial class PostgreSqlServerPropertiesForReplica : PostgreSqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForReplica"/>. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)
@@ -22,6 +23,27 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
             SourceServerId = sourceServerId;
             CreateMode = PostgreSqlCreateMode.Replica;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForReplica"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceServerId"> The master server id to create replica from. </param>
+        internal PostgreSqlServerPropertiesForReplica(PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, PostgreSqlStorageProfile storageProfile, PostgreSqlCreateMode createMode, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceServerId) : base(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, createMode, serializedAdditionalRawData)
+        {
+            SourceServerId = sourceServerId;
+            CreateMode = createMode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerPropertiesForReplica"/> for deserialization. </summary>
+        internal PostgreSqlServerPropertiesForReplica()
+        {
         }
 
         /// <summary> The master server id to create replica from. </summary>

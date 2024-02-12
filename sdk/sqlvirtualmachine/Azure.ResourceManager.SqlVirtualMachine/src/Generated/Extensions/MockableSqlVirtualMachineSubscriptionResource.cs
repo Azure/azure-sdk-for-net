@@ -57,10 +57,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmGroupResource> GetSqlVmGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -79,10 +87,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachineGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVmGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlVmGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmGroupResource> GetSqlVmGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmGroupSqlVirtualMachineGroupsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -101,10 +117,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlVmResource> GetSqlVmsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);
@@ -123,10 +147,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlVirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlVmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlVmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlVmResource> GetSqlVms(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SqlVmSqlVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId);

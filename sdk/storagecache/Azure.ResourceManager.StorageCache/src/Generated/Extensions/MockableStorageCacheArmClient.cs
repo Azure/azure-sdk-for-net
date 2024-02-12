@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AmlFileSystemResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AmlFileSystemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AmlFileSystemResource.CreateResourceIdentifier" /> to create an <see cref="AmlFileSystemResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AmlFileSystemResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AmlFileSystemResource"/> object. </returns>
         public virtual AmlFileSystemResource GetAmlFileSystemResource(ResourceIdentifier id)
         {
             AmlFileSystemResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageCacheResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageCacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageCacheResource.CreateResourceIdentifier" /> to create a <see cref="StorageCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageCacheResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageCacheResource"/> object. </returns>
         public virtual StorageCacheResource GetStorageCacheResource(ResourceIdentifier id)
         {
             StorageCacheResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageTargetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageTargetResource.CreateResourceIdentifier" /> to create a <see cref="StorageTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="StorageTargetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageTargetResource.CreateResourceIdentifier" /> to create a <see cref="StorageTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageTargetResource" /> object. </returns>
+        /// <returns> Returns a <see cref="StorageTargetResource"/> object. </returns>
         public virtual StorageTargetResource GetStorageTargetResource(ResourceIdentifier id)
         {
             StorageTargetResource.ValidateResourceId(id);

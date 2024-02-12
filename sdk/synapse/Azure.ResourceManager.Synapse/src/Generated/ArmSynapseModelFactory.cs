@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmSynapseModelFactory
     {
-        /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseAadOnlyAuthenticationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseAadOnlyAuthenticationData"/> instance for mocking. </returns>
         public static SynapseAadOnlyAuthenticationData SynapseAadOnlyAuthenticationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isAadOnlyAuthenticationEnabled = null, AadAuthenticationState? state = null, DateTimeOffset? createdOn = null)
         {
-            return new SynapseAadOnlyAuthenticationData(id, name, resourceType, systemData, isAadOnlyAuthenticationEnabled, state, createdOn);
+            return new SynapseAadOnlyAuthenticationData(id, name, resourceType, systemData, isAadOnlyAuthenticationEnabled, state, createdOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIPFirewallRuleInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseIPFirewallRuleInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,18 +44,28 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseIPFirewallRuleInfoData"/> instance for mocking. </returns>
         public static SynapseIPFirewallRuleInfoData SynapseIPFirewallRuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress endIPAddress = null, SynapseProvisioningState? provisioningState = null, IPAddress startIPAddress = null)
         {
-            return new SynapseIPFirewallRuleInfoData(id, name, resourceType, systemData, endIPAddress, provisioningState, startIPAddress);
+            return new SynapseIPFirewallRuleInfoData(id, name, resourceType, systemData, endIPAddress, provisioningState, startIPAddress, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ReplaceAllFirewallRulesOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIPFirewallRuleProperties"/>. </summary>
+        /// <param name="endIPAddress"> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="startIPAddress"> The start IP address of the firewall rule. Must be IPv4 format. </param>
+        /// <returns> A new <see cref="Models.SynapseIPFirewallRuleProperties"/> instance for mocking. </returns>
+        public static SynapseIPFirewallRuleProperties SynapseIPFirewallRuleProperties(IPAddress endIPAddress = null, SynapseProvisioningState? provisioningState = null, IPAddress startIPAddress = null)
+        {
+            return new SynapseIPFirewallRuleProperties(endIPAddress, provisioningState, startIPAddress, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ReplaceAllFirewallRulesOperationResult"/>. </summary>
         /// <param name="operationId"> The operation ID. </param>
         /// <returns> A new <see cref="Models.ReplaceAllFirewallRulesOperationResult"/> instance for mocking. </returns>
         public static ReplaceAllFirewallRulesOperationResult ReplaceAllFirewallRulesOperationResult(string operationId = null)
         {
-            return new ReplaceAllFirewallRulesOperationResult(operationId);
+            return new ReplaceAllFirewallRulesOperationResult(operationId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseKeyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseKeyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,10 +75,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseKeyData"/> instance for mocking. </returns>
         public static SynapseKeyData SynapseKeyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isActiveCmk = null, Uri keyVaultUri = null)
         {
-            return new SynapseKeyData(id, name, resourceType, systemData, isActiveCmk, keyVaultUri);
+            return new SynapseKeyData(id, name, resourceType, systemData, isActiveCmk, keyVaultUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapsePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -79,30 +89,30 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapsePrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static SynapsePrivateEndpointConnectionData SynapsePrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, SynapsePrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new SynapsePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new SynapsePrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapsePrivateEndpointConnectionProperties"/>. </summary>
         /// <param name="privateEndpointId"> The private endpoint which the connection belongs to. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <returns> A new <see cref="Models.SynapsePrivateEndpointConnectionProperties"/> instance for mocking. </returns>
         public static SynapsePrivateEndpointConnectionProperties SynapsePrivateEndpointConnectionProperties(ResourceIdentifier privateEndpointId = null, SynapsePrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new SynapsePrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
+            return new SynapsePrivateEndpointConnectionProperties(privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapsePrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
         /// <returns> A new <see cref="Models.SynapsePrivateLinkServiceConnectionState"/> instance for mocking. </returns>
         public static SynapsePrivateLinkServiceConnectionState SynapsePrivateLinkServiceConnectionState(string status = null, string description = null, string actionsRequired = null)
         {
-            return new SynapsePrivateLinkServiceConnectionState(status, description, actionsRequired);
+            return new SynapsePrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapsePrivateLinkResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -111,10 +121,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapsePrivateLinkResourceData"/> instance for mocking. </returns>
         public static SynapsePrivateLinkResourceData SynapsePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapsePrivateLinkResourceProperties properties = null)
         {
-            return new SynapsePrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new SynapsePrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapsePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
@@ -124,10 +134,10 @@ namespace Azure.ResourceManager.Synapse.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new SynapsePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new SynapsePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapsePrivateLinkHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -142,19 +152,19 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<PrivateEndpointConnectionForPrivateLinkHubBasic>();
 
-            return new SynapsePrivateLinkHubData(id, name, resourceType, systemData, tags, location, provisioningState, privateEndpointConnections?.ToList());
+            return new SynapsePrivateLinkHubData(id, name, resourceType, systemData, tags, location, provisioningState, privateEndpointConnections?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionForPrivateLinkHubBasic. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnectionForPrivateLinkHubBasic"/>. </summary>
         /// <param name="id"></param>
         /// <param name="properties"> Properties of a private endpoint connection. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionForPrivateLinkHubBasic"/> instance for mocking. </returns>
         public static PrivateEndpointConnectionForPrivateLinkHubBasic PrivateEndpointConnectionForPrivateLinkHubBasic(string id = null, SynapsePrivateEndpointConnectionProperties properties = null)
         {
-            return new PrivateEndpointConnectionForPrivateLinkHubBasic(id, properties);
+            return new PrivateEndpointConnectionForPrivateLinkHubBasic(id, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionForPrivateLinkHubData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -163,10 +173,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapsePrivateEndpointConnectionForPrivateLinkHubData"/> instance for mocking. </returns>
         public static SynapsePrivateEndpointConnectionForPrivateLinkHubData SynapsePrivateEndpointConnectionForPrivateLinkHubData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapsePrivateEndpointConnectionProperties properties = null)
         {
-            return new SynapsePrivateEndpointConnectionForPrivateLinkHubData(id, name, resourceType, systemData, properties);
+            return new SynapsePrivateEndpointConnectionForPrivateLinkHubData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -200,10 +210,43 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SynapseSqlPoolData(id, name, resourceType, systemData, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn);
+            return new SynapseSqlPoolData(id, name, resourceType, systemData, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseMetadataSyncConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSqlPoolPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> SQL pool SKU. </param>
+        /// <param name="maxSizeBytes"> Maximum size in bytes. </param>
+        /// <param name="collation"> Collation mode. </param>
+        /// <param name="sourceDatabaseId"> Source database to create from. </param>
+        /// <param name="recoverableDatabaseId"> Backup database to restore from. </param>
+        /// <param name="provisioningState"> Resource state. </param>
+        /// <param name="status"> Resource status. </param>
+        /// <param name="restorePointInTime"> Snapshot time to restore. </param>
+        /// <param name="createMode">
+        /// Specifies the mode of sql pool creation.
+        ///
+        /// Default: regular sql pool creation.
+        ///
+        /// PointInTimeRestore: Creates a sql pool by restoring a point in time backup of an existing sql pool. sourceDatabaseId must be specified as the resource ID of the existing sql pool, and restorePointInTime must be specified.
+        ///
+        /// Recovery: Creates a sql pool by a geo-replicated backup. sourceDatabaseId  must be specified as the recoverableDatabaseId to restore.
+        ///
+        /// Restore: Creates a sql pool by restoring a backup of a deleted sql  pool. SourceDatabaseId should be the sql pool's original resource ID. SourceDatabaseId and sourceDatabaseDeletionDate must be specified.
+        /// </param>
+        /// <param name="createdOn"> Date the SQL pool was created. </param>
+        /// <param name="storageAccountType"> The storage account type used to store backups for this sql pool. </param>
+        /// <param name="sourceDatabaseDeletionOn"> Specifies the time that the sql pool was deleted. </param>
+        /// <returns> A new <see cref="Models.SynapseSqlPoolPatch"/> instance for mocking. </returns>
+        public static SynapseSqlPoolPatch SynapseSqlPoolPatch(IDictionary<string, string> tags = null, AzureLocation? location = null, SynapseSku sku = null, long? maxSizeBytes = null, string collation = null, string sourceDatabaseId = null, string recoverableDatabaseId = null, string provisioningState = null, string status = null, DateTimeOffset? restorePointInTime = null, SqlPoolCreateMode? createMode = null, DateTimeOffset? createdOn = null, SqlPoolStorageAccountType? storageAccountType = null, DateTimeOffset? sourceDatabaseDeletionOn = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SynapseSqlPoolPatch(tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, createdOn, storageAccountType, sourceDatabaseDeletionOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseMetadataSyncConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -213,10 +256,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseMetadataSyncConfigurationData"/> instance for mocking. </returns>
         public static SynapseMetadataSyncConfigurationData SynapseMetadataSyncConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isEnabled = null, int? syncIntervalInMinutes = null)
         {
-            return new SynapseMetadataSyncConfigurationData(id, name, resourceType, systemData, isEnabled, syncIntervalInMinutes);
+            return new SynapseMetadataSyncConfigurationData(id, name, resourceType, systemData, isEnabled, syncIntervalInMinutes, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseGeoBackupPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseGeoBackupPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -228,10 +271,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseGeoBackupPolicyData"/> instance for mocking. </returns>
         public static SynapseGeoBackupPolicyData SynapseGeoBackupPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, SynapseGeoBackupPolicyState state = default, string storageType = null)
         {
-            return new SynapseGeoBackupPolicyData(id, name, resourceType, systemData, kind, location, state, storageType);
+            return new SynapseGeoBackupPolicyData(id, name, resourceType, systemData, kind, location, state, storageType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataWarehouseUserActivityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -240,10 +283,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDataWarehouseUserActivityData"/> instance for mocking. </returns>
         public static SynapseDataWarehouseUserActivityData SynapseDataWarehouseUserActivityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? activeQueriesCount = null)
         {
-            return new SynapseDataWarehouseUserActivityData(id, name, resourceType, systemData, activeQueriesCount);
+            return new SynapseDataWarehouseUserActivityData(id, name, resourceType, systemData, activeQueriesCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -256,10 +299,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseRestorePointData"/> instance for mocking. </returns>
         public static SynapseRestorePointData SynapseRestorePointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, SynapseRestorePointType? restorePointType = null, DateTimeOffset? earliestRestoreOn = null, DateTimeOffset? restorePointCreationOn = null, string restorePointLabel = null)
         {
-            return new SynapseRestorePointData(id, name, resourceType, systemData, location, restorePointType, earliestRestoreOn, restorePointCreationOn, restorePointLabel);
+            return new SynapseRestorePointData(id, name, resourceType, systemData, location, restorePointType, earliestRestoreOn, restorePointCreationOn, restorePointLabel, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseReplicationLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseReplicationLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -278,10 +321,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseReplicationLinkData"/> instance for mocking. </returns>
         public static SynapseReplicationLinkData SynapseReplicationLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, bool? isTerminationAllowed = null, string replicationMode = null, string partnerServer = null, string partnerDatabase = null, AzureLocation? partnerLocation = null, SynapseReplicationRole? role = null, SynapseReplicationRole? partnerRole = null, DateTimeOffset? startOn = null, int? percentComplete = null, SynapseReplicationState? replicationState = null)
         {
-            return new SynapseReplicationLinkData(id, name, resourceType, systemData, location, isTerminationAllowed, replicationMode, partnerServer, partnerDatabase, partnerLocation, role, partnerRole, startOn, percentComplete, replicationState);
+            return new SynapseReplicationLinkData(id, name, resourceType, systemData, location, isTerminationAllowed, replicationMode, partnerServer, partnerDatabase, partnerLocation, role, partnerRole, startOn, percentComplete, replicationState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseMaintenanceWindowData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -292,10 +335,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             timeRanges ??= new List<SynapseMaintenanceWindowTimeRange>();
 
-            return new SynapseMaintenanceWindowData(id, name, resourceType, systemData, timeRanges?.ToList());
+            return new SynapseMaintenanceWindowData(id, name, resourceType, systemData, timeRanges?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseMaintenanceWindowOptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseMaintenanceWindowOptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -312,10 +355,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             maintenanceWindowCycles ??= new List<SynapseMaintenanceWindowTimeRange>();
 
-            return new SynapseMaintenanceWindowOptionData(id, name, resourceType, systemData, isEnabled, maintenanceWindowCycles?.ToList(), minDurationInMinutes, defaultDurationInMinutes, minCycles, timeGranularityInMinutes, allowMultipleMaintenanceWindowsPerCycle);
+            return new SynapseMaintenanceWindowOptionData(id, name, resourceType, systemData, isEnabled, maintenanceWindowCycles?.ToList(), minDurationInMinutes, defaultDurationInMinutes, minCycles, timeGranularityInMinutes, allowMultipleMaintenanceWindowsPerCycle, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseTransparentDataEncryptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseTransparentDataEncryptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -325,10 +368,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseTransparentDataEncryptionData"/> instance for mocking. </returns>
         public static SynapseTransparentDataEncryptionData SynapseTransparentDataEncryptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, SynapseTransparentDataEncryptionStatus? status = null)
         {
-            return new SynapseTransparentDataEncryptionData(id, name, resourceType, systemData, location, status);
+            return new SynapseTransparentDataEncryptionData(id, name, resourceType, systemData, location, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -418,10 +461,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             auditActionsAndGroups ??= new List<string>();
 
-            return new SynapseSqlPoolBlobAuditingPolicyData(id, name, resourceType, systemData, kind, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled);
+            return new SynapseSqlPoolBlobAuditingPolicyData(id, name, resourceType, systemData, kind, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SqlPoolUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlPoolUsage"/>. </summary>
         /// <param name="name"> The name of the usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The usage metric display name. </param>
@@ -432,10 +475,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SqlPoolUsage"/> instance for mocking. </returns>
         public static SqlPoolUsage SqlPoolUsage(string name = null, string resourceName = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null, DateTimeOffset? nextResetOn = null)
         {
-            return new SqlPoolUsage(name, resourceName, displayName, currentValue, limit, unit, nextResetOn);
+            return new SqlPoolUsage(name, resourceName, displayName, currentValue, limit, unit, nextResetOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSensitivityLabelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -453,10 +496,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSensitivityLabelData"/> instance for mocking. </returns>
         public static SynapseSensitivityLabelData SynapseSensitivityLabelData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string managedBy = null, string schemaName = null, string tableName = null, string columnName = null, string labelName = null, Guid? labelId = null, string informationType = null, Guid? informationTypeId = null, bool? isDisabled = null, SynapseSensitivityLabelRank? rank = null)
         {
-            return new SynapseSensitivityLabelData(id, name, resourceType, systemData, managedBy, schemaName, tableName, columnName, labelName, labelId, informationType, informationTypeId, isDisabled, rank);
+            return new SynapseSensitivityLabelData(id, name, resourceType, systemData, managedBy, schemaName, tableName, columnName, labelName, labelId, informationType, informationTypeId, isDisabled, rank, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -469,10 +512,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSensitivityLabelUpdate"/> instance for mocking. </returns>
         public static SynapseSensitivityLabelUpdate SynapseSensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseSensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null, SynapseSensitivityLabelData sensitivityLabel = null)
         {
-            return new SynapseSensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column, sensitivityLabel);
+            return new SynapseSensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column, sensitivityLabel, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseRecommendedSensitivityLabelUpdate. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseRecommendedSensitivityLabelUpdate"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -484,10 +527,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseRecommendedSensitivityLabelUpdate"/> instance for mocking. </returns>
         public static SynapseRecommendedSensitivityLabelUpdate SynapseRecommendedSensitivityLabelUpdate(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseRecommendedSensitivityLabelUpdateKind? op = null, string schema = null, string table = null, string column = null)
         {
-            return new SynapseRecommendedSensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column);
+            return new SynapseRecommendedSensitivityLabelUpdate(id, name, resourceType, systemData, op, schema, table, column, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolSchemaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolSchemaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -495,10 +538,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolSchemaData"/> instance for mocking. </returns>
         public static SynapseSqlPoolSchemaData SynapseSqlPoolSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new SynapseSqlPoolSchemaData(id, name, resourceType, systemData);
+            return new SynapseSqlPoolSchemaData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolTableData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolTableData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -506,10 +549,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolTableData"/> instance for mocking. </returns>
         public static SynapseSqlPoolTableData SynapseSqlPoolTableData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new SynapseSqlPoolTableData(id, name, resourceType, systemData);
+            return new SynapseSqlPoolTableData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolColumnData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolColumnData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -519,10 +562,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolColumnData"/> instance for mocking. </returns>
         public static SynapseSqlPoolColumnData SynapseSqlPoolColumnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SqlPoolColumnDataType? columnType = null, bool? isComputed = null)
         {
-            return new SynapseSqlPoolColumnData(id, name, resourceType, systemData, columnType, isComputed);
+            return new SynapseSqlPoolColumnData(id, name, resourceType, systemData, columnType, isComputed, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolConnectionPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolConnectionPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -539,10 +582,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolConnectionPolicyData"/> instance for mocking. </returns>
         public static SynapseSqlPoolConnectionPolicyData SynapseSqlPoolConnectionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string securityEnabledAccess = null, string proxyDnsName = null, string proxyPort = null, string visibility = null, string useServerDefault = null, string redirectionState = null, string state = null)
         {
-            return new SynapseSqlPoolConnectionPolicyData(id, name, resourceType, systemData, kind, location, securityEnabledAccess, proxyDnsName, proxyPort, visibility, useServerDefault, redirectionState, state);
+            return new SynapseSqlPoolConnectionPolicyData(id, name, resourceType, systemData, kind, location, securityEnabledAccess, proxyDnsName, proxyPort, visibility, useServerDefault, redirectionState, state, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -554,10 +597,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseSqlPoolVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentData SynapseSqlPoolVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, SynapseVulnerabilityAssessmentRecurringScansProperties recurringScans = null)
         {
-            return new SynapseSqlPoolVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
+            return new SynapseSqlPoolVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseVulnerabilityAssessmentScanRecordData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseVulnerabilityAssessmentScanRecordData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -575,19 +618,19 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             errors ??= new List<SynapseVulnerabilityAssessmentScanError>();
 
-            return new SynapseVulnerabilityAssessmentScanRecordData(id, name, resourceType, systemData, scanId, triggerType, state, startOn, endOn, errors?.ToList(), storageContainerPath, numberOfFailedSecurityChecks);
+            return new SynapseVulnerabilityAssessmentScanRecordData(id, name, resourceType, systemData, scanId, triggerType, state, startOn, endOn, errors?.ToList(), storageContainerPath, numberOfFailedSecurityChecks, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseVulnerabilityAssessmentScanError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseVulnerabilityAssessmentScanError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.SynapseVulnerabilityAssessmentScanError"/> instance for mocking. </returns>
         public static SynapseVulnerabilityAssessmentScanError SynapseVulnerabilityAssessmentScanError(string code = null, string message = null)
         {
-            return new SynapseVulnerabilityAssessmentScanError(code, message);
+            return new SynapseVulnerabilityAssessmentScanError(code, message, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SqlPoolVulnerabilityAssessmentScansExport. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SqlPoolVulnerabilityAssessmentScansExport"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -596,10 +639,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SqlPoolVulnerabilityAssessmentScansExport"/> instance for mocking. </returns>
         public static SqlPoolVulnerabilityAssessmentScansExport SqlPoolVulnerabilityAssessmentScansExport(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string exportedReportLocation = null)
         {
-            return new SqlPoolVulnerabilityAssessmentScansExport(id, name, resourceType, systemData, exportedReportLocation);
+            return new SqlPoolVulnerabilityAssessmentScansExport(id, name, resourceType, systemData, exportedReportLocation, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -618,10 +661,10 @@ namespace Azure.ResourceManager.Synapse.Models
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
 
-            return new SynapseSqlPoolSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), enableEmailToAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
+            return new SynapseSqlPoolSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), enableEmailToAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -632,10 +675,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             baselineResults ??= new List<SqlPoolVulnerabilityAssessmentRuleBaselineItem>();
 
-            return new SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData(id, name, resourceType, systemData, baselineResults?.ToList());
+            return new SynapseSqlPoolVulnerabilityAssessmentRuleBaselineData(id, name, resourceType, systemData, baselineResults?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseExtendedSqlPoolBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseExtendedSqlPoolBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -736,10 +779,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             auditActionsAndGroups ??= new List<string>();
 
-            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, resourceType, systemData, predicateExpression, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs);
+            return new SynapseExtendedSqlPoolBlobAuditingPolicyData(id, name, resourceType, systemData, predicateExpression, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataMaskingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataMaskingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -754,10 +797,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDataMaskingPolicyData"/> instance for mocking. </returns>
         public static SynapseDataMaskingPolicyData SynapseDataMaskingPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, string managedBy = null, SynapseDataMaskingState? dataMaskingState = null, string exemptPrincipals = null, string applicationPrincipals = null, string maskingLevel = null)
         {
-            return new SynapseDataMaskingPolicyData(id, name, resourceType, systemData, location, kind, managedBy, dataMaskingState, exemptPrincipals, applicationPrincipals, maskingLevel);
+            return new SynapseDataMaskingPolicyData(id, name, resourceType, systemData, location, kind, managedBy, dataMaskingState, exemptPrincipals, applicationPrincipals, maskingLevel, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataMaskingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataMaskingRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -779,10 +822,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDataMaskingRuleData"/> instance for mocking. </returns>
         public static SynapseDataMaskingRuleData SynapseDataMaskingRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = null, string ruleId = null, string aliasName = null, SynapseDataMaskingRuleState? ruleState = null, string schemaName = null, string tableName = null, string columnName = null, SynapseDataMaskingFunction? maskingFunction = null, string numberFrom = null, string numberTo = null, string prefixSize = null, string suffixSize = null, string replacementString = null)
         {
-            return new SynapseDataMaskingRuleData(id, name, resourceType, systemData, location, kind, ruleId, aliasName, ruleState, schemaName, tableName, columnName, maskingFunction, numberFrom, numberTo, prefixSize, suffixSize, replacementString);
+            return new SynapseDataMaskingRuleData(id, name, resourceType, systemData, location, kind, ruleId, aliasName, ruleState, schemaName, tableName, columnName, maskingFunction, numberFrom, numberTo, prefixSize, suffixSize, replacementString, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkloadGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseWorkloadGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -796,10 +839,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseWorkloadGroupData"/> instance for mocking. </returns>
         public static SynapseWorkloadGroupData SynapseWorkloadGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? minResourcePercent = null, int? maxResourcePercent = null, double? minResourcePercentPerRequest = null, double? maxResourcePercentPerRequest = null, string importance = null, int? queryExecutionTimeout = null)
         {
-            return new SynapseWorkloadGroupData(id, name, resourceType, systemData, minResourcePercent, maxResourcePercent, minResourcePercentPerRequest, maxResourcePercentPerRequest, importance, queryExecutionTimeout);
+            return new SynapseWorkloadGroupData(id, name, resourceType, systemData, minResourcePercent, maxResourcePercent, minResourcePercentPerRequest, maxResourcePercentPerRequest, importance, queryExecutionTimeout, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkloadClassifierData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseWorkloadClassifierData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -813,10 +856,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseWorkloadClassifierData"/> instance for mocking. </returns>
         public static SynapseWorkloadClassifierData SynapseWorkloadClassifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string memberName = null, string label = null, string context = null, string startTime = null, string endTime = null, string importance = null)
         {
-            return new SynapseWorkloadClassifierData(id, name, resourceType, systemData, memberName, label, context, startTime, endTime, importance);
+            return new SynapseWorkloadClassifierData(id, name, resourceType, systemData, memberName, label, context, startTime, endTime, importance, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -929,10 +972,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             auditActionsAndGroups ??= new List<string>();
 
-            return new SynapseServerBlobAuditingPolicyData(id, name, resourceType, systemData, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isDevopsAuditEnabled);
+            return new SynapseServerBlobAuditingPolicyData(id, name, resourceType, systemData, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isDevopsAuditEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseExtendedServerBlobAuditingPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseExtendedServerBlobAuditingPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1046,10 +1089,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             auditActionsAndGroups ??= new List<string>();
 
-            return new SynapseExtendedServerBlobAuditingPolicyData(id, name, resourceType, systemData, predicateExpression, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isDevopsAuditEnabled);
+            return new SynapseExtendedServerBlobAuditingPolicyData(id, name, resourceType, systemData, predicateExpression, state, storageEndpoint, storageAccountAccessKey, retentionDays, auditActionsAndGroups?.ToList(), storageAccountSubscriptionId, isStorageSecondaryKeyInUse, isAzureMonitorTargetEnabled, queueDelayMs, isDevopsAuditEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1068,10 +1111,10 @@ namespace Azure.ResourceManager.Synapse.Models
             disabledAlerts ??= new List<string>();
             emailAddresses ??= new List<string>();
 
-            return new SynapseServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), enableEmailToAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn);
+            return new SynapseServerSecurityAlertPolicyData(id, name, resourceType, systemData, state, disabledAlerts?.ToList(), emailAddresses?.ToList(), enableEmailToAccountAdmins, storageEndpoint, storageAccountAccessKey, retentionDays, createdOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseServerVulnerabilityAssessmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseServerVulnerabilityAssessmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1083,10 +1126,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseServerVulnerabilityAssessmentData"/> instance for mocking. </returns>
         public static SynapseServerVulnerabilityAssessmentData SynapseServerVulnerabilityAssessmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string storageContainerPath = null, string storageContainerSasKey = null, string storageAccountAccessKey = null, SynapseVulnerabilityAssessmentRecurringScansProperties recurringScans = null)
         {
-            return new SynapseServerVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans);
+            return new SynapseServerVulnerabilityAssessmentData(id, name, resourceType, systemData, storageContainerPath, storageContainerSasKey, storageAccountAccessKey, recurringScans, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseEncryptionProtectorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1101,10 +1144,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseEncryptionProtectorData"/> instance for mocking. </returns>
         public static SynapseEncryptionProtectorData SynapseEncryptionProtectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, AzureLocation? location = null, string subregion = null, string serverKeyName = null, SynapseServerKeyType? serverKeyType = null, Uri uri = null, BinaryData thumbprint = null)
         {
-            return new SynapseEncryptionProtectorData(id, name, resourceType, systemData, kind, location, subregion, serverKeyName, serverKeyType, uri, thumbprint);
+            return new SynapseEncryptionProtectorData(id, name, resourceType, systemData, kind, location, subregion, serverKeyName, serverKeyType, uri, thumbprint, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseServerUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseServerUsage"/>. </summary>
         /// <param name="name"> Name of the server usage metric. </param>
         /// <param name="resourceName"> The name of the resource. </param>
         /// <param name="displayName"> The metric display name. </param>
@@ -1115,10 +1158,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseServerUsage"/> instance for mocking. </returns>
         public static SynapseServerUsage SynapseServerUsage(string name = null, string resourceName = null, string displayName = null, double? currentValue = null, double? limit = null, string unit = null, DateTimeOffset? nextResetOn = null)
         {
-            return new SynapseServerUsage(name, resourceName, displayName, currentValue, limit, unit, nextResetOn);
+            return new SynapseServerUsage(name, resourceName, displayName, currentValue, limit, unit, nextResetOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseRecoverableSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseRecoverableSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1130,10 +1173,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseRecoverableSqlPoolData"/> instance for mocking. </returns>
         public static SynapseRecoverableSqlPoolData SynapseRecoverableSqlPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string edition = null, string serviceLevelObjective = null, string elasticPoolName = null, DateTimeOffset? lastAvailableBackupOn = null)
         {
-            return new SynapseRecoverableSqlPoolData(id, name, resourceType, systemData, edition, serviceLevelObjective, elasticPoolName, lastAvailableBackupOn);
+            return new SynapseRecoverableSqlPoolData(id, name, resourceType, systemData, edition, serviceLevelObjective, elasticPoolName, lastAvailableBackupOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDedicatedSqlMinimalTlsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1143,10 +1186,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDedicatedSqlMinimalTlsSettingData"/> instance for mocking. </returns>
         public static SynapseDedicatedSqlMinimalTlsSettingData SynapseDedicatedSqlMinimalTlsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string minimalTlsVersion = null)
         {
-            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, resourceType, systemData, location, minimalTlsVersion);
+            return new SynapseDedicatedSqlMinimalTlsSettingData(id, name, resourceType, systemData, location, minimalTlsVersion, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseWorkspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1184,29 +1227,47 @@ namespace Azure.ResourceManager.Synapse.Models
             extraProperties ??= new Dictionary<string, BinaryData>();
             settings ??= new Dictionary<string, BinaryData>();
 
-            return new SynapseWorkspaceData(id, name, resourceType, systemData, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkComputeSubnetId != null ? new VirtualNetworkProfile(virtualNetworkComputeSubnetId) : null, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUid, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId) : null, adlaResourceId, publicNetworkAccess, initialWorkspaceAdminObjectId != null ? new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId) : null, settings, isAadOnlyAuthenticationEnabled, isTrustedServiceBypassEnabled);
+            return new SynapseWorkspaceData(id, name, resourceType, systemData, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkComputeSubnetId != null ? new VirtualNetworkProfile(virtualNetworkComputeSubnetId, serializedAdditionalRawData: null) : null, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUid, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId, serializedAdditionalRawData: null) : null, adlaResourceId, publicNetworkAccess, initialWorkspaceAdminObjectId != null ? new CspWorkspaceAdminProperties(initialWorkspaceAdminObjectId, serializedAdditionalRawData: null) : null, settings, isAadOnlyAuthenticationEnabled, isTrustedServiceBypassEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseEncryptionDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseEncryptionDetails"/>. </summary>
         /// <param name="isDoubleEncryptionEnabled"> Double Encryption enabled. </param>
         /// <param name="cmk"> Customer Managed Key Details. </param>
         /// <returns> A new <see cref="Models.SynapseEncryptionDetails"/> instance for mocking. </returns>
         public static SynapseEncryptionDetails SynapseEncryptionDetails(bool? isDoubleEncryptionEnabled = null, WorkspaceCustomerManagedKeyDetails cmk = null)
         {
-            return new SynapseEncryptionDetails(isDoubleEncryptionEnabled, cmk);
+            return new SynapseEncryptionDetails(isDoubleEncryptionEnabled, cmk, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of WorkspaceCustomerManagedKeyDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceCustomerManagedKeyDetails"/>. </summary>
         /// <param name="status"> The customer managed key status on the workspace. </param>
         /// <param name="key"> The key object of the workspace. </param>
         /// <param name="kekIdentity"> Key encryption key. </param>
         /// <returns> A new <see cref="Models.WorkspaceCustomerManagedKeyDetails"/> instance for mocking. </returns>
         public static WorkspaceCustomerManagedKeyDetails WorkspaceCustomerManagedKeyDetails(string status = null, SynapseWorkspaceKeyDetails key = null, KekIdentityProperties kekIdentity = null)
         {
-            return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity);
+            return new WorkspaceCustomerManagedKeyDetails(status, key, kekIdentity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseWorkspaceAadAdminInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseWorkspacePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
+        /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
+        /// <param name="purviewResourceId"> Purview Configuration. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="encryption"> The encryption details of the workspace. </param>
+        /// <param name="publicNetworkAccess"> Enable or Disable public network access to workspace. </param>
+        /// <returns> A new <see cref="Models.SynapseWorkspacePatch"/> instance for mocking. </returns>
+        public static SynapseWorkspacePatch SynapseWorkspacePatch(IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, string sqlAdministratorLoginPassword = null, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings = null, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration = null, ResourceIdentifier purviewResourceId = null, string provisioningState = null, SynapseEncryptionDetails encryption = null, WorkspacePublicNetworkAccess? publicNetworkAccess = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SynapseWorkspacePatch(tags, identity, sqlAdministratorLoginPassword, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewResourceId != null ? new PurviewConfiguration(purviewResourceId, serializedAdditionalRawData: null) : null, provisioningState, encryption, publicNetworkAccess, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseWorkspaceAadAdminInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1218,10 +1279,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseWorkspaceAadAdminInfoData"/> instance for mocking. </returns>
         public static SynapseWorkspaceAadAdminInfoData SynapseWorkspaceAadAdminInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? tenantId = null, string login = null, string administratorType = null, string sid = null)
         {
-            return new SynapseWorkspaceAadAdminInfoData(id, name, resourceType, systemData, tenantId, login, administratorType, sid);
+            return new SynapseWorkspaceAadAdminInfoData(id, name, resourceType, systemData, tenantId, login, administratorType, sid, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIdentitySqlControlSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseManagedIdentitySqlControlSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1230,19 +1291,19 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseManagedIdentitySqlControlSettingData"/> instance for mocking. </returns>
         public static SynapseManagedIdentitySqlControlSettingData SynapseManagedIdentitySqlControlSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseGrantSqlControlToManagedIdentity grantSqlControlToManagedIdentity = null)
         {
-            return new SynapseManagedIdentitySqlControlSettingData(id, name, resourceType, systemData, grantSqlControlToManagedIdentity);
+            return new SynapseManagedIdentitySqlControlSettingData(id, name, resourceType, systemData, grantSqlControlToManagedIdentity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseGrantSqlControlToManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseGrantSqlControlToManagedIdentity"/>. </summary>
         /// <param name="desiredState"> Desired state. </param>
         /// <param name="actualState"> Actual state. </param>
         /// <returns> A new <see cref="Models.SynapseGrantSqlControlToManagedIdentity"/> instance for mocking. </returns>
         public static SynapseGrantSqlControlToManagedIdentity SynapseGrantSqlControlToManagedIdentity(SynapseDesiredState? desiredState = null, SynapseGrantSqlControlToManagedIdentityState? actualState = null)
         {
-            return new SynapseGrantSqlControlToManagedIdentity(desiredState, actualState);
+            return new SynapseGrantSqlControlToManagedIdentity(desiredState, actualState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseRestorableDroppedSqlPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseRestorableDroppedSqlPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1259,10 +1320,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseRestorableDroppedSqlPoolData"/> instance for mocking. </returns>
         public static SynapseRestorableDroppedSqlPoolData SynapseRestorableDroppedSqlPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string databaseName = null, string edition = null, string maxSizeBytes = null, string serviceLevelObjective = null, string elasticPoolName = null, DateTimeOffset? createdOn = null, DateTimeOffset? deletedOn = null, DateTimeOffset? earliestRestoreOn = null)
         {
-            return new SynapseRestorableDroppedSqlPoolData(id, name, resourceType, systemData, location, databaseName, edition, maxSizeBytes, serviceLevelObjective, elasticPoolName, createdOn, deletedOn, earliestRestoreOn);
+            return new SynapseRestorableDroppedSqlPoolData(id, name, resourceType, systemData, location, databaseName, edition, maxSizeBytes, serviceLevelObjective, elasticPoolName, createdOn, deletedOn, earliestRestoreOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseBigDataPoolInfoData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseBigDataPoolInfoData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1294,20 +1355,20 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             customLibraries ??= new List<BigDataPoolLibraryInfo>();
 
-            return new SynapseBigDataPoolInfoData(id, name, resourceType, systemData, tags, location, provisioningState, autoScale, createdOn, autoPause, isComputeIsolationEnabled, isAutotuneEnabled, isSessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededOn);
+            return new SynapseBigDataPoolInfoData(id, name, resourceType, systemData, tags, location, provisioningState, autoScale, createdOn, autoPause, isComputeIsolationEnabled, isAutotuneEnabled, isSessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BigDataPoolLibraryRequirements"/>. </summary>
         /// <param name="updatedOn"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
         /// <param name="filename"> The filename of the library requirements file. </param>
         /// <returns> A new <see cref="Models.BigDataPoolLibraryRequirements"/> instance for mocking. </returns>
         public static BigDataPoolLibraryRequirements BigDataPoolLibraryRequirements(DateTimeOffset? updatedOn = null, string content = null, string filename = null)
         {
-            return new BigDataPoolLibraryRequirements(updatedOn, content, filename);
+            return new BigDataPoolLibraryRequirements(updatedOn, content, filename, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolLibraryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BigDataPoolLibraryInfo"/>. </summary>
         /// <param name="name"> Name of the library. </param>
         /// <param name="path"> Storage blob path of library. </param>
         /// <param name="containerName"> Storage blob container name. </param>
@@ -1318,10 +1379,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.BigDataPoolLibraryInfo"/> instance for mocking. </returns>
         public static BigDataPoolLibraryInfo BigDataPoolLibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedOn = null, string libraryInfoType = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new BigDataPoolLibraryInfo(name, path, containerName, uploadedOn, libraryInfoType, provisioningStatus, creatorId);
+            return new BigDataPoolLibraryInfo(name, path, containerName, uploadedOn, libraryInfoType, provisioningStatus, creatorId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolSparkConfigProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.BigDataPoolSparkConfigProperties"/>. </summary>
         /// <param name="updatedOn"> The last update time of the spark config properties file. </param>
         /// <param name="content"> The spark config properties. </param>
         /// <param name="filename"> The filename of the spark config properties file. </param>
@@ -1329,10 +1390,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.BigDataPoolSparkConfigProperties"/> instance for mocking. </returns>
         public static BigDataPoolSparkConfigProperties BigDataPoolSparkConfigProperties(DateTimeOffset? updatedOn = null, string content = null, string filename = null, SynapseSparkConfigurationType? configurationType = null)
         {
-            return new BigDataPoolSparkConfigProperties(updatedOn, content, filename, configurationType);
+            return new BigDataPoolSparkConfigProperties(updatedOn, content, filename, configurationType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseLibraryData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseLibraryData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1348,10 +1409,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseLibraryData"/> instance for mocking. </returns>
         public static SynapseLibraryData SynapseLibraryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string namePropertiesName = null, string path = null, string containerName = null, DateTimeOffset? uploadedOn = null, string typePropertiesType = null, string provisioningStatus = null, string creatorId = null, ETag? etag = null)
         {
-            return new SynapseLibraryData(id, name, resourceType, systemData, namePropertiesName, path, containerName, uploadedOn, typePropertiesType, provisioningStatus, creatorId, etag);
+            return new SynapseLibraryData(id, name, resourceType, systemData, namePropertiesName, path, containerName, uploadedOn, typePropertiesType, provisioningStatus, creatorId, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseIntegrationRuntimeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1365,18 +1426,18 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseIntegrationRuntimeData"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeData SynapseIntegrationRuntimeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SynapseIntegrationRuntimeProperties properties = null, ETag? etag = null)
         {
-            return new SynapseIntegrationRuntimeData(id, name, resourceType, systemData, properties, etag);
+            return new SynapseIntegrationRuntimeData(id, name, resourceType, systemData, properties, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeIPAddress. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeNodeIPAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeNodeIPAddress"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeNodeIPAddress SynapseIntegrationRuntimeNodeIPAddress(IPAddress ipAddress = null)
         {
-            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress);
+            return new SynapseIntegrationRuntimeNodeIPAddress(ipAddress, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisObjectMetadata"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
@@ -1384,10 +1445,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisObjectMetadata"/> instance for mocking. </returns>
         public static SynapseSsisObjectMetadata SynapseSsisObjectMetadata(string metadataType = "Unknown", long? id = null, string name = null, string description = null)
         {
-            return new UnknownSsisObjectMetadata(metadataType, id, name, description);
+            return new UnknownSsisObjectMetadata(metadataType, id, name, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSelfHostedIntegrationRuntimeNode"/>. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="machineName"> Machine name of the integration runtime node. </param>
         /// <param name="hostServiceUri"> URI for the host machine of the integration runtime. </param>
@@ -1416,7 +1477,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSelfHostedIntegrationRuntimeNode(nodeName, machineName, hostServiceUri, status, capabilities, versionStatus, version, registerOn, lastConnectedOn, expireOn, lastStartedOn, lastStopOn, lastUpdateResult, lastStartUpdateOn, lastEndUpdateOn, isActiveDispatcher, concurrentJobsLimit, maxConcurrentJobs, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeConnectionInfo"/>. </summary>
         /// <param name="serviceToken"> The token generated in service. Callers use this token to authenticate to integration runtime. </param>
         /// <param name="identityCertThumbprint"> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </param>
         /// <param name="hostServiceUri"> The on-premises integration runtime host URL. </param>
@@ -1432,7 +1493,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIntegrationRuntimeConnectionInfo(serviceToken, identityCertThumbprint, hostServiceUri, version, publicKey, isIdentityCertExprired, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeStatusResult"/>. </summary>
         /// <param name="name"> The integration runtime name. </param>
         /// <param name="properties">
         /// Integration runtime properties.
@@ -1442,10 +1503,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeStatusResult"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeStatusResult SynapseIntegrationRuntimeStatusResult(string name = null, SynapseIntegrationRuntimeStatus properties = null)
         {
-            return new SynapseIntegrationRuntimeStatusResult(name, properties);
+            return new SynapseIntegrationRuntimeStatusResult(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeStatus"/>. </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
@@ -1458,16 +1519,16 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIntegrationRuntimeStatus(runtimeType, dataFactoryName, state, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeAuthKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeAuthKeys"/>. </summary>
         /// <param name="authKey1"> The primary integration runtime authentication key. </param>
         /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeAuthKeys"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeAuthKeys SynapseIntegrationRuntimeAuthKeys(string authKey1 = null, string authKey2 = null)
         {
-            return new SynapseIntegrationRuntimeAuthKeys(authKey1, authKey2);
+            return new SynapseIntegrationRuntimeAuthKeys(authKey1, authKey2, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeMonitoringResult"/>. </summary>
         /// <param name="name"> Integration runtime name. </param>
         /// <param name="nodes"> Integration runtime node monitoring data. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeMonitoringResult"/> instance for mocking. </returns>
@@ -1475,10 +1536,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             nodes ??= new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
 
-            return new SynapseIntegrationRuntimeMonitoringResult(name, nodes?.ToList());
+            return new SynapseIntegrationRuntimeMonitoringResult(name, nodes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeNodeMonitoringResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeNodeMonitoringResult"/>. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
         /// <param name="cpuUtilization"> CPU percentage on the integration runtime node. </param>
@@ -1496,7 +1557,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseIntegrationRuntimeNodeMonitoringResult(nodeName, availableMemoryInMB, cpuUtilization, concurrentJobsLimit, concurrentJobsRunning, maxConcurrentJobs, sentBytes, receivedBytes, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisObjectMetadataStatusResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisObjectMetadataStatusResult"/>. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>
@@ -1504,10 +1565,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisObjectMetadataStatusResult"/> instance for mocking. </returns>
         public static SynapseSsisObjectMetadataStatusResult SynapseSsisObjectMetadataStatusResult(string status = null, string name = null, string properties = null, string error = null)
         {
-            return new SynapseSsisObjectMetadataStatusResult(status, name, properties, error);
+            return new SynapseSsisObjectMetadataStatusResult(status, name, properties, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/>. </summary>
         /// <param name="category"> The category of outbound network dependency. </param>
         /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> instance for mocking. </returns>
@@ -1515,10 +1576,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             endpoints ??= new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
 
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints?.ToList());
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint"/>. </summary>
         /// <param name="domainName"> The domain name of endpoint. </param>
         /// <param name="endpointDetails"> The details of endpoint. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
@@ -1526,18 +1587,18 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             endpointDetails ??= new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>();
 
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, endpointDetails?.ToList());
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/>. </summary>
         /// <param name="port"> The port of endpoint. </param>
         /// <returns> A new <see cref="Models.SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> instance for mocking. </returns>
         public static SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port = null)
         {
-            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port);
+            return new SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSparkConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseSparkConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1557,10 +1618,10 @@ namespace Azure.ResourceManager.Synapse.Models
             annotations ??= new List<string>();
             configMergeRule ??= new Dictionary<string, string>();
 
-            return new SynapseSparkConfigurationData(id, name, resourceType, systemData, description, configs, annotations?.ToList(), notes, createdBy, createdOn, configMergeRule, etag);
+            return new SynapseSparkConfigurationData(id, name, resourceType, systemData, description, configs, annotations?.ToList(), notes, createdBy, createdOn, configMergeRule, etag, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuDescription. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolSkuDescription"/>. </summary>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="name"> The name of the SKU. </param>
         /// <param name="size"> The size of the SKU. </param>
@@ -1574,10 +1635,10 @@ namespace Azure.ResourceManager.Synapse.Models
             locationInfo ??= new List<KustoPoolSkuLocationInfoItem>();
             restrictions ??= new List<BinaryData>();
 
-            return new KustoPoolSkuDescription(resourceType, name, size, locations?.ToList(), locationInfo?.ToList(), restrictions?.ToList());
+            return new KustoPoolSkuDescription(resourceType, name, size, locations?.ToList(), locationInfo?.ToList(), restrictions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KustoPoolSkuLocationInfoItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolSkuLocationInfoItem"/>. </summary>
         /// <param name="location"> The available location of the SKU. </param>
         /// <param name="zones"> The available zone of the SKU. </param>
         /// <returns> A new <see cref="Models.KustoPoolSkuLocationInfoItem"/> instance for mocking. </returns>
@@ -1585,10 +1646,19 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             zones ??= new List<string>();
 
-            return new KustoPoolSkuLocationInfoItem(location, zones?.ToList());
+            return new KustoPoolSkuLocationInfoItem(location, zones?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of KustoPoolNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Kusto Pool name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools. </param>
+        /// <returns> A new <see cref="Models.KustoPoolNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolNameAvailabilityContent KustoPoolNameAvailabilityContent(string name = null, KustoPoolType resourceType = default)
+        {
+            return new KustoPoolNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Specifies a Boolean value that indicates if the name is available. </param>
         /// <param name="name"> The name that was checked. </param>
         /// <param name="message"> Message indicating an unavailable name due to a conflict, or a description of the naming rules that are violated. </param>
@@ -1596,10 +1666,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.KustoPoolNameAvailabilityResult"/> instance for mocking. </returns>
         public static KustoPoolNameAvailabilityResult KustoPoolNameAvailabilityResult(bool? isNameAvailable = null, string name = null, string message = null, KustoPoolNameUnavailableReason? reason = null)
         {
-            return new KustoPoolNameAvailabilityResult(isNameAvailable, name, message, reason);
+            return new KustoPoolNameAvailabilityResult(isNameAvailable, name, message, reason, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseKustoPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1624,10 +1694,10 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             languageExtensionsValue ??= new List<SynapseLanguageExtension>();
 
-            return new SynapseKustoPoolData(id, name, resourceType, systemData, tags, location, sku, etag, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new SynapseLanguageExtensionsList(languageExtensionsValue?.ToList()) : null, workspaceUid);
+            return new SynapseKustoPoolData(id, name, resourceType, systemData, tags, location, sku, etag, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new SynapseLanguageExtensionsList(languageExtensionsValue?.ToList(), serializedAdditionalRawData: null) : null, workspaceUid, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseKustoPoolPatch"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1650,20 +1720,20 @@ namespace Azure.ResourceManager.Synapse.Models
             tags ??= new Dictionary<string, string>();
             languageExtensionsValue ??= new List<SynapseLanguageExtension>();
 
-            return new SynapseKustoPoolPatch(id, name, resourceType, systemData, tags, sku, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new SynapseLanguageExtensionsList(languageExtensionsValue?.ToList()) : null, workspaceUid);
+            return new SynapseKustoPoolPatch(id, name, resourceType, systemData, tags, sku, state, provisioningState, uri, dataIngestionUri, stateReason, optimizedAutoscale, enableStreamingIngest, enablePurge, languageExtensionsValue != null ? new SynapseLanguageExtensionsList(languageExtensionsValue?.ToList(), serializedAdditionalRawData: null) : null, workspaceUid, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceResourceSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseDataSourceResourceSku"/>. </summary>
         /// <param name="resourceType"> Resource Namespace and Type. </param>
         /// <param name="sku"> The SKU details. </param>
         /// <param name="capacity"> The number of instances of the cluster. </param>
         /// <returns> A new <see cref="Models.SynapseDataSourceResourceSku"/> instance for mocking. </returns>
         public static SynapseDataSourceResourceSku SynapseDataSourceResourceSku(string resourceType = null, SynapseDataSourceSku sku = null, SynapseDataSourceCapacity capacity = null)
         {
-            return new SynapseDataSourceResourceSku(resourceType, sku, capacity);
+            return new SynapseDataSourceResourceSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataSourceCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseDataSourceCapacity"/>. </summary>
         /// <param name="scaleType"> Scale type. </param>
         /// <param name="minimum"> Minimum allowed capacity. </param>
         /// <param name="maximum"> Maximum allowed capacity. </param>
@@ -1671,20 +1741,20 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseDataSourceCapacity"/> instance for mocking. </returns>
         public static SynapseDataSourceCapacity SynapseDataSourceCapacity(SynapseDataSourceScaleType scaleType = default, int minimum = default, int maximum = default, int @default = default)
         {
-            return new SynapseDataSourceCapacity(scaleType, minimum, maximum, @default);
+            return new SynapseDataSourceCapacity(scaleType, minimum, maximum, @default, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseFollowerDatabaseDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseFollowerDatabaseDefinition"/>. </summary>
         /// <param name="kustoPoolResourceId"> Resource id of the cluster that follows a database owned by this cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> Resource name of the attached database configuration in the follower cluster. </param>
         /// <param name="databaseName"> The database name owned by this cluster that was followed. * in case following all databases. </param>
         /// <returns> A new <see cref="Models.SynapseFollowerDatabaseDefinition"/> instance for mocking. </returns>
         public static SynapseFollowerDatabaseDefinition SynapseFollowerDatabaseDefinition(ResourceIdentifier kustoPoolResourceId = null, string attachedDatabaseConfigurationName = null, string databaseName = null)
         {
-            return new SynapseFollowerDatabaseDefinition(kustoPoolResourceId, attachedDatabaseConfigurationName, databaseName);
+            return new SynapseFollowerDatabaseDefinition(kustoPoolResourceId, attachedDatabaseConfigurationName, databaseName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseAttachedDatabaseConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1701,10 +1771,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             attachedDatabaseNames ??= new List<string>();
 
-            return new SynapseAttachedDatabaseConfigurationData(id, name, resourceType, systemData, location, provisioningState, databaseName, kustoPoolResourceId, attachedDatabaseNames?.ToList(), defaultPrincipalsModificationKind, tableLevelSharingProperties);
+            return new SynapseAttachedDatabaseConfigurationData(id, name, resourceType, systemData, location, provisioningState, databaseName, kustoPoolResourceId, attachedDatabaseNames?.ToList(), defaultPrincipalsModificationKind, tableLevelSharingProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1714,10 +1784,19 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDatabaseData"/> instance for mocking. </returns>
         public static SynapseDatabaseData SynapseDatabaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
-            return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind);
+            return new SynapseDatabaseData(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolDataConnectionNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Data Connection name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/dataConnections. </param>
+        /// <returns> A new <see cref="Models.KustoPoolDataConnectionNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolDataConnectionNameAvailabilityContent KustoPoolDataConnectionNameAvailabilityContent(string name = null, SynapseDataConnectionType resourceType = default)
+        {
+            return new KustoPoolDataConnectionNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDataConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1727,28 +1806,37 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDataConnectionData"/> instance for mocking. </returns>
         public static SynapseDataConnectionData SynapseDataConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string kind = "Unknown")
         {
-            return new SynapseDataConnectionData(id, name, resourceType, systemData, location, kind);
+            return new SynapseDataConnectionData(id, name, resourceType, systemData, location, kind, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseDataConnectionValidationListResult"/>. </summary>
         /// <param name="value"> The list of Kusto data connection validation errors. </param>
         /// <returns> A new <see cref="Models.SynapseDataConnectionValidationListResult"/> instance for mocking. </returns>
         public static SynapseDataConnectionValidationListResult SynapseDataConnectionValidationListResult(IEnumerable<SynapseDataConnectionValidationResult> value = null)
         {
             value ??= new List<SynapseDataConnectionValidationResult>();
 
-            return new SynapseDataConnectionValidationListResult(value?.ToList());
+            return new SynapseDataConnectionValidationListResult(value?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseDataConnectionValidationResult"/>. </summary>
         /// <param name="errorMessage"> A message which indicates a problem in data connection validation. </param>
         /// <returns> A new <see cref="Models.SynapseDataConnectionValidationResult"/> instance for mocking. </returns>
         public static SynapseDataConnectionValidationResult SynapseDataConnectionValidationResult(string errorMessage = null)
         {
-            return new SynapseDataConnectionValidationResult(errorMessage);
+            return new SynapseDataConnectionValidationResult(errorMessage, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseClusterPrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolPrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoPoolPrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolPrincipalAssignmentNameAvailabilityContent KustoPoolPrincipalAssignmentNameAvailabilityContent(string name = null, SynapsePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoPoolPrincipalAssignmentNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseClusterPrincipalAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1764,10 +1852,19 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseClusterPrincipalAssignmentData"/> instance for mocking. </returns>
         public static SynapseClusterPrincipalAssignmentData SynapseClusterPrincipalAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string principalId = null, SynapseClusterPrincipalRole? role = null, Guid? tenantId = null, SynapsePrincipalType? principalType = null, string tenantName = null, string principalName = null, ResourceProvisioningState? provisioningState = null, Guid? aadObjectId = null)
         {
-            return new SynapseClusterPrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId);
+            return new SynapseClusterPrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseDatabasePrincipalAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Principal Assignment resource name. </param>
+        /// <param name="resourceType"> The type of resource, Microsoft.Synapse/workspaces/kustoPools/databases/principalAssignments. </param>
+        /// <returns> A new <see cref="Models.KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent"/> instance for mocking. </returns>
+        public static KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(string name = null, SynapseDatabasePrincipalAssignmentType resourceType = default)
+        {
+            return new KustoPoolDatabasePrincipalAssignmentNameAvailabilityContent(name, resourceType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Synapse.SynapseDatabasePrincipalAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1783,10 +1880,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Synapse.SynapseDatabasePrincipalAssignmentData"/> instance for mocking. </returns>
         public static SynapseDatabasePrincipalAssignmentData SynapseDatabasePrincipalAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string principalId = null, SynapseDatabasePrincipalRole? role = null, Guid? tenantId = null, SynapsePrincipalType? principalType = null, string tenantName = null, string principalName = null, ResourceProvisioningState? provisioningState = null, Guid? aadObjectId = null)
         {
-            return new SynapseDatabasePrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId);
+            return new SynapseDatabasePrincipalAssignmentData(id, name, resourceType, systemData, principalId, role, tenantId, principalType, tenantName, principalName, provisioningState, aadObjectId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseKustoPoolPrivateLinkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseKustoPoolPrivateLinkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1801,10 +1898,10 @@ namespace Azure.ResourceManager.Synapse.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new SynapseKustoPoolPrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState);
+            return new SynapseKustoPoolPrivateLinkData(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntime"/>. </summary>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
@@ -1821,7 +1918,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntime(IntegrationRuntimeType.Managed, description, additionalProperties, state, referenceName, typeManagedVirtualNetworkType, id, computeProperties, ssisProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -1839,7 +1936,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeStatus(IntegrationRuntimeType.Managed, dataFactoryName, state, additionalProperties, createOn, nodes?.ToList(), otherErrors?.ToList(), lastOperation);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeNode"/>. </summary>
         /// <param name="nodeId"> The managed integration runtime node id. </param>
         /// <param name="status"> The managed integration runtime node status. </param>
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
@@ -1853,7 +1950,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeNode(nodeId, status, errors?.ToList(), additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeError"/>. </summary>
         /// <param name="time"> The time when the error occurred. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
@@ -1868,7 +1965,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeError(time, code, parameters?.ToList(), message, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseManagedIntegrationRuntimeOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseManagedIntegrationRuntimeOperationResult"/>. </summary>
         /// <param name="managedIntegrationRuntimeOperationResultType"> The operation type. Could be start or stop. </param>
         /// <param name="startOn"> The start time of the operation. </param>
         /// <param name="result"> The operation result. </param>
@@ -1885,7 +1982,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseManagedIntegrationRuntimeOperationResult(managedIntegrationRuntimeOperationResultType, startOn, result, errorCode, parameters?.ToList(), activityId, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of SynapseSelfHostedIntegrationRuntimeStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSelfHostedIntegrationRuntimeStatus"/>. </summary>
         /// <param name="dataFactoryName"> The workspace name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -1921,7 +2018,7 @@ namespace Azure.ResourceManager.Synapse.Models
             return new SynapseSelfHostedIntegrationRuntimeStatus(IntegrationRuntimeType.SelfHosted, dataFactoryName, state, additionalProperties, createOn, taskQueueId, nodeCommunicationChannelEncryptionMode, internalChannelEncryption, version, nodes?.ToList(), scheduledUpdateOn, updateDelayOffset, localTimeZoneOffset, capabilities, serviceUrls?.ToList(), autoUpdate, versionStatus, links?.ToList(), pushedVersion, latestVersion, autoUpdateEta, serviceRegion, newerVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SynapseLinkedIntegrationRuntime. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseLinkedIntegrationRuntime"/>. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the workspace for which the linked integration runtime belong to. </param>
@@ -1930,20 +2027,20 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseLinkedIntegrationRuntime"/> instance for mocking. </returns>
         public static SynapseLinkedIntegrationRuntime SynapseLinkedIntegrationRuntime(string name = null, string subscriptionId = null, string dataFactoryName = null, string dataFactoryLocation = null, DateTimeOffset? createOn = null)
         {
-            return new SynapseLinkedIntegrationRuntime(name, subscriptionId, dataFactoryName, dataFactoryLocation, createOn);
+            return new SynapseLinkedIntegrationRuntime(name, subscriptionId, dataFactoryName, dataFactoryLocation, createOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisFolder. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisFolder"/>. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
         /// <returns> A new <see cref="Models.SynapseSsisFolder"/> instance for mocking. </returns>
         public static SynapseSsisFolder SynapseSsisFolder(long? id = null, string name = null, string description = null)
         {
-            return new SynapseSsisFolder(SynapseSsisObjectMetadataType.Folder, id, name, description);
+            return new SynapseSsisFolder(SynapseSsisObjectMetadataType.Folder, id, name, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisProject. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisProject"/>. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -1957,10 +2054,10 @@ namespace Azure.ResourceManager.Synapse.Models
             environmentRefs ??= new List<SynapseSsisEnvironmentReference>();
             parameters ??= new List<SynapseSsisParameter>();
 
-            return new SynapseSsisProject(SynapseSsisObjectMetadataType.Project, id, name, description, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
+            return new SynapseSsisProject(SynapseSsisObjectMetadataType.Project, id, name, description, serializedAdditionalRawData: null, folderId, version, environmentRefs?.ToList(), parameters?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisEnvironmentReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisEnvironmentReference"/>. </summary>
         /// <param name="id"> Environment reference id. </param>
         /// <param name="environmentFolderName"> Environment folder name. </param>
         /// <param name="environmentName"> Environment name. </param>
@@ -1968,10 +2065,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisEnvironmentReference"/> instance for mocking. </returns>
         public static SynapseSsisEnvironmentReference SynapseSsisEnvironmentReference(long? id = null, string environmentFolderName = null, string environmentName = null, string referenceType = null)
         {
-            return new SynapseSsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType);
+            return new SynapseSsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisParameter. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisParameter"/>. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
@@ -1987,10 +2084,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisParameter"/> instance for mocking. </returns>
         public static SynapseSsisParameter SynapseSsisParameter(long? id = null, string name = null, string description = null, string dataType = null, bool? isRequired = null, bool? isSensitive = null, string designDefaultValue = null, string defaultValue = null, string sensitiveDefaultValue = null, string valueType = null, bool? valueSet = null, string variable = null)
         {
-            return new SynapseSsisParameter(id, name, description, dataType, isRequired, isSensitive, designDefaultValue, defaultValue, sensitiveDefaultValue, valueType, valueSet, variable);
+            return new SynapseSsisParameter(id, name, description, dataType, isRequired, isSensitive, designDefaultValue, defaultValue, sensitiveDefaultValue, valueType, valueSet, variable, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisPackage"/>. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -2003,10 +2100,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             parameters ??= new List<SynapseSsisParameter>();
 
-            return new SynapseSsisPackage(SynapseSsisObjectMetadataType.Package, id, name, description, folderId, projectVersion, projectId, parameters?.ToList());
+            return new SynapseSsisPackage(SynapseSsisObjectMetadataType.Package, id, name, description, serializedAdditionalRawData: null, folderId, projectVersion, projectId, parameters?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisEnvironment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisEnvironment"/>. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -2017,10 +2114,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             variables ??= new List<SynapseSsisVariable>();
 
-            return new SynapseSsisEnvironment(SynapseSsisObjectMetadataType.Environment, id, name, description, folderId, variables?.ToList());
+            return new SynapseSsisEnvironment(SynapseSsisObjectMetadataType.Environment, id, name, description, serializedAdditionalRawData: null, folderId, variables?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisVariable. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseSsisVariable"/>. </summary>
         /// <param name="id"> Variable id. </param>
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>
@@ -2031,10 +2128,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseSsisVariable"/> instance for mocking. </returns>
         public static SynapseSsisVariable SynapseSsisVariable(long? id = null, string name = null, string description = null, string dataType = null, bool? isSensitive = null, string value = null, string sensitiveValue = null)
         {
-            return new SynapseSsisVariable(id, name, description, dataType, isSensitive, value, sensitiveValue);
+            return new SynapseSsisVariable(id, name, description, dataType, isSensitive, value, sensitiveValue, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SynapseReadWriteDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseReadWriteDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2048,10 +2145,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseReadWriteDatabase"/> instance for mocking. </returns>
         public static SynapseReadWriteDatabase SynapseReadWriteDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, bool? isFollowed = null)
         {
-            return new SynapseReadWriteDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadWrite, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, isFollowed);
+            return new SynapseReadWriteDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadWrite, serializedAdditionalRawData: null, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize, serializedAdditionalRawData: null) : null, isFollowed);
         }
 
-        /// <summary> Initializes a new instance of SynapseReadOnlyFollowingDatabase. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseReadOnlyFollowingDatabase"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2067,10 +2164,10 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseReadOnlyFollowingDatabase"/> instance for mocking. </returns>
         public static SynapseReadOnlyFollowingDatabase SynapseReadOnlyFollowingDatabase(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceProvisioningState? provisioningState = null, TimeSpan? softDeletePeriod = null, TimeSpan? hotCachePeriod = null, float? statisticsSize = null, string leaderClusterResourceId = null, string attachedDatabaseConfigurationName = null, SynapsePrincipalsModificationKind? principalsModificationKind = null)
         {
-            return new SynapseReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadOnlyFollowing, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
+            return new SynapseReadOnlyFollowingDatabase(id, name, resourceType, systemData, location, SynapseKind.ReadOnlyFollowing, serializedAdditionalRawData: null, provisioningState, softDeletePeriod, hotCachePeriod, statisticsSize != null ? new DatabaseStatistics(statisticsSize, serializedAdditionalRawData: null) : null, leaderClusterResourceId, attachedDatabaseConfigurationName, principalsModificationKind);
         }
 
-        /// <summary> Initializes a new instance of SynapseEventHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseEventHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2090,10 +2187,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new SynapseEventHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventHub, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId);
+            return new SynapseEventHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventHub, serializedAdditionalRawData: null, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), compression, provisioningState, managedIdentityResourceId);
         }
 
-        /// <summary> Initializes a new instance of SynapseIotHubDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseIotHubDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2112,10 +2209,10 @@ namespace Azure.ResourceManager.Synapse.Models
         {
             eventSystemProperties ??= new List<string>();
 
-            return new SynapseIotHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.IotHub, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, provisioningState);
+            return new SynapseIotHubDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.IotHub, serializedAdditionalRawData: null, iotHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, eventSystemProperties?.ToList(), sharedAccessPolicyName, provisioningState);
         }
 
-        /// <summary> Initializes a new instance of SynapseEventGridDataConnection. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SynapseEventGridDataConnection"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2133,7 +2230,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <returns> A new <see cref="Models.SynapseEventGridDataConnection"/> instance for mocking. </returns>
         public static SynapseEventGridDataConnection SynapseEventGridDataConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ResourceIdentifier storageAccountResourceId = null, ResourceIdentifier eventHubResourceId = null, string consumerGroup = null, string tableName = null, string mappingRuleName = null, SynapseEventGridDataFormat? dataFormat = null, bool? ignoreFirstRecord = null, SynapseBlobStorageEventType? blobStorageEventType = null, ResourceProvisioningState? provisioningState = null)
         {
-            return new SynapseEventGridDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventGrid, storageAccountResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, ignoreFirstRecord, blobStorageEventType, provisioningState);
+            return new SynapseEventGridDataConnection(id, name, resourceType, systemData, location, SynapseDataConnectionKind.EventGrid, serializedAdditionalRawData: null, storageAccountResourceId, eventHubResourceId, consumerGroup, tableName, mappingRuleName, dataFormat, ignoreFirstRecord, blobStorageEventType, provisioningState);
         }
     }
 }

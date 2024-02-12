@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Samples
             {
                 Properties = new DeviceProvisioningServicesCertificateProperties()
                 {
-                    Certificate = BinaryData.FromString("############################################"),
+                    Certificate = BinaryData.FromString("\"############################################\""),
                 },
             };
             ArmOperation<DeviceProvisioningServicesCertificateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, certificateName, data);

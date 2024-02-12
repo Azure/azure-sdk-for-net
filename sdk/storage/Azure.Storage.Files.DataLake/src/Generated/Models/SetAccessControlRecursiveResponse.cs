@@ -13,13 +13,13 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary> The SetAccessControlRecursiveResponse. </summary>
     internal partial class SetAccessControlRecursiveResponse
     {
-        /// <summary> Initializes a new instance of SetAccessControlRecursiveResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetAccessControlRecursiveResponse"/>. </summary>
         internal SetAccessControlRecursiveResponse()
         {
             FailedEntries = new ChangeTrackingList<AclFailedEntry>();
         }
 
-        /// <summary> Initializes a new instance of SetAccessControlRecursiveResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetAccessControlRecursiveResponse"/>. </summary>
         /// <param name="directoriesSuccessful"></param>
         /// <param name="filesSuccessful"></param>
         /// <param name="failureCount"></param>

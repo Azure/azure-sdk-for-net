@@ -21,12 +21,15 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     using Xunit;
     using Xunit.Abstractions;
     using Xunit.Sdk;
+    using Microsoft.Identity.Client;
 
     using Constants = Microsoft.Azure.Batch.Constants;
 
     public static class TestUtilities
     {
         #region Credentials helpers
+        private const string BatchResourceUri = "https://batch.core.windows.net/";
+        private const string AuthorityUri = "https://login.microsoftonline.com/";
 
         public static BatchSharedKeyCredentials GetCredentialsFromEnvironment()
         {
@@ -61,6 +64,28 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
 
             return client;
         }
+
+
+        public static async Task<string> GetAccessToken(string[] scopes)
+        {
+            var app = ConfidentialClientApplicationBuilder.Create(TestCommon.Configuration.ClientId)
+                        .WithClientSecret(TestCommon.Configuration.ClientKey)
+                        .WithAuthority(new Uri(AuthorityUri + TestCommon.Configuration.BatchTenantID))
+                        .Build();
+
+            var result = await app.AcquireTokenForClient(scopes).ExecuteAsync();
+            return result.AccessToken;
+        }
+
+        public static async Task<BatchClient> OpenBatchClientServicePrincipal()
+        {
+            var token = await GetAccessToken(new string[] { TestCommon.Configuration.BatchAccountUrl + ".default" });
+
+            BatchClient client = BatchClient.Open(new BatchTokenCredentials(TestCommon.Configuration.BatchAccountUrl, token));
+
+            return client;
+        }
+
 
         public static StagingStorageAccount GetStorageCredentialsFromEnvironment()
         {

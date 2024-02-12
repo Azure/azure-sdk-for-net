@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmExtendedLocationsModelFactory
     {
-        /// <summary> Initializes a new instance of CustomLocationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedLocations.CustomLocationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             tags ??= new Dictionary<string, string>();
             clusterExtensionIds ??= new List<ResourceIdentifier>();
 
-            return new CustomLocationData(id, name, resourceType, systemData, tags, location, identity, authentication, clusterExtensionIds?.ToList(), displayName, hostResourceId, hostType, @namespace, provisioningState);
+            return new CustomLocationData(id, name, resourceType, systemData, tags, location, identity, authentication, clusterExtensionIds?.ToList(), displayName, hostResourceId, hostType, @namespace, provisioningState, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of CustomLocationEnabledResourceType. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CustomLocationEnabledResourceType"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
         {
             typesMetadata ??= new List<CustomLocationEnabledResourceTypeMetadata>();
 
-            return new CustomLocationEnabledResourceType(id, name, resourceType, systemData, clusterExtensionId, extensionType, typesMetadata?.ToList());
+            return new CustomLocationEnabledResourceType(id, name, resourceType, systemData, clusterExtensionId, extensionType, typesMetadata?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

@@ -6,16 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ChangeAnalysis.Models
 {
-    public partial class ChangeProperties
+    public partial class ChangeProperties : IUtf8JsonSerializable, IJsonModel<ChangeProperties>
     {
-        internal static ChangeProperties DeserializeChangeProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChangeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChangeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ChangeDetectedOn))
+            {
+                writer.WritePropertyName("timeStamp"u8);
+                writer.WriteStringValue(ChangeDetectedOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(InitiatedByList))
+            {
+                writer.WritePropertyName("initiatedByList"u8);
+                writer.WriteStartArray();
+                foreach (var item in InitiatedByList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ChangeType))
+            {
+                writer.WritePropertyName("changeType"u8);
+                writer.WriteStringValue(ChangeType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(PropertyChanges))
+            {
+                writer.WritePropertyName("propertyChanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in PropertyChanges)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ChangeProperties IJsonModel<ChangeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChangeProperties(document.RootElement, options);
+        }
+
+        internal static ChangeProperties DeserializeChangeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +104,8 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             Optional<IReadOnlyList<string>> initiatedByList = default;
             Optional<ChangeType> changeType = default;
             Optional<IReadOnlyList<PropertyChange>> propertyChanges = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -82,8 +163,44 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     propertyChanges = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), Optional.ToList(initiatedByList), Optional.ToNullable(changeType), Optional.ToList(propertyChanges));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ChangeProperties(resourceId.Value, Optional.ToNullable(timeStamp), Optional.ToList(initiatedByList), Optional.ToNullable(changeType), Optional.ToList(propertyChanges), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ChangeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ChangeProperties IPersistableModel<ChangeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChangeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeChangeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChangeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChangeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -75,6 +75,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted vault. </param>
@@ -98,6 +106,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedKeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,6 +146,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the deleted managed HSM. </param>
@@ -153,6 +177,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,11 +210,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KeyVaultResource> GetKeyVaultsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -201,11 +241,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KeyVaultResource> GetKeyVaults(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => KeyVaultVaultsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -224,10 +272,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
@@ -246,10 +298,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_ListDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedKeyVaultResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VaultsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
@@ -267,6 +323,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +366,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>Vaults_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KeyVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the vault. </param>
@@ -336,11 +408,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmResource> GetManagedHsmsAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -359,11 +439,19 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmResource> GetManagedHsms(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, top);
@@ -382,10 +470,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeletedManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeletedManagedHsmResource> GetDeletedManagedHsmsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
@@ -404,10 +496,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_ListDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeletedManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DeletedManagedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeletedManagedHsmResource> GetDeletedManagedHsms(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedHsmsRestClient.CreateListDeletedRequest(Id.SubscriptionId);
@@ -425,6 +521,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,6 +563,14 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedHsms_CheckMhsmNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

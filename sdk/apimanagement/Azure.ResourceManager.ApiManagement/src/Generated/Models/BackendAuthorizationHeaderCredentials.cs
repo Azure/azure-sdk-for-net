@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Authorization header information. </summary>
     public partial class BackendAuthorizationHeaderCredentials
     {
-        /// <summary> Initializes a new instance of BackendAuthorizationHeaderCredentials. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
         /// <param name="scheme"> Authentication Scheme name. </param>
         /// <param name="parameter"> Authentication Parameter value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheme"/> or <paramref name="parameter"/> is null. </exception>
@@ -24,6 +57,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             Scheme = scheme;
             Parameter = parameter;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/>. </summary>
+        /// <param name="scheme"> Authentication Scheme name. </param>
+        /// <param name="parameter"> Authentication Parameter value. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendAuthorizationHeaderCredentials(string scheme, string parameter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Scheme = scheme;
+            Parameter = parameter;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendAuthorizationHeaderCredentials"/> for deserialization. </summary>
+        internal BackendAuthorizationHeaderCredentials()
+        {
         }
 
         /// <summary> Authentication Scheme name. </summary>

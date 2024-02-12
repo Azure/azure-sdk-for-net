@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,19 +14,52 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class EdgeOrderItemDetails : IUtf8JsonSerializable
+    public partial class EdgeOrderItemDetails : IUtf8JsonSerializable, IJsonModel<EdgeOrderItemDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeOrderItemDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeOrderItemDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
             writer.WriteObjectValue(ProductDetails);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(CurrentStage))
+            {
+                writer.WritePropertyName("currentStage"u8);
+                writer.WriteObjectValue(CurrentStage);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
+            {
+                writer.WritePropertyName("orderItemStageHistory"u8);
+                writer.WriteStartArray();
+                foreach (var item in OrderItemStageHistory)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
+            {
+                writer.WritePropertyName("forwardShippingDetails"u8);
+                writer.WriteObjectValue(ForwardShippingDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
+            {
+                writer.WritePropertyName("reverseShippingDetails"u8);
+                writer.WriteObjectValue(ReverseShippingDetails);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -36,11 +71,85 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(CancellationReason))
+            {
+                writer.WritePropertyName("cancellationReason"u8);
+                writer.WriteStringValue(CancellationReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CancellationStatus))
+            {
+                writer.WritePropertyName("cancellationStatus"u8);
+                writer.WriteStringValue(CancellationStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletionStatus))
+            {
+                writer.WritePropertyName("deletionStatus"u8);
+                writer.WriteStringValue(DeletionStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReturnReason))
+            {
+                writer.WritePropertyName("returnReason"u8);
+                writer.WriteStringValue(ReturnReason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReturnStatus))
+            {
+                writer.WritePropertyName("returnStatus"u8);
+                writer.WriteStringValue(ReturnStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
+            {
+                writer.WritePropertyName("managementRpDetails"u8);
+                writer.WriteObjectValue(FirstOrDefaultManagement);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
+            {
+                writer.WritePropertyName("managementRpDetailsList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagementRPDetailsList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EdgeOrderItemDetails DeserializeEdgeOrderItemDetails(JsonElement element)
+        EdgeOrderItemDetails IJsonModel<EdgeOrderItemDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeOrderItemDetails(document.RootElement, options);
+        }
+
+        internal static EdgeOrderItemDetails DeserializeEdgeOrderItemDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +170,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ResourceProviderDetails> managementRPDetails = default;
             Optional<IReadOnlyList<ResourceProviderDetails>> managementRPDetailsList = default;
             Optional<ResponseError> error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productDetails"u8))
@@ -206,8 +317,44 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EdgeOrderItemDetails(productDetails, orderItemType, currentStage.Value, Optional.ToList(orderItemStageHistory), preferences.Value, forwardShippingDetails.Value, reverseShippingDetails.Value, Optional.ToList(notificationEmailList), cancellationReason.Value, Optional.ToNullable(cancellationStatus), Optional.ToNullable(deletionStatus), returnReason.Value, Optional.ToNullable(returnStatus), managementRPDetails.Value, Optional.ToList(managementRPDetailsList), error.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeOrderItemDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EdgeOrderItemDetails IPersistableModel<EdgeOrderItemDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderItemDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeOrderItemDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeOrderItemDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeOrderItemDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

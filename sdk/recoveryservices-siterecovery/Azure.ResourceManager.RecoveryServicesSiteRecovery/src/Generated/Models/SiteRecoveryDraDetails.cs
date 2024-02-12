@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> DRA details. </summary>
     public partial class SiteRecoveryDraDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         internal SiteRecoveryDraDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryDraDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryDraDetails"/>. </summary>
         /// <param name="id"> The DRA Id. </param>
         /// <param name="name"> The DRA name. </param>
         /// <param name="biosId"> The DRA Bios Id. </param>
@@ -30,7 +62,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="forwardProtectedItemCount"> The count of protected items which are protected in forward direction. </param>
         /// <param name="reverseProtectedItemCount"> The count of protected items which are protected in reverse direction. </param>
-        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryDraDetails(string id, string name, string biosId, string version, DateTimeOffset? lastHeartbeatReceivedOn, SiteRecoveryProtectionHealth? health, IReadOnlyList<SiteRecoveryHealthError> healthErrors, int? forwardProtectedItemCount, int? reverseProtectedItemCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -41,6 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ForwardProtectedItemCount = forwardProtectedItemCount;
             ReverseProtectedItemCount = reverseProtectedItemCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The DRA Id. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,24 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Ssis Package. </summary>
     public partial class SynapseSsisPackage : SynapseSsisObjectMetadata
     {
-        /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisPackage"/>. </summary>
         internal SynapseSsisPackage()
         {
             Parameters = new ChangeTrackingList<SynapseSsisParameter>();
             MetadataType = SynapseSsisObjectMetadataType.Package;
         }
 
-        /// <summary> Initializes a new instance of SynapseSsisPackage. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSsisPackage"/>. </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="folderId"> Folder id which contains package. </param>
         /// <param name="projectVersion"> Project version which contains package. </param>
         /// <param name="projectId"> Project id which contains package. </param>
         /// <param name="parameters"> Parameters in package. </param>
-        internal SynapseSsisPackage(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SynapseSsisParameter> parameters) : base(metadataType, id, name, description)
+        internal SynapseSsisPackage(SynapseSsisObjectMetadataType metadataType, long? id, string name, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, long? folderId, long? projectVersion, long? projectId, IReadOnlyList<SynapseSsisParameter> parameters) : base(metadataType, id, name, description, serializedAdditionalRawData)
         {
             FolderId = folderId;
             ProjectVersion = projectVersion;

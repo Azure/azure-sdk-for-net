@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEndpointScheduleAction. </summary>
     public partial class MachineLearningEndpointScheduleAction : MachineLearningScheduleAction
     {
-        /// <summary> Initializes a new instance of MachineLearningEndpointScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointScheduleAction"/>. </summary>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href="TBD" /&gt;
@@ -27,16 +28,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ActionType = ScheduleActionType.InvokeBatchEndpoint;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEndpointScheduleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointScheduleAction"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpointInvocationDefinition">
         /// [Required] Defines Schedule action definition details.
         /// &lt;see href="TBD" /&gt;
         /// </param>
-        internal MachineLearningEndpointScheduleAction(ScheduleActionType actionType, BinaryData endpointInvocationDefinition) : base(actionType)
+        internal MachineLearningEndpointScheduleAction(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData endpointInvocationDefinition) : base(actionType, serializedAdditionalRawData)
         {
             EndpointInvocationDefinition = endpointInvocationDefinition;
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointScheduleAction"/> for deserialization. </summary>
+        internal MachineLearningEndpointScheduleAction()
+        {
         }
 
         /// <summary>

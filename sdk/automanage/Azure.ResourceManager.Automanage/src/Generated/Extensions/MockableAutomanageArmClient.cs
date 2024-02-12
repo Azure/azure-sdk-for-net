@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -86,6 +94,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +139,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -146,6 +170,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -207,6 +247,14 @@ namespace Azure.ResourceManager.Automanage.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationProfileHCIAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -221,11 +269,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageBestPracticeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageBestPracticeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageBestPracticeResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageBestPracticeResource"/> object. </returns>
         public virtual AutomanageBestPracticeResource GetAutomanageBestPracticeResource(ResourceIdentifier id)
         {
             AutomanageBestPracticeResource.ValidateResourceId(id);
@@ -233,11 +281,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageConfigurationProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource"/> object. </returns>
         public virtual AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(ResourceIdentifier id)
         {
             AutomanageConfigurationProfileResource.ValidateResourceId(id);
@@ -245,11 +293,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageConfigurationProfileVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageConfigurationProfileVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource"/> object. </returns>
         public virtual AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(ResourceIdentifier id)
         {
             AutomanageConfigurationProfileVersionResource.ValidateResourceId(id);
@@ -257,11 +305,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> object. </returns>
         public virtual AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(ResourceIdentifier id)
         {
             AutomanageVmConfigurationProfileAssignmentResource.ValidateResourceId(id);
@@ -269,11 +317,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource"/> object. </returns>
         public virtual AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(ResourceIdentifier id)
         {
             AutomanageHcrpConfigurationProfileAssignmentResource.ValidateResourceId(id);
@@ -281,11 +329,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource"/> object. </returns>
         public virtual AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(ResourceIdentifier id)
         {
             AutomanageHciClusterConfigurationProfileAssignmentResource.ValidateResourceId(id);
@@ -293,11 +341,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> object. </returns>
         public virtual AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(ResourceIdentifier id)
         {
             AutomanageVmConfigurationProfileAssignmentReportResource.ValidateResourceId(id);
@@ -305,11 +353,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> object. </returns>
         public virtual AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(ResourceIdentifier id)
         {
             AutomanageHcrpConfigurationProfileAssignmentReportResource.ValidateResourceId(id);
@@ -317,11 +365,11 @@ namespace Azure.ResourceManager.Automanage.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> object. </returns>
+        /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource"/> object. </returns>
         public virtual AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(ResourceIdentifier id)
         {
             AutomanageHciClusterConfigurationProfileAssignmentReportResource.ValidateResourceId(id);

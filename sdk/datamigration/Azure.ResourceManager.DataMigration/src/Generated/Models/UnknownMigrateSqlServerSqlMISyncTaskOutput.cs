@@ -5,17 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The UnknownMigrateSqlServerSqlMISyncTaskOutput. </summary>
     internal partial class UnknownMigrateSqlServerSqlMISyncTaskOutput : MigrateSqlServerSqlMISyncTaskOutput
     {
-        /// <summary> Initializes a new instance of UnknownMigrateSqlServerSqlMISyncTaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlMISyncTaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
-        internal UnknownMigrateSqlServerSqlMISyncTaskOutput(string id, string resultType) : base(id, resultType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMigrateSqlServerSqlMISyncTaskOutput(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, resultType, serializedAdditionalRawData)
         {
             ResultType = resultType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMigrateSqlServerSqlMISyncTaskOutput"/> for deserialization. </summary>
+        internal UnknownMigrateSqlServerSqlMISyncTaskOutput()
+        {
         }
     }
 }

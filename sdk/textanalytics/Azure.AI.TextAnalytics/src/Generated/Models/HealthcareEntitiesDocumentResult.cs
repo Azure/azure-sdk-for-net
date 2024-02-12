@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The HealthcareEntitiesDocumentResult. </summary>
     internal partial class HealthcareEntitiesDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="entities"> Healthcare entities. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Models
             Relations = relations.ToList();
         }
 
-        /// <summary> Initializes a new instance of HealthcareEntitiesDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareEntitiesDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

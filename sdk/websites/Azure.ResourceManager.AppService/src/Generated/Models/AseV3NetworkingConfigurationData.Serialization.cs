@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -13,29 +15,146 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AseV3NetworkingConfigurationData : IUtf8JsonSerializable
+    public partial class AseV3NetworkingConfigurationData : IUtf8JsonSerializable, IJsonModel<AseV3NetworkingConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AseV3NetworkingConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AseV3NetworkingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
+            {
+                writer.WritePropertyName("windowsOutboundIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in WindowsOutboundIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
+            {
+                writer.WritePropertyName("linuxOutboundIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinuxOutboundIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExternalInboundIPAddresses))
+            {
+                writer.WritePropertyName("externalInboundIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExternalInboundIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(InternalInboundIPAddresses))
+            {
+                writer.WritePropertyName("internalInboundIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in InternalInboundIPAddresses)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
             {
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AseV3NetworkingConfigurationData DeserializeAseV3NetworkingConfigurationData(JsonElement element)
+        AseV3NetworkingConfigurationData IJsonModel<AseV3NetworkingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAseV3NetworkingConfigurationData(document.RootElement, options);
+        }
+
+        internal static AseV3NetworkingConfigurationData DeserializeAseV3NetworkingConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -50,6 +169,8 @@ namespace Azure.ResourceManager.AppService
             Optional<IReadOnlyList<IPAddress>> externalInboundIPAddresses = default;
             Optional<IReadOnlyList<IPAddress>> internalInboundIPAddresses = default;
             Optional<bool> allowNewPrivateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -186,8 +307,44 @@ namespace Azure.ResourceManager.AppService
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Optional.ToList(windowsOutboundIPAddresses), Optional.ToList(linuxOutboundIPAddresses), Optional.ToList(externalInboundIPAddresses), Optional.ToList(internalInboundIPAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AseV3NetworkingConfigurationData(id, name, type, systemData.Value, Optional.ToList(windowsOutboundIPAddresses), Optional.ToList(linuxOutboundIPAddresses), Optional.ToList(externalInboundIPAddresses), Optional.ToList(internalInboundIPAddresses), Optional.ToNullable(allowNewPrivateEndpointConnections), kind.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AseV3NetworkingConfigurationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AseV3NetworkingConfigurationData IPersistableModel<AseV3NetworkingConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAseV3NetworkingConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AseV3NetworkingConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

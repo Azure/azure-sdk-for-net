@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -86,6 +94,14 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,20 +127,24 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_ListAvailableSkusByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataBoxSkuInformation.DeserializeDataBoxSkuInformation(e), ServiceClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,20 +158,24 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_ListAvailableSkusByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="content"> Filters for showing the available skus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataBoxSkuInformation.DeserializeDataBoxSkuInformation, ServiceClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataBoxSkuInformation.DeserializeDataBoxSkuInformation(e), ServiceClientDiagnostics, Pipeline, "MockableDataBoxResourceGroupResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,6 +188,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Service_ValidateInputsByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +228,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_ValidateInputsByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
@@ -235,6 +267,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <term>Operation Id</term>
         /// <description>Service_RegionConfigurationByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location of the resource. </param>
@@ -269,6 +305,10 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Service_RegionConfigurationByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// </summary>

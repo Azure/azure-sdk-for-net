@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the private link resources that need to be created for a service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets the private link resources that need to be created for a service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets a private link resource that need to be created for a service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="groupName"> The name of the private link resource group. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> Gets a private link resource that need to be created for a service. </summary>
-        /// <param name="subscriptionId"> The subscription identifier. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the service instance. </param>
         /// <param name="resourceName"> The name of the service instance. </param>
         /// <param name="groupName"> The name of the private link resource group. </param>

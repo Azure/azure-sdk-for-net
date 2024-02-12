@@ -13,7 +13,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Creates a new live pipeline or updates an existing one. </summary>
     public partial class LivePipelineSetRequest : MethodRequest
     {
-        /// <summary> Initializes a new instance of LivePipelineSetRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequest"/>. </summary>
         /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="livePipeline"/> is null. </exception>
         public LivePipelineSetRequest(LivePipeline livePipeline)
@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MethodName = "livePipelineSet";
         }
 
-        /// <summary> Initializes a new instance of LivePipelineSetRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="LivePipelineSetRequest"/>. </summary>
         /// <param name="methodName"> Direct method method name. </param>
         /// <param name="apiVersion"> Video Analyzer API version. </param>
         /// <param name="livePipeline"> Live Pipeline represents an unique instance of a pipeline topology which is used for real-time content ingestion and analysis. </param>

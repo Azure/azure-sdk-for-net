@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +14,24 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebHookActivity : IUtf8JsonSerializable
+    public partial class WebHookActivity : IUtf8JsonSerializable, IJsonModel<WebHookActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebHookActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebHookActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy);
+            }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
@@ -68,10 +82,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
             }
-            if (Optional.IsDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
-                JsonSerializer.Serialize(writer, Headers);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Body))
             {
@@ -104,12 +129,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static WebHookActivity DeserializeWebHookActivity(JsonElement element)
+        WebHookActivity IJsonModel<WebHookActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebHookActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebHookActivity(document.RootElement, options);
+        }
+
+        internal static WebHookActivity DeserializeWebHookActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Optional<SecureInputOutputPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
@@ -120,7 +160,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             WebHookActivityMethod method = default;
             DataFactoryElement<string> url = default;
             Optional<string> timeout = default;
-            Optional<DataFactoryElement<string>> headers = default;
+            Optional<IDictionary<string, DataFactoryElement<string>>> headers = default;
             Optional<DataFactoryElement<string>> body = default;
             Optional<WebActivityAuthentication> authentication = default;
             Optional<DataFactoryElement<bool>> reportStatusOnCallBack = default;
@@ -128,6 +168,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("policy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = SecureInputOutputPolicy.DeserializeSecureInputOutputPolicy(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
@@ -219,7 +268,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            headers = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                }
+                            }
+                            headers = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("body"u8))
@@ -255,7 +316,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebHookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, method, url, timeout.Value, headers.Value, body.Value, authentication.Value, reportStatusOnCallBack.Value);
+            return new WebHookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, policy.Value, method, url, timeout.Value, Optional.ToDictionary(headers), body.Value, authentication.Value, reportStatusOnCallBack.Value);
         }
+
+        BinaryData IPersistableModel<WebHookActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebHookActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebHookActivity IPersistableModel<WebHookActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebHookActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebHookActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebHookActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebHookActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

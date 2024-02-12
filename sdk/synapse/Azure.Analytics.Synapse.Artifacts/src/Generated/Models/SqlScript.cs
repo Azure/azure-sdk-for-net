@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> SQL script. </summary>
     public partial class SqlScript
     {
-        /// <summary> Initializes a new instance of SqlScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScript"/>. </summary>
         /// <param name="content"> The content of the SQL script. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SqlScript(SqlScriptContent content)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of SqlScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlScript"/>. </summary>
         /// <param name="description"> The description of the SQL script. </param>
         /// <param name="type"> The type of the SQL script. </param>
         /// <param name="content"> The content of the SQL script. </param>

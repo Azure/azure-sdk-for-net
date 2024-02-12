@@ -16,8 +16,8 @@
 
 #nullable enable
 
-using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Extensions.Configuration;
 
 namespace OpenTelemetry.Internal;
@@ -58,19 +58,41 @@ internal static class HttpSemanticConventionHelper
     {
         Debug.Assert(configuration != null, "configuration was null");
 
+        if (configuration != null && TryGetConfiguredValues(configuration, out var values))
+        {
+            if (values.Contains("http/dup"))
+            {
+                return HttpSemanticConvention.Dupe;
+            }
+            else if (values.Contains("http"))
+            {
+                return HttpSemanticConvention.New;
+            }
+        }
+
+        return HttpSemanticConvention.Old;
+    }
+
+    private static bool TryGetConfiguredValues(IConfiguration configuration, [NotNullWhen(true)] out HashSet<string>? values)
+    {
         try
         {
-            var envVarValue = configuration![SemanticConventionOptInKeyName];
-            return envVarValue?.ToLowerInvariant() switch
+            var stringValue = configuration[SemanticConventionOptInKeyName];
+
+            if (string.IsNullOrWhiteSpace(stringValue))
             {
-                "http" => HttpSemanticConvention.New,
-                "http/dup" => HttpSemanticConvention.Dupe,
-                _ => HttpSemanticConvention.Old,
-            };
+                values = null;
+                return false;
+            }
+
+            var stringValues = stringValue!.Split(separator: new[] { ',', ' ' }, options: StringSplitOptions.RemoveEmptyEntries);
+            values = new HashSet<string>(stringValues, StringComparer.OrdinalIgnoreCase);
+            return true;
         }
         catch
         {
-            return HttpSemanticConvention.Old;
+            values = null;
+            return false;
         }
     }
 }

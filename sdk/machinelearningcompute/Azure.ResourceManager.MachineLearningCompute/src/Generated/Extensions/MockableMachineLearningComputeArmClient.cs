@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OperationalizationClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OperationalizationClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalizationClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="OperationalizationClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalizationClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalizationClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalizationClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="OperationalizationClusterResource"/> object. </returns>
         public virtual OperationalizationClusterResource GetOperationalizationClusterResource(ResourceIdentifier id)
         {
             OperationalizationClusterResource.ValidateResourceId(id);

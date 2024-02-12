@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListFhirservices()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/fhirservices/FhirServices_List.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_List.json
             // this example is just showing the usage of "FhirServices_ListByWorkspace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/fhirservices/FhirServices_Get.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Get.json
             // this example is just showing the usage of "FhirServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateAFhirService()
         {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2022-06-01/examples/fhirservices/FhirServices_Create.json
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2023-11-01/examples/fhirservices/FhirServices_Create.json
             // this example is just showing the usage of "FhirServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -194,10 +194,6 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             FhirServiceData data = new FhirServiceData(new AzureLocation("westus"))
             {
                 Kind = FhirServiceKind.FhirR4,
-                AccessPolicies =
-{
-new FhirServiceAccessPolicyEntry("c487e7d1-3210-41a3-8ccc-e9372b78da47"),new FhirServiceAccessPolicyEntry("5b307da8-43d4-492b-8b66-b0294ade872f")
-},
                 AcrConfiguration = new FhirServiceAcrConfiguration()
                 {
                     LoginServers =
@@ -235,7 +231,15 @@ new FhirServiceAccessPolicyEntry("c487e7d1-3210-41a3-8ccc-e9372b78da47"),new Fhi
                     IsInitialImportMode = false,
                     IsEnabled = false,
                 },
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                IsUsCoreMissingDataEnabled = false,
+                KeyEncryptionKeyUri = new Uri("https://mykeyvault.vault.azure.net/keys/myEncryptionKey/myKeyVersion"),
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/subid/resourcegroups/testRG/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-mi")] = new UserAssignedIdentity(),
+},
+                },
                 Tags =
 {
 ["additionalProp1"] = "string",

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Salesforce. </summary>
     public partial class SalesforceLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of SalesforceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceLinkedService"/>. </summary>
         public SalesforceLinkedService()
         {
             LinkedServiceType = "Salesforce";
         }
 
-        /// <summary> Initializes a new instance of SalesforceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SalesforceLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

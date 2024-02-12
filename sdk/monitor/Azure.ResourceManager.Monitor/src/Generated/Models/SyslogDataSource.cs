@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -16,7 +17,39 @@ namespace Azure.ResourceManager.Monitor.Models
     /// </summary>
     public partial class SyslogDataSource
     {
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         public SyslogDataSource()
         {
             Streams = new ChangeTrackingList<SyslogDataSourceStream>();
@@ -24,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
             LogLevels = new ChangeTrackingList<SyslogDataSourceLogLevel>();
         }
 
-        /// <summary> Initializes a new instance of SyslogDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyslogDataSource"/>. </summary>
         /// <param name="streams">
         /// List of streams that this data source will be sent to.
         /// A stream indicates what schema will be used for this data and usually what table in Log Analytics the data will be sent to.
@@ -35,12 +68,14 @@ namespace Azure.ResourceManager.Monitor.Models
         /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
-        internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SyslogDataSource(IList<SyslogDataSourceStream> streams, IList<SyslogDataSourceFacilityName> facilityNames, IList<SyslogDataSourceLogLevel> logLevels, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Streams = streams;
             FacilityNames = facilityNames;
             LogLevels = logLevels;
             Name = name;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

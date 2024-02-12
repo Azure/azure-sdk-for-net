@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.FluidRelay
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FluidRelayServerResource" /> and their operations.
-    /// Each <see cref="FluidRelayServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="FluidRelayServerCollection" /> instance call the GetFluidRelayServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="FluidRelayServerResource"/> and their operations.
+    /// Each <see cref="FluidRelayServerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="FluidRelayServerCollection"/> instance call the GetFluidRelayServers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class FluidRelayServerCollection : ArmCollection, IEnumerable<FluidRelayServerResource>, IAsyncEnumerable<FluidRelayServerResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FluidRelayServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayServerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FluidRelayServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FluidRelayServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fluidRelayServerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="fluidRelayServerName"> The Fluid Relay server resource name. </param>
@@ -334,6 +398,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,6 +443,14 @@ namespace Azure.ResourceManager.FluidRelay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluidRelayServers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FluidRelayServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

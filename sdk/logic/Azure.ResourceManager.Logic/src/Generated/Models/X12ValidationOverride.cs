@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The X12 validation override settings. </summary>
     public partial class X12ValidationOverride
     {
-        /// <summary> Initializes a new instance of X12ValidationOverride. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="X12ValidationOverride"/>. </summary>
         /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
         /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
         /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>
@@ -33,6 +66,32 @@ namespace Azure.ResourceManager.Logic.Models
             ValidateCharacterSet = validateCharacterSet;
             TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
             TrailingSeparatorPolicy = trailingSeparatorPolicy;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12ValidationOverride"/>. </summary>
+        /// <param name="messageId"> The message id on which the validation settings has to be applied. </param>
+        /// <param name="validateEdiTypes"> The value indicating whether to validate EDI types. </param>
+        /// <param name="validateXsdTypes"> The value indicating whether to validate XSD types. </param>
+        /// <param name="allowLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to allow leading and trailing spaces and zeroes. </param>
+        /// <param name="validateCharacterSet"> The value indicating whether to validate character Set. </param>
+        /// <param name="trimLeadingAndTrailingSpacesAndZeroes"> The value indicating whether to trim leading and trailing spaces and zeroes. </param>
+        /// <param name="trailingSeparatorPolicy"> The trailing separator policy. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal X12ValidationOverride(string messageId, bool validateEdiTypes, bool validateXsdTypes, bool allowLeadingAndTrailingSpacesAndZeroes, bool validateCharacterSet, bool trimLeadingAndTrailingSpacesAndZeroes, TrailingSeparatorPolicy trailingSeparatorPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            MessageId = messageId;
+            ValidateEdiTypes = validateEdiTypes;
+            ValidateXsdTypes = validateXsdTypes;
+            AllowLeadingAndTrailingSpacesAndZeroes = allowLeadingAndTrailingSpacesAndZeroes;
+            ValidateCharacterSet = validateCharacterSet;
+            TrimLeadingAndTrailingSpacesAndZeroes = trimLeadingAndTrailingSpacesAndZeroes;
+            TrailingSeparatorPolicy = trailingSeparatorPolicy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="X12ValidationOverride"/> for deserialization. </summary>
+        internal X12ValidationOverride()
+        {
         }
 
         /// <summary> The message id on which the validation settings has to be applied. </summary>

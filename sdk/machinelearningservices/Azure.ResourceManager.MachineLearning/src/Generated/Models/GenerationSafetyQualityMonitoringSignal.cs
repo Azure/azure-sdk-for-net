@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Generation safety quality monitoring signal definition. </summary>
     public partial class GenerationSafetyQualityMonitoringSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of GenerationSafetyQualityMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationSafetyQualityMonitoringSignal"/>. </summary>
         /// <param name="metricThresholds"> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </param>
         /// <param name="samplingRate"> [Required] The sample rate of the target data, should be greater than 0 and at most 1. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metricThresholds"/> is null. </exception>
@@ -29,10 +29,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.GenerationSafetyQuality;
         }
 
-        /// <summary> Initializes a new instance of GenerationSafetyQualityMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenerationSafetyQualityMonitoringSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metricThresholds"> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </param>
         /// <param name="productionData">
         /// Gets or sets the target data for computing metrics.
@@ -41,13 +42,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="samplingRate"> [Required] The sample rate of the target data, should be greater than 0 and at most 1. </param>
         /// <param name="workspaceConnectionId"> Gets or sets the workspace connection ID used to connect to the content generation endpoint. </param>
-        internal GenerationSafetyQualityMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IList<GenerationSafetyQualityMetricThreshold> metricThresholds, IList<MonitoringInputDataBase> productionData, double samplingRate, string workspaceConnectionId) : base(mode, properties, signalType)
+        internal GenerationSafetyQualityMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<GenerationSafetyQualityMetricThreshold> metricThresholds, IList<MonitoringInputDataBase> productionData, double samplingRate, string workspaceConnectionId) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             MetricThresholds = metricThresholds;
             ProductionData = productionData;
             SamplingRate = samplingRate;
             WorkspaceConnectionId = workspaceConnectionId;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GenerationSafetyQualityMonitoringSignal"/> for deserialization. </summary>
+        internal GenerationSafetyQualityMonitoringSignal()
+        {
         }
 
         /// <summary> [Required] Gets or sets the metrics to calculate and the corresponding thresholds. </summary>

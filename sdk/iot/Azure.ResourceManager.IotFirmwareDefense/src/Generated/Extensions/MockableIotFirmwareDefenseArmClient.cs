@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FirmwareResource"/> object. </returns>
         public virtual FirmwareResource GetFirmwareResource(ResourceIdentifier id)
         {
             FirmwareResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareWorkspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FirmwareWorkspaceResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FirmwareWorkspaceResource"/> object. </returns>
         public virtual FirmwareWorkspaceResource GetFirmwareWorkspaceResource(ResourceIdentifier id)
         {
             FirmwareWorkspaceResource.ValidateResourceId(id);

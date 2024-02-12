@@ -6,15 +6,90 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubEndpointHealthInfo
+    public partial class IotHubEndpointHealthInfo : IUtf8JsonSerializable, IJsonModel<IotHubEndpointHealthInfo>
     {
-        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubEndpointHealthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IotHubEndpointHealthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EndpointId))
+            {
+                writer.WritePropertyName("endpointId"u8);
+                writer.WriteStringValue(EndpointId);
+            }
+            if (Optional.IsDefined(HealthStatus))
+            {
+                writer.WritePropertyName("healthStatus"u8);
+                writer.WriteStringValue(HealthStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(LastKnownError))
+            {
+                writer.WritePropertyName("lastKnownError"u8);
+                writer.WriteStringValue(LastKnownError);
+            }
+            if (Optional.IsDefined(LastKnownErrorOn))
+            {
+                writer.WritePropertyName("lastKnownErrorTime"u8);
+                writer.WriteStringValue(LastKnownErrorOn.Value, "R");
+            }
+            if (Optional.IsDefined(LastSuccessfulSendAttemptOn))
+            {
+                writer.WritePropertyName("lastSuccessfulSendAttemptTime"u8);
+                writer.WriteStringValue(LastSuccessfulSendAttemptOn.Value, "R");
+            }
+            if (Optional.IsDefined(LastSendAttemptOn))
+            {
+                writer.WritePropertyName("lastSendAttemptTime"u8);
+                writer.WriteStringValue(LastSendAttemptOn.Value, "R");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IotHubEndpointHealthInfo IJsonModel<IotHubEndpointHealthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubEndpointHealthInfo(document.RootElement, options);
+        }
+
+        internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +100,8 @@ namespace Azure.ResourceManager.IotHub.Models
             Optional<DateTimeOffset> lastKnownErrorTime = default;
             Optional<DateTimeOffset> lastSuccessfulSendAttemptTime = default;
             Optional<DateTimeOffset> lastSendAttemptTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointId"u8))
@@ -73,8 +150,44 @@ namespace Azure.ResourceManager.IotHub.Models
                     lastSendAttemptTime = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IotHubEndpointHealthInfo(endpointId.Value, Optional.ToNullable(healthStatus), lastKnownError.Value, Optional.ToNullable(lastKnownErrorTime), Optional.ToNullable(lastSuccessfulSendAttemptTime), Optional.ToNullable(lastSendAttemptTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubEndpointHealthInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IotHubEndpointHealthInfo IPersistableModel<IotHubEndpointHealthInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubEndpointHealthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubEndpointHealthInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubEndpointHealthInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubEndpointHealthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ExtendedRestorableGremlinGraphResourceInfo
+    public partial class ExtendedRestorableGremlinGraphResourceInfo : IUtf8JsonSerializable, IJsonModel<ExtendedRestorableGremlinGraphResourceInfo>
     {
-        internal static ExtendedRestorableGremlinGraphResourceInfo DeserializeExtendedRestorableGremlinGraphResourceInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedRestorableGremlinGraphResourceInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExtendedRestorableGremlinGraphResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedRestorableGremlinGraphResourceInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Rid))
+            {
+                writer.WritePropertyName("_rid"u8);
+                writer.WriteStringValue(Rid);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationType))
+            {
+                writer.WritePropertyName("operationType"u8);
+                writer.WriteStringValue(OperationType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            {
+                writer.WritePropertyName("eventTimestamp"u8);
+                writer.WriteStringValue(EventTimestamp);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GraphName))
+            {
+                writer.WritePropertyName("ownerId"u8);
+                writer.WriteStringValue(GraphName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GraphId))
+            {
+                writer.WritePropertyName("ownerResourceId"u8);
+                writer.WriteStringValue(GraphId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExtendedRestorableGremlinGraphResourceInfo IJsonModel<ExtendedRestorableGremlinGraphResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedRestorableGremlinGraphResourceInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedRestorableGremlinGraphResourceInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedRestorableGremlinGraphResourceInfo DeserializeExtendedRestorableGremlinGraphResourceInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<string> eventTimestamp = default;
             Optional<string> ownerId = default;
             Optional<string> ownerResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_rid"u8))
@@ -54,8 +127,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     ownerResourceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedRestorableGremlinGraphResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedRestorableGremlinGraphResourceInfo(rid.Value, Optional.ToNullable(operationType), eventTimestamp.Value, ownerId.Value, ownerResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableGremlinGraphResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExtendedRestorableGremlinGraphResourceInfo IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtendedRestorableGremlinGraphResourceInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedRestorableGremlinGraphResourceInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtendedRestorableGremlinGraphResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

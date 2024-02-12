@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HDInsight.Containers.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.HDInsight.Containers
     /// </summary>
     public partial class HDInsightClusterPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of HDInsightClusterPoolData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HDInsightClusterPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <param name="networkProfile"> Cluster pool network profile. </param>
         /// <param name="logAnalyticsProfile"> Cluster pool log analytics profile to enable OMS agent for AKS cluster. </param>
         /// <param name="status"> Business status of the resource. </param>
-        internal HDInsightClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightProvisioningStatus? provisioningState, string deploymentId, string managedResourceGroupName, string aksManagedResourceGroupName, ClusterPoolProfile clusterPoolProfile, ClusterPoolComputeProfile computeProfile, AksClusterProfile aksClusterProfile, ClusterPoolNetworkProfile networkProfile, ClusterPoolLogAnalyticsProfile logAnalyticsProfile, string status) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HDInsightProvisioningStatus? provisioningState, string deploymentId, string managedResourceGroupName, string aksManagedResourceGroupName, ClusterPoolProfile clusterPoolProfile, ClusterPoolComputeProfile computeProfile, AksClusterProfile aksClusterProfile, ClusterPoolNetworkProfile networkProfile, ClusterPoolLogAnalyticsProfile logAnalyticsProfile, string status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             DeploymentId = deploymentId;
@@ -53,6 +87,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             NetworkProfile = networkProfile;
             LogAnalyticsProfile = logAnalyticsProfile;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPoolData"/> for deserialization. </summary>
+        internal HDInsightClusterPoolData()
+        {
         }
 
         /// <summary> Provisioning state of the resource. </summary>

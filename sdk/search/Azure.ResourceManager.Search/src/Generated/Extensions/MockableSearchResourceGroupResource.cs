@@ -55,6 +55,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
@@ -78,6 +86,14 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SearchServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

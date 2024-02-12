@@ -60,11 +60,19 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DnsZoneResource> GetDnsZonesAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -83,11 +91,19 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DnsZoneResource> GetDnsZones(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DnsZoneZonesRestClient.CreateListRequest(Id.SubscriptionId, top);
@@ -105,6 +121,10 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +159,10 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

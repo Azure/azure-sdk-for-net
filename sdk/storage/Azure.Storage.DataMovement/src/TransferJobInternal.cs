@@ -142,6 +142,8 @@ namespace Azure.Storage.DataMovement
             QueueChunkTaskInternal queueChunkTask,
             TransferCheckpointer checkPointer,
             DataTransferErrorMode errorHandling,
+            long? initialTransferSize,
+            long? maximumTransferChunkSize,
             StorageResourceCreationPreference creationPreference,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
@@ -154,15 +156,21 @@ namespace Azure.Storage.DataMovement
 
             _dataTransfer = dataTransfer ?? throw Errors.ArgumentNull(nameof(dataTransfer));
             _dataTransfer.TransferStatus.TrySetTransferStateChange(DataTransferState.Queued);
-            _errorMode = errorHandling;
             _checkpointer = checkPointer;
-            _creationPreference = creationPreference;
             QueueChunkTask = queueChunkTask;
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
             _enumerationComplete = false;
             _pendingJobParts = 0;
             _cancellationToken = dataTransfer._state.CancellationTokenSource.Token;
+
+            // These options come straight from user-provided options bags and are saved
+            // as-is on the job. They may be adjusted with the defaults on job part
+            // construction (regular or from checkpoint).
+            _initialTransferSize = initialTransferSize;
+            _maximumTransferChunkSize = maximumTransferChunkSize;
+            _errorMode = errorHandling;
+            _creationPreference = creationPreference;
 
             JobPartStatusEvents += JobPartEvent;
             TransferStatusEventHandler = statusEventHandler;
@@ -189,6 +197,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
+                  transferOptions.InitialTransferSize,
+                  transferOptions.MaximumTransferChunkSize,
                   transferOptions.CreationPreference,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
@@ -200,8 +210,6 @@ namespace Azure.Storage.DataMovement
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _isSingleResource = true;
-            _initialTransferSize = transferOptions?.InitialTransferSize;
-            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
@@ -222,6 +230,8 @@ namespace Azure.Storage.DataMovement
                   queueChunkTask,
                   checkpointer,
                   errorHandling,
+                  transferOptions.InitialTransferSize,
+                  transferOptions.MaximumTransferChunkSize,
                   transferOptions.CreationPreference,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
@@ -233,8 +243,6 @@ namespace Azure.Storage.DataMovement
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
             _isSingleResource = false;
-            _initialTransferSize = transferOptions?.InitialTransferSize;
-            _maximumTransferChunkSize = transferOptions?.MaximumTransferChunkSize;
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
@@ -279,7 +287,9 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public async virtual Task InvokeFailedArgAsync(Exception ex)
         {
-            if (ex is not OperationCanceledException)
+            if (ex is not OperationCanceledException &&
+                ex is not TaskCanceledException &&
+                !ex.Message.Contains("The request was canceled."))
             {
                 if (TransferFailedEventHandler != null)
                 {
@@ -297,12 +307,34 @@ namespace Azure.Storage.DataMovement
                         .ConfigureAwait(false);
                 }
             }
-            await TriggerJobCancellationAsync().ConfigureAwait(false);
 
-            // If we're failing from a Transfer Job point, it means we have aborted the job
-            // at the listing phase. However it's possible that some job parts may be in flight
-            // and we have to check if they're finished cleaning up yet.
-            await CheckAndUpdateStatusAsync().ConfigureAwait(false);
+            try
+            {
+                await TriggerJobCancellationAsync().ConfigureAwait(false);
+
+                // If we're failing from a Transfer Job point, it means we have aborted the job
+                // at the listing phase. However it's possible that some job parts may be in flight
+                // and we have to check if they're finished cleaning up yet.
+                await CheckAndUpdateStatusAsync().ConfigureAwait(false);
+            }
+            catch (Exception cancellationException)
+            {
+                if (TransferFailedEventHandler != null)
+                {
+                    await TransferFailedEventHandler.RaiseAsync(
+                        new TransferItemFailedEventArgs(
+                            _dataTransfer.Id,
+                            _sourceResource,
+                            _destinationResource,
+                            cancellationException,
+                            false,
+                            _cancellationToken),
+                        nameof(TransferJobInternal),
+                        nameof(TransferFailedEventHandler),
+                        ClientDiagnostics)
+                        .ConfigureAwait(false);
+                }
+            }
         }
 
         /// <summary>

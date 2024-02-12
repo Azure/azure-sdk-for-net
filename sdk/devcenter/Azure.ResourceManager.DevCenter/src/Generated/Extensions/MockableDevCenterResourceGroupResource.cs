@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="devCenterName"> The name of the devcenter. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DevCenters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkConnectionName"> Name of the Network Connection that can be applied to a Pool. </param>
@@ -182,6 +222,14 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

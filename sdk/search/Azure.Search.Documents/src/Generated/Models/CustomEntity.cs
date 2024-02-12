@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> An object that contains information about the matches that were found, and related metadata. </summary>
     public partial class CustomEntity
     {
-        /// <summary> Initializes a new instance of CustomEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CustomEntity(string name)
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Aliases = new ChangeTrackingList<CustomEntityAlias>();
         }
 
-        /// <summary> Initializes a new instance of CustomEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomEntity"/>. </summary>
         /// <param name="name"> The top-level entity descriptor. Matches in the skill output will be grouped by this name, and it should represent the "normalized" form of the text being found. </param>
         /// <param name="description"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>
         /// <param name="type"> This field can be used as a passthrough for custom metadata about the matched text(s). The value of this field will appear with every match of its entity in the skill output. </param>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownThreeTierCustomResourceNames. </summary>
     internal partial class UnknownThreeTierCustomResourceNames : ThreeTierCustomResourceNames
     {
-        /// <summary> Initializes a new instance of UnknownThreeTierCustomResourceNames. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/>. </summary>
         /// <param name="namingPatternType"> The pattern type to be used for resource naming. </param>
-        internal UnknownThreeTierCustomResourceNames(SapNamingPatternType namingPatternType) : base(namingPatternType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownThreeTierCustomResourceNames(SapNamingPatternType namingPatternType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(namingPatternType, serializedAdditionalRawData)
         {
             NamingPatternType = namingPatternType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownThreeTierCustomResourceNames"/> for deserialization. </summary>
+        internal UnknownThreeTierCustomResourceNames()
+        {
         }
     }
 }

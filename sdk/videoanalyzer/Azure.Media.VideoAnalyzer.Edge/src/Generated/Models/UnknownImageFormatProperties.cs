@@ -10,7 +10,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The UnknownImageFormatProperties. </summary>
     internal partial class UnknownImageFormatProperties : ImageFormatProperties
     {
-        /// <summary> Initializes a new instance of UnknownImageFormatProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownImageFormatProperties"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         internal UnknownImageFormatProperties(string type) : base(type)
         {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningOnlineDeploymentResource" /> and their operations.
-    /// Each <see cref="MachineLearningOnlineDeploymentResource" /> in the collection will belong to the same instance of <see cref="MachineLearningOnlineEndpointResource" />.
-    /// To get a <see cref="MachineLearningOnlineDeploymentCollection" /> instance call the GetMachineLearningOnlineDeployments method from an instance of <see cref="MachineLearningOnlineEndpointResource" />.
+    /// A class representing a collection of <see cref="MachineLearningOnlineDeploymentResource"/> and their operations.
+    /// Each <see cref="MachineLearningOnlineDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningOnlineEndpointResource"/>.
+    /// To get a <see cref="MachineLearningOnlineDeploymentCollection"/> instance call the GetMachineLearningOnlineDeployments method from an instance of <see cref="MachineLearningOnlineEndpointResource"/>.
     /// </summary>
     public partial class MachineLearningOnlineDeploymentCollection : ArmCollection, IEnumerable<MachineLearningOnlineDeploymentResource>, IAsyncEnumerable<MachineLearningOnlineDeploymentResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,13 +252,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningOnlineDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningOnlineDeploymentResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -245,13 +285,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningOnlineDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningOnlineDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningOnlineDeploymentResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningOnlineDeploymentOnlineDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
@@ -339,6 +403,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +448,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OnlineDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningOnlineDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorWebApplicationFirewallPolicyResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorWebApplicationFirewallPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontDoorWebApplicationFirewallPolicyResource"/> object. </returns>
         public virtual FrontDoorWebApplicationFirewallPolicyResource GetFrontDoorWebApplicationFirewallPolicyResource(ResourceIdentifier id)
         {
             FrontDoorWebApplicationFirewallPolicyResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontDoorResource"/> object. </returns>
         public virtual FrontDoorResource GetFrontDoorResource(ResourceIdentifier id)
         {
             FrontDoorResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontendEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontendEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FrontendEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontendEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontendEndpointResource.CreateResourceIdentifier" /> to create a <see cref="FrontendEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontendEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontendEndpointResource"/> object. </returns>
         public virtual FrontendEndpointResource GetFrontendEndpointResource(ResourceIdentifier id)
         {
             FrontendEndpointResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorRulesEngineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorRulesEngineResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRulesEngineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorRulesEngineResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorRulesEngineResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorRulesEngineResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorRulesEngineResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontDoorRulesEngineResource"/> object. </returns>
         public virtual FrontDoorRulesEngineResource GetFrontDoorRulesEngineResource(ResourceIdentifier id)
         {
             FrontDoorRulesEngineResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorNetworkExperimentProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorNetworkExperimentProfileResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorNetworkExperimentProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorNetworkExperimentProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorNetworkExperimentProfileResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorNetworkExperimentProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorNetworkExperimentProfileResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontDoorNetworkExperimentProfileResource"/> object. </returns>
         public virtual FrontDoorNetworkExperimentProfileResource GetFrontDoorNetworkExperimentProfileResource(ResourceIdentifier id)
         {
             FrontDoorNetworkExperimentProfileResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FrontDoorExperimentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FrontDoorExperimentResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FrontDoorExperimentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FrontDoorExperimentResource.CreateResourceIdentifier" /> to create a <see cref="FrontDoorExperimentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FrontDoorExperimentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="FrontDoorExperimentResource"/> object. </returns>
         public virtual FrontDoorExperimentResource GetFrontDoorExperimentResource(ResourceIdentifier id)
         {
             FrontDoorExperimentResource.ValidateResourceId(id);

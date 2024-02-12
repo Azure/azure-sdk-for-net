@@ -53,11 +53,19 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataShareAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);
@@ -76,11 +84,19 @@ namespace Azure.ResourceManager.DataShare.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareAccountResource> GetDataShareAccounts(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataShareAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, skipToken);

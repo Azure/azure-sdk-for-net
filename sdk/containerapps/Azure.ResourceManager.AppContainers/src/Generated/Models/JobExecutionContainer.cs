@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Container Apps Jobs execution container definition. </summary>
     public partial class JobExecutionContainer
     {
-        /// <summary> Initializes a new instance of JobExecutionContainer. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="JobExecutionContainer"/>. </summary>
         public JobExecutionContainer()
         {
             Command = new ChangeTrackingList<string>();
@@ -21,14 +54,15 @@ namespace Azure.ResourceManager.AppContainers.Models
             Env = new ChangeTrackingList<ContainerAppEnvironmentVariable>();
         }
 
-        /// <summary> Initializes a new instance of JobExecutionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobExecutionContainer"/>. </summary>
         /// <param name="image"> Container image tag. </param>
         /// <param name="name"> Custom container name. </param>
         /// <param name="command"> Container start command. </param>
         /// <param name="args"> Container start command arguments. </param>
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
-        internal JobExecutionContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal JobExecutionContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, AppContainerResources resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Image = image;
             Name = name;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Args = args;
             Env = env;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Container image tag. </summary>

@@ -54,17 +54,21 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilityStatuses_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroupAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -78,17 +82,21 @@ namespace Azure.ResourceManager.ResourceHealth.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailabilityStatuses_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="expand"> Setting $expand=recommendedactions in url query expands the recommendedactions in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceHealthAvailabilityStatus"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceHealthAvailabilityStatus> GetAvailabilityStatusesByResourceGroup(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailabilityStatusesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailabilityStatusesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus, AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthAvailabilityStatus.DeserializeResourceHealthAvailabilityStatus(e), AvailabilityStatusesClientDiagnostics, Pipeline, "MockableResourceHealthResourceGroupResource.GetAvailabilityStatusesByResourceGroup", "value", "nextLink", cancellationToken);
         }
     }
 }

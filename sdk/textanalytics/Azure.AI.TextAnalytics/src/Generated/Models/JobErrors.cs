@@ -13,10 +13,17 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The JobErrors. </summary>
     internal partial class JobErrors
     {
-        /// <summary> Initializes a new instance of JobErrors. </summary>
+        /// <summary> Initializes a new instance of <see cref="JobErrors"/>. </summary>
         internal JobErrors()
         {
             Errors = new ChangeTrackingList<Error>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="JobErrors"/>. </summary>
+        /// <param name="errors"></param>
+        internal JobErrors(IReadOnlyList<Error> errors)
+        {
+            Errors = errors;
         }
 
         /// <summary> Gets the errors. </summary>

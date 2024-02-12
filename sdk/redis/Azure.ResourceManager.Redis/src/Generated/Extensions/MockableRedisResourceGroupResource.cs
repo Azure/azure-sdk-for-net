@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the Redis cache. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Redis.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

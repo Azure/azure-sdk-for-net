@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The path of the SAP Cloud for Customer OData entity. </summary>
     public partial class SapCloudForCustomerResourceDataset : Dataset
     {
-        /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "SapCloudForCustomerResource";
         }
 
-        /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
         /// <param name="type"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>

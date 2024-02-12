@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> and their operations.
-    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
-    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection" /> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteSlotTriggeredWebJobResource" />.
+    /// A class representing a collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> and their operations.
+    /// Each <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotTriggeredWebJobResource"/>.
+    /// To get a <see cref="WebSiteSlotTriggeredWebJobHistoryCollection"/> instance call the GetWebSiteSlotTriggeredWebJobHistories method from an instance of <see cref="WebSiteSlotTriggeredWebJobResource"/>.
     /// </summary>
     public partial class WebSiteSlotTriggeredWebJobHistoryCollection : ArmCollection, IEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>, IAsyncEnumerable<WebSiteSlotTriggeredWebJobHistoryResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> History ID. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListTriggeredWebJobHistorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WebSiteSlotTriggeredWebJobHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListTriggeredWebJobHistorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WebSiteSlotTriggeredWebJobHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WebSiteSlotTriggeredWebJobHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteSlotTriggeredWebJobHistoryWebAppsRestClient.CreateListTriggeredWebJobHistorySlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="id"> History ID. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistorySlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteSlotTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

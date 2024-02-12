@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotConfigSnapshotResource" /> and their operations.
-    /// Each <see cref="SiteSlotConfigSnapshotResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotConfigResource" />.
-    /// To get a <see cref="SiteSlotConfigSnapshotCollection" /> instance call the GetSiteSlotConfigSnapshots method from an instance of <see cref="WebSiteSlotConfigResource" />.
+    /// A class representing a collection of <see cref="SiteSlotConfigSnapshotResource"/> and their operations.
+    /// Each <see cref="SiteSlotConfigSnapshotResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotConfigResource"/>.
+    /// To get a <see cref="SiteSlotConfigSnapshotCollection"/> instance call the GetSiteSlotConfigSnapshots method from an instance of <see cref="WebSiteSlotConfigResource"/>.
     /// </summary>
     public partial class SiteSlotConfigSnapshotCollection : ArmCollection
     {
@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +151,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotId"> The ID of the snapshot to read. </param>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -241,6 +281,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetConfigurationSnapshotSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotConfigSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

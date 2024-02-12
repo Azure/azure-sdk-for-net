@@ -15,7 +15,39 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation source term. </summary>
     public partial class DictionaryTranslation
     {
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -62,7 +94,7 @@ namespace Azure.AI.Translation.Text
             BackTranslations = backTranslations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -92,7 +124,8 @@ namespace Azure.AI.Translation.Text
         /// looked up is "fly", then it is guaranteed that "fly" will be in the backTranslations list).
         /// However, it is not guaranteed to be in the first position, and often will not be.
         /// </param>
-        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DictionaryTranslation(string normalizedTarget, string displayTarget, string posTag, float confidence, string prefixWord, IReadOnlyList<BackTranslation> backTranslations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NormalizedTarget = normalizedTarget;
             DisplayTarget = displayTarget;
@@ -100,6 +133,12 @@ namespace Azure.AI.Translation.Text
             Confidence = confidence;
             PrefixWord = prefixWord;
             BackTranslations = backTranslations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/> for deserialization. </summary>
+        internal DictionaryTranslation()
+        {
         }
 
         /// <summary>

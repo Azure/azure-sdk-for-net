@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.BillingBenefits
 {
     /// <summary>
-    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanResource" /> and their operations.
-    /// Each <see cref="BillingBenefitsSavingsPlanResource" /> in the collection will belong to the same instance of <see cref="BillingBenefitsSavingsPlanOrderResource" />.
-    /// To get a <see cref="BillingBenefitsSavingsPlanCollection" /> instance call the GetBillingBenefitsSavingsPlans method from an instance of <see cref="BillingBenefitsSavingsPlanOrderResource" />.
+    /// A class representing a collection of <see cref="BillingBenefitsSavingsPlanResource"/> and their operations.
+    /// Each <see cref="BillingBenefitsSavingsPlanResource"/> in the collection will belong to the same instance of <see cref="BillingBenefitsSavingsPlanOrderResource"/>.
+    /// To get a <see cref="BillingBenefitsSavingsPlanCollection"/> instance call the GetBillingBenefitsSavingsPlans method from an instance of <see cref="BillingBenefitsSavingsPlanOrderResource"/>.
     /// </summary>
     public partial class BillingBenefitsSavingsPlanCollection : ArmCollection, IEnumerable<BillingBenefitsSavingsPlanResource>, IAsyncEnumerable<BillingBenefitsSavingsPlanResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,10 +156,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<BillingBenefitsSavingsPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListRequest(Id.Name);
@@ -162,10 +186,18 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="BillingBenefitsSavingsPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<BillingBenefitsSavingsPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateListRequest(Id.Name);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +260,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
@@ -255,6 +303,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -293,6 +349,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

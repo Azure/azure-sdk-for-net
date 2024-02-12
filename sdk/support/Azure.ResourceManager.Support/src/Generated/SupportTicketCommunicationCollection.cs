@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SupportTicketCommunicationResource" /> and their operations.
-    /// Each <see cref="SupportTicketCommunicationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionSupportTicketResource" />.
-    /// To get a <see cref="SupportTicketCommunicationCollection" /> instance call the GetSupportTicketCommunications method from an instance of <see cref="SubscriptionSupportTicketResource" />.
+    /// A class representing a collection of <see cref="SupportTicketCommunicationResource"/> and their operations.
+    /// Each <see cref="SupportTicketCommunicationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionSupportTicketResource"/>.
+    /// To get a <see cref="SupportTicketCommunicationCollection"/> instance call the GetSupportTicketCommunications method from an instance of <see cref="SubscriptionSupportTicketResource"/>.
     /// </summary>
     public partial class SupportTicketCommunicationCollection : ArmCollection, IEnumerable<SupportTicketCommunicationResource>, IAsyncEnumerable<SupportTicketCommunicationResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,12 +252,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SupportTicketCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SupportTicketCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SupportTicketCommunicationResource> GetAllAsync(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
@@ -244,12 +284,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SupportTicketCommunicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SupportTicketCommunicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SupportTicketCommunicationResource> GetAll(int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _supportTicketCommunicationCommunicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.Name, top, filter);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
@@ -337,6 +401,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,6 +446,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

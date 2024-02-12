@@ -5,18 +5,26 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a text value that needs to be vectorized is provided. </summary>
     public partial class VectorizableTextQuery : VectorQuery
     {
-        /// <summary> Initializes a new instance of VectorizableTextQuery. </summary>
-        public VectorizableTextQuery()
+        /// <summary> Initializes a new instance of <see cref="VectorizableTextQuery"/>. </summary>
+        /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        public VectorizableTextQuery(string text)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
+            Text = text;
             Kind = VectorQueryKind.Text;
         }
 
-        /// <summary> Initializes a new instance of VectorizableTextQuery. </summary>
+        /// <summary> Initializes a new instance of <see cref="VectorizableTextQuery"/>. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
@@ -27,8 +35,5 @@ namespace Azure.Search.Documents.Models
             Text = text;
             Kind = kind;
         }
-
-        /// <summary> The text to be vectorized to perform a vector search query. </summary>
-        public string Text { get; set; }
     }
 }

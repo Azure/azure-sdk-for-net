@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataBoxEdge
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxEdgeAlertResource" /> and their operations.
-    /// Each <see cref="DataBoxEdgeAlertResource" /> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource" />.
-    /// To get a <see cref="DataBoxEdgeAlertCollection" /> instance call the GetDataBoxEdgeAlerts method from an instance of <see cref="DataBoxEdgeDeviceResource" />.
+    /// A class representing a collection of <see cref="DataBoxEdgeAlertResource"/> and their operations.
+    /// Each <see cref="DataBoxEdgeAlertResource"/> in the collection will belong to the same instance of <see cref="DataBoxEdgeDeviceResource"/>.
+    /// To get a <see cref="DataBoxEdgeAlertCollection"/> instance call the GetDataBoxEdgeAlerts method from an instance of <see cref="DataBoxEdgeDeviceResource"/>.
     /// </summary>
     public partial class DataBoxEdgeAlertCollection : ArmCollection, IEnumerable<DataBoxEdgeAlertResource>, IAsyncEnumerable<DataBoxEdgeAlertResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxEdgeAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxEdgeAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxEdgeAlertResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeAlertAlertsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_ListByDataBoxEdgeDevice</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxEdgeAlertResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxEdgeAlertResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxEdgeAlertResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxEdgeAlertAlertsRestClient.CreateListByDataBoxEdgeDeviceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The alert name. </param>
@@ -251,6 +299,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,6 +344,14 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

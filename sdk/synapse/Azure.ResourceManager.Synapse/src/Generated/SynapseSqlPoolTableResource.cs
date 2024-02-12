@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource" /> using the GetSynapseSqlPoolTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource"/> using the GetSynapseSqlPoolTable method.
     /// </summary>
     public partial class SynapseSqlPoolTableResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolTablesRestOperations _synapseSqlPoolTableSqlPoolTablesRestClient;
         private readonly SynapseSqlPoolTableData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolTableResource"/> class for mocking. </summary>
         protected SynapseSqlPoolTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolTableResource(ArmClient client, SynapseSqlPoolTableData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -110,6 +110,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolColumnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolColumnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
@@ -155,6 +171,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

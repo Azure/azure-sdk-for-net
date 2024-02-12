@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SqlDWSink : IUtf8JsonSerializable
+    public partial class SqlDWSink : IUtf8JsonSerializable, IJsonModel<SqlDWSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDWSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlDWSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDWSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDWSink)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -56,14 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBehavior);
-#else
-                using (JsonDocument document = JsonDocument.Parse(WriteBehavior))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, WriteBehavior);
             }
             if (Optional.IsDefined(UpsertSettings))
             {
@@ -117,8 +119,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SqlDWSink DeserializeSqlDWSink(JsonElement element)
+        SqlDWSink IJsonModel<SqlDWSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDWSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDWSink)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDWSink(document.RootElement, options);
+        }
+
+        internal static SqlDWSink DeserializeSqlDWSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -130,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DWCopyCommandSettings> copyCommandSettings = default;
             Optional<DataFactoryElement<string>> tableOption = default;
             Optional<DataFactoryElement<bool>> sqlWriterUseTableLock = default;
-            Optional<BinaryData> writeBehavior = default;
+            Optional<DataFactoryElement<string>> writeBehavior = default;
             Optional<SqlDWUpsertSettings> upsertSettings = default;
             string type = default;
             Optional<DataFactoryElement<int>> writeBatchSize = default;
@@ -212,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    writeBehavior = BinaryData.FromString(property.Value.GetRawText());
+                    writeBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("upsertSettings"u8))
@@ -288,5 +304,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SqlDWSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value, allowPolyBase.Value, polyBaseSettings.Value, allowCopyCommand.Value, copyCommandSettings.Value, tableOption.Value, sqlWriterUseTableLock.Value, writeBehavior.Value, upsertSettings.Value);
         }
+
+        BinaryData IPersistableModel<SqlDWSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDWSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDWSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlDWSink IPersistableModel<SqlDWSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDWSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlDWSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDWSink)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlDWSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

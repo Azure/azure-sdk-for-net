@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ExpressRouteCrossConnectionRoutesTableSummary
+    public partial class ExpressRouteCrossConnectionRoutesTableSummary : IUtf8JsonSerializable, IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>
     {
-        internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Neighbor))
+            {
+                writer.WritePropertyName("neighbor"u8);
+                writer.WriteStringValue(Neighbor);
+            }
+            if (Optional.IsDefined(Asn))
+            {
+                writer.WritePropertyName("asn"u8);
+                writer.WriteNumberValue(Asn.Value);
+            }
+            if (Optional.IsDefined(UpDown))
+            {
+                writer.WritePropertyName("upDown"u8);
+                writer.WriteStringValue(UpDown);
+            }
+            if (Optional.IsDefined(StateOrPrefixesReceived))
+            {
+                writer.WritePropertyName("stateOrPrefixesReceived"u8);
+                writer.WriteStringValue(StateOrPrefixesReceived);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExpressRouteCrossConnectionRoutesTableSummary IJsonModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExpressRouteCrossConnectionRoutesTableSummary(document.RootElement, options);
+        }
+
+        internal static ExpressRouteCrossConnectionRoutesTableSummary DeserializeExpressRouteCrossConnectionRoutesTableSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<int> asn = default;
             Optional<string> upDown = default;
             Optional<string> stateOrPrefixesReceived = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("neighbor"u8))
@@ -48,8 +116,44 @@ namespace Azure.ResourceManager.Network.Models
                     stateOrPrefixesReceived = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor.Value, Optional.ToNullable(asn), upDown.Value, stateOrPrefixesReceived.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExpressRouteCrossConnectionRoutesTableSummary(neighbor.Value, Optional.ToNullable(asn), upDown.Value, stateOrPrefixesReceived.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExpressRouteCrossConnectionRoutesTableSummary IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExpressRouteCrossConnectionRoutesTableSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExpressRouteCrossConnectionRoutesTableSummary)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExpressRouteCrossConnectionRoutesTableSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

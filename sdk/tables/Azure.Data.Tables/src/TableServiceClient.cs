@@ -808,7 +808,7 @@ namespace Azure.Data.Tables
         /// <param name="properties"> The Table Service properties. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Response SetProperties(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -829,7 +829,7 @@ namespace Azure.Data.Tables
         /// <param name="properties"> The Table Service properties. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -944,7 +944,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <returns> A <see cref="TableAccountSasBuilder"/> on successfully deleting. </returns>
         /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Uri GenerateSasUri(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
             => GenerateSasUri(new TableAccountSasBuilder(permissions, resourceTypes, expiresOn));
 
@@ -960,7 +960,7 @@ namespace Azure.Data.Tables
         /// <param name="builder"> Used to generate a Shared Access Signature (SAS). </param>
         /// <returns> A <see cref="TableAccountSasBuilder"/> on successfully deleting. </returns>
         /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/data-tables")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Uri GenerateSasUri(
             TableAccountSasBuilder builder)
         {

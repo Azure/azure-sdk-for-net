@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MySql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MySqlRecommendationActionResource" /> and their operations.
-    /// Each <see cref="MySqlRecommendationActionResource" /> in the collection will belong to the same instance of <see cref="MySqlAdvisorResource" />.
-    /// To get a <see cref="MySqlRecommendationActionCollection" /> instance call the GetMySqlRecommendationActions method from an instance of <see cref="MySqlAdvisorResource" />.
+    /// A class representing a collection of <see cref="MySqlRecommendationActionResource"/> and their operations.
+    /// Each <see cref="MySqlRecommendationActionResource"/> in the collection will belong to the same instance of <see cref="MySqlAdvisorResource"/>.
+    /// To get a <see cref="MySqlRecommendationActionCollection"/> instance call the GetMySqlRecommendationActions method from an instance of <see cref="MySqlAdvisorResource"/>.
     /// </summary>
     public partial class MySqlRecommendationActionCollection : ArmCollection, IEnumerable<MySqlRecommendationActionResource>, IAsyncEnumerable<MySqlRecommendationActionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionId"> The recommendation action session identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MySqlRecommendationActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlRecommendationActionResource> GetAllAsync(string sessionId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionId"> The recommendation action session identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MySqlRecommendationActionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MySqlRecommendationActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlRecommendationActionResource> GetAll(string sessionId = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlRecommendationActionRecommendedActionsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sessionId);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.MySql
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
@@ -253,6 +301,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +346,14 @@ namespace Azure.ResourceManager.MySql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecommendedActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlRecommendationActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

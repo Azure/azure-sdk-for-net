@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UserAssignedIdentityRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);

@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayData"/> to use. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayData"/> to use. </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The <see cref="ApiManagementGatewayData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="content"> The GatewayKeyRegenerateContent to use. </param>
+        /// <param name="content"> The <see cref="GatewayKeyRegenerateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="content"> The GatewayKeyRegenerateContent to use. </param>
+        /// <param name="content"> The <see cref="GatewayKeyRegenerateContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="gatewayTokenRequestContract"> The GatewayTokenRequestContract to use. </param>
+        /// <param name="gatewayTokenRequestContract"> The <see cref="GatewayTokenRequestContract"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="gatewayTokenRequestContract"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="serviceName"> The name of the API Management service. </param>
         /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
-        /// <param name="gatewayTokenRequestContract"> The GatewayTokenRequestContract to use. </param>
+        /// <param name="gatewayTokenRequestContract"> The <see cref="GatewayTokenRequestContract"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="gatewayId"/> or <paramref name="gatewayTokenRequestContract"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/> or <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>

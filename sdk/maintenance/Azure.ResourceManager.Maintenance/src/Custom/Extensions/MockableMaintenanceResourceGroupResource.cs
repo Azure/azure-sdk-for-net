@@ -11,8 +11,11 @@ using Azure.ResourceManager.Maintenance.Models;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
+    [CodeGenSuppress("ConfigurationAssignmentsRestClient")]
     public partial class MockableMaintenanceResourceGroupResource : ArmResource
     {
+        private ConfigurationAssignmentsRestOperations ConfigurationAssignmentsRestClient => _configurationAssignmentsRestClient ??= new ConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull("Microsoft.Maintenance/configurationAssignments"));
+
         /// <summary>
         /// Track maintenance updates to resource with parent
         /// <list type="bullet">

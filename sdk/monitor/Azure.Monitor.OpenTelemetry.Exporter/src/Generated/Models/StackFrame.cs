@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Stack frame information. </summary>
     internal partial class StackFrame
     {
-        /// <summary> Initializes a new instance of StackFrame. </summary>
+        /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
         /// <param name="level"></param>
         /// <param name="method"> Method name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="method"/> is null. </exception>
@@ -23,6 +23,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             Level = level;
             Method = method;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StackFrame"/>. </summary>
+        /// <param name="level"></param>
+        /// <param name="method"> Method name. </param>
+        /// <param name="assembly"> Name of the assembly (dll, jar, etc.) containing this function. </param>
+        /// <param name="fileName"> File name or URL of the method implementation. </param>
+        /// <param name="line"> Line number of the code implementation. </param>
+        internal StackFrame(int level, string method, string assembly, string fileName, int? line)
+        {
+            Level = level;
+            Method = method;
+            Assembly = assembly;
+            FileName = fileName;
+            Line = line;
         }
 
         /// <summary> Gets the level. </summary>

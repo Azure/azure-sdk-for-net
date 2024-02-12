@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SignalR.Models
 {
     /// <summary> A class represents the access keys of the resource. </summary>
     public partial class SignalRKeys
     {
-        /// <summary> Initializes a new instance of SignalRKeys. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SignalRKeys"/>. </summary>
         internal SignalRKeys()
         {
         }
 
-        /// <summary> Initializes a new instance of SignalRKeys. </summary>
+        /// <summary> Initializes a new instance of <see cref="SignalRKeys"/>. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
         /// <param name="secondaryConnectionString"> Connection string constructed via the secondaryKey. </param>
-        internal SignalRKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRKeys(string primaryKey, string secondaryKey, string primaryConnectionString, string secondaryConnectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             PrimaryConnectionString = primaryConnectionString;
             SecondaryConnectionString = secondaryConnectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The primary access key. </summary>

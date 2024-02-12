@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServiceRoleInstanceResource" /> and their operations.
-    /// Each <see cref="CloudServiceRoleInstanceResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
-    /// To get a <see cref="CloudServiceRoleInstanceCollection" /> instance call the GetCloudServiceRoleInstances method from an instance of <see cref="CloudServiceResource" />.
+    /// A class representing a collection of <see cref="CloudServiceRoleInstanceResource"/> and their operations.
+    /// Each <see cref="CloudServiceRoleInstanceResource"/> in the collection will belong to the same instance of <see cref="CloudServiceResource"/>.
+    /// To get a <see cref="CloudServiceRoleInstanceCollection"/> instance call the GetCloudServiceRoleInstances method from an instance of <see cref="CloudServiceResource"/>.
     /// </summary>
     public partial class CloudServiceRoleInstanceCollection : ArmCollection, IEnumerable<CloudServiceRoleInstanceResource>, IAsyncEnumerable<CloudServiceRoleInstanceResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,11 +157,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceRoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceRoleInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceRoleInstanceResource> GetAllAsync(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleInstanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -164,11 +188,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply to the operation. 'UserData' is not supported for cloud services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceRoleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceRoleInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceRoleInstanceResource> GetAll(InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleInstanceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -186,6 +218,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +263,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleInstanceName"> Name of the role instance. </param>
@@ -258,6 +306,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +352,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

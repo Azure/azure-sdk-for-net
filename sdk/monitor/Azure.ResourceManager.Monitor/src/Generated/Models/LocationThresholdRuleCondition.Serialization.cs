@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class LocationThresholdRuleCondition : IUtf8JsonSerializable
+    public partial class LocationThresholdRuleCondition : IUtf8JsonSerializable, IJsonModel<LocationThresholdRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocationThresholdRuleCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LocationThresholdRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowSize))
             {
@@ -30,11 +40,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("dataSource"u8);
                 writer.WriteObjectValue(DataSource);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LocationThresholdRuleCondition DeserializeLocationThresholdRuleCondition(JsonElement element)
+        LocationThresholdRuleCondition IJsonModel<LocationThresholdRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocationThresholdRuleCondition(document.RootElement, options);
+        }
+
+        internal static LocationThresholdRuleCondition DeserializeLocationThresholdRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.Monitor.Models
             int failedLocationCount = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowSize"u8))
@@ -73,8 +114,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocationThresholdRuleCondition(odataType, dataSource.Value, Optional.ToNullable(windowSize), failedLocationCount);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LocationThresholdRuleCondition(odataType, dataSource.Value, serializedAdditionalRawData, Optional.ToNullable(windowSize), failedLocationCount);
         }
+
+        BinaryData IPersistableModel<LocationThresholdRuleCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LocationThresholdRuleCondition IPersistableModel<LocationThresholdRuleCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationThresholdRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLocationThresholdRuleCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LocationThresholdRuleCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LocationThresholdRuleCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionListResponse. </summary>
     internal partial class LinkConnectionListResponse
     {
-        /// <summary> Initializes a new instance of LinkConnectionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionListResponse"/>. </summary>
         /// <param name="value"> List link connection value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal LinkConnectionListResponse(IEnumerable<LinkConnectionResource> value)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionListResponse"/>. </summary>
         /// <param name="value"> List link connection value. </param>
         /// <param name="nextLink"> List link connections next link. </param>
         internal LinkConnectionListResponse(IReadOnlyList<LinkConnectionResource> value, string nextLink)

@@ -137,7 +137,7 @@ Console.WriteLine($"`EscalateJobOnWaitTimeExceededTrigger2Min` rule has been suc
 ## List exception policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetExceptionPolicies_Async
-AsyncPageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPoliciesAsync();
+AsyncPageable<ExceptionPolicy> exceptionPolicies = routerClient.GetExceptionPoliciesAsync(cancellationToken: default);
 await foreach (Page<ExceptionPolicy> asPage in exceptionPolicies.AsPages(pageSizeHint: 10))
 {
     foreach (ExceptionPolicy? policy in asPage.Values)

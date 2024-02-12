@@ -15,7 +15,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> A valid `GeoJSON LineString` geometry type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1.4) for details. </summary>
     internal partial class GeoJsonLineString : GeoJsonGeometry
     {
-        /// <summary> Initializes a new instance of GeoJsonLineString. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonLineString"/>. </summary>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
         public GeoJsonLineString(IEnumerable<IList<double>> coordinates)
@@ -26,7 +26,7 @@ namespace Azure.Maps.Search.Models
             Type = GeoJsonObjectType.GeoJsonLineString;
         }
 
-        /// <summary> Initializes a new instance of GeoJsonLineString. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonLineString"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="coordinates"> Coordinates for the `GeoJson LineString` geometry. </param>
         internal GeoJsonLineString(GeoJsonObjectType type, IList<IList<double>> coordinates) : base(type)

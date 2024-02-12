@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Execute pipeline activity. </summary>
     public partial class ExecutePipelineActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ExecutePipeline";
         }
 
-        /// <summary> Initializes a new instance of ExecutePipelineActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             WaitOnCompletion = waitOnCompletion;
             ActivityType = activityType ?? "ExecutePipeline";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/> for deserialization. </summary>
+        internal ExecutePipelineActivity()
+        {
         }
 
         /// <summary> Execute pipeline activity policy. </summary>

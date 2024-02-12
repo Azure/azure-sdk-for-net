@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The ClassificationDocumentResult. </summary>
     internal partial class ClassificationDocumentResult : DocumentResult
     {
-        /// <summary> Initializes a new instance of ClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="class"></param>
@@ -30,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Models
             Class = @class.ToList();
         }
 
-        /// <summary> Initializes a new instance of ClassificationDocumentResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassificationDocumentResult"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="warnings"> Warnings encountered while processing document. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Specification for a node group. </summary>
     public partial class NodeGroupSpec : NodeGroupProperties
     {
-        /// <summary> Initializes a new instance of NodeGroupSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeGroupSpec"/>. </summary>
         public NodeGroupSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of NodeGroupSpec. </summary>
+        /// <summary> Initializes a new instance of <see cref="NodeGroupSpec"/>. </summary>
         /// <param name="sku"> The resource sku for the node group. This defines the size of CPU and memory that is provisioned for each node. Example values: 'M30', 'M40'. </param>
         /// <param name="diskSizeInGB"> The disk storage size for the node group in GB. Example values: 128, 256, 512, 1024. </param>
         /// <param name="enableHa"> Whether high availability is enabled on the node group. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The node type deployed in the node group. </param>
         /// <param name="nodeCount"> The number of nodes in the node group. </param>
-        internal NodeGroupSpec(string sku, long? diskSizeInGB, bool? enableHa, NodeKind? kind, int? nodeCount) : base(sku, diskSizeInGB, enableHa)
+        internal NodeGroupSpec(string sku, long? diskSizeInGB, bool? enableHa, IDictionary<string, BinaryData> serializedAdditionalRawData, NodeKind? kind, int? nodeCount) : base(sku, diskSizeInGB, enableHa, serializedAdditionalRawData)
         {
             Kind = kind;
             NodeCount = nodeCount;

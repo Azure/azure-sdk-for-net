@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The UnknownSecretInfoBase. </summary>
     internal partial class UnknownSecretInfoBase : SecretBaseInfo
     {
-        /// <summary> Initializes a new instance of UnknownSecretInfoBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretInfoBase"/>. </summary>
         /// <param name="secretType"> The secret type. </param>
-        internal UnknownSecretInfoBase(LinkerSecretType secretType) : base(secretType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSecretInfoBase(LinkerSecretType secretType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(secretType, serializedAdditionalRawData)
         {
             SecretType = secretType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSecretInfoBase"/> for deserialization. </summary>
+        internal UnknownSecretInfoBase()
+        {
         }
     }
 }

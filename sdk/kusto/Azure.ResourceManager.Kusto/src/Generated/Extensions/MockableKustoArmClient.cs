@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoClusterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoClusterResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoClusterResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoClusterResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoClusterResource"/> object. </returns>
         public virtual KustoClusterResource GetKustoClusterResource(ResourceIdentifier id)
         {
             KustoClusterResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoClusterPrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoClusterPrincipalAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoClusterPrincipalAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource"/> object. </returns>
         public virtual KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(ResourceIdentifier id)
         {
             KustoClusterPrincipalAssignmentResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoDatabaseResource"/> object. </returns>
         public virtual KustoDatabaseResource GetKustoDatabaseResource(ResourceIdentifier id)
         {
             KustoDatabaseResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoAttachedDatabaseConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KustoAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoAttachedDatabaseConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KustoAttachedDatabaseConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource"/> object. </returns>
         public virtual KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(ResourceIdentifier id)
         {
             KustoAttachedDatabaseConfigurationResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoManagedPrivateEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="KustoManagedPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoManagedPrivateEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoManagedPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="KustoManagedPrivateEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource"/> object. </returns>
         public virtual KustoManagedPrivateEndpointResource GetKustoManagedPrivateEndpointResource(ResourceIdentifier id)
         {
             KustoManagedPrivateEndpointResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoDatabasePrincipalAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDatabasePrincipalAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="KustoDatabasePrincipalAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource"/> object. </returns>
         public virtual KustoDatabasePrincipalAssignmentResource GetKustoDatabasePrincipalAssignmentResource(ResourceIdentifier id)
         {
             KustoDatabasePrincipalAssignmentResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoScriptResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoScriptResource.CreateResourceIdentifier" /> to create a <see cref="KustoScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoScriptResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoScriptResource.CreateResourceIdentifier" /> to create a <see cref="KustoScriptResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoScriptResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoScriptResource"/> object. </returns>
         public virtual KustoScriptResource GetKustoScriptResource(ResourceIdentifier id)
         {
             KustoScriptResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SandboxCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SandboxCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="SandboxCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SandboxCustomImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SandboxCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="SandboxCustomImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SandboxCustomImageResource" /> object. </returns>
+        /// <returns> Returns a <see cref="SandboxCustomImageResource"/> object. </returns>
         public virtual SandboxCustomImageResource GetSandboxCustomImageResource(ResourceIdentifier id)
         {
             SandboxCustomImageResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource"/> object. </returns>
         public virtual KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             KustoPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoPrivateLinkResource"/> object. </returns>
         public virtual KustoPrivateLinkResource GetKustoPrivateLinkResource(ResourceIdentifier id)
         {
             KustoPrivateLinkResource.ValidateResourceId(id);
@@ -157,11 +157,11 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="KustoDataConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="KustoDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KustoDataConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KustoDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoDataConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KustoDataConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="KustoDataConnectionResource"/> object. </returns>
         public virtual KustoDataConnectionResource GetKustoDataConnectionResource(ResourceIdentifier id)
         {
             KustoDataConnectionResource.ValidateResourceId(id);

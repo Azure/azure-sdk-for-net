@@ -14,7 +14,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The Analytics query. Learn more about the [Analytics query syntax](https://azure.microsoft.com/documentation/articles/app-insights-analytics-reference/). </summary>
     internal partial class QueryBody
     {
-        /// <summary> Initializes a new instance of QueryBody. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
         /// <param name="query"> The query to execute. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public QueryBody(string query)
@@ -23,6 +23,17 @@ namespace Azure.Monitor.Query.Models
 
             Query = query;
             Workspaces = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryBody"/>. </summary>
+        /// <param name="query"> The query to execute. </param>
+        /// <param name="timespan"> Optional. The timespan over which to query data. This is an ISO8601 time period value.  This timespan is applied in addition to any that are specified in the query expression. </param>
+        /// <param name="workspaces"> A list of workspaces to query in addition to the primary workspace. </param>
+        internal QueryBody(string query, string timespan, IList<string> workspaces)
+        {
+            Query = query;
+            Timespan = timespan;
+            Workspaces = workspaces;
         }
 
         /// <summary> The query to execute. </summary>

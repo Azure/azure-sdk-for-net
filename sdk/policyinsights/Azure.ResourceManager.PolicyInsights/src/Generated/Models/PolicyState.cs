@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> Policy state record. </summary>
     public partial class PolicyState
     {
-        /// <summary> Initializes a new instance of PolicyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyState"/>. </summary>
         internal PolicyState()
         {
             PolicyDefinitionGroupNames = new ChangeTrackingList<string>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of PolicyState. </summary>
+        /// <summary> Initializes a new instance of <see cref="PolicyState"/>. </summary>
         /// <param name="odataId"> OData entity ID; always set to null since policy state records do not have an entity ID. </param>
         /// <param name="odataContext"> OData context string; used by OData clients to resolve type information based on metadata. </param>
         /// <param name="timestamp"> Timestamp for the policy state record. </param>

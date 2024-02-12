@@ -14,7 +14,7 @@ namespace Azure.DigitalTwins.Core
     /// <summary> Model factory for models. </summary>
     public static partial class DigitalTwinsModelFactory
     {
-        /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.DigitalTwinsModelData"/>. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
         /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core
             return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel);
         }
 
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.IncomingRelationship"/>. </summary>
         /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
         /// <param name="sourceId"> The id of the source digital twin. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
@@ -41,7 +41,7 @@ namespace Azure.DigitalTwins.Core
             return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.DigitalTwinsEventRoute"/>. </summary>
         /// <param name="id"> The id of the event route. </param>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
@@ -51,7 +51,7 @@ namespace Azure.DigitalTwins.Core
             return new DigitalTwinsEventRoute(id, endpointName, filter);
         }
 
-        /// <summary> Initializes a new instance of ImportJob. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.ImportJob"/>. </summary>
         /// <param name="id"> The identifier of the import job. </param>
         /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
         /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>

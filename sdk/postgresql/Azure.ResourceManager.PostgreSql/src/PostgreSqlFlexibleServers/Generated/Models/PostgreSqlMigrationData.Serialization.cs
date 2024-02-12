@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    public partial class PostgreSqlMigrationData : IUtf8JsonSerializable
+    public partial class PostgreSqlMigrationData : IUtf8JsonSerializable, IJsonModel<PostgreSqlMigrationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlMigrationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlMigrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,12 +41,52 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MigrationId))
+            {
+                writer.WritePropertyName("migrationId"u8);
+                writer.WriteStringValue(MigrationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
+            {
+                writer.WritePropertyName("currentStatus"u8);
+                writer.WriteObjectValue(CurrentStatus);
+            }
             if (Optional.IsDefined(MigrationMode))
             {
                 writer.WritePropertyName("migrationMode"u8);
                 writer.WriteStringValue(MigrationMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceDbServerMetadata))
+            {
+                writer.WritePropertyName("sourceDbServerMetadata"u8);
+                writer.WriteObjectValue(SourceDbServerMetadata);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetDbServerMetadata))
+            {
+                writer.WritePropertyName("targetDbServerMetadata"u8);
+                writer.WriteObjectValue(TargetDbServerMetadata);
             }
             if (Optional.IsDefined(SourceDbServerResourceId))
             {
@@ -48,6 +97,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 writer.WritePropertyName("sourceDbServerFullyQualifiedDomainName"u8);
                 writer.WriteStringValue(SourceDbServerFullyQualifiedDomainName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetDbServerResourceId))
+            {
+                writer.WritePropertyName("targetDbServerResourceId"u8);
+                writer.WriteStringValue(TargetDbServerResourceId);
             }
             if (Optional.IsDefined(TargetDbServerFullyQualifiedDomainName))
             {
@@ -125,11 +179,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlMigrationData DeserializePostgreSqlMigrationData(JsonElement element)
+        PostgreSqlMigrationData IJsonModel<PostgreSqlMigrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlMigrationData(document.RootElement, options);
+        }
+
+        internal static PostgreSqlMigrationData DeserializePostgreSqlMigrationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,6 +243,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             Optional<IList<string>> dbsToTriggerCutoverOn = default;
             Optional<PostgreSqlMigrationCancel> cancel = default;
             Optional<IList<string>> dbsToCancelMigrationOn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -400,8 +485,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlMigrationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, migrationId.Value, currentStatus.Value, Optional.ToNullable(migrationMode), sourceDbServerMetadata.Value, targetDbServerMetadata.Value, sourceDbServerResourceId.Value, sourceDbServerFullyQualifiedDomainName.Value, targetDbServerResourceId.Value, targetDbServerFullyQualifiedDomainName.Value, secretParameters.Value, Optional.ToList(dbsToMigrate), Optional.ToNullable(setupLogicalReplicationOnSourceDbIfNeeded), Optional.ToNullable(overwriteDbsInTarget), Optional.ToNullable(migrationWindowStartTimeInUtc), Optional.ToNullable(migrationWindowEndTimeInUtc), Optional.ToNullable(startDataMigration), Optional.ToNullable(triggerCutover), Optional.ToList(dbsToTriggerCutoverOn), Optional.ToNullable(cancel), Optional.ToList(dbsToCancelMigrationOn), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostgreSqlMigrationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlMigrationData IPersistableModel<PostgreSqlMigrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlMigrationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlMigrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

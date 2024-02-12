@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     /// <summary> The list of Log Analytics workspaces associated with the cluster. </summary>
     public partial class OperationalInsightsClusterAssociatedWorkspace
     {
-        /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         public OperationalInsightsClusterAssociatedWorkspace()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationalInsightsClusterAssociatedWorkspace. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
         /// <param name="workspaceId"> The id of the assigned workspace. </param>
         /// <param name="workspaceName"> The name id the assigned workspace. </param>
         /// <param name="resourceId"> The ResourceId id the assigned workspace. </param>
         /// <param name="associatedOn"> The time of workspace association. </param>
-        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WorkspaceId = workspaceId;
             WorkspaceName = workspaceName;
             ResourceId = resourceId;
             AssociatedOn = associatedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the assigned workspace. </summary>

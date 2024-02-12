@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DedicatedHsmResource" /> and their operations.
-    /// Each <see cref="DedicatedHsmResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DedicatedHsmCollection" /> instance call the GetDedicatedHsms method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DedicatedHsmResource"/> and their operations.
+    /// Each <see cref="DedicatedHsmResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DedicatedHsmCollection"/> instance call the GetDedicatedHsms method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DedicatedHsmCollection : ArmCollection, IEnumerable<DedicatedHsmResource>, IAsyncEnumerable<DedicatedHsmResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the dedicated HSM. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DedicatedHsmResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHsmResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DedicatedHsmResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DedicatedHsmResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the dedicated HSM. </param>
@@ -336,6 +400,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +445,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DedicatedHsm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedHsmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

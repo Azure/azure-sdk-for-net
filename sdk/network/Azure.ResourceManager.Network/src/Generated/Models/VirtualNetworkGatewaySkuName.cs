@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Network.Models
         private const string ErGw1AZValue = "ErGw1AZ";
         private const string ErGw2AZValue = "ErGw2AZ";
         private const string ErGw3AZValue = "ErGw3AZ";
+        private const string ErGwScaleValue = "ErGwScale";
 
         /// <summary> Basic. </summary>
         public static VirtualNetworkGatewaySkuName Basic { get; } = new VirtualNetworkGatewaySkuName(BasicValue);
@@ -74,6 +75,8 @@ namespace Azure.ResourceManager.Network.Models
         public static VirtualNetworkGatewaySkuName ErGw2AZ { get; } = new VirtualNetworkGatewaySkuName(ErGw2AZValue);
         /// <summary> ErGw3AZ. </summary>
         public static VirtualNetworkGatewaySkuName ErGw3AZ { get; } = new VirtualNetworkGatewaySkuName(ErGw3AZValue);
+        /// <summary> ErGwScale. </summary>
+        public static VirtualNetworkGatewaySkuName ErGwScale { get; } = new VirtualNetworkGatewaySkuName(ErGwScaleValue);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuName"/> values are the same. </summary>
         public static bool operator ==(VirtualNetworkGatewaySkuName left, VirtualNetworkGatewaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VirtualNetworkGatewaySkuName"/> values are not the same. </summary>

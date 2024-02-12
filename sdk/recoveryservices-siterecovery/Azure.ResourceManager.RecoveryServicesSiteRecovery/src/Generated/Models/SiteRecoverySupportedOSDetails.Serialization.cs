@@ -5,16 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoverySupportedOSDetails
+    public partial class SiteRecoverySupportedOSDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoverySupportedOSDetails>
     {
-        internal static SiteRecoverySupportedOSDetails DeserializeSiteRecoverySupportedOSDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoverySupportedOSDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoverySupportedOSDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OSName))
+            {
+                writer.WritePropertyName("osName"u8);
+                writer.WriteStringValue(OSName);
+            }
+            if (Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (Optional.IsCollectionDefined(OSVersions))
+            {
+                writer.WritePropertyName("osVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in OSVersions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoverySupportedOSDetails IJsonModel<SiteRecoverySupportedOSDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoverySupportedOSDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoverySupportedOSDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoverySupportedOSDetails DeserializeSiteRecoverySupportedOSDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +87,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> osName = default;
             Optional<string> osType = default;
             Optional<IReadOnlyList<SiteRecoveryOSVersionWrapper>> osVersions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osName"u8))
@@ -48,8 +115,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osVersions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoverySupportedOSDetails(osName.Value, osType.Value, Optional.ToList(osVersions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoverySupportedOSDetails(osName.Value, osType.Value, Optional.ToList(osVersions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoverySupportedOSDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoverySupportedOSDetails IPersistableModel<SiteRecoverySupportedOSDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoverySupportedOSDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoverySupportedOSDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoverySupportedOSDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoverySupportedOSDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

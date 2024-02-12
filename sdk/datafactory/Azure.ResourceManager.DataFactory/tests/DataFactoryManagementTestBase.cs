@@ -40,6 +40,14 @@ namespace Azure.ResourceManager.DataFactory.Tests
             Client = GetArmClient();
         }
 
+        protected async Task<ResourceGroupResource> CreateResourceGroup(string rgName, AzureLocation location)
+        {
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupData input = new ResourceGroupData(location);
+            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
@@ -108,17 +116,13 @@ namespace Azure.ResourceManager.DataFactory.Tests
             {
                 Activities =
                 {
-                    new CopyActivity("TestAzureSQL",new CopyActivitySource(),new CopySink())
-                    {
-                        State = PipelineActivityState.Active,
-                        Source = new AzureSqlSource()
+                    new CopyActivity("TestAzureSQL",new AzureSqlSource()
                         {
                             SourceRetryCount = 10,
                             QueryTimeout = "02:00:00"
-                        },
-                        Sink = new AzureSqlSink()
-                        {
-                        },
+                        }, new AzureSqlSink())
+                    {
+                        State = PipelineActivityState.Active,
                         Inputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSource)
@@ -128,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Tests
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureSqlSink)
                         }
                     },
-                    new CopyActivity("TestAzureBlob",new CopyActivitySource(),new CopySink())
+                    new CopyActivity("TestAzureBlob",new DelimitedTextSource(), new DelimitedTextSink())
                     {
                         State = PipelineActivityState.Active,
                         Inputs =
@@ -138,15 +142,9 @@ namespace Azure.ResourceManager.DataFactory.Tests
                         Outputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureStorageSink)
-                        },
-                        Source = new DelimitedTextSource()
-                        {
-                        },
-                        Sink = new DelimitedTextSink()
-                        {
                         }
                     },
-                    new CopyActivity("TestAzureGen2",new CopyActivitySource(),new CopySink())
+                    new CopyActivity("TestAzureGen2",new DelimitedTextSource(), new DelimitedTextSink())
                     {
                         State = PipelineActivityState.Active,
                         Inputs =
@@ -156,17 +154,11 @@ namespace Azure.ResourceManager.DataFactory.Tests
                         Outputs =
                         {
                             new DatasetReference(DatasetReferenceType.DatasetReference,dataSetAzureGen2Sink)
-                        },
-                        Source = new DelimitedTextSource()
-                        {
-                        },
-                        Sink = new DelimitedTextSink()
-                        {
                         }
                     }
                 }
             };
-            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(Azure.WaitUntil.Completed, pipelineName, pipelineData);
+            var pipeline = await dataFactory.GetDataFactoryPipelines().CreateOrUpdateAsync(WaitUntil.Completed, pipelineName, pipelineData);
             return pipeline.Value;
         }
 

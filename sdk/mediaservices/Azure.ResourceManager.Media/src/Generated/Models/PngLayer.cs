@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the settings to produce a PNG image from the input video. </summary>
     public partial class PngLayer : MediaLayerBase
     {
-        /// <summary> Initializes a new instance of PngLayer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PngLayer"/>. </summary>
         public PngLayer()
         {
         }
 
-        /// <summary> Initializes a new instance of PngLayer. </summary>
+        /// <summary> Initializes a new instance of <see cref="PngLayer"/>. </summary>
         /// <param name="width"> The width of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in width as the input. </param>
         /// <param name="height"> The height of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in height as the input. </param>
         /// <param name="label"> The alphanumeric label for this layer, which can be used in multiplexing different video and audio layers, or in naming the output file. </param>
-        internal PngLayer(string width, string height, string label) : base(width, height, label)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PngLayer(string width, string height, string label, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(width, height, label, serializedAdditionalRawData)
         {
         }
     }

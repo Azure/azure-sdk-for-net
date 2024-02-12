@@ -13,14 +13,14 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to 'true'. </summary>
     internal partial class InstanceHit
     {
-        /// <summary> Initializes a new instance of InstanceHit. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHit"/>. </summary>
         internal InstanceHit()
         {
             TimeSeriesId = new ChangeTrackingList<object>();
             HierarchyIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InstanceHit. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstanceHit"/>. </summary>
         /// <param name="timeSeriesId"> Time series ID of the time series instance that matched the search request. </param>
         /// <param name="name"> Name of the time series instance that matched the search request. May be null. </param>
         /// <param name="typeId"> Represents the type that time series instance which matched the search request belongs to. Never null. </param>

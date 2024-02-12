@@ -147,7 +147,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // A worker can also choose to decline an offer
 
-            Response declineOffer = routerClient.DeclineJobOffer(worker.Value.Id, issuedOffer.OfferId);
+            Response declineOffer = routerClient.DeclineJobOffer(new DeclineJobOfferOptions(worker.Value.Id, issuedOffer.OfferId));
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_DeclineJobOffer
 
@@ -155,7 +155,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Once a worker completes the job, it needs to mark the job as completed
 
-            Response completedJobResult = routerClient.CompleteJob(jobId, new CompleteJobOptions(acceptedJobOffer.Value.AssignmentId));
+            Response completedJobResult = routerClient.CompleteJob(new CompleteJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully completed. Current status: {queriedJob.Value.Status}"); // "Completed"
@@ -164,7 +164,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_CloseRouterJob
 
-            Response closeJobResult = routerClient.CloseJob(jobId, new CloseJobOptions(acceptedJobOffer.Value.AssignmentId));
+            Response closeJobResult = routerClient.CloseJob(new CloseJobOptions(jobId, acceptedJobOffer.Value.AssignmentId));
 
             queriedJob = routerClient.GetJob(jobId);
             Console.WriteLine($"Job has been successfully closed. Current status: {queriedJob.Value.Status}"); // "Closed"
@@ -173,7 +173,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetRouterJobs
 
-            Pageable<RouterJob> routerJobs = routerClient.GetJobs();
+            Pageable<RouterJob> routerJobs = routerClient.GetJobs(null, null);
             foreach (Page<RouterJob> asPage in routerJobs.AsPages(pageSizeHint: 10))
             {
                 foreach (RouterJob? _job in asPage.Values)

@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 		<IsExtensionClientLibrary>true</IsExtensionClientLibrary>
-		<Version>1.0.0-beta.4</Version>
+		<Version>1.0.0-beta.6</Version>
 		<Description>Triggers for Azure AD Authentication event custom extensions. Lets you focus on your business logic.</Description>
 	</PropertyGroup>
 

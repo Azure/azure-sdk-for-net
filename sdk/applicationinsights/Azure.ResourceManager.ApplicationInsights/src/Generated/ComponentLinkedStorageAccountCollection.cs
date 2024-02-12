@@ -18,9 +18,9 @@ using Azure.ResourceManager.ApplicationInsights.Models;
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource" /> and their operations.
-    /// Each <see cref="ComponentLinkedStorageAccountResource" /> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource" />.
-    /// To get a <see cref="ComponentLinkedStorageAccountCollection" /> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource" />.
+    /// A class representing a collection of <see cref="ComponentLinkedStorageAccountResource"/> and their operations.
+    /// Each <see cref="ComponentLinkedStorageAccountResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsComponentResource"/>.
+    /// To get a <see cref="ComponentLinkedStorageAccountCollection"/> instance call the GetComponentLinkedStorageAccounts method from an instance of <see cref="ApplicationInsightsComponentResource"/>.
     /// </summary>
     public partial class ComponentLinkedStorageAccountCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_CreateAndUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_CreateAndUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +156,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -172,6 +196,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +238,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -237,6 +277,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

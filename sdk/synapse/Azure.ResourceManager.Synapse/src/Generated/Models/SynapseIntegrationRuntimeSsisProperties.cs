@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> SSIS properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeSsisProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisProperties"/>. </summary>
         public SynapseIntegrationRuntimeSsisProperties()
         {
             ExpressCustomSetupProperties = new ChangeTrackingList<SynapseCustomSetupBase>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisProperties"/>. </summary>
         /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
         /// <param name="licenseType"> License type for bringing your own license scenario. </param>
         /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>

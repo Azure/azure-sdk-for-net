@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
     public partial class InboundEnvironmentEndpoint
     {
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpoint"/>. </summary>
         internal InboundEnvironmentEndpoint()
         {
             Endpoints = new ChangeTrackingList<string>();
             Ports = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of InboundEnvironmentEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="InboundEnvironmentEndpoint"/>. </summary>
         /// <param name="description"> Short text describing the purpose of the network traffic. </param>
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
-        internal InboundEnvironmentEndpoint(string description, IReadOnlyList<string> endpoints, IReadOnlyList<string> ports)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InboundEnvironmentEndpoint(string description, IReadOnlyList<string> endpoints, IReadOnlyList<string> ports, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Description = description;
             Endpoints = endpoints;
             Ports = ports;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Short text describing the purpose of the network traffic. </summary>

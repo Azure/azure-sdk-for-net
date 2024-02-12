@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,13 +15,45 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The QueryStatistics. </summary>
     public partial class QueryStatistics : ResourceData
     {
-        /// <summary> Initializes a new instance of QueryStatistics. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QueryStatistics"/>. </summary>
         public QueryStatistics()
         {
             Intervals = new ChangeTrackingList<QueryMetricInterval>();
         }
 
-        /// <summary> Initializes a new instance of QueryStatistics. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryStatistics"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,13 +63,15 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="startTime"> The start time for the metric (ISO-8601 format). </param>
         /// <param name="endTime"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="intervals"> List of intervals with appropriate metric data. </param>
-        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QueryStatistics(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string databaseName, string queryId, string startTime, string endTime, IList<QueryMetricInterval> intervals, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DatabaseName = databaseName;
             QueryId = queryId;
             StartTime = startTime;
             EndTime = endTime;
             Intervals = intervals;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database name of the database in which this query was executed. </summary>

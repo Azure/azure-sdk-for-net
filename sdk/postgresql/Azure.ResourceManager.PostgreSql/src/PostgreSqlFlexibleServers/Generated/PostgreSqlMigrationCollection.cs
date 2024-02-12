@@ -21,9 +21,9 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlMigrationResource" /> and their operations.
-    /// Each <see cref="PostgreSqlMigrationResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource" />.
-    /// To get a <see cref="PostgreSqlMigrationCollection" /> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlMigrationResource"/> and their operations.
+    /// Each <see cref="PostgreSqlMigrationResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlFlexibleServerResource"/>.
+    /// To get a <see cref="PostgreSqlMigrationCollection"/> instance call the GetPostgreSqlMigrations method from an instance of <see cref="PostgreSqlFlexibleServerResource"/>.
     /// </summary>
     public partial class PostgreSqlMigrationCollection : ArmCollection, IEnumerable<PostgreSqlMigrationResource>, IAsyncEnumerable<PostgreSqlMigrationResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Migrations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Migrations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationName"> The name of the migration. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Migrations_ListByTargetServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlMigrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlMigrationResource> GetAllAsync(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Migrations_ListByTargetServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationListFilter"> Migration list filter. Retrieves either active migrations or all migrations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlMigrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlMigrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlMigrationResource> GetAll(PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlMigrationMigrationsRestClient.CreateListByTargetServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, migrationListFilter);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="migrationName"> The name of the migration. </param>
@@ -336,6 +400,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +445,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

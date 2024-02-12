@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringName"> The name of the peering. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Peerings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +123,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="peeringServiceName"> The name of the peering. </param>
@@ -129,6 +153,14 @@ namespace Azure.ResourceManager.Peering.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PeeringServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PeeringServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

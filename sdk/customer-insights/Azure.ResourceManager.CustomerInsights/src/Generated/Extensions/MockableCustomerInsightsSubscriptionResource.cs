@@ -53,10 +53,18 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HubResource> GetHubsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);
@@ -75,10 +83,18 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Hubs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HubResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HubResource> GetHubs(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => HubRestClient.CreateListRequest(Id.SubscriptionId);

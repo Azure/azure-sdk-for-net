@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Network Properties. </summary>
     public partial class SiteRecoveryNetworkProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkProperties"/>. </summary>
         internal SiteRecoveryNetworkProperties()
         {
             Subnets = new ChangeTrackingList<SiteRecoverySubnet>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkProperties"/>. </summary>
         /// <param name="fabricType"> The Fabric Type. </param>
         /// <param name="subnets"> The List of subnets. </param>
         /// <param name="friendlyName"> The Friendly Name. </param>
         /// <param name="networkType"> The Network Type. </param>
-        internal SiteRecoveryNetworkProperties(string fabricType, IReadOnlyList<SiteRecoverySubnet> subnets, string friendlyName, string networkType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteRecoveryNetworkProperties(string fabricType, IReadOnlyList<SiteRecoverySubnet> subnets, string friendlyName, string networkType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FabricType = fabricType;
             Subnets = subnets;
             FriendlyName = friendlyName;
             NetworkType = networkType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Fabric Type. </summary>

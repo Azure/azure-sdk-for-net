@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Logic
 {
     /// <summary>
     /// A Class representing a LogicWorkflowRunActionScopeRepetition along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="LogicWorkflowRunActionScopeRepetitionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunActionScopeRepetitionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunActionResource" /> using the GetLogicWorkflowRunActionScopeRepetition method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogicWorkflowRunActionScopeRepetitionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetLogicWorkflowRunActionScopeRepetitionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunActionResource"/> using the GetLogicWorkflowRunActionScopeRepetition method.
     /// </summary>
     public partial class LogicWorkflowRunActionScopeRepetitionResource : ArmResource
     {
@@ -41,12 +41,15 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunActionScopeRepetitionsRestOperations _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient;
         private readonly LogicWorkflowRunActionRepetitionDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionScopeRepetitionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunActionScopeRepetitionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal LogicWorkflowRunActionScopeRepetitionResource(ArmClient client, LogicWorkflowRunActionRepetitionDefinitionData data) : this(client, data.Id)
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

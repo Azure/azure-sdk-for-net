@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,73 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> Parameters allowed to update for a server. </summary>
     public partial class MySqlFlexibleServerPatch
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
         public MySqlFlexibleServerPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerPatch"/>. </summary>
+        /// <param name="identity"> The cmk identity for the server. Current supported identity types: UserAssigned. </param>
+        /// <param name="sku"> The SKU (pricing tier) of the server. </param>
+        /// <param name="tags"> Application-specific metadata in the form of key-value pairs. </param>
+        /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
+        /// <param name="version"> Server version. </param>
+        /// <param name="storage"> Storage related properties of a server. </param>
+        /// <param name="backup"> Backup related properties of a server. </param>
+        /// <param name="highAvailability"> High availability related properties of a server. </param>
+        /// <param name="maintenanceWindow"> Maintenance window of a server. </param>
+        /// <param name="replicationRole"> The replication role of the server. </param>
+        /// <param name="dataEncryption"> The Data Encryption for CMK. </param>
+        /// <param name="network"> Network related properties of a server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MySqlFlexibleServerPatch(ManagedServiceIdentity identity, MySqlFlexibleServerSku sku, IDictionary<string, string> tags, string administratorLoginPassword, MySqlFlexibleServerVersion? version, MySqlFlexibleServerStorage storage, MySqlFlexibleServerBackupProperties backup, MySqlFlexibleServerHighAvailability highAvailability, MySqlFlexibleServerMaintenanceWindow maintenanceWindow, MySqlFlexibleServerReplicationRole? replicationRole, MySqlFlexibleServerDataEncryption dataEncryption, MySqlFlexibleServerNetwork network, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Identity = identity;
+            Sku = sku;
+            Tags = tags;
+            AdministratorLoginPassword = administratorLoginPassword;
+            Version = version;
+            Storage = storage;
+            Backup = backup;
+            HighAvailability = highAvailability;
+            MaintenanceWindow = maintenanceWindow;
+            ReplicationRole = replicationRole;
+            DataEncryption = dataEncryption;
+            Network = network;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>

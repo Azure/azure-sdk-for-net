@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPSizingRecommendations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -95,6 +99,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +136,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPSupportedSku</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -159,6 +171,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +208,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPDiskConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -223,6 +243,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,6 +280,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPAvailabilityZoneDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -287,6 +315,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,10 +352,18 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -342,10 +382,18 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapVirtualInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapVirtualInstanceSAPVirtualInstancesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -364,10 +412,18 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -386,10 +442,18 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapMonitorResource> GetSapMonitors(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SapMonitormonitorsRestClient.CreateListRequest(Id.SubscriptionId);

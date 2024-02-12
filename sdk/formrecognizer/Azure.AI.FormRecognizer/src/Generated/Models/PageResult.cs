@@ -13,7 +13,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> Extracted information from a single page. </summary>
     internal partial class PageResult
     {
-        /// <summary> Initializes a new instance of PageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageResult"/>. </summary>
         /// <param name="page"> Page number. </param>
         internal PageResult(int page)
         {
@@ -22,7 +22,7 @@ namespace Azure.AI.FormRecognizer.Models
             Tables = new ChangeTrackingList<DataTable>();
         }
 
-        /// <summary> Initializes a new instance of PageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PageResult"/>. </summary>
         /// <param name="page"> Page number. </param>
         /// <param name="clusterId"> Cluster identifier. </param>
         /// <param name="keyValuePairs"> List of key-value pairs extracted from the page. </param>

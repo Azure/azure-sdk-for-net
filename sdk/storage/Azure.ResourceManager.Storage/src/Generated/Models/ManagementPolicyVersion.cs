@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Management policy action for blob version. </summary>
     public partial class ManagementPolicyVersion
     {
-        /// <summary> Initializes a new instance of ManagementPolicyVersion. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyVersion"/>. </summary>
         public ManagementPolicyVersion()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagementPolicyVersion. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementPolicyVersion"/>. </summary>
         /// <param name="tierToCool"> The function to tier blob version to cool storage. </param>
         /// <param name="tierToArchive"> The function to tier blob version to archive storage. </param>
         /// <param name="tierToCold"> The function to tier blobs to cold storage. </param>
         /// <param name="tierToHot"> The function to tier blobs to hot storage. This action can only be used with Premium Block Blob Storage Accounts. </param>
         /// <param name="delete"> The function to delete the blob version. </param>
-        internal ManagementPolicyVersion(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementPolicyVersion(DateAfterCreation tierToCool, DateAfterCreation tierToArchive, DateAfterCreation tierToCold, DateAfterCreation tierToHot, DateAfterCreation delete, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TierToCool = tierToCool;
             TierToArchive = tierToArchive;
             TierToCold = tierToCold;
             TierToHot = tierToHot;
             Delete = delete;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The function to tier blob version to cool storage. </summary>

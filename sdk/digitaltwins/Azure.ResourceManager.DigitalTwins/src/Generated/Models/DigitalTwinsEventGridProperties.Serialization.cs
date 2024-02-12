@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable
+    public partial class DigitalTwinsEventGridProperties : IUtf8JsonSerializable, IJsonModel<DigitalTwinsEventGridProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DigitalTwinsEventGridProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DigitalTwinsEventGridProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("TopicEndpoint"u8);
             writer.WriteStringValue(TopicEndpoint);
@@ -41,6 +51,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                if (ProvisioningState != null)
+                {
+                    writer.WritePropertyName("provisioningState"u8);
+                    writer.WriteStringValue(ProvisioningState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("provisioningState");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                if (CreatedOn != null)
+                {
+                    writer.WritePropertyName("createdTime"u8);
+                    writer.WriteStringValue(CreatedOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("createdTime");
+                }
+            }
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -82,11 +116,40 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("identity");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DigitalTwinsEventGridProperties DeserializeDigitalTwinsEventGridProperties(JsonElement element)
+        DigitalTwinsEventGridProperties IJsonModel<DigitalTwinsEventGridProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDigitalTwinsEventGridProperties(document.RootElement, options);
+        }
+
+        internal static DigitalTwinsEventGridProperties DeserializeDigitalTwinsEventGridProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -101,6 +164,8 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             Optional<string> deadLetterSecret = default;
             Optional<Uri> deadLetterUri = default;
             Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TopicEndpoint"u8))
@@ -192,8 +257,44 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, topicEndpoint, accessKey1, accessKey2.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, topicEndpoint, accessKey1, accessKey2.Value);
         }
+
+        BinaryData IPersistableModel<DigitalTwinsEventGridProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DigitalTwinsEventGridProperties IPersistableModel<DigitalTwinsEventGridProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDigitalTwinsEventGridProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DigitalTwinsEventGridProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

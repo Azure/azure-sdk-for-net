@@ -13,7 +13,7 @@ namespace Azure.Data.Tables.Models
     /// <summary> A signed identifier. </summary>
     public partial class TableSignedIdentifier
     {
-        /// <summary> Initializes a new instance of TableSignedIdentifier. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableSignedIdentifier"/>. </summary>
         /// <param name="id"> A unique id. </param>
         /// <param name="accessPolicy"> The access policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>

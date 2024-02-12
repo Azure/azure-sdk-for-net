@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Represents an Asset used as a JobOutput. </summary>
     public partial class MediaJobOutputAsset : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="assetName"> The name of the output Asset. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
         public MediaJobOutputAsset(string assetName)
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.JobOutputAsset";
         }
 
-        /// <summary> Initializes a new instance of MediaJobOutputAsset. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> If the JobOutput is in the Error state, it contains the details of the error. </param>
         /// <param name="presetOverride">
@@ -37,11 +38,17 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="label"> A label that is assigned to a JobOutput in order to help uniquely identify it. This is useful when your Transform has more than one TransformOutput, whereby your Job has more than one JobOutput. In such cases, when you submit the Job, you will add two or more JobOutputs, in the same order as TransformOutputs in the Transform. Subsequently, when you retrieve the Job, either through events or on a GET request, you can use the label to easily identify the JobOutput. If a label is not provided, a default value of '{presetName}_{outputIndex}' will be used, where the preset name is the name of the preset in the corresponding TransformOutput and the output index is the relative index of the this JobOutput within the Job. Note that this index is the same as the relative index of the corresponding TransformOutput within its Transform. </param>
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="assetName"> The name of the output Asset. </param>
-        internal MediaJobOutputAsset(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn)
+        internal MediaJobOutputAsset(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn, serializedAdditionalRawData)
         {
             AssetName = assetName;
             OdataType = odataType ?? "#Microsoft.Media.JobOutputAsset";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/> for deserialization. </summary>
+        internal MediaJobOutputAsset()
+        {
         }
 
         /// <summary> The name of the output Asset. </summary>

@@ -13,7 +13,7 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a locality. </summary>
     public partial class PhoneNumberLocality
     {
-        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberLocality"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="localizedName"/> is null. </exception>
         internal PhoneNumberLocality(string localizedName)
@@ -23,7 +23,7 @@ namespace Azure.Communication.PhoneNumbers
             LocalizedName = localizedName;
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberLocality. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberLocality"/>. </summary>
         /// <param name="localizedName"> Represents the localized name of the locality. </param>
         /// <param name="administrativeDivision"> Represents an administrative division. e.g. state or province. </param>
         internal PhoneNumberLocality(string localizedName, PhoneNumberAdministrativeDivision administrativeDivision)

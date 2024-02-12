@@ -14,21 +14,55 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server endpoint recall status object. </summary>
     public partial class ServerEndpointRecallStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallStatus"/>. </summary>
         internal ServerEndpointRecallStatus()
         {
             RecallErrors = new ChangeTrackingList<ServerEndpointRecallError>();
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointRecallStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointRecallStatus"/>. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalRecallErrorsCount"> Total count of recall errors. </param>
         /// <param name="recallErrors"> Array of recall errors. </param>
-        internal ServerEndpointRecallStatus(DateTimeOffset? lastUpdatedOn, long? totalRecallErrorsCount, IReadOnlyList<ServerEndpointRecallError> recallErrors)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServerEndpointRecallStatus(DateTimeOffset? lastUpdatedOn, long? totalRecallErrorsCount, IReadOnlyList<ServerEndpointRecallError> recallErrors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LastUpdatedOn = lastUpdatedOn;
             TotalRecallErrorsCount = totalRecallErrorsCount;
             RecallErrors = recallErrors;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Last updated timestamp. </summary>

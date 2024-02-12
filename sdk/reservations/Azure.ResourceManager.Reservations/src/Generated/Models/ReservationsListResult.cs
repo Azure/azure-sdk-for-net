@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Reservations;
@@ -14,21 +15,55 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The list of reservations and summary of roll out count of reservations in each state. </summary>
     internal partial class ReservationsListResult
     {
-        /// <summary> Initializes a new instance of ReservationsListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
         internal ReservationsListResult()
         {
             Value = new ChangeTrackingList<ReservationDetailData>();
         }
 
-        /// <summary> Initializes a new instance of ReservationsListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationsListResult"/>. </summary>
         /// <param name="value"> The list of reservations. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         /// <param name="summary"> The roll out count summary of the reservations. </param>
-        internal ReservationsListResult(IReadOnlyList<ReservationDetailData> value, string nextLink, ReservationSummary summary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReservationsListResult(IReadOnlyList<ReservationDetailData> value, string nextLink, ReservationSummary summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             Summary = summary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of reservations. </summary>

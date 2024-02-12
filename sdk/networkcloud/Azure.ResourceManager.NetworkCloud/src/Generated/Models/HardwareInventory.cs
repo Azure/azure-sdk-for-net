@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,22 +14,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> HardwareInventory represents the hardware configuration of this machine as exposed to the customer, including information acquired from the model/sku information and from the ironic inspector. </summary>
     public partial class HardwareInventory
     {
-        /// <summary> Initializes a new instance of HardwareInventory. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HardwareInventory"/>. </summary>
         internal HardwareInventory()
         {
             Interfaces = new ChangeTrackingList<HardwareInventoryNetworkInterface>();
             Nics = new ChangeTrackingList<NetworkCloudNic>();
         }
 
-        /// <summary> Initializes a new instance of HardwareInventory. </summary>
+        /// <summary> Initializes a new instance of <see cref="HardwareInventory"/>. </summary>
         /// <param name="additionalHostInformation"> Freeform data extracted from the environment about this machine. This information varies depending on the specific hardware and configuration. </param>
         /// <param name="interfaces"> The list of network interfaces and associated details for the bare metal machine. </param>
         /// <param name="nics"> Field Deprecated. Will be removed in an upcoming version. The list of network interface cards and associated details for the bare metal machine. </param>
-        internal HardwareInventory(string additionalHostInformation, IReadOnlyList<HardwareInventoryNetworkInterface> interfaces, IReadOnlyList<NetworkCloudNic> nics)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HardwareInventory(string additionalHostInformation, IReadOnlyList<HardwareInventoryNetworkInterface> interfaces, IReadOnlyList<NetworkCloudNic> nics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdditionalHostInformation = additionalHostInformation;
             Interfaces = interfaces;
             Nics = nics;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Freeform data extracted from the environment about this machine. This information varies depending on the specific hardware and configuration. </summary>

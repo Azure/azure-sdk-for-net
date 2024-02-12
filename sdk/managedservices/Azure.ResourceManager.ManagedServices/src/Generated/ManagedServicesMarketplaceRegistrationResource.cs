@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary>
     /// A Class representing a ManagedServicesMarketplaceRegistration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ManagedServicesMarketplaceRegistrationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetManagedServicesMarketplaceRegistrationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetManagedServicesMarketplaceRegistration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagedServicesMarketplaceRegistrationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagedServicesMarketplaceRegistrationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetManagedServicesMarketplaceRegistration method.
     /// </summary>
     public partial class ManagedServicesMarketplaceRegistrationResource : ArmResource
     {
@@ -37,12 +37,15 @@ namespace Azure.ResourceManager.ManagedServices
         private readonly MarketplaceRegistrationDefinitionsRestOperations _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient;
         private readonly ManagedServicesMarketplaceRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedServices/marketplaceRegistrationDefinitions";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedServicesMarketplaceRegistrationResource"/> class for mocking. </summary>
         protected ManagedServicesMarketplaceRegistrationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ManagedServicesMarketplaceRegistrationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagedServicesMarketplaceRegistrationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ManagedServicesMarketplaceRegistrationResource(ArmClient client, ManagedServicesMarketplaceRegistrationData data) : this(client, data.Id)
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.ManagedServices
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedServices/marketplaceRegistrationDefinitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

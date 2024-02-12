@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ContainerRegistry.ChartDeleted event. </summary>
     public partial class ContainerRegistryChartDeletedEventData : ContainerRegistryArtifactEventData
     {
-        /// <summary> Initializes a new instance of ContainerRegistryChartDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryChartDeletedEventData"/>. </summary>
         internal ContainerRegistryChartDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryChartDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryChartDeletedEventData"/>. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="timestamp"> The time at which the event occurred. </param>
         /// <param name="action"> The action that encompasses the provided event. </param>

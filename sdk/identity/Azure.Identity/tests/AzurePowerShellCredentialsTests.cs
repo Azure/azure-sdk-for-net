@@ -57,7 +57,7 @@ namespace Azure.Identity.Tests
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             var options = new AzurePowerShellCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
+            string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzurePowerShell(TimeSpan.FromSeconds(30));
 
             var testProcess = new TestProcess { Output = processOutput };

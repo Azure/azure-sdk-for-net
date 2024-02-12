@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     /// <summary>
     /// A Class representing a DataReplicationRecoveryPoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataReplicationRecoveryPointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataReplicationRecoveryPointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataReplicationProtectedItemResource" /> using the GetDataReplicationRecoveryPoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataReplicationRecoveryPointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataReplicationRecoveryPointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataReplicationProtectedItemResource"/> using the GetDataReplicationRecoveryPoint method.
     /// </summary>
     public partial class DataReplicationRecoveryPointResource : ArmResource
     {
@@ -40,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private readonly RecoveryPointsRestOperations _dataReplicationRecoveryPointRecoveryPointsRestClient;
         private readonly DataReplicationRecoveryPointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/protectedItems/recoveryPoints";
+
         /// <summary> Initializes a new instance of the <see cref="DataReplicationRecoveryPointResource"/> class for mocking. </summary>
         protected DataReplicationRecoveryPointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataReplicationRecoveryPointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataReplicationRecoveryPointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataReplicationRecoveryPointResource(ArmClient client, DataReplicationRecoveryPointData data) : this(client, data.Id)
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataReplication/replicationVaults/protectedItems/recoveryPoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationRecoveryPointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

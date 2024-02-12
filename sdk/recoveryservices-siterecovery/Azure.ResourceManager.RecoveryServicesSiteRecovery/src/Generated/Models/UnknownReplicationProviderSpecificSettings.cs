@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownReplicationProviderSpecificSettings. </summary>
     internal partial class UnknownReplicationProviderSpecificSettings : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of UnknownReplicationProviderSpecificSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownReplicationProviderSpecificSettings"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
-        internal UnknownReplicationProviderSpecificSettings(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownReplicationProviderSpecificSettings(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownReplicationProviderSpecificSettings"/> for deserialization. </summary>
+        internal UnknownReplicationProviderSpecificSettings()
+        {
         }
     }
 }

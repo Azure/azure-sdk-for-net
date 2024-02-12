@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataShare
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataShareConsumerInvitationResource" /> and their operations.
-    /// Each <see cref="DataShareConsumerInvitationResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="DataShareConsumerInvitationCollection" /> instance call the GetDataShareConsumerInvitations method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="DataShareConsumerInvitationResource"/> and their operations.
+    /// Each <see cref="DataShareConsumerInvitationResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="DataShareConsumerInvitationCollection"/> instance call the GetDataShareConsumerInvitations method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class DataShareConsumerInvitationCollection : ArmCollection, IEnumerable<DataShareConsumerInvitationResource>, IAsyncEnumerable<DataShareConsumerInvitationResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -98,6 +106,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,11 +149,19 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_ListInvitations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataShareConsumerInvitationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataShareConsumerInvitationResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
@@ -156,11 +180,19 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_ListInvitations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataShareConsumerInvitationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataShareConsumerInvitationResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
@@ -178,6 +210,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +251,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location of the invitation. </param>
@@ -242,6 +290,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +332,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

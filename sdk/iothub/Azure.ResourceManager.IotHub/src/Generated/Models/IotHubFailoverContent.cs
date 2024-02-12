@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Use to provide failover region when requesting manual Failover for a hub. </summary>
     public partial class IotHubFailoverContent
     {
-        /// <summary> Initializes a new instance of IotHubFailoverContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubFailoverContent"/>. </summary>
         /// <param name="failoverRegion"> Region the hub will be failed over to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="failoverRegion"/> is null. </exception>
         public IotHubFailoverContent(string failoverRegion)
@@ -21,6 +54,20 @@ namespace Azure.ResourceManager.IotHub.Models
             Argument.AssertNotNull(failoverRegion, nameof(failoverRegion));
 
             FailoverRegion = failoverRegion;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubFailoverContent"/>. </summary>
+        /// <param name="failoverRegion"> Region the hub will be failed over to. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubFailoverContent(string failoverRegion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FailoverRegion = failoverRegion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubFailoverContent"/> for deserialization. </summary>
+        internal IotHubFailoverContent()
+        {
         }
 
         /// <summary> Region the hub will be failed over to. </summary>

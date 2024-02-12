@@ -59,15 +59,19 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,15 +85,19 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -103,6 +111,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -112,7 +124,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -122,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,6 +148,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -145,7 +161,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/>, <paramref name="parentResourcePath"/>, <paramref name="resourceType"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <returns> A collection of <see cref="RoleDefinitionPermission" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleDefinitionPermission"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleDefinitionPermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
@@ -155,7 +171,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
     }
 }

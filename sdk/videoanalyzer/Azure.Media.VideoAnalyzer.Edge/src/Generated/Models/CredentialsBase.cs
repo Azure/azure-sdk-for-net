@@ -14,12 +14,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// </summary>
     public abstract partial class CredentialsBase
     {
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         protected CredentialsBase()
         {
         }
 
-        /// <summary> Initializes a new instance of CredentialsBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="CredentialsBase"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         internal CredentialsBase(string type)
         {

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,26 +14,60 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Preferences related to the order. </summary>
     public partial class DataBoxOrderPreferences
     {
-        /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderPreferences"/>. </summary>
         public DataBoxOrderPreferences()
         {
             PreferredDataCenterRegion = new ChangeTrackingList<string>();
             StorageAccountAccessTierPreferences = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxOrderPreferences. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxOrderPreferences"/>. </summary>
         /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="reverseTransportPreferences"> Optional Preferences related to the reverse shipment logistics of the sku. </param>
         /// <param name="encryptionPreferences"> Preferences related to the Encryption. </param>
         /// <param name="storageAccountAccessTierPreferences"> Preferences related to the Access Tier of storage accounts. </param>
-        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxOrderPreferences(IList<string> preferredDataCenterRegion, TransportPreferences transportPreferences, TransportPreferences reverseTransportPreferences, DataBoxEncryptionPreferences encryptionPreferences, IList<string> storageAccountAccessTierPreferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PreferredDataCenterRegion = preferredDataCenterRegion;
             TransportPreferences = transportPreferences;
             ReverseTransportPreferences = reverseTransportPreferences;
             EncryptionPreferences = encryptionPreferences;
             StorageAccountAccessTierPreferences = storageAccountAccessTierPreferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Preferred data center region. </summary>

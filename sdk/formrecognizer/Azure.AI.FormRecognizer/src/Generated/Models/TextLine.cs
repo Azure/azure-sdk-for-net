@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.Models
     /// <summary> An object representing an extracted text line. </summary>
     internal partial class TextLine
     {
-        /// <summary> Initializes a new instance of TextLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextLine"/>. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>
@@ -31,7 +31,7 @@ namespace Azure.AI.FormRecognizer.Models
             Words = words.ToList();
         }
 
-        /// <summary> Initializes a new instance of TextLine. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextLine"/>. </summary>
         /// <param name="text"> The text content of the line. </param>
         /// <param name="boundingBox"> Bounding box of an extracted line. </param>
         /// <param name="words"> List of words in the text line. </param>

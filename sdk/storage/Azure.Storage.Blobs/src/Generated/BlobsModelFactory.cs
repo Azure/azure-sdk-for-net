@@ -13,7 +13,7 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Model factory for models. </summary>
     public static partial class BlobsModelFactory
     {
-        /// <summary> Initializes a new instance of UserDelegationKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.UserDelegationKey"/>. </summary>
         /// <param name="signedObjectId"> The Azure Active Directory object ID in GUID format. </param>
         /// <param name="signedTenantId"> The Azure Active Directory tenant ID in GUID format. </param>
         /// <param name="signedStartsOn"> The date-time the key is active. </param>

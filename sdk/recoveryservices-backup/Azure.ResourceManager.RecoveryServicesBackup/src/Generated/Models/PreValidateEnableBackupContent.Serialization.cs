@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class PreValidateEnableBackupContent : IUtf8JsonSerializable
+    public partial class PreValidateEnableBackupContent : IUtf8JsonSerializable, IJsonModel<PreValidateEnableBackupContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreValidateEnableBackupContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PreValidateEnableBackupContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceType))
             {
@@ -35,7 +46,122 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStringValue(Properties);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PreValidateEnableBackupContent IJsonModel<PreValidateEnableBackupContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePreValidateEnableBackupContent(document.RootElement, options);
+        }
+
+        internal static PreValidateEnableBackupContent DeserializePreValidateEnableBackupContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<BackupDataSourceType> resourceType = default;
+            Optional<ResourceIdentifier> resourceId = default;
+            Optional<ResourceIdentifier> vaultId = default;
+            Optional<string> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("resourceType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new BackupDataSourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("vaultId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vaultId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    properties = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PreValidateEnableBackupContent(Optional.ToNullable(resourceType), resourceId.Value, vaultId.Value, properties.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PreValidateEnableBackupContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PreValidateEnableBackupContent IPersistableModel<PreValidateEnableBackupContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreValidateEnableBackupContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePreValidateEnableBackupContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PreValidateEnableBackupContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PreValidateEnableBackupContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

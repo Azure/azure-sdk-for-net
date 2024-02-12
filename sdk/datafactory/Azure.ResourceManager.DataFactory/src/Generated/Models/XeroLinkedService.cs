@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Xero Service linked service. </summary>
     public partial class XeroLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of XeroLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="XeroLinkedService"/>. </summary>
         public XeroLinkedService()
         {
             LinkedServiceType = "Xero";
         }
 
-        /// <summary> Initializes a new instance of XeroLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="XeroLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

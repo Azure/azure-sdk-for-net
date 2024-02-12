@@ -51,6 +51,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             JsonPathSanitizers.Add("$..value");
             JsonPathSanitizers.Add("$..botAppId");
             JsonPathSanitizers.Add("$..ivrContext");
+            JsonPathSanitizers.Add("$..dialog.botAppId");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx, "https://sanitized.skype.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
@@ -178,7 +179,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.LiveTestStaticConnectionString,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
         protected async Task<CommunicationUserIdentifier> CreateIdentityUserAsync()
         {

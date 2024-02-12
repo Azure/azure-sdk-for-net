@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataProtectionBackup;
@@ -14,16 +15,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> List of ResourceGuardProxyBase resources. </summary>
     internal partial class ResourceGuardProxyBaseResourceList : DppResourceList
     {
-        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         internal ResourceGuardProxyBaseResourceList()
         {
             Value = new ChangeTrackingList<ResourceGuardProxyBaseResourceData>();
         }
 
-        /// <summary> Initializes a new instance of ResourceGuardProxyBaseResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceGuardProxyBaseResourceList"/>. </summary>
         /// <param name="nextLink"> The uri to fetch the next page of resources. Call ListNext() fetches next page of resources. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> List of resources. </param>
-        internal ResourceGuardProxyBaseResourceList(string nextLink, IReadOnlyList<ResourceGuardProxyBaseResourceData> value) : base(nextLink)
+        internal ResourceGuardProxyBaseResourceList(string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ResourceGuardProxyBaseResourceData> value) : base(nextLink, serializedAdditionalRawData)
         {
             Value = value;
         }

@@ -39,9 +39,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateStoreResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PrivateStoreResource"/> object. </returns>
         public static PrivateStoreResource GetPrivateStoreResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreResource(id);
         }
 
@@ -55,9 +58,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource"/> object. </returns>
         public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableMarketplaceArmClient(client).GetMarketplaceApprovalRequestResource(id);
         }
 
@@ -71,9 +77,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource"/> object. </returns>
         public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableMarketplaceArmClient(client).GetMarketplaceAdminApprovalRequestResource(id);
         }
 
@@ -87,9 +96,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource"/> object. </returns>
         public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreCollectionInfoResource(id);
         }
 
@@ -103,9 +115,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateStoreOfferResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PrivateStoreOfferResource"/> object. </returns>
         public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
+            Argument.AssertNotNull(client, nameof(client));
+
             return GetMockableMarketplaceArmClient(client).GetPrivateStoreOfferResource(id);
         }
 
@@ -117,9 +132,12 @@ namespace Azure.ResourceManager.Marketplace
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
         public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStores();
         }
 
@@ -134,6 +152,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -143,9 +169,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return await GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStoreAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -160,6 +189,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStore_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,9 +206,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
             return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStore(privateStoreId, cancellationToken);
         }
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The DataQualityMonitoringSignal. </summary>
     public partial class DataQualityMonitoringSignal : MonitoringSignalBase
     {
-        /// <summary> Initializes a new instance of DataQualityMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/>. </summary>
         /// <param name="metricThresholds">
         /// [Required] A list of metrics to calculate and their associated thresholds.
         /// Please note <see cref="DataQualityMetricThresholdBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -45,10 +45,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SignalType = MonitoringSignalType.DataQuality;
         }
 
-        /// <summary> Initializes a new instance of DataQualityMonitoringSignal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/>. </summary>
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
         /// <param name="features">
         /// The features to calculate drift over.
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
         /// </param>
-        internal DataQualityMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType)
+        internal DataQualityMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataQualityMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             FeatureDataTypeOverride = featureDataTypeOverride;
             Features = features;
@@ -78,6 +79,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ProductionData = productionData;
             ReferenceData = referenceData;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataQualityMonitoringSignal"/> for deserialization. </summary>
+        internal DataQualityMonitoringSignal()
+        {
         }
 
         /// <summary> A dictionary that maps feature names to their respective data types. </summary>

@@ -13,14 +13,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of common properties of all Router Job events. </summary>
     public partial class AcsRouterJobEventData : AcsRouterEventData
     {
-        /// <summary> Initializes a new instance of AcsRouterJobEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
         internal AcsRouterJobEventData()
         {
             Labels = new ChangeTrackingDictionary<string, string>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of AcsRouterJobEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsRouterJobEventData"/>. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
         /// <param name="channelId"> Router Event Channel ID. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> The DocumentSentiment. </summary>
     internal partial class DocumentSentiment
     {
-        /// <summary> Initializes a new instance of DocumentSentiment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSentiment"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="confidenceScores"> Document level sentiment confidence scores between 0 and 1 for each sentiment class. </param>
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of DocumentSentiment. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentSentiment"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="sentiment"> Predicted sentiment for document (Negative, Neutral, Positive, or Mixed). </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the document payload. </param>

@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> InMageRcm mobility agent details. </summary>
     public partial class InMageRcmMobilityAgentDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
         internal InMageRcmMobilityAgentDetails()
         {
             ReasonsBlockingUpgrade = new ChangeTrackingList<AgentUpgradeBlockedReason>();
         }
 
-        /// <summary> Initializes a new instance of InMageRcmMobilityAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmMobilityAgentDetails"/>. </summary>
         /// <param name="version"> The agent version. </param>
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="latestAgentReleaseDate"> The latest agent version release date. </param>
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
-        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InMageRcmMobilityAgentDetails(string version, string latestVersion, string latestAgentReleaseDate, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             LatestVersion = latestVersion;
@@ -43,6 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The agent version. </summary>

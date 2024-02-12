@@ -13,13 +13,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Details of JobOutput errors. </summary>
     public partial class MediaJobError
     {
-        /// <summary> Initializes a new instance of MediaJobError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobError"/>. </summary>
         internal MediaJobError()
         {
             Details = new ChangeTrackingList<MediaJobErrorDetail>();
         }
 
-        /// <summary> Initializes a new instance of MediaJobError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobError"/>. </summary>
         /// <param name="code"> Error code describing the error. </param>
         /// <param name="message"> A human-readable language-dependent representation of the error. </param>
         /// <param name="category"> Helps with categorization of errors. </param>

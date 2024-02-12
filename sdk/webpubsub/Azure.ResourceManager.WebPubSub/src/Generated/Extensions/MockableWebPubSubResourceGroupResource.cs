@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.WebPubSub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

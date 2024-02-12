@@ -1261,218 +1261,116 @@ Operation operation = client.DeleteDevBox(WaitUntil.Completed, "<projectName>", 
     </member>
     <member name="StartDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call StartDevBoxAsync and parse the result.
+This sample shows how to call StartDevBoxAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call StartDevBoxAsync with all parameters and parse the result.
+This sample shows how to call StartDevBoxAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = await client.StartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code></example>
     </member>
     <member name="StartDevBox(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call StartDevBox and parse the result.
+This sample shows how to call StartDevBox.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call StartDevBox with all parameters and parse the result.
+This sample shows how to call StartDevBox with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = client.StartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code></example>
     </member>
     <member name="StopDevBoxAsync(WaitUntil,string,string,string,bool?,RequestContext)">
       <example>
-This sample shows how to call StopDevBoxAsync and parse the result.
+This sample shows how to call StopDevBoxAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null, null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call StopDevBoxAsync with all parameters and parse the result.
+This sample shows how to call StopDevBoxAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = await client.StopDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
 ]]></code></example>
     </member>
     <member name="StopDevBox(WaitUntil,string,string,string,bool?,RequestContext)">
       <example>
-This sample shows how to call StopDevBox and parse the result.
+This sample shows how to call StopDevBox.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null, null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call StopDevBox with all parameters and parse the result.
+This sample shows how to call StopDevBox with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", true, null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = client.StopDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", hibernate: true);
 ]]></code></example>
     </member>
     <member name="RestartDevBoxAsync(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call RestartDevBoxAsync and parse the result.
+This sample shows how to call RestartDevBoxAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call RestartDevBoxAsync with all parameters and parse the result.
+This sample shows how to call RestartDevBoxAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = await client.RestartDevBoxAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code></example>
     </member>
     <member name="RestartDevBox(WaitUntil,string,string,string,RequestContext)">
       <example>
-This sample shows how to call RestartDevBox and parse the result.
+This sample shows how to call RestartDevBox.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("status").ToString());
+Operation operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code>
-This sample shows how to call RestartDevBox with all parameters and parse the result.
+This sample shows how to call RestartDevBox with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
 DevBoxesClient client = new DevBoxesClient(endpoint, credential);
 
-Operation<BinaryData> operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>", null);
-BinaryData responseData = operation.Value;
-
-JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("status").ToString());
-Console.WriteLine(result.GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("startTime").ToString());
-Console.WriteLine(result.GetProperty("endTime").ToString());
-Console.WriteLine(result.GetProperty("percentComplete").ToString());
-Console.WriteLine(result.GetProperty("properties").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
-Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
+Operation operation = client.RestartDevBox(WaitUntil.Completed, "<projectName>", "<userId>", "<devBoxName>");
 ]]></code></example>
     </member>
   </members>

@@ -15,13 +15,45 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> MSDeploy ARM PUT information. </summary>
     public partial class WebAppMSDeploy : ResourceData
     {
-        /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
         public WebAppMSDeploy()
         {
             SetParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of WebAppMSDeploy. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebAppMSDeploy"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +74,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebAppMSDeploy(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -52,6 +85,7 @@ namespace Azure.ResourceManager.AppService.Models
             SkipAppData = skipAppData;
             IsAppOffline = isAppOffline;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Package URI. </summary>

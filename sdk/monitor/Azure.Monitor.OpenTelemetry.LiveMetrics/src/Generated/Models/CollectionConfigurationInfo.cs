@@ -13,14 +13,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary> Represents the collection configuration - a customizable description of performance counters, metrics, and full telemetry documents to be collected by the SDK. </summary>
     internal partial class CollectionConfigurationInfo
     {
-        /// <summary> Initializes a new instance of CollectionConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationInfo"/>. </summary>
         internal CollectionConfigurationInfo()
         {
             Metrics = new ChangeTrackingList<DerivedMetricInfo>();
             DocumentStreams = new ChangeTrackingList<DocumentStreamInfo>();
         }
 
-        /// <summary> Initializes a new instance of CollectionConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CollectionConfigurationInfo"/>. </summary>
         /// <param name="etag"> An encoded string that indicates whether the collection configuration is changed. </param>
         /// <param name="metrics"> An array of metric configuration info. </param>
         /// <param name="documentStreams"> An array of document stream configuration info. </param>

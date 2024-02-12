@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Zoho server linked service. </summary>
     public partial class ZohoLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
         public ZohoLinkedService()
         {
             LinkedServiceType = "Zoho";
         }
 
-        /// <summary> Initializes a new instance of ZohoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZohoLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

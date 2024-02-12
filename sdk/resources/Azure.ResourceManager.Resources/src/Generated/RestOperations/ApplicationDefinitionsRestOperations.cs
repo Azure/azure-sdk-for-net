@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets the managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Deletes the managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition to delete. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a new managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="data"> Parameters supplied to the create or update an managed application definition. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Creates a new managed application definition. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="applicationDefinitionName"> The name of the managed application definition. </param>
         /// <param name="data"> Parameters supplied to the create or update an managed application definition. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists the managed application definitions in a resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Lists the managed application definitions in a resource group. </summary>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists the managed application definitions in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Lists the managed application definitions in a resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Microsoft Azure subscription ID. </param>
+        /// <param name="subscriptionId"> Subscription Id which forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

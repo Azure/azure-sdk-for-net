@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM (Mercury) workload-specific backup policy. </summary>
     public partial class GenericProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectionPolicy"/>. </summary>
         public GenericProtectionPolicy()
         {
             SubProtectionPolicy = new ChangeTrackingList<SubProtectionPolicy>();
             BackupManagementType = "GenericProtectionPolicy";
         }
 
-        /// <summary> Initializes a new instance of GenericProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="fabricName"> Name of this policy's fabric. </param>
-        internal GenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IList<SubProtectionPolicy> subProtectionPolicy, string timeZone, string fabricName) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        internal GenericProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<SubProtectionPolicy> subProtectionPolicy, string timeZone, string fabricName) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             SubProtectionPolicy = subProtectionPolicy;
             TimeZone = timeZone;

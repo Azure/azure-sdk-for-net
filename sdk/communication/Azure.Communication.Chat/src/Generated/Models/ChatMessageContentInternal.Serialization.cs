@@ -23,6 +23,7 @@ namespace Azure.Communication.Chat
             Optional<string> message = default;
             Optional<string> topic = default;
             Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
+            Optional<IReadOnlyList<ChatAttachmentInternal>> attachments = default;
             Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,6 +51,20 @@ namespace Azure.Communication.Chat
                     participants = array;
                     continue;
                 }
+                if (property.NameEquals("attachments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ChatAttachmentInternal> array = new List<ChatAttachmentInternal>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ChatAttachmentInternal.DeserializeChatAttachmentInternal(item));
+                    }
+                    attachments = array;
+                    continue;
+                }
                 if (property.NameEquals("initiatorCommunicationIdentifier"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -60,7 +75,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), initiatorCommunicationIdentifier.Value);
+            return new ChatMessageContentInternal(message.Value, topic.Value, Optional.ToList(participants), Optional.ToList(attachments), initiatorCommunicationIdentifier.Value);
         }
     }
 }

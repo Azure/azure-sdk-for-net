@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> The properties to create a new replica. </summary>
     public partial class MySqlServerPropertiesForReplica : MySqlServerPropertiesForCreate
     {
-        /// <summary> Initializes a new instance of MySqlServerPropertiesForReplica. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForReplica"/>. </summary>
         /// <param name="sourceServerId"> The master server id to create replica from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public MySqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)
@@ -22,6 +23,27 @@ namespace Azure.ResourceManager.MySql.Models
 
             SourceServerId = sourceServerId;
             CreateMode = MySqlCreateMode.Replica;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForReplica"/>. </summary>
+        /// <param name="version"> Server version. </param>
+        /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
+        /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
+        /// <param name="infrastructureEncryption"> Status showing whether the server enabled infrastructure encryption. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="storageProfile"> Storage profile of a server. </param>
+        /// <param name="createMode"> The mode to create a new server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="sourceServerId"> The master server id to create replica from. </param>
+        internal MySqlServerPropertiesForReplica(MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlPublicNetworkAccessEnum? publicNetworkAccess, MySqlStorageProfile storageProfile, MySqlCreateMode createMode, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceServerId) : base(version, sslEnforcement, minimalTlsVersion, infrastructureEncryption, publicNetworkAccess, storageProfile, createMode, serializedAdditionalRawData)
+        {
+            SourceServerId = sourceServerId;
+            CreateMode = createMode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlServerPropertiesForReplica"/> for deserialization. </summary>
+        internal MySqlServerPropertiesForReplica()
+        {
         }
 
         /// <summary> The master server id to create replica from. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Communication;
 using Azure.Core;
 
@@ -15,24 +16,48 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The PlayRequest. </summary>
     internal partial class PlayRequestInternal
     {
-        /// <summary> Initializes a new instance of PlayRequestInternal. </summary>
-        /// <param name="playSourceInfo"> The source of the audio to be played. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="playSourceInfo"/> is null. </exception>
-        public PlayRequestInternal(PlaySourceInternal playSourceInfo)
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
+        /// <param name="playSources"> The source of the audio to be played. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="playSources"/> is null. </exception>
+        public PlayRequestInternal(IEnumerable<PlaySourceInternal> playSources)
         {
-            Argument.AssertNotNull(playSourceInfo, nameof(playSourceInfo));
+            Argument.AssertNotNull(playSources, nameof(playSources));
 
-            PlaySourceInfo = playSourceInfo;
+            PlaySources = playSources.ToList();
             PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PlayRequestInternal"/>. </summary>
+        /// <param name="playSources"> The source of the audio to be played. </param>
+        /// <param name="playTo">
+        /// The list of call participants play provided audio to.
+        /// Plays to everyone in the call when not provided.
+        /// </param>
+        /// <param name="playOptions"> Defines options for playing the audio. </param>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        /// <param name="operationCallbackUri">
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </param>
+        internal PlayRequestInternal(IList<PlaySourceInternal> playSources, IList<CommunicationIdentifierModel> playTo, PlayOptionsInternal playOptions, string operationContext, string operationCallbackUri)
+        {
+            PlaySources = playSources;
+            PlayTo = playTo;
+            PlayOptions = playOptions;
+            OperationContext = operationContext;
+            OperationCallbackUri = operationCallbackUri;
+        }
+
         /// <summary> The source of the audio to be played. </summary>
-        public PlaySourceInternal PlaySourceInfo { get; }
+        public IList<PlaySourceInternal> PlaySources { get; }
         /// <summary> Defines options for playing the audio. </summary>
         public PlayOptionsInternal PlayOptions { get; set; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string CallbackUri { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

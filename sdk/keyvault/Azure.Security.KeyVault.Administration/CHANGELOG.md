@@ -1,12 +1,28 @@
 # Release History
 
-## 4.4.0-beta.1 (Unreleased)
+## 4.4.0-beta.3 (Unreleased)
 
 ### Features Added
 
-- TODO: sasToken vs. useManagedIdentity.
-
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 4.4.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.4.0-beta.1 (2023-11-09)
+
+### Features Added
+
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartBackup` and `StartBackupAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
+- The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
 
 ### Bugs Fixed
 

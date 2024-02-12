@@ -18,9 +18,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseSqlPoolConnectionPolicyResource" /> and their operations.
-    /// Each <see cref="SynapseSqlPoolConnectionPolicyResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseSqlPoolConnectionPolicyCollection" /> instance call the GetSynapseSqlPoolConnectionPolicies method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseSqlPoolConnectionPolicyResource"/> and their operations.
+    /// Each <see cref="SynapseSqlPoolConnectionPolicyResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseSqlPoolConnectionPolicyCollection"/> instance call the GetSynapseSqlPoolConnectionPolicies method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseSqlPoolConnectionPolicyCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +144,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -159,6 +183,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionPolicyName"> The name of the connection policy. </param>
@@ -189,6 +221,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolConnectionPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolConnectionPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

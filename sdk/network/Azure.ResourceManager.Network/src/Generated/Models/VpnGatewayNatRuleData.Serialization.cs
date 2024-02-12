@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,11 +16,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnGatewayNatRuleData : IUtf8JsonSerializable
+    public partial class VpnGatewayNatRuleData : IUtf8JsonSerializable, IJsonModel<VpnGatewayNatRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnGatewayNatRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VpnGatewayNatRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnGatewayNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnGatewayNatRuleData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -29,8 +44,18 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(VpnNatRuleType))
             {
                 writer.WritePropertyName("type"u8);
@@ -66,12 +91,61 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("ipConfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EgressVpnSiteLinkConnections))
+            {
+                writer.WritePropertyName("egressVpnSiteLinkConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in EgressVpnSiteLinkConnections)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IngressVpnSiteLinkConnections))
+            {
+                writer.WritePropertyName("ingressVpnSiteLinkConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in IngressVpnSiteLinkConnections)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnGatewayNatRuleData DeserializeVpnGatewayNatRuleData(JsonElement element)
+        VpnGatewayNatRuleData IJsonModel<VpnGatewayNatRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnGatewayNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnGatewayNatRuleData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnGatewayNatRuleData(document.RootElement, options);
+        }
+
+        internal static VpnGatewayNatRuleData DeserializeVpnGatewayNatRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -88,6 +162,8 @@ namespace Azure.ResourceManager.Network
             Optional<string> ipConfigurationId = default;
             Optional<IReadOnlyList<WritableSubResource>> egressVpnSiteLinkConnections = default;
             Optional<IReadOnlyList<WritableSubResource>> ingressVpnSiteLinkConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -222,8 +298,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VpnGatewayNatRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(type0), Optional.ToNullable(mode), Optional.ToList(internalMappings), Optional.ToList(externalMappings), ipConfigurationId.Value, Optional.ToList(egressVpnSiteLinkConnections), Optional.ToList(ingressVpnSiteLinkConnections));
         }
+
+        BinaryData IPersistableModel<VpnGatewayNatRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnGatewayNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnGatewayNatRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VpnGatewayNatRuleData IPersistableModel<VpnGatewayNatRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnGatewayNatRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnGatewayNatRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnGatewayNatRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnGatewayNatRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

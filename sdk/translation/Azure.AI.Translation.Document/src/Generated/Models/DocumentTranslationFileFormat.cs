@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Document
     /// <summary> The FileFormat. </summary>
     public partial class DocumentTranslationFileFormat
     {
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>
@@ -32,7 +32,7 @@ namespace Azure.AI.Translation.Document
             FormatVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationFileFormat. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
         /// <param name="contentTypes"> Supported Content-Types for this format. </param>

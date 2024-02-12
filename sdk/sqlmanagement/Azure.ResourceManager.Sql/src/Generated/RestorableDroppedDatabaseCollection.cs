@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource" /> and their operations.
-    /// Each <see cref="RestorableDroppedDatabaseResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="RestorableDroppedDatabaseCollection" /> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource"/> and their operations.
+    /// Each <see cref="RestorableDroppedDatabaseResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="RestorableDroppedDatabaseCollection"/> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class RestorableDroppedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedDatabaseResource>, IAsyncEnumerable<RestorableDroppedDatabaseResource>
     {
@@ -64,9 +64,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,9 +111,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,10 +158,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableDroppedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -164,10 +188,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableDroppedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -186,9 +218,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,9 +263,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,9 +308,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,9 +355,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -1,5 +1,13 @@
 # Release History
 
+## 4.22.0 (2024-02-12)
+
+### Features Added
+
+- Added new Storage Task Assignment system events.
+- Added new AVS system events.
+- Added `Metadata` property to `AcsChatThreadCreatedEventData` system event.
+
 ## 4.21.0 (2023-11-07)
 
 ### Features Added
@@ -40,7 +48,7 @@
 
 ### Features Added
 
-- Added new system events for Container Service. 
+- Added new system events for Container Service.
 
 ### Breaking Changes
 
@@ -183,7 +191,7 @@
 ### New Features
 * Added the following new system events:
   - StorageBlobInventoryPolicyCompletedEventData
-    
+
 * Updated existing system events:
  - AcsRecordingChunkInfoProperties - Added `ContentLocation` and `MetadataLocation` properties.
 
@@ -193,7 +201,7 @@
 ## 4.2.0 (2021-05-10)
 
 ### New Features
-* Added the following new system events: 
+* Added the following new system events:
   - PolicyInsightsPolicyStateChangedEventData
   - PolicyInsightsPolicyStateCreatedEventData
   - PolicyInsightsPolicyStateDeletedEventData

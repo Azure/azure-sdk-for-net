@@ -14,19 +14,53 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> Properties of the alert modification item. </summary>
     public partial class ServiceAlertModificationProperties
     {
-        /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
         public ServiceAlertModificationProperties()
         {
             Modifications = new ChangeTrackingList<ServiceAlertModificationItemInfo>();
         }
 
-        /// <summary> Initializes a new instance of ServiceAlertModificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceAlertModificationProperties"/>. </summary>
         /// <param name="alertId"> Unique Id of the alert for which the history is being retrieved. </param>
         /// <param name="modifications"> Modification details. </param>
-        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceAlertModificationProperties(Guid? alertId, IList<ServiceAlertModificationItemInfo> modifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertId = alertId;
             Modifications = modifications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique Id of the alert for which the history is being retrieved. </summary>

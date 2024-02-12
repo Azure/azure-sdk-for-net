@@ -15,7 +15,7 @@ namespace Azure.MixedReality.RemoteRendering
     /// <summary> The result of a list sessions request. </summary>
     internal partial class SessionsList
     {
-        /// <summary> Initializes a new instance of SessionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sessions"/> is null. </exception>
         internal SessionsList(IEnumerable<RenderingSession> sessions)
@@ -25,7 +25,7 @@ namespace Azure.MixedReality.RemoteRendering
             Sessions = sessions.ToList();
         }
 
-        /// <summary> Initializes a new instance of SessionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionsList"/>. </summary>
         /// <param name="sessions"> The list of rendering sessions. Does not include sessions in 'Stopped' state. </param>
         /// <param name="nextLink"> If more rendering sessions are available this field will contain a URL where the next batch of sessions can be requested. This URL will need the same authentication as all calls to the Azure Remote Rendering API. </param>
         internal SessionsList(IReadOnlyList<RenderingSession> sessions, string nextLink)

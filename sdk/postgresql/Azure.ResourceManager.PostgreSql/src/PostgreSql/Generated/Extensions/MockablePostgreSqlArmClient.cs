@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlServerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlServerResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerResource"/> object. </returns>
         public virtual PostgreSqlServerResource GetPostgreSqlServerResource(ResourceIdentifier id)
         {
             PostgreSqlServerResource.ValidateResourceId(id);
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFirewallRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFirewallRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFirewallRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlFirewallRuleResource"/> object. </returns>
         public virtual PostgreSqlFirewallRuleResource GetPostgreSqlFirewallRuleResource(ResourceIdentifier id)
         {
             PostgreSqlFirewallRuleResource.ValidateResourceId(id);
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlVirtualNetworkRuleResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlVirtualNetworkRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlVirtualNetworkRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlVirtualNetworkRuleResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlVirtualNetworkRuleResource"/> object. </returns>
         public virtual PostgreSqlVirtualNetworkRuleResource GetPostgreSqlVirtualNetworkRuleResource(ResourceIdentifier id)
         {
             PostgreSqlVirtualNetworkRuleResource.ValidateResourceId(id);
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlDatabaseResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlDatabaseResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlDatabaseResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlDatabaseResource"/> object. </returns>
         public virtual PostgreSqlDatabaseResource GetPostgreSqlDatabaseResource(ResourceIdentifier id)
         {
             PostgreSqlDatabaseResource.ValidateResourceId(id);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlConfigurationResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlConfigurationResource"/> object. </returns>
         public virtual PostgreSqlConfigurationResource GetPostgreSqlConfigurationResource(ResourceIdentifier id)
         {
             PostgreSqlConfigurationResource.ValidateResourceId(id);
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlServerAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerAdministratorResource"/> object. </returns>
         public virtual PostgreSqlServerAdministratorResource GetPostgreSqlServerAdministratorResource(ResourceIdentifier id)
         {
             PostgreSqlServerAdministratorResource.ValidateResourceId(id);
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> object. </returns>
         public virtual PostgreSqlServerSecurityAlertPolicyResource GetPostgreSqlServerSecurityAlertPolicyResource(ResourceIdentifier id)
         {
             PostgreSqlServerSecurityAlertPolicyResource.ValidateResourceId(id);
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlPrivateEndpointConnectionResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlPrivateEndpointConnectionResource"/> object. </returns>
         public virtual PostgreSqlPrivateEndpointConnectionResource GetPostgreSqlPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             PostgreSqlPrivateEndpointConnectionResource.ValidateResourceId(id);
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlPrivateLinkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlPrivateLinkResource"/> object. </returns>
         public virtual PostgreSqlPrivateLinkResource GetPostgreSqlPrivateLinkResource(ResourceIdentifier id)
         {
             PostgreSqlPrivateLinkResource.ValidateResourceId(id);
@@ -145,11 +145,11 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlServerKeyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlServerKeyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlServerKeyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlServerKeyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="PostgreSqlServerKeyResource"/> object. </returns>
         public virtual PostgreSqlServerKeyResource GetPostgreSqlServerKeyResource(ResourceIdentifier id)
         {
             PostgreSqlServerKeyResource.ValidateResourceId(id);

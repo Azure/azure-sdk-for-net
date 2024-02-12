@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> HTTPGet specifies the http request to perform. </summary>
     public partial class ContainerAppHttpRequestInfo
     {
-        /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/>. </summary>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         public ContainerAppHttpRequestInfo(int port)
         {
@@ -21,19 +54,26 @@ namespace Azure.ResourceManager.AppContainers.Models
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerAppHttpRequestInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/>. </summary>
         /// <param name="host"> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </param>
         /// <param name="httpHeaders"> Custom headers to set in the request. HTTP allows repeated headers. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="port"> Name or number of the port to access on the container. Number must be in the range 1 to 65535. Name must be an IANA_SVC_NAME. </param>
         /// <param name="scheme"> Scheme to use for connecting to the host. Defaults to HTTP. </param>
-        internal ContainerAppHttpRequestInfo(string host, IList<ContainerAppHttpHeaderInfo> httpHeaders, string path, int port, ContainerAppHttpScheme? scheme)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppHttpRequestInfo(string host, IList<ContainerAppHttpHeaderInfo> httpHeaders, string path, int port, ContainerAppHttpScheme? scheme, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Host = host;
             HttpHeaders = httpHeaders;
             Path = path;
             Port = port;
             Scheme = scheme;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppHttpRequestInfo"/> for deserialization. </summary>
+        internal ContainerAppHttpRequestInfo()
+        {
         }
 
         /// <summary> Host name to connect to, defaults to the pod IP. You probably want to set "Host" in httpHeaders instead. </summary>

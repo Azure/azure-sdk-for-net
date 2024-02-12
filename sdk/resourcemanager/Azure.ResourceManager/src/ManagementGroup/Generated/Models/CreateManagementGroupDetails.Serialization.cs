@@ -5,22 +5,163 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
-    public partial class CreateManagementGroupDetails : IUtf8JsonSerializable
+    public partial class CreateManagementGroupDetails : IUtf8JsonSerializable, IJsonModel<CreateManagementGroupDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CreateManagementGroupDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CreateManagementGroupDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedTime"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            {
+                writer.WritePropertyName("updatedBy"u8);
+                writer.WriteStringValue(UpdatedBy);
+            }
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
                 writer.WriteObjectValue(Parent);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CreateManagementGroupDetails IJsonModel<CreateManagementGroupDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCreateManagementGroupDetails(document.RootElement, options);
+        }
+
+        internal static CreateManagementGroupDetails DeserializeCreateManagementGroupDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<int> version = default;
+            Optional<DateTimeOffset> updatedTime = default;
+            Optional<string> updatedBy = default;
+            Optional<ManagementGroupParentCreateOptions> parent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("version"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("updatedTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updatedTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("updatedBy"u8))
+                {
+                    updatedBy = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("parent"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parent = ManagementGroupParentCreateOptions.DeserializeManagementGroupParentCreateOptions(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CreateManagementGroupDetails(Optional.ToNullable(version), Optional.ToNullable(updatedTime), updatedBy.Value, parent.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<CreateManagementGroupDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CreateManagementGroupDetails IPersistableModel<CreateManagementGroupDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CreateManagementGroupDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCreateManagementGroupDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CreateManagementGroupDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CreateManagementGroupDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

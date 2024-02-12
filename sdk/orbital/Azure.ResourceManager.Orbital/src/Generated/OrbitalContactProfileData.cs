@@ -20,14 +20,46 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class OrbitalContactProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OrbitalContactProfileData(AzureLocation location) : base(location)
         {
             Links = new ChangeTrackingList<OrbitalContactProfileLink>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -42,7 +74,8 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="eventHubUri"> ARM resource identifier of the Event Hub used for telemetry. Requires granting Orbital Resource Provider the rights to send telemetry into the hub. </param>
         /// <param name="networkConfiguration"> Network configuration of customer virtual network. </param>
         /// <param name="links"> Links of the Contact Profile. Describes RF links, modem processing, and IP endpoints. </param>
-        internal OrbitalContactProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, OrbitalProvisioningState? provisioningState, TimeSpan? minimumViableContactDuration, float? minimumElevationDegrees, AutoTrackingConfiguration? autoTrackingConfiguration, Uri eventHubUri, ContactProfilesPropertiesNetworkConfiguration networkConfiguration, IList<OrbitalContactProfileLink> links) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OrbitalContactProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, OrbitalProvisioningState? provisioningState, TimeSpan? minimumViableContactDuration, float? minimumElevationDegrees, AutoTrackingConfiguration? autoTrackingConfiguration, Uri eventHubUri, ContactProfilesPropertiesNetworkConfiguration networkConfiguration, IList<OrbitalContactProfileLink> links, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ProvisioningState = provisioningState;
@@ -52,6 +85,12 @@ namespace Azure.ResourceManager.Orbital
             EventHubUri = eventHubUri;
             NetworkConfiguration = networkConfiguration;
             Links = links;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileData"/> for deserialization. </summary>
+        internal OrbitalContactProfileData()
+        {
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>

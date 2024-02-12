@@ -131,7 +131,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             if (!string.IsNullOrEmpty(logRecord.EventId.Name))
             {
-                properties.Add("EventName", logRecord.EventId.Name.Truncate(SchemaConstants.KVP_MaxValueLength));
+                properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
             }
 
             return message;

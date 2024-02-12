@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountKeyVaultProperties : IUtf8JsonSerializable
+    public partial class StorageAccountKeyVaultProperties : IUtf8JsonSerializable, IJsonModel<StorageAccountKeyVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountKeyVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountKeyVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountKeyVaultProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyName))
             {
@@ -31,11 +41,55 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("keyvaulturi"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyIdentifier))
+            {
+                writer.WritePropertyName("currentVersionedKeyIdentifier"u8);
+                writer.WriteStringValue(CurrentVersionedKeyIdentifier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
+            {
+                writer.WritePropertyName("lastKeyRotationTimestamp"u8);
+                writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentVersionedKeyExpirationTimestamp))
+            {
+                writer.WritePropertyName("currentVersionedKeyExpirationTimestamp"u8);
+                writer.WriteStringValue(CurrentVersionedKeyExpirationTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountKeyVaultProperties DeserializeStorageAccountKeyVaultProperties(JsonElement element)
+        StorageAccountKeyVaultProperties IJsonModel<StorageAccountKeyVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountKeyVaultProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountKeyVaultProperties(document.RootElement, options);
+        }
+
+        internal static StorageAccountKeyVaultProperties DeserializeStorageAccountKeyVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +100,8 @@ namespace Azure.ResourceManager.Storage.Models
             Optional<string> currentVersionedKeyIdentifier = default;
             Optional<DateTimeOffset> lastKeyRotationTimestamp = default;
             Optional<DateTimeOffset> currentVersionedKeyExpirationTimestamp = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyname"u8))
@@ -90,8 +146,44 @@ namespace Azure.ResourceManager.Storage.Models
                     currentVersionedKeyExpirationTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageAccountKeyVaultProperties(keyname.Value, keyversion.Value, keyvaulturi.Value, currentVersionedKeyIdentifier.Value, Optional.ToNullable(lastKeyRotationTimestamp), Optional.ToNullable(currentVersionedKeyExpirationTimestamp), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageAccountKeyVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountKeyVaultProperties IPersistableModel<StorageAccountKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountKeyVaultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountKeyVaultProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountKeyVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

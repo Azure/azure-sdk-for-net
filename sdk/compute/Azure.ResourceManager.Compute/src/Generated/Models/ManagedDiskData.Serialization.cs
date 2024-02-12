@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -15,11 +16,39 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    public partial class ManagedDiskData : IUtf8JsonSerializable
+    public partial class ManagedDiskData : IUtf8JsonSerializable, IJsonModel<ManagedDiskData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedDiskData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedDiskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ManagedBy))
+            {
+                writer.WritePropertyName("managedBy"u8);
+                writer.WriteStringValue(ManagedBy);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ManagedByExtended))
+            {
+                writer.WritePropertyName("managedByExtended"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedByExtended)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -53,8 +82,33 @@ namespace Azure.ResourceManager.Compute
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
+            {
+                writer.WritePropertyName("timeCreated"u8);
+                writer.WriteStringValue(TimeCreated.Value, "O");
+            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -85,10 +139,25 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeBytes))
+            {
+                writer.WritePropertyName("diskSizeBytes"u8);
+                writer.WriteNumberValue(DiskSizeBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UniqueId))
+            {
+                writer.WritePropertyName("uniqueId"u8);
+                writer.WriteStringValue(UniqueId);
+            }
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
                 writer.WriteObjectValue(EncryptionSettingsGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(DiskIopsReadWrite))
             {
@@ -110,6 +179,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("diskMBpsReadOnly"u8);
                 writer.WriteNumberValue(DiskMBpsReadOnly.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(DiskState))
+            {
+                writer.WritePropertyName("diskState"u8);
+                writer.WriteStringValue(DiskState.Value.ToString());
+            }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
@@ -119,6 +193,16 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("maxShares"u8);
                 writer.WriteNumberValue(MaxShares.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShareInfo))
+            {
+                writer.WritePropertyName("shareInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in ShareInfo)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -130,6 +214,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("diskAccessId"u8);
                 writer.WriteStringValue(DiskAccessId);
             }
+            if (options.Format != "W" && Optional.IsDefined(BurstingEnabledOn))
+            {
+                writer.WritePropertyName("burstingEnabledTime"u8);
+                writer.WriteStringValue(BurstingEnabledOn.Value, "O");
+            }
             if (Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
@@ -139,6 +228,11 @@ namespace Azure.ResourceManager.Compute
             {
                 writer.WritePropertyName("burstingEnabled"u8);
                 writer.WriteBooleanValue(BurstingEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
+            {
+                writer.WritePropertyName("propertyUpdatesInProgress"u8);
+                writer.WriteObjectValue(PropertyUpdatesInProgress);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -170,12 +264,46 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("optimizedForFrequentAttach"u8);
                 writer.WriteBooleanValue(IsOptimizedForFrequentAttach.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(LastOwnershipUpdateOn))
+            {
+                writer.WritePropertyName("LastOwnershipUpdateTime"u8);
+                writer.WriteStringValue(LastOwnershipUpdateOn.Value, "O");
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element)
+        ManagedDiskData IJsonModel<ManagedDiskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedDiskData(document.RootElement, options);
+        }
+
+        internal static ManagedDiskData DeserializeManagedDiskData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -223,6 +351,8 @@ namespace Azure.ResourceManager.Compute
             Optional<DataAccessAuthMode> dataAccessAuthMode = default;
             Optional<bool> optimizedForFrequentAttach = default;
             Optional<DateTimeOffset> lastOwnershipUpdateTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -623,8 +753,44 @@ namespace Azure.ResourceManager.Compute
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), Optional.ToNullable(lastOwnershipUpdateTime));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedDiskData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, managedBy.Value, Optional.ToList(managedByExtended), sku.Value, Optional.ToList(zones), extendedLocation, Optional.ToNullable(timeCreated), Optional.ToNullable(osType), Optional.ToNullable(hyperVGeneration), purchasePlan.Value, supportedCapabilities.Value, creationData.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(diskSizeBytes), uniqueId.Value, encryptionSettingsGroup.Value, provisioningState.Value, Optional.ToNullable(diskIOPSReadWrite), Optional.ToNullable(diskMBpsReadWrite), Optional.ToNullable(diskIOPSReadOnly), Optional.ToNullable(diskMBpsReadOnly), Optional.ToNullable(diskState), encryption.Value, Optional.ToNullable(maxShares), Optional.ToList(shareInfo), Optional.ToNullable(networkAccessPolicy), diskAccessId.Value, Optional.ToNullable(burstingEnabledTime), tier.Value, Optional.ToNullable(burstingEnabled), propertyUpdatesInProgress.Value, Optional.ToNullable(supportsHibernation), securityProfile.Value, Optional.ToNullable(completionPercent), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(dataAccessAuthMode), Optional.ToNullable(optimizedForFrequentAttach), Optional.ToNullable(lastOwnershipUpdateTime), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedDiskData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedDiskData IPersistableModel<ManagedDiskData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedDiskData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedDiskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

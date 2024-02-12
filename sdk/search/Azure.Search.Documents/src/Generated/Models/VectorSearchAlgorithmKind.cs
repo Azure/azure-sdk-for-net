@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The algorithm used for indexing and querying. </summary>
-    public readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
+    internal readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
     {
         private readonly string _value;
 
@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         private const string HnswValue = "hnsw";
         private const string ExhaustiveKnnValue = "exhaustiveKnn";
 
-        /// <summary> Hnsw (Hierarchical Navigable Small World), a type of approximate nearest neighbors algorithm. </summary>
+        /// <summary> HNSW (Hierarchical Navigable Small World), a type of approximate nearest neighbors algorithm. </summary>
         public static VectorSearchAlgorithmKind Hnsw { get; } = new VectorSearchAlgorithmKind(HnswValue);
         /// <summary> Exhaustive KNN algorithm which will perform brute-force search. </summary>
         public static VectorSearchAlgorithmKind ExhaustiveKnn { get; } = new VectorSearchAlgorithmKind(ExhaustiveKnnValue);

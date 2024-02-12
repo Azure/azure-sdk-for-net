@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Nginx
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> Get the Nginx deployment. </summary>
+        /// <summary> Get the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> Get the Nginx deployment. </summary>
+        /// <summary> Get the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,22 +143,22 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> Create or update the Nginx deployment. </summary>
+        /// <summary> Create or update the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="data"> The NginxDeployment to use. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="data"> The <see cref="NginxDeploymentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, deploymentName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deploymentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -170,22 +170,22 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> Create or update the Nginx deployment. </summary>
+        /// <summary> Create or update the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="data"> The NginxDeployment to use. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="data"> The <see cref="NginxDeploymentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string deploymentName, NginxDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, deploymentName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, deploymentName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> Update the Nginx deployment. </summary>
+        /// <summary> Update the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="patch"> The NginxDeploymentPatch to use. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> Update the Nginx deployment. </summary>
+        /// <summary> Update the NGINX deployment. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
-        /// <param name="patch"> The NginxDeploymentPatch to use. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
+        /// <param name="patch"> The <see cref="NginxDeploymentPatch"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="deploymentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -295,10 +295,10 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> Delete the Nginx deployment resource. </summary>
+        /// <summary> Delete the NGINX deployment resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -321,10 +321,10 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> Delete the Nginx deployment resource. </summary>
+        /// <summary> Delete the NGINX deployment resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> List the Nginx deployments resources. </summary>
+        /// <summary> List the NGINX deployments resources. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> List the Nginx deployments resources. </summary>
+        /// <summary> List the NGINX deployments resources. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> List all Nginx deployments under the specified resource group. </summary>
+        /// <summary> List all NGINX deployments under the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> List all Nginx deployments under the specified resource group. </summary>
+        /// <summary> List all NGINX deployments under the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> List the Nginx deployments resources. </summary>
+        /// <summary> List the NGINX deployments resources. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> List the Nginx deployments resources. </summary>
+        /// <summary> List the NGINX deployments resources. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Nginx
             return message;
         }
 
-        /// <summary> List all Nginx deployments under the specified resource group. </summary>
+        /// <summary> List all NGINX deployments under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Nginx
             }
         }
 
-        /// <summary> List all Nginx deployments under the specified resource group. </summary>
+        /// <summary> List all NGINX deployments under the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

@@ -10,12 +10,12 @@ namespace Azure.Communication.Email
     /// <summary> The resource management error additional info. </summary>
     internal partial class ErrorAdditionalInfo
     {
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         internal ErrorAdditionalInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorAdditionalInfo"/>. </summary>
         /// <param name="type"> The additional info type. </param>
         /// <param name="info"> The additional info. </param>
         internal ErrorAdditionalInfo(string type, object info)

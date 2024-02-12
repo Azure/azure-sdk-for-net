@@ -15,11 +15,8 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Text))
-            {
-                writer.WritePropertyName("text"u8);
-                writer.WriteStringValue(Text);
-            }
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
@@ -46,7 +43,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<string> text = default;
+            string text = default;
             VectorQueryKind kind = default;
             Optional<int> k = default;
             Optional<string> fields = default;
@@ -87,7 +84,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new VectorizableTextQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), text.Value);
+            return new VectorizableTextQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), text);
         }
     }
 }

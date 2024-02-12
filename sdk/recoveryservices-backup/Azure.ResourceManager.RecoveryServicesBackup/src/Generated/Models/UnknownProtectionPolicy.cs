@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,13 +13,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectionPolicy. </summary>
     internal partial class UnknownProtectionPolicy : BackupGenericProtectionPolicy
     {
-        /// <summary> Initializes a new instance of UnknownProtectionPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionPolicy"/>. </summary>
         /// <param name="protectedItemsCount"> Number of items associated with this policy. </param>
         /// <param name="backupManagementType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
-        internal UnknownProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             BackupManagementType = backupManagementType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionPolicy"/> for deserialization. </summary>
+        internal UnknownProtectionPolicy()
+        {
         }
     }
 }

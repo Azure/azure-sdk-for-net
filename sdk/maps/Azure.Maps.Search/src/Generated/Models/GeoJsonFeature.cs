@@ -13,7 +13,7 @@ namespace Azure.Maps.Search.Models
     /// <summary> A valid `GeoJSON Feature` object type. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.2) for details. </summary>
     internal partial class GeoJsonFeature : GeoJsonObject
     {
-        /// <summary> Initializes a new instance of GeoJsonFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/>. </summary>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.
         /// Please note <see cref="GeoJsonGeometry"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
             Type = GeoJsonObjectType.GeoJsonFeature;
         }
 
-        /// <summary> Initializes a new instance of GeoJsonFeature. </summary>
+        /// <summary> Initializes a new instance of <see cref="GeoJsonFeature"/>. </summary>
         /// <param name="type"> Specifies the `GeoJSON` type. Must be one of the nine valid GeoJSON object types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon, GeometryCollection, Feature and FeatureCollection. </param>
         /// <param name="geometry">
         /// A valid `GeoJSON` geometry object. The type must be one of the seven valid GeoJSON geometry types - Point, MultiPoint, LineString, MultiLineString, Polygon, MultiPolygon and GeometryCollection. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.

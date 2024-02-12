@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.IotHub;
@@ -14,19 +15,53 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The JSON-serialized array of IotHubDescription objects with a next link. </summary>
     internal partial class IotHubDescriptionListResult
     {
-        /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionListResult"/>. </summary>
         internal IotHubDescriptionListResult()
         {
             Value = new ChangeTrackingList<IotHubDescriptionData>();
         }
 
-        /// <summary> Initializes a new instance of IotHubDescriptionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubDescriptionListResult"/>. </summary>
         /// <param name="value"> The array of IotHubDescription objects. </param>
         /// <param name="nextLink"> The next link. </param>
-        internal IotHubDescriptionListResult(IReadOnlyList<IotHubDescriptionData> value, string nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubDescriptionListResult(IReadOnlyList<IotHubDescriptionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The array of IotHubDescription objects. </summary>

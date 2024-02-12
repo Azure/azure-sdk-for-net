@@ -33,25 +33,20 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreatePutRequest(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, HybridIdentityMetadataData data)
+        internal HttpMessage CreatePutRequest(string connectedClusterResourceUri, HybridIdentityMetadataData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/hybridIdentityMetadata/", false);
-            uri.AppendPath(hybridIdentityMetadataResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -64,27 +59,21 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Creates the hybrid identity metadata proxy resource that facilitates the managed identity provisioning. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
-        /// <param name="data"> The HybridIdentityMetadata to use. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="data"> Hybrid Identity Metadata resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hybridIdentityMetadataResourceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridIdentityMetadataData>> PutAsync(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response<HybridIdentityMetadataData>> PutAsync(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName, data);
+            using var message = CreatePutRequest(connectedClusterResourceUri, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         HybridIdentityMetadataData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -97,27 +86,21 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Creates the hybrid identity metadata proxy resource that facilitates the managed identity provisioning. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
-        /// <param name="data"> The HybridIdentityMetadata to use. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="data"> Hybrid Identity Metadata resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="hybridIdentityMetadataResourceName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridIdentityMetadataData> Put(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public Response<HybridIdentityMetadataData> Put(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreatePutRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName, data);
+            using var message = CreatePutRequest(connectedClusterResourceUri, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         HybridIdentityMetadataData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -129,21 +112,16 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName)
+        internal HttpMessage CreateGetRequest(string connectedClusterResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/hybridIdentityMetadata/", false);
-            uri.AppendPath(hybridIdentityMetadataResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -152,21 +130,14 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Get the hybrid identity metadata proxy resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridIdentityMetadataData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public async Task<Response<HybridIdentityMetadataData>> GetAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            using var message = CreateGetRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -185,21 +156,14 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Get the hybrid identity metadata proxy resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridIdentityMetadataData> Get(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public Response<HybridIdentityMetadataData> Get(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            using var message = CreateGetRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -217,21 +181,16 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName)
+        internal HttpMessage CreateDeleteRequest(string connectedClusterResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/hybridIdentityMetadata/", false);
-            uri.AppendPath(hybridIdentityMetadataResourceName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -240,25 +199,18 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Deletes the hybrid identity metadata proxy resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public async Task<Response> DeleteAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            using var message = CreateDeleteRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -267,25 +219,18 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Deletes the hybrid identity metadata proxy resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="hybridIdentityMetadataResourceName"> Parameter for the name of the hybrid identity metadata resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="hybridIdentityMetadataResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string hybridIdentityMetadataResourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public Response Delete(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(hybridIdentityMetadataResourceName, nameof(hybridIdentityMetadataResourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, hybridIdentityMetadataResourceName);
+            using var message = CreateDeleteRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                 case 204:
                     return message.Response;
                 default:
@@ -293,20 +238,16 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateListByClusterRequest(string connectedClusterResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusters/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/hybridIdentityMetadata", false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(connectedClusterResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/hybridIdentityMetadata", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -314,20 +255,15 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the hybrid identity metadata proxy resource in a cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
+        /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridIdentityMetadataList>> ListByClusterAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public async Task<Response<HybridIdentityMetadataList>> ListByClusterAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByClusterRequest(connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -343,20 +279,15 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the hybrid identity metadata proxy resource in a cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
+        /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridIdentityMetadataList> ListByCluster(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public Response<HybridIdentityMetadataList> ListByCluster(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateListByClusterRequest(subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByClusterRequest(connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -372,7 +303,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string connectedClusterResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -386,22 +317,17 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the hybrid identity metadata proxy resource in a cluster. </summary>
+        /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HybridIdentityMetadataList>> ListByClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public async Task<Response<HybridIdentityMetadataList>> ListByClusterNextPageAsync(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -417,22 +343,17 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the hybrid identity metadata proxy resource in a cluster. </summary>
+        /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HybridIdentityMetadataList> ListByClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public Response<HybridIdentityMetadataList> ListByClusterNextPage(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
-            using var message = CreateListByClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, resourceName);
+            using var message = CreateListByClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

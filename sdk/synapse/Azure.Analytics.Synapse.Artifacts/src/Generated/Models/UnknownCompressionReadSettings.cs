@@ -12,7 +12,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The UnknownCompressionReadSettings. </summary>
     internal partial class UnknownCompressionReadSettings : CompressionReadSettings
     {
-        /// <summary> Initializes a new instance of UnknownCompressionReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCompressionReadSettings"/>. </summary>
         /// <param name="type"> The Compression setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownCompressionReadSettings(string type, IDictionary<string, object> additionalProperties) : base(type, additionalProperties)

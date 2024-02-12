@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,91 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Support
 {
-    public partial class SupportAzureServiceData
+    public partial class SupportAzureServiceData : IUtf8JsonSerializable, IJsonModel<SupportAzureServiceData>
     {
-        internal static SupportAzureServiceData DeserializeSupportAzureServiceData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SupportAzureServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SupportAzureServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsCollectionDefined(ResourceTypes))
+            {
+                writer.WritePropertyName("resourceTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SupportAzureServiceData IJsonModel<SupportAzureServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSupportAzureServiceData(document.RootElement, options);
+        }
+
+        internal static SupportAzureServiceData DeserializeSupportAzureServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +109,8 @@ namespace Azure.ResourceManager.Support
             Optional<SystemData> systemData = default;
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> resourceTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -83,8 +168,44 @@ namespace Azure.ResourceManager.Support
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SupportAzureServiceData(id, name, type, systemData.Value, displayName.Value, Optional.ToList(resourceTypes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SupportAzureServiceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SupportAzureServiceData IPersistableModel<SupportAzureServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSupportAzureServiceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SupportAzureServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

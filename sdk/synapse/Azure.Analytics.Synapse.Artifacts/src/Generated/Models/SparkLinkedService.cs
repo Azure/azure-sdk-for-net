@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Spark Server linked service. </summary>
     public partial class SparkLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of SparkLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkLinkedService"/>. </summary>
         /// <param name="host"> IP address or host name of the Spark server. </param>
         /// <param name="port"> The TCP port that the Spark server uses to listen for client connections. </param>
         /// <param name="authenticationType"> The authentication method used to access the Spark server. </param>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Spark";
         }
 
-        /// <summary> Initializes a new instance of SparkLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

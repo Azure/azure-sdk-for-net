@@ -59,6 +59,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -83,6 +91,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ScopeAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScopeAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -97,11 +113,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedNetworkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedNetworkResource"/> object. </returns>
         public virtual ManagedNetworkResource GetManagedNetworkResource(ResourceIdentifier id)
         {
             ManagedNetworkResource.ValidateResourceId(id);
@@ -109,11 +125,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ScopeAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ScopeAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ScopeAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ScopeAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScopeAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ScopeAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ScopeAssignmentResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ScopeAssignmentResource"/> object. </returns>
         public virtual ScopeAssignmentResource GetScopeAssignmentResource(ResourceIdentifier id)
         {
             ScopeAssignmentResource.ValidateResourceId(id);
@@ -121,11 +137,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedNetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedNetworkGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedNetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkGroupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkGroupResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedNetworkGroupResource"/> object. </returns>
         public virtual ManagedNetworkGroupResource GetManagedNetworkGroupResource(ResourceIdentifier id)
         {
             ManagedNetworkGroupResource.ValidateResourceId(id);
@@ -133,11 +149,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedNetworkPeeringPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ManagedNetworkPeeringPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkPeeringPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagedNetworkPeeringPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagedNetworkPeeringPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkPeeringPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource" /> object. </returns>
+        /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource"/> object. </returns>
         public virtual ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(ResourceIdentifier id)
         {
             ManagedNetworkPeeringPolicyResource.ValidateResourceId(id);

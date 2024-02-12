@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The response of cluster create request validation. </summary>
     public partial class HDInsightClusterCreationValidateResult
     {
-        /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateResult"/>. </summary>
         internal HDInsightClusterCreationValidateResult()
         {
             ValidationErrors = new ChangeTrackingList<HDInsightClusterValidationErrorInfo>();
@@ -22,17 +54,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             AaddsResourcesDetails = new ChangeTrackingList<HDInsightClusterAaddsDetail>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterCreationValidateResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterCreationValidateResult"/>. </summary>
         /// <param name="validationErrors"> The validation errors. </param>
         /// <param name="validationWarnings"> The validation warnings. </param>
         /// <param name="estimatedCreationDuration"> The estimated creation duration. </param>
         /// <param name="aaddsResourcesDetails"> The Azure active directory domain service resource details. </param>
-        internal HDInsightClusterCreationValidateResult(IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors, IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings, TimeSpan? estimatedCreationDuration, IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterCreationValidateResult(IReadOnlyList<HDInsightClusterValidationErrorInfo> validationErrors, IReadOnlyList<HDInsightClusterValidationErrorInfo> validationWarnings, TimeSpan? estimatedCreationDuration, IReadOnlyList<HDInsightClusterAaddsDetail> aaddsResourcesDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidationErrors = validationErrors;
             ValidationWarnings = validationWarnings;
             EstimatedCreationDuration = estimatedCreationDuration;
             AaddsResourcesDetails = aaddsResourcesDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The validation errors. </summary>

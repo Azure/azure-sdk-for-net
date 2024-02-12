@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -12,7 +14,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The UnknownInputProperties. </summary>
     internal partial class UnknownInputProperties : StreamingJobInputProperties
     {
-        /// <summary> Initializes a new instance of UnknownInputProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputProperties"/>. </summary>
         /// <param name="inputPropertiesType"> Indicates whether the input is a source of reference data or stream data. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="serialization">
         /// Describes how data from an input is serialized or how data is serialized when written to an output. Required on PUT (CreateOrReplace) requests.
@@ -24,9 +26,15 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="compression"> Describes how input data is compressed. </param>
         /// <param name="partitionKey"> partitionKey Describes a key in the input data which is used for partitioning the input data. </param>
         /// <param name="watermarkSettings"> Settings which determine whether to read watermark events. </param>
-        internal UnknownInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownInputProperties(string inputPropertiesType, StreamAnalyticsDataSerialization serialization, StreamingJobDiagnostics diagnostics, ETag? etag, StreamingCompression compression, string partitionKey, StreamingJobInputWatermarkProperties watermarkSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inputPropertiesType, serialization, diagnostics, etag, compression, partitionKey, watermarkSettings, serializedAdditionalRawData)
         {
             InputPropertiesType = inputPropertiesType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownInputProperties"/> for deserialization. </summary>
+        internal UnknownInputProperties()
+        {
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Information about the device twin, which is the cloud representation of application device metadata. </summary>
     public partial class DeviceTwinInfo
     {
-        /// <summary> Initializes a new instance of DeviceTwinInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
         internal DeviceTwinInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DeviceTwinInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceTwinInfo"/>. </summary>
         /// <param name="authenticationType"> Authentication type used for this device: either SAS, SelfSigned, or CertificateAuthority. </param>
         /// <param name="cloudToDeviceMessageCount"> Count of cloud to device messages sent to this device. </param>
         /// <param name="connectionState"> Whether the device is connected or disconnected. </param>
