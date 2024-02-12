@@ -161,7 +161,7 @@ namespace Azure.Messaging.EventGrid
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterFailedEventData AvsClusterFailedEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null, string failureMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterUpdatedEventData AvsClusterUpdatedEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsClusterUpdatingEventData AvsClusterUpdatingEventData(string operationId = null, System.Collections.Generic.IEnumerable<string> addedHostNames = null, System.Collections.Generic.IEnumerable<string> removedHostNames = null, System.Collections.Generic.IEnumerable<string> inMaintenanceHostNames = null) { throw null; }
-        public static Azure.Messaging.EventGrid.Models.AvsPrivateCloudEventData AvsPrivateCloudEventData(string operationId = null) { throw null; }
+        public static Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData AvsPrivateCloudEventData(string operationId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudFailedEventData AvsPrivateCloudFailedEventData(string operationId = null, string failureMessage = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudUpdatedEventData AvsPrivateCloudUpdatedEventData(string operationId = null) { throw null; }
         public static Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudUpdatingEventData AvsPrivateCloudUpdatingEventData(string operationId = null) { throw null; }
@@ -694,11 +694,6 @@ namespace Azure.Messaging.EventGrid.Models
         public static implicit operator Azure.Messaging.EventGrid.Models.AcsRouterWorkerSelectorState (string value) { throw null; }
         public static bool operator !=(Azure.Messaging.EventGrid.Models.AcsRouterWorkerSelectorState left, Azure.Messaging.EventGrid.Models.AcsRouterWorkerSelectorState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class AvsPrivateCloudEventData
-    {
-        internal AvsPrivateCloudEventData() { }
-        public string OperationId { get { throw null; } }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1656,16 +1651,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal AvsClusterUpdatingEventData() { }
     }
-    public partial class AvsPrivateCloudFailedEventData : Azure.Messaging.EventGrid.Models.AvsPrivateCloudEventData
+    public partial class AvsPrivateCloudEventData
+    {
+        internal AvsPrivateCloudEventData() { }
+        public string OperationId { get { throw null; } }
+    }
+    public partial class AvsPrivateCloudFailedEventData : Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData
     {
         internal AvsPrivateCloudFailedEventData() { }
         public string FailureMessage { get { throw null; } }
     }
-    public partial class AvsPrivateCloudUpdatedEventData : Azure.Messaging.EventGrid.Models.AvsPrivateCloudEventData
+    public partial class AvsPrivateCloudUpdatedEventData : Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData
     {
         internal AvsPrivateCloudUpdatedEventData() { }
     }
-    public partial class AvsPrivateCloudUpdatingEventData : Azure.Messaging.EventGrid.Models.AvsPrivateCloudEventData
+    public partial class AvsPrivateCloudUpdatingEventData : Azure.Messaging.EventGrid.SystemEvents.AvsPrivateCloudEventData
     {
         internal AvsPrivateCloudUpdatingEventData() { }
     }
