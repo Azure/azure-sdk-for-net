@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -110,6 +111,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             try
             {
+                // Suppress the outbound Live Metrics service calls from being collected as dependency telemetry.
+                using var scope = SuppressInstrumentationScope.Begin();
+
                 while (true)
                 {
                     var callbackStarted = DateTimeOffset.UtcNow;

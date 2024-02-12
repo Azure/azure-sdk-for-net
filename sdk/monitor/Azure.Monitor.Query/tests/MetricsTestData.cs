@@ -3,10 +3,12 @@
 
 using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
 
 namespace Azure.Monitor.Query.Tests
 {
@@ -63,7 +65,7 @@ namespace Azure.Monitor.Query.Tests
             var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
             var senderClient = new MetricsSenderClient(
-                _testEnvironment.Location,
+                _testEnvironment.MetricsLocation,
                 _testEnvironment.MetricsIngestionEndpoint,
                 _testEnvironment.MetricsResource,
                 _testEnvironment.Credential,

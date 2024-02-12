@@ -173,7 +173,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             string expectedExceptionMessage,
             string expectedExceptionTypeName,
             string? expectedTraceId,
-            string? expectedSpanId)
+            string? expectedSpanId,
+            IDictionary<string, string>? expectedProperties,
+            Action<TelemetryExceptionData>? additionalChecks = null)
         {
             Assert.Equal("Exception", telemetryItem.Name); // telemetry type
             Assert.Equal("ExceptionData", telemetryItem.Data.BaseType); // telemetry data type
@@ -189,7 +191,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             var telemetryExceptionData = (TelemetryExceptionData)telemetryItem.Data.BaseData;
             Assert.Null(telemetryExceptionData.SeverityLevel);
-            Assert.Empty(telemetryExceptionData.Properties);
+
+            if (expectedProperties == null)
+            {
+                Assert.Empty(telemetryExceptionData.Properties);
+            }
+            else
+            {
+                foreach (var prop in expectedProperties)
+                {
+                    Assert.Equal(prop.Value, telemetryExceptionData.Properties[prop.Key]);
+                }
+            }
 
             Assert.Equal(1, telemetryExceptionData.Exceptions.Count);
 
@@ -199,6 +212,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.True(telemetryExceptionDetails.HasFullStack);
             Assert.Empty(telemetryExceptionDetails.ParsedStack);
             Assert.False(string.IsNullOrEmpty(telemetryExceptionDetails.Stack));
+
+            additionalChecks?.Invoke(telemetryExceptionData);
         }
 
         public static void AssertMetricTelemetry(

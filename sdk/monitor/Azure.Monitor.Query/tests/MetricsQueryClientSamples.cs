@@ -24,12 +24,22 @@ namespace Azure.Monitor.Query.Tests
             string resourceId = TestEnvironment.MetricsResource;
 #endif
             #region Snippet:CreateMetricsClient
+#if SNIPPET
             var client = new MetricsQueryClient(new DefaultAzureCredential());
+#else
+            var client = new MetricsQueryClient(
+                new Uri(TestEnvironment.GetMetricsAudience()),
+                TestEnvironment.Credential,
+                new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsAudience()
+                });
+#endif
             #endregion
 
             Response<MetricsQueryResult> results = await client.QueryResourceAsync(
                 resourceId,
-                new[] { "AvailabilityRate_Query", "Query Count" }
+                new[] { "Average_% Free Space", "Average_% Used Space" }
             );
 
             foreach (MetricResult metric in results.Value.Metrics)
@@ -56,13 +66,19 @@ namespace Azure.Monitor.Query.Tests
             string resourceId =
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
             string[] metricNames = new[] { "Availability" };
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.MetricsResource;
             string[] metricNames = new[] { "Heartbeat" };
+            var client = new MetricsQueryClient(
+                new Uri(TestEnvironment.GetMetricsAudience()),
+                TestEnvironment.Credential,
+                new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsAudience()
+                });
 #endif
-            var client = new MetricsQueryClient(new DefaultAzureCredential());
-
-            Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+            Response <MetricsQueryResult> result = await client.QueryResourceAsync(
                 resourceId,
                 metricNames,
                 new MetricsQueryOptions
@@ -97,12 +113,20 @@ namespace Azure.Monitor.Query.Tests
             string[] metricNames = new[] { "Http2xx" };
             // Use of asterisk in filter value enables splitting on Instance dimension.
             string filter = "Instance eq '*'";
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.MetricsResource;
             string[] metricNames = new[] { "Average_% Available Memory" };
             string filter = "Computer eq '*'";
+            var client = new MetricsQueryClient(
+                new Uri(TestEnvironment.GetMetricsAudience()),
+                TestEnvironment.Credential,
+                new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsAudience()
+                });
 #endif
-            var client = new MetricsQueryClient(new DefaultAzureCredential());
+
             var options = new MetricsQueryOptions
             {
                 Aggregations =
@@ -140,10 +164,18 @@ namespace Azure.Monitor.Query.Tests
 #if SNIPPET
             string resourceId =
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
 #else
             string resourceId = TestEnvironment.MetricsResource;
+            var client = new MetricsQueryClient(
+                new Uri(TestEnvironment.GetMetricsAudience()),
+                TestEnvironment.Credential,
+                new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetMetricsAudience()
+                });
 #endif
-            var client = new MetricsQueryClient(new DefaultAzureCredential());
+
             AsyncPageable<MetricNamespace> metricNamespaces = client.GetMetricNamespacesAsync(resourceId);
 
             await foreach (var metricNamespace in metricNamespaces)

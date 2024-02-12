@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
+    <Version>1.2.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
@@ -24,9 +24,11 @@
 
     <!-- FOR PUBLIC RELEASES, MUST USE PackageReference. THIS REQUIRES A STAGGERED RELEASE IF SHIPPING A NEW EXPORTER. -->
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.LiveMetrics" />
 
     <!-- FOR LOCAL DEV, ProjectReference IS PREFERRED. -->
     <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
+    <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />-->
   </ItemGroup>
   
   <!-- Shared source from Exporter -->

@@ -5,6 +5,25 @@ namespace Azure.Monitor.Query
         public LogsBatchQuery() { }
         public virtual string AddWorkspaceQuery(string workspaceId, string query, Azure.Monitor.Query.QueryTimeRange timeRange, Azure.Monitor.Query.LogsQueryOptions options = null) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LogsQueryAudience : System.IEquatable<Azure.Monitor.Query.LogsQueryAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LogsQueryAudience(string value) { throw null; }
+        public static Azure.Monitor.Query.LogsQueryAudience AzureChina { get { throw null; } }
+        public static Azure.Monitor.Query.LogsQueryAudience AzureGovernment { get { throw null; } }
+        public static Azure.Monitor.Query.LogsQueryAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.LogsQueryAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.LogsQueryAudience left, Azure.Monitor.Query.LogsQueryAudience right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.LogsQueryAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.LogsQueryAudience left, Azure.Monitor.Query.LogsQueryAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class LogsQueryClient
     {
         protected LogsQueryClient() { }
@@ -28,6 +47,7 @@ namespace Azure.Monitor.Query
     public partial class LogsQueryClientOptions : Azure.Core.ClientOptions
     {
         public LogsQueryClientOptions(Azure.Monitor.Query.LogsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.LogsQueryClientOptions.ServiceVersion.V1) { }
+        public Azure.Monitor.Query.LogsQueryAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1 = 1,
@@ -41,6 +61,41 @@ namespace Azure.Monitor.Query
         public bool IncludeStatistics { get { throw null; } set { } }
         public bool IncludeVisualization { get { throw null; } set { } }
         public System.TimeSpan? ServerTimeout { get { throw null; } set { } }
+    }
+    public partial class MetricsBatchQueryClient
+    {
+        protected MetricsBatchQueryClient() { }
+        public MetricsBatchQueryClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Monitor.Query.MetricsBatchQueryClientOptions options = null) { }
+        public System.Uri Endpoint { get { throw null; } }
+        public virtual Azure.Response<Azure.Monitor.Query.Models.MetricsBatchResult> QueryBatch(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Monitor.Query.Models.MetricsBatchResult>> QueryBatchAsync(System.Collections.Generic.List<string> resourceIds, System.Collections.Generic.List<string> metricNames, string metricNamespace, Azure.Monitor.Query.MetricsQueryOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MetricsBatchQueryClientOptions : Azure.Core.ClientOptions
+    {
+        public MetricsBatchQueryClientOptions(Azure.Monitor.Query.MetricsBatchQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsBatchQueryClientOptions.ServiceVersion.V2023_05_01_PREVIEW) { }
+        public enum ServiceVersion
+        {
+            V2023_05_01_PREVIEW = 1,
+        }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MetricsQueryAudience : System.IEquatable<Azure.Monitor.Query.MetricsQueryAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MetricsQueryAudience(string value) { throw null; }
+        public static Azure.Monitor.Query.MetricsQueryAudience AzureChina { get { throw null; } }
+        public static Azure.Monitor.Query.MetricsQueryAudience AzureGovernment { get { throw null; } }
+        public static Azure.Monitor.Query.MetricsQueryAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Monitor.Query.MetricsQueryAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Monitor.Query.MetricsQueryAudience left, Azure.Monitor.Query.MetricsQueryAudience right) { throw null; }
+        public static implicit operator Azure.Monitor.Query.MetricsQueryAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Monitor.Query.MetricsQueryAudience left, Azure.Monitor.Query.MetricsQueryAudience right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MetricsQueryClient
     {
@@ -59,6 +114,7 @@ namespace Azure.Monitor.Query
     public partial class MetricsQueryClientOptions : Azure.Core.ClientOptions
     {
         public MetricsQueryClientOptions(Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion version = Azure.Monitor.Query.MetricsQueryClientOptions.ServiceVersion.V2018_01_01) { }
+        public Azure.Monitor.Query.MetricsQueryAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V2018_01_01 = 1,
