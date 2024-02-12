@@ -1,6 +1,6 @@
 # Authentication events trigger for Azure Functions client library for .NET
 
-The authentication events trigger for Azure Functions allows you to implement a custom extension to handle Azure Active Directory (Azure AD) authentication events. The authentication events trigger handles all the backend processing for incoming HTTP requests for Azure AD authentication events and provides the developer with:
+The authentication events trigger for Azure Functions allows you to implement a custom extension to handle Microsoft Entra authentication events. The authentication events trigger handles all the backend processing for incoming HTTP requests for Microsoft Entra authentication events and provides the developer with:
 
 - Token validation for securing the API call
 - Object model, typing, and IDE intellisense
@@ -22,24 +22,24 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents --pre
 
 ### Authenticate the client
 
-When the Azure AD authentication events service calls your custom extension, it sends an `Authorization` header with a `Bearer {token}`. This token represents a [service to service authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
+When the Microsoft Entra authentication events service calls your custom extension, it sends an `Authorization` header with a `Bearer {token}`. This token represents a [service to service authentication](https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-client-creds-grant-flow) in which:
 
 * The '**resource**', also known as the **audience**, is the application that you register to represent your API. This is represented by the `aud` claim in the token.
-* The '**client**' is a Microsoft application that represents the Azure AD authentication events service. It has an `appId` value of `99045fe1-7639-4a75-9d4a-577b6ca3810f`. This is represented by:
+* The '**client**' is a Microsoft application that represents the Microsoft Entra authentication events service. It has an `appId` value of `99045fe1-7639-4a75-9d4a-577b6ca3810f`. This is represented by:
   * The `azp` claim in the token if your application `accessTokenAcceptedVersion` property is set to `2`.
   * The `appid` claim in the token if your resource application's `accessTokenAcceptedVersion` property is set to `1` or `null`.
 
 There are three approaches to authenticating HTTP requests to your function app and validating the token. 
 
-#### Validate tokens using Azure Functions Azure AD authentication integration
+#### Validate tokens using Azure Functions Microsoft Entra ID authentication integration
 
-When running your function in production, it is **highly recommended** to use the [Azure Functions Azure AD authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens. Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
+When running your function in production, it is **highly recommended** to use the [Azure Functions Microsoft Entra ID authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens. Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
 
 1. Go to the "Authentication" tab in your Function App
 2. Click on "Add identity provider"
 3. Select "Microsoft" as the identity provider
 4. Select "Provide the details of an existing app registration"
-5. Enter the `Application ID` of the app that represents your API in Azure AD
+5. Enter the `Application ID` of the app that represents your API in Microsoft Entra ID
 
 The issuer and allowed audience depends on the [`accessTokenAcceptedVersion`](https://learn.microsoft.com/azure/active-directory/develop/access-tokens) property of your application (can be found in the "Manifest" of the application).
 
@@ -53,7 +53,7 @@ If the `accessTokenAcceptedVersion` property is set to `1` or `null`:
 
 By default, the Authentication event trigger will validate that Azure Function authentication integration is configured and it will check that the **client** in the token is set to `99045fe1-7639-4a75-9d4a-577b6ca3810f` (via the `azp` or `appid` claims in the token).
 
-If you want to test your API against some other client that is not Azure AD authentication events service, like using Postman, you can configure an _optional_ application setting:
+If you want to test your API against some other client that is not Microsoft Entra authentication events service, like using Postman, you can configure an _optional_ application setting:
 
 * **AuthenticationEvents__CustomCallerAppId** - the guid of your desired client. If not provided, `99045fe1-7639-4a75-9d4a-577b6ca3810f` is assumed.
 
@@ -121,17 +121,17 @@ If you would like to _not_ authenticate the token while in local development, se
 
 Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
 
-### Azure AD custom extensions
+### Microsoft Entra custom extensions
 
-Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. 
+Custom extensions allow you to handle Microsoft Entra authentication events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Microsoft Entra directory. 
 
 ### Authentication events trigger
 
-The authentication events trigger allows a function to be executed when an authentication event is sent from the Azure AD event service.
+The authentication events trigger allows a function to be executed when an authentication event is sent from the Microsoft Entra event service.
 
 ### Authentication events trigger output binding
 
-The authentication events trigger output binding allows a function to send authentication event actions to the Azure AD event service.
+The authentication events trigger output binding allows a function to send authentication event actions to the Microsoft Entra event service.
 
 ## Documentation
 
