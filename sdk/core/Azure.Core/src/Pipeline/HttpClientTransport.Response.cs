@@ -1,11 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
@@ -40,6 +43,14 @@ namespace Azure.Core.Pipeline
                 get => _pipelineResponse.ContentStream;
                 set => _pipelineResponse.ContentStream = value;
             }
+
+            public override BinaryData Content => _pipelineResponse.Content;
+
+            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+                => _pipelineResponse.ReadContent(cancellationToken);
+
+            public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+                => await base.ReadContentAsync(cancellationToken).ConfigureAwait(false);
 
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);
