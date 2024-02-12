@@ -41,11 +41,12 @@ internal static class CancellationHelper
 
     /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="cancellationToken"/>.</summary>
     /// <param name="cancellationToken">The token to check for a cancellation request.</param>
-    internal static void ThrowIfCancellationRequested(CancellationToken cancellationToken)
+    /// <param name="innerException">The inner exception to wrap. May be null.</param>
+    internal static void ThrowIfCancellationRequested(CancellationToken cancellationToken, Exception? innerException = default)
     {
         if (cancellationToken.IsCancellationRequested)
         {
-            ThrowOperationCanceledException(innerException: null, cancellationToken);
+            ThrowOperationCanceledException(innerException, cancellationToken);
         }
     }
 
@@ -58,7 +59,7 @@ internal static class CancellationHelper
     internal static void ThrowIfCancellationRequestedOrTimeout(CancellationToken messageToken, CancellationToken timeoutToken, Exception? innerException, TimeSpan timeout)
 #pragma warning restore CA1068
     {
-        ThrowIfCancellationRequested(messageToken);
+        ThrowIfCancellationRequested(messageToken, innerException);
 
         if (timeoutToken.IsCancellationRequested)
         {
