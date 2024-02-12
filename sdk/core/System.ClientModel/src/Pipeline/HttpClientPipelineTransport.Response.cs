@@ -11,7 +11,7 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport
 {
-    private class HttpPipelineResponse : PipelineResponse
+    private class HttpClientTransportResponse : PipelineResponse
     {
         private readonly HttpResponseMessage _httpResponse;
 
@@ -27,7 +27,7 @@ public partial class HttpClientPipelineTransport
 
         private bool _disposed;
 
-        public HttpPipelineResponse(HttpResponseMessage httpResponse)
+        public HttpClientTransportResponse(HttpResponseMessage httpResponse)
         {
             _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
             _httpResponseContent = _httpResponse.Content;
@@ -74,7 +74,6 @@ public partial class HttpClientPipelineTransport
         {
             get
             {
-                // TODO: Consolidate with part of ReadContent implementation?
                 if (_bufferedContent is not null)
                 {
                     return _bufferedContent;
@@ -173,6 +172,12 @@ public partial class HttpClientPipelineTransport
                 //
                 // Given this, if _contentStream is not null, we are holding
                 // a source stream and will dispose it.
+
+                if (ContentStream is MemoryStream)
+                {
+                    // Support mocks
+                    ReadContent();
+                }
 
                 Stream? contentStream = _contentStream;
                 contentStream?.Dispose();
