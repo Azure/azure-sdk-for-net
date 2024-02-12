@@ -4,15 +4,21 @@
 using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Identity;
 
 namespace Azure.Communication.Messages.Tests
 {
     public class MessagesLiveTestBase : RecordedTestBase<MessagesTestEnvironment>
     {
+        private const string URIDomainNameReplacerRegEx = @"https://([^/?]+)";
+
         public MessagesLiveTestBase(bool isAsync) : base(isAsync)
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
+            SanitizedHeaders.Add("Repeatability-Request-ID");
+            SanitizedHeaders.Add("Repeatability-First-Sent");
+            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainNameReplacerRegEx, "https://sanitized.communication.azure.com"));
         }
 
         protected NotificationMessagesClient CreateInstrumentedNotificationMessagesClient()

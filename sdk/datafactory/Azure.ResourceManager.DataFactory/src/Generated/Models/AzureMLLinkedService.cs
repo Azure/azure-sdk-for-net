@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureML";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureMLLinkedService"/> for deserialization. </summary>
+        internal AzureMLLinkedService()
+        {
+        }
+
         /// <summary> The Batch Execution REST URL for an Azure ML Studio Web Service endpoint. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> MLEndpoint { get; set; }
         /// <summary> The API key for accessing the Azure ML model endpoint. </summary>

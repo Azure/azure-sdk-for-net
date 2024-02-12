@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.Logger = mockLogger.Object;
 
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 65, 998, default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -89,12 +89,11 @@ namespace Azure.Messaging.EventHubs.Tests
         ///
         private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
                                                         string partitionId,
-                                                        long offset,
-                                                        long? sequenceNumber,
+                                                        long sequenceNumber,
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
                     .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, null, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) }, null)
-                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken });
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber), cancellationToken });
     }
 }

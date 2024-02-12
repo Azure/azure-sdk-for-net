@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Spark";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SparkLinkedService"/> for deserialization. </summary>
+        internal SparkLinkedService()
+        {
+        }
+
         /// <summary> IP address or host name of the Spark server. </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Spark server uses to listen for client connections. </summary>
