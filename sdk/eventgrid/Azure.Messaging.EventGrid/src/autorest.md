@@ -95,7 +95,7 @@ directive:
     const namespace = "Azure.Messaging.EventGrid.SystemEvents";
     for (var path in $)
     {
-      if (!path.includes("CloudEvent") && !path.includes("EventGridEvent"))
+      if (!path.includes("CloudEventEvent") && !path.includes("EventGridEvent"))
       {
         $[path]["x-namespace"] = namespace;
       }
