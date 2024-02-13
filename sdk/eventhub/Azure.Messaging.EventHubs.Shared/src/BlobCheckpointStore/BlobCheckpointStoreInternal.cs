@@ -400,7 +400,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         private async Task UpdateCheckpointInternalAsync(string fullyQualifiedNamespace, string eventHubName, string consumerGroup, string partitionId, string clientIdentifier, long? offset, long? sequenceNumber, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString());
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString());
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -430,17 +430,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString(), ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString(), ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), -1, offset.ToString());
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber.ToString(), "-1", offset.ToString());
             }
         }
 
@@ -788,7 +788,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            string sequenceNumber,
-                                           int replicationSegment,
+                                           string replicationSegment,
                                            string offset,
                                            Exception exception);
 
@@ -811,7 +811,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string consumerGroup,
                                               string clientIdentifier,
                                               string sequenceNumber,
-                                              int replicationSegment,
+                                              string replicationSegment,
                                               string offset);
 
         /// <summary>
@@ -833,7 +833,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            string sequenceNumber,
-                                           int replicationSegment,
+                                           string replicationSegment,
                                            string offset);
 
         /// <summary>

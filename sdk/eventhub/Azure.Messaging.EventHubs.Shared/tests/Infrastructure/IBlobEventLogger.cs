@@ -126,7 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string consumerGroup,
                                    string clientIdentifier,
                                    string sequenceNumber,
-                                   int replicationSegment,
+                                   string replicationSegment,
                                    string offset,
                                    string exception);
 
@@ -149,7 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                       string consumerGroup,
                                       string clientIdentifier,
                                       string sequenceNumber,
-                                      int replicationSegment,
+                                      string replicationSegment,
                                       string offset);
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string consumerGroup,
                                    string clientIdentifier,
                                    string sequenceNumber,
-                                   int replicationSegment,
+                                   string replicationSegment,
                                    string offset);
 
         /// <summary>

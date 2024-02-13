@@ -262,12 +262,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   string sequenceNumber,
-                                                  int replicationSegment,
+                                                  string replicationSegment,
                                                   string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment, offset ?? string.Empty);
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -291,12 +291,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                      string consumerGroup,
                                                      string clientIdentifier,
                                                      string sequenceNumber,
-                                                     int replicationSegment,
+                                                     string replicationSegment,
                                                      string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment, offset ?? string.Empty);
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -322,12 +322,12 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string clientIdentifier,
                                                   string errorMessage,
                                                   string sequenceNumber,
-                                                  int replicationSegment,
+                                                  string replicationSegment,
                                                   string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment, offset ?? string.Empty);
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber ?? string.Empty, replicationSegment ?? string.Empty, offset ?? string.Empty);
             }
         }
 
@@ -684,7 +684,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                 string arg4,
                                                 string arg5,
                                                 string arg6,
-                                                TValue1 arg7,
+                                                string arg7,
                                                 string arg8)
             where TValue1 : struct
         {
@@ -694,6 +694,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg4Ptr = arg4)
             fixed (char* arg5Ptr = arg5)
             fixed (char* arg6Ptr = arg6)
+            fixed (char* arg7Ptr = arg7)
             fixed (char* arg8Ptr = arg8)
             {
                 var eventPayload = stackalloc EventData[8];
@@ -714,10 +715,10 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[4].DataPointer = (IntPtr)arg5Ptr;
 
                 eventPayload[5].Size = (arg6.Length + 1) * sizeof(char);
-                eventPayload[5].DataPointer = (IntPtr)arg5Ptr;
+                eventPayload[5].DataPointer = (IntPtr)arg6Ptr;
 
-                eventPayload[6].Size = Unsafe.SizeOf<TValue1>();
-                eventPayload[6].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
+                eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
+                eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
 
                 eventPayload[7].Size = (arg8.Length + 1) * sizeof(char);
                 eventPayload[7].DataPointer = (IntPtr)arg8Ptr;
@@ -752,7 +753,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                 string arg5,
                                                 string arg6,
                                                 string arg7,
-                                                TValue1 arg8,
+                                                string arg8,
                                                 string arg9)
             where TValue1 : struct
         {
@@ -763,6 +764,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg5Ptr = arg5)
             fixed (char* arg6Ptr = arg6)
             fixed (char* arg7Ptr = arg7)
+            fixed (char* arg8Ptr = arg8)
             fixed (char* arg9Ptr = arg9)
             {
                 var eventPayload = stackalloc EventData[9];
@@ -788,8 +790,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[6].Size = (arg7.Length + 1) * sizeof(char);
                 eventPayload[6].DataPointer = (IntPtr)arg7Ptr;
 
-                eventPayload[7].Size = Unsafe.SizeOf<TValue1>();
-                eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+                eventPayload[7].Size = (arg8.Length + 1) * sizeof(char);
+                eventPayload[7].DataPointer = (IntPtr)arg8Ptr;
 
                 eventPayload[8].Size = (arg9.Length + 1) * sizeof(char);
                 eventPayload[8].DataPointer = (IntPtr)arg9Ptr;
