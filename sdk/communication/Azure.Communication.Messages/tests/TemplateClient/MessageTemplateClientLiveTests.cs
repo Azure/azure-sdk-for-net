@@ -22,7 +22,7 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClient();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
 
             // Act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages.Tests
         {
             // Arrange
             MessageTemplateClient messageTemplateClient = CreateInstrumentedMessageTemplateClientWithAzureKeyCredential();
-            string channelRegistrationId = TestEnvironment.SenderChannelRegistrationId;
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
 
             // Act
             AsyncPageable<MessageTemplateItem> templates = messageTemplateClient.GetTemplatesAsync(channelRegistrationId);
