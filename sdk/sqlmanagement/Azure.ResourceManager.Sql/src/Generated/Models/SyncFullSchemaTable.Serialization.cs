@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -155,68 +156,114 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Columns))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
+            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
             {
-                if (Columns.Any())
+                if (Columns.Any() || hasPropertyOverride)
                 {
                     builder.Append("  columns:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Columns)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Columns)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ErrorId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorId), out propertyOverride);
+            if (Optional.IsDefined(ErrorId) || hasPropertyOverride)
             {
                 builder.Append("  errorId:");
-                if (ErrorId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ErrorId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ErrorId}'");
+                    if (ErrorId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ErrorId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ErrorId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(HasError))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasError), out propertyOverride);
+            if (Optional.IsDefined(HasError) || hasPropertyOverride)
             {
                 builder.Append("  hasError:");
-                var boolValue = HasError.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(QuotedName))
-            {
-                builder.Append("  quotedName:");
-                if (QuotedName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{QuotedName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{QuotedName}'");
+                    var boolValue = HasError.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
+            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            {
+                builder.Append("  quotedName:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (QuotedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{QuotedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{QuotedName}'");
+                    }
                 }
             }
 

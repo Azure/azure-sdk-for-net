@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -144,54 +145,92 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(VirtualPath))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualPath), out propertyOverride);
+            if (Optional.IsDefined(VirtualPath) || hasPropertyOverride)
             {
                 builder.Append("  virtualPath:");
-                if (VirtualPath.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{VirtualPath}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{VirtualPath}'");
+                    if (VirtualPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{VirtualPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{VirtualPath}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PhysicalPath))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalPath), out propertyOverride);
+            if (Optional.IsDefined(PhysicalPath) || hasPropertyOverride)
             {
                 builder.Append("  physicalPath:");
-                if (PhysicalPath.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PhysicalPath}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PhysicalPath}'");
+                    if (PhysicalPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PhysicalPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PhysicalPath}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IsPreloadEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreloadEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsPreloadEnabled) || hasPropertyOverride)
             {
                 builder.Append("  preloadEnabled:");
-                var boolValue = IsPreloadEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPreloadEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(VirtualDirectories))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualDirectories), out propertyOverride);
+            if (Optional.IsCollectionDefined(VirtualDirectories) || hasPropertyOverride)
             {
-                if (VirtualDirectories.Any())
+                if (VirtualDirectories.Any() || hasPropertyOverride)
                 {
                     builder.Append("  virtualDirectories:");
-                    builder.AppendLine(" [");
-                    foreach (var item in VirtualDirectories)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in VirtualDirectories)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

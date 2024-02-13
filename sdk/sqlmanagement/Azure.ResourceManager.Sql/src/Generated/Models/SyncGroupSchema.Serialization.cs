@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -118,33 +119,55 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsCollectionDefined(Tables))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tables), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tables) || hasPropertyOverride)
             {
-                if (Tables.Any())
+                if (Tables.Any() || hasPropertyOverride)
                 {
                     builder.Append("  tables:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Tables)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Tables)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MasterSyncMemberName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterSyncMemberName), out propertyOverride);
+            if (Optional.IsDefined(MasterSyncMemberName) || hasPropertyOverride)
             {
                 builder.Append("  masterSyncMemberName:");
-                if (MasterSyncMemberName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MasterSyncMemberName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MasterSyncMemberName}'");
+                    if (MasterSyncMemberName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MasterSyncMemberName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MasterSyncMemberName}'");
+                    }
                 }
             }
 

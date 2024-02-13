@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -165,70 +166,100 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TableName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableName), out propertyOverride);
+            if (Optional.IsDefined(TableName) || hasPropertyOverride)
             {
                 builder.Append("  tableName:");
-                if (TableName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TableName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TableName}'");
+                    if (TableName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TableName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TableName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Columns))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Columns), out propertyOverride);
+            if (Optional.IsCollectionDefined(Columns) || hasPropertyOverride)
             {
-                if (Columns.Any())
+                if (Columns.Any() || hasPropertyOverride)
                 {
                     builder.Append("  columns:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Columns)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Columns)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Rows))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rows), out propertyOverride);
+            if (Optional.IsCollectionDefined(Rows) || hasPropertyOverride)
             {
-                if (Rows.Any())
+                if (Rows.Any() || hasPropertyOverride)
                 {
                     builder.Append("  rows:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Rows)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
                         builder.AppendLine(" [");
-                        foreach (var item0 in item)
+                        foreach (var item in Rows)
                         {
-                            if (item0 == null)
+                            if (item == null)
                             {
                                 builder.Append("null");
                                 continue;
                             }
-                            if (item0.Contains(Environment.NewLine))
+                            builder.AppendLine(" [");
+                            foreach (var item0 in item)
                             {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item0}'''");
+                                if (item0 == null)
+                                {
+                                    builder.Append("null");
+                                    continue;
+                                }
+                                if (item0.Contains(Environment.NewLine))
+                                {
+                                    builder.AppendLine("    '''");
+                                    builder.AppendLine($"{item0}'''");
+                                }
+                                else
+                                {
+                                    builder.AppendLine($"    '{item0}'");
+                                }
                             }
-                            else
-                            {
-                                builder.AppendLine($"    '{item0}'");
-                            }
+                            builder.AppendLine("  ]");
                         }
                         builder.AppendLine("  ]");
                     }
-                    builder.AppendLine("  ]");
                 }
             }
 

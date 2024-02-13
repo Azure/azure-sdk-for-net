@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -193,72 +194,142 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(CurrentTimeStamp))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentTimeStamp), out propertyOverride);
+            if (Optional.IsDefined(CurrentTimeStamp) || hasPropertyOverride)
             {
                 builder.Append("  currentTimeStamp:");
-                var formattedDateTimeString = TypeFormatters.ToString(CurrentTimeStamp.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
-            }
-
-            if (Optional.IsDefined(PreviousTimeStamp))
-            {
-                builder.Append("  previousTimeStamp:");
-                var formattedDateTimeString = TypeFormatters.ToString(PreviousTimeStamp.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
-            }
-
-            if (Optional.IsDefined(CurrentCpuStats))
-            {
-                builder.Append("  currentCpuStats:");
-                AppendChildObject(builder, CurrentCpuStats, options, 2, false);
-            }
-
-            if (Optional.IsDefined(PreviousCpuStats))
-            {
-                builder.Append("  previousCpuStats:");
-                AppendChildObject(builder, PreviousCpuStats, options, 2, false);
-            }
-
-            if (Optional.IsDefined(MemoryStats))
-            {
-                builder.Append("  memoryStats:");
-                AppendChildObject(builder, MemoryStats, options, 2, false);
-            }
-
-            if (Optional.IsDefined(Id))
-            {
-                builder.Append("  id:");
-                if (Id.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Id}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id}'");
+                    var formattedDateTimeString = TypeFormatters.ToString(CurrentTimeStamp.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
                 }
             }
 
-            if (Optional.IsDefined(Eth0))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousTimeStamp), out propertyOverride);
+            if (Optional.IsDefined(PreviousTimeStamp) || hasPropertyOverride)
+            {
+                builder.Append("  previousTimeStamp:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(PreviousTimeStamp.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCpuStats), out propertyOverride);
+            if (Optional.IsDefined(CurrentCpuStats) || hasPropertyOverride)
+            {
+                builder.Append("  currentCpuStats:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, CurrentCpuStats, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousCpuStats), out propertyOverride);
+            if (Optional.IsDefined(PreviousCpuStats) || hasPropertyOverride)
+            {
+                builder.Append("  previousCpuStats:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, PreviousCpuStats, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryStats), out propertyOverride);
+            if (Optional.IsDefined(MemoryStats) || hasPropertyOverride)
+            {
+                builder.Append("  memoryStats:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, MemoryStats, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Eth0), out propertyOverride);
+            if (Optional.IsDefined(Eth0) || hasPropertyOverride)
             {
                 builder.Append("  eth0:");
-                AppendChildObject(builder, Eth0, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Eth0, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

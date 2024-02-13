@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -219,135 +220,221 @@ namespace Azure.ResourceManager.Resources
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                if (Id.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Id}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Id}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TenantId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
                 builder.Append("  tenantId:");
-                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(TenantCategory))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantCategory), out propertyOverride);
+            if (Optional.IsDefined(TenantCategory) || hasPropertyOverride)
             {
                 builder.Append("  tenantCategory:");
-                builder.AppendLine($" '{TenantCategory.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TenantCategory.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Country))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
+            if (Optional.IsDefined(Country) || hasPropertyOverride)
             {
                 builder.Append("  country:");
-                if (Country.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Country}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Country}'");
+                    if (Country.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Country}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Country}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(CountryCode))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CountryCode), out propertyOverride);
+            if (Optional.IsDefined(CountryCode) || hasPropertyOverride)
             {
                 builder.Append("  countryCode:");
-                if (CountryCode.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{CountryCode}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CountryCode}'");
+                    if (CountryCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{CountryCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{CountryCode}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DisplayName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
             {
                 builder.Append("  displayName:");
-                if (DisplayName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DisplayName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DisplayName}'");
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DisplayName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Domains))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Domains), out propertyOverride);
+            if (Optional.IsCollectionDefined(Domains) || hasPropertyOverride)
             {
-                if (Domains.Any())
+                if (Domains.Any() || hasPropertyOverride)
                 {
                     builder.Append("  domains:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Domains)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("    '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"    '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Domains)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DefaultDomain))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDomain), out propertyOverride);
+            if (Optional.IsDefined(DefaultDomain) || hasPropertyOverride)
             {
                 builder.Append("  defaultDomain:");
-                if (DefaultDomain.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DefaultDomain}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DefaultDomain}'");
+                    if (DefaultDomain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DefaultDomain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DefaultDomain}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TenantType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantType), out propertyOverride);
+            if (Optional.IsDefined(TenantType) || hasPropertyOverride)
             {
                 builder.Append("  tenantType:");
-                if (TenantType.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TenantType}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TenantType}'");
+                    if (TenantType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TenantType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TenantType}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TenantBrandingLogoUri))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantBrandingLogoUri), out propertyOverride);
+            if (Optional.IsDefined(TenantBrandingLogoUri) || hasPropertyOverride)
             {
                 builder.Append("  tenantBrandingLogoUrl:");
-                builder.AppendLine($" '{TenantBrandingLogoUri.AbsoluteUri}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TenantBrandingLogoUri.AbsoluteUri}'");
+                }
             }
 
             builder.AppendLine("}");

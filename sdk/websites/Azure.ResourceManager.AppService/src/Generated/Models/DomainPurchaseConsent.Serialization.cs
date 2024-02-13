@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -133,54 +134,84 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsCollectionDefined(AgreementKeys))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(AgreementKeys) || hasPropertyOverride)
             {
-                if (AgreementKeys.Any())
+                if (AgreementKeys.Any() || hasPropertyOverride)
                 {
                     builder.Append("  agreementKeys:");
-                    builder.AppendLine(" [");
-                    foreach (var item in AgreementKeys)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("    '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"    '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in AgreementKeys)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AgreedBy))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedBy), out propertyOverride);
+            if (Optional.IsDefined(AgreedBy) || hasPropertyOverride)
             {
                 builder.Append("  agreedBy:");
-                if (AgreedBy.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AgreedBy}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AgreedBy}'");
+                    if (AgreedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AgreedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AgreedBy}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AgreedOn))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedOn), out propertyOverride);
+            if (Optional.IsDefined(AgreedOn) || hasPropertyOverride)
             {
                 builder.Append("  agreedAt:");
-                var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
             }
 
             builder.AppendLine("}");

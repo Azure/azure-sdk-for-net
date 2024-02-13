@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Sql.Models;
 
@@ -197,61 +198,107 @@ namespace Azure.ResourceManager.Sql
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsCollectionDefined(GroupMembers))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupMembers), out propertyOverride);
+            if (Optional.IsCollectionDefined(GroupMembers) || hasPropertyOverride)
             {
-                if (GroupMembers.Any())
+                if (GroupMembers.Any() || hasPropertyOverride)
                 {
                     builder.Append("    groupMembers:");
-                    builder.AppendLine(" [");
-                    foreach (var item in GroupMembers)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 6, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in GroupMembers)
+                        {
+                            AppendChildObject(builder, item, options, 6, true);
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(TrustScopes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrustScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(TrustScopes) || hasPropertyOverride)
             {
-                if (TrustScopes.Any())
+                if (TrustScopes.Any() || hasPropertyOverride)
                 {
                     builder.Append("    trustScopes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in TrustScopes)
+                    if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"      '{item.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in TrustScopes)
+                        {
+                            builder.AppendLine($"      '{item.ToString()}'");
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 

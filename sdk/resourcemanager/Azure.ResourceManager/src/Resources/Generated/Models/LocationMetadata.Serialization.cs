@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -203,99 +204,177 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(RegionType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionType), out propertyOverride);
+            if (Optional.IsDefined(RegionType) || hasPropertyOverride)
             {
                 builder.Append("  regionType:");
-                builder.AppendLine($" '{RegionType.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RegionType.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(RegionCategory))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionCategory), out propertyOverride);
+            if (Optional.IsDefined(RegionCategory) || hasPropertyOverride)
             {
                 builder.Append("  regionCategory:");
-                builder.AppendLine($" '{RegionCategory.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RegionCategory.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Geography))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Geography), out propertyOverride);
+            if (Optional.IsDefined(Geography) || hasPropertyOverride)
             {
                 builder.Append("  geography:");
-                if (Geography.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Geography}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Geography}'");
+                    if (Geography.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Geography}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Geography}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GeographyGroup))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeographyGroup), out propertyOverride);
+            if (Optional.IsDefined(GeographyGroup) || hasPropertyOverride)
             {
                 builder.Append("  geographyGroup:");
-                if (GeographyGroup.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GeographyGroup}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GeographyGroup}'");
+                    if (GeographyGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GeographyGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GeographyGroup}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Longitude))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
+            if (Optional.IsDefined(Longitude) || hasPropertyOverride)
             {
                 builder.Append("  longitude:");
-                builder.AppendLine($" '{Longitude.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Longitude.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Latitude))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
+            if (Optional.IsDefined(Latitude) || hasPropertyOverride)
             {
                 builder.Append("  latitude:");
-                builder.AppendLine($" '{Latitude.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Latitude.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(PhysicalLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalLocation), out propertyOverride);
+            if (Optional.IsDefined(PhysicalLocation) || hasPropertyOverride)
             {
                 builder.Append("  physicalLocation:");
-                if (PhysicalLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PhysicalLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PhysicalLocation}'");
+                    if (PhysicalLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PhysicalLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PhysicalLocation}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(PairedRegions))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PairedRegions), out propertyOverride);
+            if (Optional.IsCollectionDefined(PairedRegions) || hasPropertyOverride)
             {
-                if (PairedRegions.Any())
+                if (PairedRegions.Any() || hasPropertyOverride)
                 {
                     builder.Append("  pairedRegion:");
-                    builder.AppendLine(" [");
-                    foreach (var item in PairedRegions)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in PairedRegions)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(HomeLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeLocation), out propertyOverride);
+            if (Optional.IsDefined(HomeLocation) || hasPropertyOverride)
             {
                 builder.Append("  homeLocation:");
-                if (HomeLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{HomeLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{HomeLocation}'");
+                    if (HomeLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{HomeLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{HomeLocation}'");
+                    }
                 }
             }
 

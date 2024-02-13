@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -205,81 +206,151 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                if (Id.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Id}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Id}'");
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Id}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Status))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
             {
                 builder.Append("  status:");
-                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(Errors))
-            {
-                if (Errors.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  errors:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Errors)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
                 }
             }
 
-            if (Optional.IsDefined(CreatedOn))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Errors), out propertyOverride);
+            if (Optional.IsCollectionDefined(Errors) || hasPropertyOverride)
+            {
+                if (Errors.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  errors:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Errors)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
             {
                 builder.Append("  createdTime:");
-                var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
             }
 
-            if (Optional.IsDefined(ModifiedOn))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
+            if (Optional.IsDefined(ModifiedOn) || hasPropertyOverride)
             {
                 builder.Append("  modifiedTime:");
-                var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
             }
 
-            if (Optional.IsDefined(ExpireOn))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
+            if (Optional.IsDefined(ExpireOn) || hasPropertyOverride)
             {
                 builder.Append("  expirationTime:");
-                var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
             }
 
-            if (Optional.IsDefined(GeoMasterOperationId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoMasterOperationId), out propertyOverride);
+            if (Optional.IsDefined(GeoMasterOperationId) || hasPropertyOverride)
             {
                 builder.Append("  geoMasterOperationId:");
-                builder.AppendLine($" '{GeoMasterOperationId.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{GeoMasterOperationId.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");

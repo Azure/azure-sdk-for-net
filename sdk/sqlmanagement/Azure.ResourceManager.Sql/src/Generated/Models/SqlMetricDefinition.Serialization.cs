@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -163,51 +164,97 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                AppendChildObject(builder, Name, options, 2, false);
-            }
-
-            if (Optional.IsDefined(PrimaryAggregationType))
-            {
-                builder.Append("  primaryAggregationType:");
-                builder.AppendLine($" '{PrimaryAggregationType.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(ResourceUriString))
-            {
-                builder.Append("  resourceUri:");
-                if (ResourceUriString.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ResourceUriString}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ResourceUriString}'");
+                    AppendChildObject(builder, Name, options, 2, false);
                 }
             }
 
-            if (Optional.IsDefined(Unit))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAggregationType), out propertyOverride);
+            if (Optional.IsDefined(PrimaryAggregationType) || hasPropertyOverride)
             {
-                builder.Append("  unit:");
-                builder.AppendLine($" '{Unit.Value.ToString()}'");
+                builder.Append("  primaryAggregationType:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrimaryAggregationType.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsCollectionDefined(MetricAvailabilities))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceUriString), out propertyOverride);
+            if (Optional.IsDefined(ResourceUriString) || hasPropertyOverride)
             {
-                if (MetricAvailabilities.Any())
+                builder.Append("  resourceUri:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceUriString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ResourceUriString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ResourceUriString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricAvailabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(MetricAvailabilities) || hasPropertyOverride)
+            {
+                if (MetricAvailabilities.Any() || hasPropertyOverride)
                 {
                     builder.Append("  metricAvailabilities:");
-                    builder.AppendLine(" [");
-                    foreach (var item in MetricAvailabilities)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in MetricAvailabilities)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

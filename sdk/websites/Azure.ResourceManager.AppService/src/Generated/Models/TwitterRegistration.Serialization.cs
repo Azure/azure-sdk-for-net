@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -103,33 +104,55 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ConsumerKey))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConsumerKey), out propertyOverride);
+            if (Optional.IsDefined(ConsumerKey) || hasPropertyOverride)
             {
                 builder.Append("  consumerKey:");
-                if (ConsumerKey.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ConsumerKey}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ConsumerKey}'");
+                    if (ConsumerKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ConsumerKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ConsumerKey}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ConsumerSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConsumerSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(ConsumerSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("  consumerSecretSettingName:");
-                if (ConsumerSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ConsumerSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ConsumerSecretSettingName}'");
+                    if (ConsumerSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ConsumerSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ConsumerSecretSettingName}'");
+                    }
                 }
             }
 

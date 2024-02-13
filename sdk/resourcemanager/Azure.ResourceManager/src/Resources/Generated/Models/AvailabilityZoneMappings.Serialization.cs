@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -103,33 +104,55 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(LogicalZone))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogicalZone), out propertyOverride);
+            if (Optional.IsDefined(LogicalZone) || hasPropertyOverride)
             {
                 builder.Append("  logicalZone:");
-                if (LogicalZone.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LogicalZone}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LogicalZone}'");
+                    if (LogicalZone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{LogicalZone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{LogicalZone}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PhysicalZone))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalZone), out propertyOverride);
+            if (Optional.IsDefined(PhysicalZone) || hasPropertyOverride)
             {
                 builder.Append("  physicalZone:");
-                if (PhysicalZone.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PhysicalZone}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PhysicalZone}'");
+                    if (PhysicalZone.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PhysicalZone}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PhysicalZone}'");
+                    }
                 }
             }
 

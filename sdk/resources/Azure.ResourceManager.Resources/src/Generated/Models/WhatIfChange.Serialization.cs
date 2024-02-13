@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -178,65 +179,119 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ResourceId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
             {
                 builder.Append("  resourceId:");
-                if (ResourceId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ResourceId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ResourceId}'");
+                    if (ResourceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ResourceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ResourceId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ChangeType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ChangeType), out propertyOverride);
+            if (Optional.IsDefined(ChangeType) || hasPropertyOverride)
             {
                 builder.Append("  changeType:");
-                builder.AppendLine($" '{ChangeType.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(UnsupportedReason))
-            {
-                builder.Append("  unsupportedReason:");
-                if (UnsupportedReason.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{UnsupportedReason}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{UnsupportedReason}'");
+                    builder.AppendLine($" '{ChangeType.ToSerialString()}'");
                 }
             }
 
-            if (Optional.IsDefined(Before))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedReason), out propertyOverride);
+            if (Optional.IsDefined(UnsupportedReason) || hasPropertyOverride)
+            {
+                builder.Append("  unsupportedReason:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (UnsupportedReason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{UnsupportedReason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{UnsupportedReason}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Before), out propertyOverride);
+            if (Optional.IsDefined(Before) || hasPropertyOverride)
             {
                 builder.Append("  before:");
-                builder.AppendLine($" '{Before.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Before.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(After))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(After), out propertyOverride);
+            if (Optional.IsDefined(After) || hasPropertyOverride)
             {
                 builder.Append("  after:");
-                builder.AppendLine($" '{After.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{After.ToString()}'");
+                }
             }
 
-            if (Optional.IsCollectionDefined(Delta))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delta), out propertyOverride);
+            if (Optional.IsCollectionDefined(Delta) || hasPropertyOverride)
             {
-                if (Delta.Any())
+                if (Delta.Any() || hasPropertyOverride)
                 {
                     builder.Append("  delta:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Delta)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Delta)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

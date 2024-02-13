@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -166,87 +167,149 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ArtifactsStorageType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactsStorageType), out propertyOverride);
+            if (Optional.IsDefined(ArtifactsStorageType) || hasPropertyOverride)
             {
                 builder.Append("  artifactsStorageType:");
-                builder.AppendLine($" '{ArtifactsStorageType.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ArtifactsStorageType.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(ArtifactStorageClassName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageClassName), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageClassName) || hasPropertyOverride)
             {
                 builder.Append("  artifactStorageClassName:");
-                if (ArtifactStorageClassName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ArtifactStorageClassName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ArtifactStorageClassName}'");
+                    if (ArtifactStorageClassName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ArtifactStorageClassName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ArtifactStorageClassName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ArtifactStorageMountPath))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageMountPath), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageMountPath) || hasPropertyOverride)
             {
                 builder.Append("  artifactStorageMountPath:");
-                if (ArtifactStorageMountPath.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ArtifactStorageMountPath}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ArtifactStorageMountPath}'");
+                    if (ArtifactStorageMountPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ArtifactStorageMountPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ArtifactStorageMountPath}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ArtifactStorageNodeName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageNodeName), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageNodeName) || hasPropertyOverride)
             {
                 builder.Append("  artifactStorageNodeName:");
-                if (ArtifactStorageNodeName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ArtifactStorageNodeName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ArtifactStorageNodeName}'");
+                    if (ArtifactStorageNodeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ArtifactStorageNodeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ArtifactStorageNodeName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ArtifactStorageAccessMode))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageAccessMode), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageAccessMode) || hasPropertyOverride)
             {
                 builder.Append("  artifactStorageAccessMode:");
-                if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ArtifactStorageAccessMode}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ArtifactStorageAccessMode}'");
+                    if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ArtifactStorageAccessMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ArtifactStorageAccessMode}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(FrontEndServiceConfiguration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontEndServiceConfiguration), out propertyOverride);
+            if (Optional.IsDefined(FrontEndServiceConfiguration) || hasPropertyOverride)
             {
                 builder.Append("  frontEndServiceConfiguration:");
-                AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false);
-            }
-
-            if (Optional.IsDefined(KubeConfig))
-            {
-                builder.Append("  kubeConfig:");
-                if (KubeConfig.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{KubeConfig}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{KubeConfig}'");
+                    AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeConfig), out propertyOverride);
+            if (Optional.IsDefined(KubeConfig) || hasPropertyOverride)
+            {
+                builder.Append("  kubeConfig:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (KubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{KubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{KubeConfig}'");
+                    }
                 }
             }
 

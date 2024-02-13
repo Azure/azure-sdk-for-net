@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -182,61 +183,99 @@ namespace Azure.ResourceManager.KeyVault.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsCollectionDefined(Keys))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Keys), out propertyOverride);
+            if (Optional.IsCollectionDefined(Keys) || hasPropertyOverride)
             {
-                if (Keys.Any())
+                if (Keys.Any() || hasPropertyOverride)
                 {
                     builder.Append("  keys:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Keys)
+                    if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"    '{item.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Keys)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Secrets))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Secrets), out propertyOverride);
+            if (Optional.IsCollectionDefined(Secrets) || hasPropertyOverride)
             {
-                if (Secrets.Any())
+                if (Secrets.Any() || hasPropertyOverride)
                 {
                     builder.Append("  secrets:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Secrets)
+                    if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"    '{item.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Secrets)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Certificates))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Certificates), out propertyOverride);
+            if (Optional.IsCollectionDefined(Certificates) || hasPropertyOverride)
             {
-                if (Certificates.Any())
+                if (Certificates.Any() || hasPropertyOverride)
                 {
                     builder.Append("  certificates:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Certificates)
+                    if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"    '{item.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Certificates)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Storage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Storage), out propertyOverride);
+            if (Optional.IsCollectionDefined(Storage) || hasPropertyOverride)
             {
-                if (Storage.Any())
+                if (Storage.Any() || hasPropertyOverride)
                 {
                     builder.Append("  storage:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Storage)
+                    if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"    '{item.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Storage)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

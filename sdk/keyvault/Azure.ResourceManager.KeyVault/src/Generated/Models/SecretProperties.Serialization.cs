@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -144,59 +145,105 @@ namespace Azure.ResourceManager.KeyVault.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Value))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
             {
                 builder.Append("  value:");
-                if (Value.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Value}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Value}'");
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Value}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ContentType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
+            if (Optional.IsDefined(ContentType) || hasPropertyOverride)
             {
                 builder.Append("  contentType:");
-                if (ContentType.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ContentType}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ContentType}'");
+                    if (ContentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ContentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ContentType}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Attributes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
+            if (Optional.IsDefined(Attributes) || hasPropertyOverride)
             {
                 builder.Append("  attributes:");
-                AppendChildObject(builder, Attributes, options, 2, false);
-            }
-
-            if (Optional.IsDefined(SecretUri))
-            {
-                builder.Append("  secretUri:");
-                builder.AppendLine($" '{SecretUri.AbsoluteUri}'");
-            }
-
-            if (Optional.IsDefined(SecretUriWithVersion))
-            {
-                builder.Append("  secretUriWithVersion:");
-                if (SecretUriWithVersion.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SecretUriWithVersion}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SecretUriWithVersion}'");
+                    AppendChildObject(builder, Attributes, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretUri), out propertyOverride);
+            if (Optional.IsDefined(SecretUri) || hasPropertyOverride)
+            {
+                builder.Append("  secretUri:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SecretUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretUriWithVersion), out propertyOverride);
+            if (Optional.IsDefined(SecretUriWithVersion) || hasPropertyOverride)
+            {
+                builder.Append("  secretUriWithVersion:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (SecretUriWithVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{SecretUriWithVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{SecretUriWithVersion}'");
+                    }
                 }
             }
 

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -167,51 +168,97 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Path))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Path), out propertyOverride);
+            if (Optional.IsDefined(Path) || hasPropertyOverride)
             {
                 builder.Append("  path:");
-                if (Path.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Path}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Path}'");
+                    if (Path.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Path}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Path}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PropertyChangeType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PropertyChangeType), out propertyOverride);
+            if (Optional.IsDefined(PropertyChangeType) || hasPropertyOverride)
             {
                 builder.Append("  propertyChangeType:");
-                builder.AppendLine($" '{PropertyChangeType.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PropertyChangeType.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Before))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Before), out propertyOverride);
+            if (Optional.IsDefined(Before) || hasPropertyOverride)
             {
                 builder.Append("  before:");
-                builder.AppendLine($" '{Before.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Before.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(After))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(After), out propertyOverride);
+            if (Optional.IsDefined(After) || hasPropertyOverride)
             {
                 builder.Append("  after:");
-                builder.AppendLine($" '{After.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{After.ToString()}'");
+                }
             }
 
-            if (Optional.IsCollectionDefined(Children))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Children), out propertyOverride);
+            if (Optional.IsCollectionDefined(Children) || hasPropertyOverride)
             {
-                if (Children.Any())
+                if (Children.Any() || hasPropertyOverride)
                 {
                     builder.Append("  children:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Children)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Children)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

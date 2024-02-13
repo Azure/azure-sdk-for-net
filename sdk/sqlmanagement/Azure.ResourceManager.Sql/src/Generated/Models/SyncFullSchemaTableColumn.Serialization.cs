@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -166,89 +167,151 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DataSize))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataSize), out propertyOverride);
+            if (Optional.IsDefined(DataSize) || hasPropertyOverride)
             {
                 builder.Append("  dataSize:");
-                if (DataSize.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DataSize}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DataSize}'");
+                    if (DataSize.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DataSize}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DataSize}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DataType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataType), out propertyOverride);
+            if (Optional.IsDefined(DataType) || hasPropertyOverride)
             {
                 builder.Append("  dataType:");
-                if (DataType.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DataType}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DataType}'");
+                    if (DataType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DataType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DataType}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ErrorId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorId), out propertyOverride);
+            if (Optional.IsDefined(ErrorId) || hasPropertyOverride)
             {
                 builder.Append("  errorId:");
-                if (ErrorId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ErrorId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ErrorId}'");
+                    if (ErrorId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ErrorId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ErrorId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(HasError))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HasError), out propertyOverride);
+            if (Optional.IsDefined(HasError) || hasPropertyOverride)
             {
                 builder.Append("  hasError:");
-                var boolValue = HasError.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(IsPrimaryKey))
-            {
-                builder.Append("  isPrimaryKey:");
-                var boolValue = IsPrimaryKey.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(QuotedName))
-            {
-                builder.Append("  quotedName:");
-                if (QuotedName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{QuotedName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{QuotedName}'");
+                    var boolValue = HasError.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPrimaryKey), out propertyOverride);
+            if (Optional.IsDefined(IsPrimaryKey) || hasPropertyOverride)
+            {
+                builder.Append("  isPrimaryKey:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPrimaryKey.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotedName), out propertyOverride);
+            if (Optional.IsDefined(QuotedName) || hasPropertyOverride)
+            {
+                builder.Append("  quotedName:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (QuotedName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{QuotedName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{QuotedName}'");
+                    }
                 }
             }
 

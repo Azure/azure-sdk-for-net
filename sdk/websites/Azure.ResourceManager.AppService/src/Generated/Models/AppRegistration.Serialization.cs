@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -103,33 +104,55 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(AppId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
+            if (Optional.IsDefined(AppId) || hasPropertyOverride)
             {
                 builder.Append("  appId:");
-                if (AppId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AppId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AppId}'");
+                    if (AppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AppId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AppSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(AppSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("  appSecretSettingName:");
-                if (AppSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AppSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AppSecretSettingName}'");
+                    if (AppSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AppSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AppSecretSettingName}'");
+                    }
                 }
             }
 

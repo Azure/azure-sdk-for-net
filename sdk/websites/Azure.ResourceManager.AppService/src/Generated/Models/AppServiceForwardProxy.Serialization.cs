@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -118,39 +119,69 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Convention))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Convention), out propertyOverride);
+            if (Optional.IsDefined(Convention) || hasPropertyOverride)
             {
                 builder.Append("  convention:");
-                builder.AppendLine($" '{Convention.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Convention.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(CustomHostHeaderName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomHostHeaderName), out propertyOverride);
+            if (Optional.IsDefined(CustomHostHeaderName) || hasPropertyOverride)
             {
                 builder.Append("  customHostHeaderName:");
-                if (CustomHostHeaderName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{CustomHostHeaderName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CustomHostHeaderName}'");
+                    if (CustomHostHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{CustomHostHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{CustomHostHeaderName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(CustomProtoHeaderName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomProtoHeaderName), out propertyOverride);
+            if (Optional.IsDefined(CustomProtoHeaderName) || hasPropertyOverride)
             {
                 builder.Append("  customProtoHeaderName:");
-                if (CustomProtoHeaderName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{CustomProtoHeaderName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CustomProtoHeaderName}'");
+                    if (CustomProtoHeaderName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{CustomProtoHeaderName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{CustomProtoHeaderName}'");
+                    }
                 }
             }
 

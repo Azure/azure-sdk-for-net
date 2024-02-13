@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -107,25 +108,47 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(WorkspaceId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
+            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
             {
                 builder.Append("  workspaceId:");
-                builder.AppendLine($" '{WorkspaceId.ToString()}'");
-            }
-
-            if (Optional.IsDefined(LinkConnectionName))
-            {
-                builder.Append("  linkConnectionName:");
-                if (LinkConnectionName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LinkConnectionName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LinkConnectionName}'");
+                    builder.AppendLine($" '{WorkspaceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkConnectionName), out propertyOverride);
+            if (Optional.IsDefined(LinkConnectionName) || hasPropertyOverride)
+            {
+                builder.Append("  linkConnectionName:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (LinkConnectionName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{LinkConnectionName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{LinkConnectionName}'");
+                    }
                 }
             }
 

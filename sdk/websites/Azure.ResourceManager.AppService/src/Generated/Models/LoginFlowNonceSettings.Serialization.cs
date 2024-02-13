@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -107,26 +108,48 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ValidateNonce))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateNonce), out propertyOverride);
+            if (Optional.IsDefined(ValidateNonce) || hasPropertyOverride)
             {
                 builder.Append("  validateNonce:");
-                var boolValue = ValidateNonce.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(NonceExpirationInterval))
-            {
-                builder.Append("  nonceExpirationInterval:");
-                if (NonceExpirationInterval.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{NonceExpirationInterval}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{NonceExpirationInterval}'");
+                    var boolValue = ValidateNonce.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NonceExpirationInterval), out propertyOverride);
+            if (Optional.IsDefined(NonceExpirationInterval) || hasPropertyOverride)
+            {
+                builder.Append("  nonceExpirationInterval:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (NonceExpirationInterval.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{NonceExpirationInterval}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{NonceExpirationInterval}'");
+                    }
                 }
             }
 

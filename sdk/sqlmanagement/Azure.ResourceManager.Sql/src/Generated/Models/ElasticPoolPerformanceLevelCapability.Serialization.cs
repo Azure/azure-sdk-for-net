@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -308,126 +309,228 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(PerformanceLevel))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerformanceLevel), out propertyOverride);
+            if (Optional.IsDefined(PerformanceLevel) || hasPropertyOverride)
             {
                 builder.Append("  performanceLevel:");
-                AppendChildObject(builder, PerformanceLevel, options, 2, false);
-            }
-
-            if (Optional.IsDefined(Sku))
-            {
-                builder.Append("  sku:");
-                AppendChildObject(builder, Sku, options, 2, false);
-            }
-
-            if (Optional.IsCollectionDefined(SupportedLicenseTypes))
-            {
-                if (SupportedLicenseTypes.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  supportedLicenseTypes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SupportedLicenseTypes)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsDefined(MaxDatabaseCount))
-            {
-                builder.Append("  maxDatabaseCount:");
-                builder.AppendLine($" {MaxDatabaseCount.Value}");
-            }
-
-            if (Optional.IsDefined(IncludedMaxSize))
-            {
-                builder.Append("  includedMaxSize:");
-                AppendChildObject(builder, IncludedMaxSize, options, 2, false);
-            }
-
-            if (Optional.IsCollectionDefined(SupportedMaxSizes))
-            {
-                if (SupportedMaxSizes.Any())
-                {
-                    builder.Append("  supportedMaxSizes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SupportedMaxSizes)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxSizes))
-            {
-                if (SupportedPerDatabaseMaxSizes.Any())
-                {
-                    builder.Append("  supportedPerDatabaseMaxSizes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SupportedPerDatabaseMaxSizes)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxPerformanceLevels))
-            {
-                if (SupportedPerDatabaseMaxPerformanceLevels.Any())
-                {
-                    builder.Append("  supportedPerDatabaseMaxPerformanceLevels:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsDefined(IsZoneRedundant))
-            {
-                builder.Append("  zoneRedundant:");
-                var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
-            {
-                if (SupportedMaintenanceConfigurations.Any())
-                {
-                    builder.Append("  supportedMaintenanceConfigurations:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SupportedMaintenanceConfigurations)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsDefined(Status))
-            {
-                builder.Append("  status:");
-                builder.AppendLine($" '{Status.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(Reason))
-            {
-                builder.Append("  reason:");
-                if (Reason.Contains(Environment.NewLine))
-                {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Reason}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Reason}'");
+                    AppendChildObject(builder, PerformanceLevel, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            {
+                builder.Append("  sku:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Sku, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedLicenseTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes) || hasPropertyOverride)
+            {
+                if (SupportedLicenseTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedLicenseTypes:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SupportedLicenseTypes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDatabaseCount), out propertyOverride);
+            if (Optional.IsDefined(MaxDatabaseCount) || hasPropertyOverride)
+            {
+                builder.Append("  maxDatabaseCount:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {MaxDatabaseCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
+            if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
+            {
+                builder.Append("  includedMaxSize:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, IncludedMaxSize, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaxSizes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMaxSizes) || hasPropertyOverride)
+            {
+                if (SupportedMaxSizes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMaxSizes:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SupportedMaxSizes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedPerDatabaseMaxSizes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxSizes) || hasPropertyOverride)
+            {
+                if (SupportedPerDatabaseMaxSizes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedPerDatabaseMaxSizes:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SupportedPerDatabaseMaxSizes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedPerDatabaseMaxPerformanceLevels), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMaxPerformanceLevels) || hasPropertyOverride)
+            {
+                if (SupportedPerDatabaseMaxPerformanceLevels.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedPerDatabaseMaxPerformanceLevels:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SupportedPerDatabaseMaxPerformanceLevels)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundant:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaintenanceConfigurations), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations) || hasPropertyOverride)
+            {
+                if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMaintenanceConfigurations:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SupportedMaintenanceConfigurations)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Reason}'");
+                    }
                 }
             }
 

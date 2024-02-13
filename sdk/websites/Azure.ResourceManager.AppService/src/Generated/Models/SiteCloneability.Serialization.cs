@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -172,53 +173,91 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Result))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
+            if (Optional.IsDefined(Result) || hasPropertyOverride)
             {
                 builder.Append("  result:");
-                builder.AppendLine($" '{Result.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Result.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsCollectionDefined(BlockingFeatures))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlockingFeatures) || hasPropertyOverride)
             {
-                if (BlockingFeatures.Any())
+                if (BlockingFeatures.Any() || hasPropertyOverride)
                 {
                     builder.Append("  blockingFeatures:");
-                    builder.AppendLine(" [");
-                    foreach (var item in BlockingFeatures)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in BlockingFeatures)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(UnsupportedFeatures))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(UnsupportedFeatures) || hasPropertyOverride)
             {
-                if (UnsupportedFeatures.Any())
+                if (UnsupportedFeatures.Any() || hasPropertyOverride)
                 {
                     builder.Append("  unsupportedFeatures:");
-                    builder.AppendLine(" [");
-                    foreach (var item in UnsupportedFeatures)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in UnsupportedFeatures)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(BlockingCharacteristics))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingCharacteristics), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlockingCharacteristics) || hasPropertyOverride)
             {
-                if (BlockingCharacteristics.Any())
+                if (BlockingCharacteristics.Any() || hasPropertyOverride)
                 {
                     builder.Append("  blockingCharacteristics:");
-                    builder.AppendLine(" [");
-                    foreach (var item in BlockingCharacteristics)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in BlockingCharacteristics)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

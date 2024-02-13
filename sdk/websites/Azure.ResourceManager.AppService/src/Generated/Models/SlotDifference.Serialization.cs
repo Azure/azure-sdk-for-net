@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -233,145 +234,239 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Kind))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
                 builder.Append("  kind:");
-                if (Kind.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Kind}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Kind}'");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Kind}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(Level))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
+            if (Optional.IsDefined(Level) || hasPropertyOverride)
             {
                 builder.Append("    level:");
-                if (Level.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Level}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Level}'");
+                    if (Level.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Level}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Level}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SettingType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SettingType), out propertyOverride);
+            if (Optional.IsDefined(SettingType) || hasPropertyOverride)
             {
                 builder.Append("    settingType:");
-                if (SettingType.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SettingType}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SettingType}'");
+                    if (SettingType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{SettingType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{SettingType}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DiffRule))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DiffRule), out propertyOverride);
+            if (Optional.IsDefined(DiffRule) || hasPropertyOverride)
             {
                 builder.Append("    diffRule:");
-                if (DiffRule.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DiffRule}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DiffRule}'");
+                    if (DiffRule.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DiffRule}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DiffRule}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SettingName), out propertyOverride);
+            if (Optional.IsDefined(SettingName) || hasPropertyOverride)
             {
                 builder.Append("    settingName:");
-                if (SettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SettingName}'");
+                    if (SettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{SettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{SettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ValueInCurrentSlot))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValueInCurrentSlot), out propertyOverride);
+            if (Optional.IsDefined(ValueInCurrentSlot) || hasPropertyOverride)
             {
                 builder.Append("    valueInCurrentSlot:");
-                if (ValueInCurrentSlot.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ValueInCurrentSlot}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ValueInCurrentSlot}'");
+                    if (ValueInCurrentSlot.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ValueInCurrentSlot}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ValueInCurrentSlot}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ValueInTargetSlot))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValueInTargetSlot), out propertyOverride);
+            if (Optional.IsDefined(ValueInTargetSlot) || hasPropertyOverride)
             {
                 builder.Append("    valueInTargetSlot:");
-                if (ValueInTargetSlot.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ValueInTargetSlot}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ValueInTargetSlot}'");
+                    if (ValueInTargetSlot.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ValueInTargetSlot}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ValueInTargetSlot}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Description))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Description), out propertyOverride);
+            if (Optional.IsDefined(Description) || hasPropertyOverride)
             {
                 builder.Append("    description:");
-                if (Description.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Description}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Description}'");
+                    if (Description.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Description}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Description}'");
+                    }
                 }
             }
 

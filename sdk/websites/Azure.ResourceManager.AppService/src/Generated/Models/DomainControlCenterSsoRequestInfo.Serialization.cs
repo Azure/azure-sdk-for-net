@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -118,39 +119,69 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Uri))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (Optional.IsDefined(Uri) || hasPropertyOverride)
             {
                 builder.Append("  url:");
-                builder.AppendLine($" '{Uri.AbsoluteUri}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Uri.AbsoluteUri}'");
+                }
             }
 
-            if (Optional.IsDefined(PostParameterKey))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostParameterKey), out propertyOverride);
+            if (Optional.IsDefined(PostParameterKey) || hasPropertyOverride)
             {
                 builder.Append("  postParameterKey:");
-                if (PostParameterKey.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PostParameterKey}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PostParameterKey}'");
+                    if (PostParameterKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PostParameterKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PostParameterKey}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PostParameterValue))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostParameterValue), out propertyOverride);
+            if (Optional.IsDefined(PostParameterValue) || hasPropertyOverride)
             {
                 builder.Append("  postParameterValue:");
-                if (PostParameterValue.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PostParameterValue}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PostParameterValue}'");
+                    if (PostParameterValue.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PostParameterValue}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PostParameterValue}'");
+                    }
                 }
             }
 

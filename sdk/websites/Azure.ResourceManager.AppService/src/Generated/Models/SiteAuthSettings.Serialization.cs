@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -697,625 +698,967 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Kind))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
                 builder.Append("  kind:");
-                if (Kind.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Kind}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Kind}'");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Kind}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(IsEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
             {
                 builder.Append("    enabled:");
-                var boolValue = IsEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsDefined(RuntimeVersion))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
             {
                 builder.Append("    runtimeVersion:");
-                if (RuntimeVersion.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{RuntimeVersion}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RuntimeVersion}'");
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{RuntimeVersion}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(UnauthenticatedClientAction))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
+            if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
             {
                 builder.Append("    unauthenticatedClientAction:");
-                builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(IsTokenStoreEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsTokenStoreEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsTokenStoreEnabled) || hasPropertyOverride)
             {
                 builder.Append("    tokenStoreEnabled:");
-                var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsTokenStoreEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls) || hasPropertyOverride)
             {
-                if (AllowedExternalRedirectUrls.Any())
+                if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
                 {
                     builder.Append("    allowedExternalRedirectUrls:");
-                    builder.AppendLine(" [");
-                    foreach (var item in AllowedExternalRedirectUrls)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in AllowedExternalRedirectUrls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DefaultProvider))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProvider), out propertyOverride);
+            if (Optional.IsDefined(DefaultProvider) || hasPropertyOverride)
             {
                 builder.Append("    defaultProvider:");
-                builder.AppendLine($" '{DefaultProvider.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultProvider.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(TokenRefreshExtensionHours))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenRefreshExtensionHours), out propertyOverride);
+            if (Optional.IsDefined(TokenRefreshExtensionHours) || hasPropertyOverride)
             {
                 builder.Append("    tokenRefreshExtensionHours:");
-                builder.AppendLine($" '{TokenRefreshExtensionHours.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TokenRefreshExtensionHours.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(ClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
             {
                 builder.Append("    clientId:");
-                if (ClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientId}'");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecret), out propertyOverride);
+            if (Optional.IsDefined(ClientSecret) || hasPropertyOverride)
             {
                 builder.Append("    clientSecret:");
-                if (ClientSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecret}'");
+                    if (ClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    clientSecretSettingName:");
-                if (ClientSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretSettingName}'");
+                    if (ClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString) || hasPropertyOverride)
             {
                 builder.Append("    clientSecretCertificateThumbprint:");
-                if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+                    if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Issuer))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (Optional.IsDefined(Issuer) || hasPropertyOverride)
             {
                 builder.Append("    issuer:");
-                if (Issuer.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Issuer}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Issuer}'");
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Issuer}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ValidateIssuer))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidateIssuer), out propertyOverride);
+            if (Optional.IsDefined(ValidateIssuer) || hasPropertyOverride)
             {
                 builder.Append("    validateIssuer:");
-                var boolValue = ValidateIssuer.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ValidateIssuer.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(AllowedAudiences))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
             {
-                if (AllowedAudiences.Any())
+                if (AllowedAudiences.Any() || hasPropertyOverride)
                 {
                     builder.Append("    allowedAudiences:");
-                    builder.AppendLine(" [");
-                    foreach (var item in AllowedAudiences)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in AllowedAudiences)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(AdditionalLoginParams))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdditionalLoginParams), out propertyOverride);
+            if (Optional.IsCollectionDefined(AdditionalLoginParams) || hasPropertyOverride)
             {
-                if (AdditionalLoginParams.Any())
+                if (AdditionalLoginParams.Any() || hasPropertyOverride)
                 {
                     builder.Append("    additionalLoginParams:");
-                    builder.AppendLine(" [");
-                    foreach (var item in AdditionalLoginParams)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in AdditionalLoginParams)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AadClaimsAuthorization))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadClaimsAuthorization), out propertyOverride);
+            if (Optional.IsDefined(AadClaimsAuthorization) || hasPropertyOverride)
             {
                 builder.Append("    aadClaimsAuthorization:");
-                if (AadClaimsAuthorization.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AadClaimsAuthorization}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AadClaimsAuthorization}'");
+                    if (AadClaimsAuthorization.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AadClaimsAuthorization}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AadClaimsAuthorization}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GoogleClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientId), out propertyOverride);
+            if (Optional.IsDefined(GoogleClientId) || hasPropertyOverride)
             {
                 builder.Append("    googleClientId:");
-                if (GoogleClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GoogleClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GoogleClientId}'");
+                    if (GoogleClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GoogleClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GoogleClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GoogleClientSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecret), out propertyOverride);
+            if (Optional.IsDefined(GoogleClientSecret) || hasPropertyOverride)
             {
                 builder.Append("    googleClientSecret:");
-                if (GoogleClientSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GoogleClientSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GoogleClientSecret}'");
+                    if (GoogleClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GoogleClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GoogleClientSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GoogleClientSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(GoogleClientSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    googleClientSecretSettingName:");
-                if (GoogleClientSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GoogleClientSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GoogleClientSecretSettingName}'");
+                    if (GoogleClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GoogleClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GoogleClientSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(GoogleOAuthScopes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GoogleOAuthScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(GoogleOAuthScopes) || hasPropertyOverride)
             {
-                if (GoogleOAuthScopes.Any())
+                if (GoogleOAuthScopes.Any() || hasPropertyOverride)
                 {
                     builder.Append("    googleOAuthScopes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in GoogleOAuthScopes)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in GoogleOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(FacebookAppId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppId), out propertyOverride);
+            if (Optional.IsDefined(FacebookAppId) || hasPropertyOverride)
             {
                 builder.Append("    facebookAppId:");
-                if (FacebookAppId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{FacebookAppId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FacebookAppId}'");
+                    if (FacebookAppId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{FacebookAppId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{FacebookAppId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(FacebookAppSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecret), out propertyOverride);
+            if (Optional.IsDefined(FacebookAppSecret) || hasPropertyOverride)
             {
                 builder.Append("    facebookAppSecret:");
-                if (FacebookAppSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{FacebookAppSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FacebookAppSecret}'");
+                    if (FacebookAppSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{FacebookAppSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{FacebookAppSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(FacebookAppSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookAppSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(FacebookAppSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    facebookAppSecretSettingName:");
-                if (FacebookAppSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{FacebookAppSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{FacebookAppSecretSettingName}'");
+                    if (FacebookAppSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{FacebookAppSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{FacebookAppSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(FacebookOAuthScopes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FacebookOAuthScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(FacebookOAuthScopes) || hasPropertyOverride)
             {
-                if (FacebookOAuthScopes.Any())
+                if (FacebookOAuthScopes.Any() || hasPropertyOverride)
                 {
                     builder.Append("    facebookOAuthScopes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in FacebookOAuthScopes)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in FacebookOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GitHubClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientId), out propertyOverride);
+            if (Optional.IsDefined(GitHubClientId) || hasPropertyOverride)
             {
                 builder.Append("    gitHubClientId:");
-                if (GitHubClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GitHubClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GitHubClientId}'");
+                    if (GitHubClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GitHubClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GitHubClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GitHubClientSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecret), out propertyOverride);
+            if (Optional.IsDefined(GitHubClientSecret) || hasPropertyOverride)
             {
                 builder.Append("    gitHubClientSecret:");
-                if (GitHubClientSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GitHubClientSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GitHubClientSecret}'");
+                    if (GitHubClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GitHubClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GitHubClientSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(GitHubClientSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(GitHubClientSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    gitHubClientSecretSettingName:");
-                if (GitHubClientSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GitHubClientSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GitHubClientSecretSettingName}'");
+                    if (GitHubClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GitHubClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GitHubClientSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(GitHubOAuthScopes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHubOAuthScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(GitHubOAuthScopes) || hasPropertyOverride)
             {
-                if (GitHubOAuthScopes.Any())
+                if (GitHubOAuthScopes.Any() || hasPropertyOverride)
                 {
                     builder.Append("    gitHubOAuthScopes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in GitHubOAuthScopes)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in GitHubOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TwitterConsumerKey))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerKey), out propertyOverride);
+            if (Optional.IsDefined(TwitterConsumerKey) || hasPropertyOverride)
             {
                 builder.Append("    twitterConsumerKey:");
-                if (TwitterConsumerKey.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TwitterConsumerKey}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TwitterConsumerKey}'");
+                    if (TwitterConsumerKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TwitterConsumerKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TwitterConsumerKey}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TwitterConsumerSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecret), out propertyOverride);
+            if (Optional.IsDefined(TwitterConsumerSecret) || hasPropertyOverride)
             {
                 builder.Append("    twitterConsumerSecret:");
-                if (TwitterConsumerSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TwitterConsumerSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TwitterConsumerSecret}'");
+                    if (TwitterConsumerSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TwitterConsumerSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TwitterConsumerSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TwitterConsumerSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TwitterConsumerSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(TwitterConsumerSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    twitterConsumerSecretSettingName:");
-                if (TwitterConsumerSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TwitterConsumerSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TwitterConsumerSecretSettingName}'");
+                    if (TwitterConsumerSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TwitterConsumerSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TwitterConsumerSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MicrosoftAccountClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientId), out propertyOverride);
+            if (Optional.IsDefined(MicrosoftAccountClientId) || hasPropertyOverride)
             {
                 builder.Append("    microsoftAccountClientId:");
-                if (MicrosoftAccountClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MicrosoftAccountClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MicrosoftAccountClientId}'");
+                    if (MicrosoftAccountClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MicrosoftAccountClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MicrosoftAccountClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MicrosoftAccountClientSecret))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecret), out propertyOverride);
+            if (Optional.IsDefined(MicrosoftAccountClientSecret) || hasPropertyOverride)
             {
                 builder.Append("    microsoftAccountClientSecret:");
-                if (MicrosoftAccountClientSecret.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MicrosoftAccountClientSecret}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MicrosoftAccountClientSecret}'");
+                    if (MicrosoftAccountClientSecret.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MicrosoftAccountClientSecret}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MicrosoftAccountClientSecret}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(MicrosoftAccountClientSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("    microsoftAccountClientSecretSettingName:");
-                if (MicrosoftAccountClientSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MicrosoftAccountClientSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MicrosoftAccountClientSecretSettingName}'");
+                    if (MicrosoftAccountClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MicrosoftAccountClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MicrosoftAccountClientSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftAccountOAuthScopes), out propertyOverride);
+            if (Optional.IsCollectionDefined(MicrosoftAccountOAuthScopes) || hasPropertyOverride)
             {
-                if (MicrosoftAccountOAuthScopes.Any())
+                if (MicrosoftAccountOAuthScopes.Any() || hasPropertyOverride)
                 {
                     builder.Append("    microsoftAccountOAuthScopes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in MicrosoftAccountOAuthScopes)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("      '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"      '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("    ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in MicrosoftAccountOAuthScopes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("      '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"      '{item}'");
+                            }
+                        }
+                        builder.AppendLine("    ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IsAuthFromFile))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthFromFile), out propertyOverride);
+            if (Optional.IsDefined(IsAuthFromFile) || hasPropertyOverride)
             {
                 builder.Append("    isAuthFromFile:");
-                if (IsAuthFromFile.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{IsAuthFromFile}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{IsAuthFromFile}'");
+                    if (IsAuthFromFile.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{IsAuthFromFile}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{IsAuthFromFile}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AuthFilePath))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthFilePath), out propertyOverride);
+            if (Optional.IsDefined(AuthFilePath) || hasPropertyOverride)
             {
                 builder.Append("    authFilePath:");
-                if (AuthFilePath.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AuthFilePath}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AuthFilePath}'");
+                    if (AuthFilePath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AuthFilePath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AuthFilePath}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ConfigVersion))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigVersion), out propertyOverride);
+            if (Optional.IsDefined(ConfigVersion) || hasPropertyOverride)
             {
                 builder.Append("    configVersion:");
-                if (ConfigVersion.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ConfigVersion}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ConfigVersion}'");
+                    if (ConfigVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ConfigVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ConfigVersion}'");
+                    }
                 }
             }
 

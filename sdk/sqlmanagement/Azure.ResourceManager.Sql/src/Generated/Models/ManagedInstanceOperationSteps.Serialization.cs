@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -133,39 +134,69 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TotalSteps))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalSteps), out propertyOverride);
+            if (Optional.IsDefined(TotalSteps) || hasPropertyOverride)
             {
                 builder.Append("  totalSteps:");
-                if (TotalSteps.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TotalSteps}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TotalSteps}'");
+                    if (TotalSteps.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TotalSteps}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TotalSteps}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(CurrentStep))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentStep), out propertyOverride);
+            if (Optional.IsDefined(CurrentStep) || hasPropertyOverride)
             {
                 builder.Append("  currentStep:");
-                builder.AppendLine($" {CurrentStep.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {CurrentStep.Value}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(StepsList))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepsList), out propertyOverride);
+            if (Optional.IsCollectionDefined(StepsList) || hasPropertyOverride)
             {
-                if (StepsList.Any())
+                if (StepsList.Any() || hasPropertyOverride)
                 {
                     builder.Append("  stepsList:");
-                    builder.AppendLine(" [");
-                    foreach (var item in StepsList)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in StepsList)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

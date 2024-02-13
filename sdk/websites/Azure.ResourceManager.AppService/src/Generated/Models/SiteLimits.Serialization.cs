@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -126,24 +127,54 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(MaxPercentageCpu))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxPercentageCpu), out propertyOverride);
+            if (Optional.IsDefined(MaxPercentageCpu) || hasPropertyOverride)
             {
                 builder.Append("  maxPercentageCpu:");
-                builder.AppendLine($" '{MaxPercentageCpu.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxPercentageCpu.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(MaxMemoryInMb))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxMemoryInMb), out propertyOverride);
+            if (Optional.IsDefined(MaxMemoryInMb) || hasPropertyOverride)
             {
                 builder.Append("  maxMemoryInMb:");
-                builder.AppendLine($" '{MaxMemoryInMb.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxMemoryInMb.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(MaxDiskSizeInMb))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxDiskSizeInMb), out propertyOverride);
+            if (Optional.IsDefined(MaxDiskSizeInMb) || hasPropertyOverride)
             {
                 builder.Append("  maxDiskSizeInMb:");
-                builder.AppendLine($" '{MaxDiskSizeInMb.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxDiskSizeInMb.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -141,32 +142,70 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(CodeConfiguration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CodeConfiguration), out propertyOverride);
+            if (Optional.IsDefined(CodeConfiguration) || hasPropertyOverride)
             {
                 builder.Append("  codeConfiguration:");
-                AppendChildObject(builder, CodeConfiguration, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, CodeConfiguration, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(ContainerConfiguration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerConfiguration), out propertyOverride);
+            if (Optional.IsDefined(ContainerConfiguration) || hasPropertyOverride)
             {
                 builder.Append("  containerConfiguration:");
-                AppendChildObject(builder, ContainerConfiguration, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ContainerConfiguration, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(IsLinux))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLinux), out propertyOverride);
+            if (Optional.IsDefined(IsLinux) || hasPropertyOverride)
             {
                 builder.Append("  isLinux:");
-                var boolValue = IsLinux.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLinux.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsDefined(GenerateWorkflowFile))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GenerateWorkflowFile), out propertyOverride);
+            if (Optional.IsDefined(GenerateWorkflowFile) || hasPropertyOverride)
             {
                 builder.Append("  generateWorkflowFile:");
-                var boolValue = GenerateWorkflowFile.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = GenerateWorkflowFile.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
             builder.AppendLine("}");

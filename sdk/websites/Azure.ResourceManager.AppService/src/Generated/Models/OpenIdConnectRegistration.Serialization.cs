@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -122,32 +123,62 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
             {
                 builder.Append("  clientId:");
-                if (ClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientId}'");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientCredential))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientCredential), out propertyOverride);
+            if (Optional.IsDefined(ClientCredential) || hasPropertyOverride)
             {
                 builder.Append("  clientCredential:");
-                AppendChildObject(builder, ClientCredential, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ClientCredential, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(OpenIdConnectConfiguration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdConnectConfiguration), out propertyOverride);
+            if (Optional.IsDefined(OpenIdConnectConfiguration) || hasPropertyOverride)
             {
                 builder.Append("  openIdConnectConfiguration:");
-                AppendChildObject(builder, OpenIdConnectConfiguration, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, OpenIdConnectConfiguration, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

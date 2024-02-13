@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -162,45 +163,83 @@ namespace Azure.ResourceManager.KeyVault.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Bypass))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bypass), out propertyOverride);
+            if (Optional.IsDefined(Bypass) || hasPropertyOverride)
             {
                 builder.Append("  bypass:");
-                builder.AppendLine($" '{Bypass.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(DefaultAction))
-            {
-                builder.Append("  defaultAction:");
-                builder.AppendLine($" '{DefaultAction.Value.ToString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(IPRules))
-            {
-                if (IPRules.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  ipRules:");
-                    builder.AppendLine(" [");
-                    foreach (var item in IPRules)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Bypass.Value.ToString()}'");
                 }
             }
 
-            if (Optional.IsCollectionDefined(VirtualNetworkRules))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAction), out propertyOverride);
+            if (Optional.IsDefined(DefaultAction) || hasPropertyOverride)
             {
-                if (VirtualNetworkRules.Any())
+                builder.Append("  defaultAction:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{DefaultAction.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(IPRules) || hasPropertyOverride)
+            {
+                if (IPRules.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  ipRules:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in IPRules)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualNetworkRules), out propertyOverride);
+            if (Optional.IsCollectionDefined(VirtualNetworkRules) || hasPropertyOverride)
+            {
+                if (VirtualNetworkRules.Any() || hasPropertyOverride)
                 {
                     builder.Append("  virtualNetworkRules:");
-                    builder.AppendLine(" [");
-                    foreach (var item in VirtualNetworkRules)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in VirtualNetworkRules)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

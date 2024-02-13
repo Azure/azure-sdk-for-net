@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -145,75 +146,105 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(MasterKey))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterKey), out propertyOverride);
+            if (Optional.IsDefined(MasterKey) || hasPropertyOverride)
             {
                 builder.Append("  masterKey:");
-                if (MasterKey.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MasterKey}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MasterKey}'");
+                    if (MasterKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MasterKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MasterKey}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(FunctionKeys))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FunctionKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(FunctionKeys) || hasPropertyOverride)
             {
-                if (FunctionKeys.Any())
+                if (FunctionKeys.Any() || hasPropertyOverride)
                 {
                     builder.Append("  functionKeys:");
-                    builder.AppendLine(" {");
-                    foreach (var item in FunctionKeys)
+                    if (hasPropertyOverride)
                     {
-                        builder.Append($"    {item.Key}:");
-                        if (item.Value == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Value.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine(" '''");
-                            builder.AppendLine($"{item.Value}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($" '{item.Value}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  }");
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in FunctionKeys)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine(" '''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($" '{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(SystemKeys))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(SystemKeys) || hasPropertyOverride)
             {
-                if (SystemKeys.Any())
+                if (SystemKeys.Any() || hasPropertyOverride)
                 {
                     builder.Append("  systemKeys:");
-                    builder.AppendLine(" {");
-                    foreach (var item in SystemKeys)
+                    if (hasPropertyOverride)
                     {
-                        builder.Append($"    {item.Key}:");
-                        if (item.Value == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Value.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine(" '''");
-                            builder.AppendLine($"{item.Value}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($" '{item.Value}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  }");
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in SystemKeys)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine(" '''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($" '{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
                 }
             }
 

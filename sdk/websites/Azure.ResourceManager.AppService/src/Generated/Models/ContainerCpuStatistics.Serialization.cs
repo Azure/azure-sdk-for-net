@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -141,30 +142,68 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(CpuUsage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CpuUsage), out propertyOverride);
+            if (Optional.IsDefined(CpuUsage) || hasPropertyOverride)
             {
                 builder.Append("  cpuUsage:");
-                AppendChildObject(builder, CpuUsage, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, CpuUsage, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(SystemCpuUsage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemCpuUsage), out propertyOverride);
+            if (Optional.IsDefined(SystemCpuUsage) || hasPropertyOverride)
             {
                 builder.Append("  systemCpuUsage:");
-                builder.AppendLine($" '{SystemCpuUsage.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemCpuUsage.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(OnlineCpuCount))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OnlineCpuCount), out propertyOverride);
+            if (Optional.IsDefined(OnlineCpuCount) || hasPropertyOverride)
             {
                 builder.Append("  onlineCpuCount:");
-                builder.AppendLine($" {OnlineCpuCount.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {OnlineCpuCount.Value}");
+                }
             }
 
-            if (Optional.IsDefined(ThrottlingData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottlingData), out propertyOverride);
+            if (Optional.IsDefined(ThrottlingData) || hasPropertyOverride)
             {
                 builder.Append("  throttlingData:");
-                AppendChildObject(builder, ThrottlingData, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ThrottlingData, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

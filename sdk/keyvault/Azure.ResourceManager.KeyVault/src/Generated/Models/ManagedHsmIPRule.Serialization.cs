@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -89,19 +90,33 @@ namespace Azure.ResourceManager.KeyVault.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(AddressRange))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressRange), out propertyOverride);
+            if (Optional.IsDefined(AddressRange) || hasPropertyOverride)
             {
                 builder.Append("  value:");
-                if (AddressRange.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AddressRange}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AddressRange}'");
+                    if (AddressRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AddressRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AddressRange}'");
+                    }
                 }
             }
 

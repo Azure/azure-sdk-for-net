@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -155,68 +156,114 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(AccountName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountName), out propertyOverride);
+            if (Optional.IsDefined(AccountName) || hasPropertyOverride)
             {
                 builder.Append("  accountName:");
-                if (AccountName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AccountName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AccountName}'");
+                    if (AccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AccountName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ShareName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareName), out propertyOverride);
+            if (Optional.IsDefined(ShareName) || hasPropertyOverride)
             {
                 builder.Append("  shareName:");
-                if (ShareName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ShareName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ShareName}'");
+                    if (ShareName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ShareName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ShareName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AccessKey))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessKey), out propertyOverride);
+            if (Optional.IsDefined(AccessKey) || hasPropertyOverride)
             {
                 builder.Append("  accessKey:");
-                if (AccessKey.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AccessKey}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AccessKey}'");
+                    if (AccessKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AccessKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AccessKey}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MountPath))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MountPath), out propertyOverride);
+            if (Optional.IsDefined(MountPath) || hasPropertyOverride)
             {
                 builder.Append("  mountPath:");
-                if (MountPath.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MountPath}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MountPath}'");
+                    if (MountPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MountPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MountPath}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(State))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
             {
                 builder.Append("  state:");
-                builder.AppendLine($" '{State.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{State.Value.ToSerialString()}'");
+                }
             }
 
             builder.AppendLine("}");

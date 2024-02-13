@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -385,158 +386,300 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(ProvisioningState))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
             {
                 builder.Append("  provisioningState:");
-                builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProvisioningState.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(CorrelationId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
+            if (Optional.IsDefined(CorrelationId) || hasPropertyOverride)
             {
                 builder.Append("  correlationId:");
-                if (CorrelationId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{CorrelationId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{CorrelationId}'");
+                    if (CorrelationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{CorrelationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{CorrelationId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Timestamp))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
             {
                 builder.Append("  timestamp:");
-                var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
-            }
-
-            if (Optional.IsDefined(Duration))
-            {
-                builder.Append("  duration:");
-                var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
-                builder.AppendLine($" '{formattedTimeSpan}'");
-            }
-
-            if (Optional.IsDefined(Outputs))
-            {
-                builder.Append("  outputs:");
-                builder.AppendLine($" '{Outputs.ToString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(Providers))
-            {
-                if (Providers.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  providers:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Providers)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsCollectionDefined(Dependencies))
-            {
-                if (Dependencies.Any())
-                {
-                    builder.Append("  dependencies:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Dependencies)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
-                }
-            }
-
-            if (Optional.IsDefined(TemplateLink))
-            {
-                builder.Append("  templateLink:");
-                AppendChildObject(builder, TemplateLink, options, 2, false);
-            }
-
-            if (Optional.IsDefined(Parameters))
-            {
-                builder.Append("  parameters:");
-                builder.AppendLine($" '{Parameters.ToString()}'");
-            }
-
-            if (Optional.IsDefined(ParametersLink))
-            {
-                builder.Append("  parametersLink:");
-                AppendChildObject(builder, ParametersLink, options, 2, false);
-            }
-
-            if (Optional.IsDefined(Mode))
-            {
-                builder.Append("  mode:");
-                builder.AppendLine($" '{Mode.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(DebugSetting))
-            {
-                builder.Append("  debugSetting:");
-                AppendChildObject(builder, DebugSetting, options, 2, false);
-            }
-
-            if (Optional.IsDefined(ErrorDeployment))
-            {
-                builder.Append("  onErrorDeployment:");
-                AppendChildObject(builder, ErrorDeployment, options, 2, false);
-            }
-
-            if (Optional.IsDefined(TemplateHash))
-            {
-                builder.Append("  templateHash:");
-                if (TemplateHash.Contains(Environment.NewLine))
-                {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TemplateHash}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TemplateHash}'");
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
                 }
             }
 
-            if (Optional.IsCollectionDefined(OutputResources))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (Optional.IsDefined(Duration) || hasPropertyOverride)
             {
-                if (OutputResources.Any())
+                builder.Append("  duration:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                    builder.AppendLine($" '{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Outputs), out propertyOverride);
+            if (Optional.IsDefined(Outputs) || hasPropertyOverride)
+            {
+                builder.Append("  outputs:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Outputs.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Providers), out propertyOverride);
+            if (Optional.IsCollectionDefined(Providers) || hasPropertyOverride)
+            {
+                if (Providers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  providers:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Providers)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dependencies), out propertyOverride);
+            if (Optional.IsCollectionDefined(Dependencies) || hasPropertyOverride)
+            {
+                if (Dependencies.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dependencies:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Dependencies)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateLink), out propertyOverride);
+            if (Optional.IsDefined(TemplateLink) || hasPropertyOverride)
+            {
+                builder.Append("  templateLink:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, TemplateLink, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (Optional.IsDefined(Parameters) || hasPropertyOverride)
+            {
+                builder.Append("  parameters:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Parameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParametersLink), out propertyOverride);
+            if (Optional.IsDefined(ParametersLink) || hasPropertyOverride)
+            {
+                builder.Append("  parametersLink:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ParametersLink, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (Optional.IsDefined(Mode) || hasPropertyOverride)
+            {
+                builder.Append("  mode:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Mode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DebugSetting), out propertyOverride);
+            if (Optional.IsDefined(DebugSetting) || hasPropertyOverride)
+            {
+                builder.Append("  debugSetting:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, DebugSetting, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDeployment), out propertyOverride);
+            if (Optional.IsDefined(ErrorDeployment) || hasPropertyOverride)
+            {
+                builder.Append("  onErrorDeployment:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, ErrorDeployment, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateHash), out propertyOverride);
+            if (Optional.IsDefined(TemplateHash) || hasPropertyOverride)
+            {
+                builder.Append("  templateHash:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (TemplateHash.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TemplateHash}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TemplateHash}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(OutputResources) || hasPropertyOverride)
+            {
+                if (OutputResources.Any() || hasPropertyOverride)
                 {
                     builder.Append("  outputResources:");
-                    builder.AppendLine(" [");
-                    foreach (var item in OutputResources)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in OutputResources)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(ValidatedResources))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(ValidatedResources) || hasPropertyOverride)
             {
-                if (ValidatedResources.Any())
+                if (ValidatedResources.Any() || hasPropertyOverride)
                 {
                     builder.Append("  validatedResources:");
-                    builder.AppendLine(" [");
-                    foreach (var item in ValidatedResources)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in ValidatedResources)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Error))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (Optional.IsDefined(Error) || hasPropertyOverride)
             {
                 builder.Append("  error:");
-                AppendChildObject(builder, Error, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Error, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");
