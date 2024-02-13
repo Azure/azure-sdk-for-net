@@ -1,6 +1,6 @@
 # Generated code configuration
 
-Run `dotnet build /t:GenerateCode` to generate code.
+Run `dotnet build /t:GenerateCode` to generate code. Test
 
 # Azure.ResourceManager.Compute
 
