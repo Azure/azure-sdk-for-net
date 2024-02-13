@@ -68,7 +68,7 @@ resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-mnash-cdk'
   location: 'westus'
   properties: {
-    tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+    tenantId: '00000000-0000-0000-0000-000000000000'
     sku: {
       name: 'standard'
       family: 'A'
