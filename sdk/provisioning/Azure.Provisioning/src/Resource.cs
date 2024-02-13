@@ -104,7 +104,7 @@ namespace Azure.Provisioning
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
         public void AssignParameter(object instance, string propertyName, Parameter parameter)
         {
-            ParameterOverrides.Add(instance, new Dictionary<string, string> {  { propertyName.ToCamelCase(), parameter.Name } });
+            ParameterOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, parameter.Name } });
             Parameters.Add(parameter);
         }
 

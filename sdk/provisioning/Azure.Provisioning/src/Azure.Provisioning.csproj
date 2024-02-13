@@ -16,5 +16,5 @@
     <PackageReference Include="Azure.ResourceManager.AppService" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
-  
+
 </Project>

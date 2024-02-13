@@ -107,7 +107,7 @@ resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   parent: keyVault_CRoMbemLF
   name: 'appUserPassword'
   properties: {
-    value: '00000000-0000-0000-0000-000000000000'
+    value: appUserPassword
   }
 }
 
@@ -117,7 +117,7 @@ resource sqlServer_zjdvvB2wl 'Microsoft.Sql/servers@2022-08-01-preview' = {
   location: 'westus'
   properties: {
     administratorLogin: 'sqladmin'
-    administratorLoginPassword: '00000000-0000-0000-0000-000000000000'
+    administratorLoginPassword: sqlAdminPassword
     version: '12.0'
     minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
