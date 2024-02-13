@@ -42,8 +42,9 @@ namespace Azure.Provisioning
         /// <param name="scope">The scope the construct belongs to.</param>
         /// <param name="name">The name of the construct.</param>
         /// <param name="constructScope">The <see cref="ConstructScope"/> the construct is.</param>
+        /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
         /// <exception cref="ArgumentException"><paramref name="constructScope"/> is <see cref="ConstructScope.ResourceGroup"/> and <paramref name="scope"/> is null.</exception>
-        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup)
+        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null)
         {
             if (scope is null && constructScope == ConstructScope.ResourceGroup)
             {
@@ -58,7 +59,7 @@ namespace Azure.Provisioning
             _constructs = new List<IConstruct>();
             _existingResources = new List<Resource>();
             Name = name;
-            Root = scope?.Root ?? new Tenant(this);
+            Root = scope?.Root ?? new Tenant(this, tenantId);
             ConstructScope = constructScope;
             if (constructScope == ConstructScope.ResourceGroup)
             {

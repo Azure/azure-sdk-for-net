@@ -21,8 +21,9 @@ namespace Azure.Provisioning
         /// Initializes a new instance of the <see cref="Infrastructure"/> class.
         /// </summary>
         /// <param name="constructScope">The <see cref="ConstructScope"/> to use for the root <see cref="IConstruct"/>.</param>
-        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription)
-            : base(null, "default", constructScope)
+        /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
+        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null)
+            : base(null, "default", constructScope, tenantId)
         {
         }
 
