@@ -1,20 +1,20 @@
 
-resource appServicePlan_zDVZJZSeJ 'Microsoft.Web/serverfarms@2021-02-01' existing = {
-  name: 'appServicePlan_zDVZJZSeJ'
+resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' existing = {
+  name: 'appServicePlan_kjMZSF1FP'
 }
 
-resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-  name: 'keyVault_n6Xn70PzJ'
+resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: 'keyVault_CRoMbemLF'
 }
 
-resource webSite_kwcoFVmFY 'Microsoft.Web/sites@2021-02-01' = {
+resource webSite_5n5qLSHlO 'Microsoft.Web/sites@2021-02-01' = {
   name: 'frontEnd-mnash-cdk'
   location: 'westus'
   identity: {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-mnash-cdk/providers/Microsoft.Web/serverfarms/appServicePlan-mnash-cdk'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -34,13 +34,13 @@ resource webSite_kwcoFVmFY 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_GTzB2G8tg 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_kwcoFVmFY
+resource applicationSettingsResource_0dS4jj7Cg 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_5n5qLSHlO
   name: 'appsettings'
 }
 
-resource webSiteConfigLogs_caWaXRSC1 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_kwcoFVmFY
+resource webSiteConfigLogs_PBLecfGMJ 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_5n5qLSHlO
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -64,4 +64,4 @@ resource webSiteConfigLogs_caWaXRSC1 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_kwcoFVmFY.identity.principalId
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_5n5qLSHlO.identity.principalId

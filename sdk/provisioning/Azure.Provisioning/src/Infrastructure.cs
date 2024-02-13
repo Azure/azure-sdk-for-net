@@ -15,16 +15,15 @@ namespace Azure.Provisioning
     public abstract class Infrastructure : Construct
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        internal static readonly string Seed = Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'");
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Infrastructure"/> class.
         /// </summary>
         /// <param name="constructScope">The <see cref="ConstructScope"/> to use for the root <see cref="IConstruct"/>.</param>
         /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
         /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
-        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null, Guid? subscriptionId = null)
-            : base(null, "default", constructScope, tenantId, subscriptionId)
+        /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
+        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null)
+            : base(null, "default", constructScope, tenantId, subscriptionId, envName)
         {
         }
 

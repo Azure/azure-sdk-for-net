@@ -7,7 +7,7 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource appServicePlan_zDVZJZSeJ 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource appServicePlan_rxltck14T 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-mnash-cdk'
   location: 'westus'
   sku: {
@@ -18,7 +18,7 @@ resource appServicePlan_zDVZJZSeJ 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' = {
+resource keyVault_sofGLX66Z 'Microsoft.KeyVault/vaults@2023-02-01' = {
   name: 'kv-mnash-cdk'
   location: 'westus'
   tags: {
@@ -33,8 +33,8 @@ resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_pzaknyGaJ 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultAddAccessPolicy_k8EvVNryo 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_sofGLX66Z
   name: 'add'
   properties: {
     accessPolicies: [
@@ -54,12 +54,12 @@ resource keyVaultAddAccessPolicy_pzaknyGaJ 'Microsoft.KeyVault/vaults/accessPoli
 
 module TestFrontEndWebSite './resources/TestFrontEndWebSite/TestFrontEndWebSite.bicep' = {
   name: 'TestFrontEndWebSite'
-  scope: resourceGroup_IABVtvgDt
+  scope: resourceGroup_I6QNkoPsb
 }
 
 module TestCommonSqlDatabase './resources/TestCommonSqlDatabase/TestCommonSqlDatabase.bicep' = {
   name: 'TestCommonSqlDatabase'
-  scope: resourceGroup_IABVtvgDt
+  scope: resourceGroup_I6QNkoPsb
   params: {
     sqlAdminPassword: sqlAdminPassword
     appUserPassword: appUserPassword
@@ -68,7 +68,7 @@ module TestCommonSqlDatabase './resources/TestCommonSqlDatabase/TestCommonSqlDat
 
 module TestBackEndWebSite './resources/TestBackEndWebSite/TestBackEndWebSite.bicep' = {
   name: 'TestBackEndWebSite'
-  scope: resourceGroup_IABVtvgDt
+  scope: resourceGroup_I6QNkoPsb
 }
 
 output SERVICE_API_IDENTITY_PRINCIPAL_ID string = TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
