@@ -7,8 +7,9 @@ namespace Azure.Provisioning
     }
     public abstract partial class Construct : Azure.Provisioning.IConstruct, System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Construct>
     {
-        protected Construct(Azure.Provisioning.IConstruct? scope, string name, Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.ResourceGroup, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?)) { }
+        protected Construct(Azure.Provisioning.IConstruct? scope, string name, Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.ResourceGroup, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null) { }
         public Azure.Provisioning.ConstructScope ConstructScope { get { throw null; } }
+        public string EnvironmentName { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.Provisioning.ResourceManager.ResourceGroup? ResourceGroup { get { throw null; } protected set { } }
         public Azure.Provisioning.ResourceManager.Tenant Root { get { throw null; } }
@@ -37,6 +38,7 @@ namespace Azure.Provisioning
     public partial interface IConstruct
     {
         Azure.Provisioning.ConstructScope ConstructScope { get; }
+        string EnvironmentName { get; }
         string Name { get; }
         Azure.Provisioning.ResourceManager.ResourceGroup? ResourceGroup { get; }
         Azure.Provisioning.ResourceManager.Tenant Root { get; }
@@ -53,7 +55,7 @@ namespace Azure.Provisioning
     }
     public abstract partial class Infrastructure : Azure.Provisioning.Construct
     {
-        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?)) { }
+        public Infrastructure(Azure.Provisioning.ConstructScope constructScope = Azure.Provisioning.ConstructScope.Subscription, System.Guid? tenantId = default(System.Guid?), System.Guid? subscriptionId = default(System.Guid?), string? envName = null) : base (default(Azure.Provisioning.IConstruct), default(string), default(Azure.Provisioning.ConstructScope), default(System.Guid?), default(System.Guid?), default(string)) { }
         public void Build(string? outputPath = null) { }
     }
     public partial class Output
