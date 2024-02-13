@@ -374,7 +374,22 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // MaxConcurrentCallsPerSession > 1, but in that case FIFO is not possible to guarantee.
                 if (_isSessionReceiver && !_isProcessor && messageList.Count < maxMessages)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    var drainTask = link.DrainAsyc(cancellationToken);
+                    try
+                    {
+                        while (!drainTask.IsCompleted)
+                        {
+                            var additionalMessage = await link.ReceiveMessageAsync(TimeSpan.FromMilliseconds(0), cancellationToken).ConfigureAwait(false);
+                            if (additionalMessage != null)
+                            {
+                                link.ReleaseMessage(additionalMessage);
+                            }
+                        }
+                        await drainTask.ConfigureAwait(false);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
                 }
 
                 List<ServiceBusReceivedMessage> receivedMessages = null;
@@ -1398,22 +1413,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 if (!_isSessionReceiver && link.LinkCredit > 0)
                 {
-                    var drainTask = link.DrainAsyc(cancellationToken);
-                    try
-                    {
-                        while (!drainTask.IsCompleted)
-                        {
-                            var additionalMessage = await link.ReceiveMessageAsync(TimeSpan.FromMilliseconds(0), cancellationToken).ConfigureAwait(false);
-                            if (additionalMessage != null)
-                            {
-                                link.ReleaseMessage(additionalMessage);
-                            }
-                        }
-                        await drainTask.ConfigureAwait(false);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                    }
+                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
                 }
 
                 await _receiveLink.CloseAsync(CancellationToken.None).ConfigureAwait(false);
