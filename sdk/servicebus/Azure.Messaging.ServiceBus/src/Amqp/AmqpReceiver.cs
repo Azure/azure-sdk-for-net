@@ -375,6 +375,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
                     await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+
+                    // These workarounds are necessary in order to resume prefetching after the link has been drained
+                    // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
                     if (_prefetchCount > 0)
                     {
                         link.Settings.TotalLinkCredit = 0;
