@@ -10,6 +10,28 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
     internal class Sample01_CriticalResultSample
     {
+        private const string DOC_CONTENT = "CLINICAL HISTORY:   "
+            + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
+            + "\r\n "
+            + "\r\nCOMPARISON:   "
+            + "\r\nRight upper quadrant sonographic performed 1 day prior."
+            + "\r\n "
+            + "\r\nTECHNIQUE:   "
+            + "\r\nTransabdominal grayscale pelvic sonography with duplex color Doppler "
+            + "\r\nand spectral waveform analysis of the ovaries."
+            + "\r\n "
+            + "\r\nFINDINGS:   "
+            + "\r\nThe uterus is unremarkable given the transabdominal technique with "
+            + "\r\nendometrial echo complex within physiologic normal limits. The "
+            + "\r\novaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the "
+            + "\r\nleft measuring 2.8 x 1.5 x 1.9 cm.\n \r\nOn duplex imaging, Doppler signal is symmetric."
+            + "\r\n "
+            + "\r\nIMPRESSION:   "
+            + "\r\n1. Normal pelvic sonography. Findings of testicular torsion."
+            + "\r\n\nA new US pelvis within the next 6 months is recommended."
+            + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
+            + "\r\n";
+
         [Test]
         public void RadiologyInsightsCriticalResultScenario()
         {
@@ -97,7 +119,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 }
             };
             List<Encounter> encounterList = new() { encounter };
-            DocumentContent documentContent = new(DocumentContentSourceType.Inline, "CLINICAL HISTORY:   \n        20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy.\n        COMPARISON:   \n        Right upper quadrant sonographic performed 1 day prior.\n        TECHNIQUE:   \n        Transabdominal grayscale pelvic sonography with duplex color Doppler and spectral waveform analysis of the ovaries.\n        FINDINGS:   \n        The uterus is unremarkable given the transabdominal technique with endometrial echo complex within physiologic normal limits. The ovaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the left measuring 2.8 x 1.5 x 1.9 cm.\n On duplex imaging, Doppler signal is symmetric.\n        IMPRESSION:   \n        1. Normal pelvic sonography. Findings of testicular torsion.\n        A new US pelvis within the next 6 months is recommended.\n        These results have been discussed with Dr. Jones at 3 PM on November 5 2020.");
+            DocumentContent documentContent = new(DocumentContentSourceType.Inline, DOC_CONTENT);
             PatientDocument patientDocument = new(DocumentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,

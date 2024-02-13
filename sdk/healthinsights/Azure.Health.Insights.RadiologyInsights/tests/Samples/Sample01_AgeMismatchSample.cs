@@ -4,12 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_CriticalResultSampleAsync
+    internal class Sample01_AgeMismatchSample
     {
         private const string DOC_CONTENT = "CLINICAL HISTORY:   "
             + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
@@ -34,7 +33,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             + "\r\n";
 
         [Test]
-        public async Task RadiologyInsightsCriticalResultScenario()
+        public void RadiologyInsightsAgeMismatchScenario()
         {
             Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
             AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
@@ -42,18 +41,58 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
-                if (inference is CriticalResultInference criticalResultInference)
+                if (inference is AgeMismatchInference ageMismatchInference)
                 {
-                    Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+                    Console.Write("Age Mismatch Inference found");
+                    IReadOnlyList<Extension> extensions = ageMismatchInference.Extension;
+                    Console.Write("   Evidence: " + ExtractEvidence(extensions));
                 }
             }
+        }
+
+        private static String ExtractEvidence(IReadOnlyList<Extension> extensions)
+        {
+            String evidence = "";
+            foreach (Extension extension in extensions)
+            {
+                IReadOnlyList<Extension> subExtensions = extension.Extension;
+                if (subExtensions != null)
+                {
+                    evidence += extractEvidenceToken(subExtensions) + " ";
+                }
+            }
+            return evidence;
+        }
+
+        private static String extractEvidenceToken(IReadOnlyList<Extension> subExtensions)
+        {
+            String evidence = "";
+            int offset = -1;
+            int length = -1;
+            foreach (Extension iExtension in subExtensions)
+            {
+                if (iExtension.Url.Equals("offset"))
+                {
+                    offset = (int)iExtension.ValueInteger;
+                }
+                if (iExtension.Url.Equals("length"))
+                {
+                    length = (int)iExtension.ValueInteger;
+                }
+            }
+            if (offset > 0 && length > 0)
+            {
+                Console.Write(Math.Min(offset + length, DOC_CONTENT.Length));
+                //System.out.println("Offset: " + offset + ", length: " + length);
+                evidence = DOC_CONTENT.Substring(offset, Math.Min(offset + length, DOC_CONTENT.Length - offset));
+            }
+            return evidence;
         }
 
         private static RadiologyInsightsData GetRadiologyInsightsData()
