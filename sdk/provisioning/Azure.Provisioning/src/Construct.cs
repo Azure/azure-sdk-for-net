@@ -43,8 +43,9 @@ namespace Azure.Provisioning
         /// <param name="name">The name of the construct.</param>
         /// <param name="constructScope">The <see cref="ConstructScope"/> the construct is.</param>
         /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
+        /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
         /// <exception cref="ArgumentException"><paramref name="constructScope"/> is <see cref="ConstructScope.ResourceGroup"/> and <paramref name="scope"/> is null.</exception>
-        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null)
+        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null)
         {
             if (scope is null && constructScope == ConstructScope.ResourceGroup)
             {
@@ -67,7 +68,7 @@ namespace Azure.Provisioning
             }
             if (constructScope == ConstructScope.Subscription)
             {
-                Subscription = scope is null ? this.GetOrCreateSubscription() : scope.Subscription ?? scope.GetOrCreateSubscription();
+                Subscription = scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId);
             }
         }
 
