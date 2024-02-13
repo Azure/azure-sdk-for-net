@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
@@ -9,8 +9,28 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
     /// </summary>
-    public abstract class HttpPipelineTransport
+    public abstract partial class HttpPipelineTransport
     {
+        private readonly PipelineTransport _transport;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        protected HttpPipelineTransport()
+        {
+            _transport = new AzureCorePipelineTransport(this);
+        }
+
+        internal void ProcessInternal(HttpMessage message)
+        {
+            _transport.Process(message);
+        }
+
+        internal async ValueTask ProcessInternalAsync(HttpMessage message)
+        {
+            await _transport.ProcessAsync(message).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Sends the request contained by the <paramref name="message"/> and sets the <see cref="HttpMessage.Response"/> property to received response synchronously.
         /// </summary>

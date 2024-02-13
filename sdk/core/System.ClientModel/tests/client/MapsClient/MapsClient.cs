@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Maps;
 
@@ -32,6 +33,40 @@ public class MapsClient
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
             perTryPolicies: new PipelinePolicy[] { authenticationPolicy },
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+    }
+
+    public virtual async Task<ClientResult<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress)
+    {
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
+
+        ClientResult output = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
+
+        PipelineResponse response = output.GetRawResponse();
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+
+        return ClientResult.FromValue(value, response);
+    }
+
+    public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions options = null)
+    {
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
+
+        options ??= new RequestOptions();
+
+        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
+
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response!;
+
+        if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
+        {
+            throw await ClientResultException.CreateAsync(response).ConfigureAwait(false);
+        }
+
+        return ClientResult.FromResponse(response);
     }
 
     public virtual ClientResult<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress)

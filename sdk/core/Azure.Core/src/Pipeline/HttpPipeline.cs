@@ -40,6 +40,8 @@ namespace Azure.Core.Pipeline
         /// </summary>
         private readonly int _perRetryIndex;
 
+        private readonly TimeSpan _networkTimeout;
+
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
         /// </summary>
@@ -59,6 +61,7 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
+            _networkTimeout = ClientOptions.DefaultNetworkTimeout;
         }
 
         internal HttpPipeline(
@@ -66,7 +69,8 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier)
+            ResponseClassifier responseClassifier,
+            TimeSpan? networkTimeout)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
@@ -77,6 +81,9 @@ namespace Azure.Core.Pipeline
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
+
+            _networkTimeout = networkTimeout ?? ClientOptions.DefaultNetworkTimeout;
+
             _internallyConstructed = true;
         }
 
@@ -85,14 +92,22 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transport.CreateRequest();
+        {
+            Request request = _transport.CreateRequest();
+            request.NetworkTimeout = _networkTimeout;
+            return request;
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-            => new(CreateRequest(), ResponseClassifier);
+        {
+            Request request = CreateRequest();
+            HttpMessage message = new(request, ResponseClassifier);
+            return message;
+        }
 
         /// <summary>
         /// </summary>
@@ -109,7 +124,8 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = new(CreateRequest(), classifier ?? ResponseClassifier);
+            Request request = CreateRequest();
+            HttpMessage message = new(request, classifier ?? ResponseClassifier);
 
             if (context != null)
             {
@@ -134,6 +150,11 @@ namespace Azure.Core.Pipeline
         {
             message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+
+            // We must set NetworkTimeout here because the documentation for
+            // HttpMessage states that if a user sets this value to null, the
+            // pipeline will use the value set on ClientOptions.
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)
@@ -169,6 +190,7 @@ namespace Azure.Core.Pipeline
         {
             message.SetCancellationToken(cancellationToken);
             message.ProcessingStartTime = DateTimeOffset.UtcNow;
+            message.NetworkTimeout ??= _networkTimeout;
             AddHttpMessageProperties(message);
 
             if (message.Policies == null || message.Policies.Count == 0)

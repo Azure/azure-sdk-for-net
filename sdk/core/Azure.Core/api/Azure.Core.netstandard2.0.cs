@@ -232,6 +232,7 @@ namespace Azure
         public RequestFailedException(string message) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
         public RequestFailedException(string message, System.Exception? innerException) : base (default(System.ClientModel.Primitives.PipelineResponse), default(System.Exception)) { }
         public string? ErrorCode { get { throw null; } }
+        public static System.Threading.Tasks.ValueTask<Azure.RequestFailedException> CreateAsync(Azure.Response response, Azure.Core.RequestFailedDetailsParser? parser = null, System.Exception? innerException = null) { throw null; }
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public new Azure.Response? GetRawResponse() { throw null; }
     }
@@ -239,13 +240,15 @@ namespace Azure
     {
         protected Response() { }
         public abstract string ClientRequestId { get; set; }
-        public virtual new System.BinaryData Content { get { throw null; } }
+        public override System.BinaryData Content { get { throw null; } }
         public virtual new Azure.Core.ResponseHeaders Headers { get { throw null; } }
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
         public static Azure.Response<T> FromValue<T>(T value, Azure.Response response) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected override System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore() { throw null; }
+        public override System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected sealed override void SetIsErrorCore(bool isError) { }
         public override string ToString() { throw null; }
