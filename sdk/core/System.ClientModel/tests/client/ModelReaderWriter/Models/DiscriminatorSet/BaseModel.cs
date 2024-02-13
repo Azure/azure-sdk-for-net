@@ -11,33 +11,36 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     [PersistableModelProxy(typeof(UnknownBaseModel))]
     public abstract class BaseModel : IJsonModel<BaseModel?>
     {
-        private Dictionary<string, BinaryData> _rawData;
-
-        public static implicit operator BinaryContent?(BaseModel baseModel)
-        {
-            if (baseModel == null)
-            {
-                return null;
-            }
-
-            return BinaryContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
-        }
-
-        public static explicit operator BaseModel?(ClientResult result)
-        {
-            if (result is null) throw new ArgumentNullException(nameof(result));
-
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
-            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
-        }
+        private readonly Dictionary<string, BinaryData> _rawData;
 
         protected internal BaseModel(Dictionary<string, BinaryData>? rawData)
         {
             _rawData = rawData ?? new Dictionary<string, BinaryData>();
         }
 
-        public string Kind { get; internal set; }
-        public string Name { get; set; }
+        private Dictionary<string, BinaryData> GetRawData() => _rawData;
+
+        public static implicit operator BinaryContent?(BaseModel? baseModel)
+        {
+            if (baseModel == null)
+            {
+                return null;
+            }
+
+            return BinaryContent.Create(new NonNullable(baseModel), ModelReaderWriterHelper.WireOptions);
+        }
+
+        public static explicit operator BaseModel?(ClientResult result)
+        {
+            if (result is null)
+                throw new ArgumentNullException(nameof(result));
+
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
+        }
+
+        public string? Kind { get; internal set; }
+        public string? Name { get; set; }
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
         {
@@ -102,7 +105,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             //Deserialize unknown subtype
             string? kind = default;
-            OptionalProperty<string>? name = null;
+            OptionalProperty<string>? name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
@@ -113,7 +116,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = new(property.Value.GetString());
                     continue;
                 }
                 if (options.Format == "J")
@@ -144,9 +147,53 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.Write<BaseModel?>(this, options);
+            return ModelReaderWriter.Write(new NonNullable(this), options);
         }
 
         string IPersistableModel<BaseModel?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private class NonNullable : BaseModel,/* IPersistableModel<BaseModel>, */ IPersistableModel<NonNullable>
+        {
+            private readonly BaseModel _value;
+
+            public NonNullable(BaseModel model)//, Dictionary<string, BinaryData>? rawData)
+                : base(model.GetRawData())
+            {
+                ArgumentNullException.ThrowIfNull(model);
+
+                _value = model;
+            }
+
+            NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new(((IPersistableModel<BaseModel>)_value).Create(data, options));
+
+            string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
+                => ((IPersistableModel<BaseModel>)_value).GetFormatFromOptions(options);
+
+            BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
+                => ((IPersistableModel<BaseModel>)_value).Write(options);
+
+            //public NonNullable Create(BinaryData data, ModelReaderWriterOptions options)
+            //=> ((IPersistableModel<BaseModel>)_value).Create(data, options);
+
+            //public string GetFormatFromOptions(ModelReaderWriterOptions options)
+            //{
+            //    throw new NotImplementedException();
+            //}
+
+            //public BinaryData Write(ModelReaderWriterOptions options)
+            //{
+            //    throw new NotImplementedException();
+            //}
+
+            //BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            //    => ((IPersistableModel<BaseModel>)_value).Create(data, options);
+
+            //string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            //    => ((IPersistableModel<BaseModel>)_value).GetFormatFromOptions(options);
+
+            //BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
+            //    => ((IPersistableModel<BaseModel>)_value).Write(options);
+        }
     }
 }
