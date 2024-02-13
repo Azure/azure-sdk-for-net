@@ -24,8 +24,8 @@ namespace Azure.Provisioning.Sql
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public SqlServer(IConstruct scope, string name, string? version = default, AzureLocation? location = default)
-            : base(scope, null, GetName(name), ResourceTypeName, version ?? "2022-08-01-preview", ArmSqlModelFactory.SqlServerData(
-                name: GetName(name),
+            : base(scope, null, GetName(scope, name), ResourceTypeName, version ?? "2022-08-01-preview", ArmSqlModelFactory.SqlServerData(
+                name: GetName(scope, name),
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
                 version: "12.0",
@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Sql
         {
         }
 
-        private static string GetName(string? name) => name is null ? $"sql-{Infrastructure.Seed}" : $"{name}-{Infrastructure.Seed}";
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"sql-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

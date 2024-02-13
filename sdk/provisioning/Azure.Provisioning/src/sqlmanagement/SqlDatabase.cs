@@ -23,8 +23,8 @@ namespace Azure.Provisioning.Sql
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public SqlDatabase(IConstruct scope, string? name = default, string version = "2022-08-01-preview", AzureLocation? location = default)
-            : base(scope, null, GetName(name), ResourceTypeName, version, ArmSqlModelFactory.SqlDatabaseData(
-                name: GetName(name),
+            : base(scope, null, GetName(scope, name), ResourceTypeName, version, ArmSqlModelFactory.SqlDatabaseData(
+                name: GetName(scope, name),
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Sql
         public ConnectionString GetConnectionString(Parameter passwordSecret, string userName = "appUser")
             => new ConnectionString(this, passwordSecret, userName);
 
-        private static string GetName(string? name) => name is null ? $"db-{Infrastructure.Seed}" : name;
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"db-{scope.EnvironmentName}" : name;
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

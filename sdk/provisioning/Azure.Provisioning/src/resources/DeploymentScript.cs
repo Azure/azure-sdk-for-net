@@ -27,8 +27,8 @@ namespace Azure.Provisioning.Resources
         /// <param name="version">The resource version.</param>
         /// <param name="location">The resource location.</param>
         public DeploymentScript(IConstruct scope, string resourceName, IEnumerable<ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = _defaultVersion, AzureLocation? location = default)
-            : base(scope, null, GetName(resourceName), ResourceTypeName, version, ArmResourcesModelFactory.AzureCliScript(
-                name: GetName(resourceName),
+            : base(scope, null, GetName(scope, resourceName), ResourceTypeName, version, ArmResourcesModelFactory.AzureCliScript(
+                name: GetName(scope, resourceName),
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 azCliVersion: "2.37.0",
@@ -51,8 +51,8 @@ namespace Azure.Provisioning.Resources
         /// <param name="version">The resource version.</param>
         /// <param name="location">The resource location.</param>
         public DeploymentScript(IConstruct scope, string resourceName, Resource database, Parameter appUserPasswordSecret, Parameter sqlAdminPasswordSecret, string version = _defaultVersion, AzureLocation? location = default)
-            : base(scope, null, GetName(resourceName), ResourceTypeName, version, ArmResourcesModelFactory.AzureCliScript(
-                name: GetName(resourceName),
+            : base(scope, null, GetName(scope, resourceName), ResourceTypeName, version, ArmResourcesModelFactory.AzureCliScript(
+                name: GetName(scope, resourceName),
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 azCliVersion: "2.37.0",
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Resources
             Scope.AddParameter(sqlAdminPasswordSecret);
         }
 
-        private static string GetName(string? name) => name is null ? $"deploymentScript-{Infrastructure.Seed}" : $"{name}-{Infrastructure.Seed}";
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"deploymentScript-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

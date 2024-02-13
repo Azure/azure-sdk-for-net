@@ -14,7 +14,7 @@ namespace Azure.Provisioning.AppService
     {
         private const string ResourceTypeName = "Microsoft.Web/sites/config";
 
-        private static string GetName(string? name) => name is null ? $"logs-{Infrastructure.Seed}" : $"{name}-{Infrastructure.Seed}";
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"logs-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSiteConfigLogs"/>.
