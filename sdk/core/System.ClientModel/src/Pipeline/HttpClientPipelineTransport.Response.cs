@@ -121,13 +121,18 @@ public partial class HttpClientPipelineTransport
             if (async)
             {
                 await _contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+#if NETSTANDARD2_0
+                _contentStream.Dispose();
+#else
+                await _contentStream.DisposeAsync().ConfigureAwait(false);
+#endif
             }
             else
             {
                 _contentStream.CopyTo(bufferStream, cancellationToken);
+                _contentStream.Dispose();
             }
 
-            _contentStream.Dispose();
             _contentStream = null;
 
             bufferStream.Position = 0;

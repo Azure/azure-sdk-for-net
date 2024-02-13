@@ -59,7 +59,7 @@ public class MockPipelineResponse : PipelineResponse
         {
             if (_contentStream is null)
             {
-                return BinaryData.FromString("");
+                return new BinaryData(Array.Empty<byte>());
             }
 
             if (ContentStream is not MemoryStream memoryContent)
@@ -91,7 +91,7 @@ public class MockPipelineResponse : PipelineResponse
     {
         if (disposing && !_disposed)
         {
-            var content = _contentStream;
+            Stream? content = _contentStream;
             if (content != null)
             {
                 _contentStream = null;
@@ -111,7 +111,7 @@ public class MockPipelineResponse : PipelineResponse
 
         if (_contentStream is null)
         {
-            _bufferedContent = BinaryData.FromString(string.Empty);
+            _bufferedContent = new BinaryData(Array.Empty<byte>());
             return _bufferedContent;
         }
 
@@ -120,6 +120,8 @@ public class MockPipelineResponse : PipelineResponse
         _contentStream.Dispose();
         _contentStream = bufferStream;
 
+        // Less efficient FromStream method called here because it is a mock.
+        // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
         return _bufferedContent;
     }
@@ -133,15 +135,24 @@ public class MockPipelineResponse : PipelineResponse
 
         if (_contentStream is null)
         {
-            _bufferedContent = BinaryData.FromString(string.Empty);
+            _bufferedContent = new BinaryData(Array.Empty<byte>());
             return _bufferedContent;
         }
 
         MemoryStream bufferStream = new();
+
+#if NETSTANDARD2_0 || NETFRAMEWORK
         await _contentStream.CopyToAsync(bufferStream).ConfigureAwait(false);
         _contentStream.Dispose();
+#else
+        await _contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
+        await _contentStream.DisposeAsync().ConfigureAwait(false);
+#endif
+
         _contentStream = bufferStream;
 
+        // Less efficient FromStream method called here because it is a mock.
+        // For intended production implementation, see HttpClientTransportResponse.
         _bufferedContent = BinaryData.FromStream(bufferStream);
         return _bufferedContent;
     }
