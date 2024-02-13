@@ -34,8 +34,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     string.Format(
                         provider: CultureInfo.CurrentCulture,
                         format: AuthenticationEventResource.Ex_Trigger_Required_Attrs,
-                        arg0: ConfigurationManager.TENANT_ID,
-                        arg1: ConfigurationManager.AUDIENCE_APPID));
+                        arg0: ConfigurationManager.TENANT_ID_KEY,
+                        arg1: ConfigurationManager.AUDIENCE_APPID_KEY));
             }
 
             string accessToken = request.Headers?.Authorization?.Parameter;

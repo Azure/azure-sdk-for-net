@@ -6,6 +6,9 @@ using System.Globalization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
+    /// <summary>
+    /// Configuration manager for loading up token validations.
+    /// </summary>
     internal class ConfigurationManager
     {
         /// <summary>
@@ -13,6 +16,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         public static ServiceInfo defaultService { get; private set; }
 
+        /// <summary>
+        /// AAD Service Info.
+        /// </summary>
         private static readonly ServiceInfo AADServiceInfo = new()
         {
             OpenIdConnectionHost = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
@@ -21,13 +27,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             ApplicationId = "99045fe1-7639-4a75-9d4a-577b6ca3810f"
         };
 
-        private const string BYPASS_VALIDATION = "AuthenticationEvents__BypassTokenValidation";
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
 
-        internal const string OIDC_METADATA = "AuthenticationEvents__OpenIdConnectionHost";
-        internal const string TOKEN_ISSUER= "AuthenticationEvents__TokenIssuer";
-        internal const string TENANT_ID = "AuthenticationEvents__TenantId";
-        internal const string AUDIENCE_APPID = "AuthenticationEvents__AudienceAppId";
+        private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
+        private const string OIDC_METADATA_KEY = "AuthenticationEvents__OpenIdConnectionHost";
+        private const string TOKEN_ISSUER_KEY = "AuthenticationEvents__TokenIssuer";
+
+        internal const string TENANT_ID_KEY = "AuthenticationEvents__TenantId";
+        internal const string AUDIENCE_APPID_KEY = "AuthenticationEvents__AudienceAppId";
 
         internal const string TOKEN_V1_VERIFY = "appid";
         internal const string TOKEN_V2_VERIFY = "azp";
@@ -36,6 +43,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal const string HEADER_EZAUTH_ICP_VERIFY = "aad";
         internal const string HEADER_EZAUTH_PRINCIPAL = "X-MS-CLIENT-PRINCIPAL";
 
+        /// <summary>
+        /// Annotation for the trigger attribute.
+        /// </summary>
         private readonly AuthenticationEventsTriggerAttribute triggerAttribute;
 
         internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
@@ -51,11 +61,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         public void CheckForServiceInfoConfigValues()
         {
-            string tid = GetConfigValue(TENANT_ID, triggerAttribute.TenantId);
-            string appId = GetConfigValue(AUDIENCE_APPID, triggerAttribute.AudienceAppId);
-            string oidc = GetConfigValue(OIDC_METADATA, triggerAttribute.OpenIdConnectionHost);
-            string issuer = GetConfigValue(TOKEN_ISSUER, triggerAttribute.TokenIssuer);
+            // Get the configuration values from the environment variables or use the values triggerAttribute.
+            string tid = TenantId;
+            string appId = AudienceAppId;
+            string oidc = OpenIdConnectionHost;
+            string issuer = TokenIssuer;
 
+            // if any of the values are missing, use the default AAD service info.
             if (string.IsNullOrEmpty(tid)
                 || string.IsNullOrEmpty(appId)
                 || string.IsNullOrEmpty(oidc)
@@ -75,18 +87,44 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
         }
 
-        internal static bool BypassValidation => GetConfigValue(BYPASS_VALIDATION, false);
+        /// <summary>
+        /// If we should bypass the token validation.
+        /// Use only for testing and development.
+        /// </summary>
+        internal static bool BypassValidation => GetConfigValue(BYPASS_VALIDATION_KEY, false);
 
+        /// <summary>
+        /// If the EZAuth is enabled.
+        /// </summary>
         internal static bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
 
-        internal string TenantId => GetConfigValue(TENANT_ID, triggerAttribute.TenantId);
+        /// <summary>
+        /// Get the tenant id from the environment variable or use the default value.
+        /// </summary>
+        internal string TenantId => GetConfigValue(TENANT_ID_KEY, triggerAttribute.TenantId);
 
-        internal string AudienceAppId => GetConfigValue(AUDIENCE_APPID, triggerAttribute.AudienceAppId);
+        /// <summary>
+        /// Get the audience app id from the environment variable or use the default value.
+        /// </summary>
+        internal string AudienceAppId => GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute.AudienceAppId);
 
-        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA, triggerAttribute.OpenIdConnectionHost);
+        /// <summary>
+        /// Get the OpenId connection host from the environment variable or use the default value.
+        /// </summary>
+        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute.OpenIdConnectionHost);
 
-        internal string TokenIssuer => GetConfigValue(TOKEN_ISSUER, triggerAttribute.TokenIssuer);
+        /// <summary>
+        /// Get the token issuer from the environment variable or use the default value.
+        /// </summary>
+        internal string TokenIssuer => GetConfigValue(TOKEN_ISSUER_KEY, triggerAttribute.TokenIssuer);
 
+        /// <summary>
+        /// Try to get the service info based on the service id.
+        /// </summary>
+        /// <param name="serviceId">The service id to look for.</param>
+        /// <param name="serviceInfo">The service info we found based on the service id.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         internal static bool TryGetService(string serviceId, out ServiceInfo serviceInfo)
         {
             serviceInfo = null;
@@ -105,11 +143,22 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return serviceInfo != null;
         }
 
+        /// <summary>
+        /// Verify if the service id is valid by checking if we have the service info for it.
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns></returns>
         internal static bool VerifyServiceId(string testId)
         {
             return TryGetService(testId, out _);
         }
 
+        /// <summary>
+        /// Get config value from environment variable or use the default value.
+        /// </summary>
+        /// <param name="environmentVariable"></param>
+        /// <param name="defaultValue"></param>
+        /// <returns></returns>
         private static string GetConfigValue(string environmentVariable, string defaultValue)
         {
             return Environment.GetEnvironmentVariable(environmentVariable) ?? defaultValue;
