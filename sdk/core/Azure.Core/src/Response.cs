@@ -164,7 +164,7 @@ namespace Azure
                     new BinaryData(memoryStream.ToArray());
             }
 
-            MemoryStream bufferStream = new();
+            BufferedContentStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
             contentStream.CopyTo(bufferStream, cancellationToken);
@@ -200,7 +200,8 @@ namespace Azure
                     new BinaryData(segment.AsMemory()) :
                     new BinaryData(memoryStream.ToArray());
             }
-            MemoryStream bufferStream = new();
+
+            BufferedContentStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
             await contentStream.CopyToAsync(bufferStream, cancellationToken).ConfigureAwait(false);
@@ -214,6 +215,8 @@ namespace Azure
 
             return content;
         }
+
+        private class BufferedContentStream : MemoryStream { }
 
         #region Private implementation subtypes of abstract Response types
         private class AzureCoreResponse<T> : Response<T>

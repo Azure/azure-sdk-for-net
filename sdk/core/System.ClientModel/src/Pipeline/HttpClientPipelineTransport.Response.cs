@@ -80,7 +80,7 @@ public partial class HttpClientPipelineTransport
 
                 if (_contentStream is null || _contentStream is MemoryStream)
                 {
-                    ReadContent();
+                    return ReadContent();
                 }
 
                 throw new InvalidOperationException($"The response is not buffered.");

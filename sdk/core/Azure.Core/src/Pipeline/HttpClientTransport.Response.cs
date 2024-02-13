@@ -44,7 +44,14 @@ namespace Azure.Core.Pipeline
                 set => _pipelineResponse.ContentStream = value;
             }
 
-            public override BinaryData Content => _pipelineResponse.Content;
+            public override BinaryData Content
+            {
+                get
+                {
+                    ResetContentStreamPosition(_pipelineResponse);
+                    return _pipelineResponse.Content;
+                }
+            }
 
             public override BinaryData ReadContent(CancellationToken cancellationToken = default)
                 => _pipelineResponse.ReadContent(cancellationToken);
@@ -72,20 +79,23 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 PipelineResponse response = _pipelineResponse;
+                ResetContentStreamPosition(response);
+                response?.Dispose();
+            }
 
+            private void ResetContentStreamPosition(PipelineResponse response)
+            {
                 if (response.ContentStream is MemoryStream stream && stream.Position != 0)
                 {
                     // Azure.Core Response has a contract that ContentStream can be read
                     // without setting position back to 0.  This means if ReadContent is
-                    // called, the buffer will contain empty BinaryData.
+                    // called after such a read, the buffer will contain empty BinaryData.
 
                     // So that the ClientModel response implementations don't throw,
                     // set the position back to 0 if Azure.Core Response default
                     // ReadContent was called.
                     stream.Position = 0;
                 }
-
-                response?.Dispose();
             }
         }
     }
