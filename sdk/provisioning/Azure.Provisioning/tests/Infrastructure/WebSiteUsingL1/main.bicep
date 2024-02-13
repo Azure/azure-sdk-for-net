@@ -9,8 +9,8 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource resourceGroup_IABVtvgDt 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: 'rg-mnash-cdk'
+resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+  name: 'rg-TEST'
   location: 'westus'
   tags: {
     azd-env-name: 'mnash-cdk'
@@ -18,9 +18,9 @@ resource resourceGroup_IABVtvgDt 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource appServicePlan_zDVZJZSeJ 'Microsoft.Web/serverfarms@2021-02-01' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'appServicePlan-mnash-cdk'
+resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'appServicePlan-TEST'
   location: 'westus'
   sku: {
     name: 'B1'
@@ -30,15 +30,15 @@ resource appServicePlan_zDVZJZSeJ 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource webSite_kwcoFVmFY 'Microsoft.Web/sites@2021-02-01' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'frontEnd-mnash-cdk'
+resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-mnash-cdk/providers/Microsoft.Web/serverfarms/appServicePlan-mnash-cdk'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -58,14 +58,14 @@ resource webSite_kwcoFVmFY 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_GTzB2G8tg 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_kwcoFVmFY
+resource applicationSettingsResource_NslbdUwEt 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'appsettings'
 }
 
-resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'kv-mnash-cdk'
+resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'kv-TEST'
   location: 'westus'
   properties: {
     tenantId: '00000000-0000-0000-0000-000000000000'
@@ -76,8 +76,8 @@ resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_pzaknyGaJ 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'add'
   properties: {
     accessPolicies: [
@@ -95,25 +95,25 @@ resource keyVaultAddAccessPolicy_pzaknyGaJ 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_mAspwDx0h 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_nMDmVNMVq 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'sqlAdminPassword'
   properties: {
     value: '00000000-0000-0000-0000-000000000000'
   }
 }
 
-resource keyVaultSecret_qg5TJE5co 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'appUserPassword'
   properties: {
     value: '00000000-0000-0000-0000-000000000000'
   }
 }
 
-resource sqlServer_h9WlA3ws7 'Microsoft.Sql/servers@2022-08-01-preview' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'sqlserver-mnash-cdk'
+resource sqlServer_zjdvvB2wl 'Microsoft.Sql/servers@2022-08-01-preview' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'sqlserver-TEST'
   location: 'westus'
   properties: {
     administratorLogin: 'sqladmin'
@@ -124,34 +124,34 @@ resource sqlServer_h9WlA3ws7 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_5rllN3VNV 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
-  parent: sqlServer_h9WlA3ws7
-  name: 'db-mnash-cdk'
+resource sqlDatabase_U7NzorRJT 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
+  name: 'db-TEST'
   location: 'westus'
   properties: {
   }
 }
 
-resource keyVaultSecret_dZU0IKkqM 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_NP8ELZpgb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'connectionString'
   properties: {
-    value: 'Server=${sqlServer_h9WlA3ws7.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_5rllN3VNV.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_U7NzorRJT.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
-resource sqlFirewallRule_mYeCi9UIt 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_h9WlA3ws7
-  name: 'firewallRule-mnash-cdk'
+resource sqlFirewallRule_eS4m8st65 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
+  name: 'firewallRule-TEST'
   properties: {
     startIpAddress: '0.0.0.1'
     endIpAddress: '255.255.255.254'
   }
 }
 
-resource deploymentScript_CQw5nRksz 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'cliScript-mnash-cdk'
+resource deploymentScript_3Zq2Pl8xa 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'cliScript-TEST'
   location: 'westus'
   kind: 'AzureCLI'
   properties: {
@@ -179,11 +179,11 @@ SCRIPT_END
       }
       {
         name: 'DBNAME'
-        value: '_p_.sqlDatabase_5rllN3VNV.name'
+        value: '_p_.sqlDatabase_U7NzorRJT.name'
       }
       {
         name: 'DBSERVER'
-        value: '_p_.sqlServer_h9WlA3ws7.properties.fullyQualifiedDomainName'
+        value: '_p_.sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName'
       }
       {
         name: 'SQLCMDPASSWORD'
@@ -200,15 +200,15 @@ SCRIPT_END
   }
 }
 
-resource webSite_bbXnyuYEl 'Microsoft.Web/sites@2021-02-01' = {
-  scope: resourceGroup_IABVtvgDt
-  name: 'backEnd-mnash-cdk'
+resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
+  scope: resourceGroup_I6QNkoPsb
+  name: 'backEnd-TEST'
   location: 'westus'
   identity: {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/faa080af-c1d8-40ad-9cce-e1a450ca5b57/resourceGroups/rg-mnash-cdk/providers/Microsoft.Web/serverfarms/appServicePlan-mnash-cdk'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'dotnetcore|6.0'
       alwaysOn: true
@@ -228,8 +228,8 @@ resource webSite_bbXnyuYEl 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_6U6Xi0A5f 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_bbXnyuYEl
+resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
     SCM_DO_BUILD_DURING_DEPLOYMENT: 'False'
@@ -237,8 +237,8 @@ resource applicationSettingsResource_6U6Xi0A5f 'Microsoft.Web/sites/config@2021-
   }
 }
 
-resource webSiteConfigLogs_caWaXRSC1 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_kwcoFVmFY
+resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -262,4 +262,4 @@ resource webSiteConfigLogs_caWaXRSC1 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_kwcoFVmFY.identity.principalId
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId

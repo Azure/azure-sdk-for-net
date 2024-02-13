@@ -7,27 +7,27 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource keyVault_n6Xn70PzJ 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-  name: 'keyVault_n6Xn70PzJ'
+resource keyVault_sofGLX66Z 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: 'keyVault_sofGLX66Z'
 }
 
-resource keyVaultSecret_mAspwDx0h 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_FJBMvLS18 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_sofGLX66Z
   name: 'sqlAdminPassword'
   properties: {
     value: '00000000-0000-0000-0000-000000000000'
   }
 }
 
-resource keyVaultSecret_qg5TJE5co 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_yNzymUIqj 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_sofGLX66Z
   name: 'appUserPassword'
   properties: {
     value: '00000000-0000-0000-0000-000000000000'
   }
 }
 
-resource sqlServer_h9WlA3ws7 'Microsoft.Sql/servers@2022-08-01-preview' = {
+resource sqlServer_GfC780gjO 'Microsoft.Sql/servers@2022-08-01-preview' = {
   name: 'sqlserver-mnash-cdk'
   location: 'westus'
   properties: {
@@ -39,24 +39,24 @@ resource sqlServer_h9WlA3ws7 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_5rllN3VNV 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
-  parent: sqlServer_h9WlA3ws7
+resource sqlDatabase_06pzzL812 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+  parent: sqlServer_GfC780gjO
   name: 'db-mnash-cdk'
   location: 'westus'
   properties: {
   }
 }
 
-resource keyVaultSecret_dZU0IKkqM 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
-  parent: keyVault_n6Xn70PzJ
+resource keyVaultSecret_EcymP2r3i 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+  parent: keyVault_sofGLX66Z
   name: 'connectionString'
   properties: {
-    value: 'Server=${sqlServer_h9WlA3ws7.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_5rllN3VNV.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_GfC780gjO.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_06pzzL812.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
-resource sqlFirewallRule_mYeCi9UIt 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_h9WlA3ws7
+resource sqlFirewallRule_uT1qFq1g9 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_GfC780gjO
   name: 'firewallRule-mnash-cdk'
   properties: {
     startIpAddress: '0.0.0.1'
@@ -64,7 +64,7 @@ resource sqlFirewallRule_mYeCi9UIt 'Microsoft.Sql/servers/firewallRules@2020-11-
   }
 }
 
-resource deploymentScript_CQw5nRksz 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+resource deploymentScript_rue7c15EI 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'cliScript-mnash-cdk'
   location: 'westus'
   kind: 'AzureCLI'
@@ -93,11 +93,11 @@ SCRIPT_END
       }
       {
         name: 'DBNAME'
-        value: '_p_.sqlDatabase_5rllN3VNV.name'
+        value: '_p_.sqlDatabase_06pzzL812.name'
       }
       {
         name: 'DBSERVER'
-        value: '_p_.sqlServer_h9WlA3ws7.properties.fullyQualifiedDomainName'
+        value: '_p_.sqlServer_GfC780gjO.properties.fullyQualifiedDomainName'
       }
       {
         name: 'SQLCMDPASSWORD'

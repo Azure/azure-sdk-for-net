@@ -22,9 +22,12 @@ namespace Azure.Provisioning
         private List<IConstruct> _constructs;
         private List<Output> _outputs;
         private List<Resource> _existingResources;
+        private string _environmentName;
 
         /// <inheritdoc/>
         public string Name { get; }
+        /// <inheritdoc/>
+        public string EnvironmentName => GetEnvironmentName();
         /// <inheritdoc/>
         public IConstruct? Scope { get; }
         /// <inheritdoc/>
@@ -44,8 +47,9 @@ namespace Azure.Provisioning
         /// <param name="constructScope">The <see cref="ConstructScope"/> the construct is.</param>
         /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
         /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
+        /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
         /// <exception cref="ArgumentException"><paramref name="constructScope"/> is <see cref="ConstructScope.ResourceGroup"/> and <paramref name="scope"/> is null.</exception>
-        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null)
+        protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null)
         {
             if (scope is null && constructScope == ConstructScope.ResourceGroup)
             {
@@ -70,6 +74,13 @@ namespace Azure.Provisioning
             {
                 Subscription = scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId);
             }
+
+            _environmentName = envName ?? Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'");
+        }
+
+        private string GetEnvironmentName()
+        {
+            return _environmentName is null ? Scope!.EnvironmentName : _environmentName;
         }
 
         /// <summary>

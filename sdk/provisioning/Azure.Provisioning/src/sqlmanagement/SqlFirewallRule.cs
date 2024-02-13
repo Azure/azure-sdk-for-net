@@ -20,8 +20,8 @@ namespace Azure.Provisioning.Sql
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         public SqlFirewallRule(IConstruct scope, string? name = default, string version = "2020-11-01-preview")
-            : base(scope, null, GetName(name), ResourceTypeName, version, ArmSqlModelFactory.SqlFirewallRuleData(
-                name: GetName(name),
+            : base(scope, null, GetName(scope, name), ResourceTypeName, version, ArmSqlModelFactory.SqlFirewallRuleData(
+                name: GetName(scope, name),
                 resourceType: ResourceTypeName,
                 startIPAddress: "0.0.0.1",
                 endIPAddress: "255.255.255.254"
@@ -29,7 +29,7 @@ namespace Azure.Provisioning.Sql
         {
         }
 
-        private static string GetName(string? name) => name is null ? $"fw-{Infrastructure.Seed}" : $"{name}-{Infrastructure.Seed}";
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"fw-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

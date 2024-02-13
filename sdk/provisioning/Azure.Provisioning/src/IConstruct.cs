@@ -19,6 +19,11 @@ namespace Azure.Provisioning
         public string Name { get; }
 
         /// <summary>
+        /// Gets the environment name of the construct.
+        /// </summary>
+        public string EnvironmentName { get; }
+
+        /// <summary>
         /// Gets the <see cref="Provisioning.ConstructScope"/> scope.
         /// </summary>
         public ConstructScope ConstructScope { get; }

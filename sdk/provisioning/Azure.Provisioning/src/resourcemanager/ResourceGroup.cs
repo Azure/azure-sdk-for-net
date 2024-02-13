@@ -24,15 +24,15 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="version">The version of the resourceGroup.</param>
         /// <param name="location">The location of the resourceGroup.</param>
         public ResourceGroup(IConstruct scope, string? name = default, string version = "2023-07-01", AzureLocation? location = default)
-            : base(scope, null, GetName(name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
-                name: GetName(name),
+            : base(scope, null, GetName(scope, name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
+                name: GetName(scope, name),
                 resourceType: ResourceType,
                 tags: new Dictionary<string, string> { { "azd-env-name", Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable 'AZURE_ENV_NAME' was found") } },
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
 
-        private static string GetName(string? name) => name is null ? $"rg-{Infrastructure.Seed}" : $"{name}-{Infrastructure.Seed}";
+        private static string GetName(IConstruct scope, string? name) => name is null ? $"rg-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
