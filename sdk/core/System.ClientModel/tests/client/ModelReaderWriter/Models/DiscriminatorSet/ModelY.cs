@@ -1,22 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    public class ModelY : BaseModel, IJsonModel<ModelY>
+    public class ModelY : BaseModel, IJsonModel<ModelY?>
     {
-        public ModelY()
-            : base(null)
+        public ModelY() : base(null)
         {
             Kind = "Y";
         }
 
-        internal ModelY(string kind, string name, string yProperty, Dictionary<string, BinaryData> rawData)
+        internal ModelY(string kind, string? name, string? yProperty, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
@@ -24,9 +23,10 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             YProperty = yProperty;
         }
 
-        public string YProperty { get; private set; }
+        public string? YProperty { get; private set; }
 
-        void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
+        void IJsonModel<ModelY?>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -50,7 +50,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelY DeserializeModelY(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelY? DeserializeModelY(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
@@ -58,7 +58,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             {
                 return null;
             }
-            string kind = default;
+
+            string? kind = default;
             OptionalProperty<string> name = default;
             OptionalProperty<string> yProperty = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -71,12 +72,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = new(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("yProperty"u8))
                 {
-                    yProperty = property.Value.GetString();
+                    yProperty = new(property.Value.GetString());
                     continue;
                 }
                 if (options.Format == "J")
@@ -85,27 +86,62 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
+            if (kind is null)
+            {
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelY)}': Missing 'kind' property");
+            }
+
             return new ModelY(kind, name, yProperty, rawData);
         }
 
-        ModelY IPersistableModel<ModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ModelY? IPersistableModel<ModelY?>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             return DeserializeModelY(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        ModelY IJsonModel<ModelY>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ModelY? IJsonModel<ModelY?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelY(doc.RootElement, options);
         }
 
-        BinaryData IPersistableModel<ModelY>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ModelY?>.Write(ModelReaderWriterOptions options)
         {
-            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
+            NonNullable model = new(this);
 
-            return ModelReaderWriter.Write(this, options);
+            ModelReaderWriterHelper.ValidateFormat(model, options.Format);
+            return ModelReaderWriter.Write(model, options);
         }
 
-        string IPersistableModel<ModelY>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelY?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private class NonNullable : ModelY, IPersistableModel<NonNullable>, IJsonModel<NonNullable>
+        {
+            private readonly ModelY _value;
+
+            public NonNullable(ModelY model) : base()
+            {
+                if (model is null)
+                    throw new ArgumentNullException(nameof(model));
+
+                _value = model;
+            }
+
+            NonNullable IJsonModel<NonNullable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new(((IJsonModel<ModelY>)_value).Create(ref reader, options));
+
+            void IJsonModel<NonNullable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+                => ((IJsonModel<ModelY>)_value).Write(writer, options);
+
+            NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
+                => new(((IPersistableModel<ModelY>)_value).Create(data, options));
+
+            string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
+                => ((IPersistableModel<ModelY>)_value).GetFormatFromOptions(options);
+
+            BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
+                => ((IPersistableModel<ModelY>)_value).Write(options);
+        }
     }
 }

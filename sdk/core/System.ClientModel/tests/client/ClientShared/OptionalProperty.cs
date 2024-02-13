@@ -48,7 +48,7 @@ internal static class OptionalProperty
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalDictionary<TKey, TValue>(optional);
     }
@@ -58,7 +58,7 @@ internal static class OptionalProperty
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalDictionary<TKey, TValue>(optional);
     }
@@ -100,7 +100,7 @@ public readonly struct OptionalProperty<T>
     public OptionalProperty(T? value) : this()
     {
         Value = value;
-        HasValue = true;
+        HasValue = value is not null;
     }
 
     public T? Value { get; }

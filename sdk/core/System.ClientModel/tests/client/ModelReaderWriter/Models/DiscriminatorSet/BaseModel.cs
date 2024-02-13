@@ -18,7 +18,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             _rawData = rawData ?? new Dictionary<string, BinaryData>();
         }
 
-        private Dictionary<string, BinaryData> GetRawData() => _rawData;
+        internal Dictionary<string, BinaryData> GetRawData() => _rawData;
 
         public static implicit operator BinaryContent?(BaseModel? baseModel)
         {
@@ -152,14 +152,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         string IPersistableModel<BaseModel?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        private class NonNullable : BaseModel,/* IPersistableModel<BaseModel>, */ IPersistableModel<NonNullable>
+        private class NonNullable : BaseModel, IPersistableModel<NonNullable>
         {
             private readonly BaseModel _value;
 
-            public NonNullable(BaseModel model)//, Dictionary<string, BinaryData>? rawData)
-                : base(model.GetRawData())
+            public NonNullable(BaseModel model) : base(model.GetRawData())
             {
-                ArgumentNullException.ThrowIfNull(model);
+                if (model is null)
+                    throw new ArgumentNullException(nameof(model));
 
                 _value = model;
             }
@@ -172,28 +172,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
                 => ((IPersistableModel<BaseModel>)_value).Write(options);
-
-            //public NonNullable Create(BinaryData data, ModelReaderWriterOptions options)
-            //=> ((IPersistableModel<BaseModel>)_value).Create(data, options);
-
-            //public string GetFormatFromOptions(ModelReaderWriterOptions options)
-            //{
-            //    throw new NotImplementedException();
-            //}
-
-            //public BinaryData Write(ModelReaderWriterOptions options)
-            //{
-            //    throw new NotImplementedException();
-            //}
-
-            //BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
-            //    => ((IPersistableModel<BaseModel>)_value).Create(data, options);
-
-            //string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
-            //    => ((IPersistableModel<BaseModel>)_value).GetFormatFromOptions(options);
-
-            //BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
-            //    => ((IPersistableModel<BaseModel>)_value).Write(options);
         }
     }
 }

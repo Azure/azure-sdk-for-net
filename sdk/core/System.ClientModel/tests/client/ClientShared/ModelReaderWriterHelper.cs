@@ -21,7 +21,8 @@ internal static class ModelReaderWriterHelper
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static void ValidateFormat(IPersistableModel<object> model, string format) => ValidateFormat<object>(model, format);
+    public static void ValidateFormat(IPersistableModel<object> model, string format)
+        => ValidateFormat<object>(model, format);
 
     private static ModelReaderWriterOptions? _wireOptions;
     public static ModelReaderWriterOptions WireOptions => _wireOptions ??= new ModelReaderWriterOptions("W");
