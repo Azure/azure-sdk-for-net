@@ -109,6 +109,11 @@ public partial class HttpClientPipelineTransport
                 return _bufferedContent;
             }
 
+            if (_contentStream.CanSeek && _contentStream.Position != 0)
+            {
+                throw new InvalidOperationException("Content stream position is not at beginning of stream.");
+            }
+
             // ContentStream still holds the source stream.  Buffer the content
             // and dispose the source stream.
             BufferedContentStream bufferStream = new();
@@ -147,17 +152,6 @@ public partial class HttpClientPipelineTransport
             {
                 HttpResponseMessage httpResponse = _httpResponse;
                 httpResponse?.Dispose();
-
-                // This response type has two states:
-                //   1. _contentStream holds a "source stream" which has not
-                //      been buffered; _bufferedContent is null.
-                //   2. _bufferedContent is set and _contentStream is null.
-                //
-                // Given this, if _contentStream is not null, we are holding
-                // a source stream and will dispose it.
-                //
-                // If the source stream is a memory stream, it's likely a mock,
-                // so buffer it prior to disposing so the content remains available.
 
                 if (ContentStream is MemoryStream)
                 {
