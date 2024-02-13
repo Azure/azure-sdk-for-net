@@ -99,11 +99,11 @@ namespace Azure.Core.Pipeline
             {
                 if (message.HasResponse)
                 {
-                    throw new RequestFailedException(message.Response, e.InnerException);
+                    throw await RequestFailedException.CreateAsync(message.Response, innerException: e.InnerException).ConfigureAwait(false);
                 }
                 else
                 {
-                    throw new RequestFailedException(e.Message, e.InnerException);
+                    throw new RequestFailedException(e.Message, innerException: e.InnerException);
                 }
             }
         }

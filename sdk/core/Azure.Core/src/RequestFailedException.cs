@@ -6,9 +6,9 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -21,6 +21,19 @@ namespace Azure
     public class RequestFailedException : ClientResultException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="response"></param>
+        /// <param name="parser"></param>
+        /// <param name="innerException"></param>
+        /// <returns></returns>
+        public static async ValueTask<RequestFailedException> CreateAsync(Response response, RequestFailedDetailsParser? parser = default, Exception? innerException = default)
+        {
+            ErrorDetails details = await CreateExceptionDetailsAsync(response, parser).ConfigureAwait(false);
+            return new RequestFailedException(response, details, innerException);
+        }
 
         /// <summary>
         /// Gets the service specific error code if available. Please refer to the client documentation for the list of supported error codes.
@@ -52,7 +65,7 @@ namespace Azure
         /// <param name="innerException">An inner exception to associate with the new <see cref="RequestFailedException"/>.</param>
         /// <param name="detailsParser">The parser to use to parse the response content.</param>
         public RequestFailedException(Response response, Exception? innerException, RequestFailedDetailsParser? detailsParser)
-            : this(response, CreateRequestFailedExceptionContent(response, detailsParser), innerException)
+            : this(response, CreateExceptionDetails(response, detailsParser), innerException)
         {
         }
 
@@ -148,9 +161,22 @@ namespace Azure
         /// </summary>
         public new Response? GetRawResponse() => (Response?)base.GetRawResponse();
 
-        private static ErrorDetails CreateRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
+        private static ErrorDetails CreateExceptionDetails(Response response, RequestFailedDetailsParser? parser)
+            => CreateExceptionDetailsSyncOrAsync(response, parser, async: false).EnsureCompleted();
+
+        private static async ValueTask<ErrorDetails> CreateExceptionDetailsAsync(Response response, RequestFailedDetailsParser? parser)
+            => await CreateExceptionDetailsSyncOrAsync(response, parser, async: true).ConfigureAwait(false);
+
+        private static async ValueTask<ErrorDetails> CreateExceptionDetailsSyncOrAsync(Response response, RequestFailedDetailsParser? parser, bool async)
         {
-            response.ReadContent();
+            if (async)
+            {
+                await response.ReadContentAsync().ConfigureAwait(false);
+            }
+            else
+            {
+                response.ReadContent();
+            }
 
             parser ??= response.RequestFailedDetailsParser;
 
