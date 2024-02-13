@@ -128,8 +128,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             Coding coding = new()
             {
-                Display = "US PELVIS COMPLETE",
-                Code = "USPELVIS",
+                Display = "US BREAST - LEFT LIMITED",
+                Code = "26688-1",
                 System = "Http://hl7.org/fhir/ValueSet/cpt-all"
             };
 
@@ -138,7 +138,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             OrderedProcedure orderedProcedure = new()
             {
-                Description = "US PELVIS COMPLETE",
+                Description = "US BREAST - LEFT LIMITED",
                 Code = codeableConcept
             };
 
