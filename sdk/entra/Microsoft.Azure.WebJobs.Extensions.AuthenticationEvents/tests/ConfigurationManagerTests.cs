@@ -92,8 +92,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 OpenIdConnectionHost = null
             };
             ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OpenIdConnectionHost is null");
-            Assert.IsNotNull(configurationManager, "Test when attribute's OpenIdConnectionHost is null");
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OIDCMetadataUrl is null");
+            Assert.IsNotNull(configurationManager, "Test when attribute's OIDCMetadataUrl is null");
             Assert.IsTrue(configurationManager.ConfiguredService.IsDefault, "When full configuration not provided, default service should be set");
         }
 
@@ -109,13 +109,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 OpenIdConnectionHost = oidcHost
             };
             ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OpenIdConnectionHost is null");
-            Assert.IsNotNull(configurationManager, "Test when attribute's OpenIdConnectionHost is null");
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OIDCMetadataUrl is null");
+            Assert.IsNotNull(configurationManager, "Test when attribute's OIDCMetadataUrl is null");
             Assert.IsFalse(configurationManager.ConfiguredService.IsDefault, "When full configuration not provided, default service should be set");
 
             Assert.AreEqual(tenantId, configurationManager.ConfiguredService.TenantId, "TenantId should be set to the custom");
             Assert.AreEqual(audienceAppId, configurationManager.ConfiguredService.ApplicationId, "AudienceAppId should be set to the custom");
-            Assert.AreEqual(oidcHost, configurationManager.ConfiguredService.OpenIdConnectionHost, "OpenIdConnectionHost should be set to the custom");
+            Assert.AreEqual(oidcHost, configurationManager.ConfiguredService.OIDCMetadataUrl, "OIDCMetadataUrl should be set to the custom");
             Assert.AreEqual(issuerv1, configurationManager.ConfiguredService.TokenIssuerV1, "TokenIssuerV1 should be set to the custom");
             Assert.AreEqual(issuerv2, configurationManager.ConfiguredService.TokenIssuerV2, "TokenIssuerV2 should be set to the custom");
         }
@@ -129,8 +129,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId
             };
             ConfigurationManager configurationManager = null;
-            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OpenIdConnectionHost is null");
-            Assert.IsNotNull(configurationManager, "Test when attribute's OpenIdConnectionHost is null");
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OIDCMetadataUrl is null");
+            Assert.IsNotNull(configurationManager, "Test when attribute's OIDCMetadataUrl is null");
             Assert.IsTrue(configurationManager.ConfiguredService.IsDefault, "When full configuration not provided, default service should be set");
         }
     }

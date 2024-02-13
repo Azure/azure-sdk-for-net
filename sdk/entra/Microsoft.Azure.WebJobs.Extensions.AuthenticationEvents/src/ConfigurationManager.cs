@@ -19,7 +19,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
         private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
 
-        private const string OIDC_METADATA_KEY = "AuthenticationEvents__OpenIdConnectionHost";
+        private const string OIDC_METADATA_KEY = "AuthenticationEvents__OIDCMetadataUrl";
         private const string TOKEN_ISSUER_V1_KEY = "AuthenticationEvents__TokenIssuer_V1";
         private const string TOKEN_ISSUER_V2_KEY = "AuthenticationEvents__TokenIssuer_V2";
         private const string TENANT_ID_KEY = "AuthenticationEvents__TenantId";
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 {
                     TenantId = TenantId,
                     ApplicationId = AudienceAppId,
-                    OpenIdConnectionHost = OpenIdConnectionHost,
+                    OIDCMetadataUrl = OpenIdConnectionHost,
                     TokenIssuerV1 = TokenIssuerV1,
                     TokenIssuerV2 = TokenIssuerV2,
                     IsDefault = false
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             return new ServiceInfo()
             {
-                OpenIdConnectionHost = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+                OIDCMetadataUrl = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
                 TokenIssuerV1 = $"https://sts.windows.net/{tid}/",
                 TokenIssuerV2 = $"https://login.microsoftonline.com/{tid}/v2.0",
                 ApplicationId = "99045fe1-7639-4a75-9d4a-577b6ca3810f",
