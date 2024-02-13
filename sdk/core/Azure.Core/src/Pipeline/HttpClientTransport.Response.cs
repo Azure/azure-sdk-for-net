@@ -72,6 +72,13 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 PipelineResponse response = _pipelineResponse;
+
+                if (response.ContentStream is MemoryStream stream &&
+                    stream.Position != 0)
+                {
+                    stream.Position = 0;
+                }
+
                 response?.Dispose();
             }
         }

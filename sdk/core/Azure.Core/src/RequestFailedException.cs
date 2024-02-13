@@ -150,6 +150,7 @@ namespace Azure
 
         private static ErrorDetails CreateRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
+            Console.WriteLine($"RequestFailedException.CreateRequestFailedExceptionContent.");
             response.ReadContent();
 
             parser ??= response.RequestFailedDetailsParser;
@@ -202,7 +203,7 @@ namespace Azure
                 }
             }
 
-            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+            if (ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
             {
                 messageBuilder
                     .AppendLine()

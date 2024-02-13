@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
@@ -56,29 +57,13 @@ namespace Azure
         {
             get
             {
-                if (ContentStream == null)
+                if (ContentStream is null || ContentStream is MemoryStream)
                 {
-                    return s_EmptyBinaryData;
+                    Console.WriteLine($"Response.Content");
+                    return ReadContent();
                 }
 
-                // Base implementation must create the buffer on-demand
-                // because it cannot know whether the ContentStream has
-                // been replaced since _bufferedContent was set.  Subtypes
-                // should override this implementation to be able to use
-                // cached content.
-                if (ContentStream is not MemoryStream memoryContent)
-                {
-                    throw new InvalidOperationException($"The response is not buffered.");
-                }
-
-                if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-                {
-                    return new BinaryData(segment.AsMemory());
-                }
-                else
-                {
-                    return new BinaryData(memoryContent.ToArray());
-                }
+                throw new InvalidOperationException($"The response is not buffered.");
             }
         }
 
@@ -170,16 +155,19 @@ namespace Azure
             // to improve performance.
             if (ContentStream is null)
             {
+                Console.WriteLine("Response.ReadContent: ContentStream is null");
                 return s_EmptyBinaryData;
             }
 
             if (ContentStream is MemoryStream memoryStream)
             {
+                Console.WriteLine($"Response.ReadContent: ContentStream is MemoryStream.  Position is {memoryStream.Position}. ContentLength is {memoryStream.Length}");
                 return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
                     new BinaryData(segment.AsMemory()) :
                     new BinaryData(memoryStream.ToArray());
             }
 
+            Console.WriteLine($"Response.ReadContent: ContentStream is source: {ContentStream.GetType()}.");
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
@@ -191,6 +179,9 @@ namespace Azure
 
             BinaryData content = BinaryData.FromStream(bufferStream);
             bufferStream.Position = 0;
+
+            Console.WriteLine($"Response.ReadContent: Buffered.  ContentLength is {content.ToMemory().Length}");
+
             return content;
         }
 
@@ -206,16 +197,19 @@ namespace Azure
             // to improve performance.
             if (ContentStream is null)
             {
+                Console.WriteLine("Response.ReadContentAsync: ContentStream is null");
                 return s_EmptyBinaryData;
             }
 
             if (ContentStream is MemoryStream memoryStream)
             {
+                Console.WriteLine($"Response.ReadContentAsync: ContentStream is MemoryStream.  Position is {memoryStream.Position}. ContentLength is {memoryStream.Length}");
                 return memoryStream.TryGetBuffer(out ArraySegment<byte> segment) ?
                     new BinaryData(segment.AsMemory()) :
                     new BinaryData(memoryStream.ToArray());
             }
 
+            Console.WriteLine($"Response.ReadContentAsync: ContentStream is source: {ContentStream.GetType()}.");
             MemoryStream bufferStream = new();
 
             Stream? contentStream = ContentStream;
@@ -227,6 +221,9 @@ namespace Azure
 
             BinaryData content = BinaryData.FromStream(bufferStream);
             bufferStream.Position = 0;
+
+            Console.WriteLine($"Response.ReadContentAsync: Buffered.  ContentLength is {content.ToMemory().Length}");
+
             return content;
         }
 

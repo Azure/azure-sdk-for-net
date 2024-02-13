@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -97,20 +98,30 @@ public partial class HttpClientPipelineTransport
         {
             if (_bufferedContent is not null)
             {
+                Console.WriteLine("HttpClientTransportResponse.ReadContentSyncOrAsync: return _bufferedContent");
                 // Content has already been buffered.
                 return _bufferedContent;
             }
 
             if (_contentStream == null)
             {
+                Console.WriteLine("HttpClientTransportResponse.ReadContentSyncOrAsync: return EmptyBinaryData");
+
                 // Content is not buffered but there is no source stream.
                 // Our contract from Azure.Core is to return BinaryData.Empty in this case.
                 _bufferedContent = s_EmptyBinaryData;
                 return _bufferedContent;
             }
 
+            if (_contentStream.Position != 0 && _contentStream is MemoryStream)
+            {
+                Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: MemoryStream and Position={_contentStream.Position}");
+                //throw new InvalidOperationException();
+            }
+
             // ContentStream still holds the source stream.  Buffer the content
             // and dispose the source stream.
+            Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: Buffering. Stream type is {_contentStream.GetType()}");
             BufferedContentStream bufferStream = new();
 
             if (async)
@@ -131,6 +142,8 @@ public partial class HttpClientPipelineTransport
                 new BinaryData(segment.AsMemory()) :
                 new BinaryData(bufferStream.ToArray());
 
+            Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: Buffered.  ContentLength is {_bufferedContent.ToMemory().Length}");
+
             return _bufferedContent;
         }
 
@@ -148,25 +161,24 @@ public partial class HttpClientPipelineTransport
                 HttpResponseMessage httpResponse = _httpResponse;
                 httpResponse?.Dispose();
 
-                // This response type has two states:
-                //   1. _contentStream holds a "source stream" which has not
-                //      been buffered; _bufferedContent is null.
-                //   2. _bufferedContent is set and _contentStream is null.
-                //
-                // Given this, if _contentStream is not null, we are holding
-                // a source stream and will dispose it.
-                //
-                // If the source stream is a memory stream, it's likely a mock,
-                // so buffer it prior to disposing so the content remains available.
+                Console.WriteLine("HttpClientTransportResponse.Dispose.");
 
                 if (ContentStream is MemoryStream)
                 {
+                    Console.WriteLine("HttpClientTransportResponse.Dispose.  ContentStream is MemoryStream");
                     ReadContent();
                 }
 
                 Stream? contentStream = _contentStream;
                 contentStream?.Dispose();
                 _contentStream = null;
+
+                //if (ContentStream is not MemoryStream)
+                //{
+                //    Stream? contentStream = _contentStream;
+                //    contentStream?.Dispose();
+                //    _contentStream = null;
+                //}
 
                 _disposed = true;
             }

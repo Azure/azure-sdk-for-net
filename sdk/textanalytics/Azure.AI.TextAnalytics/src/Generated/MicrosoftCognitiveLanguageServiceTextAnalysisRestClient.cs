@@ -76,17 +76,22 @@ namespace Azure.AI.TextAnalytics
             }
 
             using var message = CreateAnalyzeRequest(body, showStats);
+            Console.WriteLine($"RestClient.AnalyzeAsync.");
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         AnalyzeTextTaskResult value = default;
+                        Console.WriteLine($"RestClient.AnalyzeAsync: ParseAsync.");
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        Console.WriteLine($"RestClient.AnalyzeAsync: Stream position ={message.Response.ContentStream.Position}.");
+                        Console.WriteLine($"RestClient.AnalyzeAsync: DeserializeAnalyzeTextTaskResult.");
                         value = AnalyzeTextTaskResult.DeserializeAnalyzeTextTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
+                    Console.WriteLine($"RestClient.AnalyzeAsync: throw RFE.");
                     throw new RequestFailedException(message.Response);
             }
         }

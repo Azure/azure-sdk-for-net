@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics;
 using System.Threading;
 
 namespace System.ClientModel.Primitives;
@@ -144,6 +145,8 @@ public class PipelineMessage : IDisposable
     {
         if (disposing && !_disposed)
         {
+            Console.WriteLine("PipelineMessage.Dispose.");
+
             PipelineResponse? response = Response;
             response?.Dispose();
             Response = null;
