@@ -377,7 +377,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
                     if (_prefetchCount > 0)
                     {
-                        link.SetTotalLinkCredit((uint)_prefetchCount, true, false);
+                        link.Settings.TotalLinkCredit = 0;
+                        link.SetTotalLinkCredit((uint)_prefetchCount, true, true);
                     }
                 }
 
