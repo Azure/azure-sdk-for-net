@@ -6,31 +6,72 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class DpmContainerExtendedInfo : IUtf8JsonSerializable
+    internal partial class DpmContainerExtendedInfo : IUtf8JsonSerializable, IJsonModel<DpmContainerExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DpmContainerExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DpmContainerExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmContainerExtendedInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LastRefreshedOn))
             {
                 writer.WritePropertyName("lastRefreshedAt"u8);
                 writer.WriteStringValue(LastRefreshedOn.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DpmContainerExtendedInfo DeserializeDpmContainerExtendedInfo(JsonElement element)
+        DpmContainerExtendedInfo IJsonModel<DpmContainerExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmContainerExtendedInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmContainerExtendedInfo(document.RootElement, options);
+        }
+
+        internal static DpmContainerExtendedInfo DeserializeDpmContainerExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<DateTimeOffset> lastRefreshedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastRefreshedAt"u8))
@@ -42,8 +83,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     lastRefreshedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DpmContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DpmContainerExtendedInfo(Optional.ToNullable(lastRefreshedAt), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DpmContainerExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DpmContainerExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DpmContainerExtendedInfo IPersistableModel<DpmContainerExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmContainerExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDpmContainerExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DpmContainerExtendedInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DpmContainerExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

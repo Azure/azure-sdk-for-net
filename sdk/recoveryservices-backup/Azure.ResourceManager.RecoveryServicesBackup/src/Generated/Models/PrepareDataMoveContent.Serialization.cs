@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class PrepareDataMoveContent : IUtf8JsonSerializable
+    public partial class PrepareDataMoveContent : IUtf8JsonSerializable, IJsonModel<PrepareDataMoveContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrepareDataMoveContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrepareDataMoveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
@@ -41,7 +52,136 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("ignoreMoved"u8);
                 writer.WriteBooleanValue(IgnoreMoved.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        PrepareDataMoveContent IJsonModel<PrepareDataMoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrepareDataMoveContent(document.RootElement, options);
+        }
+
+        internal static PrepareDataMoveContent DeserializePrepareDataMoveContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier targetResourceId = default;
+            AzureLocation targetRegion = default;
+            DataMoveLevel dataMoveLevel = default;
+            Optional<IList<ResourceIdentifier>> sourceContainerArmIds = default;
+            Optional<bool> ignoreMoved = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("targetResourceId"u8))
+                {
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetRegion"u8))
+                {
+                    targetRegion = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("dataMoveLevel"u8))
+                {
+                    dataMoveLevel = new DataMoveLevel(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sourceContainerArmIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
+                    }
+                    sourceContainerArmIds = array;
+                    continue;
+                }
+                if (property.NameEquals("ignoreMoved"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ignoreMoved = property.Value.GetBoolean();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrepareDataMoveContent(targetResourceId, targetRegion, dataMoveLevel, Optional.ToList(sourceContainerArmIds), Optional.ToNullable(ignoreMoved), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<PrepareDataMoveContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PrepareDataMoveContent IPersistableModel<PrepareDataMoveContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrepareDataMoveContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrepareDataMoveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

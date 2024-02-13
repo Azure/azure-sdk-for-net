@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    internal partial class RequestHeaderOptions : IUtf8JsonSerializable
+    internal partial class RequestHeaderOptions : IUtf8JsonSerializable, IJsonModel<RequestHeaderOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestHeaderOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RequestHeaderOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OptInHeaders))
             {
                 writer.WritePropertyName("optInHeaders"u8);
                 writer.WriteStringValue(OptInHeaders.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RequestHeaderOptions DeserializeRequestHeaderOptions(JsonElement element)
+        RequestHeaderOptions IJsonModel<RequestHeaderOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestHeaderOptions(document.RootElement, options);
+        }
+
+        internal static RequestHeaderOptions DeserializeRequestHeaderOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<OptInHeaderType> optInHeaders = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("optInHeaders"u8))
@@ -41,8 +83,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     optInHeaders = new OptInHeaderType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RequestHeaderOptions(Optional.ToNullable(optInHeaders));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RequestHeaderOptions(Optional.ToNullable(optInHeaders), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RequestHeaderOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RequestHeaderOptions IPersistableModel<RequestHeaderOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRequestHeaderOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestHeaderOptions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestHeaderOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

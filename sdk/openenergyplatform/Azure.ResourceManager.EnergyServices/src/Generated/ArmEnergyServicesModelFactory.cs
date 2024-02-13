@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <returns> A new <see cref="Models.EnergyServiceNameAvailabilityResult"/> instance for mocking. </returns>
         public static EnergyServiceNameAvailabilityResult EnergyServiceNameAvailabilityResult(bool? nameAvailable = null, EnergyServiceNameUnavailableReason? reason = null, string message = null)
         {
-            return new EnergyServiceNameAvailabilityResult(nameAvailable, reason, message);
+            return new EnergyServiceNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EnergyServices.EnergyServiceData"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EnergyServiceData(id, name, resourceType, systemData, tags, location, properties);
+            return new EnergyServiceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EnergyServiceProperties"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             dataPartitionNames ??= new List<DataPartitionName>();
 
-            return new EnergyServiceProperties(dnsName, provisioningState, authAppId, dataPartitionNames?.ToList());
+            return new EnergyServiceProperties(dnsName, provisioningState, authAppId, dataPartitionNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataPartitionsListResult"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         {
             dataPartitionInfo ??= new List<DataPartition>();
 
-            return new DataPartitionsListResult(dataPartitionInfo?.ToList());
+            return new DataPartitionsListResult(dataPartitionInfo?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataPartition"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
         /// <returns> A new <see cref="Models.DataPartition"/> instance for mocking. </returns>
         public static DataPartition DataPartition(string name = null, string provisioningState = null)
         {
-            return new DataPartition(name, provisioningState);
+            return new DataPartition(name, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -24,7 +26,7 @@
 
 ### Bugs Fixed
 
-- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string 
+- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string
 
 ## 1.4.0 (2023-10-19)
 

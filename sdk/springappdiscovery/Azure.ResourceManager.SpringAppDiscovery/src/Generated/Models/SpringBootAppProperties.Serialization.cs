@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
-    public partial class SpringBootAppProperties : IUtf8JsonSerializable
+    public partial class SpringBootAppProperties : IUtf8JsonSerializable, IJsonModel<SpringBootAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpringBootAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppName))
             {
@@ -227,11 +236,40 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element)
+        SpringBootAppProperties IJsonModel<SpringBootAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpringBootAppProperties(document.RootElement, options);
+        }
+
+        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -264,6 +302,8 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             Optional<DateTimeOffset> lastUpdatedTime = default;
             Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
             Optional<IList<SpringBootSiteError>> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -554,8 +594,44 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     errors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SpringBootAppProperties IPersistableModel<SpringBootAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpringBootAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpringBootAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

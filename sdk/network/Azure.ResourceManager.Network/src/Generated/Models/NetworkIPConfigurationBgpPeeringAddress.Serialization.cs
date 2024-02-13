@@ -5,21 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkIPConfigurationBgpPeeringAddress : IUtf8JsonSerializable
+    public partial class NetworkIPConfigurationBgpPeeringAddress : IUtf8JsonSerializable, IJsonModel<NetworkIPConfigurationBgpPeeringAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkIPConfigurationBgpPeeringAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkIPConfigurationBgpPeeringAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IPConfigurationId))
             {
                 writer.WritePropertyName("ipconfigurationId"u8);
                 writer.WriteStringValue(IPConfigurationId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DefaultBgpIPAddresses))
+            {
+                writer.WritePropertyName("defaultBgpIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultBgpIPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsCollectionDefined(CustomBgpIPAddresses))
             {
@@ -31,11 +51,50 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(TunnelIPAddresses))
+            {
+                writer.WritePropertyName("tunnelIpAddresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in TunnelIPAddresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkIPConfigurationBgpPeeringAddress DeserializeNetworkIPConfigurationBgpPeeringAddress(JsonElement element)
+        NetworkIPConfigurationBgpPeeringAddress IJsonModel<NetworkIPConfigurationBgpPeeringAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkIPConfigurationBgpPeeringAddress(document.RootElement, options);
+        }
+
+        internal static NetworkIPConfigurationBgpPeeringAddress DeserializeNetworkIPConfigurationBgpPeeringAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +103,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IReadOnlyList<string>> defaultBgpIPAddresses = default;
             Optional<IList<string>> customBgpIPAddresses = default;
             Optional<IReadOnlyList<string>> tunnelIPAddresses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipconfigurationId"u8))
@@ -93,8 +154,44 @@ namespace Azure.ResourceManager.Network.Models
                     tunnelIPAddresses = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkIPConfigurationBgpPeeringAddress(ipconfigurationId.Value, Optional.ToList(defaultBgpIPAddresses), Optional.ToList(customBgpIPAddresses), Optional.ToList(tunnelIPAddresses), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkIPConfigurationBgpPeeringAddress IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkIPConfigurationBgpPeeringAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkIPConfigurationBgpPeeringAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkIPConfigurationBgpPeeringAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

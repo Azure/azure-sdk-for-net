@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
@@ -12,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class DiagnosticContractData : IUtf8JsonSerializable
+    public partial class DiagnosticContractData : IUtf8JsonSerializable, IJsonModel<DiagnosticContractData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiagnosticContractData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DiagnosticContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AlwaysLog))
@@ -70,11 +101,40 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteBooleanValue(Metrics.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DiagnosticContractData DeserializeDiagnosticContractData(JsonElement element)
+        DiagnosticContractData IJsonModel<DiagnosticContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDiagnosticContractData(document.RootElement, options);
+        }
+
+        internal static DiagnosticContractData DeserializeDiagnosticContractData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,6 +153,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<TraceVerbosityLevel> verbosity = default;
             Optional<OperationNameFormat> operationNameFormat = default;
             Optional<bool> metrics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -217,8 +279,44 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DiagnosticContractData(id, name, type, systemData.Value, Optional.ToNullable(alwaysLog), loggerId.Value, sampling.Value, frontend.Value, backend.Value, Optional.ToNullable(logClientIP), Optional.ToNullable(httpCorrelationProtocol), Optional.ToNullable(verbosity), Optional.ToNullable(operationNameFormat), Optional.ToNullable(metrics), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DiagnosticContractData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DiagnosticContractData IPersistableModel<DiagnosticContractData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DiagnosticContractData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDiagnosticContractData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DiagnosticContractData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DiagnosticContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

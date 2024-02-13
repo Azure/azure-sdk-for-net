@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,16 +14,76 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ListVirtualNetworkGatewayNatRulesResult
+    internal partial class ListVirtualNetworkGatewayNatRulesResult : IUtf8JsonSerializable, IJsonModel<ListVirtualNetworkGatewayNatRulesResult>
     {
-        internal static ListVirtualNetworkGatewayNatRulesResult DeserializeListVirtualNetworkGatewayNatRulesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListVirtualNetworkGatewayNatRulesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ListVirtualNetworkGatewayNatRulesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListVirtualNetworkGatewayNatRulesResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ListVirtualNetworkGatewayNatRulesResult IJsonModel<ListVirtualNetworkGatewayNatRulesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ListVirtualNetworkGatewayNatRulesResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeListVirtualNetworkGatewayNatRulesResult(document.RootElement, options);
+        }
+
+        internal static ListVirtualNetworkGatewayNatRulesResult DeserializeListVirtualNetworkGatewayNatRulesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<VirtualNetworkGatewayNatRuleData>> value = default;
             Optional<string> nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,8 +105,44 @@ namespace Azure.ResourceManager.Network.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ListVirtualNetworkGatewayNatRulesResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ListVirtualNetworkGatewayNatRulesResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ListVirtualNetworkGatewayNatRulesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ListVirtualNetworkGatewayNatRulesResult IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeListVirtualNetworkGatewayNatRulesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ListVirtualNetworkGatewayNatRulesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ListVirtualNetworkGatewayNatRulesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

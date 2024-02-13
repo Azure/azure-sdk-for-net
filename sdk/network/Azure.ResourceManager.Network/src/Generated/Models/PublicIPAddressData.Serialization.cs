@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,10 +16,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class PublicIPAddressData : IUtf8JsonSerializable
+    public partial class PublicIPAddressData : IUtf8JsonSerializable, IJsonModel<PublicIPAddressData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicIPAddressData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PublicIPAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -29,6 +38,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -44,6 +58,16 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (Optional.IsDefined(Location))
             {
@@ -72,6 +96,11 @@ namespace Azure.ResourceManager.Network
             {
                 writer.WritePropertyName("publicIPAddressVersion"u8);
                 writer.WriteStringValue(PublicIPAddressVersion.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
+            {
+                writer.WritePropertyName("ipConfiguration"u8);
+                writer.WriteObjectValue(IPConfiguration);
             }
             if (Optional.IsDefined(DnsSettings))
             {
@@ -108,6 +137,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("idleTimeoutInMinutes"u8);
                 writer.WriteNumberValue(IdleTimeoutInMinutes.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(ServicePublicIPAddress))
             {
                 writer.WritePropertyName("servicePublicIPAddress"u8);
@@ -134,11 +173,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PublicIPAddressData DeserializePublicIPAddressData(JsonElement element)
+        PublicIPAddressData IJsonModel<PublicIPAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePublicIPAddressData(document.RootElement, options);
+        }
+
+        internal static PublicIPAddressData DeserializePublicIPAddressData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -168,6 +236,8 @@ namespace Azure.ResourceManager.Network
             Optional<PublicIPAddressMigrationPhase> migrationPhase = default;
             Optional<PublicIPAddressData> linkedPublicIPAddress = default;
             Optional<IPAddressDeleteOption> deleteOption = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -414,8 +484,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PublicIPAddressData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData, extendedLocation, sku.Value, Optional.ToNullable(etag), Optional.ToList(zones), Optional.ToNullable(publicIPAllocationMethod), Optional.ToNullable(publicIPAddressVersion), ipConfiguration.Value, dnsSettings.Value, ddosSettings.Value, Optional.ToList(ipTags), ipAddress.Value, publicIPPrefix, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(resourceGuid), Optional.ToNullable(provisioningState), servicePublicIPAddress.Value, natGateway.Value, Optional.ToNullable(migrationPhase), linkedPublicIPAddress.Value, Optional.ToNullable(deleteOption));
         }
+
+        BinaryData IPersistableModel<PublicIPAddressData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PublicIPAddressData IPersistableModel<PublicIPAddressData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePublicIPAddressData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PublicIPAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

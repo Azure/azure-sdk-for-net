@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The UnknownScriptExecutionParameter. </summary>
@@ -13,9 +16,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
-        internal UnknownScriptExecutionParameter(string name, ScriptExecutionParameterType parameterType) : base(name, parameterType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownScriptExecutionParameter(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, parameterType, serializedAdditionalRawData)
         {
             ParameterType = parameterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownScriptExecutionParameter"/> for deserialization. </summary>
+        internal UnknownScriptExecutionParameter()
+        {
         }
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewayRewriteRuleActionSet : IUtf8JsonSerializable
+    public partial class ApplicationGatewayRewriteRuleActionSet : IUtf8JsonSerializable, IJsonModel<ApplicationGatewayRewriteRuleActionSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewayRewriteRuleActionSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationGatewayRewriteRuleActionSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleActionSet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequestHeaderConfigurations))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("urlConfiguration"u8);
                 writer.WriteObjectValue(UrlConfiguration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationGatewayRewriteRuleActionSet DeserializeApplicationGatewayRewriteRuleActionSet(JsonElement element)
+        ApplicationGatewayRewriteRuleActionSet IJsonModel<ApplicationGatewayRewriteRuleActionSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleActionSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleActionSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewayRewriteRuleActionSet(document.RootElement, options);
+        }
+
+        internal static ApplicationGatewayRewriteRuleActionSet DeserializeApplicationGatewayRewriteRuleActionSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +92,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<ApplicationGatewayHeaderConfiguration>> requestHeaderConfigurations = default;
             Optional<IList<ApplicationGatewayHeaderConfiguration>> responseHeaderConfigurations = default;
             Optional<ApplicationGatewayUrlConfiguration> urlConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requestHeaderConfigurations"u8))
@@ -92,8 +133,44 @@ namespace Azure.ResourceManager.Network.Models
                     urlConfiguration = ApplicationGatewayUrlConfiguration.DeserializeApplicationGatewayUrlConfiguration(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationGatewayRewriteRuleActionSet(Optional.ToList(requestHeaderConfigurations), Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationGatewayRewriteRuleActionSet(Optional.ToList(requestHeaderConfigurations), Optional.ToList(responseHeaderConfigurations), urlConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationGatewayRewriteRuleActionSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleActionSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleActionSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewayRewriteRuleActionSet IPersistableModel<ApplicationGatewayRewriteRuleActionSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayRewriteRuleActionSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewayRewriteRuleActionSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewayRewriteRuleActionSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewayRewriteRuleActionSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -16,6 +17,38 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// </summary>
     public abstract partial class BenefitRecommendationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationProperties"/>. </summary>
         protected BenefitRecommendationProperties()
         {
@@ -35,7 +68,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
-        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstConsumptionOn = firstConsumptionOn;
             LastConsumptionOn = lastConsumptionOn;
@@ -50,6 +84,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             RecommendationDetails = recommendationDetails;
             AllRecommendationDetails = allRecommendationDetails;
             Scope = scope;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The first usage date used for looking back for computing the recommendations. </summary>

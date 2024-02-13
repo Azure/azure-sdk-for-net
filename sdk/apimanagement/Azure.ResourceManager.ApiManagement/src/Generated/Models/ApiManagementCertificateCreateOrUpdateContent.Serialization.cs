@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ApiManagementCertificateCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class ApiManagementCertificateCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<ApiManagementCertificateCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementCertificateCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiManagementCertificateCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,7 +44,120 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteObjectValue(KeyVaultDetails);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApiManagementCertificateCreateOrUpdateContent IJsonModel<ApiManagementCertificateCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiManagementCertificateCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static ApiManagementCertificateCreateOrUpdateContent DeserializeApiManagementCertificateCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> data = default;
+            Optional<string> password = default;
+            Optional<KeyVaultContractCreateProperties> keyVault = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("data"u8))
+                        {
+                            data = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("password"u8))
+                        {
+                            password = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("keyVault"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            keyVault = KeyVaultContractCreateProperties.DeserializeKeyVaultContractCreateProperties(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiManagementCertificateCreateOrUpdateContent(data.Value, password.Value, keyVault.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiManagementCertificateCreateOrUpdateContent IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiManagementCertificateCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiManagementCertificateCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiManagementCertificateCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

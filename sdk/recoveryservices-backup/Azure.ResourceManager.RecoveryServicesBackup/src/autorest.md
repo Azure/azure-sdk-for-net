@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   Job: BackupGenericJob
@@ -477,7 +478,7 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
-  # Here the format date-time isn't specified in swagger, hence adding it explicitly 
+  # Here the format date-time isn't specified in swagger, hence adding it explicitly
   - from: bms.json
     where: $.definitions.RecoveryPointProperties.properties.expiryTime
     transform: >

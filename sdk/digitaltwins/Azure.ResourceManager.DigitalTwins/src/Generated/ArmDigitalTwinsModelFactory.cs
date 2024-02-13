@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<DigitalTwinsPrivateEndpointConnectionData>();
 
-            return new DigitalTwinsDescriptionData(id, name, resourceType, systemData, tags, location, createdOn, lastUpdatedOn, provisioningState, hostName, privateEndpointConnections?.ToList(), publicNetworkAccess, identity);
+            return new DigitalTwinsDescriptionData(id, name, resourceType, systemData, tags, location, createdOn, lastUpdatedOn, provisioningState, hostName, privateEndpointConnections?.ToList(), publicNetworkAccess, identity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsPrivateEndpointConnectionData"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static DigitalTwinsPrivateEndpointConnectionData DigitalTwinsPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DigitalTwinsPrivateEndpointConnectionProperties properties = null)
         {
-            return new DigitalTwinsPrivateEndpointConnectionData(id, name, resourceType, systemData, properties);
+            return new DigitalTwinsPrivateEndpointConnectionData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsPrivateEndpointConnectionProperties"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             groupIds ??= new List<string>();
 
-            return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState);
+            return new DigitalTwinsPrivateEndpointConnectionProperties(provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, groupIds?.ToList(), privateLinkServiceConnectionState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsEndpointResourceData"/>. </summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsEndpointResourceData"/> instance for mocking. </returns>
         public static DigitalTwinsEndpointResourceData DigitalTwinsEndpointResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DigitalTwinsEndpointResourceProperties properties = null)
         {
-            return new DigitalTwinsEndpointResourceData(id, name, resourceType, systemData, properties);
+            return new DigitalTwinsEndpointResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEndpointResourceProperties"/>. </summary>
@@ -92,7 +92,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DigitalTwinsEndpointResourceProperties"/> instance for mocking. </returns>
         public static DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = "Unknown", DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null)
         {
-            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity);
+            return new UnknownDigitalTwinsEndpointResourceProperties(endpointType, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsNameContent"/>. </summary>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> The type of resource, for instance Microsoft.DigitalTwins/digitalTwinsInstances. </param>
+        /// <returns> A new <see cref="Models.DigitalTwinsNameContent"/> instance for mocking. </returns>
+        public static DigitalTwinsNameContent DigitalTwinsNameContent(string name = null, DigitalTwinsResourceType resourceType = default)
+        {
+            return new DigitalTwinsNameContent(name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsNameResult"/>. </summary>
@@ -102,7 +111,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DigitalTwinsNameResult"/> instance for mocking. </returns>
         public static DigitalTwinsNameResult DigitalTwinsNameResult(bool? isNameAvailable = null, string message = null, DigitalTwinsNameUnavailableReason? reason = null)
         {
-            return new DigitalTwinsNameResult(isNameAvailable, message, reason);
+            return new DigitalTwinsNameResult(isNameAvailable, message, reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DigitalTwins.DigitalTwinsPrivateLinkResourceData"/>. </summary>
@@ -114,7 +123,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="DigitalTwins.DigitalTwinsPrivateLinkResourceData"/> instance for mocking. </returns>
         public static DigitalTwinsPrivateLinkResourceData DigitalTwinsPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DigitalTwinsPrivateLinkResourceProperties properties = null)
         {
-            return new DigitalTwinsPrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new DigitalTwinsPrivateLinkResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsPrivateLinkResourceProperties"/>. </summary>
@@ -127,7 +136,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new DigitalTwinsPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new DigitalTwinsPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DigitalTwins.TimeSeriesDatabaseConnectionData"/>. </summary>
@@ -143,7 +152,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="DigitalTwins.TimeSeriesDatabaseConnectionData"/> instance for mocking. </returns>
         public static TimeSeriesDatabaseConnectionData TimeSeriesDatabaseConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, TimeSeriesDatabaseConnectionProperties properties = null)
         {
-            return new TimeSeriesDatabaseConnectionData(id, name, resourceType, systemData, properties);
+            return new TimeSeriesDatabaseConnectionData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TimeSeriesDatabaseConnectionProperties"/>. </summary>
@@ -153,7 +162,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.TimeSeriesDatabaseConnectionProperties"/> instance for mocking. </returns>
         public static TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = "Unknown", TimeSeriesDatabaseConnectionState? provisioningState = null, DigitalTwinsManagedIdentityReference identity = null)
         {
-            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity);
+            return new UnknownTimeSeriesDatabaseConnectionProperties(connectionType, provisioningState, identity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsServiceBusProperties"/>. </summary>
@@ -170,7 +179,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DigitalTwinsServiceBusProperties"/> instance for mocking. </returns>
         public static DigitalTwinsServiceBusProperties DigitalTwinsServiceBusProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string primaryConnectionString = null, string secondaryConnectionString = null, Uri endpointUri = null, string entityPath = null)
         {
-            return new DigitalTwinsServiceBusProperties(EndpointType.ServiceBus, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, primaryConnectionString, secondaryConnectionString, endpointUri, entityPath);
+            return new DigitalTwinsServiceBusProperties(EndpointType.ServiceBus, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData: null, primaryConnectionString, secondaryConnectionString, endpointUri, entityPath);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEventHubProperties"/>. </summary>
@@ -187,7 +196,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DigitalTwinsEventHubProperties"/> instance for mocking. </returns>
         public static DigitalTwinsEventHubProperties DigitalTwinsEventHubProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string connectionStringPrimaryKey = null, string connectionStringSecondaryKey = null, Uri endpointUri = null, string entityPath = null)
         {
-            return new DigitalTwinsEventHubProperties(EndpointType.EventHub, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, connectionStringPrimaryKey, connectionStringSecondaryKey, endpointUri, entityPath);
+            return new DigitalTwinsEventHubProperties(EndpointType.EventHub, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData: null, connectionStringPrimaryKey, connectionStringSecondaryKey, endpointUri, entityPath);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DigitalTwinsEventGridProperties"/>. </summary>
@@ -203,7 +212,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DigitalTwinsEventGridProperties"/> instance for mocking. </returns>
         public static DigitalTwinsEventGridProperties DigitalTwinsEventGridProperties(DigitalTwinsEndpointProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DigitalTwinsAuthenticationType? authenticationType = null, string deadLetterSecret = null, Uri deadLetterUri = null, DigitalTwinsManagedIdentityReference identity = null, string topicEndpoint = null, string accessKey1 = null, string accessKey2 = null)
         {
-            return new DigitalTwinsEventGridProperties(EndpointType.EventGrid, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, topicEndpoint, accessKey1, accessKey2);
+            return new DigitalTwinsEventGridProperties(EndpointType.EventGrid, provisioningState, createdOn, authenticationType, deadLetterSecret, deadLetterUri, identity, serializedAdditionalRawData: null, topicEndpoint, accessKey1, accessKey2);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataExplorerConnectionProperties"/>. </summary>
@@ -223,7 +232,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         /// <returns> A new <see cref="Models.DataExplorerConnectionProperties"/> instance for mocking. </returns>
         public static DataExplorerConnectionProperties DataExplorerConnectionProperties(TimeSeriesDatabaseConnectionState? provisioningState = null, DigitalTwinsManagedIdentityReference identity = null, ResourceIdentifier adxResourceId = null, Uri adxEndpointUri = null, string adxDatabaseName = null, string adxTableName = null, string adxTwinLifecycleEventsTableName = null, string adxRelationshipLifecycleEventsTableName = null, Uri eventHubEndpointUri = null, string eventHubEntityPath = null, ResourceIdentifier eventHubNamespaceResourceId = null, string eventHubConsumerGroup = null, RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals = null)
         {
-            return new DataExplorerConnectionProperties(ConnectionType.AzureDataExplorer, provisioningState, identity, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName, adxTwinLifecycleEventsTableName, adxRelationshipLifecycleEventsTableName, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup, recordPropertyAndItemRemovals);
+            return new DataExplorerConnectionProperties(ConnectionType.AzureDataExplorer, provisioningState, identity, serializedAdditionalRawData: null, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName, adxTwinLifecycleEventsTableName, adxRelationshipLifecycleEventsTableName, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup, recordPropertyAndItemRemovals);
         }
     }
 }

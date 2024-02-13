@@ -6,16 +6,97 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DataMigrationServiceStatusResponse
+    public partial class DataMigrationServiceStatusResponse : IUtf8JsonSerializable, IJsonModel<DataMigrationServiceStatusResponse>
     {
-        internal static DataMigrationServiceStatusResponse DeserializeDataMigrationServiceStatusResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMigrationServiceStatusResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataMigrationServiceStatusResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(AgentVersion))
+            {
+                writer.WritePropertyName("agentVersion"u8);
+                writer.WriteStringValue(AgentVersion);
+            }
+            if (Optional.IsDefined(AgentConfiguration))
+            {
+                writer.WritePropertyName("agentConfiguration"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(AgentConfiguration);
+#else
+                using (JsonDocument document = JsonDocument.Parse(AgentConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (Optional.IsCollectionDefined(SupportedTaskTypes))
+            {
+                writer.WritePropertyName("supportedTaskTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedTaskTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataMigrationServiceStatusResponse IJsonModel<DataMigrationServiceStatusResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataMigrationServiceStatusResponse(document.RootElement, options);
+        }
+
+        internal static DataMigrationServiceStatusResponse DeserializeDataMigrationServiceStatusResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> status = default;
             Optional<string> vmSize = default;
             Optional<IReadOnlyList<string>> supportedTaskTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("agentVersion"u8))
@@ -65,8 +148,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     supportedTaskTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataMigrationServiceStatusResponse(agentVersion.Value, agentConfiguration.Value, status.Value, vmSize.Value, Optional.ToList(supportedTaskTypes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataMigrationServiceStatusResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataMigrationServiceStatusResponse IPersistableModel<DataMigrationServiceStatusResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMigrationServiceStatusResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataMigrationServiceStatusResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMigrationServiceStatusResponse)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataMigrationServiceStatusResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

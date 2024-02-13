@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> The UnknownStorageProperties. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownStorageProperties"/>. </summary>
         /// <param name="storageType"> The type of the storage. </param>
-        internal UnknownStorageProperties(StorageType storageType) : base(storageType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownStorageProperties(StorageType storageType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(storageType, serializedAdditionalRawData)
         {
             StorageType = storageType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownStorageProperties"/> for deserialization. </summary>
+        internal UnknownStorageProperties()
+        {
         }
     }
 }

@@ -3,12 +3,29 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Azure.AI.OpenAI;
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
     public static partial class VectorSearchCommons
     {
+        #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings
+        public static ReadOnlyMemory<float> GetEmbeddings(string input)
+        {
+            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+            string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+            AzureKeyCredential credential = new AzureKeyCredential(key);
+
+            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+            EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+
+            Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
+            return embeddings.Data[0].Embedding;
+        }
+        #endregion
+
         #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
         public static Hotel[] GetHotelDocuments()
         {
@@ -22,20 +39,39 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                         "the tourist attractions. We highly recommend this hotel.",
+#if !SNIPPET
                     DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
+#else
+                    DescriptionVector = GetEmbeddings(
+                        "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                        "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                        "the tourist attractions. We highly recommend this hotel."),
+#endif
                     Category = "Luxury",
+#if !SNIPPET
                     CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
+#else
+                    CategoryVector = GetEmbeddings("Luxury")
+#endif
                 },
                 new Hotel()
                 {
                     HotelId = "2",
                     HotelName = "Roach Motel",
                     Description = "Cheapest hotel in town. Infact, a motel.",
+#if !SNIPPET
                     DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
+#else
+                    DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
+#endif
                     Category = "Budget",
+#if !SNIPPET
                     CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
+#else
+                    CategoryVector = GetEmbeddings("Budget")
+#endif
                 },
- #if !SNIPPET
+#if !SNIPPET
                 new Hotel()
                 {
                     HotelId = "3",

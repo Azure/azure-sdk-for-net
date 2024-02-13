@@ -25,6 +25,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print tags results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Tags:");
             foreach (DetectedTag tag in result.Tags.Values)
             {
@@ -41,41 +42,16 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisTagsFromUrl
             // Get the tags for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.Tags);
 
             // Print tags results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" Tags:");
             foreach (DetectedTag tag in result.Tags.Values)
             {
                 Console.WriteLine($"   '{tag.Name}', Confidence {tag.Confidence:F4}");
-            }
-            #endregion
-        }
-
-        [TestCase]
-        public void ImageAnalysisTagsException()
-        {
-            var client = ImageAnalysisAuth();
-            #region Snippet:ImageAnalysisTagsException
-            var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-            try
-            {
-                var result = client.Analyze(imageUrl, VisualFeatures.DenseCaptions);
-            }
-            catch (RequestFailedException e)
-            {
-                if (e.Status == 400)
-                {
-                    Console.WriteLine("Error analyzing image.");
-                    Console.WriteLine("HTTP status code 400: The request is invalid or malformed.");
-                }
-                else
-                {
-                    throw;
-                }
             }
             #endregion
         }

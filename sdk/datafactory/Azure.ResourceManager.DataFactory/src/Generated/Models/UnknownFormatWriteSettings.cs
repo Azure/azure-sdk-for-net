@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             FormatWriteSettingsType = formatWriteSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownFormatWriteSettings"/> for deserialization. </summary>
+        internal UnknownFormatWriteSettings()
+        {
+        }
     }
 }

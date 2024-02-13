@@ -280,6 +280,20 @@
             "Type": "Models.NodeCommunicationMode?",
             "Name": "TargetNodeCommunicationMode"
           }
+        },
+        {
+          "Key": {
+            "Type": "IDictionary<string, string>",
+            "Name": "ResourceTags",
+            "SummaryComment": "The user-specified tags associated with the pool.",
+            "RemarksComment": "The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to the backing Azure resources associated with the pool. This property can only be specified when the Batch account was created with the poolAllocationMode property set to 'UserSubscription'.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IDictionary<string, string>",
+            "Name": "ResourceTags"
+          }
         }
       ]
     }

@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVaultSettingProperties
+    public partial class SiteRecoveryVaultSettingProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryVaultSettingProperties>
     {
-        internal static SiteRecoveryVaultSettingProperties DeserializeSiteRecoveryVaultSettingProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryVaultSettingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryVaultSettingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVaultSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVaultSettingProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MigrationSolutionId))
+            {
+                writer.WritePropertyName("migrationSolutionId"u8);
+                writer.WriteStringValue(MigrationSolutionId);
+            }
+            if (Optional.IsDefined(VMwareToAzureProviderType))
+            {
+                writer.WritePropertyName("vmwareToAzureProviderType"u8);
+                writer.WriteStringValue(VMwareToAzureProviderType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryVaultSettingProperties IJsonModel<SiteRecoveryVaultSettingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVaultSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVaultSettingProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVaultSettingProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryVaultSettingProperties DeserializeSiteRecoveryVaultSettingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<ResourceIdentifier> migrationSolutionId = default;
             Optional<string> vmwareToAzureProviderType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("migrationSolutionId"u8))
@@ -36,8 +94,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     vmwareToAzureProviderType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryVaultSettingProperties(migrationSolutionId.Value, vmwareToAzureProviderType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryVaultSettingProperties(migrationSolutionId.Value, vmwareToAzureProviderType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryVaultSettingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVaultSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryVaultSettingProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryVaultSettingProperties IPersistableModel<SiteRecoveryVaultSettingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVaultSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryVaultSettingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryVaultSettingProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryVaultSettingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

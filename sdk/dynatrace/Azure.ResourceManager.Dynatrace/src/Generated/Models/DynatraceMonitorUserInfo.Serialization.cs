@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitorUserInfo : IUtf8JsonSerializable
+    public partial class DynatraceMonitorUserInfo : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorUserInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorUserInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DynatraceMonitorUserInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorUserInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceMonitorUserInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FirstName))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DynatraceMonitorUserInfo DeserializeDynatraceMonitorUserInfo(JsonElement element)
+        DynatraceMonitorUserInfo IJsonModel<DynatraceMonitorUserInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorUserInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceMonitorUserInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceMonitorUserInfo(document.RootElement, options);
+        }
+
+        internal static DynatraceMonitorUserInfo DeserializeDynatraceMonitorUserInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<string> emailAddress = default;
             Optional<string> phoneNumber = default;
             Optional<string> country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstName"u8))
@@ -81,8 +123,44 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceMonitorUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DynatraceMonitorUserInfo(firstName.Value, lastName.Value, emailAddress.Value, phoneNumber.Value, country.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynatraceMonitorUserInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorUserInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitorUserInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DynatraceMonitorUserInfo IPersistableModel<DynatraceMonitorUserInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorUserInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynatraceMonitorUserInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitorUserInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynatraceMonitorUserInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

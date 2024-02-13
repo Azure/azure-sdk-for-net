@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> The Virtual machine template inventory item. </summary>
@@ -22,11 +25,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="cpuCount"> Gets or sets the desired number of vCPUs for the vm. </param>
         /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
         /// <param name="osType"> Gets or sets the type of the os. </param>
         /// <param name="osName"> Gets or sets os name. </param>
-        internal VirtualMachineTemplateInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, int? cpuCount, int? memoryMB, OSType? osType, string osName) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState)
+        internal VirtualMachineTemplateInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, int? cpuCount, int? memoryMB, OSType? osType, string osName) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             CpuCount = cpuCount;
             MemoryMB = memoryMB;

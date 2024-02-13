@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
+    /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
     public readonly partial struct HybridContainerServiceOSType : IEquatable<HybridContainerServiceOSType>
     {
         private readonly string _value;

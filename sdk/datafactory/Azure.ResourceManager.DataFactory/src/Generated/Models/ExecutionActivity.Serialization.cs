@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecutionActivity : IUtf8JsonSerializable
+    public partial class ExecutionActivity : IUtf8JsonSerializable, IJsonModel<ExecutionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExecutionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExecutionActivity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -82,8 +91,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element)
+        ExecutionActivity IJsonModel<ExecutionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExecutionActivity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExecutionActivity(document.RootElement, options);
+        }
+
+        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -217,5 +240,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new ExecutionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value);
         }
+
+        BinaryData IPersistableModel<ExecutionActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExecutionActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExecutionActivity IPersistableModel<ExecutionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExecutionActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExecutionActivity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExecutionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

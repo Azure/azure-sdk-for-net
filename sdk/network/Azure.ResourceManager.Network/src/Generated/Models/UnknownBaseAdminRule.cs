@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -22,9 +24,15 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Whether the rule is custom or default. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal UnknownBaseAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag) : base(id, name, resourceType, systemData, kind, etag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBaseAdminRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AdminRuleKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBaseAdminRule"/> for deserialization. </summary>
+        internal UnknownBaseAdminRule()
+        {
         }
     }
 }

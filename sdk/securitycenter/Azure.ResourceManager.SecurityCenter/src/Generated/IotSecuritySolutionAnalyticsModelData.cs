@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.SecurityCenter
     /// </summary>
     public partial class IotSecuritySolutionAnalyticsModelData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotSecuritySolutionAnalyticsModelData"/>. </summary>
         public IotSecuritySolutionAnalyticsModelData()
         {
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="topAlertedDevices"> List of the 3 devices with the most alerts. </param>
         /// <param name="mostPrevalentDeviceAlerts"> List of the 3 most prevalent device alerts. </param>
         /// <param name="mostPrevalentDeviceRecommendations"> List of the 3 most prevalent device recommendations. </param>
-        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotSecuritySolutionAnalyticsModelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IotSeverityMetrics metrics, long? unhealthyDeviceCount, IReadOnlyList<IotSecuritySolutionAnalyticsModelDevicesMetrics> devicesMetrics, IList<IotSecurityAlertedDevice> topAlertedDevices, IList<IotSecurityDeviceAlert> mostPrevalentDeviceAlerts, IList<IotSecurityDeviceRecommendation> mostPrevalentDeviceRecommendations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Metrics = metrics;
             UnhealthyDeviceCount = unhealthyDeviceCount;
@@ -46,6 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter
             TopAlertedDevices = topAlertedDevices;
             MostPrevalentDeviceAlerts = mostPrevalentDeviceAlerts;
             MostPrevalentDeviceRecommendations = mostPrevalentDeviceRecommendations;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Security analytics of your IoT Security solution. </summary>

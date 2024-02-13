@@ -5,28 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> AgentPool update configuration. </summary>
+    /// <summary> Profile for agent pool properties that can be updated. </summary>
     public partial class AgentPoolUpdateProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
         public AgentPoolUpdateProfile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolUpdateProfile"/>. </summary>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        internal AgentPoolUpdateProfile(int? count, string vmSize)
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AgentPoolUpdateProfile(int? count, string vmSize, string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Count = count;
             VmSize = vmSize;
+            KubernetesVersion = kubernetesVersion;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>
+        /// <summary> Number of nodes in the agent pool. The default value is 1. </summary>
         public int? Count { get; set; }
-        /// <summary> VmSize - The size of the agent pool VMs. </summary>
+        /// <summary> The VM sku size of the agent pool node VMs. </summary>
         public string VmSize { get; set; }
+        /// <summary> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </summary>
+        public string KubernetesVersion { get; }
     }
 }

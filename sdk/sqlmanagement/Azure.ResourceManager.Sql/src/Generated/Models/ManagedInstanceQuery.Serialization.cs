@@ -5,17 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceQuery : IUtf8JsonSerializable
+    public partial class ManagedInstanceQuery : IUtf8JsonSerializable, IJsonModel<ManagedInstanceQuery>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceQuery>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedInstanceQuery>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceQuery>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceQuery)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryText))
@@ -24,11 +55,40 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStringValue(QueryText);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedInstanceQuery DeserializeManagedInstanceQuery(JsonElement element)
+        ManagedInstanceQuery IJsonModel<ManagedInstanceQuery>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceQuery>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceQuery)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceQuery(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceQuery DeserializeManagedInstanceQuery(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -38,6 +98,8 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> queryText = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -81,8 +143,44 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceQuery(id, name, type, systemData.Value, queryText.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedInstanceQuery(id, name, type, systemData.Value, queryText.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedInstanceQuery>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceQuery>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceQuery)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedInstanceQuery IPersistableModel<ManagedInstanceQuery>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceQuery>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedInstanceQuery(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceQuery)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedInstanceQuery>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

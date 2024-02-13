@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         public virtual AsyncPageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(e), RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppPlatform.Mocking
         public virtual Pageable<AppPlatformSupportedRuntimeVersion> GetRuntimeVersions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RuntimeVersionsRestClient.CreateListRuntimeVersionsRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion, RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(e), RuntimeVersionsClientDiagnostics, Pipeline, "MockableAppPlatformTenantResource.GetRuntimeVersions", "value", null, cancellationToken);
         }
     }
 }

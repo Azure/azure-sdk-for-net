@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Azure Operator Distributed Services network function image application definition. </summary>
@@ -19,10 +22,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactProfile"> Azure Operator Distributed Services image artifact profile. </param>
         /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
-        internal AzureOperatorNexusNetworkFunctionImageApplication(string name, DependsOnProfile dependsOnProfile, AzureOperatorNexusArtifactType artifactType, AzureOperatorNexusImageArtifactProfile artifactProfile, AzureOperatorNexusImageDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, artifactType)
+        internal AzureOperatorNexusNetworkFunctionImageApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureOperatorNexusArtifactType artifactType, AzureOperatorNexusImageArtifactProfile artifactProfile, AzureOperatorNexusImageDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
         {
             ArtifactProfile = artifactProfile;
             DeployParametersMappingRuleProfile = deployParametersMappingRuleProfile;

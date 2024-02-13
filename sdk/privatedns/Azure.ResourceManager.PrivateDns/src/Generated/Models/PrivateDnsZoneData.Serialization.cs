@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    public partial class PrivateDnsZoneData : IUtf8JsonSerializable
+    public partial class PrivateDnsZoneData : IUtf8JsonSerializable, IJsonModel<PrivateDnsZoneData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateDnsZoneData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateDnsZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -37,14 +47,103 @@ namespace Azure.ResourceManager.PrivateDns
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
+            {
+                writer.WritePropertyName("maxNumberOfRecordSets"u8);
+                writer.WriteNumberValue(MaxNumberOfRecords.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
+            {
+                writer.WritePropertyName("numberOfRecordSets"u8);
+                writer.WriteNumberValue(NumberOfRecords.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinks))
+            {
+                writer.WritePropertyName("maxNumberOfVirtualNetworkLinks"u8);
+                writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinks.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinks))
+            {
+                writer.WritePropertyName("numberOfVirtualNetworkLinks"u8);
+                writer.WriteNumberValue(NumberOfVirtualNetworkLinks.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinksWithRegistration))
+            {
+                writer.WritePropertyName("maxNumberOfVirtualNetworkLinksWithRegistration"u8);
+                writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinksWithRegistration.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinksWithRegistration))
+            {
+                writer.WritePropertyName("numberOfVirtualNetworkLinksWithRegistration"u8);
+                writer.WriteNumberValue(NumberOfVirtualNetworkLinksWithRegistration.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InternalId))
+            {
+                writer.WritePropertyName("internalId"u8);
+                writer.WriteStringValue(InternalId);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element)
+        PrivateDnsZoneData IJsonModel<PrivateDnsZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateDnsZoneData(document.RootElement, options);
+        }
+
+        internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +163,8 @@ namespace Azure.ResourceManager.PrivateDns
             Optional<long> numberOfVirtualNetworkLinksWithRegistration = default;
             Optional<PrivateDnsProvisioningState> privateDnsProvisioningState = default;
             Optional<string> internalId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -198,8 +299,44 @@ namespace Azure.ResourceManager.PrivateDns
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PrivateDnsZoneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(maxNumberOfRecordSets), Optional.ToNullable(numberOfRecordSets), Optional.ToNullable(maxNumberOfVirtualNetworkLinks), Optional.ToNullable(numberOfVirtualNetworkLinks), Optional.ToNullable(maxNumberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(numberOfVirtualNetworkLinksWithRegistration), Optional.ToNullable(privateDnsProvisioningState), internalId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateDnsZoneData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PrivateDnsZoneData IPersistableModel<PrivateDnsZoneData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateDnsZoneData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateDnsZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

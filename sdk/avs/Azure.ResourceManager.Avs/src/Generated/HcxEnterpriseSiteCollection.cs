@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// List HCX Enterprise Sites in a private cloud
+        /// List HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-05-01</description>
+        /// <description>2023-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

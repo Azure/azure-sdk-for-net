@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeResource volume = (await volumeCollection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, GetDefaultElasticSanVolumeData())).Value;
             ElasticSanSnapshotCollection snapshotCollection = volumeGroup.GetElasticSanSnapshots();
 
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationData(volume.Id));
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(volume.Id));
             ElasticSanSnapshotResource snapshot = (await snapshotCollection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName1, data)).Value;
             Assert.AreEqual(snapshot.Id.Name, snapshotName1);
             Assert.AreEqual(snapshot.Data.VolumeName, volumeName);

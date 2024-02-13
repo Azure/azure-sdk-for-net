@@ -5,16 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class ImageAnalysisResult
+    public partial class ImageAnalysisResult : IUtf8JsonSerializable, IJsonModel<ImageAnalysisResult>
     {
-        internal static ImageAnalysisResult DeserializeImageAnalysisResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageAnalysisResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageAnalysisResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Caption))
+            {
+                writer.WritePropertyName("captionResult"u8);
+                writer.WriteObjectValue(Caption);
+            }
+            if (Optional.IsDefined(DenseCaptions))
+            {
+                writer.WritePropertyName("denseCaptionsResult"u8);
+                writer.WriteObjectValue(DenseCaptions);
+            }
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteObjectValue(Metadata);
+            writer.WritePropertyName("modelVersion"u8);
+            writer.WriteStringValue(ModelVersion);
+            if (Optional.IsDefined(Objects))
+            {
+                writer.WritePropertyName("objectsResult"u8);
+                writer.WriteObjectValue(Objects);
+            }
+            if (Optional.IsDefined(People))
+            {
+                writer.WritePropertyName("peopleResult"u8);
+                writer.WriteObjectValue(People);
+            }
+            if (Optional.IsDefined(Read))
+            {
+                writer.WritePropertyName("readResult"u8);
+                writer.WriteObjectValue(Read);
+            }
+            if (Optional.IsDefined(SmartCrops))
+            {
+                writer.WritePropertyName("smartCropsResult"u8);
+                writer.WriteObjectValue(SmartCrops);
+            }
+            if (Optional.IsDefined(Tags))
+            {
+                writer.WritePropertyName("tagsResult"u8);
+                writer.WriteObjectValue(Tags);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ImageAnalysisResult IJsonModel<ImageAnalysisResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageAnalysisResult(document.RootElement, options);
+        }
+
+        internal static ImageAnalysisResult DeserializeImageAnalysisResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +113,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             Optional<ReadResult> readResult = default;
             Optional<SmartCropsResult> smartCropsResult = default;
             Optional<TagsResult> tagsResult = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("captionResult"u8))
@@ -103,9 +190,45 @@ namespace Azure.AI.Vision.ImageAnalysis
                     tagsResult = TagsResult.DeserializeTagsResult(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ImageAnalysisResult(captionResult.Value, denseCaptionsResult.Value, metadata, modelVersion, objectsResult.Value, peopleResult.Value, readResult.Value, smartCropsResult.Value, tagsResult.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImageAnalysisResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ImageAnalysisResult IPersistableModel<ImageAnalysisResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageAnalysisResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImageAnalysisResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageAnalysisResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImageAnalysisResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -113,6 +236,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeImageAnalysisResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

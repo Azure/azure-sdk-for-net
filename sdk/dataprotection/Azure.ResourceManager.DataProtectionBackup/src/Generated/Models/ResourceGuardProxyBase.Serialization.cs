@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class ResourceGuardProxyBase : IUtf8JsonSerializable
+    public partial class ResourceGuardProxyBase : IUtf8JsonSerializable, IJsonModel<ResourceGuardProxyBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceGuardProxyBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceGuardProxyBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceGuardResourceId))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ResourceGuardProxyBase DeserializeResourceGuardProxyBase(JsonElement element)
+        ResourceGuardProxyBase IJsonModel<ResourceGuardProxyBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceGuardProxyBase(document.RootElement, options);
+        }
+
+        internal static ResourceGuardProxyBase DeserializeResourceGuardProxyBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +93,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<ResourceGuardOperationDetail>> resourceGuardOperationDetails = default;
             Optional<string> lastUpdatedTime = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceGuardResourceId"u8))
@@ -85,8 +126,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ResourceGuardProxyBase(resourceGuardResourceId.Value, Optional.ToList(resourceGuardOperationDetails), lastUpdatedTime.Value, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceGuardProxyBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ResourceGuardProxyBase IPersistableModel<ResourceGuardProxyBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceGuardProxyBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyBase)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceGuardProxyBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

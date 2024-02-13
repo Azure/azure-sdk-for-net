@@ -3,7 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService

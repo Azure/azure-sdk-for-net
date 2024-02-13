@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -27,7 +29,7 @@
 - Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 - Added `NotificationHubApnsCredential.ThumbprintString`, `NotificationHubMpnsCredential.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `NotificationHubApnsCredential.Thumbprint`, `NotificationHubMpnsCredential.Thumbprint` have been hidden but are still available.
-  
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.32.0.

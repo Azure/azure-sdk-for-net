@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,11 +15,44 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    public partial class MySqlServerKeyData : IUtf8JsonSerializable
+    public partial class MySqlServerKeyData : IUtf8JsonSerializable, IJsonModel<MySqlServerKeyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerKeyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlServerKeyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerKeyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerKeyData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ServerKeyType))
@@ -30,12 +65,46 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element)
+        MySqlServerKeyData IJsonModel<MySqlServerKeyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerKeyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerKeyData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerKeyData(document.RootElement, options);
+        }
+
+        internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +117,8 @@ namespace Azure.ResourceManager.MySql
             Optional<MySqlServerKeyType> serverKeyType = default;
             Optional<Uri> uri = default;
             Optional<DateTimeOffset> creationDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -118,8 +189,44 @@ namespace Azure.ResourceManager.MySql
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MySqlServerKeyData(id, name, type, systemData.Value, kind.Value, Optional.ToNullable(serverKeyType), uri.Value, Optional.ToNullable(creationDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlServerKeyData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerKeyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerKeyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MySqlServerKeyData IPersistableModel<MySqlServerKeyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerKeyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlServerKeyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerKeyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlServerKeyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

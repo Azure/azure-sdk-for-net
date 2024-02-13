@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput : IUtf8JsonSerializable
+    public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput : IUtf8JsonSerializable, IJsonModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,11 +47,40 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MigrateMySqlAzureDBForMySqlOfflineDatabaseInput DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(JsonElement element)
+        MigrateMySqlAzureDBForMySqlOfflineDatabaseInput IJsonModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(document.RootElement, options);
+        }
+
+        internal static MigrateMySqlAzureDBForMySqlOfflineDatabaseInput DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,6 +88,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> name = default;
             Optional<string> targetDatabaseName = default;
             Optional<IDictionary<string, string>> tableMap = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -75,8 +116,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     tableMap = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(tableMap));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateMySqlAzureDBForMySqlOfflineDatabaseInput(name.Value, targetDatabaseName.Value, Optional.ToDictionary(tableMap), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MigrateMySqlAzureDBForMySqlOfflineDatabaseInput IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

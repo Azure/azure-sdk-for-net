@@ -29,13 +29,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="location"> Resource location. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="uniqueId"> The unique id of this community gallery. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="publishedOn"> The published date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="endOfLifeOn"> The end of life date of the gallery image version Definition. This property can be used for decommissioning purposes. This property is updatable. </param>
         /// <param name="isExcludedFromLatest"> If set to true, Virtual Machines deployed from the latest version of the Image Definition won't use this Image Version. </param>
         /// <param name="storageProfile"> Describes the storage profile of the image version. </param>
         /// <param name="disclaimer"> The disclaimer for a community gallery resource. </param>
         /// <param name="artifactTags"> The artifact tags of a community gallery resource. </param>
-        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, resourceType, uniqueId)
+        internal CommunityGalleryImageVersionData(string name, AzureLocation? location, ResourceType? resourceType, string uniqueId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, bool? isExcludedFromLatest, SharedGalleryImageVersionStorageProfile storageProfile, string disclaimer, IReadOnlyDictionary<string, string> artifactTags) : base(name, location, resourceType, uniqueId, serializedAdditionalRawData)
         {
             PublishedOn = publishedOn;
             EndOfLifeOn = endOfLifeOn;

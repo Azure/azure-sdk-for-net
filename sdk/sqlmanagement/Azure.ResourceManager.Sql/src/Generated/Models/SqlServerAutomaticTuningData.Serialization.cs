@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,17 +15,50 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlServerAutomaticTuningData : IUtf8JsonSerializable
+    public partial class SqlServerAutomaticTuningData : IUtf8JsonSerializable, IJsonModel<SqlServerAutomaticTuningData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlServerAutomaticTuningData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlServerAutomaticTuningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerAutomaticTuningData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerAutomaticTuningData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActualState))
+            {
+                writer.WritePropertyName("actualState"u8);
+                writer.WriteStringValue(ActualState.Value.ToSerialString());
             }
             if (Optional.IsCollectionDefined(Options))
             {
@@ -37,11 +72,40 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlServerAutomaticTuningData DeserializeSqlServerAutomaticTuningData(JsonElement element)
+        SqlServerAutomaticTuningData IJsonModel<SqlServerAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerAutomaticTuningData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlServerAutomaticTuningData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlServerAutomaticTuningData(document.RootElement, options);
+        }
+
+        internal static SqlServerAutomaticTuningData DeserializeSqlServerAutomaticTuningData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,7 +116,9 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<AutomaticTuningServerMode> desiredState = default;
             Optional<AutomaticTuningServerMode> actualState = default;
-            Optional<IDictionary<string, AutomaticTuningServerOptions>> options = default;
+            Optional<IDictionary<string, AutomaticTuningServerOptions>> options0 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,14 +183,50 @@ namespace Azure.ResourceManager.Sql
                             {
                                 dictionary.Add(property1.Name, AutomaticTuningServerOptions.DeserializeAutomaticTuningServerOptions(property1.Value));
                             }
-                            options = dictionary;
+                            options0 = dictionary;
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlServerAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlServerAutomaticTuningData(id, name, type, systemData.Value, Optional.ToNullable(desiredState), Optional.ToNullable(actualState), Optional.ToDictionary(options0), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlServerAutomaticTuningData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerAutomaticTuningData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerAutomaticTuningData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlServerAutomaticTuningData IPersistableModel<SqlServerAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlServerAutomaticTuningData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlServerAutomaticTuningData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlServerAutomaticTuningData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlServerAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

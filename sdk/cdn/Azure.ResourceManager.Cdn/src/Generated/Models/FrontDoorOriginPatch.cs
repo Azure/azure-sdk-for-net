@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -13,6 +15,38 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> AFDOrigin properties needed for origin update. </summary>
     public partial class FrontDoorOriginPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FrontDoorOriginPatch"/>. </summary>
         public FrontDoorOriginPatch()
         {
@@ -30,7 +64,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
         /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
         /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
-        internal FrontDoorOriginPatch(string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorOriginPatch(string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OriginGroupName = originGroupName;
             Origin = origin;
@@ -43,6 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             SharedPrivateLinkResource = sharedPrivateLinkResource;
             EnabledState = enabledState;
             EnforceCertificateNameCheck = enforceCertificateNameCheck;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the origin group which contains this origin. </summary>

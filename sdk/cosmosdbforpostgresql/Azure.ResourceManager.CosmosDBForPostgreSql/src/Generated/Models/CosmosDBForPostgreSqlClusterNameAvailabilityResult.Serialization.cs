@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
-    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult
+    public partial class CosmosDBForPostgreSqlClusterNameAvailabilityResult : IUtf8JsonSerializable, IJsonModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>
     {
-        internal static CosmosDBForPostgreSqlClusterNameAvailabilityResult DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterNameAvailabilityResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (Optional.IsDefined(IsNameAvailable))
+            {
+                writer.WritePropertyName("nameAvailable"u8);
+                writer.WriteBooleanValue(IsNameAvailable.Value);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CosmosDBForPostgreSqlClusterNameAvailabilityResult IJsonModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterNameAvailabilityResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(document.RootElement, options);
+        }
+
+        internal static CosmosDBForPostgreSqlClusterNameAvailabilityResult DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             Optional<bool> nameAvailable = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -52,8 +120,44 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBForPostgreSqlClusterNameAvailabilityResult(message.Value, Optional.ToNullable(nameAvailable), name.Value, Optional.ToNullable(type), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBForPostgreSqlClusterNameAvailabilityResult IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBForPostgreSqlClusterNameAvailabilityResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterNameAvailabilityResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBForPostgreSqlClusterNameAvailabilityResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

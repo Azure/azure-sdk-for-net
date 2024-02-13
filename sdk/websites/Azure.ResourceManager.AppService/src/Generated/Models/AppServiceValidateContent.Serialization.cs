@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceValidateContent : IUtf8JsonSerializable
+    public partial class AppServiceValidateContent : IUtf8JsonSerializable, IJsonModel<AppServiceValidateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceValidateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceValidateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -94,7 +105,228 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteObjectValue(AppServiceEnvironment);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        AppServiceValidateContent IJsonModel<AppServiceValidateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceValidateContent(document.RootElement, options);
+        }
+
+        internal static AppServiceValidateContent DeserializeAppServiceValidateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            ValidateResourceType type = default;
+            AzureLocation location = default;
+            Optional<ResourceIdentifier> serverFarmId = default;
+            Optional<string> skuName = default;
+            Optional<bool> needLinuxWorkers = default;
+            Optional<bool> isSpot = default;
+            Optional<int> capacity = default;
+            Optional<string> hostingEnvironment = default;
+            Optional<bool> isXenon = default;
+            Optional<Uri> containerRegistryBaseUrl = default;
+            Optional<string> containerRegistryUsername = default;
+            Optional<string> containerRegistryPassword = default;
+            Optional<string> containerImageRepository = default;
+            Optional<string> containerImageTag = default;
+            Optional<string> containerImagePlatform = default;
+            Optional<AppServiceEnvironmentProperties> appServiceEnvironment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ValidateResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("serverFarmId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serverFarmId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("skuName"u8))
+                        {
+                            skuName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("needLinuxWorkers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            needLinuxWorkers = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("isSpot"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isSpot = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("capacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            capacity = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostingEnvironment"u8))
+                        {
+                            hostingEnvironment = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isXenon"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isXenon = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryBaseUrl"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            containerRegistryBaseUrl = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryUsername"u8))
+                        {
+                            containerRegistryUsername = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerRegistryPassword"u8))
+                        {
+                            containerRegistryPassword = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImageRepository"u8))
+                        {
+                            containerImageRepository = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImageTag"u8))
+                        {
+                            containerImageTag = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("containerImagePlatform"u8))
+                        {
+                            containerImagePlatform = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("appServiceEnvironment"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            appServiceEnvironment = AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(property0.Value);
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppServiceValidateContent(name, type, location, serverFarmId.Value, skuName.Value, Optional.ToNullable(needLinuxWorkers), Optional.ToNullable(isSpot), Optional.ToNullable(capacity), hostingEnvironment.Value, Optional.ToNullable(isXenon), containerRegistryBaseUrl.Value, containerRegistryUsername.Value, containerRegistryPassword.Value, containerImageRepository.Value, containerImageTag.Value, containerImagePlatform.Value, appServiceEnvironment.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<AppServiceValidateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceValidateContent IPersistableModel<AppServiceValidateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceValidateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceValidateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceValidateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceValidateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

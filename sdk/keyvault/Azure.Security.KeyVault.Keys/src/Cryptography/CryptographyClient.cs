@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// <summary>
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
-    [CallerShouldAudit(Reason = CallerShouldAuditReason)]
+    [CallerShouldAudit(CallerShouldAuditReason)]
     public class CryptographyClient : IKeyEncryptionKey
     {
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";

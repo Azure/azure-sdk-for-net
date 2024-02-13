@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-15-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Creates the hybrid identity metadata proxy resource that facilitates the managed identity provisioning. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="data"> The <see cref="HybridIdentityMetadataData"/> to use. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="data"> Hybrid Identity Metadata resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> PutAsync(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Creates the hybrid identity metadata proxy resource that facilitates the managed identity provisioning. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="data"> The <see cref="HybridIdentityMetadataData"/> to use. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="data"> Hybrid Identity Metadata resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="data"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Put(string connectedClusterResourceUri, HybridIdentityMetadataData data, CancellationToken cancellationToken = default)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Get the hybrid identity metadata proxy resource. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataData>> GetAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Get the hybrid identity metadata proxy resource. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataData> Get(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Deletes the hybrid identity metadata proxy resource. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response> DeleteAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Deletes the hybrid identity metadata proxy resource. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response Delete(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByClusterAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByCluster(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<HybridIdentityMetadataList>> ListByClusterNextPageAsync(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HybridContainerService
 
         /// <summary> Lists the hybrid identity metadata proxy resource in a provisioned cluster instance. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<HybridIdentityMetadataList> ListByClusterNextPage(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)

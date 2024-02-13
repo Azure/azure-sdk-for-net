@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterWindowsProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterWindowsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterWindowsProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterWindowsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWindowsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
@@ -37,11 +48,40 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("gmsaProfile"u8);
                 writer.WriteObjectValue(GmsaProfile);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterWindowsProfile DeserializeManagedClusterWindowsProfile(JsonElement element)
+        ManagedClusterWindowsProfile IJsonModel<ManagedClusterWindowsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWindowsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterWindowsProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterWindowsProfile DeserializeManagedClusterWindowsProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +91,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<WindowsVmLicenseType> licenseType = default;
             Optional<bool> enableCsiProxy = default;
             Optional<WindowsGmsaProfile> gmsaProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -90,8 +132,44 @@ namespace Azure.ResourceManager.ContainerService.Models
                     gmsaProfile = WindowsGmsaProfile.DeserializeWindowsGmsaProfile(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ManagedClusterWindowsProfile(adminUsername, adminPassword.Value, Optional.ToNullable(licenseType), Optional.ToNullable(enableCsiProxy), gmsaProfile.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterWindowsProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWindowsProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterWindowsProfile IPersistableModel<ManagedClusterWindowsProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterWindowsProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterWindowsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterWindowsProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterWindowsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

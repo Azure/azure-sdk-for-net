@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsAlertConfidenceReason
+    public partial class SecurityInsightsAlertConfidenceReason : IUtf8JsonSerializable, IJsonModel<SecurityInsightsAlertConfidenceReason>
     {
-        internal static SecurityInsightsAlertConfidenceReason DeserializeSecurityInsightsAlertConfidenceReason(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsAlertConfidenceReason>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsAlertConfidenceReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReasonType))
+            {
+                writer.WritePropertyName("reasonType"u8);
+                writer.WriteStringValue(ReasonType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SecurityInsightsAlertConfidenceReason IJsonModel<SecurityInsightsAlertConfidenceReason>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsAlertConfidenceReason(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsAlertConfidenceReason DeserializeSecurityInsightsAlertConfidenceReason(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> reason = default;
             Optional<string> reasonType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("reason"u8))
@@ -32,8 +90,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     reasonType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsAlertConfidenceReason(reason.Value, reasonType.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityInsightsAlertConfidenceReason(reason.Value, reasonType.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsAlertConfidenceReason>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsAlertConfidenceReason IPersistableModel<SecurityInsightsAlertConfidenceReason>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsAlertConfidenceReason(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsAlertConfidenceReason>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

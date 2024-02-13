@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The ContainerRegistryImportSource. </summary>
     public partial class ContainerRegistryImportSource
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSource"/>. </summary>
         /// <param name="sourceImage">
         /// Repository name of the source image.
@@ -38,12 +71,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// Specify an image by tag ('hello-world:latest').
         /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </param>
-        internal ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryImportSource(ResourceIdentifier resourceId, string registryAddress, ContainerRegistryImportSourceCredentials credentials, string sourceImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             RegistryAddress = registryAddress;
             Credentials = credentials;
             SourceImage = sourceImage;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryImportSource"/> for deserialization. </summary>
+        internal ContainerRegistryImportSource()
+        {
         }
 
         /// <summary> The resource identifier of the source Azure Container Registry. </summary>

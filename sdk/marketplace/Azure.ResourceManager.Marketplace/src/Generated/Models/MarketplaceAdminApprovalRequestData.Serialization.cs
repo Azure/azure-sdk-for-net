@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,17 +15,50 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable
+    public partial class MarketplaceAdminApprovalRequestData : IUtf8JsonSerializable, IJsonModel<MarketplaceAdminApprovalRequestData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceAdminApprovalRequestData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MarketplaceAdminApprovalRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsDefined(PublisherId))
             {
@@ -56,6 +90,16 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("administrator"u8);
                 writer.WriteStringValue(Administrator);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(CollectionIds))
             {
                 writer.WritePropertyName("collectionIds"u8);
@@ -66,12 +110,46 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element)
+        MarketplaceAdminApprovalRequestData IJsonModel<MarketplaceAdminApprovalRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMarketplaceAdminApprovalRequestData(document.RootElement, options);
+        }
+
+        internal static MarketplaceAdminApprovalRequestData DeserializeMarketplaceAdminApprovalRequestData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,6 +168,8 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
             Optional<IList<Guid>> collectionIds = default;
             Optional<Uri> icon = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -213,8 +293,44 @@ namespace Azure.ResourceManager.Marketplace
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MarketplaceAdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MarketplaceAdminApprovalRequestData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MarketplaceAdminApprovalRequestData IPersistableModel<MarketplaceAdminApprovalRequestData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAdminApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMarketplaceAdminApprovalRequestData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceAdminApprovalRequestData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MarketplaceAdminApprovalRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> The Cloud inventory item. </summary>
@@ -22,7 +25,8 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal CloudInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CloudInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             InventoryType = inventoryType;
         }

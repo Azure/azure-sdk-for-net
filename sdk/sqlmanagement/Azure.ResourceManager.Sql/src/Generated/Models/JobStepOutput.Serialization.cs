@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class JobStepOutput : IUtf8JsonSerializable
+    public partial class JobStepOutput : IUtf8JsonSerializable, IJsonModel<JobStepOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobStepOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JobStepOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobStepOutput)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(OutputType))
             {
@@ -44,11 +54,40 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(TableName);
             writer.WritePropertyName("credential"u8);
             writer.WriteStringValue(Credential);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobStepOutput DeserializeJobStepOutput(JsonElement element)
+        JobStepOutput IJsonModel<JobStepOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobStepOutput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobStepOutput(document.RootElement, options);
+        }
+
+        internal static JobStepOutput DeserializeJobStepOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> schemaName = default;
             string tableName = default;
             string credential = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -111,8 +152,44 @@ namespace Azure.ResourceManager.Sql.Models
                     credential = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobStepOutput(Optional.ToNullable(type), Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new JobStepOutput(Optional.ToNullable(type), Optional.ToNullable(subscriptionId), resourceGroupName.Value, serverName, databaseName, schemaName.Value, tableName, credential, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobStepOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JobStepOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        JobStepOutput IPersistableModel<JobStepOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobStepOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobStepOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobStepOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobStepOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

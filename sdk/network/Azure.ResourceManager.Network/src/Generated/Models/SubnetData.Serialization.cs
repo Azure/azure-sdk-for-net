@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,11 +16,24 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class SubnetData : IUtf8JsonSerializable
+    public partial class SubnetData : IUtf8JsonSerializable, IJsonModel<SubnetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubnetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubnetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -86,6 +101,36 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpoints))
+            {
+                writer.WritePropertyName("privateEndpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpoints)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
+            {
+                writer.WritePropertyName("ipConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurationProfiles))
+            {
+                writer.WritePropertyName("ipConfigurationProfiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPConfigurationProfiles)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
                 writer.WritePropertyName("ipAllocations"u8);
@@ -93,6 +138,26 @@ namespace Azure.ResourceManager.Network
                 foreach (var item in IPAllocations)
                 {
                     JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceNavigationLinks))
+            {
+                writer.WritePropertyName("resourceNavigationLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceNavigationLinks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ServiceAssociationLinks))
+            {
+                writer.WritePropertyName("serviceAssociationLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceAssociationLinks)
+                {
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -105,6 +170,16 @@ namespace Azure.ResourceManager.Network
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Purpose))
+            {
+                writer.WritePropertyName("purpose"u8);
+                writer.WriteStringValue(Purpose);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(PrivateEndpointNetworkPolicy))
             {
@@ -132,11 +207,40 @@ namespace Azure.ResourceManager.Network
                 writer.WriteBooleanValue(DefaultOutboundAccess.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SubnetData DeserializeSubnetData(JsonElement element)
+        SubnetData IJsonModel<SubnetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubnetData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnetData(document.RootElement, options);
+        }
+
+        internal static SubnetData DeserializeSubnetData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -165,6 +269,8 @@ namespace Azure.ResourceManager.Network
             Optional<VirtualNetworkPrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
             Optional<IList<ApplicationGatewayIPConfiguration>> applicationGatewayIPConfigurations = default;
             Optional<bool> defaultOutboundAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -438,8 +544,44 @@ namespace Azure.ResourceManager.Network
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), Optional.ToNullable(defaultOutboundAccess));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SubnetData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), addressPrefix.Value, Optional.ToList(addressPrefixes), networkSecurityGroup.Value, routeTable.Value, natGateway, Optional.ToList(serviceEndpoints), Optional.ToList(serviceEndpointPolicies), Optional.ToList(privateEndpoints), Optional.ToList(ipConfigurations), Optional.ToList(ipConfigurationProfiles), Optional.ToList(ipAllocations), Optional.ToList(resourceNavigationLinks), Optional.ToList(serviceAssociationLinks), Optional.ToList(delegations), purpose.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(privateEndpointNetworkPolicies), Optional.ToNullable(privateLinkServiceNetworkPolicies), Optional.ToList(applicationGatewayIPConfigurations), Optional.ToNullable(defaultOutboundAccess));
         }
+
+        BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubnetData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SubnetData IPersistableModel<SubnetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubnetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubnetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubnetData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubnetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

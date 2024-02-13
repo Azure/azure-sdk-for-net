@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapPatch : IUtf8JsonSerializable
+    public partial class NetworkTapPatch : IUtf8JsonSerializable, IJsonModel<NetworkTapPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkTapPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -49,7 +60,144 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetworkTapPatch IJsonModel<NetworkTapPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapPatch(document.RootElement, options);
+        }
+
+        internal static NetworkTapPatch DeserializeNetworkTapPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IDictionary<string, string>> tags = default;
+            Optional<string> annotation = default;
+            Optional<NetworkTapPollingType> pollingType = default;
+            Optional<IList<NetworkTapPatchableParametersDestinationsItem>> destinations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("annotation"u8))
+                        {
+                            annotation = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("pollingType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            pollingType = new NetworkTapPollingType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("destinations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NetworkTapPatchableParametersDestinationsItem> array = new List<NetworkTapPatchableParametersDestinationsItem>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NetworkTapPatchableParametersDestinationsItem.DeserializeNetworkTapPatchableParametersDestinationsItem(item));
+                            }
+                            destinations = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkTapPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, annotation.Value, Optional.ToNullable(pollingType), Optional.ToList(destinations));
+        }
+
+        BinaryData IPersistableModel<NetworkTapPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkTapPatch IPersistableModel<NetworkTapPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkTapPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkTapPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

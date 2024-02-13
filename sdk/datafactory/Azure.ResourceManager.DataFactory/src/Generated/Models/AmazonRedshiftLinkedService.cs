@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AmazonRedshift";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftLinkedService"/> for deserialization. </summary>
+        internal AmazonRedshiftLinkedService()
+        {
+        }
+
         /// <summary> The name of the Amazon Redshift server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The username of the Amazon Redshift source. Type: string (or Expression with resultType string). </summary>

@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual AsyncPageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByClusterAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public virtual Pageable<RedisEnterprisePrivateLinkResource> GetPrivateLinkResourcesByCluster(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisEnterprisePrivateLinkResource.DeserializeRedisEnterprisePrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisEnterpriseClusterResource.GetPrivateLinkResourcesByCluster", "value", null, cancellationToken);
         }
 
         /// <summary>

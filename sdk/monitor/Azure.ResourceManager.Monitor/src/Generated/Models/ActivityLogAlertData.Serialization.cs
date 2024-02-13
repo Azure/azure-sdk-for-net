@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class ActivityLogAlertData : IUtf8JsonSerializable
+    public partial class ActivityLogAlertData : IUtf8JsonSerializable, IJsonModel<ActivityLogAlertData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ActivityLogAlertData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ActivityLogAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -31,6 +41,26 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Scopes))
@@ -64,11 +94,40 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ActivityLogAlertData DeserializeActivityLogAlertData(JsonElement element)
+        ActivityLogAlertData IJsonModel<ActivityLogAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeActivityLogAlertData(document.RootElement, options);
+        }
+
+        internal static ActivityLogAlertData DeserializeActivityLogAlertData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -84,6 +143,8 @@ namespace Azure.ResourceManager.Monitor
             Optional<ActionList> actions = default;
             Optional<bool> enabled = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -187,8 +248,44 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ActivityLogAlertData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToList(scopes), condition.Value, actions.Value, Optional.ToNullable(enabled), description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ActivityLogAlertData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ActivityLogAlertData IPersistableModel<ActivityLogAlertData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeActivityLogAlertData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ActivityLogAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

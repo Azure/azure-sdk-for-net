@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "DrillTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DrillTableDataset"/> for deserialization. </summary>
+        internal DrillTableDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

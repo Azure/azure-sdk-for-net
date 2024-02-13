@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningCustomModelJobOutput : IUtf8JsonSerializable
+    public partial class MachineLearningCustomModelJobOutput : IUtf8JsonSerializable, IJsonModel<MachineLearningCustomModelJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningCustomModelJobOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningCustomModelJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AssetName))
             {
@@ -83,11 +93,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobOutputType"u8);
             writer.WriteStringValue(JobOutputType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningCustomModelJobOutput DeserializeMachineLearningCustomModelJobOutput(JsonElement element)
+        MachineLearningCustomModelJobOutput IJsonModel<MachineLearningCustomModelJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningCustomModelJobOutput(document.RootElement, options);
+        }
+
+        internal static MachineLearningCustomModelJobOutput DeserializeMachineLearningCustomModelJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -99,6 +138,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<Uri> uri = default;
             Optional<string> description = default;
             JobOutputType jobOutputType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetName"u8))
@@ -165,8 +206,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobOutputType = new JobOutputType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, serializedAdditionalRawData, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
         }
+
+        BinaryData IPersistableModel<MachineLearningCustomModelJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningCustomModelJobOutput IPersistableModel<MachineLearningCustomModelJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningCustomModelJobOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobOutput)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningCustomModelJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

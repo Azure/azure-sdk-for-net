@@ -34,6 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
         private readonly IQueueProcessorFactory _queueProcessorFactory;
         private readonly QueueCausalityManager _queueCausalityManager;
         private readonly ConcurrencyManager _concurrencyManager;
+        private readonly IDrainModeManager _drainModeManager;
 
         public QueueListenerFactory(
             QueueServiceClient queueServiceClient,
@@ -46,8 +47,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             IQueueProcessorFactory queueProcessorFactory,
             QueueCausalityManager queueCausalityManager,
             FunctionDescriptor descriptor,
-            ConcurrencyManager concurrencyManager
-            )
+            ConcurrencyManager concurrencyManager,
+            IDrainModeManager drainModeManager)
         {
             _queue = queue ?? throw new ArgumentNullException(nameof(queue));
             _queueOptions = queueOptions ?? throw new ArgumentNullException(nameof(queueOptions));
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             _poisonQueue = CreatePoisonQueueReference(queueServiceClient, queue.Name);
             _loggerFactory = loggerFactory;
             _queueProcessorFactory = queueProcessorFactory;
+            _drainModeManager = drainModeManager;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -69,8 +71,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners
             QueueTriggerExecutor triggerExecutor = new QueueTriggerExecutor(_executor, _queueCausalityManager);
 
             var queueProcessor = CreateQueueProcessor(_queue, _poisonQueue, _loggerFactory, _queueProcessorFactory, _queueOptions, _messageEnqueuedWatcherSetter);
-            IListener listener = new QueueListener(_queue, _poisonQueue, triggerExecutor, _exceptionHandler, _loggerFactory,
-                _messageEnqueuedWatcherSetter, _queueOptions, queueProcessor, _descriptor, _concurrencyManager);
+            IListener listener = new QueueListener(
+                _queue,
+                _poisonQueue,
+                triggerExecutor,
+                _exceptionHandler,
+                _loggerFactory,
+                _messageEnqueuedWatcherSetter,
+                _queueOptions,
+                queueProcessor,
+                _descriptor,
+                _concurrencyManager,
+                drainModeManager: _drainModeManager);
 
             return Task.FromResult(listener);
         }

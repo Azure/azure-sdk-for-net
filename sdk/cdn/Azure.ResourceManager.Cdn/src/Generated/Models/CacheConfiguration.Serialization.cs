@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CacheConfiguration : IUtf8JsonSerializable
+    public partial class CacheConfiguration : IUtf8JsonSerializable, IJsonModel<CacheConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CacheConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CacheConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(QueryStringCachingBehavior))
             {
@@ -48,11 +58,40 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("cacheDuration");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element)
+        CacheConfiguration IJsonModel<CacheConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CacheConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCacheConfiguration(document.RootElement, options);
+        }
+
+        internal static CacheConfiguration DeserializeCacheConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -62,6 +101,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<RuleIsCompressionEnabled> isCompressionEnabled = default;
             Optional<RuleCacheBehavior> cacheBehavior = default;
             Optional<TimeSpan?> cacheDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryStringCachingBehavior"u8))
@@ -106,8 +147,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     cacheDuration = property.Value.GetTimeSpan("c");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CacheConfiguration(Optional.ToNullable(queryStringCachingBehavior), queryParameters.Value, Optional.ToNullable(isCompressionEnabled), Optional.ToNullable(cacheBehavior), Optional.ToNullable(cacheDuration), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CacheConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CacheConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CacheConfiguration IPersistableModel<CacheConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CacheConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCacheConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CacheConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CacheConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class InboundNatRulePortMapping
+    public partial class InboundNatRulePortMapping : IUtf8JsonSerializable, IJsonModel<InboundNatRulePortMapping>
     {
-        internal static InboundNatRulePortMapping DeserializeInboundNatRulePortMapping(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundNatRulePortMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InboundNatRulePortMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatRulePortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InboundNatRulePortMapping)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(InboundNatRuleName))
+            {
+                writer.WritePropertyName("inboundNatRuleName"u8);
+                writer.WriteStringValue(InboundNatRuleName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FrontendPort))
+            {
+                writer.WritePropertyName("frontendPort"u8);
+                writer.WriteNumberValue(FrontendPort.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackendPort))
+            {
+                writer.WritePropertyName("backendPort"u8);
+                writer.WriteNumberValue(BackendPort.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InboundNatRulePortMapping IJsonModel<InboundNatRulePortMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatRulePortMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InboundNatRulePortMapping)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInboundNatRulePortMapping(document.RootElement, options);
+        }
+
+        internal static InboundNatRulePortMapping DeserializeInboundNatRulePortMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<LoadBalancingTransportProtocol> protocol = default;
             Optional<int> frontendPort = default;
             Optional<int> backendPort = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inboundNatRuleName"u8))
@@ -56,8 +124,44 @@ namespace Azure.ResourceManager.Network.Models
                     backendPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InboundNatRulePortMapping(inboundNatRuleName.Value, Optional.ToNullable(protocol), Optional.ToNullable(frontendPort), Optional.ToNullable(backendPort), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InboundNatRulePortMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatRulePortMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InboundNatRulePortMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InboundNatRulePortMapping IPersistableModel<InboundNatRulePortMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InboundNatRulePortMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInboundNatRulePortMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InboundNatRulePortMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InboundNatRulePortMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

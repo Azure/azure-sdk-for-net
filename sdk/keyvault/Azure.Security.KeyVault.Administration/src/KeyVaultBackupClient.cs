@@ -136,7 +136,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<KeyVaultRestoreOperation> StartRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
@@ -176,7 +176,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual KeyVaultRestoreOperation StartRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
@@ -217,7 +217,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
@@ -261,7 +261,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
-        [CallerShouldAudit(Reason = KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");

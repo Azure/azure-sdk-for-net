@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.DataLakeStore.Models
     /// <summary> The DataLakeStoreAccountCreateOrUpdateContent. </summary>
     public partial class DataLakeStoreAccountCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The resource location. </param>
         public DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location)
@@ -39,7 +72,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         /// <param name="trustedIdProviders"> The list of trusted identity providers associated with this Data Lake Store account. </param>
         /// <param name="trustedIdProviderState"> The current state of the trusted identity provider feature for this Data Lake Store account. </param>
         /// <param name="newTier"> The commitment tier to use for next month. </param>
-        internal DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules, IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs, IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreAccountCreateOrUpdateContent(AzureLocation location, IDictionary<string, string> tags, ManagedServiceIdentity identity, string defaultGroup, DataLakeStoreAccountEncryptionConfig encryptionConfig, DataLakeStoreEncryptionState? encryptionState, IList<FirewallRuleForDataLakeStoreAccountCreateOrUpdateContent> firewallRules, IList<VirtualNetworkRuleForDataLakeStoreAccountCreateOrUpdateContent> virtualNetworkRules, DataLakeStoreFirewallState? firewallState, DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs, IList<TrustedIdProviderForDataLakeStoreAccountCreateOrUpdateContent> trustedIdProviders, DataLakeStoreTrustedIdProviderState? trustedIdProviderState, DataLakeStoreCommitmentTierType? newTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Tags = tags;
@@ -54,6 +88,12 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             TrustedIdProviders = trustedIdProviders;
             TrustedIdProviderState = trustedIdProviderState;
             NewTier = newTier;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreAccountCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DataLakeStoreAccountCreateOrUpdateContent()
+        {
         }
 
         /// <summary> The resource location. </summary>

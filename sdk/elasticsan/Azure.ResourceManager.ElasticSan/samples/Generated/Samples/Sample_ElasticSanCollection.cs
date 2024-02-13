@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 {
 "1"
 },
-                PublicNetworkAccess = PublicNetworkAccess.Enabled,
+                PublicNetworkAccess = ElasticSanPublicNetworkAccess.Enabled,
                 Tags =
 {
 ["key9316"] = "ihndtieqibtob",

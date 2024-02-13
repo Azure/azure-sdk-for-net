@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Known CVEs of a firmware. </summary>
     public partial class FirmwareCve
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FirmwareCve"/>. </summary>
         internal FirmwareCve()
         {
@@ -33,7 +65,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="updatedOn"> Updated date of CVE. </param>
         /// <param name="links"> The list of CVE links. </param>
         /// <param name="description"> Description of CVE. </param>
-        internal FirmwareCve(string cveId, BinaryData component, string severity, string name, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, DateTimeOffset? publishOn, DateTimeOffset? updatedOn, IReadOnlyList<CveLink> links, string description)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirmwareCve(string cveId, BinaryData component, string severity, string name, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, DateTimeOffset? publishOn, DateTimeOffset? updatedOn, IReadOnlyList<CveLink> links, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CveId = cveId;
             Component = component;
@@ -47,6 +80,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             UpdatedOn = updatedOn;
             Links = links;
             Description = description;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of CVE. </summary>

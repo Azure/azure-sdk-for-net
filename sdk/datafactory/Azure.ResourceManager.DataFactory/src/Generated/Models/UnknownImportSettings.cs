@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             ImportSettingsType = importSettingsType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownImportSettings"/> for deserialization. </summary>
+        internal UnknownImportSettings()
+        {
+        }
     }
 }

@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    public partial class MoverResourceDependency
+    public partial class MoverResourceDependency : IUtf8JsonSerializable, IJsonModel<MoverResourceDependency>
     {
-        internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverResourceDependency>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MoverResourceDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ResolutionStatus))
+            {
+                writer.WritePropertyName("resolutionStatus"u8);
+                writer.WriteStringValue(ResolutionStatus);
+            }
+            if (Optional.IsDefined(ResolutionType))
+            {
+                writer.WritePropertyName("resolutionType"u8);
+                writer.WriteStringValue(ResolutionType.Value.ToString());
+            }
+            if (Optional.IsDefined(DependencyType))
+            {
+                writer.WritePropertyName("dependencyType"u8);
+                writer.WriteStringValue(DependencyType.Value.ToString());
+            }
+            if (Optional.IsDefined(ManualResolution))
+            {
+                writer.WritePropertyName("manualResolution"u8);
+                writer.WriteObjectValue(ManualResolution);
+            }
+            if (Optional.IsDefined(AutomaticResolution))
+            {
+                writer.WritePropertyName("automaticResolution"u8);
+                writer.WriteObjectValue(AutomaticResolution);
+            }
+            if (Optional.IsDefined(IsOptional))
+            {
+                writer.WritePropertyName("isOptional"u8);
+                writer.WriteBooleanValue(IsOptional.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MoverResourceDependency IJsonModel<MoverResourceDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverResourceDependency(document.RootElement, options);
+        }
+
+        internal static MoverResourceDependency DeserializeMoverResourceDependency(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<ManualResolutionProperties> manualResolution = default;
             Optional<AutomaticResolutionProperties> automaticResolution = default;
             Optional<bool> isOptional = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -86,8 +169,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     isOptional = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MoverResourceDependency(id.Value, resolutionStatus.Value, Optional.ToNullable(resolutionType), Optional.ToNullable(dependencyType), manualResolution.Value, automaticResolution.Value, Optional.ToNullable(isOptional), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MoverResourceDependency>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MoverResourceDependency IPersistableModel<MoverResourceDependency>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverResourceDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverResourceDependency(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverResourceDependency)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverResourceDependency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

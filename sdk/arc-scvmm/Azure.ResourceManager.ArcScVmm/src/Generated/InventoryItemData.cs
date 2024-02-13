@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.ArcScVmm
     /// </summary>
     public partial class InventoryItemData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="InventoryItemData"/>. </summary>
         /// <param name="properties">
         /// Resource properties.
@@ -43,10 +76,17 @@ namespace Azure.ResourceManager.ArcScVmm
         /// The available derived classes include <see cref="CloudInventoryItem"/>, <see cref="VirtualMachineInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/> and <see cref="VirtualNetworkInventoryItem"/>.
         /// </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InventoryItemProperties properties, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InventoryItemProperties properties, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InventoryItemData"/> for deserialization. </summary>
+        internal InventoryItemData()
+        {
         }
 
         /// <summary>

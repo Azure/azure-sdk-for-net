@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -16,13 +17,46 @@ namespace Azure.ResourceManager.HybridContainerService
     /// A class representing the HybridContainerServiceAgentPool data model.
     /// The agentPool resource definition
     /// </summary>
-    public partial class HybridContainerServiceAgentPoolData : TrackedResourceData
+    public partial class HybridContainerServiceAgentPoolData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public HybridContainerServiceAgentPoolData(AzureLocation location) : base(location)
+        public HybridContainerServiceAgentPoolData()
         {
-            AvailabilityZones = new ChangeTrackingList<string>();
+            Tags = new ChangeTrackingDictionary<string, string>();
+            NodeLabels = new ChangeTrackingDictionary<string, string>();
+            NodeTaints = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceAgentPoolData"/>. </summary>
@@ -30,47 +64,71 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Extended Location definition. </param>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="status"> Defines the observed state of the agent pool. </param>
-        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridContainerServiceExtendedLocation extendedLocation, IList<string> availabilityZones, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, string nodeImageVersion, int? count, string vmSize, HybridContainerServiceResourceProvisioningState? provisioningState, AgentPoolProvisioningStatus status) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="provisioningState"> The status of the latest long running operation for the agent pool. </param>
+        /// <param name="status"> The observed status of the agent pool. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceAgentPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, int? count, string vmSize, string kubernetesVersion, HybridContainerServiceResourceProvisioningState? provisioningState, AgentPoolProvisioningStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Tags = tags;
             ExtendedLocation = extendedLocation;
-            AvailabilityZones = availabilityZones;
             OSType = osType;
             OSSku = osSku;
-            NodeImageVersion = nodeImageVersion;
+            NodeLabels = nodeLabels;
+            NodeTaints = nodeTaints;
+            MaxCount = maxCount;
+            MinCount = minCount;
+            EnableAutoScaling = enableAutoScaling;
+            MaxPods = maxPods;
             Count = count;
             VmSize = vmSize;
+            KubernetesVersion = kubernetesVersion;
             ProvisioningState = provisioningState;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Extended Location definition. </summary>
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
-        /// <summary> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </summary>
-        public IList<string> AvailabilityZones { get; }
-        /// <summary> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </summary>
+        /// <summary> The particular KubernetesVersion Image OS Type (Linux, Windows). </summary>
         public HybridContainerServiceOSType? OSType { get; set; }
         /// <summary> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </summary>
         public HybridContainerServiceOSSku? OSSku { get; set; }
-        /// <summary> The version of node image. </summary>
-        public string NodeImageVersion { get; set; }
-        /// <summary> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>
+        /// <summary> The node labels to be persisted across all nodes in agent pool. </summary>
+        public IDictionary<string, string> NodeLabels { get; }
+        /// <summary> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </summary>
+        public IList<string> NodeTaints { get; }
+        /// <summary> The maximum number of nodes for auto-scaling. </summary>
+        public int? MaxCount { get; set; }
+        /// <summary> The minimum number of nodes for auto-scaling. </summary>
+        public int? MinCount { get; set; }
+        /// <summary> Whether to enable auto-scaler. Default value is false. </summary>
+        public bool? EnableAutoScaling { get; set; }
+        /// <summary> The maximum number of pods that can run on a node. </summary>
+        public int? MaxPods { get; set; }
+        /// <summary> Number of nodes in the agent pool. The default value is 1. </summary>
         public int? Count { get; set; }
-        /// <summary> VmSize - The size of the agent pool VMs. </summary>
+        /// <summary> The VM sku size of the agent pool node VMs. </summary>
         public string VmSize { get; set; }
-        /// <summary> Provisioning state of the resource. </summary>
+        /// <summary> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </summary>
+        public string KubernetesVersion { get; }
+        /// <summary> The status of the latest long running operation for the agent pool. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> Defines the observed state of the agent pool. </summary>
+        /// <summary> The observed status of the agent pool. </summary>
         public AgentPoolProvisioningStatus Status { get; set; }
     }
 }

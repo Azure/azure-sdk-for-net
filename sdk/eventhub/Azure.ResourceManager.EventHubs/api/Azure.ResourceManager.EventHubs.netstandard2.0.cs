@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubData>
     {
         public EventHubData() { }
         public Azure.ResourceManager.EventHubs.Models.CaptureDescription CaptureDescription { get { throw null; } set { } }
@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.RetentionDescription RetentionDescription { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubEntityStatus? Status { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubResource : Azure.ResourceManager.ArmResource
     {
@@ -104,13 +109,18 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsApplicationGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsApplicationGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>
     {
         public EventHubsApplicationGroupData() { }
         public string ClientAppGroupIdentifier { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy> Policies { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsApplicationGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -126,11 +136,16 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.EventHubs.EventHubsApplicationGroupResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.EventHubs.EventHubsApplicationGroupData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventHubsAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsAuthorizationRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>
     {
         public EventHubsAuthorizationRuleData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsAccessRight> Rights { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsAuthorizationRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EventHubs.EventHubsClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsClusterResource>, System.Collections.IEnumerable
     {
@@ -149,7 +164,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventHubsClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>
     {
         public EventHubsClusterData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -158,6 +173,11 @@ namespace Azure.ResourceManager.EventHubs
         public string Status { get { throw null; } }
         public bool? SupportsScaling { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsClusterResource : Azure.ResourceManager.ArmResource
     {
@@ -202,13 +222,18 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsConsumerGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsConsumerGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>
     {
         public EventHubsConsumerGroupData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public string UserMetadata { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsConsumerGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -268,7 +293,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsDisasterRecoveryData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsDisasterRecoveryData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>
     {
         public EventHubsDisasterRecoveryData() { }
         public string AlternateName { get { throw null; } set { } }
@@ -277,6 +302,11 @@ namespace Azure.ResourceManager.EventHubs
         public long? PendingReplicationOperationsCount { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsDisasterRecoveryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsDisasterRecoveryRole? Role { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsDisasterRecoveryData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsDisasterRecoveryResource : Azure.ResourceManager.ArmResource
     {
@@ -380,7 +410,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventHubsNamespaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>
     {
         public EventHubsNamespaceData(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
@@ -402,6 +432,11 @@ namespace Azure.ResourceManager.EventHubs
         public string Status { get { throw null; } }
         public System.DateTimeOffset? UpdatedOn { get { throw null; } }
         public bool? ZoneRedundant { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.EventHubsNamespaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsNamespaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsNamespaceResource : Azure.ResourceManager.ArmResource
     {
@@ -450,7 +485,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource> Update(Azure.ResourceManager.EventHubs.EventHubsNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>> UpdateAsync(Azure.ResourceManager.EventHubs.EventHubsNamespaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventHubsNetworkRuleSetData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsNetworkRuleSetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>
     {
         public EventHubsNetworkRuleSetData() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction? DefaultAction { get { throw null; } set { } }
@@ -459,6 +494,11 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag? PublicNetworkAccess { get { throw null; } set { } }
         public bool? TrustedServiceAccessEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules> VirtualNetworkRules { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsNetworkRuleSetResource : Azure.ResourceManager.ArmResource
     {
@@ -489,13 +529,18 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>
     {
         public EventHubsPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -528,7 +573,7 @@ namespace Azure.ResourceManager.EventHubs
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EventHubsSchemaGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsSchemaGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>
     {
         public EventHubsSchemaGroupData() { }
         public System.DateTimeOffset? CreatedAtUtc { get { throw null; } }
@@ -538,6 +583,11 @@ namespace Azure.ResourceManager.EventHubs
         public Azure.ResourceManager.EventHubs.Models.EventHubsSchemaCompatibility? SchemaCompatibility { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType? SchemaType { get { throw null; } set { } }
         public System.DateTimeOffset? UpdatedAtUtc { get { throw null; } }
+        Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EventHubsSchemaGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -620,14 +670,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData EventHubsPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue EventHubsProvisioningIssue(string name = null, Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties EventHubsProvisioningIssueProperties(string issueType = null, string description = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent EventHubsRegenerateAccessKeyContent(Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType keyType = default(Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType), string key = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsSchemaGroupData EventHubsSchemaGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? updatedAtUtc = default(System.DateTimeOffset?), System.DateTimeOffset? createdAtUtc = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IDictionary<string, string> groupProperties = null, Azure.ResourceManager.EventHubs.Models.EventHubsSchemaCompatibility? schemaCompatibility = default(Azure.ResourceManager.EventHubs.Models.EventHubsSchemaCompatibility?), Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType? schemaType = default(Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
     }
-    public partial class AvailableCluster
+    public partial class AvailableCluster : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>
     {
         internal AvailableCluster() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.AvailableCluster System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.AvailableCluster System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.AvailableCluster>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CaptureDescription
+    public partial class CaptureDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>
     {
         public CaptureDescription() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubDestination Destination { get { throw null; } set { } }
@@ -636,6 +692,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         public int? IntervalInSeconds { get { throw null; } set { } }
         public int? SizeLimitInBytes { get { throw null; } set { } }
         public bool? SkipEmptyArchives { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.CaptureDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.CaptureDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.CaptureDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CleanupPolicyRetentionDescription : System.IEquatable<Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription>
@@ -655,17 +716,22 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription left, Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ClusterQuotaConfigurationProperties
+    public partial class ClusterQuotaConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>
     {
         public ClusterQuotaConfigurationProperties() { }
         public System.Collections.Generic.IDictionary<string, string> Settings { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.ClusterQuotaConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum EncodingCaptureDescription
     {
         Avro = 0,
         AvroDeflate = 1,
     }
-    public partial class EventHubDestination
+    public partial class EventHubDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>
     {
         public EventHubDestination() { }
         public string ArchiveNameFormat { get { throw null; } set { } }
@@ -675,6 +741,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.Guid? DataLakeSubscriptionId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum EventHubEntityStatus
     {
@@ -688,7 +759,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         Deleting = 7,
         Renaming = 8,
     }
-    public partial class EventHubsAccessKeys
+    public partial class EventHubsAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>
     {
         internal EventHubsAccessKeys() { }
         public string AliasPrimaryConnectionString { get { throw null; } }
@@ -698,6 +769,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsAccessKeyType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType>
@@ -736,16 +812,26 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsAccessRight left, Azure.ResourceManager.EventHubs.Models.EventHubsAccessRight right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class EventHubsApplicationGroupPolicy
+    public abstract partial class EventHubsApplicationGroupPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>
     {
         protected EventHubsApplicationGroupPolicy(string name) { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsClusterSku
+    public partial class EventHubsClusterSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>
     {
         public EventHubsClusterSku(Azure.ResourceManager.EventHubs.Models.EventHubsClusterSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsClusterSkuName Name { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsClusterSkuName : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsClusterSkuName>
@@ -776,12 +862,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         PrimaryNotReplicating = 1,
         Secondary = 2,
     }
-    public partial class EventHubsEncryption
+    public partial class EventHubsEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>
     {
         public EventHubsEncryption() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsKeySource? KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsKeySource : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsKeySource>
@@ -800,13 +891,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsKeySource left, Azure.ResourceManager.EventHubs.Models.EventHubsKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsKeyVaultProperties
+    public partial class EventHubsKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>
     {
         public EventHubsKeyVaultProperties() { }
         public string KeyName { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
         public string KeyVersion { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsMetricId : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsMetricId>
@@ -828,17 +924,27 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsMetricId left, Azure.ResourceManager.EventHubs.Models.EventHubsMetricId right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsNameAvailabilityContent
+    public partial class EventHubsNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>
     {
         public EventHubsNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNameAvailabilityResult
+    public partial class EventHubsNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>
     {
         internal EventHubsNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum EventHubsNameUnavailableReason
     {
@@ -884,26 +990,41 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction left, Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsNetworkRuleSetIPRules
+    public partial class EventHubsNetworkRuleSetIPRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>
     {
         public EventHubsNetworkRuleSetIPRules() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleIPAction? Action { get { throw null; } set { } }
         public string IPMask { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNetworkRuleSetVirtualNetworkRules
+    public partial class EventHubsNetworkRuleSetVirtualNetworkRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>
     {
         public EventHubsNetworkRuleSetVirtualNetworkRules() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNetworkSecurityPerimeter
+    public partial class EventHubsNetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>
     {
         internal EventHubsNetworkSecurityPerimeter() { }
         public string Id { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string PerimeterGuid { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EventHubsNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>
     {
         public EventHubsNetworkSecurityPerimeterConfiguration(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } }
@@ -911,19 +1032,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue> ProvisioningIssues { get { throw null; } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>
     {
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule> AccessRules { get { throw null; } }
         public string AccessRulesVersion { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
+    public partial class EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>
     {
         internal EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsResourceAssociationAccessMode? AccessMode { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsNetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationProvisioningState>
@@ -952,10 +1088,15 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsNspAccessRule : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsNspAccessRule : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>
     {
         internal EventHubsNspAccessRule() { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties Properties { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsNspAccessRuleDirection : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleDirection>
@@ -975,7 +1116,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleDirection left, Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleDirection right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsNspAccessRuleProperties
+    public partial class EventHubsNspAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>
     {
         internal EventHubsNspAccessRuleProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> AddressPrefixes { get { throw null; } }
@@ -983,6 +1124,11 @@ namespace Azure.ResourceManager.EventHubs.Models
         public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Subscriptions { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNspAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateEndpointConnectionProvisioningState>
@@ -1026,30 +1172,50 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkConnectionStatus left, Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class EventHubsPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>
     {
         internal EventHubsPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsPrivateLinkServiceConnectionState
+    public partial class EventHubsPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>
     {
         public EventHubsPrivateLinkServiceConnectionState() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsProvisioningIssue
+    public partial class EventHubsProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>
     {
         public EventHubsProvisioningIssue() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties Properties { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EventHubsProvisioningIssueProperties
+    public partial class EventHubsProvisioningIssueProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>
     {
         internal EventHubsProvisioningIssueProperties() { }
         public string Description { get { throw null; } }
         public string IssueType { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsPublicNetworkAccess : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess>
@@ -1089,11 +1255,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag left, Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsRegenerateAccessKeyContent
+    public partial class EventHubsRegenerateAccessKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>
     {
         public EventHubsRegenerateAccessKeyContent(Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType keyType) { }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsAccessKeyType KeyType { get { throw null; } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsRegenerateAccessKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsResourceAssociationAccessMode>
@@ -1153,12 +1324,17 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType left, Azure.ResourceManager.EventHubs.Models.EventHubsSchemaType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsSku
+    public partial class EventHubsSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>
     {
         public EventHubsSku(Azure.ResourceManager.EventHubs.Models.EventHubsSkuName name) { }
         public int? Capacity { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsSkuName Name { get { throw null; } set { } }
         public Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsSkuName : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsSkuName>
@@ -1198,11 +1374,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier left, Azure.ResourceManager.EventHubs.Models.EventHubsSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EventHubsThrottlingPolicy : Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy
+    public partial class EventHubsThrottlingPolicy : Azure.ResourceManager.EventHubs.Models.EventHubsApplicationGroupPolicy, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>
     {
         public EventHubsThrottlingPolicy(string name, long rateLimitThreshold, Azure.ResourceManager.EventHubs.Models.EventHubsMetricId metricId) : base (default(string)) { }
         public Azure.ResourceManager.EventHubs.Models.EventHubsMetricId MetricId { get { throw null; } set { } }
         public long RateLimitThreshold { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsThrottlingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EventHubsTlsVersion : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion>
@@ -1223,11 +1404,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion left, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RetentionDescription
+    public partial class RetentionDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>
     {
         public RetentionDescription() { }
         public Azure.ResourceManager.EventHubs.Models.CleanupPolicyRetentionDescription? CleanupPolicy { get { throw null; } set { } }
         public long? RetentionTimeInHours { get { throw null; } set { } }
         public int? TombstoneRetentionTimeInHours { get { throw null; } set { } }
+        Azure.ResourceManager.EventHubs.Models.RetentionDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EventHubs.Models.RetentionDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

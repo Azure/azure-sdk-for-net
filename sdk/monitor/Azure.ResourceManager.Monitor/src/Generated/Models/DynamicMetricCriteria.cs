@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType = criterionType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicMetricCriteria"/> for deserialization. </summary>
+        internal DynamicMetricCriteria()
+        {
+        }
+
         /// <summary> The operator used to compare the metric value against the threshold. </summary>
         public DynamicThresholdOperator Operator { get; set; }
         /// <summary> The extent of deviation required to trigger an alert. This will affect how tight the threshold is to the metric series pattern. </summary>

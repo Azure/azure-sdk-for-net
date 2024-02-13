@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +267,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricApplicationTypeVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -283,7 +284,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -296,7 +297,8 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricApplicationTypeVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricApplicationTypeVersionApplicationTypeVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricApplicationTypeVersionResource(Client, ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(e)), _serviceFabricApplicationTypeVersionApplicationTypeVersionsClientDiagnostics, Pipeline, "ServiceFabricApplicationTypeVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +314,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -355,7 +357,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +400,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -443,7 +445,7 @@ namespace Azure.ResourceManager.ServiceFabric
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01</description>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

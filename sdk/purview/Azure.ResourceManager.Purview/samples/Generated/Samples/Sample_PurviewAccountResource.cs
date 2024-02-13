@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPurviewAccounts_AccountsListBySubscription()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_ListBySubscription.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_ListBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AccountsDelete()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Delete.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Delete.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AccountsUpdate()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Update.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Update.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -148,39 +148,12 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Accounts_ListKeys
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetKeys_AccountsListKeys()
-        {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_ListKeys.json
-            // this example is just showing the usage of "Accounts_ListKeys" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PurviewAccountResource created on azure
-            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "account1";
-            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
-
-            // invoke the operation
-            PurviewAccountAccessKey result = await purviewAccount.GetKeysAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
         // Accounts_AddRootCollectionAdmin
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task AddRootCollectionAdmin_AccountsAddRootCollectionAdmin()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_AddRootCollectionAdmin.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_AddRootCollectionAdmin.json
             // this example is just showing the usage of "Accounts_AddRootCollectionAdmin" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,12 +179,39 @@ namespace Azure.ResourceManager.Purview.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // Accounts_ListKeys
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetKeys_AccountsListKeys()
+        {
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_ListKeys.json
+            // this example is just showing the usage of "Accounts_ListKeys" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "account1";
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
+
+            // invoke the operation
+            PurviewAccountAccessKey result = await purviewAccount.GetKeysAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Accounts_CheckNameAvailability
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckPurviewAccountNameAvailability_AccountsCheckNameAvailability()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_CheckNameAvailability.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_CheckNameAvailability.json
             // this example is just showing the usage of "Accounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,6 +232,106 @@ namespace Azure.ResourceManager.Purview.Samples
                 ResourceType = "Microsoft.Purview/accounts",
             };
             PurviewAccountNameAvailabilityResult result = await subscriptionResource.CheckPurviewAccountNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Features_AccountGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task AccountGetFeature_FeaturesAccountGet()
+        {
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Features_AccountGet.json
+            // this example is just showing the usage of "Features_AccountGet" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "account1";
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
+
+            // invoke the operation
+            PurviewBatchFeatureContent content = new PurviewBatchFeatureContent()
+            {
+                Features =
+{
+"Feature1","Feature2","FeatureThatDoesntExist"
+},
+            };
+            PurviewBatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // IngestionPrivateEndpointConnections_List
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIngestionPrivateEndpointConnections_IngestionPrivateEndpointConnectionsList()
+        {
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/IngestionPrivateEndpointConnections_List.json
+            // this example is just showing the usage of "IngestionPrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "account1";
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PurviewPrivateEndpointConnectionResource item in purviewAccount.GetIngestionPrivateEndpointConnectionsAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PurviewPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
+        }
+
+        // IngestionPrivateEndpointConnections_UpdateStatus
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task UpdateStatusIngestionPrivateEndpointConnection_IngestionPrivateEndpointConnectionsUpdateStatus()
+        {
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/IngestionPrivateEndpointConnections_UpdateStatus.json
+            // this example is just showing the usage of "IngestionPrivateEndpointConnections_UpdateStatus" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PurviewAccountResource created on azure
+            // for more information of creating PurviewAccountResource, please refer to the document of PurviewAccountResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "account1";
+            ResourceIdentifier purviewAccountResourceId = PurviewAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
+
+            // invoke the operation
+            PrivateEndpointConnectionStatusUpdateContent content = new PrivateEndpointConnectionStatusUpdateContent()
+            {
+                PrivateEndpointId = "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/SampleResourceGroup/providers/Microsoft.Purview/accounts/account1/privateEndpointConnections/privateEndpointConnection1",
+                Status = "Approved",
+            };
+            PrivateEndpointConnectionStatusUpdateResult result = await purviewAccount.UpdateStatusIngestionPrivateEndpointConnectionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

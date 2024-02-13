@@ -14,10 +14,17 @@ public class MockPersistableModel : IPersistableModel<MockPersistableModel>
 
     public string StringValue { get; set; }
 
+    public string SerializedValue { get; }
+
     public MockPersistableModel(int intValue, string stringValue)
     {
         IntValue = intValue;
         StringValue = stringValue;
+
+        dynamic json = BinaryData.FromString("{}").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+        json.IntValue = IntValue;
+        json.StringValue = StringValue;
+        SerializedValue = json.ToString();
     }
 
     MockPersistableModel IPersistableModel<MockPersistableModel>.Create(BinaryData data, ModelReaderWriterOptions options)
@@ -31,9 +38,6 @@ public class MockPersistableModel : IPersistableModel<MockPersistableModel>
 
     BinaryData IPersistableModel<MockPersistableModel>.Write(ModelReaderWriterOptions options)
     {
-        dynamic json = BinaryData.FromString("{}").ToDynamicFromJson(JsonPropertyNames.CamelCase);
-        json.IntValue = IntValue;
-        json.StringValue = StringValue;
-        return BinaryData.FromString(json.ToString());
+        return BinaryData.FromString(SerializedValue);
     }
 }

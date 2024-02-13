@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.HybridContainerService
     /// </summary>
     public partial class HybridContainerServiceVmSkuData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVmSkuData"/>. </summary>
         public HybridContainerServiceVmSkuData()
         {
@@ -29,21 +62,23 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="extendedLocation"> Extended Location definition. </param>
+        /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="values"> Array of HybridAKS Support VM Skus. </param>
-        internal HybridContainerServiceVmSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceResourceProvisioningState? provisioningState, IList<HybridContainerServiceVmSkuProperties> values) : base(id, name, resourceType, systemData)
+        /// <param name="values"> List of supported VM SKUs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceVmSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HybridContainerServiceExtendedLocation extendedLocation, HybridContainerServiceResourceProvisioningState? provisioningState, IList<HybridContainerServiceVmSkuProperties> values, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExtendedLocation = extendedLocation;
             ProvisioningState = provisioningState;
             Values = values;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Extended Location definition. </summary>
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         public HybridContainerServiceExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public HybridContainerServiceResourceProvisioningState? ProvisioningState { get; }
-        /// <summary> Array of HybridAKS Support VM Skus. </summary>
+        /// <summary> List of supported VM SKUs. </summary>
         public IList<HybridContainerServiceVmSkuProperties> Values { get; }
     }
 }

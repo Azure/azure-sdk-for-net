@@ -5,18 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class RoleAssignmentCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<RoleAssignmentCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleAssignmentCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalId"u8);
@@ -41,6 +57,26 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("conditionVersion"u8);
                 writer.WriteStringValue(ConditionVersion);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedOn"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
+            {
+                writer.WritePropertyName("updatedBy"u8);
+                writer.WriteStringValue(UpdatedBy);
+            }
             if (Optional.IsDefined(DelegatedManagedIdentityResourceId))
             {
                 if (DelegatedManagedIdentityResourceId != null)
@@ -54,7 +90,187 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        RoleAssignmentCreateOrUpdateContent IJsonModel<RoleAssignmentCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static RoleAssignmentCreateOrUpdateContent DeserializeRoleAssignmentCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> scope = default;
+            ResourceIdentifier roleDefinitionId = default;
+            Guid principalId = default;
+            Optional<RoleManagementPrincipalType> principalType = default;
+            Optional<string> description = default;
+            Optional<string> condition = default;
+            Optional<string> conditionVersion = default;
+            Optional<DateTimeOffset> createdOn = default;
+            Optional<DateTimeOffset> updatedOn = default;
+            Optional<string> createdBy = default;
+            Optional<string> updatedBy = default;
+            Optional<ResourceIdentifier> delegatedManagedIdentityResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("scope"u8))
+                        {
+                            scope = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("roleDefinitionId"u8))
+                        {
+                            roleDefinitionId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("principalId"u8))
+                        {
+                            principalId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("principalType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            principalType = new RoleManagementPrincipalType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("condition"u8))
+                        {
+                            condition = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("conditionVersion"u8))
+                        {
+                            conditionVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("createdOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            updatedOn = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("createdBy"u8))
+                        {
+                            createdBy = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("updatedBy"u8))
+                        {
+                            updatedBy = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("delegatedManagedIdentityResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                delegatedManagedIdentityResourceId = null;
+                                continue;
+                            }
+                            delegatedManagedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoleAssignmentCreateOrUpdateContent(scope.Value, roleDefinitionId, principalId, Optional.ToNullable(principalType), description.Value, condition.Value, conditionVersion.Value, Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), createdBy.Value, updatedBy.Value, delegatedManagedIdentityResourceId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RoleAssignmentCreateOrUpdateContent IPersistableModel<RoleAssignmentCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleAssignmentCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleAssignmentCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

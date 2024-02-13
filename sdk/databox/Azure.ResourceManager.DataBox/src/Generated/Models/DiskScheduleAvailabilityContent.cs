@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -25,11 +27,17 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="expectedDataSizeInTerabytes"> The expected size of the data, which needs to be transferred in this job, in terabytes. </param>
-        internal DiskScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country)
+        internal DiskScheduleAvailabilityContent(AzureLocation storageLocation, DataBoxSkuName skuName, string country, IDictionary<string, BinaryData> serializedAdditionalRawData, int expectedDataSizeInTerabytes) : base(storageLocation, skuName, country, serializedAdditionalRawData)
         {
             ExpectedDataSizeInTerabytes = expectedDataSizeInTerabytes;
             SkuName = skuName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DiskScheduleAvailabilityContent"/> for deserialization. </summary>
+        internal DiskScheduleAvailabilityContent()
+        {
         }
 
         /// <summary> The expected size of the data, which needs to be transferred in this job, in terabytes. </summary>

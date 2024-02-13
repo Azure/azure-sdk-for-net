@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppCustomOpenIdConnectProviderConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomOpenIdConnectProviderConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("login"u8);
                 writer.WriteObjectValue(Login);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppCustomOpenIdConnectProviderConfiguration DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(JsonElement element)
+        ContainerAppCustomOpenIdConnectProviderConfiguration IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomOpenIdConnectProviderConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppCustomOpenIdConnectProviderConfiguration DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<bool> enabled = default;
             Optional<ContainerAppOpenIdConnectRegistration> registration = default;
             Optional<ContainerAppOpenIdConnectLogin> login = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,8 +113,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     login = ContainerAppOpenIdConnectLogin.DeserializeContainerAppOpenIdConnectLogin(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppCustomOpenIdConnectProviderConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomOpenIdConnectProviderConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppCustomOpenIdConnectProviderConfiguration IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomOpenIdConnectProviderConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppCustomOpenIdConnectProviderConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

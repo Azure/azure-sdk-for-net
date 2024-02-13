@@ -5,25 +5,105 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DatabaseUsage : IUtf8JsonSerializable
+    public partial class DatabaseUsage : IUtf8JsonSerializable, IJsonModel<DatabaseUsage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabaseUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseUsage)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DatabaseUsage DeserializeDatabaseUsage(JsonElement element)
+        DatabaseUsage IJsonModel<DatabaseUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseUsage)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseUsage(document.RootElement, options);
+        }
+
+        internal static DatabaseUsage DeserializeDatabaseUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +116,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<double> currentValue = default;
             Optional<double> limit = default;
             Optional<string> unit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -102,8 +184,44 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseUsage(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseUsage(id, name, type, systemData.Value, displayName.Value, Optional.ToNullable(currentValue), Optional.ToNullable(limit), unit.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseUsage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatabaseUsage IPersistableModel<DatabaseUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseUsage)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

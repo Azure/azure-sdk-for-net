@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> This is the Autoscale profile for the cluster. This will allow customer to create cluster enabled with Autoscale. </summary>
     public partial class ClusterAutoscaleProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClusterAutoscaleProfile"/>. </summary>
         /// <param name="isEnabled"> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </param>
         public ClusterAutoscaleProfile(bool isEnabled)
@@ -23,13 +58,20 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="autoscaleType"> User to specify which type of Autoscale to be implemented - Scheduled Based or Load Based. </param>
         /// <param name="scheduleBasedConfig"> Profiles of schedule based Autoscale. </param>
         /// <param name="loadBasedConfig"> Profiles of load based Autoscale. </param>
-        internal ClusterAutoscaleProfile(bool isEnabled, int? gracefulDecommissionTimeout, ClusterAutoscaleType? autoscaleType, ScheduleBasedConfig scheduleBasedConfig, LoadBasedConfig loadBasedConfig)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterAutoscaleProfile(bool isEnabled, int? gracefulDecommissionTimeout, ClusterAutoscaleType? autoscaleType, ScheduleBasedConfig scheduleBasedConfig, LoadBasedConfig loadBasedConfig, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             GracefulDecommissionTimeout = gracefulDecommissionTimeout;
             AutoscaleType = autoscaleType;
             ScheduleBasedConfig = scheduleBasedConfig;
             LoadBasedConfig = loadBasedConfig;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterAutoscaleProfile"/> for deserialization. </summary>
+        internal ClusterAutoscaleProfile()
+        {
         }
 
         /// <summary> This indicates whether auto scale is enabled on HDInsight on AKS cluster. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.ElasticSan
     /// </summary>
     public partial class ElasticSanVolumeData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/>. </summary>
         /// <param name="sizeGiB"> Volume size. </param>
         public ElasticSanVolumeData(long sizeGiB)
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="storageTarget"> Storage target information. </param>
         /// <param name="managedBy"> Parent resource information. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
-        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, ManagedByInfo managedBy, ElasticSanProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? volumeId, ElasticSanVolumeDataSourceInfo creationData, long sizeGiB, IscsiTargetInfo storageTarget, ManagedByInfo managedBy, ElasticSanProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             VolumeId = volumeId;
             CreationData = creationData;
@@ -44,6 +78,12 @@ namespace Azure.ResourceManager.ElasticSan
             StorageTarget = storageTarget;
             ManagedBy = managedBy;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumeData"/> for deserialization. </summary>
+        internal ElasticSanVolumeData()
+        {
         }
 
         /// <summary> Unique Id of the volume in GUID format. </summary>

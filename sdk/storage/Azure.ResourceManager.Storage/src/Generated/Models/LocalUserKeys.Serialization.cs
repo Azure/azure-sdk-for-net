@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LocalUserKeys
+    public partial class LocalUserKeys : IUtf8JsonSerializable, IJsonModel<LocalUserKeys>
     {
-        internal static LocalUserKeys DeserializeLocalUserKeys(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocalUserKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LocalUserKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(SshAuthorizedKeys))
+            {
+                writer.WritePropertyName("sshAuthorizedKeys"u8);
+                writer.WriteStartArray();
+                foreach (var item in SshAuthorizedKeys)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SharedKey))
+            {
+                writer.WritePropertyName("sharedKey"u8);
+                writer.WriteStringValue(SharedKey);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LocalUserKeys IJsonModel<LocalUserKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocalUserKeys(document.RootElement, options);
+        }
+
+        internal static LocalUserKeys DeserializeLocalUserKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IReadOnlyList<StorageSshPublicKey>> sshAuthorizedKeys = default;
             Optional<string> sharedKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sshAuthorizedKeys"u8))
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.Storage.Models
                     sharedKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocalUserKeys(Optional.ToList(sshAuthorizedKeys), sharedKey.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LocalUserKeys(Optional.ToList(sshAuthorizedKeys), sharedKey.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LocalUserKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LocalUserKeys IPersistableModel<LocalUserKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocalUserKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLocalUserKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LocalUserKeys)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LocalUserKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,8 +5,9 @@
 
 #nullable disable
 
-using System.Globalization;
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.Globalization;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager.Compute

@@ -75,7 +75,7 @@ namespace Microsoft.Extensions.Azure
         /// <returns>This instance.</returns>
         public AzureClientFactoryBuilder ConfigureDefaults(IConfiguration configuration)
         {
-            ConfigureDefaults(options => configuration.Bind(options));
+            ConfigureDefaults(configuration.Bind);
 
             var credentialsFromConfig = ClientFactory.CreateCredential(configuration);
 
@@ -161,18 +161,14 @@ namespace Microsoft.Extensions.Azure
 
         private IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(Func<TOptions, TokenCredential, IServiceProvider, TClient> clientFactory, bool requiresCredential) where TOptions : class
         {
-            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, (provider, options, credential) => clientFactory((TOptions) options, credential, provider));
-            clientRegistration.RequiresTokenCredential = requiresCredential;
-
+            var clientRegistration = new ClientRegistration<TClient>(DefaultClientName, requiresCredential, (provider, options, credential) => clientFactory((TOptions) options, credential, provider));
             _serviceCollection.AddSingleton(clientRegistration);
 
             _serviceCollection.TryAddSingleton(typeof(IConfigureOptions<AzureClientCredentialOptions<TClient>>), typeof(DefaultCredentialClientOptionsSetup<TClient>));
             _serviceCollection.TryAddSingleton(typeof(IOptionsMonitor<TOptions>), typeof(ClientOptionsMonitor<TClient, TOptions>));
             _serviceCollection.TryAddSingleton(typeof(ClientOptionsFactory<TClient, TOptions>), typeof(ClientOptionsFactory<TClient, TOptions>));
             _serviceCollection.TryAddSingleton(typeof(IAzureClientFactory<TClient>), typeof(AzureClientFactory<TClient, TOptions>));
-            _serviceCollection.TryAddSingleton(
-                typeof(TClient),
-                provider => provider.GetService<IAzureClientFactory<TClient>>().CreateClient(DefaultClientName));
+            _serviceCollection.TryAddSingleton(typeof(TClient), provider => provider.GetService<IAzureClientFactory<TClient>>().CreateClient(DefaultClientName));
 
             return new AzureClientBuilder<TClient, TOptions>(clientRegistration, _serviceCollection);
         }

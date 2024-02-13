@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBCreateUpdateConfig : IUtf8JsonSerializable
+    public partial class CosmosDBCreateUpdateConfig : IUtf8JsonSerializable, IJsonModel<CosmosDBCreateUpdateConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBCreateUpdateConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBCreateUpdateConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCreateUpdateConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBCreateUpdateConfig)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Throughput))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("autoscaleSettings"u8);
                 writer.WriteObjectValue(AutoscaleSettings);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBCreateUpdateConfig DeserializeCosmosDBCreateUpdateConfig(JsonElement element)
+        CosmosDBCreateUpdateConfig IJsonModel<CosmosDBCreateUpdateConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCreateUpdateConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBCreateUpdateConfig)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBCreateUpdateConfig(document.RootElement, options);
+        }
+
+        internal static CosmosDBCreateUpdateConfig DeserializeCosmosDBCreateUpdateConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> throughput = default;
             Optional<AutoscaleSettings> autoscaleSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("throughput"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     autoscaleSettings = AutoscaleSettings.DeserializeAutoscaleSettings(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBCreateUpdateConfig(Optional.ToNullable(throughput), autoscaleSettings.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBCreateUpdateConfig(Optional.ToNullable(throughput), autoscaleSettings.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBCreateUpdateConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCreateUpdateConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBCreateUpdateConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBCreateUpdateConfig IPersistableModel<CosmosDBCreateUpdateConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBCreateUpdateConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBCreateUpdateConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBCreateUpdateConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBCreateUpdateConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    public partial class SapMonitorData : IUtf8JsonSerializable
+    public partial class SapMonitorData : IUtf8JsonSerializable, IJsonModel<SapMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapMonitorData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -37,8 +47,38 @@ namespace Azure.ResourceManager.Workloads
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                JsonSerializer.Serialize(writer, Errors);
+            }
             if (Optional.IsDefined(AppLocation))
             {
                 writer.WritePropertyName("appLocation"u8);
@@ -69,12 +109,51 @@ namespace Azure.ResourceManager.Workloads
                 writer.WritePropertyName("monitorSubnet"u8);
                 writer.WriteStringValue(MonitorSubnetId);
             }
+            if (options.Format != "W" && Optional.IsDefined(MsiArmId))
+            {
+                writer.WritePropertyName("msiArmId"u8);
+                writer.WriteStringValue(MsiArmId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountArmId))
+            {
+                writer.WritePropertyName("storageAccountArmId"u8);
+                writer.WriteStringValue(StorageAccountArmId);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SapMonitorData DeserializeSapMonitorData(JsonElement element)
+        SapMonitorData IJsonModel<SapMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapMonitorData(document.RootElement, options);
+        }
+
+        internal static SapMonitorData DeserializeSapMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -96,6 +175,8 @@ namespace Azure.ResourceManager.Workloads
             Optional<ResourceIdentifier> monitorSubnet = default;
             Optional<ResourceIdentifier> msiArmId = default;
             Optional<ResourceIdentifier> storageAccountArmId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -248,8 +329,44 @@ namespace Azure.ResourceManager.Workloads
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SapMonitorData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), errors.Value, Optional.ToNullable(appLocation), Optional.ToNullable(routingPreference), zoneRedundancyPreference.Value, managedResourceGroupConfiguration.Value, logAnalyticsWorkspaceArmId.Value, monitorSubnet.Value, msiArmId.Value, storageAccountArmId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapMonitorData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SapMonitorData IPersistableModel<SapMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapMonitorData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapMonitorData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable
+    public partial class IntegrationRuntimeSsisCatalogInfo : IUtf8JsonSerializable, IJsonModel<IntegrationRuntimeSsisCatalogInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationRuntimeSsisCatalogInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationRuntimeSsisCatalogInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeSsisCatalogInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CatalogServerEndpoint))
             {
@@ -58,8 +67,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element)
+        IntegrationRuntimeSsisCatalogInfo IJsonModel<IntegrationRuntimeSsisCatalogInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationRuntimeSsisCatalogInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationRuntimeSsisCatalogInfo(document.RootElement, options);
+        }
+
+        internal static IntegrationRuntimeSsisCatalogInfo DeserializeIntegrationRuntimeSsisCatalogInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,5 +134,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new IntegrationRuntimeSsisCatalogInfo(catalogServerEndpoint.Value, catalogAdminUserName.Value, catalogAdminPassword, Optional.ToNullable(catalogPricingTier), dualStandbyPairName.Value, additionalProperties);
         }
+
+        BinaryData IPersistableModel<IntegrationRuntimeSsisCatalogInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeSsisCatalogInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IntegrationRuntimeSsisCatalogInfo IPersistableModel<IntegrationRuntimeSsisCatalogInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationRuntimeSsisCatalogInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationRuntimeSsisCatalogInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationRuntimeSsisCatalogInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationRuntimeSsisCatalogInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

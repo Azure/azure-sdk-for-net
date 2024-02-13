@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -772,7 +772,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -841,7 +841,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1155,7 +1155,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1265,7 +1265,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1297,7 +1297,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1476,7 +1476,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1508,7 +1508,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1579,7 +1579,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1618,7 +1618,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1687,7 +1687,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1719,7 +1719,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1758,7 +1758,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1829,7 +1829,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1861,7 +1861,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1900,7 +1900,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1932,7 +1932,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1971,7 +1971,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2003,7 +2003,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2042,7 +2042,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2074,7 +2074,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2113,7 +2113,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2144,7 +2144,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2182,7 +2182,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2214,7 +2214,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2253,7 +2253,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2285,7 +2285,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2324,7 +2324,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2355,7 +2355,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2393,7 +2393,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2424,7 +2424,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2462,7 +2462,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2493,7 +2493,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2531,7 +2531,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2562,7 +2562,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2600,7 +2600,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2632,7 +2632,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2671,7 +2671,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2702,7 +2702,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2740,7 +2740,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2771,7 +2771,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2809,7 +2809,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2840,7 +2840,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2878,7 +2878,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2909,7 +2909,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2947,7 +2947,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2978,7 +2978,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3016,7 +3016,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3047,7 +3047,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3085,7 +3085,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3116,7 +3116,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3154,7 +3154,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3185,7 +3185,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3216,7 +3216,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3227,7 +3227,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3243,7 +3243,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3254,7 +3254,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableDelegation.DeserializeAvailableDelegation(e), AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3270,7 +3270,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3281,7 +3281,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3297,7 +3297,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3308,7 +3308,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableServiceAlias.DeserializeAvailableServiceAlias(e), AvailableServiceAliasesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3324,7 +3324,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3335,7 +3335,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3351,7 +3351,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3362,7 +3362,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType(e), AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3378,7 +3378,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3421,7 +3421,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3464,7 +3464,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3475,7 +3475,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3491,7 +3491,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3502,7 +3502,7 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService(e), PrivateLinkServicesClientDiagnostics, Pipeline, "MockableNetworkResourceGroupResource.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
     }
 }

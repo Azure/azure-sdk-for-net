@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PacketCaptureFilter : IUtf8JsonSerializable
+    public partial class PacketCaptureFilter : IUtf8JsonSerializable, IJsonModel<PacketCaptureFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PacketCaptureFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PacketCaptureFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PacketCaptureFilter)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Protocol))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("remotePort"u8);
                 writer.WriteStringValue(RemotePort);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PacketCaptureFilter DeserializePacketCaptureFilter(JsonElement element)
+        PacketCaptureFilter IJsonModel<PacketCaptureFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PacketCaptureFilter)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePacketCaptureFilter(document.RootElement, options);
+        }
+
+        internal static PacketCaptureFilter DeserializePacketCaptureFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> remoteIPAddress = default;
             Optional<string> localPort = default;
             Optional<string> remotePort = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocol"u8))
@@ -85,8 +127,44 @@ namespace Azure.ResourceManager.Network.Models
                     remotePort = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PacketCaptureFilter(Optional.ToNullable(protocol), localIPAddress.Value, remoteIPAddress.Value, localPort.Value, remotePort.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PacketCaptureFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PacketCaptureFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PacketCaptureFilter IPersistableModel<PacketCaptureFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePacketCaptureFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PacketCaptureFilter)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PacketCaptureFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

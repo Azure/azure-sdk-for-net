@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "VerticaTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="VerticaTableDataset"/> for deserialization. </summary>
+        internal VerticaTableDataset()
+        {
+        }
+
         /// <summary>
         /// This property will be retired. Please consider using schema + table properties instead.
         /// <para>

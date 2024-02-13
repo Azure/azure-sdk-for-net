@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsRankingsOptions()
+        {
+        }
+
         /// <summary> The metrics. </summary>
         public IList<WafMetric> Metrics { get; }
         /// <summary> The dateTimeBegin. </summary>
