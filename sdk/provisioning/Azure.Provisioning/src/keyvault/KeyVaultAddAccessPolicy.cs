@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KeyVaults
                 accessPolicies: new List<KeyVaultAccessPolicy>
                 {
                     new KeyVaultAccessPolicy(
-                        Guid.Parse(Environment.GetEnvironmentVariable("AZURE_TENANT_ID")!),
+                        scope.Root.Properties.TenantId!.Value,
                         GetParamValue(principalIdParameter, scope),
                         new IdentityAccessPermissions()
                         {
