@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Marketo";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MarketoLinkedService"/> for deserialization. </summary>
+        internal MarketoLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the Marketo server. (i.e. 123-ABC-321.mktorest.com). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The client Id of your Marketo service. </summary>

@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "DynamicsCrm";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsCrmLinkedService"/> for deserialization. </summary>
+        internal DynamicsCrmLinkedService()
+        {
+        }
+
         /// <summary> The deployment type of the Dynamics CRM instance. 'Online' for Dynamics CRM Online and 'OnPremisesWithIfd' for Dynamics CRM on-premises with Ifd. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DeploymentType { get; set; }
         /// <summary> The host name of the on-premises Dynamics CRM server. The property is required for on-prem and not allowed for online. Type: string (or Expression with resultType string). </summary>

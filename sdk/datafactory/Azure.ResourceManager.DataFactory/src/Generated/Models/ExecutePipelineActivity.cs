@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "ExecutePipeline";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ExecutePipelineActivity"/> for deserialization. </summary>
+        internal ExecutePipelineActivity()
+        {
+        }
+
         /// <summary> Execute pipeline activity policy. </summary>
         public ExecutePipelineActivityPolicy Policy { get; set; }
         /// <summary> Pipeline reference. </summary>

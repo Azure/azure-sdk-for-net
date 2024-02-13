@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("multipleAvailabilityZones"u8);
                 writer.WriteBooleanValue(IsMultipleAvailabilityZonesSupported.Value);
             }
+            if (Optional.IsDefined(HttpGatewayTokenAuthEndpointPort))
+            {
+                writer.WritePropertyName("httpGatewayTokenAuthEndpointPort"u8);
+                writer.WriteNumberValue(HttpGatewayTokenAuthEndpointPort.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             Optional<int> reverseProxyEndpointPort = default;
             Optional<bool> isStateless = default;
             Optional<bool> multipleAvailabilityZones = default;
+            Optional<int> httpGatewayTokenAuthEndpointPort = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -250,13 +256,22 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     multipleAvailabilityZones = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("httpGatewayTokenAuthEndpointPort"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    httpGatewayTokenAuthEndpointPort = property.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones), serializedAdditionalRawData);
+            return new ClusterNodeTypeDescription(name, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), clientConnectionEndpointPort, httpGatewayEndpointPort, Optional.ToNullable(durabilityLevel), applicationPorts.Value, ephemeralPorts.Value, isPrimary, vmInstanceCount, Optional.ToNullable(reverseProxyEndpointPort), Optional.ToNullable(isStateless), Optional.ToNullable(multipleAvailabilityZones), Optional.ToNullable(httpGatewayTokenAuthEndpointPort), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterNodeTypeDescription>.Write(ModelReaderWriterOptions options)

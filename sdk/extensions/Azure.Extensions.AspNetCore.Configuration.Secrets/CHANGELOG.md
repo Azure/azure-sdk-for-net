@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.1 (2024-02-12)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix several issues related to ThreadPool starvation for synchronous scenarios
 
 ## 1.3.0 (2023-11-08)
 

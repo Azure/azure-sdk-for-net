@@ -10,6 +10,14 @@
 
 ### Other Changes
 
+- Additional Azure data centers are now included in `AzureLocation`.  The following were added:
+  - China East 3
+  - China North 3
+  - Israel Central
+  - Italy North
+  - Poland Central
+  - Sweden South
+
 ## 1.37.0 (2024-01-11)
 
 ### Bugs Fixed

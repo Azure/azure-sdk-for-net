@@ -60,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "ServiceNow";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ServiceNowLinkedService"/> for deserialization. </summary>
+        internal ServiceNowLinkedService()
+        {
+        }
+
         /// <summary> The endpoint of the ServiceNow server. (i.e. &lt;instance&gt;.service-now.com). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> The authentication type to use. </summary>

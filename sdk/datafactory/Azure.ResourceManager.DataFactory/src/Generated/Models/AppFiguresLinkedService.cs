@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AppFigures";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppFiguresLinkedService"/> for deserialization. </summary>
+        internal AppFiguresLinkedService()
+        {
+        }
+
         /// <summary> The username of the Appfigures source. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of the AppFigures source. </summary>

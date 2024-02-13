@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SapOdpResource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapOdpResourceDataset"/> for deserialization. </summary>
+        internal SapOdpResourceDataset()
+        {
+        }
+
         /// <summary> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Context { get; set; }
         /// <summary> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </summary>

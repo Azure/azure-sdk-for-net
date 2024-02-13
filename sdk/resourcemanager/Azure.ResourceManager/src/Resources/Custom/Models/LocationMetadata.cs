@@ -9,13 +9,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
+    [CodeGenSerialization(nameof(Longitude), SerializationValueHook = nameof(WriteLongitude), DeserializationValueHook = nameof(ReadLongitude))]
+    [CodeGenSerialization(nameof(Latitude), SerializationValueHook = nameof(WriteLatitude), DeserializationValueHook = nameof(ReadLatitude))]
     public partial class LocationMetadata
     {
         /// <summary> The longitude of the location. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteLongitude), DeserializationValueHook = nameof(ReadLongitude))]
         public double? Longitude { get; }
         /// <summary> The latitude of the location. </summary>
-        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteLatitude), DeserializationValueHook = nameof(ReadLatitude))]
         public double? Latitude { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Wait";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WaitActivity"/> for deserialization. </summary>
+        internal WaitActivity()
+        {
+        }
+
         /// <summary> Duration in seconds. Type: integer (or Expression with resultType integer). </summary>
         public DataFactoryElement<int> WaitTimeInSeconds { get; set; }
     }

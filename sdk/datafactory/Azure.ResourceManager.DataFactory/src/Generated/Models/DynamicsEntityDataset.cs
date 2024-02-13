@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "DynamicsEntity";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsEntityDataset"/> for deserialization. </summary>
+        internal DynamicsEntityDataset()
+        {
+        }
+
         /// <summary> The logical name of the entity. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> EntityName { get; set; }
     }
