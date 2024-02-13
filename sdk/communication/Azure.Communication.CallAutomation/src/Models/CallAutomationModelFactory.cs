@@ -300,7 +300,6 @@ namespace Azure.Communication.CallAutomation
             string callConnectionId = default,
             string serverCallId = default,
             string correlationId = default,
-            string invitationId = default,
             ResultInformation resultInformation = default,
             string operationContext = default)
         {
@@ -321,7 +320,6 @@ namespace Azure.Communication.CallAutomation
             string callConnectionId = default,
             string serverCallId = default,
             string correlationId = default,
-            string invitationId = default,
             ResultInformation resultInformation = default,
             string operationContext = default)
         {
