@@ -1,4 +1,4 @@
-# Azure Cognitive Services Health Insights Radiology Insights library for .NET
+# Azure Cognitive Services Health Insights Radiology Insights client library for .NET
 
 Azure.Health.Insights.RadiologyInsights is a managed service that helps developers get secret simply and securely.
 
