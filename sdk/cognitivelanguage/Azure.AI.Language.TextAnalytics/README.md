@@ -16,7 +16,7 @@ Text Analytics is part of the Azure Cognitive Service for Language, a cloud-base
 
 [Source code][textanalytics_client_src] | [Package (NuGet)][textanalytics_nuget_package] | [API reference documentation][textanalytics_refdocs] | [Product documentation][language_service_docs] | [Samples][textanalytics_samples]
 
-## ## Getting started
+## Getting started
 
 ### Install the package
 
