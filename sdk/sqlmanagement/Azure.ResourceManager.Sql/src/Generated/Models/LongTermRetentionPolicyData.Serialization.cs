@@ -8,9 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -49,6 +52,16 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(MakeBackupsImmutable))
+            {
+                writer.WritePropertyName("makeBackupsImmutable"u8);
+                writer.WriteBooleanValue(MakeBackupsImmutable.Value);
+            }
+            if (Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -112,6 +125,8 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<bool> makeBackupsImmutable = default;
+            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
             Optional<string> weeklyRetention = default;
             Optional<string> monthlyRetention = default;
             Optional<string> yearlyRetention = default;
@@ -153,6 +168,24 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("makeBackupsImmutable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            makeBackupsImmutable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
@@ -186,7 +219,219 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(makeBackupsImmutable), Optional.ToNullable(backupStorageAccessTier), weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MakeBackupsImmutable), out propertyOverride);
+            if (Optional.IsDefined(MakeBackupsImmutable) || hasPropertyOverride)
+            {
+                builder.Append("    makeBackupsImmutable:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = MakeBackupsImmutable.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BackupStorageAccessTier), out propertyOverride);
+            if (Optional.IsDefined(BackupStorageAccessTier) || hasPropertyOverride)
+            {
+                builder.Append("    backupStorageAccessTier:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{BackupStorageAccessTier.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeeklyRetention), out propertyOverride);
+            if (Optional.IsDefined(WeeklyRetention) || hasPropertyOverride)
+            {
+                builder.Append("    weeklyRetention:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (WeeklyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{WeeklyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{WeeklyRetention}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthlyRetention), out propertyOverride);
+            if (Optional.IsDefined(MonthlyRetention) || hasPropertyOverride)
+            {
+                builder.Append("    monthlyRetention:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (MonthlyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MonthlyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MonthlyRetention}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(YearlyRetention), out propertyOverride);
+            if (Optional.IsDefined(YearlyRetention) || hasPropertyOverride)
+            {
+                builder.Append("    yearlyRetention:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (YearlyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{YearlyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{YearlyRetention}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeekOfYear), out propertyOverride);
+            if (Optional.IsDefined(WeekOfYear) || hasPropertyOverride)
+            {
+                builder.Append("    weekOfYear:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {WeekOfYear.Value}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void AppendChildObject(StringBuilder stringBuilder, object childObject, ModelReaderWriterOptions options, int spaces, bool indentFirstLine)
+        {
+            string indent = new string(' ', spaces);
+            BinaryData data = ModelReaderWriter.Write(childObject, options);
+            string[] lines = data.ToString().Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+            bool inMultilineString = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i];
+                if (inMultilineString)
+                {
+                    if (line.Contains("'''"))
+                    {
+                        inMultilineString = false;
+                    }
+                    stringBuilder.AppendLine(line);
+                    continue;
+                }
+                if (line.Contains("'''"))
+                {
+                    inMultilineString = true;
+                    stringBuilder.AppendLine($"{indent}{line}");
+                    continue;
+                }
+                if (i == 0 && !indentFirstLine)
+                {
+                    stringBuilder.AppendLine($" {line}");
+                }
+                else
+                {
+                    stringBuilder.AppendLine($"{indent}{line}");
+                }
+            }
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)
@@ -197,6 +442,8 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(LongTermRetentionPolicyData)} does not support '{options.Format}' format.");
             }
@@ -213,6 +460,8 @@ namespace Azure.ResourceManager.Sql
                         using JsonDocument document = JsonDocument.Parse(data);
                         return DeserializeLongTermRetentionPolicyData(document.RootElement, options);
                     }
+                case "bicep":
+                    throw new InvalidOperationException("Bicep deserialization is not supported for this type.");
                 default:
                     throw new FormatException($"The model {nameof(LongTermRetentionPolicyData)} does not support '{options.Format}' format.");
             }

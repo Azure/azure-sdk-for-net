@@ -129,19 +129,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesKeyVaultProperties(keyName.Value, keyVersion.Value, keyVaultUri.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesKeyVaultProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesKeyVaultProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesKeyVaultProperties IPersistableModel<CognitiveServicesKeyVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;

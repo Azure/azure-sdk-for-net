@@ -233,19 +233,6 @@ namespace Azure.ResourceManager.CognitiveServices
             return new CognitiveServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, identity, properties.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountData)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesAccountData IPersistableModel<CognitiveServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountData>)this).GetFormatFromOptions(options) : options.Format;

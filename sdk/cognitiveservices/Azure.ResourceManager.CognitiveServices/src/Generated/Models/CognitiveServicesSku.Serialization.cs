@@ -137,19 +137,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesSku(name, Optional.ToNullable(tier), size.Value, family.Value, Optional.ToNullable(capacity), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesSku>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesSku)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesSku IPersistableModel<CognitiveServicesSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesSku>)this).GetFormatFromOptions(options) : options.Format;

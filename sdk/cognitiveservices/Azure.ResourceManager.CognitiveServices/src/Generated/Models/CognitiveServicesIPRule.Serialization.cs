@@ -85,19 +85,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesIPRule(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesIPRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesIPRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesIPRule)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesIPRule IPersistableModel<CognitiveServicesIPRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesIPRule>)this).GetFormatFromOptions(options) : options.Format;

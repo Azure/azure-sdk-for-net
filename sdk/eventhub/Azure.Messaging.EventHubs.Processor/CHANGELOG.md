@@ -45,6 +45,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Initialization of the load balancing task is now performed in the background and will no longer cause delays when starting the processor.
 
+- Loosened validation for the fully qualified namespace name passed to the processor constructor.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the processor.
+
 - In the rare case that an event processor's load balancing and health monitoring task cannot recover from an error, the processor now signals the error handler with a wrapped exception that makes clear that processing will terminate.  Previously, the source exception was surfaced to the error handler and the impact was not clear.
 
 ## 5.10.0 (2023-11-08)

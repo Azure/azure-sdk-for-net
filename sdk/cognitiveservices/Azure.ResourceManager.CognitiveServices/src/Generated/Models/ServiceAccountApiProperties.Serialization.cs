@@ -197,19 +197,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountApiProperties(qnaRuntimeEndpoint.Value, qnaAzureSearchEndpointKey.Value, qnaAzureSearchEndpointId.Value, Optional.ToNullable(statisticsEnabled), eventHubConnectionString.Value, storageAccountConnectionString.Value, Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), superUser.Value, websiteName.Value, additionalProperties);
         }
 
-        BinaryData IPersistableModel<ServiceAccountApiProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceAccountApiProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
         ServiceAccountApiProperties IPersistableModel<ServiceAccountApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountApiProperties>)this).GetFormatFromOptions(options) : options.Format;

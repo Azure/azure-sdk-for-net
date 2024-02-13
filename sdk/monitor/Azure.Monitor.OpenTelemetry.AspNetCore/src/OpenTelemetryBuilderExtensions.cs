@@ -3,12 +3,10 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Azure.Monitor.OpenTelemetry.Exporter;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
@@ -90,6 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             Action<ResourceBuilder> configureResource = (r) => r
                 .AddAttributes(new[] { new KeyValuePair<string, object>("telemetry.distro.name", "Azure.Monitor.OpenTelemetry.AspNetCore") })
                 .AddDetector(new AppServiceResourceDetector())
+                .AddDetector(new AzureContainerAppsResourceDetector())
                 .AddDetector(new AzureVMResourceDetector());
 
             builder.ConfigureResource(configureResource);
@@ -113,6 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 return true;
                             })
                             .AddProcessor<ProfilingSessionTraceProcessor>()
+                            .AddLiveMetrics()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
@@ -148,6 +148,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
                     {
                         azureMonitorOptions.Get(Options.DefaultName).SetValueToExporterOptions(exporterOptions);
+                    });
+
+            // Register a configuration action so that when
+            // LiveMetricsExporterOptions is requested it is populated from
+            // AzureMonitorOptions.
+            builder.Services
+                    .AddOptions<LiveMetricsExporterOptions>()
+                    .Configure<IOptionsMonitor<AzureMonitorOptions>>((exporterOptions, azureMonitorOptions) =>
+                    {
+                        azureMonitorOptions.Get(Options.DefaultName).SetValueToLiveMetricsExporterOptions(exporterOptions);
                     });
 
             return builder;

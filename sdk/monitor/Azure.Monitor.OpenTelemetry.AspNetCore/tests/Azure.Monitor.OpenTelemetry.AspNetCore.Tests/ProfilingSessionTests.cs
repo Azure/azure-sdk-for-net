@@ -62,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Equal(_profiler.SessionId, activity.GetTagItem(ProfilingSessionTraceProcessor.TagName));
         }
 
-        [Fact]
+        [Fact(Skip = "In Linux, it attempts to load performance counters. This will be enabled once we remove the dependency on them.")]
         public void TraceProcessorIsAddedViaUseAzureMonitor()
         {
             // Configure DI services

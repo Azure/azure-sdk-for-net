@@ -107,19 +107,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountUserOwnedStorage(resourceId.Value, Optional.ToNullable(identityClientId), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServiceAccountUserOwnedStorage>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUserOwnedStorage>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceAccountUserOwnedStorage)} does not support '{options.Format}' format.");
-            }
-        }
-
         ServiceAccountUserOwnedStorage IPersistableModel<ServiceAccountUserOwnedStorage>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUserOwnedStorage>)this).GetFormatFromOptions(options) : options.Format;
