@@ -22,9 +22,10 @@ namespace Azure.Provisioning.ResourceManager
         /// Initializes a new instance of the <see cref="Tenant"/>.
         /// </summary>
         /// <param name="scope">The scope the tenant belongs to.</param>
-        public Tenant(IConstruct scope)
+        /// <param name="tenantId">The tenant id.</param>
+        public Tenant(IConstruct scope, Guid? tenantId = null)
             : base(scope, null, GetName(), ResourceTypeName, "2022-12-01", ResourceManagerModelFactory.TenantData(
-                tenantId: Guid.Parse(GetName())))
+                tenantId: tenantId.HasValue ? tenantId.Value : Guid.Parse(GetName())))
         {
         }
     }
