@@ -50,14 +50,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         internal static BaseModel? DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions? options = default)
             => DeserializeBaseModel(element, options);
 
-        BaseModel IPersistableModel<BaseModel?>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel? IPersistableModel<BaseModel?>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeUnknownBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        BaseModel IJsonModel<BaseModel?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BaseModel? IJsonModel<BaseModel?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 

@@ -62,11 +62,12 @@ internal static class OptionalProperty
         }
         return new OptionalDictionary<TKey, TValue>(optional);
     }
+
     public static IReadOnlyList<T> ToList<T>(OptionalProperty<IReadOnlyList<T>> optional)
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalList<T>(optional);
     }
@@ -75,7 +76,7 @@ internal static class OptionalProperty
     {
         if (optional.HasValue)
         {
-            return optional.Value;
+            return optional.Value!;
         }
         return new OptionalList<T>(optional);
     }

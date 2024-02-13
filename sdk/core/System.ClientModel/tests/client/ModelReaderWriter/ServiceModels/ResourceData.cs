@@ -24,13 +24,49 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             SystemData = systemData;
         }
 
+        private void AssertHasValue<T>(T? value, string name)
+        {
+            if (value is null)
+                throw new ArgumentNullException(name);
+        }
+
+        private string? _id;
         /// <summary> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </summary>
-        public string Id { get; }
+        public string Id
+        {
+            get
+            {
+                AssertHasValue(_id, nameof(Id));
+                return _id!;
+            }
+            private set { _id = value; }
+        }
+
+        private string? _name;
         /// <summary> The name of the resource. </summary>
-        public string Name { get; }
+        public string Name
+        {
+            get
+            {
+                AssertHasValue(_name, nameof(Name));
+                return _name!;
+            }
+            private set { _name = value; }
+        }
+
+        private string? _resourceType;
         /// <summary> The type of the resource. E.g. &quot;Microsoft.Compute/virtualMachines&quot; or &quot;Microsoft.Storage/storageAccounts&quot;. </summary>
-        public string ResourceType { get; }
+        public string ResourceType
+        {
+            get
+            {
+                AssertHasValue(_resourceType, nameof(ResourceType));
+                return _resourceType!;
+            }
+            private set { _resourceType = value; }
+        }
+
         /// <summary> Azure Resource Manager metadata containing createdBy and modifiedBy information. </summary>
-        public SystemData SystemData { get; }
+        public SystemData? SystemData { get; }
     }
 }

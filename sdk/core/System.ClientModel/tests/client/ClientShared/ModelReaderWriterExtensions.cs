@@ -176,7 +176,7 @@ internal static class ModelReaderWriterExtensions
         writer.WriteNumberValue(value.ToUnixTimeSeconds());
     }
 
-    public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+    public static void WriteObjectValue(this Utf8JsonWriter writer, object? value)
     {
         switch (value)
         {

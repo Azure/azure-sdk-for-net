@@ -11,13 +11,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     public class ModelX : BaseModel, IJsonModel<ModelX>
     {
-        public ModelX()
-            : base(null)
+        public ModelX() : base(null)
         {
             Kind = "X";
+            Fields = new List<string>();
+            KeyValuePairs = new Dictionary<string, string>();
         }
 
-        internal ModelX(string kind, string name, int xProperty, int? nullProperty, IList<string> fields, IDictionary<string, string> keyValuePairs, Dictionary<string, BinaryData> rawData)
+        internal ModelX(string kind, string? name, int xProperty, int? nullProperty, IList<string> fields, IDictionary<string, string> keyValuePairs, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
@@ -37,7 +38,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             if (modelX == null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(modelX));
             }
 
             return BinaryContent.Create(modelX, ModelReaderWriterHelper.WireOptions);
@@ -81,7 +82,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             if (OptionalProperty.IsDefined(NullProperty))
             {
                 writer.WritePropertyName("nullProperty"u8);
-                writer.WriteNumberValue(NullProperty.Value);
+                writer.WriteNumberValue(NullProperty!.Value);
             }
             if (OptionalProperty.IsCollectionDefined(KeyValuePairs))
             {
@@ -112,19 +113,20 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelX? DeserializeModelX(JsonElement element, ModelReaderWriterOptions? options = default)
+        internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelX)}'");
             }
+
             string? kind = default;
-            OptionalProperty<string>? name = default;
+            OptionalProperty<string> name = default;
             int xProperty = default;
             OptionalProperty<int> nullProperty = default;
-            OptionalProperty<IList<string>>? fields = default;
+            OptionalProperty<IList<string>> fields = default;
             OptionalProperty<IDictionary<string, string>> keyValuePairs = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
@@ -137,12 +139,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = property.Value.GetString();
+                    name = new(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fields"u8))
                 {
-                    fields = property.Value.EnumerateArray().Select(element => element.GetString()).ToList();
+                    // TODO: May do something different depending on the semantics of expected values
+                    fields = property.Value.EnumerateArray().Select(element => element.GetString()!).ToList();
                     continue;
                 }
                 if (property.NameEquals("nullProperty"u8))
@@ -159,7 +162,8 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        // TODO: May do something different depending on the semantics of expected values
+                        dictionary.Add(property0.Name, property0.Value.GetString()!);
                     }
                     keyValuePairs = dictionary;
                     continue;
@@ -175,6 +179,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
+            if (kind is null)
+            {
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(ModelX)}': Missing 'kind' property.");
+            }
+
             return new ModelX(kind, name, xProperty, OptionalProperty.ToNullable(nullProperty), OptionalProperty.ToList(fields), OptionalProperty.ToDictionary(keyValuePairs), rawData);
         }
 
