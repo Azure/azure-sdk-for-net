@@ -369,12 +369,16 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     messagesReceived as IReadOnlyCollection<AmqpMessage> ?? messagesReceived?.ToList() ?? s_emptyAmqpMessageList;
 
                 // If this is a session receiver and we didn't receive all requested messages, we need to drain the credits
-                // to ensure FIFO ordering within each session. We exclude session processor since those will always receive a single message
-                // at a time, and if there are no messages, the session will be closed. The session won't be closed in the case that
-                // MaxConcurrentCallsPerSession > 1, but in that case FIFO is not possible to guarantee.
-                if (_isSessionReceiver && !_isProcessor && messageList.Count < maxMessages)
+                // to ensure FIFO ordering within each session. We exclude session processors where the  since those will always receive a single message
+                // at a time, and if there are no messages, the session will be closed unless the processor was configured to receive from specific sessions.
+                // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but in that case FIFO is not possible to guarantee.
+                if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
                     await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    if (_prefetchCount > 0)
+                    {
+                        link.SetTotalLinkCredit((uint)_prefetchCount, true, false);
+                    }
                 }
 
                 List<ServiceBusReceivedMessage> receivedMessages = null;
