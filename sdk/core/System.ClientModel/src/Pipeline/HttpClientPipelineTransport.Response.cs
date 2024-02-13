@@ -110,7 +110,7 @@ public partial class HttpClientPipelineTransport
                 return _bufferedContent;
             }
 
-            if (_contentStream.Position != 0)
+            if (_contentStream.CanSeek && _contentStream.Position != 0)
             {
                 throw new InvalidOperationException();
             }

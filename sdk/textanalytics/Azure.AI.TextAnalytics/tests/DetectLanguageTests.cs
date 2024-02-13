@@ -93,8 +93,6 @@ namespace Azure.AI.TextAnalytics.Tests
             TextAnalyticsClient client = GetClient();
             string document = SingleSpanish;
 
-            Console.WriteLine("Starting");
-
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(() => client.DetectLanguageAsync(document, "COLOMBIA"));
             Assert.AreEqual(TextAnalyticsErrorCode.InvalidCountryHint, ex.ErrorCode);
         }
