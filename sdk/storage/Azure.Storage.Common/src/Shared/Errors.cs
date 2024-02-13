@@ -80,7 +80,7 @@ namespace Azure.Storage
             }
         }
 
-        internal static void AssertBufferMinimumSize(Span<byte> buffer, int minSize, string paramName)
+        internal static void AssertBufferMinimumSize(ReadOnlySpan<byte> buffer, int minSize, string paramName)
         {
             if (buffer.Length < minSize)
             {

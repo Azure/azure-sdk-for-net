@@ -4,6 +4,7 @@
 using System;
 using System.Buffers;
 using System.Buffers.Binary;
+using System.IO;
 using System.Security.Cryptography;
 using Azure.Core;
 
@@ -28,6 +29,22 @@ internal static class StructuredMessage
         public const int SegmentHeaderLength = 10;
 
         #region Stream Header
+        public static void ReadStreamHeader(
+            ReadOnlySpan<byte> buffer,
+            out long messageLength,
+            out Flags flags,
+            out int totalSegments)
+        {
+            Errors.AssertBufferExactSize(buffer, 13, nameof(buffer));
+            if (buffer[0] != 1)
+            {
+                throw new InvalidDataException("Unrecognized version of structured message.");
+            }
+            messageLength = (long)BinaryPrimitives.ReadUInt64LittleEndian(buffer.Slice(1, 8));
+            flags = (Flags)BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(9, 2));
+            totalSegments = BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(11, 2));
+        }
+
         public static int WriteStreamHeader(
             Span<byte> buffer,
             long messageLength,
@@ -72,6 +89,16 @@ internal static class StructuredMessage
         // no stream footer content in 1.0
 
         #region SegmentHeader
+        public static void ReadSegmentHeader(
+            ReadOnlySpan<byte> buffer,
+            out int segmentNum,
+            out long contentLength)
+        {
+            Errors.AssertBufferExactSize(buffer, 10, nameof(buffer));
+            segmentNum = BinaryPrimitives.ReadUInt16LittleEndian(buffer.Slice(0, 2));
+            contentLength = (long)BinaryPrimitives.ReadUInt64LittleEndian(buffer.Slice(2, 8));
+        }
+
         public static int WriteSegmentHeader(Span<byte> buffer, int segmentNum, long segmentLength)
         {
             const int segmentNumOffset = 0;
@@ -105,6 +132,24 @@ internal static class StructuredMessage
         #endregion
 
         #region SegmentFooter
+        public static void ReadSegmentFooter(
+            ReadOnlySpan<byte> buffer,
+            Span<byte> crc64 = default)
+        {
+            int expectedBufferSize = 0;
+            if (!crc64.IsEmpty)
+            {
+                Errors.AssertBufferExactSize(crc64, Crc64Length, nameof(crc64));
+                expectedBufferSize += Crc64Length;
+            }
+            Errors.AssertBufferExactSize(buffer, expectedBufferSize, nameof(buffer));
+
+            if (!crc64.IsEmpty)
+            {
+                buffer.Slice(0, Crc64Length).CopyTo(crc64);
+            }
+        }
+
         public static int WriteSegmentFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
         {
             int requiredSpace = 0;
