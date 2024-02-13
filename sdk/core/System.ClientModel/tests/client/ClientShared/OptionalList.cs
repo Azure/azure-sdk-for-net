@@ -6,8 +6,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-#nullable enable
-
 namespace ClientModel.Tests.ClientShared;
 
 internal class OptionalList<T> : IList<T>, IReadOnlyList<T>

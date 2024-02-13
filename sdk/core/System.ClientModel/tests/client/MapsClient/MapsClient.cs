@@ -17,7 +17,7 @@ public class MapsClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions options = default)
+    public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -48,7 +48,7 @@ public class MapsClient
         return ClientResult.FromValue(value, response);
     }
 
-    public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions options = null)
+    public virtual async Task<ClientResult> GetCountryCodeAsync(string ipAddress, RequestOptions? options = null)
     {
         if (ipAddress is null)
             throw new ArgumentNullException(nameof(ipAddress));
@@ -81,7 +81,7 @@ public class MapsClient
         return ClientResult.FromValue(value, response);
     }
 
-    public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions options = null)
+    public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
