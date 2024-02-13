@@ -10,6 +10,10 @@ Changes from both the last release and the last beta include:
 - The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartRestore` and `StartRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
 - The `sasToken` parameter is now optional in `KeyVaultBackupClient.StartSelectiveKeyRestore` and `StartSelectiveKeyRestoreAsync`. Managed Identity will be used instead if `sasToken` is null.
 
+### Breaking Changes
+
+- `KeyVaultBackupOperation`, `KeyVaultRestoreOperation`, and `KeyVaultSelectiveKeyRestoreOperation` now throw a `RequestFailedException` when the service returns an error response. ([#41855](https://github.com/Azure/azure-sdk-for-net/issues/41855))
+
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
