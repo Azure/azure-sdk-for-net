@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ResourceManager
             : base(scope, null, GetName(scope, name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
                 name: GetName(scope, name),
                 resourceType: ResourceType,
-                tags: new Dictionary<string, string> { { "azd-env-name", Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable 'AZURE_ENV_NAME' was found") } },
+                tags: new Dictionary<string, string> { { "azd-env-name", scope.EnvironmentName } },
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
