@@ -124,14 +124,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute.OpenIdConnectionHost);
 
         /// <summary>
-        /// Get the token issuer from the environment variable or use the default value.
+        /// Get the version 1 of the token issuer from the environment variable or use the default value.
         /// </summary>
-        internal string TokenIssuerV1 => GetConfigValue(TOKEN_ISSUER_V1_KEY, triggerAttribute.TokenIssuer);
+        internal string TokenIssuerV1 => GetConfigValue(TOKEN_ISSUER_V1_KEY, triggerAttribute.TokenIssuerV1);
 
         /// <summary>
-        /// Get the token issuer from the environment variable or use the default value.
+        /// Get the version 2 of the token issuer from the environment variable or use the default value.
         /// </summary>
-        internal string TokenIssuerV2 => GetConfigValue(TOKEN_ISSUER_V2_KEY, triggerAttribute.TokenIssuer);
+        internal string TokenIssuerV2 => GetConfigValue(TOKEN_ISSUER_V2_KEY, triggerAttribute.TokenIssuerV2);
 
         /// <summary>
         /// If we should bypass the token validation.

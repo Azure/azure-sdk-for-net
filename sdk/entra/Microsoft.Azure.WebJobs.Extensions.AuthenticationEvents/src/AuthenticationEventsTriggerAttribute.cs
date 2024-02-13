@@ -35,7 +35,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Token Issuer for all versions of tokens.
         /// </summary>
-        public string TokenIssuer { get; set; }
+        public string TokenIssuerV1 { get; set; }
+
+        /// <summary>
+        /// Token Issuer for all versions of tokens.
+        /// </summary>
+        public string TokenIssuerV2 { get; set; }
 
         internal bool IsParameterString { get; set; } = true;
     }
