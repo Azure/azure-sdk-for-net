@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// The host of the OpenId connection.
         /// </summary>
-        internal string OIDCMetadataUrl { get; set; }
+        internal string OidcMetadataUrl { get; set; }
 
         /// <summary>
         /// The tenant id of the service side service.

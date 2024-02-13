@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                             using (HttpClient httpClient = new HttpClient())
                             {
-                                string openidConfiguration = httpClient.GetStringAsync(new Uri(serviceInfo.OIDCMetadataUrl, UriKind.Absolute)).Result;
+                                string openidConfiguration = httpClient.GetStringAsync(new Uri(serviceInfo.OidcMetadataUrl, UriKind.Absolute)).Result;
 
                                 AuthenticationEventJsonElement openidConfigurationJson = new AuthenticationEventJsonElement(openidConfiguration);
                                 string jwksUri = openidConfigurationJson.GetPropertyValue("jwks_uri");
