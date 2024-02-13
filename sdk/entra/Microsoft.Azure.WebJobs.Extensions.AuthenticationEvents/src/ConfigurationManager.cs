@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Get the OpenId connection host from the environment variable or use the default value.
         /// </summary>
-        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute?.OpenIdConnectionHost);
+        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute?.OIDCMetadataUrl);
 
         /// <summary>
         /// Get the version 1 of the token issuer from the environment variable or use the default value.

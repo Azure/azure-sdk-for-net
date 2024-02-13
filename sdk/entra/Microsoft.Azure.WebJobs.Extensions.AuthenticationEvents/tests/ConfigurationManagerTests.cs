@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId,
                 TokenIssuerV1 = issuerv1,
                 TokenIssuerV2 = issuerv2,
-                OpenIdConnectionHost = oidcHost
+                OIDCMetadataUrl = oidcHost
             };
             Assert.Throws<MissingFieldException>(() => new ConfigurationManager(attribute), "Test when attribute's tenantId is null");
         }
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = null,
                 TokenIssuerV1 = issuerv1,
                 TokenIssuerV2 = issuerv2,
-                OpenIdConnectionHost = oidcHost
+                OIDCMetadataUrl = oidcHost
             };
             Assert.Throws<MissingFieldException>(() => new ConfigurationManager(attribute), "Test when attribute's audienceAppId is null");
         }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId,
                 TokenIssuerV1 = null,
                 TokenIssuerV2 = issuerv2,
-                OpenIdConnectionHost = oidcHost
+                OIDCMetadataUrl = oidcHost
             };
             ConfigurationManager configurationManager = null;
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's TokenIssuerV1 is null");
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId,
                 TokenIssuerV1 = issuerv1,
                 TokenIssuerV2 = null,
-                OpenIdConnectionHost = oidcHost
+                OIDCMetadataUrl = oidcHost
             };
             ConfigurationManager configurationManager = null;
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's TokenIssuerV2 is null");
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId,
                 TokenIssuerV1 = issuerv1,
                 TokenIssuerV2 = issuerv2,
-                OpenIdConnectionHost = null
+                OIDCMetadataUrl = null
             };
             ConfigurationManager configurationManager = null;
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OIDCMetadataUrl is null");
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 AudienceAppId = audienceAppId,
                 TokenIssuerV1 = issuerv1,
                 TokenIssuerV2 = issuerv2,
-                OpenIdConnectionHost = oidcHost
+                OIDCMetadataUrl = oidcHost
             };
             ConfigurationManager configurationManager = null;
             Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's OIDCMetadataUrl is null");

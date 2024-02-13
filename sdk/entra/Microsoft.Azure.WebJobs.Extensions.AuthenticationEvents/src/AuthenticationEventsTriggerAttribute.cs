@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Well known OpenId configuration endpoint.
         /// </summary>
-        public string OpenIdConnectionHost { get; set; }
+        public string OIDCMetadataUrl { get; set; }
 
         /// <summary>
         /// Token Issuer for all versions of tokens.
