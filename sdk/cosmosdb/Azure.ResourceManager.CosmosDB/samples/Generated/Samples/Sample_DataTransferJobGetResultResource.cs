@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
 
             // this example assumes you already have this DataTransferJobGetResultResource created on azure
             // for more information of creating DataTransferJobGetResultResource, please refer to the document of DataTransferJobGetResultResource
-            string subscriptionId = "subid";
+            string subscriptionId = "e35cc6eb-c8e3-447b-8de6-b83328cd0098";
             string resourceGroupName = "rg1";
             string accountName = "ddb1";
             string jobName = "j1";
