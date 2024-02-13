@@ -12,9 +12,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     internal class ConfigurationManager
     {
         /// <summary>
-        /// Application Ids for the services we support.
+        /// Application Ids for the services to validate against.
         /// </summary>
-        public static ServiceInfo defaultService { get; private set; }
+        internal ServiceInfo ConfiguredService { get; private set; }
 
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
         private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
@@ -40,16 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
         {
             this.triggerAttribute = triggerAttribute;
-            CheckForCustomServiceInfoConfigValues();
-        }
 
-        /// <summary>
-        /// Check if there are any service info values in the custom configurations (environment variables or triggerAttribute).
-        /// if not, use the default AAD service info.
-        /// if all are there, use the custom service info.
-        /// </summary>
-        private void CheckForCustomServiceInfoConfigValues()
-        {
             // if any of the values are missing, use the default AAD service info.
             // Don't need to check tenant id or application id
             // because they are required and will throw an exception if missing.
@@ -58,11 +49,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 || string.IsNullOrEmpty(TokenIssuerV2))
             {
                 // Continue to support the aad as the default service if overrides not provided.
-                defaultService = GetAADServiceInfo(TenantId);
+                ConfiguredService = GetAADServiceInfo(TenantId);
             }
             else
             {
-                defaultService = new ServiceInfo
+                ConfiguredService = new ServiceInfo
                 {
                     TenantId = TenantId,
                     ApplicationId = AudienceAppId,
@@ -81,7 +72,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             get
             {
-                string value = GetConfigValue(TENANT_ID_KEY, triggerAttribute.TenantId);
+                string value = GetConfigValue(TENANT_ID_KEY, triggerAttribute?.TenantId);
 
                 if (string.IsNullOrEmpty(value))
                 {
@@ -103,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             get
             {
-                string value = GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute.AudienceAppId);
+                string value = GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute?.AudienceAppId);
 
                 if (string.IsNullOrEmpty(value))
                 {
@@ -121,28 +112,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Get the OpenId connection host from the environment variable or use the default value.
         /// </summary>
-        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute.OpenIdConnectionHost);
+        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute?.OpenIdConnectionHost);
 
         /// <summary>
         /// Get the version 1 of the token issuer from the environment variable or use the default value.
         /// </summary>
-        internal string TokenIssuerV1 => GetConfigValue(TOKEN_ISSUER_V1_KEY, triggerAttribute.TokenIssuerV1);
+        internal string TokenIssuerV1 => GetConfigValue(TOKEN_ISSUER_V1_KEY, triggerAttribute?.TokenIssuerV1);
 
         /// <summary>
         /// Get the version 2 of the token issuer from the environment variable or use the default value.
         /// </summary>
-        internal string TokenIssuerV2 => GetConfigValue(TOKEN_ISSUER_V2_KEY, triggerAttribute.TokenIssuerV2);
+        internal string TokenIssuerV2 => GetConfigValue(TOKEN_ISSUER_V2_KEY, triggerAttribute?.TokenIssuerV2);
 
         /// <summary>
         /// If we should bypass the token validation.
         /// Use only for testing and development.
         /// </summary>
-        internal static bool BypassValidation => GetConfigValue(BYPASS_VALIDATION_KEY, false);
+        internal bool BypassValidation => GetConfigValue(BYPASS_VALIDATION_KEY, false);
 
         /// <summary>
         /// If the EZAuth is enabled.
         /// </summary>
-        internal static bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
+        internal bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
 
         /// <summary>
         /// Try to get the service info based on the service id.
@@ -151,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="serviceInfo">The service info we found based on the service id.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        internal static bool TryGetService(string serviceId, out ServiceInfo serviceInfo)
+        internal bool TryGetService(string serviceId, out ServiceInfo serviceInfo)
         {
             serviceInfo = null;
 
@@ -160,9 +151,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 throw new ArgumentNullException(nameof(serviceId));
             }
 
-            if (serviceId.Equals(defaultService.ApplicationId, StringComparison.OrdinalIgnoreCase))
+            if (serviceId.Equals(ConfiguredService.ApplicationId, StringComparison.OrdinalIgnoreCase))
             {
-                serviceInfo = defaultService;
+                serviceInfo = ConfiguredService;
                 return true;
             }
 
@@ -174,7 +165,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="testId"></param>
         /// <returns></returns>
-        internal static bool VerifyServiceId(string testId)
+        internal bool VerifyServiceId(string testId)
         {
             return TryGetService(testId, out _);
         }

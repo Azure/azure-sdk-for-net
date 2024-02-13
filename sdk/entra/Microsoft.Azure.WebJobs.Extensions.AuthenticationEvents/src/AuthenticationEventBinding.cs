@@ -219,12 +219,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         private async Task<Dictionary<string, string>> GetClaimsAndValidateRequest(HttpRequestMessage requestMessage)
         {
             ConfigurationManager configurationManager = new ConfigurationManager(_authEventTriggerAttr);
-            if (ConfigurationManager.BypassValidation)
+            if (configurationManager.BypassValidation)
             {
                 return null;
             }
 
-            TokenValidator validator = ConfigurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
+            TokenValidator validator = configurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
                 new TokenValidatorEZAuth() :
                 new TokenValidatorInternal();
 

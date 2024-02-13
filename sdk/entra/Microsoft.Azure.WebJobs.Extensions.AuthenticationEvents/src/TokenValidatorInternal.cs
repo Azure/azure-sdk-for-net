@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     ConfigurationManager.TOKEN_V2_VERIFY :
                     ConfigurationManager.TOKEN_V1_VERIFY].ToString();
 
-            if (!ConfigurationManager.TryGetService(
+            if (!configurationManager.TryGetService(
                 serviceId: tokenAuthorizationPartyId,
                 serviceInfo: out ServiceInfo serviceInfo))
             {
