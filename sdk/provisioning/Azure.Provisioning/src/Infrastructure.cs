@@ -22,8 +22,9 @@ namespace Azure.Provisioning
         /// </summary>
         /// <param name="constructScope">The <see cref="ConstructScope"/> to use for the root <see cref="IConstruct"/>.</param>
         /// <param name="tenantId">The tenant id to use.  If not passed in will try to load from AZURE_TENANT_ID environment variable.</param>
-        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null)
-            : base(null, "default", constructScope, tenantId)
+        /// <param name="subscriptionId">The subscription id to use.  If not passed in will try to load from AZURE_SUBSCRIPTION_ID environment variable.</param>
+        public Infrastructure(ConstructScope constructScope = ConstructScope.Subscription, Guid? tenantId = null, Guid? subscriptionId = null)
+            : base(null, "default", constructScope, tenantId, subscriptionId)
         {
         }
 

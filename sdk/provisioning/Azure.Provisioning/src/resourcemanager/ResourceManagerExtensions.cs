@@ -40,10 +40,11 @@ namespace Azure.Provisioning.ResourceManager
         /// Gets or adds a subscription to the construct.
         /// </summary>
         /// <param name="construct">The construct</param>
+        /// <param name="subscriptionId">The id of the subscription.</param>
         /// <returns>The see <see cref="Subscription"/>.</returns>
-        public static Subscription GetOrCreateSubscription(this IConstruct construct)
+        public static Subscription GetOrCreateSubscription(this IConstruct construct, Guid? subscriptionId = null)
         {
-            return construct.Subscription ?? construct.GetSingleResource<Subscription>() ?? new Subscription(construct);
+            return construct.Subscription ?? construct.GetSingleResource<Subscription>() ?? new Subscription(construct, subscriptionId);
         }
     }
 }
