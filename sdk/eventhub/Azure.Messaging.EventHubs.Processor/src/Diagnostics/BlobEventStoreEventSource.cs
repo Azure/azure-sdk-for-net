@@ -677,16 +677,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1>(int eventId,
-                                                string arg1,
-                                                string arg2,
-                                                string arg3,
-                                                string arg4,
-                                                string arg5,
-                                                string arg6,
-                                                string arg7,
-                                                string arg8)
-            where TValue1 : struct
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7,
+                                       string arg8)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
@@ -745,17 +744,16 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1>(int eventId,
-                                                string arg1,
-                                                string arg2,
-                                                string arg3,
-                                                string arg4,
-                                                string arg5,
-                                                string arg6,
-                                                string arg7,
-                                                string arg8,
-                                                string arg9)
-            where TValue1 : struct
+        private unsafe void WriteEvent(int eventId,
+                                       string arg1,
+                                       string arg2,
+                                       string arg3,
+                                       string arg4,
+                                       string arg5,
+                                       string arg6,
+                                       string arg7,
+                                       string arg8,
+                                       string arg9)
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
