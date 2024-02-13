@@ -111,7 +111,7 @@ public partial class HttpClientPipelineTransport
 
             if (_contentStream.CanSeek && _contentStream.Position != 0)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Content stream position is not at beginning of stream.");
             }
 
             // ContentStream still holds the source stream.  Buffer the content
