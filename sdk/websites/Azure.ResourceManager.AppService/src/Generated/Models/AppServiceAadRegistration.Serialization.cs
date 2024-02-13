@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -147,89 +148,143 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(OpenIdIssuer))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenIdIssuer), out propertyOverride);
+            if (Optional.IsDefined(OpenIdIssuer) || hasPropertyOverride)
             {
                 builder.Append("  openIdIssuer:");
-                if (OpenIdIssuer.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{OpenIdIssuer}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{OpenIdIssuer}'");
+                    if (OpenIdIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{OpenIdIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{OpenIdIssuer}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
+            if (Optional.IsDefined(ClientId) || hasPropertyOverride)
             {
                 builder.Append("  clientId:");
-                if (ClientId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientId}'");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretSettingName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretSettingName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretSettingName) || hasPropertyOverride)
             {
                 builder.Append("  clientSecretSettingName:");
-                if (ClientSecretSettingName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretSettingName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretSettingName}'");
+                    if (ClientSecretSettingName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretSettingName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretSettingName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString) || hasPropertyOverride)
             {
                 builder.Append("  clientSecretCertificateThumbprint:");
-                if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+                    if (ClientSecretCertificateThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretCertificateThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretCertificateThumbprintString}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateSubjectAlternativeName), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName) || hasPropertyOverride)
             {
                 builder.Append("  clientSecretCertificateSubjectAlternativeName:");
-                if (ClientSecretCertificateSubjectAlternativeName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretCertificateSubjectAlternativeName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretCertificateSubjectAlternativeName}'");
+                    if (ClientSecretCertificateSubjectAlternativeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretCertificateSubjectAlternativeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretCertificateSubjectAlternativeName}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ClientSecretCertificateIssuer))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientSecretCertificateIssuer), out propertyOverride);
+            if (Optional.IsDefined(ClientSecretCertificateIssuer) || hasPropertyOverride)
             {
                 builder.Append("  clientSecretCertificateIssuer:");
-                if (ClientSecretCertificateIssuer.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ClientSecretCertificateIssuer}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ClientSecretCertificateIssuer}'");
+                    if (ClientSecretCertificateIssuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ClientSecretCertificateIssuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ClientSecretCertificateIssuer}'");
+                    }
                 }
             }
 

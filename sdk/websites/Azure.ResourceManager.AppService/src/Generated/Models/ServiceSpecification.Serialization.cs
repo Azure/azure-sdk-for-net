@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -132,33 +133,55 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsCollectionDefined(MetricSpecifications))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricSpecifications), out propertyOverride);
+            if (Optional.IsCollectionDefined(MetricSpecifications) || hasPropertyOverride)
             {
-                if (MetricSpecifications.Any())
+                if (MetricSpecifications.Any() || hasPropertyOverride)
                 {
                     builder.Append("  metricSpecifications:");
-                    builder.AppendLine(" [");
-                    foreach (var item in MetricSpecifications)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in MetricSpecifications)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(LogSpecifications))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSpecifications), out propertyOverride);
+            if (Optional.IsCollectionDefined(LogSpecifications) || hasPropertyOverride)
             {
-                if (LogSpecifications.Any())
+                if (LogSpecifications.Any() || hasPropertyOverride)
                 {
                     builder.Append("  logSpecifications:");
-                    builder.AppendLine(" [");
-                    foreach (var item in LogSpecifications)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in LogSpecifications)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

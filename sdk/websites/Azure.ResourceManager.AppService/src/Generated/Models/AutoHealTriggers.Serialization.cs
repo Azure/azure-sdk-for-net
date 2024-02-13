@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -202,65 +203,119 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Requests))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
+            if (Optional.IsDefined(Requests) || hasPropertyOverride)
             {
                 builder.Append("  requests:");
-                AppendChildObject(builder, Requests, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Requests, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(PrivateBytesInKB))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
+            if (Optional.IsDefined(PrivateBytesInKB) || hasPropertyOverride)
             {
                 builder.Append("  privateBytesInKB:");
-                builder.AppendLine($" {PrivateBytesInKB.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {PrivateBytesInKB.Value}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(StatusCodes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodes), out propertyOverride);
+            if (Optional.IsCollectionDefined(StatusCodes) || hasPropertyOverride)
             {
-                if (StatusCodes.Any())
+                if (StatusCodes.Any() || hasPropertyOverride)
                 {
                     builder.Append("  statusCodes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in StatusCodes)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in StatusCodes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SlowRequests))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
+            if (Optional.IsDefined(SlowRequests) || hasPropertyOverride)
             {
                 builder.Append("  slowRequests:");
-                AppendChildObject(builder, SlowRequests, options, 2, false);
-            }
-
-            if (Optional.IsCollectionDefined(SlowRequestsWithPath))
-            {
-                if (SlowRequestsWithPath.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  slowRequestsWithPath:");
-                    builder.AppendLine(" [");
-                    foreach (var item in SlowRequestsWithPath)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, SlowRequests, options, 2, false);
                 }
             }
 
-            if (Optional.IsCollectionDefined(StatusCodesRange))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequestsWithPath), out propertyOverride);
+            if (Optional.IsCollectionDefined(SlowRequestsWithPath) || hasPropertyOverride)
             {
-                if (StatusCodesRange.Any())
+                if (SlowRequestsWithPath.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  slowRequestsWithPath:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in SlowRequestsWithPath)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodesRange), out propertyOverride);
+            if (Optional.IsCollectionDefined(StatusCodesRange) || hasPropertyOverride)
+            {
+                if (StatusCodesRange.Any() || hasPropertyOverride)
                 {
                     builder.Append("  statusCodesRange:");
-                    builder.AppendLine(" [");
-                    foreach (var item in StatusCodesRange)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in StatusCodesRange)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

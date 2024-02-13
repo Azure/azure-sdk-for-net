@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -148,59 +149,97 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(IsAuthenticationRequired))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthenticationRequired), out propertyOverride);
+            if (Optional.IsDefined(IsAuthenticationRequired) || hasPropertyOverride)
             {
                 builder.Append("  requireAuthentication:");
-                var boolValue = IsAuthenticationRequired.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(UnauthenticatedClientAction))
-            {
-                builder.Append("  unauthenticatedClientAction:");
-                builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(RedirectToProvider))
-            {
-                builder.Append("  redirectToProvider:");
-                if (RedirectToProvider.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{RedirectToProvider}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RedirectToProvider}'");
+                    var boolValue = IsAuthenticationRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
                 }
             }
 
-            if (Optional.IsCollectionDefined(ExcludedPaths))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
+            if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
             {
-                if (ExcludedPaths.Any())
+                builder.Append("  unauthenticatedClientAction:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectToProvider), out propertyOverride);
+            if (Optional.IsDefined(RedirectToProvider) || hasPropertyOverride)
+            {
+                builder.Append("  redirectToProvider:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (RedirectToProvider.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{RedirectToProvider}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{RedirectToProvider}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPaths), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExcludedPaths) || hasPropertyOverride)
+            {
+                if (ExcludedPaths.Any() || hasPropertyOverride)
                 {
                     builder.Append("  excludedPaths:");
-                    builder.AppendLine(" [");
-                    foreach (var item in ExcludedPaths)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("    '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"    '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in ExcludedPaths)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

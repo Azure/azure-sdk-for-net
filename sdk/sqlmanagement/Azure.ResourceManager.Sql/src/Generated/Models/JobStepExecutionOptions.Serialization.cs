@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -156,36 +157,82 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TimeoutSeconds))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
+            if (Optional.IsDefined(TimeoutSeconds) || hasPropertyOverride)
             {
                 builder.Append("  timeoutSeconds:");
-                builder.AppendLine($" {TimeoutSeconds.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {TimeoutSeconds.Value}");
+                }
             }
 
-            if (Optional.IsDefined(RetryAttempts))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryAttempts), out propertyOverride);
+            if (Optional.IsDefined(RetryAttempts) || hasPropertyOverride)
             {
                 builder.Append("  retryAttempts:");
-                builder.AppendLine($" {RetryAttempts.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {RetryAttempts.Value}");
+                }
             }
 
-            if (Optional.IsDefined(InitialRetryIntervalSeconds))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialRetryIntervalSeconds), out propertyOverride);
+            if (Optional.IsDefined(InitialRetryIntervalSeconds) || hasPropertyOverride)
             {
                 builder.Append("  initialRetryIntervalSeconds:");
-                builder.AppendLine($" {InitialRetryIntervalSeconds.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {InitialRetryIntervalSeconds.Value}");
+                }
             }
 
-            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetryIntervalSeconds), out propertyOverride);
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds) || hasPropertyOverride)
             {
                 builder.Append("  maximumRetryIntervalSeconds:");
-                builder.AppendLine($" {MaximumRetryIntervalSeconds.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {MaximumRetryIntervalSeconds.Value}");
+                }
             }
 
-            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalBackoffMultiplier), out propertyOverride);
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier) || hasPropertyOverride)
             {
                 builder.Append("  retryIntervalBackoffMultiplier:");
-                builder.AppendLine($" '{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");

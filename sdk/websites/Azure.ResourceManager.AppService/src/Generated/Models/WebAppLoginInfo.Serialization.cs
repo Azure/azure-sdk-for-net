@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -182,64 +183,118 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Routes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
+            if (Optional.IsDefined(Routes) || hasPropertyOverride)
             {
                 builder.Append("  routes:");
-                AppendChildObject(builder, Routes, options, 2, false);
-            }
-
-            if (Optional.IsDefined(TokenStore))
-            {
-                builder.Append("  tokenStore:");
-                AppendChildObject(builder, TokenStore, options, 2, false);
-            }
-
-            if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
-            {
-                builder.Append("  preserveUrlFragmentsForLogins:");
-                var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls))
-            {
-                if (AllowedExternalRedirectUrls.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  allowedExternalRedirectUrls:");
-                    builder.AppendLine(" [");
-                    foreach (var item in AllowedExternalRedirectUrls)
-                    {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("    '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"    '{item}'");
-                        }
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Routes, options, 2, false);
                 }
             }
 
-            if (Optional.IsDefined(CookieExpiration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenStore), out propertyOverride);
+            if (Optional.IsDefined(TokenStore) || hasPropertyOverride)
             {
-                builder.Append("  cookieExpiration:");
-                AppendChildObject(builder, CookieExpiration, options, 2, false);
+                builder.Append("  tokenStore:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, TokenStore, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(Nonce))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreserveUrlFragmentsForLogins), out propertyOverride);
+            if (Optional.IsDefined(PreserveUrlFragmentsForLogins) || hasPropertyOverride)
+            {
+                builder.Append("  preserveUrlFragmentsForLogins:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = PreserveUrlFragmentsForLogins.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedExternalRedirectUrls), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedExternalRedirectUrls) || hasPropertyOverride)
+            {
+                if (AllowedExternalRedirectUrls.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedExternalRedirectUrls:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in AllowedExternalRedirectUrls)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CookieExpiration), out propertyOverride);
+            if (Optional.IsDefined(CookieExpiration) || hasPropertyOverride)
+            {
+                builder.Append("  cookieExpiration:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, CookieExpiration, options, 2, false);
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Nonce), out propertyOverride);
+            if (Optional.IsDefined(Nonce) || hasPropertyOverride)
             {
                 builder.Append("  nonce:");
-                AppendChildObject(builder, Nonce, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, Nonce, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

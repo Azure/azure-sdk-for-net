@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -141,30 +142,68 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(LinuxRuntimeSettings))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxRuntimeSettings) || hasPropertyOverride)
             {
                 builder.Append("  linuxRuntimeSettings:");
-                AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, LinuxRuntimeSettings, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(WindowsRuntimeSettings))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsRuntimeSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsRuntimeSettings) || hasPropertyOverride)
             {
                 builder.Append("  windowsRuntimeSettings:");
-                AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, WindowsRuntimeSettings, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(LinuxContainerSettings))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(LinuxContainerSettings) || hasPropertyOverride)
             {
                 builder.Append("  linuxContainerSettings:");
-                AppendChildObject(builder, LinuxContainerSettings, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, LinuxContainerSettings, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(WindowsContainerSettings))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsContainerSettings), out propertyOverride);
+            if (Optional.IsDefined(WindowsContainerSettings) || hasPropertyOverride)
             {
                 builder.Append("  windowsContainerSettings:");
-                AppendChildObject(builder, WindowsContainerSettings, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, WindowsContainerSettings, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

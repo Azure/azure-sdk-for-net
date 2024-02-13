@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -153,32 +154,62 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(PrincipalId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
             {
                 builder.Append("  principalId:");
-                builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{PrincipalId.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(TenantId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
             {
                 builder.Append("  tenantId:");
-                builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TenantId.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
+            if (Optional.IsCollectionDefined(UserAssignedIdentities) || hasPropertyOverride)
             {
-                if (UserAssignedIdentities.Any())
+                if (UserAssignedIdentities.Any() || hasPropertyOverride)
                 {
                     builder.Append("  userAssignedIdentities:");
-                    builder.AppendLine(" {");
-                    foreach (var item in UserAssignedIdentities)
+                    if (hasPropertyOverride)
                     {
-                        builder.Append($"    {item.Key}:");
-                        AppendChildObject(builder, item.Value, options, 4, false);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  }");
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in UserAssignedIdentities)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            AppendChildObject(builder, item.Value, options, 4, false);
+                        }
+                        builder.AppendLine("  }");
+                    }
                 }
             }
 

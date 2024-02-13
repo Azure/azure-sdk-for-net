@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -148,52 +149,98 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(VirtualIP))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualIP), out propertyOverride);
+            if (Optional.IsDefined(VirtualIP) || hasPropertyOverride)
             {
                 builder.Append("  virtualIP:");
-                if (VirtualIP.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{VirtualIP}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{VirtualIP}'");
+                    if (VirtualIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{VirtualIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{VirtualIP}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(InternalHttpPort))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpPort), out propertyOverride);
+            if (Optional.IsDefined(InternalHttpPort) || hasPropertyOverride)
             {
                 builder.Append("  internalHttpPort:");
-                builder.AppendLine($" {InternalHttpPort.Value}");
-            }
-
-            if (Optional.IsDefined(InternalHttpsPort))
-            {
-                builder.Append("  internalHttpsPort:");
-                builder.AppendLine($" {InternalHttpsPort.Value}");
-            }
-
-            if (Optional.IsDefined(IsInUse))
-            {
-                builder.Append("  inUse:");
-                var boolValue = IsInUse.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(ServiceName))
-            {
-                builder.Append("  serviceName:");
-                if (ServiceName.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ServiceName}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ServiceName}'");
+                    builder.AppendLine($" {InternalHttpPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpsPort), out propertyOverride);
+            if (Optional.IsDefined(InternalHttpsPort) || hasPropertyOverride)
+            {
+                builder.Append("  internalHttpsPort:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {InternalHttpsPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInUse), out propertyOverride);
+            if (Optional.IsDefined(IsInUse) || hasPropertyOverride)
+            {
+                builder.Append("  inUse:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInUse.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceName), out propertyOverride);
+            if (Optional.IsDefined(ServiceName) || hasPropertyOverride)
+            {
+                builder.Append("  serviceName:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ServiceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ServiceName}'");
+                    }
                 }
             }
 

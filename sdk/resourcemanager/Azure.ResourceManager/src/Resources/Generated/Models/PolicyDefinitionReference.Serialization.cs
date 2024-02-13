@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -152,75 +153,113 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(PolicyDefinitionId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionId), out propertyOverride);
+            if (Optional.IsDefined(PolicyDefinitionId) || hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionId:");
-                if (PolicyDefinitionId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PolicyDefinitionId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PolicyDefinitionId}'");
+                    if (PolicyDefinitionId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PolicyDefinitionId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PolicyDefinitionId}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Parameters))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (Optional.IsCollectionDefined(Parameters) || hasPropertyOverride)
             {
-                if (Parameters.Any())
+                if (Parameters.Any() || hasPropertyOverride)
                 {
                     builder.Append("  parameters:");
-                    builder.AppendLine(" {");
-                    foreach (var item in Parameters)
+                    if (hasPropertyOverride)
                     {
-                        builder.Append($"    {item.Key}:");
-                        AppendChildObject(builder, item.Value, options, 4, false);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  }");
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in Parameters)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            AppendChildObject(builder, item.Value, options, 4, false);
+                        }
+                        builder.AppendLine("  }");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(PolicyDefinitionReferenceId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PolicyDefinitionReferenceId), out propertyOverride);
+            if (Optional.IsDefined(PolicyDefinitionReferenceId) || hasPropertyOverride)
             {
                 builder.Append("  policyDefinitionReferenceId:");
-                if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                    if (PolicyDefinitionReferenceId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{PolicyDefinitionReferenceId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{PolicyDefinitionReferenceId}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(GroupNames))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GroupNames), out propertyOverride);
+            if (Optional.IsCollectionDefined(GroupNames) || hasPropertyOverride)
             {
-                if (GroupNames.Any())
+                if (GroupNames.Any() || hasPropertyOverride)
                 {
                     builder.Append("  groupNames:");
-                    builder.AppendLine(" [");
-                    foreach (var item in GroupNames)
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        if (item.Contains(Environment.NewLine))
-                        {
-                            builder.AppendLine("    '''");
-                            builder.AppendLine($"{item}'''");
-                        }
-                        else
-                        {
-                            builder.AppendLine($"    '{item}'");
-                        }
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in GroupNames)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

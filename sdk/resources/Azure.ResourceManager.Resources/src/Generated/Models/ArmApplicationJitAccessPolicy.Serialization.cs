@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -145,40 +146,78 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(JitAccessEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitAccessEnabled), out propertyOverride);
+            if (Optional.IsDefined(JitAccessEnabled) || hasPropertyOverride)
             {
                 builder.Append("  jitAccessEnabled:");
-                var boolValue = JitAccessEnabled == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(JitApprovalMode))
-            {
-                builder.Append("  jitApprovalMode:");
-                builder.AppendLine($" '{JitApprovalMode.Value.ToString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(JitApprovers))
-            {
-                if (JitApprovers.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  jitApprovers:");
-                    builder.AppendLine(" [");
-                    foreach (var item in JitApprovers)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = JitAccessEnabled == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
                 }
             }
 
-            if (Optional.IsDefined(MaximumJitAccessDuration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovalMode), out propertyOverride);
+            if (Optional.IsDefined(JitApprovalMode) || hasPropertyOverride)
+            {
+                builder.Append("  jitApprovalMode:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{JitApprovalMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovers), out propertyOverride);
+            if (Optional.IsCollectionDefined(JitApprovers) || hasPropertyOverride)
+            {
+                if (JitApprovers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  jitApprovers:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in JitApprovers)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumJitAccessDuration), out propertyOverride);
+            if (Optional.IsDefined(MaximumJitAccessDuration) || hasPropertyOverride)
             {
                 builder.Append("  maximumJitAccessDuration:");
-                var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
-                builder.AppendLine($" '{formattedTimeSpan}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
+                    builder.AppendLine($" '{formattedTimeSpan}'");
+                }
             }
 
             builder.AppendLine("}");

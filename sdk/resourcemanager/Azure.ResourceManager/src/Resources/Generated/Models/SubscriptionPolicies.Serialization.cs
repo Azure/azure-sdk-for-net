@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -118,40 +119,70 @@ namespace Azure.ResourceManager.Resources.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(LocationPlacementId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationPlacementId), out propertyOverride);
+            if (Optional.IsDefined(LocationPlacementId) || hasPropertyOverride)
             {
                 builder.Append("  locationPlacementId:");
-                if (LocationPlacementId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LocationPlacementId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LocationPlacementId}'");
+                    if (LocationPlacementId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{LocationPlacementId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{LocationPlacementId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(QuotaId))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaId), out propertyOverride);
+            if (Optional.IsDefined(QuotaId) || hasPropertyOverride)
             {
                 builder.Append("  quotaId:");
-                if (QuotaId.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{QuotaId}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{QuotaId}'");
+                    if (QuotaId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{QuotaId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{QuotaId}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SpendingLimit))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
+            if (Optional.IsDefined(SpendingLimit) || hasPropertyOverride)
             {
                 builder.Append("  spendingLimit:");
-                builder.AppendLine($" '{SpendingLimit.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SpendingLimit.Value.ToSerialString()}'");
+                }
             }
 
             builder.AppendLine("}");

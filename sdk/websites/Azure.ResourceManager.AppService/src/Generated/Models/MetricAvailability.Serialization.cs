@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -107,27 +108,49 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TimeGrain))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGrain), out propertyOverride);
+            if (Optional.IsDefined(TimeGrain) || hasPropertyOverride)
             {
                 builder.Append("  timeGrain:");
-                if (TimeGrain.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TimeGrain}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TimeGrain}'");
+                    if (TimeGrain.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TimeGrain}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TimeGrain}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(BlobDuration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobDuration), out propertyOverride);
+            if (Optional.IsDefined(BlobDuration) || hasPropertyOverride)
             {
                 builder.Append("  blobDuration:");
-                var formattedTimeSpan = TypeFormatters.ToString(BlobDuration.Value, "P");
-                builder.AppendLine($" '{formattedTimeSpan}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(BlobDuration.Value, "P");
+                    builder.AppendLine($" '{formattedTimeSpan}'");
+                }
             }
 
             builder.AppendLine("}");

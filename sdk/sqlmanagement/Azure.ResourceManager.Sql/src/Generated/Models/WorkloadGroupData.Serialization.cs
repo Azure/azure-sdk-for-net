@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -231,78 +232,156 @@ namespace Azure.ResourceManager.Sql
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(MinResourcePercent))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercent), out propertyOverride);
+            if (Optional.IsDefined(MinResourcePercent) || hasPropertyOverride)
             {
                 builder.Append("    minResourcePercent:");
-                builder.AppendLine($" {MinResourcePercent.Value}");
-            }
-
-            if (Optional.IsDefined(MaxResourcePercent))
-            {
-                builder.Append("    maxResourcePercent:");
-                builder.AppendLine($" {MaxResourcePercent.Value}");
-            }
-
-            if (Optional.IsDefined(MinResourcePercentPerRequest))
-            {
-                builder.Append("    minResourcePercentPerRequest:");
-                builder.AppendLine($" '{MinResourcePercentPerRequest.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(MaxResourcePercentPerRequest))
-            {
-                builder.Append("    maxResourcePercentPerRequest:");
-                builder.AppendLine($" '{MaxResourcePercentPerRequest.Value.ToString()}'");
-            }
-
-            if (Optional.IsDefined(Importance))
-            {
-                builder.Append("    importance:");
-                if (Importance.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Importance}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Importance}'");
+                    builder.AppendLine($" {MinResourcePercent.Value}");
                 }
             }
 
-            if (Optional.IsDefined(QueryExecutionTimeout))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercent), out propertyOverride);
+            if (Optional.IsDefined(MaxResourcePercent) || hasPropertyOverride)
+            {
+                builder.Append("    maxResourcePercent:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {MaxResourcePercent.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinResourcePercentPerRequest), out propertyOverride);
+            if (Optional.IsDefined(MinResourcePercentPerRequest) || hasPropertyOverride)
+            {
+                builder.Append("    minResourcePercentPerRequest:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MinResourcePercentPerRequest.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxResourcePercentPerRequest), out propertyOverride);
+            if (Optional.IsDefined(MaxResourcePercentPerRequest) || hasPropertyOverride)
+            {
+                builder.Append("    maxResourcePercentPerRequest:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{MaxResourcePercentPerRequest.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Importance), out propertyOverride);
+            if (Optional.IsDefined(Importance) || hasPropertyOverride)
+            {
+                builder.Append("    importance:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (Importance.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Importance}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Importance}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueryExecutionTimeout), out propertyOverride);
+            if (Optional.IsDefined(QueryExecutionTimeout) || hasPropertyOverride)
             {
                 builder.Append("    queryExecutionTimeout:");
-                builder.AppendLine($" {QueryExecutionTimeout.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {QueryExecutionTimeout.Value}");
+                }
             }
 
             builder.AppendLine("  }");

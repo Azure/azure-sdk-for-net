@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -181,87 +182,149 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(NumberOfQueries))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfQueries), out propertyOverride);
+            if (Optional.IsDefined(NumberOfQueries) || hasPropertyOverride)
             {
                 builder.Append("  numberOfQueries:");
-                builder.AppendLine($" {NumberOfQueries.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {NumberOfQueries.Value}");
+                }
             }
 
-            if (Optional.IsDefined(AggregationFunction))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationFunction), out propertyOverride);
+            if (Optional.IsDefined(AggregationFunction) || hasPropertyOverride)
             {
                 builder.Append("  aggregationFunction:");
-                if (AggregationFunction.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AggregationFunction}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AggregationFunction}'");
+                    if (AggregationFunction.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AggregationFunction}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AggregationFunction}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ObservationMetric))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObservationMetric), out propertyOverride);
+            if (Optional.IsDefined(ObservationMetric) || hasPropertyOverride)
             {
                 builder.Append("  observationMetric:");
-                if (ObservationMetric.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ObservationMetric}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ObservationMetric}'");
+                    if (ObservationMetric.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ObservationMetric}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ObservationMetric}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IntervalType))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
+            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
             {
                 builder.Append("  intervalType:");
-                builder.AppendLine($" '{IntervalType.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IntervalType.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(StartTime))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartTime), out propertyOverride);
+            if (Optional.IsDefined(StartTime) || hasPropertyOverride)
             {
                 builder.Append("  startTime:");
-                if (StartTime.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{StartTime}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{StartTime}'");
+                    if (StartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{StartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{StartTime}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(EndTime))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndTime), out propertyOverride);
+            if (Optional.IsDefined(EndTime) || hasPropertyOverride)
             {
                 builder.Append("  endTime:");
-                if (EndTime.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{EndTime}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{EndTime}'");
+                    if (EndTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{EndTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{EndTime}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(Queries))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Queries), out propertyOverride);
+            if (Optional.IsCollectionDefined(Queries) || hasPropertyOverride)
             {
-                if (Queries.Any())
+                if (Queries.Any() || hasPropertyOverride)
                 {
                     builder.Append("  queries:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Queries)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Queries)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

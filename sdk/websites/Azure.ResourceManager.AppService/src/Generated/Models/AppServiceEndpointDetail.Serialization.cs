@@ -12,6 +12,7 @@ using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -142,31 +143,69 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(IPAddress))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPAddress), out propertyOverride);
+            if (Optional.IsDefined(IPAddress) || hasPropertyOverride)
             {
                 builder.Append("  ipAddress:");
-                builder.AppendLine($" '{IPAddress.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{IPAddress.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Port))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Port), out propertyOverride);
+            if (Optional.IsDefined(Port) || hasPropertyOverride)
             {
                 builder.Append("  port:");
-                builder.AppendLine($" {Port.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {Port.Value}");
+                }
             }
 
-            if (Optional.IsDefined(Latency))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latency), out propertyOverride);
+            if (Optional.IsDefined(Latency) || hasPropertyOverride)
             {
                 builder.Append("  latency:");
-                builder.AppendLine($" '{Latency.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Latency.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(IsAccessible))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAccessible), out propertyOverride);
+            if (Optional.IsDefined(IsAccessible) || hasPropertyOverride)
             {
                 builder.Append("  isAccessible:");
-                var boolValue = IsAccessible.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAccessible.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
             builder.AppendLine("}");

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -234,99 +235,193 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AvailableCapacity))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableCapacity), out propertyOverride);
+            if (Optional.IsDefined(AvailableCapacity) || hasPropertyOverride)
             {
                 builder.Append("  availableCapacity:");
-                builder.AppendLine($" '{AvailableCapacity.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{AvailableCapacity.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(TotalCapacity))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalCapacity), out propertyOverride);
+            if (Optional.IsDefined(TotalCapacity) || hasPropertyOverride)
             {
                 builder.Append("  totalCapacity:");
-                builder.AppendLine($" '{TotalCapacity.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalCapacity.Value.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Unit))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
             {
                 builder.Append("  unit:");
-                if (Unit.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Unit}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Unit}'");
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Unit}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ComputeMode))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeMode), out propertyOverride);
+            if (Optional.IsDefined(ComputeMode) || hasPropertyOverride)
             {
                 builder.Append("  computeMode:");
-                builder.AppendLine($" '{ComputeMode.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(WorkerSize))
-            {
-                builder.Append("  workerSize:");
-                builder.AppendLine($" '{WorkerSize.Value.ToSerialString()}'");
-            }
-
-            if (Optional.IsDefined(WorkerSizeId))
-            {
-                builder.Append("  workerSizeId:");
-                builder.AppendLine($" {WorkerSizeId.Value}");
-            }
-
-            if (Optional.IsDefined(ExcludeFromCapacityAllocation))
-            {
-                builder.Append("  excludeFromCapacityAllocation:");
-                var boolValue = ExcludeFromCapacityAllocation.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(IsApplicableForAllComputeModes))
-            {
-                builder.Append("  isApplicableForAllComputeModes:");
-                var boolValue = IsApplicableForAllComputeModes.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(SiteMode))
-            {
-                builder.Append("  siteMode:");
-                if (SiteMode.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{SiteMode}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{SiteMode}'");
+                    builder.AppendLine($" '{ComputeMode.Value.ToSerialString()}'");
                 }
             }
 
-            if (Optional.IsDefined(IsLinux))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerSize), out propertyOverride);
+            if (Optional.IsDefined(WorkerSize) || hasPropertyOverride)
+            {
+                builder.Append("  workerSize:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{WorkerSize.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerSizeId), out propertyOverride);
+            if (Optional.IsDefined(WorkerSizeId) || hasPropertyOverride)
+            {
+                builder.Append("  workerSizeId:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {WorkerSizeId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludeFromCapacityAllocation), out propertyOverride);
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation) || hasPropertyOverride)
+            {
+                builder.Append("  excludeFromCapacityAllocation:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ExcludeFromCapacityAllocation.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicableForAllComputeModes), out propertyOverride);
+            if (Optional.IsDefined(IsApplicableForAllComputeModes) || hasPropertyOverride)
+            {
+                builder.Append("  isApplicableForAllComputeModes:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsApplicableForAllComputeModes.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteMode), out propertyOverride);
+            if (Optional.IsDefined(SiteMode) || hasPropertyOverride)
+            {
+                builder.Append("  siteMode:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (SiteMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{SiteMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{SiteMode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLinux), out propertyOverride);
+            if (Optional.IsDefined(IsLinux) || hasPropertyOverride)
             {
                 builder.Append("  isLinux:");
-                var boolValue = IsLinux.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLinux.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
             builder.AppendLine("}");

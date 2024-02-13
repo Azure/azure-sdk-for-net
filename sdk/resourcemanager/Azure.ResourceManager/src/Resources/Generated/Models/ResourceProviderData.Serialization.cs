@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
@@ -171,74 +172,128 @@ namespace Azure.ResourceManager.Resources
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(Namespace))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
+            if (Optional.IsDefined(Namespace) || hasPropertyOverride)
             {
                 builder.Append("  namespace:");
-                if (Namespace.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Namespace}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Namespace}'");
+                    if (Namespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Namespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Namespace}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(RegistrationState))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationState), out propertyOverride);
+            if (Optional.IsDefined(RegistrationState) || hasPropertyOverride)
             {
                 builder.Append("  registrationState:");
-                if (RegistrationState.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{RegistrationState}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RegistrationState}'");
+                    if (RegistrationState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{RegistrationState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{RegistrationState}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(RegistrationPolicy))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationPolicy), out propertyOverride);
+            if (Optional.IsDefined(RegistrationPolicy) || hasPropertyOverride)
             {
                 builder.Append("  registrationPolicy:");
-                if (RegistrationPolicy.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{RegistrationPolicy}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RegistrationPolicy}'");
+                    if (RegistrationPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{RegistrationPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{RegistrationPolicy}'");
+                    }
                 }
             }
 
-            if (Optional.IsCollectionDefined(ResourceTypes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
             {
-                if (ResourceTypes.Any())
+                if (ResourceTypes.Any() || hasPropertyOverride)
                 {
                     builder.Append("  resourceTypes:");
-                    builder.AppendLine(" [");
-                    foreach (var item in ResourceTypes)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in ResourceTypes)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ProviderAuthorizationConsentState))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
+            if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
             {
                 builder.Append("  providerAuthorizationConsentState:");
-                builder.AppendLine($" '{ProviderAuthorizationConsentState.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ProviderAuthorizationConsentState.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");

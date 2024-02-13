@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -140,67 +141,113 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(AuthorizationEndpoint))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthorizationEndpoint), out propertyOverride);
+            if (Optional.IsDefined(AuthorizationEndpoint) || hasPropertyOverride)
             {
                 builder.Append("  authorizationEndpoint:");
-                if (AuthorizationEndpoint.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AuthorizationEndpoint}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AuthorizationEndpoint}'");
+                    if (AuthorizationEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AuthorizationEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AuthorizationEndpoint}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(TokenEndpoint))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenEndpoint), out propertyOverride);
+            if (Optional.IsDefined(TokenEndpoint) || hasPropertyOverride)
             {
                 builder.Append("  tokenEndpoint:");
-                if (TokenEndpoint.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{TokenEndpoint}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{TokenEndpoint}'");
+                    if (TokenEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{TokenEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{TokenEndpoint}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Issuer))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (Optional.IsDefined(Issuer) || hasPropertyOverride)
             {
                 builder.Append("  issuer:");
-                if (Issuer.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Issuer}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Issuer}'");
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Issuer}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(CertificationUri))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificationUri), out propertyOverride);
+            if (Optional.IsDefined(CertificationUri) || hasPropertyOverride)
             {
                 builder.Append("  certificationUri:");
-                builder.AppendLine($" '{CertificationUri.AbsoluteUri}'");
-            }
-
-            if (Optional.IsDefined(WellKnownOpenIdConfiguration))
-            {
-                builder.Append("  wellKnownOpenIdConfiguration:");
-                if (WellKnownOpenIdConfiguration.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{WellKnownOpenIdConfiguration}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{WellKnownOpenIdConfiguration}'");
+                    builder.AppendLine($" '{CertificationUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WellKnownOpenIdConfiguration), out propertyOverride);
+            if (Optional.IsDefined(WellKnownOpenIdConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  wellKnownOpenIdConfiguration:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (WellKnownOpenIdConfiguration.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{WellKnownOpenIdConfiguration}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{WellKnownOpenIdConfiguration}'");
+                    }
                 }
             }
 

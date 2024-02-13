@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -294,122 +295,208 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(DisplayVersion))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayVersion), out propertyOverride);
+            if (Optional.IsDefined(DisplayVersion) || hasPropertyOverride)
             {
                 builder.Append("  displayVersion:");
-                if (DisplayVersion.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{DisplayVersion}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{DisplayVersion}'");
+                    if (DisplayVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{DisplayVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{DisplayVersion}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(RuntimeVersion))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuntimeVersion), out propertyOverride);
+            if (Optional.IsDefined(RuntimeVersion) || hasPropertyOverride)
             {
                 builder.Append("  runtimeVersion:");
-                if (RuntimeVersion.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{RuntimeVersion}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{RuntimeVersion}'");
+                    if (RuntimeVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{RuntimeVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{RuntimeVersion}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IsDefault))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
             {
                 builder.Append("  isDefault:");
-                var boolValue = IsDefault.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsCollectionDefined(MinorVersions))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinorVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(MinorVersions) || hasPropertyOverride)
             {
-                if (MinorVersions.Any())
+                if (MinorVersions.Any() || hasPropertyOverride)
                 {
                     builder.Append("  minorVersions:");
-                    builder.AppendLine(" [");
-                    foreach (var item in MinorVersions)
+                    if (hasPropertyOverride)
                     {
-                        AppendChildObject(builder, item, options, 4, true);
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  ]");
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in MinorVersions)
+                        {
+                            AppendChildObject(builder, item, options, 4, true);
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(IsApplicationInsights))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicationInsights), out propertyOverride);
+            if (Optional.IsDefined(IsApplicationInsights) || hasPropertyOverride)
             {
                 builder.Append("  applicationInsights:");
-                var boolValue = IsApplicationInsights.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(IsPreview))
-            {
-                builder.Append("  isPreview:");
-                var boolValue = IsPreview.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(IsDeprecated))
-            {
-                builder.Append("  isDeprecated:");
-                var boolValue = IsDeprecated.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(IsHidden))
-            {
-                builder.Append("  isHidden:");
-                var boolValue = IsHidden.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsCollectionDefined(AppSettingsDictionary))
-            {
-                if (AppSettingsDictionary.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  appSettingsDictionary:");
-                    builder.AppendLine(" {");
-                    foreach (var item in AppSettingsDictionary)
-                    {
-                        builder.Append($"    {item.Key}:");
-                        if (item.Value == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        builder.AppendLine($" '{item.Value.ToString()}'");
-                    }
-                    builder.AppendLine("  }");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsApplicationInsights.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
                 }
             }
 
-            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
+            if (Optional.IsDefined(IsPreview) || hasPropertyOverride)
             {
-                if (SiteConfigPropertiesDictionary.Any())
+                builder.Append("  isPreview:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
+            if (Optional.IsDefined(IsDeprecated) || hasPropertyOverride)
+            {
+                builder.Append("  isDeprecated:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDeprecated.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            {
+                builder.Append("  isHidden:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppSettingsDictionary), out propertyOverride);
+            if (Optional.IsCollectionDefined(AppSettingsDictionary) || hasPropertyOverride)
+            {
+                if (AppSettingsDictionary.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  appSettingsDictionary:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in AppSettingsDictionary)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($" '{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteConfigPropertiesDictionary), out propertyOverride);
+            if (Optional.IsCollectionDefined(SiteConfigPropertiesDictionary) || hasPropertyOverride)
+            {
+                if (SiteConfigPropertiesDictionary.Any() || hasPropertyOverride)
                 {
                     builder.Append("  siteConfigPropertiesDictionary:");
-                    builder.AppendLine(" {");
-                    foreach (var item in SiteConfigPropertiesDictionary)
+                    if (hasPropertyOverride)
                     {
-                        builder.Append($"    {item.Key}:");
-                        if (item.Value == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
-                        builder.AppendLine($" '{item.Value.ToString()}'");
+                        builder.AppendLine($" {propertyOverride}");
                     }
-                    builder.AppendLine("  }");
+                    else
+                    {
+                        builder.AppendLine(" {");
+                        foreach (var item in SiteConfigPropertiesDictionary)
+                        {
+                            builder.Append($"    {item.Key}:");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine($" '{item.Value.ToString()}'");
+                        }
+                        builder.AppendLine("  }");
+                    }
                 }
             }
 

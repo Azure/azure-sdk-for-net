@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -156,38 +157,84 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TransactionManagerCommunicationSettings))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransactionManagerCommunicationSettings), out propertyOverride);
+            if (Optional.IsDefined(TransactionManagerCommunicationSettings) || hasPropertyOverride)
             {
                 builder.Append("  transactionManagerCommunicationSettings:");
-                AppendChildObject(builder, TransactionManagerCommunicationSettings, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, TransactionManagerCommunicationSettings, options, 2, false);
+                }
             }
 
-            if (Optional.IsDefined(IsXATransactionsEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsXATransactionsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsXATransactionsEnabled) || hasPropertyOverride)
             {
                 builder.Append("  xaTransactionsEnabled:");
-                var boolValue = IsXATransactionsEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsXATransactionsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SnaLu6Point2TransactionsEnabled), out propertyOverride);
+            if (Optional.IsDefined(SnaLu6Point2TransactionsEnabled) || hasPropertyOverride)
             {
                 builder.Append("  snaLu6point2TransactionsEnabled:");
-                var boolValue = SnaLu6Point2TransactionsEnabled.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = SnaLu6Point2TransactionsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
             }
 
-            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(XATransactionsDefaultTimeoutInSeconds), out propertyOverride);
+            if (Optional.IsDefined(XATransactionsDefaultTimeoutInSeconds) || hasPropertyOverride)
             {
                 builder.Append("  xaTransactionsDefaultTimeout:");
-                builder.AppendLine($" {XATransactionsDefaultTimeoutInSeconds.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {XATransactionsDefaultTimeoutInSeconds.Value}");
+                }
             }
 
-            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(XATransactionsMaximumTimeoutInSeconds), out propertyOverride);
+            if (Optional.IsDefined(XATransactionsMaximumTimeoutInSeconds) || hasPropertyOverride)
             {
                 builder.Append("  xaTransactionsMaximumTimeout:");
-                builder.AppendLine($" {XATransactionsMaximumTimeoutInSeconds.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {XATransactionsMaximumTimeoutInSeconds.Value}");
+                }
             }
 
             builder.AppendLine("}");

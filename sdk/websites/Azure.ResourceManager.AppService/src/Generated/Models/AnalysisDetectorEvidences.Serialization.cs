@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -195,70 +196,116 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Source))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (Optional.IsDefined(Source) || hasPropertyOverride)
             {
                 builder.Append("  source:");
-                if (Source.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Source}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Source}'");
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Source}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(DetectorDefinition))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorDefinition), out propertyOverride);
+            if (Optional.IsDefined(DetectorDefinition) || hasPropertyOverride)
             {
                 builder.Append("  detectorDefinition:");
-                AppendChildObject(builder, DetectorDefinition, options, 2, false);
-            }
-
-            if (Optional.IsCollectionDefined(Metrics))
-            {
-                if (Metrics.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  metrics:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Metrics)
-                    {
-                        AppendChildObject(builder, item, options, 4, true);
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, DetectorDefinition, options, 2, false);
                 }
             }
 
-            if (Optional.IsCollectionDefined(Data))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            if (Optional.IsCollectionDefined(Metrics) || hasPropertyOverride)
             {
-                if (Data.Any())
+                if (Metrics.Any() || hasPropertyOverride)
                 {
-                    builder.Append("  data:");
-                    builder.AppendLine(" [");
-                    foreach (var item in Data)
+                    builder.Append("  metrics:");
+                    if (hasPropertyOverride)
                     {
-                        if (item == null)
-                        {
-                            builder.Append("null");
-                            continue;
-                        }
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
                         builder.AppendLine(" [");
-                        foreach (var item0 in item)
+                        foreach (var item in Metrics)
                         {
-                            AppendChildObject(builder, item0, options, 4, true);
+                            AppendChildObject(builder, item, options, 4, true);
                         }
                         builder.AppendLine("  ]");
                     }
-                    builder.AppendLine("  ]");
                 }
             }
 
-            if (Optional.IsDefined(DetectorMetaData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
+            if (Optional.IsCollectionDefined(Data) || hasPropertyOverride)
+            {
+                if (Data.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  data:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in Data)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine(" [");
+                            foreach (var item0 in item)
+                            {
+                                AppendChildObject(builder, item0, options, 4, true);
+                            }
+                            builder.AppendLine("  ]");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorMetaData), out propertyOverride);
+            if (Optional.IsDefined(DetectorMetaData) || hasPropertyOverride)
             {
                 builder.Append("  detectorMetaData:");
-                AppendChildObject(builder, DetectorMetaData, options, 2, false);
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    AppendChildObject(builder, DetectorMetaData, options, 2, false);
+                }
             }
 
             builder.AppendLine("}");

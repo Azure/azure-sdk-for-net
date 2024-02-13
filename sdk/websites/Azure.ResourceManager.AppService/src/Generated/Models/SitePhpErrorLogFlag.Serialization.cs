@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -200,103 +201,173 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Kind))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
             {
                 builder.Append("  kind:");
-                if (Kind.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Kind}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Kind}'");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Kind}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(LocalLogErrors))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalLogErrors), out propertyOverride);
+            if (Optional.IsDefined(LocalLogErrors) || hasPropertyOverride)
             {
                 builder.Append("    localLogErrors:");
-                if (LocalLogErrors.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LocalLogErrors}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LocalLogErrors}'");
+                    if (LocalLogErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{LocalLogErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{LocalLogErrors}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MasterLogErrors))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterLogErrors), out propertyOverride);
+            if (Optional.IsDefined(MasterLogErrors) || hasPropertyOverride)
             {
                 builder.Append("    masterLogErrors:");
-                if (MasterLogErrors.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MasterLogErrors}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MasterLogErrors}'");
+                    if (MasterLogErrors.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MasterLogErrors}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MasterLogErrors}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(LocalLogErrorsMaxLength))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalLogErrorsMaxLength), out propertyOverride);
+            if (Optional.IsDefined(LocalLogErrorsMaxLength) || hasPropertyOverride)
             {
                 builder.Append("    localLogErrorsMaxLength:");
-                if (LocalLogErrorsMaxLength.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{LocalLogErrorsMaxLength}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{LocalLogErrorsMaxLength}'");
+                    if (LocalLogErrorsMaxLength.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{LocalLogErrorsMaxLength}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{LocalLogErrorsMaxLength}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MasterLogErrorsMaxLength))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MasterLogErrorsMaxLength), out propertyOverride);
+            if (Optional.IsDefined(MasterLogErrorsMaxLength) || hasPropertyOverride)
             {
                 builder.Append("    masterLogErrorsMaxLength:");
-                if (MasterLogErrorsMaxLength.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MasterLogErrorsMaxLength}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MasterLogErrorsMaxLength}'");
+                    if (MasterLogErrorsMaxLength.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MasterLogErrorsMaxLength}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MasterLogErrorsMaxLength}'");
+                    }
                 }
             }
 

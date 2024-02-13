@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -104,18 +105,40 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(FailoverPolicy))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverPolicy), out propertyOverride);
+            if (Optional.IsDefined(FailoverPolicy) || hasPropertyOverride)
             {
                 builder.Append("  failoverPolicy:");
-                builder.AppendLine($" '{FailoverPolicy.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{FailoverPolicy.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FailoverWithDataLossGracePeriodMinutes), out propertyOverride);
+            if (Optional.IsDefined(FailoverWithDataLossGracePeriodMinutes) || hasPropertyOverride)
             {
                 builder.Append("  failoverWithDataLossGracePeriodMinutes:");
-                builder.AppendLine($" {FailoverWithDataLossGracePeriodMinutes.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {FailoverWithDataLossGracePeriodMinutes.Value}");
+                }
             }
 
             builder.AppendLine("}");

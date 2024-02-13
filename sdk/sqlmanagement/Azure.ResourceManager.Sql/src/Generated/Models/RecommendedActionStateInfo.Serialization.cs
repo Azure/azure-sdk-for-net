@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -119,25 +120,55 @@ namespace Azure.ResourceManager.Sql.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(CurrentValue))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentValue), out propertyOverride);
+            if (Optional.IsDefined(CurrentValue) || hasPropertyOverride)
             {
                 builder.Append("  currentValue:");
-                builder.AppendLine($" '{CurrentValue.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{CurrentValue.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(ActionInitiatedBy))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionInitiatedBy), out propertyOverride);
+            if (Optional.IsDefined(ActionInitiatedBy) || hasPropertyOverride)
             {
                 builder.Append("  actionInitiatedBy:");
-                builder.AppendLine($" '{ActionInitiatedBy.Value.ToSerialString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{ActionInitiatedBy.Value.ToSerialString()}'");
+                }
             }
 
-            if (Optional.IsDefined(LastModified))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModified), out propertyOverride);
+            if (Optional.IsDefined(LastModified) || hasPropertyOverride)
             {
                 builder.Append("  lastModified:");
-                var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
-                builder.AppendLine($" '{formattedDateTimeString}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastModified.Value, "o");
+                    builder.AppendLine($" '{formattedDateTimeString}'");
+                }
             }
 
             builder.AppendLine("}");

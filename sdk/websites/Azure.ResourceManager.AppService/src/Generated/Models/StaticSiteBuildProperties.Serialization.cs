@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -173,110 +174,180 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(AppLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppLocation), out propertyOverride);
+            if (Optional.IsDefined(AppLocation) || hasPropertyOverride)
             {
                 builder.Append("  appLocation:");
-                if (AppLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AppLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AppLocation}'");
+                    if (AppLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AppLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AppLocation}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ApiLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiLocation), out propertyOverride);
+            if (Optional.IsDefined(ApiLocation) || hasPropertyOverride)
             {
                 builder.Append("  apiLocation:");
-                if (ApiLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ApiLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ApiLocation}'");
+                    if (ApiLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ApiLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ApiLocation}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AppArtifactLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppArtifactLocation), out propertyOverride);
+            if (Optional.IsDefined(AppArtifactLocation) || hasPropertyOverride)
             {
                 builder.Append("  appArtifactLocation:");
-                if (AppArtifactLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AppArtifactLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AppArtifactLocation}'");
+                    if (AppArtifactLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AppArtifactLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AppArtifactLocation}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(OutputLocation))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputLocation), out propertyOverride);
+            if (Optional.IsDefined(OutputLocation) || hasPropertyOverride)
             {
                 builder.Append("  outputLocation:");
-                if (OutputLocation.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{OutputLocation}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{OutputLocation}'");
+                    if (OutputLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{OutputLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{OutputLocation}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(AppBuildCommand))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppBuildCommand), out propertyOverride);
+            if (Optional.IsDefined(AppBuildCommand) || hasPropertyOverride)
             {
                 builder.Append("  appBuildCommand:");
-                if (AppBuildCommand.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{AppBuildCommand}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{AppBuildCommand}'");
+                    if (AppBuildCommand.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{AppBuildCommand}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{AppBuildCommand}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(ApiBuildCommand))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiBuildCommand), out propertyOverride);
+            if (Optional.IsDefined(ApiBuildCommand) || hasPropertyOverride)
             {
                 builder.Append("  apiBuildCommand:");
-                if (ApiBuildCommand.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{ApiBuildCommand}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{ApiBuildCommand}'");
+                    if (ApiBuildCommand.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{ApiBuildCommand}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{ApiBuildCommand}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipGithubActionWorkflowGeneration), out propertyOverride);
+            if (Optional.IsDefined(SkipGithubActionWorkflowGeneration) || hasPropertyOverride)
             {
                 builder.Append("  skipGithubActionWorkflowGeneration:");
-                var boolValue = SkipGithubActionWorkflowGeneration.Value == true ? "true" : "false";
-                builder.AppendLine($" {boolValue}");
-            }
-
-            if (Optional.IsDefined(GithubActionSecretNameOverride))
-            {
-                builder.Append("  githubActionSecretNameOverride:");
-                if (GithubActionSecretNameOverride.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{GithubActionSecretNameOverride}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{GithubActionSecretNameOverride}'");
+                    var boolValue = SkipGithubActionWorkflowGeneration.Value == true ? "true" : "false";
+                    builder.AppendLine($" {boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GithubActionSecretNameOverride), out propertyOverride);
+            if (Optional.IsDefined(GithubActionSecretNameOverride) || hasPropertyOverride)
+            {
+                builder.Append("  githubActionSecretNameOverride:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    if (GithubActionSecretNameOverride.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{GithubActionSecretNameOverride}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{GithubActionSecretNameOverride}'");
+                    }
                 }
             }
 

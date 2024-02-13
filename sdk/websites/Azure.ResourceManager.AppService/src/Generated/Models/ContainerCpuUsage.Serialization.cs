@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -152,38 +153,76 @@ namespace Azure.ResourceManager.AppService.Models
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(TotalUsage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalUsage), out propertyOverride);
+            if (Optional.IsDefined(TotalUsage) || hasPropertyOverride)
             {
                 builder.Append("  totalUsage:");
-                builder.AppendLine($" '{TotalUsage.Value.ToString()}'");
-            }
-
-            if (Optional.IsCollectionDefined(PerCpuUsage))
-            {
-                if (PerCpuUsage.Any())
+                if (hasPropertyOverride)
                 {
-                    builder.Append("  perCpuUsage:");
-                    builder.AppendLine(" [");
-                    foreach (var item in PerCpuUsage)
-                    {
-                        builder.AppendLine($"    '{item.ToString()}'");
-                    }
-                    builder.AppendLine("  ]");
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{TotalUsage.Value.ToString()}'");
                 }
             }
 
-            if (Optional.IsDefined(KernelModeUsage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerCpuUsage), out propertyOverride);
+            if (Optional.IsCollectionDefined(PerCpuUsage) || hasPropertyOverride)
             {
-                builder.Append("  kernelModeUsage:");
-                builder.AppendLine($" '{KernelModeUsage.Value.ToString()}'");
+                if (PerCpuUsage.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  perCpuUsage:");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($" {propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine(" [");
+                        foreach (var item in PerCpuUsage)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
             }
 
-            if (Optional.IsDefined(UserModeUsage))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelModeUsage), out propertyOverride);
+            if (Optional.IsDefined(KernelModeUsage) || hasPropertyOverride)
+            {
+                builder.Append("  kernelModeUsage:");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{KernelModeUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserModeUsage), out propertyOverride);
+            if (Optional.IsDefined(UserModeUsage) || hasPropertyOverride)
             {
                 builder.Append("  userModeUsage:");
-                builder.AppendLine($" '{UserModeUsage.Value.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{UserModeUsage.Value.ToString()}'");
+                }
             }
 
             builder.AppendLine("}");

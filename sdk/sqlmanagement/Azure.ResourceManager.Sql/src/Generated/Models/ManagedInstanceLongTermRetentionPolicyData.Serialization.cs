@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
@@ -193,82 +194,144 @@ namespace Azure.ResourceManager.Sql
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.ParameterOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
             builder.AppendLine("{");
 
-            if (Optional.IsDefined(Name))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
             {
                 builder.Append("  name:");
-                if (Name.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{Name}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{Name}'");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{Name}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(Id))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
             {
                 builder.Append("  id:");
-                builder.AppendLine($" '{Id.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{Id.ToString()}'");
+                }
             }
 
-            if (Optional.IsDefined(SystemData))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
             {
                 builder.Append("  systemData:");
-                builder.AppendLine($" '{SystemData.ToString()}'");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" '{SystemData.ToString()}'");
+                }
             }
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            if (Optional.IsDefined(WeeklyRetention))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeeklyRetention), out propertyOverride);
+            if (Optional.IsDefined(WeeklyRetention) || hasPropertyOverride)
             {
                 builder.Append("    weeklyRetention:");
-                if (WeeklyRetention.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{WeeklyRetention}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{WeeklyRetention}'");
+                    if (WeeklyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{WeeklyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{WeeklyRetention}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(MonthlyRetention))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MonthlyRetention), out propertyOverride);
+            if (Optional.IsDefined(MonthlyRetention) || hasPropertyOverride)
             {
                 builder.Append("    monthlyRetention:");
-                if (MonthlyRetention.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{MonthlyRetention}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{MonthlyRetention}'");
+                    if (MonthlyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{MonthlyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{MonthlyRetention}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(YearlyRetention))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(YearlyRetention), out propertyOverride);
+            if (Optional.IsDefined(YearlyRetention) || hasPropertyOverride)
             {
                 builder.Append("    yearlyRetention:");
-                if (YearlyRetention.Contains(Environment.NewLine))
+                if (hasPropertyOverride)
                 {
-                    builder.AppendLine(" '''");
-                    builder.AppendLine($"{YearlyRetention}'''");
+                    builder.AppendLine($" {propertyOverride}");
                 }
                 else
                 {
-                    builder.AppendLine($" '{YearlyRetention}'");
+                    if (YearlyRetention.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine(" '''");
+                        builder.AppendLine($"{YearlyRetention}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($" '{YearlyRetention}'");
+                    }
                 }
             }
 
-            if (Optional.IsDefined(WeekOfYear))
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WeekOfYear), out propertyOverride);
+            if (Optional.IsDefined(WeekOfYear) || hasPropertyOverride)
             {
                 builder.Append("    weekOfYear:");
-                builder.AppendLine($" {WeekOfYear.Value}");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($" {propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($" {WeekOfYear.Value}");
+                }
             }
 
             builder.AppendLine("  }");
