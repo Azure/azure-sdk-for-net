@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
@@ -117,7 +116,6 @@ public partial class HttpClientPipelineTransport
 
             // ContentStream still holds the source stream.  Buffer the content
             // and dispose the source stream.
-            Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: Buffering. Stream type is {_contentStream.GetType()}");
             BufferedContentStream bufferStream = new();
 
             if (async)
@@ -138,8 +136,6 @@ public partial class HttpClientPipelineTransport
                 new BinaryData(segment.AsMemory()) :
                 new BinaryData(bufferStream.ToArray());
 
-            Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: Buffered.  ContentLength is {_bufferedContent.ToMemory().Length}");
-
             return _bufferedContent;
         }
 
@@ -157,24 +153,14 @@ public partial class HttpClientPipelineTransport
                 HttpResponseMessage httpResponse = _httpResponse;
                 httpResponse?.Dispose();
 
-                Console.WriteLine("HttpClientTransportResponse.Dispose.");
-
                 if (ContentStream is MemoryStream)
                 {
-                    Console.WriteLine("HttpClientTransportResponse.Dispose.  ContentStream is MemoryStream");
                     ReadContent();
                 }
 
                 Stream? contentStream = _contentStream;
                 contentStream?.Dispose();
                 _contentStream = null;
-
-                //if (ContentStream is not MemoryStream)
-                //{
-                //    Stream? contentStream = _contentStream;
-                //    contentStream?.Dispose();
-                //    _contentStream = null;
-                //}
 
                 _disposed = true;
             }

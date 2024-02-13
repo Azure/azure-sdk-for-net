@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Diagnostics;
 using System.Threading;
 
 namespace System.ClientModel.Primitives;

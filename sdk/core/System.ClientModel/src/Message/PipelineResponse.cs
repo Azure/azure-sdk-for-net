@@ -31,11 +31,7 @@ public abstract class PipelineResponse : IDisposable
     /// <summary>
     /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
     /// </summary>
-    public abstract Stream? ContentStream
-    {
-        get;
-        set;
-    }
+    public abstract Stream? ContentStream { get; set; }
 
     public abstract BinaryData Content { get; }
 
