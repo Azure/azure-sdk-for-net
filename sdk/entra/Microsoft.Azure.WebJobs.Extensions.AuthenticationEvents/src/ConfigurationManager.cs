@@ -16,25 +16,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         public static ServiceInfo defaultService { get; private set; }
 
-        /// <summary>
-        /// AAD Service Info.
-        /// </summary>
-        private static readonly ServiceInfo AADServiceInfo = new()
-        {
-            OpenIdConnectionHost = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
-            TokenIssuerV1 = "https://sts.windows.net/{0}/",
-            TokenIssuerV2 = "https://login.microsoftonline.com/{0}/v2.0",
-            ApplicationId = "99045fe1-7639-4a75-9d4a-577b6ca3810f"
-        };
-
         private const string EZAUTH_ENABLED = "WEBSITE_AUTH_ENABLED";
-
         private const string BYPASS_VALIDATION_KEY = "AuthenticationEvents__BypassTokenValidation";
-        private const string OIDC_METADATA_KEY = "AuthenticationEvents__OpenIdConnectionHost";
-        private const string TOKEN_ISSUER_KEY = "AuthenticationEvents__TokenIssuer";
 
-        internal const string TENANT_ID_KEY = "AuthenticationEvents__TenantId";
-        internal const string AUDIENCE_APPID_KEY = "AuthenticationEvents__AudienceAppId";
+        private const string OIDC_METADATA_KEY = "AuthenticationEvents__OpenIdConnectionHost";
+        private const string TOKEN_ISSUER_V1_KEY = "AuthenticationEvents__TokenIssuer_V1";
+        private const string TOKEN_ISSUER_V2_KEY = "AuthenticationEvents__TokenIssuer_V2";
+        private const string TENANT_ID_KEY = "AuthenticationEvents__TenantId";
+        private const string AUDIENCE_APPID_KEY = "AuthenticationEvents__AudienceAppId";
 
         internal const string TOKEN_V1_VERIFY = "appid";
         internal const string TOKEN_V2_VERIFY = "azp";
@@ -51,7 +40,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal ConfigurationManager(AuthenticationEventsTriggerAttribute triggerAttribute)
         {
             this.triggerAttribute = triggerAttribute;
-            CheckForServiceInfoConfigValues();
+            CheckForCustomServiceInfoConfigValues();
         }
 
         /// <summary>
@@ -59,33 +48,90 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// if not, use the default AAD service info.
         /// if all are there, use the custom service info.
         /// </summary>
-        public void CheckForServiceInfoConfigValues()
+        private void CheckForCustomServiceInfoConfigValues()
         {
-            // Get the configuration values from the environment variables or use the values triggerAttribute.
-            string tid = TenantId;
-            string appId = AudienceAppId;
-            string oidc = OpenIdConnectionHost;
-            string issuer = TokenIssuer;
-
             // if any of the values are missing, use the default AAD service info.
-            if (string.IsNullOrEmpty(tid)
-                || string.IsNullOrEmpty(appId)
-                || string.IsNullOrEmpty(oidc)
-                || string.IsNullOrEmpty(issuer))
+            // Don't need to check tenant id or application id
+            // because they are required and will throw an exception if missing.
+            if (string.IsNullOrEmpty(OpenIdConnectionHost)
+                || string.IsNullOrEmpty(TokenIssuerV1)
+                || string.IsNullOrEmpty(TokenIssuerV2))
             {
-                defaultService = AADServiceInfo;
+                // Continue to support the aad as the default service if overrides not provided.
+                defaultService = GetAADServiceInfo(TenantId);
             }
             else
             {
                 defaultService = new ServiceInfo
                 {
-                    OpenIdConnectionHost = oidc,
-                    TokenIssuerV1 = issuer,
-                    TokenIssuerV2 = issuer,
-                    ApplicationId = appId
+                    TenantId = TenantId,
+                    ApplicationId = AudienceAppId,
+                    OpenIdConnectionHost = OpenIdConnectionHost,
+                    TokenIssuerV1 = TokenIssuerV1,
+                    TokenIssuerV2 = TokenIssuerV2,
+                    IsDefault = false
                 };
             }
         }
+
+        /// <summary>
+        /// Get the tenant id from the environment variable or use the default value from the trigger attribute.
+        /// </summary>
+        internal string TenantId
+        {
+            get
+            {
+                string value = GetConfigValue(TENANT_ID_KEY, triggerAttribute.TenantId);
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_TenantId_Required,
+                            arg0: TENANT_ID_KEY));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Get the audience app id from the environment variable or use the default value from the trigger attribute.
+        /// </summary>
+        internal string AudienceAppId
+        {
+            get
+            {
+                string value = GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute.AudienceAppId);
+
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new MissingFieldException(
+                        string.Format(
+                            provider: CultureInfo.CurrentCulture,
+                            format: AuthenticationEventResource.Ex_Trigger_ApplicationId_Required,
+                            arg0: AUDIENCE_APPID_KEY));
+                }
+
+                return value;
+            }
+        }
+
+        /// <summary>
+        /// Get the OpenId connection host from the environment variable or use the default value.
+        /// </summary>
+        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute.OpenIdConnectionHost);
+
+        /// <summary>
+        /// Get the token issuer from the environment variable or use the default value.
+        /// </summary>
+        internal string TokenIssuerV1 => GetConfigValue(TOKEN_ISSUER_V1_KEY, triggerAttribute.TokenIssuer);
+
+        /// <summary>
+        /// Get the token issuer from the environment variable or use the default value.
+        /// </summary>
+        internal string TokenIssuerV2 => GetConfigValue(TOKEN_ISSUER_V2_KEY, triggerAttribute.TokenIssuer);
 
         /// <summary>
         /// If we should bypass the token validation.
@@ -97,26 +143,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// If the EZAuth is enabled.
         /// </summary>
         internal static bool EZAuthEnabled => GetConfigValue(EZAUTH_ENABLED, false);
-
-        /// <summary>
-        /// Get the tenant id from the environment variable or use the default value.
-        /// </summary>
-        internal string TenantId => GetConfigValue(TENANT_ID_KEY, triggerAttribute.TenantId);
-
-        /// <summary>
-        /// Get the audience app id from the environment variable or use the default value.
-        /// </summary>
-        internal string AudienceAppId => GetConfigValue(AUDIENCE_APPID_KEY, triggerAttribute.AudienceAppId);
-
-        /// <summary>
-        /// Get the OpenId connection host from the environment variable or use the default value.
-        /// </summary>
-        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute.OpenIdConnectionHost);
-
-        /// <summary>
-        /// Get the token issuer from the environment variable or use the default value.
-        /// </summary>
-        internal string TokenIssuer => GetConfigValue(TOKEN_ISSUER_KEY, triggerAttribute.TokenIssuer);
 
         /// <summary>
         /// Try to get the service info based on the service id.
@@ -156,8 +182,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Get config value from environment variable or use the default value.
         /// </summary>
-        /// <param name="environmentVariable"></param>
-        /// <param name="defaultValue"></param>
+        /// <param name="environmentVariable">Definied Azure function application settings</param>
+        /// <param name="defaultValue">Default value, most likely from auth trigger anotation</param>
         /// <returns></returns>
         private static string GetConfigValue(string environmentVariable, string defaultValue)
         {
@@ -166,9 +192,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         private static T GetConfigValue<T>(string environmentVariable, T defaultValue) where T : struct
         {
-            return Environment.GetEnvironmentVariable(environmentVariable) == null ?
+            string value = GetConfigValue(environmentVariable, null);
+
+            return value == null ?
                 defaultValue :
-                (T)Convert.ChangeType(Environment.GetEnvironmentVariable(environmentVariable), typeof(T), CultureInfo.CurrentCulture);
+                (T)Convert.ChangeType(
+                    value: Environment.GetEnvironmentVariable(environmentVariable),
+                    conversionType: typeof(T),
+                    provider: CultureInfo.CurrentCulture);
+        }
+
+        private static ServiceInfo GetAADServiceInfo(string tid)
+        {
+            return new ServiceInfo()
+            {
+                OpenIdConnectionHost = "https://login.microsoftonline.com/common/v2.0/.well-known/openid-configuration",
+                TokenIssuerV1 = $"https://sts.windows.net/{tid}/",
+                TokenIssuerV2 = $"https://login.microsoftonline.com/{tid}/v2.0",
+                ApplicationId = "99045fe1-7639-4a75-9d4a-577b6ca3810f",
+                IsDefault = true
+            };
         }
     }
 }

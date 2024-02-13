@@ -27,17 +27,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             HttpRequestMessage request,
             ConfigurationManager configurationManager)
         {
-            if (string.IsNullOrEmpty(configurationManager.TenantId) ||
-                string.IsNullOrEmpty(configurationManager.AudienceAppId))
-            {
-                throw new MissingFieldException(
-                    string.Format(
-                        provider: CultureInfo.CurrentCulture,
-                        format: AuthenticationEventResource.Ex_Trigger_Required_Attrs,
-                        arg0: ConfigurationManager.TENANT_ID_KEY,
-                        arg1: ConfigurationManager.AUDIENCE_APPID_KEY));
-            }
-
             string accessToken = request.Headers?.Authorization?.Parameter;
 
             if (string.IsNullOrWhiteSpace(accessToken))
@@ -55,8 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             string tokenAuthorizationPartyId = token.Payload[
                 tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
                     ConfigurationManager.TOKEN_V2_VERIFY :
-                    ConfigurationManager.TOKEN_V1_VERIFY]
-                    .ToString();
+                    ConfigurationManager.TOKEN_V1_VERIFY].ToString();
 
             if (!ConfigurationManager.TryGetService(
                 serviceId: tokenAuthorizationPartyId,
@@ -103,12 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     validationParameters: new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = string.Format(
-                            CultureInfo.CurrentCulture,
-                            tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ?
-                                serviceInfo.TokenIssuerV2 :
-                                serviceInfo.TokenIssuerV1,
-                            configurationManager.TenantId),
+                        ValidIssuer = tokenSchemaVersion == SupportedTokenSchemaVersions.V2_0 ? configurationManager.TokenIssuerV2 : configurationManager.TokenIssuerV1,
                         ValidAudiences = authenticationAppIds,
                         IssuerSigningKeys = _cacheKeys
                     },

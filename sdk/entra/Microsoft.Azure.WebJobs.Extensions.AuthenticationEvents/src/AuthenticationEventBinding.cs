@@ -225,7 +225,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
 
             TokenValidator validator = ConfigurationManager.EZAuthEnabled && requestMessage.Headers.Matches(ConfigurationManager.HEADER_EZAUTH_ICP, ConfigurationManager.HEADER_EZAUTH_ICP_VERIFY) ?
-                (TokenValidator)new TokenValidatorEZAuth() :
+                new TokenValidatorEZAuth() :
                 new TokenValidatorInternal();
 
             (bool valid, Dictionary<string, string> claims) = await validator.GetClaimsAndValidate(requestMessage, configurationManager).ConfigureAwait(false);

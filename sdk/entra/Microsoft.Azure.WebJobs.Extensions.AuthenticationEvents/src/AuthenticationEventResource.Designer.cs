@@ -323,11 +323,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1}).
+        ///   Looks up a localized string similar to Please supply the ApplicationId {0} in variables in your binding configuration..
         /// </summary>
-        internal static string Ex_Trigger_Required_Attrs {
+        internal static string Ex_Trigger_ApplicationId_Required {
             get {
-                return ResourceManager.GetString("Ex_Trigger_Required_Attrs", resourceCulture);
+                return ResourceManager.GetString("Ex_Trigger_ApplicationId_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please supply the TenantId {0} in variables in your binding configuration..
+        /// </summary>
+        internal static string Ex_Trigger_TenantId_Required {
+            get {
+                return ResourceManager.GetString("Ex_Trigger_TenantId_Required", resourceCulture);
             }
         }
         

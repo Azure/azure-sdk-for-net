@@ -204,8 +204,11 @@
   <data name="Ex_Token_Version" xml:space="preserve">
     <value>Invalid token version {0}, supported versions are: {1}</value>
   </data>
-  <data name="Ex_Trigger_Required_Attrs" xml:space="preserve">
-    <value>Please supply both the TenantId and AudienceAppId in variables in your binding configuration. (Or app settings {0} and {1})</value>
+  <data name="Ex_Trigger_ApplicationId_Required" xml:space="preserve">
+    <value>Please supply the ApplicationId {0} in variables in your binding configuration.</value>
+  </data>
+  <data name="Ex_Trigger_TenantId_Required" xml:space="preserve">
+    <value>Please supply the TenantId {0} in variables in your binding configuration.</value>
   </data>
   <data name="Log_EventHandler_Url" xml:space="preserve">
     <value>Listener registered at: {0}</value>

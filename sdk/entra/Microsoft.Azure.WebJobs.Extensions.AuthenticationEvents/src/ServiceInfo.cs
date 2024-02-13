@@ -19,6 +19,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         internal string OpenIdConnectionHost { get; set; }
 
         /// <summary>
+        /// The tenant id of the service side service.
+        /// </summary>
+        internal string TenantId { get; set; }
+
+        /// <summary>
         /// The v1 issuer string of the token.
         /// </summary>
         internal string TokenIssuerV1 { get; set; }
@@ -27,5 +32,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// the v2 issuer string of the token.
         /// </summary>
         internal string TokenIssuerV2 { get; set; }
+
+        /// <summary>
+        /// If definied by the library.
+        /// Default is true.
+        /// </summary>
+        internal bool IsDefault { get; set; } = true;
     }
 }
