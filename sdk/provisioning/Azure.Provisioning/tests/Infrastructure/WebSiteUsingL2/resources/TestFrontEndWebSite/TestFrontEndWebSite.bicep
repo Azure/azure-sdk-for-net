@@ -7,8 +7,8 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
   name: 'keyVault_CRoMbemLF'
 }
 
-resource webSite_5n5qLSHlO 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'frontEnd-mnash-cdk'
+resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
+  name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
   }
@@ -34,13 +34,13 @@ resource webSite_5n5qLSHlO 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_0dS4jj7Cg 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_5n5qLSHlO
+resource applicationSettingsResource_NslbdUwEt 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'appsettings'
 }
 
-resource webSiteConfigLogs_PBLecfGMJ 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_5n5qLSHlO
+resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -64,4 +64,4 @@ resource webSiteConfigLogs_PBLecfGMJ 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_5n5qLSHlO.identity.principalId
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId

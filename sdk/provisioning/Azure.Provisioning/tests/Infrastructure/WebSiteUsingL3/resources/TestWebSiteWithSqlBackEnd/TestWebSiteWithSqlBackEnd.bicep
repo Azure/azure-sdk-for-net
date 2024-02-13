@@ -7,8 +7,8 @@ param sqlAdminPassword string
 param appUserPassword string
 
 
-resource appServicePlan_rxltck14T 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: 'appServicePlan-mnash-cdk'
+resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: 'appServicePlan-TEST'
   location: 'westus'
   sku: {
     name: 'B1'
@@ -18,8 +18,8 @@ resource appServicePlan_rxltck14T 'Microsoft.Web/serverfarms@2021-02-01' = {
   }
 }
 
-resource keyVault_sofGLX66Z 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  name: 'kv-mnash-cdk'
+resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: 'kv-TEST'
   location: 'westus'
   tags: {
     key: 'value'
@@ -33,8 +33,8 @@ resource keyVault_sofGLX66Z 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_k8EvVNryo 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_sofGLX66Z
+resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_CRoMbemLF
   name: 'add'
   properties: {
     accessPolicies: [

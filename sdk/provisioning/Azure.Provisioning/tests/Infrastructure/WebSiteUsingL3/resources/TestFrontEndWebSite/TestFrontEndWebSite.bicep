@@ -1,20 +1,20 @@
 
-resource appServicePlan_rxltck14T 'Microsoft.Web/serverfarms@2021-02-01' existing = {
-  name: 'appServicePlan_rxltck14T'
+resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' existing = {
+  name: 'appServicePlan_kjMZSF1FP'
 }
 
-resource keyVault_sofGLX66Z 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
-  name: 'keyVault_sofGLX66Z'
+resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
+  name: 'keyVault_CRoMbemLF'
 }
 
-resource webSite_5n5qLSHlO 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'frontEnd-mnash-cdk'
+resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
+  name: 'frontEnd-TEST'
   location: 'westus'
   identity: {
   }
   kind: 'app,linux'
   properties: {
-    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-mnash-cdk'
+    serverFarmId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-TEST/providers/Microsoft.Web/serverfarms/appServicePlan-TEST'
     siteConfig: {
       linuxFxVersion: 'node|18-lts'
       alwaysOn: true
@@ -34,13 +34,13 @@ resource webSite_5n5qLSHlO 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_0dS4jj7Cg 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_5n5qLSHlO
+resource applicationSettingsResource_NslbdUwEt 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'appsettings'
 }
 
-resource webSiteConfigLogs_PBLecfGMJ 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_5n5qLSHlO
+resource webSiteConfigLogs_giqxapQs0 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_W5EweSXEq
   name: 'logs'
   properties: {
     applicationLogs: {
@@ -64,4 +64,4 @@ resource webSiteConfigLogs_PBLecfGMJ 'Microsoft.Web/sites/config@2021-02-01' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_5n5qLSHlO.identity.principalId
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId

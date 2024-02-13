@@ -27,8 +27,8 @@ resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   }
 }
 
-resource sqlServer_GfC780gjO 'Microsoft.Sql/servers@2022-08-01-preview' = {
-  name: 'sqlserver-mnash-cdk'
+resource sqlServer_zjdvvB2wl 'Microsoft.Sql/servers@2022-08-01-preview' = {
+  name: 'sqlserver-TEST'
   location: 'westus'
   properties: {
     administratorLogin: 'sqladmin'
@@ -39,9 +39,9 @@ resource sqlServer_GfC780gjO 'Microsoft.Sql/servers@2022-08-01-preview' = {
   }
 }
 
-resource sqlDatabase_06pzzL812 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
-  parent: sqlServer_GfC780gjO
-  name: 'db-mnash-cdk'
+resource sqlDatabase_U7NzorRJT 'Microsoft.Sql/servers/databases@2022-08-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
+  name: 'db-TEST'
   location: 'westus'
   properties: {
   }
@@ -51,21 +51,21 @@ resource keyVaultSecret_NP8ELZpgb 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   parent: keyVault_CRoMbemLF
   name: 'connectionString'
   properties: {
-    value: 'Server=${sqlServer_GfC780gjO.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_06pzzL812.name}; User=appUser; Password=${appUserPassword}'
+    value: 'Server=${sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_U7NzorRJT.name}; User=appUser; Password=${appUserPassword}'
   }
 }
 
-resource sqlFirewallRule_uT1qFq1g9 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
-  parent: sqlServer_GfC780gjO
-  name: 'firewallRule-mnash-cdk'
+resource sqlFirewallRule_eS4m8st65 'Microsoft.Sql/servers/firewallRules@2020-11-01-preview' = {
+  parent: sqlServer_zjdvvB2wl
+  name: 'firewallRule-TEST'
   properties: {
     startIpAddress: '0.0.0.1'
     endIpAddress: '255.255.255.254'
   }
 }
 
-resource deploymentScript_rue7c15EI 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'cliScript-mnash-cdk'
+resource deploymentScript_3Zq2Pl8xa 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+  name: 'cliScript-TEST'
   location: 'westus'
   kind: 'AzureCLI'
   properties: {
@@ -93,11 +93,11 @@ SCRIPT_END
       }
       {
         name: 'DBNAME'
-        value: '_p_.sqlDatabase_06pzzL812.name'
+        value: '_p_.sqlDatabase_U7NzorRJT.name'
       }
       {
         name: 'DBSERVER'
-        value: '_p_.sqlServer_GfC780gjO.properties.fullyQualifiedDomainName'
+        value: '_p_.sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName'
       }
       {
         name: 'SQLCMDPASSWORD'

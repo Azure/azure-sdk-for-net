@@ -22,7 +22,7 @@ namespace Azure.Provisioning
         private List<IConstruct> _constructs;
         private List<Output> _outputs;
         private List<Resource> _existingResources;
-        private string _environmentName;
+        private string? _environmentName;
 
         /// <inheritdoc/>
         public string Name { get; }
@@ -75,7 +75,7 @@ namespace Azure.Provisioning
                 Subscription = scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId);
             }
 
-            _environmentName = envName ?? Environment.GetEnvironmentVariable("AZURE_ENV_NAME") ?? throw new Exception("No environment variable found named 'AZURE_ENV_NAME'");
+            _environmentName = envName;
         }
 
         private string GetEnvironmentName()
