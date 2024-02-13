@@ -147,7 +147,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
             throw new ClientResultException(e.Message, response: default, e);
         }
 
-        message.Response = new HttpPipelineResponse(responseMessage);
+        message.Response = new HttpClientTransportResponse(responseMessage);
 
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
