@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ContainerServiceNetworkPlugin Azure { get; } = new ContainerServiceNetworkPlugin(AzureValue);
         /// <summary> Use the Kubenet network plugin. See [Kubenet (basic) networking](https://docs.microsoft.com/azure/aks/concepts-network#kubenet-basic-networking) for more information. </summary>
         public static ContainerServiceNetworkPlugin Kubenet { get; } = new ContainerServiceNetworkPlugin(KubenetValue);
-        /// <summary> Do not use a network plugin. A custom CNI will need to be installed after cluster creation for networking functionality. </summary>
+        /// <summary> No CNI plugin is pre-installed. See [BYO CNI](https://docs.microsoft.com/en-us/azure/aks/use-byo-cni) for more information. </summary>
         public static ContainerServiceNetworkPlugin None { get; } = new ContainerServiceNetworkPlugin(NoneValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPlugin"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPlugin left, ContainerServiceNetworkPlugin right) => left.Equals(right);

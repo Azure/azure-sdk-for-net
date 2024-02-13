@@ -86,20 +86,22 @@ Next, we will create sample hotel documents. The vector field requires submittin
 
 ### Get Embeddings using `Azure.AI.OpenAI`
 
-```C# Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
-Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-AzureKeyCredential credential = new AzureKeyCredential(key);
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_GetEmbeddings
+public static ReadOnlyMemory<float> GetEmbeddings(string input)
+{
+    Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
+    string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
+    AzureKeyCredential credential = new AzureKeyCredential(key);
 
-OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-string description = "Very popular hotel in town.";
-EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { description });
+    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
+    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
 
-Embeddings embeddings = await openAIClient.GetEmbeddingsAsync(embeddingsOptions);
-ReadOnlyMemory<float> descriptionVector = embeddings.Data[0].Embedding;
+    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
+    return embeddings.Data[0].Embedding;
+}
 ```
 
-In the sample code below, we are using hardcoded embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
+In the sample code below, we are using `GetEmbeddings` method mentioned above to get embeddings for the vector fields named `DescriptionVector` and `CategoryVector`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Hotel_Document
 public static Hotel[] GetHotelDocuments()
@@ -114,20 +116,23 @@ public static Hotel[] GetHotelDocuments()
                 "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                 "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
                 "the tourist attractions. We highly recommend this hotel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel1VectorizeDescription,
+            DescriptionVector = GetEmbeddings(
+                "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
+                "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
+                "the tourist attractions. We highly recommend this hotel."),
             Category = "Luxury",
-            CategoryVector = VectorSearchEmbeddings.LuxuryVectorizeCategory
+            CategoryVector = GetEmbeddings("Luxury")
         },
         new Hotel()
         {
             HotelId = "2",
             HotelName = "Roach Motel",
             Description = "Cheapest hotel in town. Infact, a motel.",
-            DescriptionVector = VectorSearchEmbeddings.Hotel2VectorizeDescription,
+            DescriptionVector = GetEmbeddings("Cheapest hotel in town. Infact, a motel."),
             Category = "Budget",
-            CategoryVector = VectorSearchEmbeddings.BudgetVectorizeCategory
+            CategoryVector = GetEmbeddings("Luxury")
         },
-         // Add more hotel documents here...
+        // Add more hotel documents here...
     };
 }
 ```

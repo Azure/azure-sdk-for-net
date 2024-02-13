@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,186 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionModernReservationTransaction
+    public partial class ConsumptionModernReservationTransaction : IUtf8JsonSerializable, IJsonModel<ConsumptionModernReservationTransaction>
     {
-        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionModernReservationTransaction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionModernReservationTransaction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tags)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("amount"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
+            {
+                writer.WritePropertyName("armSkuName"u8);
+                writer.WriteStringValue(ArmSkuName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            {
+                writer.WritePropertyName("billingProfileId"u8);
+                writer.WriteStringValue(BillingProfileId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileName))
+            {
+                writer.WritePropertyName("billingProfileName"u8);
+                writer.WriteStringValue(BillingProfileName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
+            {
+                writer.WritePropertyName("eventDate"u8);
+                writer.WriteStringValue(TransactOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Invoice))
+            {
+                writer.WritePropertyName("invoice"u8);
+                writer.WriteStringValue(Invoice);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceId))
+            {
+                writer.WritePropertyName("invoiceId"u8);
+                writer.WriteStringValue(InvoiceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionId))
+            {
+                writer.WritePropertyName("invoiceSectionId"u8);
+                writer.WriteStringValue(InvoiceSectionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceSectionName))
+            {
+                writer.WritePropertyName("invoiceSectionName"u8);
+                writer.WriteStringValue(InvoiceSectionName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionGuid))
+            {
+                writer.WritePropertyName("purchasingSubscriptionGuid"u8);
+                writer.WriteStringValue(PurchasingSubscriptionGuid.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionName))
+            {
+                writer.WritePropertyName("purchasingSubscriptionName"u8);
+                writer.WriteStringValue(PurchasingSubscriptionName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Region))
+            {
+                writer.WritePropertyName("region"u8);
+                writer.WriteStringValue(Region);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
+            {
+                writer.WritePropertyName("reservationOrderId"u8);
+                writer.WriteStringValue(ReservationOrderId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderName))
+            {
+                writer.WritePropertyName("reservationOrderName"u8);
+                writer.WriteStringValue(ReservationOrderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Term))
+            {
+                writer.WritePropertyName("term"u8);
+                writer.WriteStringValue(Term);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionModernReservationTransaction IJsonModel<ConsumptionModernReservationTransaction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
+        }
+
+        internal static ConsumptionModernReservationTransaction DeserializeConsumptionModernReservationTransaction(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +223,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<string> reservationOrderId = default;
             Optional<string> reservationOrderName = default;
             Optional<string> term = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -226,8 +405,44 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionModernReservationTransaction(id, name, type, systemData.Value, Optional.ToNullable(amount), armSkuName.Value, billingFrequency.Value, billingProfileId.Value, billingProfileName.Value, currency.Value, description.Value, Optional.ToNullable(eventDate), eventType.Value, invoice.Value, invoiceId.Value, invoiceSectionId.Value, invoiceSectionName.Value, Optional.ToNullable(purchasingSubscriptionGuid), purchasingSubscriptionName.Value, Optional.ToNullable(quantity), region.Value, reservationOrderId.Value, reservationOrderName.Value, term.Value, Optional.ToList(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionModernReservationTransaction>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionModernReservationTransaction IPersistableModel<ConsumptionModernReservationTransaction>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionModernReservationTransaction(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionModernReservationTransaction)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionModernReservationTransaction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

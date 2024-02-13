@@ -5,46 +5,79 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> ControlPlaneProfile - The control plane properties for the provisioned cluster. </summary>
-    public partial class ProvisionedClusterControlPlaneProfile : HybridContainerServiceNamedAgentPoolProfile
+    /// <summary> The properties of the control plane nodes of the provisioned cluster. </summary>
+    public partial class ProvisionedClusterControlPlaneProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterControlPlaneProfile"/>. </summary>
         public ProvisionedClusterControlPlaneProfile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterControlPlaneProfile"/>. </summary>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
-        /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        /// <param name="controlPlaneEndpoint"> API server endpoint for the control plane. </param>
-        /// <param name="linuxProfile"> Profile for Linux VMs in the container service cluster. </param>
-        internal ProvisionedClusterControlPlaneProfile(IList<string> availabilityZones, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, string nodeImageVersion, int? count, string vmSize, string name, ProvisionedClusterControlPlaneEndpoint controlPlaneEndpoint, LinuxProfileProperties linuxProfile) : base(availabilityZones, osType, osSku, nodeImageVersion, count, vmSize, name)
+        /// <param name="count"> Number of control plane nodes. The default value is 1, and the count should be an odd number. </param>
+        /// <param name="vmSize"> VM sku size of the control plane nodes. </param>
+        /// <param name="controlPlaneEndpoint"> IP Address of the Kubernetes API server. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterControlPlaneProfile(int? count, string vmSize, ControlPlaneProfileControlPlaneEndpoint controlPlaneEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Count = count;
+            VmSize = vmSize;
             ControlPlaneEndpoint = controlPlaneEndpoint;
-            LinuxProfile = linuxProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> API server endpoint for the control plane. </summary>
-        public ProvisionedClusterControlPlaneEndpoint ControlPlaneEndpoint { get; set; }
-        /// <summary> Profile for Linux VMs in the container service cluster. </summary>
-        internal LinuxProfileProperties LinuxProfile { get; set; }
-        /// <summary> PublicKeys - The list of SSH public keys used to authenticate with Linux-based VMs. Only expect one key specified. </summary>
-        public IList<LinuxSshPublicKey> SshPublicKeys
+        /// <summary> Number of control plane nodes. The default value is 1, and the count should be an odd number. </summary>
+        public int? Count { get; set; }
+        /// <summary> VM sku size of the control plane nodes. </summary>
+        public string VmSize { get; set; }
+        /// <summary> IP Address of the Kubernetes API server. </summary>
+        internal ControlPlaneProfileControlPlaneEndpoint ControlPlaneEndpoint { get; set; }
+        /// <summary> IP address of the Kubernetes API server. </summary>
+        public string ControlPlaneEndpointHostIP
         {
-            get
+            get => ControlPlaneEndpoint is null ? default : ControlPlaneEndpoint.HostIP;
+            set
             {
-                if (LinuxProfile is null)
-                    LinuxProfile = new LinuxProfileProperties();
-                return LinuxProfile.SshPublicKeys;
+                if (ControlPlaneEndpoint is null)
+                    ControlPlaneEndpoint = new ControlPlaneProfileControlPlaneEndpoint();
+                ControlPlaneEndpoint.HostIP = value;
             }
         }
     }

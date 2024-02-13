@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quantum.Models
             tags ??= new Dictionary<string, string>();
             providers ??= new List<Provider>();
 
-            return new QuantumWorkspaceData(id, name, resourceType, systemData, tags, location, identity, providers?.ToList(), usable, provisioningState, storageAccount, endpointUri);
+            return new QuantumWorkspaceData(id, name, resourceType, systemData, tags, location, identity, providers?.ToList(), usable, provisioningState, storageAccount, endpointUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderDescription"/>. </summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.ProviderDescription"/> instance for mocking. </returns>
         public static ProviderDescription ProviderDescription(string id = null, string name = null, ProviderProperties properties = null)
         {
-            return new ProviderDescription(id, name, properties);
+            return new ProviderDescription(id, name, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderProperties"/>. </summary>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Quantum.Models
             quotaDimensions ??= new List<QuotaDimension>();
             pricingDimensions ??= new List<PricingDimension>();
 
-            return new ProviderProperties(description, providerType, company, defaultEndpoint, aad, managedApplication, targets?.ToList(), skus?.ToList(), quotaDimensions?.ToList(), pricingDimensions?.ToList());
+            return new ProviderProperties(description, providerType, company, defaultEndpoint, aad, managedApplication, targets?.ToList(), skus?.ToList(), quotaDimensions?.ToList(), pricingDimensions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesAad"/>. </summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.ProviderPropertiesAad"/> instance for mocking. </returns>
         public static ProviderPropertiesAad ProviderPropertiesAad(string applicationId = null, Guid? tenantId = null)
         {
-            return new ProviderPropertiesAad(applicationId, tenantId);
+            return new ProviderPropertiesAad(applicationId, tenantId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesManagedApplication"/>. </summary>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.ProviderPropertiesManagedApplication"/> instance for mocking. </returns>
         public static ProviderPropertiesManagedApplication ProviderPropertiesManagedApplication(string publisherId = null, string offerId = null)
         {
-            return new ProviderPropertiesManagedApplication(publisherId, offerId);
+            return new ProviderPropertiesManagedApplication(publisherId, offerId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TargetDescription"/>. </summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Quantum.Models
             acceptedDataFormats ??= new List<string>();
             acceptedContentEncodings ??= new List<string>();
 
-            return new TargetDescription(id, name, description, acceptedDataFormats?.ToList(), acceptedContentEncodings?.ToList());
+            return new TargetDescription(id, name, description, acceptedDataFormats?.ToList(), acceptedContentEncodings?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SkuDescription"/>. </summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Quantum.Models
             quotaDimensions ??= new List<QuotaDimension>();
             pricingDetails ??= new List<PricingDetail>();
 
-            return new SkuDescription(id, name, version, description, restrictedAccessUri, autoAdd, targets?.ToList(), quotaDimensions?.ToList(), pricingDetails?.ToList());
+            return new SkuDescription(id, name, version, description, restrictedAccessUri, autoAdd, targets?.ToList(), quotaDimensions?.ToList(), pricingDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.QuotaDimension"/>. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.QuotaDimension"/> instance for mocking. </returns>
         public static QuotaDimension QuotaDimension(string id = null, string scope = null, string period = null, float? quota = null, string name = null, string description = null, string unit = null, string unitPlural = null)
         {
-            return new QuotaDimension(id, scope, period, quota, name, description, unit, unitPlural);
+            return new QuotaDimension(id, scope, period, quota, name, description, unit, unitPlural, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PricingDetail"/>. </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.PricingDetail"/> instance for mocking. </returns>
         public static PricingDetail PricingDetail(string id = null, string value = null)
         {
-            return new PricingDetail(id, value);
+            return new PricingDetail(id, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PricingDimension"/>. </summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.PricingDimension"/> instance for mocking. </returns>
         public static PricingDimension PricingDimension(string id = null, string name = null)
         {
-            return new PricingDimension(id, name);
+            return new PricingDimension(id, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
         public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message);
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
         }
     }
 }

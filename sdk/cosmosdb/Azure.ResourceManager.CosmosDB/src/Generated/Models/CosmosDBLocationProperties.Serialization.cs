@@ -5,22 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class CosmosDBLocationProperties : IUtf8JsonSerializable
+    public partial class CosmosDBLocationProperties : IUtf8JsonSerializable, IJsonModel<CosmosDBLocationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBLocationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CosmosDBLocationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBLocationProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DoesSupportAvailabilityZone))
+            {
+                writer.WritePropertyName("supportsAvailabilityZone"u8);
+                writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsResidencyRestricted))
+            {
+                writer.WritePropertyName("isResidencyRestricted"u8);
+                writer.WriteBooleanValue(IsResidencyRestricted.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BackupStorageRedundancies))
+            {
+                writer.WritePropertyName("backupStorageRedundancies"u8);
+                writer.WriteStartArray();
+                foreach (var item in BackupStorageRedundancies)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForRegular))
+            {
+                writer.WritePropertyName("isSubscriptionRegionAccessAllowedForRegular"u8);
+                writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForRegular.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsSubscriptionRegionAccessAllowedForAz))
+            {
+                writer.WritePropertyName("isSubscriptionRegionAccessAllowedForAz"u8);
+                writer.WriteBooleanValue(IsSubscriptionRegionAccessAllowedForAz.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CosmosDBLocationProperties DeserializeCosmosDBLocationProperties(JsonElement element)
+        CosmosDBLocationProperties IJsonModel<CosmosDBLocationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CosmosDBLocationProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCosmosDBLocationProperties(document.RootElement, options);
+        }
+
+        internal static CosmosDBLocationProperties DeserializeCosmosDBLocationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +105,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> isSubscriptionRegionAccessAllowedForRegular = default;
             Optional<bool> isSubscriptionRegionAccessAllowedForAz = default;
             Optional<CosmosDBStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportsAvailabilityZone"u8))
@@ -92,8 +168,44 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     status = new CosmosDBStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CosmosDBLocationProperties(Optional.ToNullable(supportsAvailabilityZone), Optional.ToNullable(isResidencyRestricted), Optional.ToList(backupStorageRedundancies), Optional.ToNullable(isSubscriptionRegionAccessAllowedForRegular), Optional.ToNullable(isSubscriptionRegionAccessAllowedForAz), Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CosmosDBLocationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBLocationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CosmosDBLocationProperties IPersistableModel<CosmosDBLocationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBLocationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCosmosDBLocationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CosmosDBLocationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CosmosDBLocationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,8 +20,9 @@ modelerfour:
   flatten-payloads: false
   # Mitigate the duplication schema named 'ErrorDetail'
   lenient-model-deduplication: true
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 prepend-rp-prefix:
@@ -121,7 +122,7 @@ acronym-mapping:
 models-to-treat-empty-string-as-null:
   - AgentConfiguration
 
-directive:  
+directive:
   - from: HybridCompute.json
     where: $.definitions.MachineInstallPatchesParameters.properties.maximumDuration
     transform: $['format'] = 'duration'
@@ -133,11 +134,11 @@ directive:
   - from: HybridCompute.json
     where: $.definitions.MachineProperties.properties.privateLinkScopeResourceId
     transform: $['format'] = 'arm-id'
-  
+
   - from: HybridCompute.json
     where: $.definitions.AgentUpgrade.properties.correlationId
     transform: $['format'] = 'uuid'
-  
+
   - from: HybridCompute.json
     where: $.definitions.AgentUpgrade.properties.lastAttemptTimestamp
     transform: $['format'] = 'date-time'
@@ -195,7 +196,7 @@ directive:
           }
         ]
 
-  # add 200 response to run-command delete 
+  # add 200 response to run-command delete
   - from: HybridCompute.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/runCommands/{runCommandName}"].delete.responses
     transform: >-
@@ -231,7 +232,7 @@ directive:
           }
         }
       }
-  
+
   # remove cmdlets
   - where:
       subject: NetworkProfile

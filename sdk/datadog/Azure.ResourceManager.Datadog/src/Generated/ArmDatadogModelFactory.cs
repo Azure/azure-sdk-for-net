@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogAgreementResourceProperties"/> instance for mocking. </returns>
         public static DatadogAgreementResourceProperties DatadogAgreementResourceProperties(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogAgreementProperties properties = null)
         {
-            return new DatadogAgreementResourceProperties(id, name, resourceType, systemData, properties);
+            return new DatadogAgreementResourceProperties(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogHost"/>. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Datadog.Models
             aliases ??= new List<string>();
             apps ??= new List<string>();
 
-            return new DatadogHost(name, aliases?.ToList(), apps?.ToList(), meta);
+            return new DatadogHost(name, aliases?.ToList(), apps?.ToList(), meta, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogHostMetadata"/>. </summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogHostMetadata"/> instance for mocking. </returns>
         public static DatadogHostMetadata DatadogHostMetadata(string agentVersion = null, DatadogInstallMethod installMethod = null, string logsAgentTransport = null)
         {
-            return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport != null ? new DatadogLogsAgent(logsAgentTransport) : null);
+            return new DatadogHostMetadata(agentVersion, installMethod, logsAgentTransport != null ? new DatadogLogsAgent(logsAgentTransport, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogInstallMethod"/>. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogInstallMethod"/> instance for mocking. </returns>
         public static DatadogInstallMethod DatadogInstallMethod(string tool = null, string toolVersion = null, string installerVersion = null)
         {
-            return new DatadogInstallMethod(tool, toolVersion, installerVersion);
+            return new DatadogInstallMethod(tool, toolVersion, installerVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoredResourceContent"/>. </summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.MonitoredResourceContent"/> instance for mocking. </returns>
         public static MonitoredResourceContent MonitoredResourceContent(string id = null, bool? sendingMetrics = null, string reasonForMetricsStatus = null, bool? sendingLogs = null, string reasonForLogsStatus = null)
         {
-            return new MonitoredResourceContent(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus);
+            return new MonitoredResourceContent(id, sendingMetrics, reasonForMetricsStatus, sendingLogs, reasonForLogsStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Datadog.DatadogMonitorResourceData"/>. </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DatadogMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName) : null, properties, identity);
+            return new DatadogMonitorResourceData(id, name, resourceType, systemData, tags, location, skuName != null ? new ResourceSku(skuName, serializedAdditionalRawData: null) : null, properties, identity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorProperties"/>. </summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.MonitorProperties"/> instance for mocking. </returns>
         public static MonitorProperties MonitorProperties(ProvisioningState? provisioningState = null, MonitoringStatus? monitoringStatus = null, MarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = null, DatadogOrganizationProperties datadogOrganizationProperties = null, UserInfo userInfo = null, LiftrResourceCategory? liftrResourceCategory = null, int? liftrResourcePreference = null)
         {
-            return new MonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference);
+            return new MonitorProperties(provisioningState, monitoringStatus, marketplaceSubscriptionStatus, datadogOrganizationProperties, userInfo, liftrResourceCategory, liftrResourcePreference, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogOrganizationProperties"/>. </summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogOrganizationProperties"/> instance for mocking. </returns>
         public static DatadogOrganizationProperties DatadogOrganizationProperties(string name = null, string id = null, string linkingAuthCode = null, string linkingClientId = null, Uri redirectUri = null, string apiKey = null, string applicationKey = null, string enterpriseAppId = null)
         {
-            return new DatadogOrganizationProperties(name, id, linkingAuthCode, linkingClientId, redirectUri, apiKey, applicationKey, enterpriseAppId);
+            return new DatadogOrganizationProperties(name, id, linkingAuthCode, linkingClientId, redirectUri, apiKey, applicationKey, enterpriseAppId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogSetPasswordLink"/>. </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogSetPasswordLink"/> instance for mocking. </returns>
         public static DatadogSetPasswordLink DatadogSetPasswordLink(string setPasswordLink = null)
         {
-            return new DatadogSetPasswordLink(setPasswordLink);
+            return new DatadogSetPasswordLink(setPasswordLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Datadog.MonitoringTagRuleData"/>. </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Datadog.MonitoringTagRuleData"/> instance for mocking. </returns>
         public static MonitoringTagRuleData MonitoringTagRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MonitoringTagRulesProperties properties = null)
         {
-            return new MonitoringTagRuleData(id, name, resourceType, systemData, properties);
+            return new MonitoringTagRuleData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitoringTagRulesProperties"/>. </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Datadog.Models
         {
             metricRulesFilteringTags ??= new List<FilteringTag>();
 
-            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRulesFilteringTags != null ? new MetricRules(metricRulesFilteringTags?.ToList()) : null);
+            return new MonitoringTagRulesProperties(provisioningState, logRules, metricRulesFilteringTags != null ? new MetricRules(metricRulesFilteringTags?.ToList(), serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Datadog.DatadogSingleSignOnResourceData"/>. </summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Datadog.DatadogSingleSignOnResourceData"/> instance for mocking. </returns>
         public static DatadogSingleSignOnResourceData DatadogSingleSignOnResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DatadogSingleSignOnProperties properties = null)
         {
-            return new DatadogSingleSignOnResourceData(id, name, resourceType, systemData, properties);
+            return new DatadogSingleSignOnResourceData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatadogSingleSignOnProperties"/>. </summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Datadog.Models
         /// <returns> A new <see cref="Models.DatadogSingleSignOnProperties"/> instance for mocking. </returns>
         public static DatadogSingleSignOnProperties DatadogSingleSignOnProperties(ProvisioningState? provisioningState = null, SingleSignOnState? singleSignOnState = null, string enterpriseAppId = null, Uri singleSignOnUri = null)
         {
-            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri);
+            return new DatadogSingleSignOnProperties(provisioningState, singleSignOnState, enterpriseAppId, singleSignOnUri, serializedAdditionalRawData: null);
         }
     }
 }

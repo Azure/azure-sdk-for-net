@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StorageCache.Models
 {
     /// <summary> Rule to place restrictions on portions of the cache namespace being presented to clients. </summary>
     public partial class NfsAccessRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NfsAccessRule"/>. </summary>
         /// <param name="scope"> Scope for this rule. The scope and filter determine which clients match the rule. </param>
         /// <param name="access"> Access allowed by this rule. </param>
@@ -28,7 +63,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="enableRootSquash"> Map root accesses to anonymousUID and anonymousGID. </param>
         /// <param name="anonymousUID"> UID value that replaces 0 when rootSquash is true. 65534 will be used if not provided. </param>
         /// <param name="anonymousGID"> GID value that replaces 0 when rootSquash is true. This will use the value of anonymousUID if not provided. </param>
-        internal NfsAccessRule(NfsAccessRuleScope scope, string filter, NfsAccessRuleAccess access, bool? allowSuid, bool? allowSubmountAccess, bool? enableRootSquash, string anonymousUID, string anonymousGID)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NfsAccessRule(NfsAccessRuleScope scope, string filter, NfsAccessRuleAccess access, bool? allowSuid, bool? allowSubmountAccess, bool? enableRootSquash, string anonymousUID, string anonymousGID, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Scope = scope;
             Filter = filter;
@@ -38,6 +74,12 @@ namespace Azure.ResourceManager.StorageCache.Models
             EnableRootSquash = enableRootSquash;
             AnonymousUID = anonymousUID;
             AnonymousGID = anonymousGID;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NfsAccessRule"/> for deserialization. </summary>
+        internal NfsAccessRule()
+        {
         }
 
         /// <summary> Scope for this rule. The scope and filter determine which clients match the rule. </summary>

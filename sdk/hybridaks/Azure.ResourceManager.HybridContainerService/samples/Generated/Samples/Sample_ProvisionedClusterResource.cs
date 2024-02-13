@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/GetProvisionedClusterInstance.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/GetProvisionedClusterInstance.json
             // this example is just showing the usage of "provisionedClusterInstances_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridContainerService.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_PutProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/PutProvisionedClusterInstance.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/PutProvisionedClusterInstance.json
             // this example is just showing the usage of "provisionedClusterInstances_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,16 +80,8 @@ KeyData = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCY.......",
 },
                     ControlPlane = new ProvisionedClusterControlPlaneProfile()
                     {
-                        SshPublicKeys =
-{
-new LinuxSshPublicKey()
-{
-KeyData = "ssh-rsa AAAAB1NzaC1yc2EAAAADAQABAAACAQCY......",
-}
-},
                         Count = 1,
                         VmSize = "Standard_A4_v2",
-                        OSType = HybridContainerServiceOSType.Linux,
                     },
                     KubernetesVersion = "v1.20.5",
                     NetworkProfile = new ProvisionedClusterNetworkProfile()
@@ -97,6 +89,7 @@ KeyData = "ssh-rsa AAAAB1NzaC1yc2EAAAADAQABAAACAQCY......",
                         NetworkPolicy = ProvisionedClusterNetworkPolicy.Calico,
                         PodCidr = "10.244.0.0/16",
                     },
+                    ClusterVmAccessAuthorizedIPRanges = "127.0.0.1,127.0.0.2",
                     AgentPoolProfiles =
 {
 new HybridContainerServiceNamedAgentPoolProfile()
@@ -105,6 +98,15 @@ Count = 1,
 VmSize = "Standard_A4_v2",
 Name = "default-nodepool-1",
 OSType = HybridContainerServiceOSType.Linux,
+NodeLabels =
+{
+["env"] = "dev",
+["goal"] = "test",
+},
+NodeTaints =
+{
+"env=prod:NoSchedule","sku=gpu:NoSchedule"
+},
 }
 },
                     InfraNetworkVnetSubnetIds =
@@ -134,7 +136,7 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteProvisionedClusterInstance()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/DeleteProvisionedClusterInstance.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/DeleteProvisionedClusterInstance.json
             // this example is just showing the usage of "provisionedClusterInstances_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +161,7 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUserKubeconfig_ListClusterUserCredentials()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/ProvisionedClusterInstanceListUserKubeconfig.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ProvisionedClusterInstanceListUserKubeconfig.json
             // this example is just showing the usage of "provisionedClusterInstances_ListUserKubeconfig" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +187,7 @@ new ResourceIdentifier("/subscriptions/a3e42606-29b1-4d7d-b1d9-9ff6b9d3c71b/reso
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAdminKubeconfig_ListClusterAdminCredentials()
         {
-            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/preview/2023-11-15-preview/examples/ProvisionedClusterInstanceListAdminKubeconfig.json
+            // Generated from example definition: specification/hybridaks/resource-manager/Microsoft.HybridContainerService/stable/2024-01-01/examples/ProvisionedClusterInstanceListAdminKubeconfig.json
             // this example is just showing the usage of "provisionedClusterInstances_ListAdminKubeconfig" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ServicePrincipalInformation : IUtf8JsonSerializable
+    public partial class ServicePrincipalInformation : IUtf8JsonSerializable, IJsonModel<ServicePrincipalInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServicePrincipalInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServicePrincipalInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("applicationId"u8);
             writer.WriteStringValue(ApplicationId);
@@ -26,11 +37,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStringValue(PrincipalId);
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServicePrincipalInformation DeserializeServicePrincipalInformation(JsonElement element)
+        ServicePrincipalInformation IJsonModel<ServicePrincipalInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServicePrincipalInformation(document.RootElement, options);
+        }
+
+        internal static ServicePrincipalInformation DeserializeServicePrincipalInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> password = default;
             string principalId = default;
             string tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -61,8 +103,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     tenantId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServicePrincipalInformation(applicationId, password.Value, principalId, tenantId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServicePrincipalInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServicePrincipalInformation IPersistableModel<ServicePrincipalInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServicePrincipalInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServicePrincipalInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServicePrincipalInformation)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServicePrincipalInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

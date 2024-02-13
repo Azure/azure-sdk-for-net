@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListServiceConfigsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterServiceConfigResult.DeserializeClusterServiceConfigResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetServiceConfigs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _hdInsightClusterClustersRestClient.CreateListInstanceViewsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterInstanceViewResult.DeserializeClusterInstanceViewResult, _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterInstanceViewResult.DeserializeClusterInstanceViewResult(e), _hdInsightClusterClustersClientDiagnostics, Pipeline, "HDInsightClusterResource.GetInstanceViews", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterJob.DeserializeClusterJob(e), _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _clusterJobsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _clusterJobsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterJob.DeserializeClusterJob, _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterJob.DeserializeClusterJob(e), _clusterJobsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetClusterJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

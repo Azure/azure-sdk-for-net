@@ -5,16 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class DedicatedHostInstanceViewWithName
+    public partial class DedicatedHostInstanceViewWithName : IUtf8JsonSerializable, IJsonModel<DedicatedHostInstanceViewWithName>
     {
-        internal static DedicatedHostInstanceViewWithName DeserializeDedicatedHostInstanceViewWithName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHostInstanceViewWithName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DedicatedHostInstanceViewWithName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AssetId))
+            {
+                writer.WritePropertyName("assetId"u8);
+                writer.WriteStringValue(AssetId);
+            }
+            if (Optional.IsDefined(AvailableCapacity))
+            {
+                writer.WritePropertyName("availableCapacity"u8);
+                writer.WriteObjectValue(AvailableCapacity);
+            }
+            if (Optional.IsCollectionDefined(Statuses))
+            {
+                writer.WritePropertyName("statuses"u8);
+                writer.WriteStartArray();
+                foreach (var item in Statuses)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DedicatedHostInstanceViewWithName IJsonModel<DedicatedHostInstanceViewWithName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHostInstanceViewWithName(document.RootElement, options);
+        }
+
+        internal static DedicatedHostInstanceViewWithName DeserializeDedicatedHostInstanceViewWithName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +93,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<string> assetId = default;
             Optional<DedicatedHostAvailableCapacity> availableCapacity = default;
             Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -58,8 +130,44 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DedicatedHostInstanceViewWithName(assetId.Value, availableCapacity.Value, Optional.ToList(statuses), name.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DedicatedHostInstanceViewWithName(assetId.Value, availableCapacity.Value, Optional.ToList(statuses), serializedAdditionalRawData, name.Value);
         }
+
+        BinaryData IPersistableModel<DedicatedHostInstanceViewWithName>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DedicatedHostInstanceViewWithName IPersistableModel<DedicatedHostInstanceViewWithName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostInstanceViewWithName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDedicatedHostInstanceViewWithName(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHostInstanceViewWithName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DedicatedHostInstanceViewWithName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

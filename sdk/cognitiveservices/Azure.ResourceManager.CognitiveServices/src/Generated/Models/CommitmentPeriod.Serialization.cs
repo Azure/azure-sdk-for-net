@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentPeriod : IUtf8JsonSerializable
+    public partial class CommitmentPeriod : IUtf8JsonSerializable, IJsonModel<CommitmentPeriod>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPeriod>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommitmentPeriod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPeriod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommitmentPeriod)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Tier))
             {
@@ -26,11 +36,55 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(Quota))
+            {
+                writer.WritePropertyName("quota"u8);
+                writer.WriteObjectValue(Quota);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDate"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommitmentPeriod DeserializeCommitmentPeriod(JsonElement element)
+        CommitmentPeriod IJsonModel<CommitmentPeriod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPeriod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommitmentPeriod)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommitmentPeriod(document.RootElement, options);
+        }
+
+        internal static CommitmentPeriod DeserializeCommitmentPeriod(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -40,6 +94,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<CommitmentQuota> quota = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> endDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"u8))
@@ -83,8 +139,44 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommitmentPeriod>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPeriod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommitmentPeriod)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommitmentPeriod IPersistableModel<CommitmentPeriod>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPeriod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommitmentPeriod(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommitmentPeriod)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommitmentPeriod>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorLocalizableString.DeserializeMonitorLocalizableString(e), EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorLocalizableString.DeserializeMonitorLocalizableString(e), EventCategoriesClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EventDataInfo.DeserializeEventDataInfo(e), TenantActivityLogsClientDiagnostics, Pipeline, "MockableMonitorTenantResource.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
     }
 }

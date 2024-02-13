@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningUsage.DeserializeMachineLearningUsage(e), UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningUsage.DeserializeMachineLearningUsage(e), UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningVmSize.DeserializeMachineLearningVmSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningVmSize.DeserializeMachineLearningVmSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

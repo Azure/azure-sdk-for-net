@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> HybridAKSClusterStatus defines the observed state of HybridAKSCluster. </summary>
+    /// <summary> The observed status of the provisioned cluster. </summary>
     public partial class ProvisionedClusterStatus
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterStatus"/>. </summary>
         internal ProvisionedClusterStatus()
         {
@@ -20,21 +53,23 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterStatus"/>. </summary>
-        /// <param name="controlPlaneStatus"> Status of the control plane components. </param>
-        /// <param name="errorMessage"> ErrorMessage - Error messages during creation of cluster. </param>
-        /// <param name="operationStatus"> Contains Provisioning errors. </param>
-        internal ProvisionedClusterStatus(IReadOnlyList<ProvisionedClusterAddonStatusProfile> controlPlaneStatus, string errorMessage, ProvisionedClusterOperationStatus operationStatus)
+        /// <param name="controlPlaneStatus"> The detailed status of the provisioned cluster components including addons. </param>
+        /// <param name="currentState"> The current state of the provisioned cluster. </param>
+        /// <param name="errorMessage"> Error messages during a provisioned cluster operation or steady state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterStatus(IReadOnlyList<ProvisionedClusterAddonStatusProfile> controlPlaneStatus, HybridContainerServiceResourceProvisioningState? currentState, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ControlPlaneStatus = controlPlaneStatus;
+            CurrentState = currentState;
             ErrorMessage = errorMessage;
-            OperationStatus = operationStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Status of the control plane components. </summary>
+        /// <summary> The detailed status of the provisioned cluster components including addons. </summary>
         public IReadOnlyList<ProvisionedClusterAddonStatusProfile> ControlPlaneStatus { get; }
-        /// <summary> ErrorMessage - Error messages during creation of cluster. </summary>
+        /// <summary> The current state of the provisioned cluster. </summary>
+        public HybridContainerServiceResourceProvisioningState? CurrentState { get; }
+        /// <summary> Error messages during a provisioned cluster operation or steady state. </summary>
         public string ErrorMessage { get; }
-        /// <summary> Contains Provisioning errors. </summary>
-        public ProvisionedClusterOperationStatus OperationStatus { get; }
     }
 }

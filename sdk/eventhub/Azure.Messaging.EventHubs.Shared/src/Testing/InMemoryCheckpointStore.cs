@@ -195,7 +195,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     PartitionId = data.PartitionId,
                     StartingPosition = EventPosition.FromOffset(data.StartingPosition.Offset.Value, false),
                     ClientIdentifier = data.ClientIdentifier,
-                    LastModified = DateTimeOffset.Parse(data.LastModified)
+                    LastModified = (DateTimeOffset.TryParse(data.LastModified, out var lastModified) ? lastModified : default)
                 };
 
             lock (_checkpointLock)

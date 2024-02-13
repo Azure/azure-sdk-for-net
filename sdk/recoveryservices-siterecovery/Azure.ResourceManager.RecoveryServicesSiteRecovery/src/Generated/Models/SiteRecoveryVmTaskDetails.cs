@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the virtual machine task details. </summary>
@@ -18,10 +21,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="SiteRecoveryVmTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="jobTask"> The job entity. </param>
         /// <param name="skippedReason"> The skipped reason. </param>
         /// <param name="skippedReasonString"> The skipped reason string. </param>
-        internal SiteRecoveryVmTaskDetails(string instanceType, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, jobTask)
+        internal SiteRecoveryVmTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, SiteRecoveryJobEntity jobTask, string skippedReason, string skippedReasonString) : base(instanceType, serializedAdditionalRawData, jobTask)
         {
             SkippedReason = skippedReason;
             SkippedReasonString = skippedReasonString;

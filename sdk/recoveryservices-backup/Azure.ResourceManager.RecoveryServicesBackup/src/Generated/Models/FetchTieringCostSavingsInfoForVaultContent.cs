@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Request parameters for tiering cost info for vault. </summary>
@@ -22,9 +25,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="sourceTierType"> Source tier for the request. </param>
         /// <param name="targetTierType"> target tier for the request. </param>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        internal FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType) : base(sourceTierType, targetTierType, objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FetchTieringCostSavingsInfoForVaultContent(RecoveryPointTierType sourceTierType, RecoveryPointTierType targetTierType, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceTierType, targetTierType, objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "FetchTieringCostSavingsInfoForVaultRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FetchTieringCostSavingsInfoForVaultContent"/> for deserialization. </summary>
+        internal FetchTieringCostSavingsInfoForVaultContent()
+        {
         }
     }
 }

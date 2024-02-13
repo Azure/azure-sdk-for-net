@@ -97,7 +97,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataPathAssignments))
             {
                 writer.WritePropertyName("dataPathAssignments"u8);
-                JsonSerializer.Serialize(writer, DataPathAssignments);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(DataPathAssignments);
+#else
+                using (JsonDocument document = JsonDocument.Parse(DataPathAssignments))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             if (Optional.IsDefined(MLParentRunId))
             {
@@ -145,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> version = default;
             Optional<DataFactoryElement<string>> experimentName = default;
             Optional<DataFactoryElement<IDictionary<string, string>>> mlPipelineParameters = default;
-            Optional<DataFactoryElement<IDictionary<string, string>>> dataPathAssignments = default;
+            Optional<BinaryData> dataPathAssignments = default;
             Optional<DataFactoryElement<string>> mlParentRunId = default;
             Optional<DataFactoryElement<bool>> continueOnStepFailure = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -291,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            dataPathAssignments = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property0.Value.GetRawText());
+                            dataPathAssignments = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlParentRunId"u8))

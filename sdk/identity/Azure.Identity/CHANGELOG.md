@@ -8,8 +8,10 @@
 
 ### Bugs Fixed
 - Claims from the `TokenRequestContext` are now correctly sent through to MSAL in `ConfidentialClient` credentials. [#40451](https://github.com/Azure/azure-sdk-for-net/issues/40451).
+- `ManagedIdentityCredential` is more lenient with the error message it matches when falling through to the next credential in the chain in the case that Docker Desktop returns a 403 response when attempting to access the IMDS endpoint. [#38218](https://github.com/Azure/azure-sdk-for-net/issues/38218)
 
 ### Other Changes
+- `AzureCliCredential` utilizes the new `expires_on` property returned by `az account get-access-token` to determine token expiration.
 
 ## 1.10.4 (2023-11-13)
 

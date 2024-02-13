@@ -6,16 +6,177 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class KpiDefinition
+    public partial class KpiDefinition : IUtf8JsonSerializable, IJsonModel<KpiDefinition>
     {
-        internal static KpiDefinition DeserializeKpiDefinition(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KpiDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KpiDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("entityType"u8);
+            writer.WriteStringValue(EntityType.ToSerialString());
+            writer.WritePropertyName("entityTypeName"u8);
+            writer.WriteStringValue(EntityTypeName);
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KpiName))
+            {
+                writer.WritePropertyName("kpiName"u8);
+                writer.WriteStringValue(KpiName);
+            }
+            if (Optional.IsCollectionDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStartObject();
+                foreach (var item in DisplayName)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStartObject();
+                foreach (var item in Description)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("calculationWindow"u8);
+            writer.WriteStringValue(CalculationWindow.ToSerialString());
+            if (Optional.IsDefined(CalculationWindowFieldName))
+            {
+                writer.WritePropertyName("calculationWindowFieldName"u8);
+                writer.WriteStringValue(CalculationWindowFieldName);
+            }
+            writer.WritePropertyName("function"u8);
+            writer.WriteStringValue(Function.ToSerialString());
+            writer.WritePropertyName("expression"u8);
+            writer.WriteStringValue(Expression);
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteStringValue(Filter);
+            }
+            if (Optional.IsCollectionDefined(GroupBy))
+            {
+                writer.WritePropertyName("groupBy"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupBy)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(GroupByMetadata))
+            {
+                writer.WritePropertyName("groupByMetadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in GroupByMetadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ParticipantProfilesMetadata))
+            {
+                writer.WritePropertyName("participantProfilesMetadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in ParticipantProfilesMetadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (Optional.IsDefined(ThresHolds))
+            {
+                writer.WritePropertyName("thresHolds"u8);
+                writer.WriteObjectValue(ThresHolds);
+            }
+            if (Optional.IsCollectionDefined(Aliases))
+            {
+                writer.WritePropertyName("aliases"u8);
+                writer.WriteStartArray();
+                foreach (var item in Aliases)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Extracts))
+            {
+                writer.WritePropertyName("extracts"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extracts)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KpiDefinition IJsonModel<KpiDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKpiDefinition(document.RootElement, options);
+        }
+
+        internal static KpiDefinition DeserializeKpiDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +200,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<KpiThresholds> thresHolds = default;
             Optional<IReadOnlyList<KpiAlias>> aliases = default;
             Optional<IReadOnlyList<KpiExtract>> extracts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entityType"u8))
@@ -211,8 +374,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     extracts = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KpiDefinition(entityType, entityTypeName, Optional.ToNullable(tenantId), kpiName.Value, Optional.ToDictionary(displayName), Optional.ToDictionary(description), calculationWindow, calculationWindowFieldName.Value, function, expression, unit.Value, filter.Value, Optional.ToList(groupBy), Optional.ToList(groupByMetadata), Optional.ToList(participantProfilesMetadata), Optional.ToNullable(provisioningState), thresHolds.Value, Optional.ToList(aliases), Optional.ToList(extracts), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KpiDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KpiDefinition IPersistableModel<KpiDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KpiDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKpiDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KpiDefinition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KpiDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

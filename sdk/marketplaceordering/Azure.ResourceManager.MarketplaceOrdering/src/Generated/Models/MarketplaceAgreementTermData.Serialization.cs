@@ -6,17 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    public partial class MarketplaceAgreementTermData : IUtf8JsonSerializable
+    public partial class MarketplaceAgreementTermData : IUtf8JsonSerializable, IJsonModel<MarketplaceAgreementTermData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MarketplaceAgreementTermData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MarketplaceAgreementTermData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAgreementTermData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarketplaceAgreementTermData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Publisher))
@@ -65,11 +95,40 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 writer.WriteBooleanValue(IsAccepted.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MarketplaceAgreementTermData DeserializeMarketplaceAgreementTermData(JsonElement element)
+        MarketplaceAgreementTermData IJsonModel<MarketplaceAgreementTermData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAgreementTermData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MarketplaceAgreementTermData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMarketplaceAgreementTermData(document.RootElement, options);
+        }
+
+        internal static MarketplaceAgreementTermData DeserializeMarketplaceAgreementTermData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -87,6 +146,8 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             Optional<DateTimeOffset> retrieveDatetime = default;
             Optional<string> signature = default;
             Optional<bool> accepted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -190,8 +251,44 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MarketplaceAgreementTermData(id, name, type, systemData.Value, publisher.Value, product.Value, plan.Value, licenseTextLink.Value, privacyPolicyLink.Value, marketplaceTermsLink.Value, Optional.ToNullable(retrieveDatetime), signature.Value, Optional.ToNullable(accepted), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MarketplaceAgreementTermData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAgreementTermData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceAgreementTermData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MarketplaceAgreementTermData IPersistableModel<MarketplaceAgreementTermData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MarketplaceAgreementTermData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMarketplaceAgreementTermData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MarketplaceAgreementTermData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MarketplaceAgreementTermData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

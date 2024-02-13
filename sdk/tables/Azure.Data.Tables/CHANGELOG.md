@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- `TableEntity` string properties will correctly handle type coercion from `DateTime` and `DateTimeOffset` types. ([#40775](https://github.com/Azure/azure-sdk-for-net/issues/40775))
 
 ### Other Changes
 

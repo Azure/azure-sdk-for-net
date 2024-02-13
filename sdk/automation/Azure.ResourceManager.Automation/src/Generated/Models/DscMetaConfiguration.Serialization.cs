@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscMetaConfiguration
+    public partial class DscMetaConfiguration : IUtf8JsonSerializable, IJsonModel<DscMetaConfiguration>
     {
-        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscMetaConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DscMetaConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConfigurationModeFrequencyMins))
+            {
+                writer.WritePropertyName("configurationModeFrequencyMins"u8);
+                writer.WriteNumberValue(ConfigurationModeFrequencyMins.Value);
+            }
+            if (Optional.IsDefined(RebootNodeIfNeeded))
+            {
+                writer.WritePropertyName("rebootNodeIfNeeded"u8);
+                writer.WriteBooleanValue(RebootNodeIfNeeded.Value);
+            }
+            if (Optional.IsDefined(ConfigurationMode))
+            {
+                writer.WritePropertyName("configurationMode"u8);
+                writer.WriteStringValue(ConfigurationMode);
+            }
+            if (Optional.IsDefined(ActionAfterReboot))
+            {
+                writer.WritePropertyName("actionAfterReboot"u8);
+                writer.WriteStringValue(ActionAfterReboot);
+            }
+            if (Optional.IsDefined(CertificateId))
+            {
+                writer.WritePropertyName("certificateId"u8);
+                writer.WriteStringValue(CertificateId);
+            }
+            if (Optional.IsDefined(RefreshFrequencyMins))
+            {
+                writer.WritePropertyName("refreshFrequencyMins"u8);
+                writer.WriteNumberValue(RefreshFrequencyMins.Value);
+            }
+            if (Optional.IsDefined(AllowModuleOverwrite))
+            {
+                writer.WritePropertyName("allowModuleOverwrite"u8);
+                writer.WriteBooleanValue(AllowModuleOverwrite.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DscMetaConfiguration IJsonModel<DscMetaConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscMetaConfiguration(document.RootElement, options);
+        }
+
+        internal static DscMetaConfiguration DeserializeDscMetaConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.Automation.Models
             Optional<string> certificateId = default;
             Optional<int> refreshFrequencyMins = default;
             Optional<bool> allowModuleOverwrite = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("configurationModeFrequencyMins"u8))
@@ -78,8 +161,44 @@ namespace Azure.ResourceManager.Automation.Models
                     allowModuleOverwrite = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DscMetaConfiguration IPersistableModel<DscMetaConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDscMetaConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DscMetaConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

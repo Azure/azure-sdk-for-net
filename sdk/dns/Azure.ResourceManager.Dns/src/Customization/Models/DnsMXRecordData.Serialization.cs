@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -13,21 +15,23 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    public partial class DnsMXRecordData : IUtf8JsonSerializable
+    public partial class DnsMXRecordData : IUtf8JsonSerializable, IJsonModel<DnsMXRecordData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsMXRecordData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DnsMXRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("etag");
+                writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties");
+            writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("metadata");
+                writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
                 foreach (var item in Metadata)
                 {
@@ -38,17 +42,17 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(TtlInSeconds))
             {
-                writer.WritePropertyName("TTL");
+                writer.WritePropertyName("TTL"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
             }
             if (Optional.IsDefined(TargetResource))
             {
-                writer.WritePropertyName("targetResource");
+                writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
             if (Optional.IsCollectionDefined(DnsMXRecords))
             {
-                writer.WritePropertyName("MXRecords");
+                writer.WritePropertyName("MXRecords"u8);
                 writer.WriteStartArray();
                 foreach (var item in DnsMXRecords)
                 {
@@ -57,11 +61,44 @@ namespace Azure.ResourceManager.Dns
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsMXRecordData DeserializeDnsMXRecordData(JsonElement element)
+        DnsMXRecordData IJsonModel<DnsMXRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsMXRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsMXRecordData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsMXRecordData(document.RootElement, options);
+        }
+
+        internal static DnsMXRecordData DeserializeDnsMXRecordData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -73,9 +110,11 @@ namespace Azure.ResourceManager.Dns
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
             Optional<IList<DnsMXRecordInfo>> mxRecords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"))
+                if (property.NameEquals("etag"u8))
                 {
                      if (property.Value.ValueKind == JsonValueKind.Null)
                      {
@@ -85,27 +124,27 @@ namespace Azure.ResourceManager.Dns
                      etag = new ETag(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"))
+                if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("name"))
+                if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("systemData"))
+                if (property.NameEquals("systemData"u8))
                 {
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -114,7 +153,7 @@ namespace Azure.ResourceManager.Dns
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("metadata"))
+                        if (property0.NameEquals("metadata"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -129,7 +168,7 @@ namespace Azure.ResourceManager.Dns
                             metadata = dictionary;
                             continue;
                         }
-                        if (property0.NameEquals("TTL"))
+                        if (property0.NameEquals("TTL"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -139,17 +178,17 @@ namespace Azure.ResourceManager.Dns
                             ttl = property0.Value.GetInt64();
                             continue;
                         }
-                        if (property0.NameEquals("fqdn"))
+                        if (property0.NameEquals("fqdn"u8))
                         {
                             fqdn = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"))
+                        if (property0.NameEquals("provisioningState"u8))
                         {
                             provisioningState = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("targetResource"))
+                        if (property0.NameEquals("targetResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -159,7 +198,7 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("MXRecords"))
+                        if (property0.NameEquals("MXRecords"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
@@ -177,8 +216,43 @@ namespace Azure.ResourceManager.Dns
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsMXRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(mxRecords));
+            return new DnsMXRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(mxRecords), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DnsMXRecordData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsMXRecordData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsMXRecordData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DnsMXRecordData IPersistableModel<DnsMXRecordData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsMXRecordData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsMXRecordData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsMXRecordData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsMXRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

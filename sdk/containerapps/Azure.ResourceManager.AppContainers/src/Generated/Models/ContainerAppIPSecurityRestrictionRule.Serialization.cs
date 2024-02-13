@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIPSecurityRestrictionRule : IUtf8JsonSerializable
+    public partial class ContainerAppIPSecurityRestrictionRule : IUtf8JsonSerializable, IJsonModel<ContainerAppIPSecurityRestrictionRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIPSecurityRestrictionRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppIPSecurityRestrictionRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -26,11 +37,40 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStringValue(IPAddressRange);
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppIPSecurityRestrictionRule DeserializeContainerAppIPSecurityRestrictionRule(JsonElement element)
+        ContainerAppIPSecurityRestrictionRule IJsonModel<ContainerAppIPSecurityRestrictionRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppIPSecurityRestrictionRule(document.RootElement, options);
+        }
+
+        internal static ContainerAppIPSecurityRestrictionRule DeserializeContainerAppIPSecurityRestrictionRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> description = default;
             string ipAddressRange = default;
             ContainerAppIPRuleAction action = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,8 +103,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     action = new ContainerAppIPRuleAction(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppIPSecurityRestrictionRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppIPSecurityRestrictionRule IPersistableModel<ContainerAppIPSecurityRestrictionRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppIPSecurityRestrictionRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppIPSecurityRestrictionRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

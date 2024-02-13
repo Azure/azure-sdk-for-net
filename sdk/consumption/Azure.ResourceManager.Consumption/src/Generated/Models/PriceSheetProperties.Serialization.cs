@@ -6,15 +6,105 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class PriceSheetProperties
+    public partial class PriceSheetProperties : IUtf8JsonSerializable, IJsonModel<PriceSheetProperties>
     {
-        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PriceSheetProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PriceSheetProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            {
+                writer.WritePropertyName("billingPeriodId"u8);
+                writer.WriteStringValue(BillingPeriodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
+            {
+                writer.WritePropertyName("meterId"u8);
+                writer.WriteStringValue(MeterId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MeterDetails))
+            {
+                writer.WritePropertyName("meterDetails"u8);
+                writer.WriteObjectValue(MeterDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            {
+                writer.WritePropertyName("unitOfMeasure"u8);
+                writer.WriteStringValue(UnitOfMeasure);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedQuantity))
+            {
+                writer.WritePropertyName("includedQuantity"u8);
+                writer.WriteNumberValue(IncludedQuantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PartNumber))
+            {
+                writer.WritePropertyName("partNumber"u8);
+                writer.WriteStringValue(PartNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UnitPrice))
+            {
+                writer.WritePropertyName("unitPrice"u8);
+                writer.WriteNumberValue(UnitPrice.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrencyCode))
+            {
+                writer.WritePropertyName("currencyCode"u8);
+                writer.WriteStringValue(CurrencyCode);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PriceSheetProperties IJsonModel<PriceSheetProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePriceSheetProperties(document.RootElement, options);
+        }
+
+        internal static PriceSheetProperties DeserializePriceSheetProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -28,6 +118,8 @@ namespace Azure.ResourceManager.Consumption.Models
             Optional<decimal> unitPrice = default;
             Optional<string> currencyCode = default;
             Optional<string> offerId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingPeriodId"u8))
@@ -95,8 +187,44 @@ namespace Azure.ResourceManager.Consumption.Models
                     offerId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PriceSheetProperties(billingPeriodId.Value, Optional.ToNullable(meterId), meterDetails.Value, unitOfMeasure.Value, Optional.ToNullable(includedQuantity), partNumber.Value, Optional.ToNullable(unitPrice), currencyCode.Value, offerId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PriceSheetProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PriceSheetProperties IPersistableModel<PriceSheetProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PriceSheetProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePriceSheetProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PriceSheetProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PriceSheetProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

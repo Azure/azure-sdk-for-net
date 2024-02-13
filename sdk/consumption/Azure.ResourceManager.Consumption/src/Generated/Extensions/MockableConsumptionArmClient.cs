@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(scope, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, scope, expand, filter, skipToken, top, metric);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionUsageDetail.DeserializeConsumptionUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionUsageDetail.DeserializeConsumptionUsageDetail(e), UsageDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageDetailsRestClient.CreateListRequest(scope, expand, filter, skipToken, top, metric);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageDetailsRestClient.CreateListNextPageRequest(nextLink, scope, expand, filter, skipToken, top, metric);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionUsageDetail.DeserializeConsumptionUsageDetail, UsageDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionUsageDetail.DeserializeConsumptionUsageDetail(e), UsageDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionUsageDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(scope, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionMarketplace.DeserializeConsumptionMarketplace, MarketplacesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionMarketplace.DeserializeConsumptionMarketplace(e), MarketplacesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MarketplacesRestClient.CreateListRequest(scope, filter, top, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MarketplacesRestClient.CreateListNextPageRequest(nextLink, scope, filter, top, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionMarketplace.DeserializeConsumptionMarketplace, MarketplacesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionMarketplace.DeserializeConsumptionMarketplace(e), MarketplacesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionMarketPlaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(scope, startDate, endDate, filter, apply);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConsumptionChargeSummary.DeserializeConsumptionChargeSummary, ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(e), ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ChargesRestClient.CreateListRequest(scope, startDate, endDate, filter, apply);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ConsumptionChargeSummary.DeserializeConsumptionChargeSummary, ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(e), ChargesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionCharges", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), ReservationsSummariesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsSummariesRestClient.CreateListRequest(scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsSummariesRestClient.CreateListNextPageRequest(nextLink, scope, options.Grain, options.StartDate, options.EndDate, options.Filter, options.ReservationId, options.ReservationOrderId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, ReservationsSummariesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), ReservationsSummariesClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -523,7 +523,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(scope, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, scope, startDate, endDate, filter, reservationId, reservationOrderId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationDetail.DeserializeConsumptionReservationDetail(e), ReservationsDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationsDetailsRestClient.CreateListRequest(scope, startDate, endDate, filter, reservationId, reservationOrderId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationsDetailsRestClient.CreateListNextPageRequest(nextLink, scope, startDate, endDate, filter, reservationId, reservationOrderId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, ReservationsDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationDetail.DeserializeConsumptionReservationDetail(e), ReservationsDetailsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationsDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(e), ReservationRecommendationsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ReservationRecommendationsRestClient.CreateListRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ReservationRecommendationsRestClient.CreateListNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation, ReservationRecommendationsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationRecommendation.DeserializeConsumptionReservationRecommendation(e), ReservationRecommendationsClientDiagnostics, Pipeline, "MockableConsumptionArmClient.GetConsumptionReservationRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

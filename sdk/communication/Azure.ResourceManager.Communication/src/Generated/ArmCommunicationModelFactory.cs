@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.CommunicationNameAvailabilityResult"/> instance for mocking. </returns>
         public static CommunicationNameAvailabilityResult CommunicationNameAvailabilityResult(bool? isNameAvailable = null, CommunicationNameAvailabilityReason? reason = null, string message = null)
         {
-            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message);
+            return new CommunicationNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkedNotificationHub"/>. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.LinkedNotificationHub"/> instance for mocking. </returns>
         public static LinkedNotificationHub LinkedNotificationHub(ResourceIdentifier resourceId = null)
         {
-            return new LinkedNotificationHub(resourceId);
+            return new LinkedNotificationHub(resourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.CommunicationServiceResourceData"/>. </summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Communication.Models
             tags ??= new Dictionary<string, string>();
             linkedDomains ??= new List<string>();
 
-            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList());
+            return new CommunicationServiceResourceData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, dataLocation, notificationHubId, version, immutableResourceId, linkedDomains?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommunicationServiceKeys"/>. </summary>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.CommunicationServiceKeys"/> instance for mocking. </returns>
         public static CommunicationServiceKeys CommunicationServiceKeys(string primaryKey = null, string secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
         {
-            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
+            return new CommunicationServiceKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.CommunicationDomainResourceData"/>. </summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking);
+            return new CommunicationDomainResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, fromSenderDomain, mailFromSenderDomain, domainManagement, verificationStates, verificationRecords, userEngagementTracking, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationStates"/>. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationStates"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationStates DomainPropertiesVerificationStates(DomainVerificationStatusRecord domain = null, DomainVerificationStatusRecord spf = null, DomainVerificationStatusRecord dkim = null, DomainVerificationStatusRecord dkim2 = null, DomainVerificationStatusRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc);
+            return new DomainPropertiesVerificationStates(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainVerificationStatusRecord"/>. </summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainVerificationStatusRecord"/> instance for mocking. </returns>
         public static DomainVerificationStatusRecord DomainVerificationStatusRecord(DomainRecordVerificationStatus? status = null, string errorCode = null)
         {
-            return new DomainVerificationStatusRecord(status, errorCode);
+            return new DomainVerificationStatusRecord(status, errorCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainPropertiesVerificationRecords"/>. </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.DomainPropertiesVerificationRecords"/> instance for mocking. </returns>
         public static DomainPropertiesVerificationRecords DomainPropertiesVerificationRecords(VerificationDnsRecord domain = null, VerificationDnsRecord spf = null, VerificationDnsRecord dkim = null, VerificationDnsRecord dkim2 = null, VerificationDnsRecord dmarc = null)
         {
-            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc);
+            return new DomainPropertiesVerificationRecords(domain, spf, dkim, dkim2, dmarc, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VerificationDnsRecord"/>. </summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Models.VerificationDnsRecord"/> instance for mocking. </returns>
         public static VerificationDnsRecord VerificationDnsRecord(string dnsRecordType = null, string name = null, string value = null, int? timeToLiveInSeconds = null)
         {
-            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds);
+            return new VerificationDnsRecord(dnsRecordType, name, value, timeToLiveInSeconds, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.EmailServiceResourceData"/>. </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Communication.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation);
+            return new EmailServiceResourceData(id, name, resourceType, systemData, tags, location, provisioningState, dataLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.SenderUsernameResourceData"/>. </summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SenderUsernameResourceData"/> instance for mocking. </returns>
         public static SenderUsernameResourceData SenderUsernameResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string dataLocation = null, string username = null, string displayName = null, CommunicationServiceProvisioningState? provisioningState = null)
         {
-            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState);
+            return new SenderUsernameResourceData(id, name, resourceType, systemData, dataLocation, username, displayName, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListResourceData"/>. </summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SuppressionListResourceData"/> instance for mocking. </returns>
         public static SuppressionListResourceData SuppressionListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? lastUpdatedTimeStamp = null, DateTimeOffset? createdTimeStamp = null, string dataLocation = null)
         {
-            return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation);
+            return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Communication.SuppressionListAddressResourceData"/>. </summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <returns> A new <see cref="Communication.SuppressionListAddressResourceData"/> instance for mocking. </returns>
         public static SuppressionListAddressResourceData SuppressionListAddressResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string email = null, string firstName = null, string lastName = null, string notes = null, DateTimeOffset? lastModified = null, string dataLocation = null)
         {
-            return new SuppressionListAddressResourceData(id, name, resourceType, systemData, email, firstName, lastName, notes, lastModified, dataLocation);
+            return new SuppressionListAddressResourceData(id, name, resourceType, systemData, email, firstName, lastName, notes, lastModified, dataLocation, serializedAdditionalRawData: null);
         }
     }
 }

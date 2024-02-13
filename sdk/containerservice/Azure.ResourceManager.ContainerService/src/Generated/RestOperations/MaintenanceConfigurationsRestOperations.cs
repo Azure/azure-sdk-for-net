@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-11-02-preview";
+            _apiVersion = apiVersion ?? "2023-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a list of maintenance configurations in the specified managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets a list of maintenance configurations in the specified managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets the specified maintenance configuration of a managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Gets the specified maintenance configuration of a managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Creates or updates a maintenance configuration in the specified managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -252,6 +252,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -264,7 +265,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Creates or updates a maintenance configuration in the specified managed cluster. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -285,6 +286,7 @@ namespace Azure.ResourceManager.ContainerService
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         ContainerServiceMaintenanceConfigurationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -319,7 +321,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a maintenance configuration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -346,7 +348,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> Deletes a maintenance configuration. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="configName"> The name of the maintenance configuration. </param>
@@ -388,7 +390,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Gets a list of maintenance configurations in the specified managed cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -419,7 +421,7 @@ namespace Azure.ResourceManager.ContainerService
 
         /// <summary> Gets a list of maintenance configurations in the specified managed cluster. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

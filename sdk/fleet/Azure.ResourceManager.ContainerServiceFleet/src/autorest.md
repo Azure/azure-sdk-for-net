@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -88,7 +89,7 @@ operations-to-lro-api-version-override:
   UpdateRuns_Delete: "2016-03-30"
   FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
   FleetUpdateStrategies_Delete: "2016-03-30"
-  
+
 models-to-treat-empty-string-as-null:
 - SubnetResourceId
 ```

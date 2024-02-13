@@ -112,6 +112,8 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 To perform a semantic search query, we'll specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic` in the `SearchOptions`. We'll use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we've enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to retrieve the caption and answer in the response. With these settings in place, we're ready to execute a semantic search query.
 
+### Using QueryType
+
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Query
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
@@ -125,6 +127,57 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         },
         QueryLanguage = QueryLanguage.EnUs,
         QueryType = SearchQueryType.Semantic
+    });
+
+int count = 0;
+Console.WriteLine($"Semantic Search Results:");
+
+Console.WriteLine($"\nQuery Answer:");
+foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
+{
+    Console.WriteLine($"Answer Highlights: {result.Highlights}");
+    Console.WriteLine($"Answer Text: {result.Text}");
+}
+
+await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+{
+    count++;
+    Hotel doc = result.Document;
+    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+
+    if (result.SemanticSearch.Captions != null)
+    {
+        var caption = result.SemanticSearch.Captions.FirstOrDefault();
+        if (caption.Highlights != null && caption.Highlights != "")
+        {
+            Console.WriteLine($"Caption Highlights: {caption.Highlights}");
+        }
+        else
+        {
+            Console.WriteLine($"Caption Text: {caption.Text}");
+        }
+    }
+}
+Console.WriteLine($"Total number of search results:{count}");
+```
+
+### Using SemanticQuery
+
+You can also use `SemanticSearch.SemanticQuery` for semantic search. This feature allows you to set a separate search query that will be used exclusively for semantic reranking, semantic captions, and semantic answers. It is beneficial for scenarios where different queries are required between the base retrieval and ranking phase, and the L2 semantic phase.
+
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Query
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
+    "Luxury hotel",
+    new SearchOptions
+    {
+        SemanticSearch = new()
+        {
+            SemanticConfigurationName = "my-semantic-config",
+            QueryCaption = new(QueryCaptionType.Extractive),
+            QueryAnswer = new(QueryAnswerType.Extractive),
+            SemanticQuery = "Is there any hotel located on the main commercial artery of the city in the heart of New York?"
+        },
+        QueryLanguage = QueryLanguage.EnUs,
     });
 
 int count = 0;

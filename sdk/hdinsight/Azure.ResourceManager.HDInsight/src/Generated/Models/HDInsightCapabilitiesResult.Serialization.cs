@@ -5,16 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightCapabilitiesResult
+    public partial class HDInsightCapabilitiesResult : IUtf8JsonSerializable, IJsonModel<HDInsightCapabilitiesResult>
     {
-        internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightCapabilitiesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightCapabilitiesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Versions))
+            {
+                writer.WritePropertyName("versions"u8);
+                writer.WriteStartObject();
+                foreach (var item in Versions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Regions))
+            {
+                writer.WritePropertyName("regions"u8);
+                writer.WriteStartObject();
+                foreach (var item in Regions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Features))
+            {
+                writer.WritePropertyName("features"u8);
+                writer.WriteStartArray();
+                foreach (var item in Features)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Quota))
+            {
+                writer.WritePropertyName("quota"u8);
+                writer.WriteObjectValue(Quota);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HDInsightCapabilitiesResult IJsonModel<HDInsightCapabilitiesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightCapabilitiesResult(document.RootElement, options);
+        }
+
+        internal static HDInsightCapabilitiesResult DeserializeHDInsightCapabilitiesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +105,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IReadOnlyDictionary<string, RegionsCapability>> regions = default;
             Optional<IReadOnlyList<string>> features = default;
             Optional<QuotaCapability> quota = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("versions"u8))
@@ -76,8 +160,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     quota = QuotaCapability.DeserializeQuotaCapability(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightCapabilitiesResult(Optional.ToDictionary(versions), Optional.ToDictionary(regions), Optional.ToList(features), quota.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightCapabilitiesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HDInsightCapabilitiesResult IPersistableModel<HDInsightCapabilitiesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightCapabilitiesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightCapabilitiesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightCapabilitiesResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightCapabilitiesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -13,13 +16,46 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class AvsPrivateCloudDatastoreData : IUtf8JsonSerializable
+    public partial class AvsPrivateCloudDatastoreData : IUtf8JsonSerializable, IJsonModel<AvsPrivateCloudDatastoreData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsPrivateCloudDatastoreData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AvsPrivateCloudDatastoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudDatastoreData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(NetAppVolume))
             {
                 writer.WritePropertyName("netAppVolume"u8);
@@ -30,12 +66,46 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("diskPoolVolume"u8);
                 writer.WriteObjectValue(DiskPoolVolume);
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AvsPrivateCloudDatastoreData DeserializeAvsPrivateCloudDatastoreData(JsonElement element)
+        AvsPrivateCloudDatastoreData IJsonModel<AvsPrivateCloudDatastoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AvsPrivateCloudDatastoreData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAvsPrivateCloudDatastoreData(document.RootElement, options);
+        }
+
+        internal static AvsPrivateCloudDatastoreData DeserializeAvsPrivateCloudDatastoreData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +118,8 @@ namespace Azure.ResourceManager.Avs
             Optional<WritableSubResource> netAppVolume = default;
             Optional<DiskPoolVolume> diskPoolVolume = default;
             Optional<DatastoreStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +194,44 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AvsPrivateCloudDatastoreData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), netAppVolume, diskPoolVolume.Value, Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AvsPrivateCloudDatastoreData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudDatastoreData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AvsPrivateCloudDatastoreData IPersistableModel<AvsPrivateCloudDatastoreData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudDatastoreData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAvsPrivateCloudDatastoreData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudDatastoreData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AvsPrivateCloudDatastoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

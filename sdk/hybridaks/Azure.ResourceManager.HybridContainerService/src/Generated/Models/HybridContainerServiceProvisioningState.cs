@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
-        private const string InProgressValue = "InProgress";
+        private const string PendingValue = "Pending";
+        private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
         private const string AcceptedValue = "Accepted";
-        private const string CreatedValue = "Created";
 
         /// <summary> Succeeded. </summary>
         public static HybridContainerServiceProvisioningState Succeeded { get; } = new HybridContainerServiceProvisioningState(SucceededValue);
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         public static HybridContainerServiceProvisioningState Failed { get; } = new HybridContainerServiceProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static HybridContainerServiceProvisioningState Canceled { get; } = new HybridContainerServiceProvisioningState(CanceledValue);
-        /// <summary> InProgress. </summary>
-        public static HybridContainerServiceProvisioningState InProgress { get; } = new HybridContainerServiceProvisioningState(InProgressValue);
+        /// <summary> Pending. </summary>
+        public static HybridContainerServiceProvisioningState Pending { get; } = new HybridContainerServiceProvisioningState(PendingValue);
+        /// <summary> Creating. </summary>
+        public static HybridContainerServiceProvisioningState Creating { get; } = new HybridContainerServiceProvisioningState(CreatingValue);
         /// <summary> Deleting. </summary>
         public static HybridContainerServiceProvisioningState Deleting { get; } = new HybridContainerServiceProvisioningState(DeletingValue);
         /// <summary> Updating. </summary>
         public static HybridContainerServiceProvisioningState Updating { get; } = new HybridContainerServiceProvisioningState(UpdatingValue);
         /// <summary> Accepted. </summary>
         public static HybridContainerServiceProvisioningState Accepted { get; } = new HybridContainerServiceProvisioningState(AcceptedValue);
-        /// <summary> Created. </summary>
-        public static HybridContainerServiceProvisioningState Created { get; } = new HybridContainerServiceProvisioningState(CreatedValue);
         /// <summary> Determines if two <see cref="HybridContainerServiceProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HybridContainerServiceProvisioningState left, HybridContainerServiceProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HybridContainerServiceProvisioningState"/> values are not the same. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="licenseKey"> The Site Recovery Manager (SRM) license. </param>
-        internal AddonSrmProperties(AddonType addonType, AddonProvisioningState? provisioningState, string licenseKey) : base(addonType, provisioningState)
+        internal AddonSrmProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string licenseKey) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             LicenseKey = licenseKey;
             AddonType = addonType;

@@ -22,10 +22,12 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             // Get the smart-cropped thumbnails for the image.
             ImageAnalysisResult result = client.Analyze(
                 BinaryData.FromStream(stream),
-                VisualFeatures.SmartCrops);
+                VisualFeatures.SmartCrops,
+                new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             // Print smart-crops analysis results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" SmartCrops:");
             foreach (CropRegion cropRegion in result.SmartCrops.Values)
             {
@@ -42,11 +44,13 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisSmartCropsFromUrl
             // Get the smart-cropped thumbnails for the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
-                VisualFeatures.SmartCrops);
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
+                VisualFeatures.SmartCrops,
+                new ImageAnalysisOptions { SmartCropsAspectRatios = new float[] { 0.9F, 1.33F } });
 
             // Print smart-crops analysis results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" SmartCrops:");
             foreach (CropRegion cropRegion in result.SmartCrops.Values)
             {

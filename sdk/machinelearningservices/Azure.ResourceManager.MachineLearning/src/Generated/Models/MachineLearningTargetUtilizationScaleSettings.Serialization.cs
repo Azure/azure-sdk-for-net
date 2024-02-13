@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTargetUtilizationScaleSettings : IUtf8JsonSerializable
+    public partial class MachineLearningTargetUtilizationScaleSettings : IUtf8JsonSerializable, IJsonModel<MachineLearningTargetUtilizationScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTargetUtilizationScaleSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningTargetUtilizationScaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxInstances))
             {
@@ -38,11 +48,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("scaleType"u8);
             writer.WriteStringValue(ScaleType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningTargetUtilizationScaleSettings DeserializeMachineLearningTargetUtilizationScaleSettings(JsonElement element)
+        MachineLearningTargetUtilizationScaleSettings IJsonModel<MachineLearningTargetUtilizationScaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTargetUtilizationScaleSettings(document.RootElement, options);
+        }
+
+        internal static MachineLearningTargetUtilizationScaleSettings DeserializeMachineLearningTargetUtilizationScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +91,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<TimeSpan> pollingInterval = default;
             Optional<int> targetUtilizationPercentage = default;
             ScaleType scaleType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxInstances"u8))
@@ -95,8 +136,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     scaleType = new ScaleType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningTargetUtilizationScaleSettings(scaleType, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningTargetUtilizationScaleSettings(scaleType, serializedAdditionalRawData, Optional.ToNullable(maxInstances), Optional.ToNullable(minInstances), Optional.ToNullable(pollingInterval), Optional.ToNullable(targetUtilizationPercentage));
         }
+
+        BinaryData IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningTargetUtilizationScaleSettings IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningTargetUtilizationScaleSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningTargetUtilizationScaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
@@ -22,23 +21,9 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("targetName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TargetName);
-#else
-            using (JsonDocument document = JsonDocument.Parse(TargetName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, TargetName);
             writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-            using (JsonDocument document = JsonDocument.Parse(UserName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, UserName);
             writer.WritePropertyName("password"u8);
             JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
@@ -52,8 +37,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string type = default;
-            BinaryData targetName = default;
-            BinaryData userName = default;
+            DataFactoryElement<string> targetName = default;
+            DataFactoryElement<string> userName = default;
             DataFactorySecretBaseDefinition password = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -73,12 +58,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("targetName"u8))
                         {
-                            targetName = BinaryData.FromString(property0.Value.GetRawText());
+                            targetName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
                         {
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))

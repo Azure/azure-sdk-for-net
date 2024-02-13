@@ -10,11 +10,15 @@ using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Base class of the specific document types. </summary>
-    internal partial class DocumentIngress
+    /// <summary>
+    /// Base class of the specific document types.
+    /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
+    /// </summary>
+    internal abstract partial class DocumentIngress
     {
         /// <summary> Initializes a new instance of <see cref="DocumentIngress"/>. </summary>
-        public DocumentIngress()
+        protected DocumentIngress()
         {
             DocumentStreamIds = new ChangeTrackingList<string>();
             Properties = new ChangeTrackingList<KeyValuePairString>();
@@ -24,22 +28,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="documentType"> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </param>
         /// <param name="documentStreamIds"> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </param>
         /// <param name="properties"> Collection of custom properties. </param>
-        /// <param name="additionalProperties"> Additional properties to be provided by a child type of DocumentIngress. </param>
-        internal DocumentIngress(DocumentIngressDocumentType? documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties, string additionalProperties)
+        internal DocumentIngress(DocumentIngressDocumentType documentType, IList<string> documentStreamIds, IList<KeyValuePairString> properties)
         {
             DocumentType = documentType;
             DocumentStreamIds = documentStreamIds;
             Properties = properties;
-            AdditionalProperties = additionalProperties;
         }
 
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>
-        public DocumentIngressDocumentType? DocumentType { get; set; }
+        internal DocumentIngressDocumentType DocumentType { get; set; }
         /// <summary> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </summary>
         public IList<string> DocumentStreamIds { get; }
         /// <summary> Collection of custom properties. </summary>
         public IList<KeyValuePairString> Properties { get; }
-        /// <summary> Additional properties to be provided by a child type of DocumentIngress. </summary>
-        public string AdditionalProperties { get; set; }
     }
 }

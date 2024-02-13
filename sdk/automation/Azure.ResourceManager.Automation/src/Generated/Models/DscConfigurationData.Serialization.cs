@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    public partial class DscConfigurationData : IUtf8JsonSerializable
+    public partial class DscConfigurationData : IUtf8JsonSerializable, IJsonModel<DscConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DscConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -38,6 +47,26 @@ namespace Azure.ResourceManager.Automation
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -97,11 +126,40 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DscConfigurationData DeserializeDscConfigurationData(JsonElement element)
+        DscConfigurationData IJsonModel<DscConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscConfigurationData(document.RootElement, options);
+        }
+
+        internal static DscConfigurationData DeserializeDscConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -123,6 +181,8 @@ namespace Azure.ResourceManager.Automation
             Optional<DateTimeOffset> lastModifiedTime = default;
             Optional<int> nodeConfigurationCount = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -280,8 +340,44 @@ namespace Azure.ResourceManager.Automation
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DscConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DscConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), Optional.ToNullable(jobCount), Optional.ToDictionary(parameters), source.Value, Optional.ToNullable(state), Optional.ToNullable(logVerbose), Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(nodeConfigurationCount), description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DscConfigurationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DscConfigurationData IPersistableModel<DscConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDscConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DscConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

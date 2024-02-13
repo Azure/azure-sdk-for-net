@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Details of ACR account to be used for the Registry. </summary>
     public partial class RegistryAcrDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         public RegistryAcrDetails()
         {
@@ -20,10 +54,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="RegistryAcrDetails"/>. </summary>
         /// <param name="systemCreatedAcrAccount"> Details of system created ACR account to be used for the Registry. </param>
         /// <param name="userCreatedAcrAccount"> Details of user created ACR account to be used for the Registry. Not supported in most cases and will throw 400 error if provided. </param>
-        internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, UserCreatedAcrAccount userCreatedAcrAccount)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RegistryAcrDetails(SystemCreatedAcrAccount systemCreatedAcrAccount, UserCreatedAcrAccount userCreatedAcrAccount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemCreatedAcrAccount = systemCreatedAcrAccount;
             UserCreatedAcrAccount = userCreatedAcrAccount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Details of system created ACR account to be used for the Registry. </summary>

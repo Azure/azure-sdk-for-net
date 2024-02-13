@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -13,10 +14,335 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmReplicationDetails
+    public partial class InMageRcmReplicationDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmReplicationDetails>
     {
-        internal static InMageRcmReplicationDetails DeserializeInMageRcmReplicationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmReplicationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageRcmReplicationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(InternalIdentifier))
+            {
+                writer.WritePropertyName("internalIdentifier"u8);
+                writer.WriteStringValue(InternalIdentifier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FabricDiscoveryMachineId))
+            {
+                writer.WritePropertyName("fabricDiscoveryMachineId"u8);
+                writer.WriteStringValue(FabricDiscoveryMachineId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MultiVmGroupName))
+            {
+                writer.WritePropertyName("multiVmGroupName"u8);
+                writer.WriteStringValue(MultiVmGroupName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiscoveryType))
+            {
+                writer.WritePropertyName("discoveryType"u8);
+                writer.WriteStringValue(DiscoveryType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessServerId))
+            {
+                writer.WritePropertyName("processServerId"u8);
+                writer.WriteStringValue(ProcessServerId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessorCoreCount))
+            {
+                writer.WritePropertyName("processorCoreCount"u8);
+                writer.WriteNumberValue(ProcessorCoreCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AllocatedMemoryInMB))
+            {
+                writer.WritePropertyName("allocatedMemoryInMB"u8);
+                writer.WriteNumberValue(AllocatedMemoryInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessServerName))
+            {
+                writer.WritePropertyName("processServerName"u8);
+                writer.WriteStringValue(ProcessServerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunAsAccountId))
+            {
+                writer.WritePropertyName("runAsAccountId"u8);
+                writer.WriteStringValue(RunAsAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareType))
+            {
+                writer.WritePropertyName("firmwareType"u8);
+                writer.WriteStringValue(FirmwareType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimaryNicIPAddress))
+            {
+                writer.WritePropertyName("primaryNicIpAddress"u8);
+                writer.WriteStringValue(PrimaryNicIPAddress.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetGeneration))
+            {
+                writer.WritePropertyName("targetGeneration"u8);
+                writer.WriteStringValue(TargetGeneration);
+            }
+            if (Optional.IsDefined(LicenseType))
+            {
+                writer.WritePropertyName("licenseType"u8);
+                writer.WriteStringValue(LicenseType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountId))
+            {
+                writer.WritePropertyName("storageAccountId"u8);
+                writer.WriteStringValue(StorageAccountId);
+            }
+            if (Optional.IsDefined(TargetVmName))
+            {
+                writer.WritePropertyName("targetVmName"u8);
+                writer.WriteStringValue(TargetVmName);
+            }
+            if (Optional.IsDefined(TargetVmSize))
+            {
+                writer.WritePropertyName("targetVmSize"u8);
+                writer.WriteStringValue(TargetVmSize);
+            }
+            if (Optional.IsDefined(TargetResourceGroupId))
+            {
+                writer.WritePropertyName("targetResourceGroupId"u8);
+                writer.WriteStringValue(TargetResourceGroupId);
+            }
+            if (Optional.IsDefined(TargetLocation))
+            {
+                writer.WritePropertyName("targetLocation"u8);
+                writer.WriteStringValue(TargetLocation);
+            }
+            if (Optional.IsDefined(TargetAvailabilitySetId))
+            {
+                writer.WritePropertyName("targetAvailabilitySetId"u8);
+                writer.WriteStringValue(TargetAvailabilitySetId);
+            }
+            if (Optional.IsDefined(TargetAvailabilityZone))
+            {
+                writer.WritePropertyName("targetAvailabilityZone"u8);
+                writer.WriteStringValue(TargetAvailabilityZone);
+            }
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
+            {
+                writer.WritePropertyName("targetProximityPlacementGroupId"u8);
+                writer.WriteStringValue(TargetProximityPlacementGroupId);
+            }
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
+            {
+                writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
+                writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
+            }
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                writer.WritePropertyName("targetNetworkId"u8);
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailoverRecoveryPointId))
+            {
+                writer.WritePropertyName("failoverRecoveryPointId"u8);
+                writer.WriteStringValue(FailoverRecoveryPointId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
+            {
+                writer.WritePropertyName("lastRecoveryPointReceived"u8);
+                writer.WriteStringValue(LastRecoveryPointReceived.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRpoInSeconds))
+            {
+                writer.WritePropertyName("lastRpoInSeconds"u8);
+                writer.WriteNumberValue(LastRpoInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                writer.WritePropertyName("lastRpoCalculatedTime"u8);
+                writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointId))
+            {
+                writer.WritePropertyName("lastRecoveryPointId"u8);
+                writer.WriteStringValue(LastRecoveryPointId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressPercentage))
+            {
+                writer.WritePropertyName("initialReplicationProgressPercentage"u8);
+                writer.WriteNumberValue(InitialReplicationProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProcessedBytes))
+            {
+                writer.WritePropertyName("initialReplicationProcessedBytes"u8);
+                writer.WriteNumberValue(InitialReplicationProcessedBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationTransferredBytes))
+            {
+                writer.WritePropertyName("initialReplicationTransferredBytes"u8);
+                writer.WriteNumberValue(InitialReplicationTransferredBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InitialReplicationProgressHealth))
+            {
+                writer.WritePropertyName("initialReplicationProgressHealth"u8);
+                writer.WriteStringValue(InitialReplicationProgressHealth.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressPercentage))
+            {
+                writer.WritePropertyName("resyncProgressPercentage"u8);
+                writer.WriteNumberValue(ResyncProgressPercentage.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncProcessedBytes))
+            {
+                writer.WritePropertyName("resyncProcessedBytes"u8);
+                writer.WriteNumberValue(ResyncProcessedBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncTransferredBytes))
+            {
+                writer.WritePropertyName("resyncTransferredBytes"u8);
+                writer.WriteNumberValue(ResyncTransferredBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncProgressHealth))
+            {
+                writer.WritePropertyName("resyncProgressHealth"u8);
+                writer.WriteStringValue(ResyncProgressHealth.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncRequired))
+            {
+                writer.WritePropertyName("resyncRequired"u8);
+                writer.WriteStringValue(ResyncRequired);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResyncState))
+            {
+                writer.WritePropertyName("resyncState"u8);
+                writer.WriteStringValue(ResyncState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeState))
+            {
+                writer.WritePropertyName("agentUpgradeState"u8);
+                writer.WriteStringValue(AgentUpgradeState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastAgentUpgradeType))
+            {
+                writer.WritePropertyName("lastAgentUpgradeType"u8);
+                writer.WriteStringValue(LastAgentUpgradeType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeJobId))
+            {
+                writer.WritePropertyName("agentUpgradeJobId"u8);
+                writer.WriteStringValue(AgentUpgradeJobId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AgentUpgradeAttemptToVersion))
+            {
+                writer.WritePropertyName("agentUpgradeAttemptToVersion"u8);
+                writer.WriteStringValue(AgentUpgradeAttemptToVersion);
+            }
+            if (Optional.IsCollectionDefined(ProtectedDisks))
+            {
+                writer.WritePropertyName("protectedDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedDisks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsLastUpgradeSuccessful))
+            {
+                writer.WritePropertyName("isLastUpgradeSuccessful"u8);
+                writer.WriteStringValue(IsLastUpgradeSuccessful);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAgentRegistrationSuccessfulAfterFailover))
+            {
+                writer.WritePropertyName("isAgentRegistrationSuccessfulAfterFailover"u8);
+                writer.WriteBooleanValue(IsAgentRegistrationSuccessfulAfterFailover.Value);
+            }
+            if (Optional.IsDefined(MobilityAgentDetails))
+            {
+                writer.WritePropertyName("mobilityAgentDetails"u8);
+                writer.WriteObjectValue(MobilityAgentDetails);
+            }
+            if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
+            {
+                writer.WritePropertyName("lastAgentUpgradeErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in LastAgentUpgradeErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AgentUpgradeBlockingErrorDetails))
+            {
+                writer.WritePropertyName("agentUpgradeBlockingErrorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentUpgradeBlockingErrorDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmNics))
+            {
+                writer.WritePropertyName("vmNics"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmNics)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(DiscoveredVmDetails))
+            {
+                writer.WritePropertyName("discoveredVmDetails"u8);
+                writer.WriteObjectValue(DiscoveredVmDetails);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmReplicationDetails IJsonModel<InMageRcmReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmReplicationDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmReplicationDetails DeserializeInMageRcmReplicationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +400,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<InMageRcmNicDetails>> vmNics = default;
             Optional<InMageRcmDiscoveredProtectedVmDetails> discoveredVmDetails = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internalIdentifier"u8))
@@ -493,8 +821,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmReplicationDetails(instanceType, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmReplicationDetails(instanceType, serializedAdditionalRawData, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
         }
+
+        BinaryData IPersistableModel<InMageRcmReplicationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmReplicationDetails IPersistableModel<InMageRcmReplicationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmReplicationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmReplicationDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmReplicationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

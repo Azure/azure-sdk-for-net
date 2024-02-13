@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Cluster profile. </summary>
     public partial class ClusterProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ClusterProfile"/>. </summary>
         /// <param name="clusterVersion"> Version with 3/4 part. </param>
         /// <param name="ossVersion"> Version with three part. </param>
@@ -59,7 +91,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="sparkProfile"> The spark cluster profile. </param>
         /// <param name="stubProfile"> Stub cluster profile. </param>
         /// <param name="scriptActionProfiles"> The script action profile list. </param>
-        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ClusterProfile(string clusterVersion, string ossVersion, IReadOnlyList<ClusterComponentItem> components, HDInsightIdentityProfile identityProfile, AuthorizationProfile authorizationProfile, ClusterSecretsProfile secretsProfile, IList<ClusterServiceConfigsProfile> serviceConfigsProfiles, ClusterConnectivityProfile connectivityProfile, ClusterLogAnalyticsProfile logAnalyticsProfile, ClusterPrometheusProfile prometheusProfile, ClusterSshProfile sshProfile, ClusterAutoscaleProfile autoscaleProfile, IDictionary<string, BinaryData> kafkaProfile, TrinoProfile trinoProfile, IDictionary<string, BinaryData> llapProfile, FlinkProfile flinkProfile, SparkProfile sparkProfile, IDictionary<string, BinaryData> stubProfile, IList<ScriptActionProfile> scriptActionProfiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterVersion = clusterVersion;
             OssVersion = ossVersion;
@@ -80,6 +113,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             SparkProfile = sparkProfile;
             StubProfile = stubProfile;
             ScriptActionProfiles = scriptActionProfiles;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClusterProfile"/> for deserialization. </summary>
+        internal ClusterProfile()
+        {
         }
 
         /// <summary> Version with 3/4 part. </summary>

@@ -66,14 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("functionAppUrl"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FunctionAppUri);
-#else
-            using (JsonDocument document = JsonDocument.Parse(FunctionAppUri))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, FunctionAppUri);
             if (Optional.IsDefined(FunctionKey))
             {
                 writer.WritePropertyName("functionKey"u8);
@@ -92,14 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourceId);
-#else
-                using (JsonDocument document = JsonDocument.Parse(ResourceId))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, ResourceId);
             }
             if (Optional.IsDefined(Authentication))
             {
@@ -133,11 +119,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData functionAppUrl = default;
+            DataFactoryElement<string> functionAppUrl = default;
             Optional<DataFactorySecretBaseDefinition> functionKey = default;
             Optional<string> encryptedCredential = default;
             Optional<DataFactoryCredentialReference> credential = default;
-            Optional<BinaryData> resourceId = default;
+            Optional<DataFactoryElement<string>> resourceId = default;
             Optional<DataFactoryElement<string>> authentication = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -208,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("functionAppUrl"u8))
                         {
-                            functionAppUrl = BinaryData.FromString(property0.Value.GetRawText());
+                            functionAppUrl = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("functionKey"u8))
@@ -240,7 +226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            resourceId = BinaryData.FromString(property0.Value.GetRawText());
+                            resourceId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("authentication"u8))

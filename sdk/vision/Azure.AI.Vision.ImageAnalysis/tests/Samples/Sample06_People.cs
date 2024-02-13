@@ -27,6 +27,7 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
 
             // Print people detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" People:");
             foreach (DetectedPerson person in result.People.Values)
             {
@@ -43,11 +44,12 @@ namespace Azure.AI.Vision.ImageAnalysis.Tests
             #region Snippet:ImageAnalysisPeopleFromUrl
             // Detect people in the image.
             ImageAnalysisResult result = client.Analyze(
-                new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg"),
+                new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
                 VisualFeatures.People);
 
             // Print people detection results to the console
             Console.WriteLine($"Image analysis results:");
+            Console.WriteLine($" Metadata: Model: {result.ModelVersion} Image dimensions: {result.Metadata.Width} x {result.Metadata.Height}");
             Console.WriteLine($" People:");
             foreach (DetectedPerson person in result.People.Values)
             {

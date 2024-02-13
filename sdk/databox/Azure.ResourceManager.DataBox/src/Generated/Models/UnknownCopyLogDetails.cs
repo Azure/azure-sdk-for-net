@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> The UnknownCopyLogDetails. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal UnknownCopyLogDetails(DataBoxOrderType copyLogDetailsType) : base(copyLogDetailsType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             CopyLogDetailsType = copyLogDetailsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCopyLogDetails"/> for deserialization. </summary>
+        internal UnknownCopyLogDetails()
+        {
         }
     }
 }

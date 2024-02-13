@@ -24,6 +24,7 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -342,7 +343,7 @@ rename-mapping:
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
   FailoverGroupUpdate.properties.databases: FailoverDatabases
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 prompted-enum-values:

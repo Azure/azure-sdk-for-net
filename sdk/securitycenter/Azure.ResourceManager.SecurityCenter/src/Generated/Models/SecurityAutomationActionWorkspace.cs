@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -20,8 +22,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="SecurityAutomationActionWorkspace"/>. </summary>
         /// <param name="actionType"> The type of the action that will be triggered by the Automation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workspaceResourceId"> The fully qualified Log Analytics Workspace Azure Resource ID. </param>
-        internal SecurityAutomationActionWorkspace(ActionType actionType, ResourceIdentifier workspaceResourceId) : base(actionType)
+        internal SecurityAutomationActionWorkspace(ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier workspaceResourceId) : base(actionType, serializedAdditionalRawData)
         {
             WorkspaceResourceId = workspaceResourceId;
             ActionType = actionType;

@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Batch
     using System.Linq;
 
     /// <summary>
-    /// A reference to an Azure Virtual Machines Marketplace Image or a custom Azure Virtual Machine Image. To get the list 
-    /// of all Azure Marketplace Image references verified by Azure Batch, see <see cref="PoolOperations.ListSupportedImages"/>.
+    /// A reference to an Azure Virtual Machines Marketplace Image or a Azure Compute Gallery Image. To get the list of all 
+    /// Azure Marketplace Image references verified by Azure Batch, see the 'List Supported Images' operation.
     /// </summary>
     public partial class ImageReference : ITransportObjectProvider<Models.ImageReference>, IPropertyMetadata
     {
@@ -84,13 +84,16 @@ namespace Microsoft.Azure.Batch
         public string Version { get; }
 
         /// <summary>
-        /// Gets the ARM resource identifier of the Virtual Machine Image or Shared Image Gallery Image. Computes Compute 
-        /// Nodes of the Pool will be created using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{versionId}.
+        /// Gets the ARM resource identifier of the Azure Compute Gallery Image. Compute Nodes in the Pool will be created 
+        /// using this Image Id. This is of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName}/versions/{VersionId} 
+        /// or /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Compute/galleries/{galleryName}/images/{imageDefinitionName} 
+        /// for always defaulting to the latest image version.
         /// </summary>
         /// <remarks>
-        /// This property is mutually exclusive with other <see cref="ImageReference"/> properties. The Shared Image Gallery 
-        /// image must have replicas in the same region as the Azure Batch account. For information about the firewall settings 
-        /// for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
+        /// This property is mutually exclusive with other ImageReference properties. The Azure Compute Gallery Image must 
+        /// have replicas in the same region and must be in the same subscription as the Azure Batch account. If the image 
+        /// version is not specified in the imageId, the latest version will be used. For information about the firewall 
+        /// settings for the Batch Compute Node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration.
         /// </remarks>
         public string VirtualMachineImageId { get; }
 

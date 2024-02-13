@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-15-preview";
+            _apiVersion = apiVersion ?? "2023-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilityTypeData>> GetAsync(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosCapabilityTypeData>> GetAsync(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -165,13 +165,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        CapabilityTypeData value = default;
+                        ChaosCapabilityTypeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilityTypeData.DeserializeCapabilityTypeData(document.RootElement);
+                        value = ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityTypeData)null, message.Response);
+                    return Response.FromValue((ChaosCapabilityTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="locationName"/>, <paramref name="targetTypeName"/> or <paramref name="capabilityTypeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilityTypeData> Get(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
+        public Response<ChaosCapabilityTypeData> Get(string subscriptionId, string locationName, string targetTypeName, string capabilityTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locationName, nameof(locationName));
@@ -198,13 +198,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        CapabilityTypeData value = default;
+                        ChaosCapabilityTypeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilityTypeData.DeserializeCapabilityTypeData(document.RootElement);
+                        value = ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityTypeData)null, message.Response);
+                    return Response.FromValue((ChaosCapabilityTypeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

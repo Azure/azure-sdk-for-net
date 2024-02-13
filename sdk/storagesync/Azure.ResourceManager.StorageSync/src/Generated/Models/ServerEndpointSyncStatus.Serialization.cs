@@ -6,15 +6,120 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointSyncStatus
+    public partial class ServerEndpointSyncStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointSyncStatus>
     {
-        internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointSyncStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServerEndpointSyncStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DownloadHealth))
+            {
+                writer.WritePropertyName("downloadHealth"u8);
+                writer.WriteStringValue(DownloadHealth.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UploadHealth))
+            {
+                writer.WritePropertyName("uploadHealth"u8);
+                writer.WriteStringValue(UploadHealth.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CombinedHealth))
+            {
+                writer.WritePropertyName("combinedHealth"u8);
+                writer.WriteStringValue(CombinedHealth.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SyncActivity))
+            {
+                writer.WritePropertyName("syncActivity"u8);
+                writer.WriteStringValue(SyncActivity.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalPersistentFilesNotSyncingCount))
+            {
+                writer.WritePropertyName("totalPersistentFilesNotSyncingCount"u8);
+                writer.WriteNumberValue(TotalPersistentFilesNotSyncingCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UploadStatus))
+            {
+                writer.WritePropertyName("uploadStatus"u8);
+                writer.WriteObjectValue(UploadStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
+            {
+                writer.WritePropertyName("downloadStatus"u8);
+                writer.WriteObjectValue(DownloadStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UploadActivity))
+            {
+                writer.WritePropertyName("uploadActivity"u8);
+                writer.WriteObjectValue(UploadActivity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
+            {
+                writer.WritePropertyName("downloadActivity"u8);
+                writer.WriteObjectValue(DownloadActivity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
+            {
+                writer.WritePropertyName("offlineDataTransferStatus"u8);
+                writer.WriteStringValue(OfflineDataTransferStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
+            {
+                writer.WritePropertyName("backgroundDataDownloadActivity"u8);
+                writer.WriteObjectValue(BackgroundDataDownloadActivity);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerEndpointSyncStatus IJsonModel<ServerEndpointSyncStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointSyncStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointSyncStatus(document.RootElement, options);
+        }
+
+        internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,6 +136,8 @@ namespace Azure.ResourceManager.StorageSync.Models
             Optional<ServerEndpointSyncActivityStatus> downloadActivity = default;
             Optional<ServerEndpointOfflineDataTransferState> offlineDataTransferStatus = default;
             Optional<ServerEndpointBackgroundDataDownloadActivity> backgroundDataDownloadActivity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("downloadHealth"u8))
@@ -141,8 +248,44 @@ namespace Azure.ResourceManager.StorageSync.Models
                     backgroundDataDownloadActivity = ServerEndpointBackgroundDataDownloadActivity.DeserializeServerEndpointBackgroundDataDownloadActivity(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointSyncStatus(Optional.ToNullable(downloadHealth), Optional.ToNullable(uploadHealth), Optional.ToNullable(combinedHealth), Optional.ToNullable(syncActivity), Optional.ToNullable(totalPersistentFilesNotSyncingCount), Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServerEndpointSyncStatus(Optional.ToNullable(downloadHealth), Optional.ToNullable(uploadHealth), Optional.ToNullable(combinedHealth), Optional.ToNullable(syncActivity), Optional.ToNullable(totalPersistentFilesNotSyncingCount), Optional.ToNullable(lastUpdatedTimestamp), uploadStatus.Value, downloadStatus.Value, uploadActivity.Value, downloadActivity.Value, Optional.ToNullable(offlineDataTransferStatus), backgroundDataDownloadActivity.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServerEndpointSyncStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServerEndpointSyncStatus IPersistableModel<ServerEndpointSyncStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServerEndpointSyncStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServerEndpointSyncStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

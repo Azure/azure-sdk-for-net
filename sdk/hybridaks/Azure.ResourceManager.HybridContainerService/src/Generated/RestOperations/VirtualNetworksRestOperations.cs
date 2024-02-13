@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-15-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Gets the Hybrid AKS virtual network. </summary>
+        /// <summary> Gets the specified virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Gets the Hybrid AKS virtual network. </summary>
+        /// <summary> Gets the specified virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Puts the Hybrid AKS virtual network. </summary>
+        /// <summary> Creates or updates the virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceVirtualNetworkData"/> to use. </param>
+        /// <param name="data"> Virtual Network resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Puts the Hybrid AKS virtual network. </summary>
+        /// <summary> Creates or updates the virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceVirtualNetworkData"/> to use. </param>
+        /// <param name="data"> Virtual Network resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Deletes the Hybrid AKS virtual network. </summary>
+        /// <summary> Deletes the specified virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Deletes the Hybrid AKS virtual network. </summary>
+        /// <summary> Deletes the specified virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
@@ -291,11 +291,11 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Patches the Hybrid AKS virtual network. </summary>
+        /// <summary> Patches the virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceVirtualNetworkPatch"/> to use. </param>
+        /// <param name="patch"> Virtual Network resource patch definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -318,11 +318,11 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Patches the Hybrid AKS virtual network. </summary>
+        /// <summary> Patches the virtual network resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceVirtualNetworkPatch"/> to use. </param>
+        /// <param name="patch"> Virtual Network resource patch definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by resource group. </summary>
+        /// <summary> Lists the virtual networks in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by resource group. </summary>
+        /// <summary> Lists the virtual networks in the specified resource group. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by subscription. </summary>
+        /// <summary> Lists the virtual networks in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by subscription. </summary>
+        /// <summary> Lists the virtual networks in the specified subscription. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by resource group. </summary>
+        /// <summary> Lists the virtual networks in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by resource group. </summary>
+        /// <summary> Lists the virtual networks in the specified resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by subscription. </summary>
+        /// <summary> Lists the virtual networks in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Lists the Hybrid AKS virtual networks by subscription. </summary>
+        /// <summary> Lists the virtual networks in the specified subscription. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

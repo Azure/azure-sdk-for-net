@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </summary>
+    /// <summary> Network policy used for building Kubernetes network. Possible values include: 'calico'. </summary>
     public readonly partial struct ProvisionedClusterNetworkPolicy : IEquatable<ProvisionedClusterNetworkPolicy>
     {
         private readonly string _value;
@@ -23,12 +23,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         private const string CalicoValue = "calico";
-        private const string FlannelValue = "flannel";
 
         /// <summary> calico. </summary>
         public static ProvisionedClusterNetworkPolicy Calico { get; } = new ProvisionedClusterNetworkPolicy(CalicoValue);
-        /// <summary> flannel. </summary>
-        public static ProvisionedClusterNetworkPolicy Flannel { get; } = new ProvisionedClusterNetworkPolicy(FlannelValue);
         /// <summary> Determines if two <see cref="ProvisionedClusterNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(ProvisionedClusterNetworkPolicy left, ProvisionedClusterNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisionedClusterNetworkPolicy"/> values are not the same. </summary>

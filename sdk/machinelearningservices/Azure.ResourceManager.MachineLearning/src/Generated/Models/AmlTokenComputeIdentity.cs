@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AML token compute identity definition. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AmlTokenComputeIdentity"/>. </summary>
         /// <param name="computeIdentityType"> [Required] Monitor compute identity type enum. </param>
-        internal AmlTokenComputeIdentity(MonitorComputeIdentityType computeIdentityType) : base(computeIdentityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlTokenComputeIdentity(MonitorComputeIdentityType computeIdentityType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(computeIdentityType, serializedAdditionalRawData)
         {
             ComputeIdentityType = computeIdentityType;
         }

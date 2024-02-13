@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningUserFeature.DeserializeMachineLearningUserFeature(e), _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workspaceFeaturesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _workspaceFeaturesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUserFeature.DeserializeMachineLearningUserFeature, _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningUserFeature.DeserializeMachineLearningUserFeature(e), _workspaceFeaturesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetWorkspaceFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2008,7 +2008,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual AsyncPageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceWorkspacesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(e), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningFqdnEndpoints> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceWorkspacesRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints, _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningFqdnEndpoints.DeserializeMachineLearningFqdnEndpoints(e), _machineLearningWorkspaceWorkspacesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2234,7 +2234,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual AsyncPageable<MachineLearningPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2263,7 +2263,7 @@ namespace Azure.ResourceManager.MachineLearning
         public virtual Pageable<MachineLearningPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningPrivateLinkResource.DeserializeMachineLearningPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "MachineLearningWorkspaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

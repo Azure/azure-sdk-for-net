@@ -32,12 +32,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
         /// <param name="denylistValues"> The values to deny. The format of the values depends on the rule type. </param>
-        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, valueType)
+        internal DenylistCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecurityValueType? valueType, IList<string> denylistValues) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData, valueType)
         {
             DenylistValues = denylistValues;
             RuleType = ruleType ?? "DenylistCustomAlertRule";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DenylistCustomAlertRule"/> for deserialization. </summary>
+        internal DenylistCustomAlertRule()
+        {
         }
 
         /// <summary> The values to deny. The format of the values depends on the rule type. </summary>

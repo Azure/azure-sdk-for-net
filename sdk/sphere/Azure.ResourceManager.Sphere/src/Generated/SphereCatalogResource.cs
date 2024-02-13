@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SphereDeviceInsight.DeserializeSphereDeviceInsight(e), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Sphere
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sphereCatalogCatalogsRestClient.CreateListDeviceInsightsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, pageSizeHint);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SphereDeviceInsight.DeserializeSphereDeviceInsight, _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SphereDeviceInsight.DeserializeSphereDeviceInsight(e), _sphereCatalogCatalogsClientDiagnostics, Pipeline, "SphereCatalogResource.GetDeviceInsights", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -13,24 +15,116 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class LongTermRetentionBackupData : IUtf8JsonSerializable
+    public partial class LongTermRetentionBackupData : IUtf8JsonSerializable, IJsonModel<LongTermRetentionBackupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LongTermRetentionBackupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LongTermRetentionBackupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            {
+                writer.WritePropertyName("serverName"u8);
+                writer.WriteStringValue(ServerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerCreateOn))
+            {
+                writer.WritePropertyName("serverCreateTime"u8);
+                writer.WriteStringValue(ServerCreateOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DatabaseDeletedOn))
+            {
+                writer.WritePropertyName("databaseDeletionTime"u8);
+                writer.WriteStringValue(DatabaseDeletedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupOn))
+            {
+                writer.WritePropertyName("backupTime"u8);
+                writer.WriteStringValue(BackupOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupExpireOn))
+            {
+                writer.WritePropertyName("backupExpirationTime"u8);
+                writer.WriteStringValue(BackupExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackupStorageRedundancy))
+            {
+                writer.WritePropertyName("backupStorageRedundancy"u8);
+                writer.WriteStringValue(BackupStorageRedundancy.Value.ToString());
+            }
             if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LongTermRetentionBackupData DeserializeLongTermRetentionBackupData(JsonElement element)
+        LongTermRetentionBackupData IJsonModel<LongTermRetentionBackupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLongTermRetentionBackupData(document.RootElement, options);
+        }
+
+        internal static LongTermRetentionBackupData DeserializeLongTermRetentionBackupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +141,8 @@ namespace Azure.ResourceManager.Sql
             Optional<DateTimeOffset> backupExpirationTime = default;
             Optional<SqlBackupStorageRedundancy> backupStorageRedundancy = default;
             Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -149,8 +245,44 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LongTermRetentionBackupData(id, name, type, systemData.Value, serverName.Value, Optional.ToNullable(serverCreateTime), databaseName.Value, Optional.ToNullable(databaseDeletionTime), Optional.ToNullable(backupTime), Optional.ToNullable(backupExpirationTime), Optional.ToNullable(backupStorageRedundancy), Optional.ToNullable(requestedBackupStorageRedundancy), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LongTermRetentionBackupData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LongTermRetentionBackupData IPersistableModel<LongTermRetentionBackupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LongTermRetentionBackupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLongTermRetentionBackupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LongTermRetentionBackupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LongTermRetentionBackupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetricDefinition.DeserializeMonitorMetricDefinition(e), MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricDefinitionsRestClient.CreateListRequest(scope, metricnamespace);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricDefinition.DeserializeMonitorMetricDefinition, MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetricDefinition.DeserializeMonitorMetricDefinition(e), MetricDefinitionsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricDefinitions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetric.DeserializeMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             options ??= new ArmResourceGetMonitorMetricsOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListRequest(scope, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetric.DeserializeMonitorMetric, MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetric.DeserializeMonitorMetric(e), MetricsClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetrics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(e), BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             options ??= new ArmResourceGetMonitorMetricBaselinesOptions();
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BaselinesRestClient.CreateListRequest(scope, options.Metricnames, options.Metricnamespace, options.Timespan, options.Interval, options.Aggregation, options.Sensitivities, options.Filter, options.ResultType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline, BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorSingleMetricBaseline.DeserializeMonitorSingleMetricBaseline(e), BaselinesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricBaselines", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorMetricNamespace.DeserializeMonitorMetricNamespace(e), MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Monitor.Mocking
             Argument.AssertNotNull(scope, nameof(scope));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricNamespacesRestClient.CreateListRequest(scope, startTime);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorMetricNamespace.DeserializeMonitorMetricNamespace, MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorMetricNamespace.DeserializeMonitorMetricNamespace(e), MetricNamespacesClientDiagnostics, Pipeline, "MockableMonitorArmClient.GetMonitorMetricNamespaces", "value", null, cancellationToken);
         }
         /// <summary>
         /// Gets an object representing an <see cref="AutoscaleSettingResource"/> along with the instance operations that can be performed on it but with no data.

@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- `InteractiveBrowserCredentialBrokerOptions` and `SharedTokenCacheCredentialBrokerOptions` now support a `UseOperatingSystemAccount` property to enable the use of the currently logged in operating system account for authentication rather than prompting for a credential.
 - Preview support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential`. This feature is enabled via the `IsProofOfPossessionRequired` property on `InteractiveBrowserCredentialBrokerOptions`.
 
 ### Breaking Changes

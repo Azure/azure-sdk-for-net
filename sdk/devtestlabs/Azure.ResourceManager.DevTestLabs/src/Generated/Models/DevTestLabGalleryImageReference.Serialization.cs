@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabGalleryImageReference : IUtf8JsonSerializable
+    public partial class DevTestLabGalleryImageReference : IUtf8JsonSerializable, IJsonModel<DevTestLabGalleryImageReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabGalleryImageReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabGalleryImageReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Offer))
             {
@@ -40,11 +51,40 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabGalleryImageReference DeserializeDevTestLabGalleryImageReference(JsonElement element)
+        DevTestLabGalleryImageReference IJsonModel<DevTestLabGalleryImageReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabGalleryImageReference(document.RootElement, options);
+        }
+
+        internal static DevTestLabGalleryImageReference DeserializeDevTestLabGalleryImageReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +94,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Optional<string> sku = default;
             Optional<string> osType = default;
             Optional<string> version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offer"u8))
@@ -81,8 +123,44 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabGalleryImageReference(offer.Value, publisher.Value, sku.Value, osType.Value, version.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabGalleryImageReference(offer.Value, publisher.Value, sku.Value, osType.Value, version.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabGalleryImageReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabGalleryImageReference IPersistableModel<DevTestLabGalleryImageReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGalleryImageReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabGalleryImageReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabGalleryImageReference)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabGalleryImageReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

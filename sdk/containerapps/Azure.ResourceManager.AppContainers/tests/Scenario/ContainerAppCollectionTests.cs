@@ -21,9 +21,8 @@ namespace Azure.ResourceManager.AppContainers.Tests
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            ResourceGroupResource rg = await CreateResourceGroup("testRg", AzureLocation.WestUS);
-
-            // Create ContainerAppManagedEnvironment
+            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroupResource rg = await CreateResourceGroupAsync();
             string envName = Recording.GenerateAssetName("env");
             var envResource = await CreateContainerAppManagedEnvironment(rg, envName);
             Assert.AreEqual(envName, envResource.Data.Name);

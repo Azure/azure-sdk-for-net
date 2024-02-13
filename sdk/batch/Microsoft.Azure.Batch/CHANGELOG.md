@@ -1,6 +1,6 @@
 # Release History
 
-## 16.1.0-beta.1 (Unreleased)
+## 16.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,27 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 16.1.0 (2024-01-01)
+
+### Features Added
+
+- Add `ResourceTags` support to Pool Creation
+  - Added `resourceTags` property to `PoolAddParameter` definition
+  - Added `resourceTags` property to `PoolSpecification` definition
+  - Added `resourceTags` property to `CloudPool` definition
+
+- Add `SecurityProfile` support to Pool Creation
+  - Added `serviceArtifactReference` property to `VirtualMachineConfiguration`definition
+  - Added `securityProfile` property to `VirtualMachineConfiguration` definition
+  - Added `ScaleSetVmResourceId` property to `VirtualMachineInfo` definition
+
+- Add `ServiceArtifactReference` and `OSDisk` support to Pool Creation
+  - Added `StandardSSDLRS` value to `StorageAccountType` enum
+  - Added `caching` property to `OSDisk` definition
+  - Added `managedDisk` property to `OSDisk` definition
+  - Added `diskSizeGB` property to `OSDisk` definition
+  - Added `writeAcceleratorEnabled` property to `OSDisk` definition
 
 ## 16.0.0 (2023-05-01)
 

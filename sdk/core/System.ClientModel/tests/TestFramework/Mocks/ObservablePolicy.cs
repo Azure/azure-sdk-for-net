@@ -10,6 +10,7 @@ namespace ClientModel.Tests.Mocks;
 public class ObservablePolicy : PipelinePolicy
 {
     public string Id { get; }
+    protected bool IsLastPolicy { get; set; } = false;
 
     public ObservablePolicy(string id)
     {
@@ -20,7 +21,10 @@ public class ObservablePolicy : PipelinePolicy
     {
         Stamp(message, "Request");
 
-        ProcessNext(message, pipeline, currentIndex);
+        if (!IsLastPolicy)
+        {
+            ProcessNext(message, pipeline, currentIndex);
+        }
 
         Stamp(message, "Response");
     }
@@ -29,7 +33,10 @@ public class ObservablePolicy : PipelinePolicy
     {
         Stamp(message, "Request");
 
-        await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        if (!IsLastPolicy)
+        {
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
+        }
 
         Stamp(message, "Response");
     }

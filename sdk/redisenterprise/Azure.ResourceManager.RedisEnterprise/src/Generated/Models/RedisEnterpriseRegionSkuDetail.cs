@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     /// <summary> Details about the location requested and the available skus in the location. </summary>
     public partial class RedisEnterpriseRegionSkuDetail
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RedisEnterpriseRegionSkuDetail"/>. </summary>
         internal RedisEnterpriseRegionSkuDetail()
         {
@@ -21,11 +55,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="resourceType"> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </param>
         /// <param name="locationInfo"> Details about location and its capabilities. </param>
         /// <param name="skuDetails"> Details about available skus. </param>
-        internal RedisEnterpriseRegionSkuDetail(ResourceType? resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisEnterpriseRegionSkuDetail(ResourceType? resourceType, RedisEnterpriseLocationInfo locationInfo, SkuDetail skuDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             LocationInfo = locationInfo;
             SkuDetails = skuDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type which has the SKU, such as Microsoft.Cache/redisEnterprise. </summary>

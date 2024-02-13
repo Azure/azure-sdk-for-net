@@ -1,7 +1,9 @@
 directory: specification/ai/HealthInsights/HealthInsights.RadiologyInsights
 additionalDirectories:
+  - specification/ai/HealthInsights/tspconfig.yaml
+  - specification/ai/HealthInsights/service.tsp
+  - specification/ai/HealthInsights/main.tsp
   - specification/ai/HealthInsights/HealthInsights.Common
-  - specification/ai/HealthInsights/HealthInsights.OpenAPI
-commit: 4d34e359313a882fc3bc1a9ad035a578403ce3d0
+commit: d3d52ceca0bfbe261d6fa4de72021d5c473ee222
 repo: Azure/azure-rest-api-specs
 cleanup: false

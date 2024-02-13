@@ -40,6 +40,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("copyBehavior"u8);
                 JsonSerializer.Serialize(writer, CopyBehavior);
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in Metadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -66,6 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
             Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
             Optional<DataFactoryElement<string>> copyBehavior = default;
+            Optional<IList<DataFactoryMetadataItemInfo>> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,10 +122,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                     copyBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item));
+                    }
+                    metadata = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, additionalProperties, blockSizeInMB.Value);
+            return new AzureBlobStorageWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, Optional.ToList(metadata), additionalProperties, blockSizeInMB.Value);
         }
     }
 }

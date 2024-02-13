@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
@@ -20,9 +22,15 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Specifies the kind of blueprint artifact. </param>
-        internal UnknownArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind) : base(id, name, resourceType, systemData, kind)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownArtifact(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArtifactKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownArtifact"/> for deserialization. </summary>
+        internal UnknownArtifact()
+        {
         }
     }
 }

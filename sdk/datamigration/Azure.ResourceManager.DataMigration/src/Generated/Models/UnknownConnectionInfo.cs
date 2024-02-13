@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The UnknownConnectionInfo. </summary>
@@ -14,9 +17,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="connectionInfoType"> Type of connection info. </param>
         /// <param name="userName"> User name. </param>
         /// <param name="password"> Password credential. </param>
-        internal UnknownConnectionInfo(string connectionInfoType, string userName, string password) : base(connectionInfoType, userName, password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownConnectionInfo(string connectionInfoType, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(connectionInfoType, userName, password, serializedAdditionalRawData)
         {
             ConnectionInfoType = connectionInfoType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownConnectionInfo"/> for deserialization. </summary>
+        internal UnknownConnectionInfo()
+        {
         }
     }
 }

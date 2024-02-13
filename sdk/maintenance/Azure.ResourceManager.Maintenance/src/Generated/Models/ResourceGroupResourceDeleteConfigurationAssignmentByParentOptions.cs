@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             ConfigurationAssignmentName = configurationAssignmentName;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions"/> for deserialization. </summary>
+        internal ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions()
+        {
+        }
+
         /// <summary> Resource provider name. </summary>
         public string ProviderName { get; }
         /// <summary> Resource parent type. </summary>
