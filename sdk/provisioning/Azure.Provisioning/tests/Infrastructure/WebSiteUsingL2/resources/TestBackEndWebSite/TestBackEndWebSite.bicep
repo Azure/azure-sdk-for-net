@@ -3,8 +3,8 @@ resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' existin
   name: 'appServicePlan_kjMZSF1FP'
 }
 
-resource webSite_vYvIqKCDk 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'backEnd-mnash-cdk'
+resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
+  name: 'backEnd-TEST'
   location: 'westus'
   identity: {
   }
@@ -30,8 +30,8 @@ resource webSite_vYvIqKCDk 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_Ys2FlARU8 'Microsoft.Web/sites/config@2021-02-01' = {
-  parent: webSite_vYvIqKCDk
+resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-02-01' = {
+  parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {
     SCM_DO_BUILD_DURING_DEPLOYMENT: 'False'

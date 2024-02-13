@@ -13,7 +13,7 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   name: 'rg-TEST'
   location: 'westus'
   tags: {
-    azd-env-name: 'mnash-cdk'
+    azd-env-name: 'TEST'
     key: 'value'
   }
 }
@@ -49,7 +49,7 @@ resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPoli
   properties: {
     accessPolicies: [
       {
-        tenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+        tenantId: '00000000-0000-0000-0000-000000000000'
         objectId: 'TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID'
         permissions: {
           secrets: [

@@ -21,7 +21,15 @@ namespace Azure.Provisioning
         /// </summary>
         public T Properties { get; }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Resource{T}"/>.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="parent">The parent.</param>
+        /// <param name="resourceName">The resouce name.</param>
+        /// <param name="resourceType">The resourceType.</param>
+        /// <param name="version">The version.</param>
+        /// <param name="properties">The properites.</param>
         protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, T properties)
             : base(scope, parent, resourceName, resourceType, version, properties)
         {
