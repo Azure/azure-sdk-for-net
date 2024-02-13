@@ -140,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        await _executor.TryExecuteAsync(input, _functionExecutionToken).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
@@ -225,7 +225,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 // Don't checkpoint if cancellation has been requested as this can lead to data loss,
                 // since the user may not actually process the event.
 
-                if (eventToCheckpoint != null && !linkedCts.IsCancellationRequested)
+                if (eventToCheckpoint != null &&
+                    // IMPORTANT - explicitly check each token to avoid data loss as the linkedCts is not canceled atomically when each of the
+                    // sources are canceled.
+                    !_functionExecutionToken.IsCancellationRequested && !_ownershipLostTokenSource.IsCancellationRequested)
                 {
                     await CheckpointAsync(eventToCheckpoint, context).ConfigureAwait(false);
                 }
