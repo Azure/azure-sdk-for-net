@@ -98,25 +98,21 @@ public partial class HttpClientPipelineTransport
         {
             if (_bufferedContent is not null)
             {
-                Console.WriteLine("HttpClientTransportResponse.ReadContentSyncOrAsync: return _bufferedContent");
                 // Content has already been buffered.
                 return _bufferedContent;
             }
 
             if (_contentStream == null)
             {
-                Console.WriteLine("HttpClientTransportResponse.ReadContentSyncOrAsync: return EmptyBinaryData");
-
                 // Content is not buffered but there is no source stream.
                 // Our contract from Azure.Core is to return BinaryData.Empty in this case.
                 _bufferedContent = s_EmptyBinaryData;
                 return _bufferedContent;
             }
 
-            if (_contentStream.Position != 0 && _contentStream is MemoryStream)
+            if (_contentStream.Position != 0)
             {
-                Console.WriteLine($"HttpClientTransportResponse.ReadContentSyncOrAsync: MemoryStream and Position={_contentStream.Position}");
-                //throw new InvalidOperationException();
+                throw new InvalidOperationException();
             }
 
             // ContentStream still holds the source stream.  Buffer the content

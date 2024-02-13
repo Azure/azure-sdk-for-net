@@ -127,12 +127,10 @@ public abstract class PipelineTransport : PipelinePolicy
 
             if (async)
             {
-                Console.WriteLine("PipelineTransport.ProcessAsync");
                 await message.Response.ReadContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
             }
             else
             {
-                Console.WriteLine("PipelineTransport.Process");
                 message.Response.ReadContent(timeoutTokenSource.Token);
             }
         }

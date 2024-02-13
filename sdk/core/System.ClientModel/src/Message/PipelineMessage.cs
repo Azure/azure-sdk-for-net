@@ -145,8 +145,6 @@ public class PipelineMessage : IDisposable
     {
         if (disposing && !_disposed)
         {
-            Console.WriteLine("PipelineMessage.Dispose.");
-
             PipelineResponse? response = Response;
             response?.Dispose();
             Response = null;

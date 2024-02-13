@@ -73,9 +73,15 @@ namespace Azure.Core.Pipeline
             {
                 PipelineResponse response = _pipelineResponse;
 
-                if (response.ContentStream is MemoryStream stream &&
-                    stream.Position != 0)
+                if (response.ContentStream is MemoryStream stream && stream.Position != 0)
                 {
+                    // Azure.Core Response has a contract that ContentStream can be read
+                    // without setting position back to 0.  This means if ReadContent is
+                    // called, the buffer will contain empty BinaryData.
+
+                    // So that the ClientModel response implementations don't throw,
+                    // set the position back to 0 if Azure.Core Response default
+                    // ReadContent was called.
                     stream.Position = 0;
                 }
 

@@ -150,7 +150,6 @@ namespace Azure
 
         private static ErrorDetails CreateRequestFailedExceptionContent(Response response, RequestFailedDetailsParser? parser)
         {
-            Console.WriteLine($"RequestFailedException.CreateRequestFailedExceptionContent.");
             response.ReadContent();
 
             parser ??= response.RequestFailedDetailsParser;
