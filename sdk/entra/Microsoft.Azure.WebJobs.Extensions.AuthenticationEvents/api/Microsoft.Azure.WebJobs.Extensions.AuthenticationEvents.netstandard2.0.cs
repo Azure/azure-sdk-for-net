@@ -22,7 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         public AuthenticationEventsTriggerAttribute() { }
         public string AudienceAppId { get { throw null; } set { } }
+        public string OpenIdConnectionHost { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+        public string TokenIssuerV1 { get { throw null; } set { } }
+        public string TokenIssuerV2 { get { throw null; } set { } }
     }
     public partial class AuthenticationEventWebJobsStartup : Microsoft.Azure.WebJobs.Hosting.IWebJobsStartup
     {
