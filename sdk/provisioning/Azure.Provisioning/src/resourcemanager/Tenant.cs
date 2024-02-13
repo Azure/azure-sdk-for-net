@@ -1,0 +1,31 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources;
+
+namespace Azure.Provisioning.ResourceManager
+{
+    /// <summary>
+    /// Tenant resource.
+    /// </summary>
+#pragma warning disable AZC0012 // Avoid single word type names
+    public class Tenant : Resource<TenantData>
+#pragma warning restore AZC0012 // Avoid single word type names
+    {
+        private const string ResourceTypeName = "Microsoft.Resources/tenants";
+
+        private static string GetName() => Environment.GetEnvironmentVariable("AZURE_TENANT_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_TENANT_ID' found");
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Tenant"/>.
+        /// </summary>
+        /// <param name="scope">The scope the tenant belongs to.</param>
+        public Tenant(IConstruct scope)
+            : base(scope, null, GetName(), ResourceTypeName, "2022-12-01", ResourceManagerModelFactory.TenantData(
+                tenantId: Guid.Parse(GetName())))
+        {
+        }
+    }
+}
