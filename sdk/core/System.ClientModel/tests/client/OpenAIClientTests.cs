@@ -15,9 +15,14 @@ public class OpenAIClientTests
     [Ignore("OpenAI deprecated this endpoint and it now returns a 404.")]
     public void TestClientSync()
     {
-        string key = Environment.GetEnvironmentVariable("OPENAI_KEY");
+        string? key = Environment.GetEnvironmentVariable("OPENAI_KEY");
 
-        ApiKeyCredential credential = new ApiKeyCredential(key);
+        if (key == null)
+        {
+            throw new InvalidOperationException();
+        }
+
+        ApiKeyCredential credential = new ApiKeyCredential(key!);
         OpenAIClient client = new OpenAIClient(new Uri("https://api.openai.com/"), credential);
 
         CompletionsOptions input = new(new string[] { "tell me something about life." })

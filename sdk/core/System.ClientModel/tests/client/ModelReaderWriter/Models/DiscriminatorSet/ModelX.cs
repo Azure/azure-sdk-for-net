@@ -112,7 +112,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static ModelX DeserializeModelX(JsonElement element, ModelReaderWriterOptions options = default)
+        internal static ModelX? DeserializeModelX(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
@@ -120,11 +120,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             {
                 return null;
             }
-            string kind = default;
-            OptionalProperty<string> name = default;
+            string? kind = default;
+            OptionalProperty<string>? name = default;
             int xProperty = default;
             OptionalProperty<int> nullProperty = default;
-            OptionalProperty<IList<string>> fields = default;
+            OptionalProperty<IList<string>>? fields = default;
             OptionalProperty<IDictionary<string, string>> keyValuePairs = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
 
