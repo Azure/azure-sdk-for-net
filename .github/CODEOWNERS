@@ -22,7 +22,7 @@
 
 # Catch all for loose files in the root, which are mostly global configuration and
 # should not be changed without team discussion.
-/*                                                                 @jsquire @pallavit @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
+/*                                                                 @jsquire @pallavit @Azure/azure-sdk-write-net-core
 
 ################
 # Automation
@@ -57,7 +57,7 @@
 # ######## Core Libraries ########
 
 # PRLabel: %Azure.Core
-/sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @jsquire
+/sdk/core/                                                         @Azure/azure-sdk-write-net-core
 
 # PRLabel: %Azure.Identity
 /sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
