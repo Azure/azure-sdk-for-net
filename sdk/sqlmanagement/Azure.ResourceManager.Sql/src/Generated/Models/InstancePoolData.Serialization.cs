@@ -83,6 +83,16 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(DnsZone))
+            {
+                writer.WritePropertyName("dnsZone"u8);
+                writer.WriteStringValue(DnsZone);
+            }
+            if (Optional.IsDefined(MaintenanceConfigurationId))
+            {
+                writer.WritePropertyName("maintenanceConfigurationId"u8);
+                writer.WriteStringValue(MaintenanceConfigurationId);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -132,6 +142,8 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceIdentifier> subnetId = default;
             Optional<int> vCores = default;
             Optional<InstancePoolLicenseType> licenseType = default;
+            Optional<string> dnsZone = default;
+            Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,6 +236,20 @@ namespace Azure.ResourceManager.Sql
                             licenseType = new InstancePoolLicenseType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("dnsZone"u8))
+                        {
+                            dnsZone = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceConfigurationId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -233,7 +259,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InstancePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), serializedAdditionalRawData);
+            return new InstancePoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, subnetId.Value, Optional.ToNullable(vCores), Optional.ToNullable(licenseType), dnsZone.Value, maintenanceConfigurationId.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InstancePoolData>.Write(ModelReaderWriterOptions options)

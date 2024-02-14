@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="SendAsync(NotificationContent,CancellationToken)">
+      <example>
+This sample shows how to call SendAsync.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = await client.SendAsync(notificationContent);
+]]></code>
+This sample shows how to call SendAsync with all parameters.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = await client.SendAsync(notificationContent);
+]]></code></example>
+    </member>
+    <member name="Send(NotificationContent,CancellationToken)">
+      <example>
+This sample shows how to call Send.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = client.Send(notificationContent);
+]]></code>
+This sample shows how to call Send with all parameters.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+NotificationContent notificationContent = new TextNotificationContent(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), new string[] { "<to>" }, "<content>");
+Response<SendMessageResult> response = client.Send(notificationContent);
+]]></code></example>
+    </member>
+    <member name="SendAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call SendAsync and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    content = "<content>",
+    channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    to = new object[]
+    {
+        "<to>"
+    },
+    kind = "text",
+});
+Response response = await client.SendAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
+]]></code>
+This sample shows how to call SendAsync with all request content and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    content = "<content>",
+    channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    to = new object[]
+    {
+        "<to>"
+    },
+    kind = "text",
+});
+Response response = await client.SendAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
+]]></code></example>
+    </member>
+    <member name="Send(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Send and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    content = "<content>",
+    channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    to = new object[]
+    {
+        "<to>"
+    },
+    kind = "text",
+});
+Response response = client.Send(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
+]]></code>
+This sample shows how to call Send with all request content and parse the result.
+<code><![CDATA[
+NotificationMessagesClient client = new NotificationMessagesClient(null);
+
+using RequestContent content = RequestContent.Create(new
+{
+    content = "<content>",
+    channelRegistrationId = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
+    to = new object[]
+    {
+        "<to>"
+    },
+    kind = "text",
+});
+Response response = client.Send(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("messageId").ToString());
+Console.WriteLine(result.GetProperty("receipts")[0].GetProperty("to").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

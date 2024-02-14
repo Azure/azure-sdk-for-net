@@ -15,6 +15,38 @@ namespace Azure.Communication.JobRouter
     /// <summary> An entity for jobs to be routed to. </summary>
     public partial class RouterWorker
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
         internal RouterWorker()
         {
@@ -39,7 +71,8 @@ namespace Azure.Communication.JobRouter
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
-        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = eTag;
             Id = id;
@@ -53,6 +86,7 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of a worker. </summary>
         public string Id { get; }
