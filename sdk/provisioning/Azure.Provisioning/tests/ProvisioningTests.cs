@@ -35,7 +35,10 @@ namespace Azure.Provisioning.Tests
             AppServicePlan appServicePlan = infra.AddAppServicePlan();
 
             WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
-            var frontEndPrincipalId = frontEnd.AddOutput("SERVICE_API_IDENTITY_PRINCIPAL_ID", nameof(frontEnd.Properties.Identity.PrincipalId), isSecure: true);
+            var frontEndPrincipalId = frontEnd.AddOutput(
+                website => website.Identity.PrincipalId,
+                "SERVICE_API_IDENTITY_PRINCIPAL_ID",
+                isSecure: true);
 
             infra.AddKeyVault()
                 .AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId

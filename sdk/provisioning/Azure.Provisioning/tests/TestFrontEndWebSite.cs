@@ -21,7 +21,10 @@ namespace Azure.Provisioning.Tests
             keyVault = UseExistingResource(keyVault, () => scope.AddKeyVault(ResourceGroup));
 
             WebSite frontEnd = new WebSite(this, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
-            var frontEndPrincipalId = frontEnd.AddOutput("SERVICE_API_IDENTITY_PRINCIPAL_ID", nameof(frontEnd.Properties.Identity.PrincipalId), isSecure: true);
+            var frontEndPrincipalId = frontEnd.AddOutput(
+                website => website.Identity.PrincipalId,
+                "SERVICE_API_IDENTITY_PRINCIPAL_ID",
+                isSecure: true);
 
             keyVault.AddAccessPolicy(frontEndPrincipalId);
 

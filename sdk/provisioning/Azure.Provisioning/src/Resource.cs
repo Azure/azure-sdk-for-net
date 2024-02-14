@@ -102,7 +102,7 @@ namespace Azure.Provisioning
         /// <param name="instance">The property instance.</param>
         /// <param name="propertyName">The property name.</param>
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
-        public void AssignParameter(object instance, string propertyName, Parameter parameter)
+        private protected void AssignParameter(object instance, string propertyName, Parameter parameter)
         {
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
@@ -119,14 +119,16 @@ namespace Azure.Provisioning
         /// Adds an output to the resource.
         /// </summary>
         /// <param name="name">The name of the output.</param>
+        /// <param name="instance">The instance which contains the property for the output.</param>
         /// <param name="propertyName">The property name to output.</param>
         /// <param name="isLiteral">Is the output literal.</param>
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
-        public Output AddOutput(string name, string propertyName, bool isLiteral = false, bool isSecure = false)
+        private protected Output AddOutput(string name, object instance, string propertyName, bool isLiteral = false, bool isSecure = false)
         {
-            string? reference = GetReference(Properties.GetType(), propertyName, Name.ToCamelCase());
+            string? reference = GetReference(instance.GetType(), Properties.GetType(), propertyName, Name.ToCamelCase());
+
             if (reference is null)
                 throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {Properties.GetType().Name}");
             var result = new Output(name, reference, Scope, isLiteral, isSecure);
@@ -134,21 +136,24 @@ namespace Azure.Provisioning
             return result;
         }
 
-        private static string? GetReference(Type type, string propertyName, string str)
+        private static string? GetReference(Type targetType, Type currentType, string propertyName, string str)
         {
-            var properties = type.GetProperties();
-            foreach (var property in properties)
+            var properties = currentType.GetProperties();
+            if (currentType == targetType)
             {
-                if (property.Name.Equals(propertyName, StringComparison.Ordinal))
+                foreach (var property in properties)
                 {
-                    return $"{str}.{property.Name.ToCamelCase()}";
+                    if (property.Name.Equals(propertyName, StringComparison.Ordinal))
+                    {
+                        return $"{str}.{property.Name.ToCamelCase()}";
+                    }
                 }
             }
 
             //need to check next level
             foreach (var property in properties)
             {
-                var result = GetReference(property.PropertyType, propertyName, $"{str}.{property.Name.ToCamelCase()}");
+                var result = GetReference(targetType, property.PropertyType, propertyName, $"{str}.{property.Name.ToCamelCase()}");
                 if (result is not null)
                     return result;
             }
