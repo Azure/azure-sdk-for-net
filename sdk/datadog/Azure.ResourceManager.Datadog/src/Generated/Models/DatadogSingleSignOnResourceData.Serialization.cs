@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Datadog
                     {
                         continue;
                     }
-                    properties = DatadogSingleSignOnProperties.DeserializeDatadogSingleSignOnProperties(property.Value);
+                    properties = DatadogSingleSignOnProperties.DeserializeDatadogSingleSignOnProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

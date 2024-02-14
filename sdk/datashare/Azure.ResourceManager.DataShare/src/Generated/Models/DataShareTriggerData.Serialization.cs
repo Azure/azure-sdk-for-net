@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DataShare
             {
                 switch (discriminator.GetString())
                 {
-                    case "ScheduleBased": return ScheduledTrigger.DeserializeScheduledTrigger(element);
+                    case "ScheduleBased": return ScheduledTrigger.DeserializeScheduledTrigger(element, options);
                 }
             }
-            return UnknownTrigger.DeserializeUnknownTrigger(element);
+            return UnknownTrigger.DeserializeUnknownTrigger(element, options);
         }
 
         BinaryData IPersistableModel<DataShareTriggerData>.Write(ModelReaderWriterOptions options)

@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item, options));
                             }
                             containers = array;
                             continue;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item, options));
                             }
                             initContainers = array;
                             continue;

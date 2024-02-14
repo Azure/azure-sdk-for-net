@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataTransferDataSourceSink(document.RootElement, options);
+            return DeserializeDataTransferDataSourceSink(document.RootElement, options);
         }
 
         internal static UnknownDataTransferDataSourceSink DeserializeUnknownDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)

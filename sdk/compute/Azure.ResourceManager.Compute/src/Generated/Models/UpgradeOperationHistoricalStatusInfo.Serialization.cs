@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    properties = UpgradeOperationHistoricalStatusInfoProperties.DeserializeUpgradeOperationHistoricalStatusInfoProperties(property.Value);
+                    properties = UpgradeOperationHistoricalStatusInfoProperties.DeserializeUpgradeOperationHistoricalStatusInfoProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

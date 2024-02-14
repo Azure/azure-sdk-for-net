@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlStoredProcedureData> array = new List<CosmosDBSqlStoredProcedureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(item));
+                        array.Add(CosmosDBSqlStoredProcedureData.DeserializeCosmosDBSqlStoredProcedureData(item, options));
                     }
                     value = array;
                     continue;

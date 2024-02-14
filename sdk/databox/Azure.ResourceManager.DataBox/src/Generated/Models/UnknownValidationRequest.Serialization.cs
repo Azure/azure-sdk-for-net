@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationRequest(document.RootElement, options);
+            return DeserializeDataBoxValidationContent(document.RootElement, options);
         }
 
         internal static UnknownValidationRequest DeserializeUnknownValidationRequest(JsonElement element, ModelReaderWriterOptions options = null)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxValidationInputContent> array = new List<DataBoxValidationInputContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item));
+                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item, options));
                     }
                     individualRequestDetails = array;
                     continue;

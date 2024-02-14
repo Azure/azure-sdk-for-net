@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent> array = new List<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(item));
+                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(item, options));
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<StorageAccountForDataLakeAnalyticsAccountUpdateContent> array = new List<StorageAccountForDataLakeAnalyticsAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccountForDataLakeAnalyticsAccountUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountUpdateContent(item));
+                                array.Add(StorageAccountForDataLakeAnalyticsAccountUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountUpdateContent(item, options));
                             }
                             storageAccounts = array;
                             continue;
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<ComputePolicyForDataLakeAnalyticsAccountUpdateContent> array = new List<ComputePolicyForDataLakeAnalyticsAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePolicyForDataLakeAnalyticsAccountUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountUpdateContent(item));
+                                array.Add(ComputePolicyForDataLakeAnalyticsAccountUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountUpdateContent(item, options));
                             }
                             computePolicies = array;
                             continue;
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<FirewallRuleForDataLakeAnalyticsAccountUpdateContent> array = new List<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeAnalyticsAccountUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountUpdateContent(item));
+                                array.Add(FirewallRuleForDataLakeAnalyticsAccountUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountUpdateContent(item, options));
                             }
                             firewallRules = array;
                             continue;

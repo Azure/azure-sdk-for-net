@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentity> array = new List<ManagedClusterPodIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item));
+                        array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item, options));
                     }
                     userAssignedIdentities = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentityException> array = new List<ManagedClusterPodIdentityException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item));
+                        array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item, options));
                     }
                     userAssignedIdentityExceptions = array;
                     continue;

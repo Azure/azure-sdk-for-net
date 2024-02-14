@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value);
+                    registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value);
+                    login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value);
+                    validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))

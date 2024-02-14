@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataset(document.RootElement, options);
+            return DeserializeDataFactoryDatasetProperties(document.RootElement, options);
         }
 
         internal static UnknownDataset DeserializeUnknownDataset(JsonElement element, ModelReaderWriterOptions options = null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
+                    folder = DatasetFolder.DeserializeDatasetFolder(property.Value, options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChargeSummary(document.RootElement, options);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
         }
 
         internal static UnknownChargeSummary DeserializeUnknownChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)

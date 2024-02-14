@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value);
+                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value);
+                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value);
+                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                             {
                                 continue;
                             }
-                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value);
+                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataEndpointEnabled"u8))

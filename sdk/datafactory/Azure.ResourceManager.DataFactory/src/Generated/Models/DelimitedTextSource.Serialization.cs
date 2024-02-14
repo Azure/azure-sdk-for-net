@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("formatSettings"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    formatSettings = DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(property.Value);
+                    formatSettings = DelimitedTextReadSettings.DeserializeDelimitedTextReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))

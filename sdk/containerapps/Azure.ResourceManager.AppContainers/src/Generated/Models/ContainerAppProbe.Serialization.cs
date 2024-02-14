@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value);
+                    httpGet = ContainerAppHttpRequestInfo.DeserializeContainerAppHttpRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value);
+                    tcpSocket = ContainerAppTcpSocketRequestInfo.DeserializeContainerAppTcpSocketRequestInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))

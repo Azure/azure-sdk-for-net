@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRole(document.RootElement, options);
+            return DeserializeDataBoxEdgeRoleData(document.RootElement, options);
         }
 
         internal static UnknownRole DeserializeUnknownRole(JsonElement element, ModelReaderWriterOptions options = null)

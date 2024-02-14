@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             {
                                 continue;
                             }
-                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value);
+                            encryptionConfig = DataLakeStoreAccountEncryptionConfig.DeserializeDataLakeStoreAccountEncryptionConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryptionState"u8))
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             List<DataLakeStoreFirewallRuleData> array = new List<DataLakeStoreFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(item));
+                                array.Add(DataLakeStoreFirewallRuleData.DeserializeDataLakeStoreFirewallRuleData(item, options));
                             }
                             firewallRules = array;
                             continue;
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
+                                array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DataLakeStore
                             List<DataLakeStoreTrustedIdProviderData> array = new List<DataLakeStoreTrustedIdProviderData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(item));
+                                array.Add(DataLakeStoreTrustedIdProviderData.DeserializeDataLakeStoreTrustedIdProviderData(item, options));
                             }
                             trustedIdProviders = array;
                             continue;

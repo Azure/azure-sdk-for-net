@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomSetupBase(document.RootElement, options);
+            return DeserializeCustomSetupBase(document.RootElement, options);
         }
 
         internal static UnknownCustomSetupBase DeserializeUnknownCustomSetupBase(JsonElement element, ModelReaderWriterOptions options = null)

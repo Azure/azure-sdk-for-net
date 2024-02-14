@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepUpdateParameters(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepUpdateContent(document.RootElement, options);
         }
 
         internal static UnknownTaskStepUpdateParameters DeserializeUnknownTaskStepUpdateParameters(JsonElement element, ModelReaderWriterOptions options = null)

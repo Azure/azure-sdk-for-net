@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRouterRule(document.RootElement, options);
+            return DeserializeRouterRule(document.RootElement, options);
         }
 
         internal static UnknownRouterRule DeserializeUnknownRouterRule(JsonElement element, ModelReaderWriterOptions options = null)

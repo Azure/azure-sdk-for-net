@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLinkedService(document.RootElement, options);
+            return DeserializeDataFactoryLinkedServiceProperties(document.RootElement, options);
         }
 
         internal static UnknownLinkedService DeserializeUnknownLinkedService(JsonElement element, ModelReaderWriterOptions options = null)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
+                    connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value));
+                        dictionary.Add(property0.Name, EntityParameterSpecification.DeserializeEntityParameterSpecification(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;

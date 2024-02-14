@@ -114,12 +114,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element);
-                    case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element);
-                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element);
+                    case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element, options);
+                    case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
+                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                 }
             }
-            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element);
+            return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);
         }
 
         BinaryData IPersistableModel<MongoDBProgress>.Write(ModelReaderWriterOptions options)

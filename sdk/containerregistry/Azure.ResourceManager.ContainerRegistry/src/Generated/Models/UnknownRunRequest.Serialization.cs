@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRunRequest(document.RootElement, options);
+            return DeserializeContainerRegistryRunContent(document.RootElement, options);
         }
 
         internal static UnknownRunRequest DeserializeUnknownRunRequest(JsonElement element, ModelReaderWriterOptions options = null)

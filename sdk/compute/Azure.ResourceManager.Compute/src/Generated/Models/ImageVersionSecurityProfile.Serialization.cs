@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(property.Value);
+                    uefiSettings = GalleryImageVersionUefiSettings.DeserializeGalleryImageVersionUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

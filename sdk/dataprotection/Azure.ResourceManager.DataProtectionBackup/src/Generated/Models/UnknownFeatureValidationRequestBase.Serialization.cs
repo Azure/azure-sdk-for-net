@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFeatureValidationRequestBase(document.RootElement, options);
+            return DeserializeBackupFeatureValidationContentBase(document.RootElement, options);
         }
 
         internal static UnknownFeatureValidationRequestBase DeserializeUnknownFeatureValidationRequestBase(JsonElement element, ModelReaderWriterOptions options = null)

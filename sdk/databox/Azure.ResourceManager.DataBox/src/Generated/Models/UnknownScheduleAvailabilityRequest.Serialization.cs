@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScheduleAvailabilityRequest(document.RootElement, options);
+            return DeserializeScheduleAvailabilityContent(document.RootElement, options);
         }
 
         internal static UnknownScheduleAvailabilityRequest DeserializeUnknownScheduleAvailabilityRequest(JsonElement element, ModelReaderWriterOptions options = null)

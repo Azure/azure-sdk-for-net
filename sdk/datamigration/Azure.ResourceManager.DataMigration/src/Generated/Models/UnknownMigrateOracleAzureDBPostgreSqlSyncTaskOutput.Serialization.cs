@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput DeserializeUnknownMigrateOracleAzureDBPostgreSqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)

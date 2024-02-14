@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    password = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
+                    password = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

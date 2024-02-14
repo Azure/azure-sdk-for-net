@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryPrivateEndpointProperties.DeserializeDataFactoryPrivateEndpointProperties(property.Value);
+                    properties = DataFactoryPrivateEndpointProperties.DeserializeDataFactoryPrivateEndpointProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

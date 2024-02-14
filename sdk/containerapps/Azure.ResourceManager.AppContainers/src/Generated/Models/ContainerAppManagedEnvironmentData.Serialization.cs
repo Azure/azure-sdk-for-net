@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value);
+                            vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("deploymentErrors"u8))
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value);
+                            appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);
+                            customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventStreamEndpoint"u8))
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWorkloadProfile> array = new List<ContainerAppWorkloadProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item));
+                                array.Add(ContainerAppWorkloadProfile.DeserializeContainerAppWorkloadProfile(item, options));
                             }
                             workloadProfiles = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value);
+                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("daprConfiguration"u8))
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value);
+                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("infrastructureResourceGroup"u8))
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value);
+                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value, options);
                             continue;
                         }
                     }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeleteOption(document.RootElement, options);
+            return DeserializeDataProtectionBackupDeleteSetting(document.RootElement, options);
         }
 
         internal static UnknownDeleteOption DeserializeUnknownDeleteOption(JsonElement element, ModelReaderWriterOptions options = null)

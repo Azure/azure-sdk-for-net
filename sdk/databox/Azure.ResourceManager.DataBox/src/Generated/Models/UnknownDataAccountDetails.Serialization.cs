@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataAccountDetails(document.RootElement, options);
+            return DeserializeDataAccountDetails(document.RootElement, options);
         }
 
         internal static UnknownDataAccountDetails DeserializeUnknownDataAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)

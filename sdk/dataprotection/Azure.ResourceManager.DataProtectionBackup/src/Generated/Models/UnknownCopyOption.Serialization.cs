@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopyOption(document.RootElement, options);
+            return DeserializeDataProtectionBackupCopySetting(document.RootElement, options);
         }
 
         internal static UnknownCopyOption DeserializeUnknownCopyOption(JsonElement element, ModelReaderWriterOptions options = null)

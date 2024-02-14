@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrigger(document.RootElement, options);
+            return DeserializeDataShareTriggerData(document.RootElement, options);
         }
 
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element, ModelReaderWriterOptions options = null)

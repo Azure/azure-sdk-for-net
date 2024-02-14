@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
                     {
                         continue;
                     }
-                    properties = DeletedDataProtectionBackupInstanceProperties.DeserializeDeletedDataProtectionBackupInstanceProperties(property.Value);
+                    properties = DeletedDataProtectionBackupInstanceProperties.DeserializeDeletedDataProtectionBackupInstanceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

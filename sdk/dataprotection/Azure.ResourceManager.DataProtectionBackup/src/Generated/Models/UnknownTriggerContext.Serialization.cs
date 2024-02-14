@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTriggerContext(document.RootElement, options);
+            return DeserializeDataProtectionBackupTriggerContext(document.RootElement, options);
         }
 
         internal static UnknownTriggerContext DeserializeUnknownTriggerContext(JsonElement element, ModelReaderWriterOptions options = null)

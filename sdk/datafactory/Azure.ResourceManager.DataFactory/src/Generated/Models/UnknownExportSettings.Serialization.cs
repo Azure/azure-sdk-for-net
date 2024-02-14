@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExportSettings(document.RootElement, options);
+            return DeserializeExportSettings(document.RootElement, options);
         }
 
         internal static UnknownExportSettings DeserializeUnknownExportSettings(JsonElement element, ModelReaderWriterOptions options = null)

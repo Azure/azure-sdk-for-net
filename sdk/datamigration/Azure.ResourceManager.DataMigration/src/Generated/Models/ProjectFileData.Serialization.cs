@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration
                     {
                         continue;
                     }
-                    properties = ProjectFileProperties.DeserializeProjectFileProperties(property.Value);
+                    properties = ProjectFileProperties.DeserializeProjectFileProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

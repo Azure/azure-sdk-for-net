@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
                             {
                                 continue;
                             }
-                            options0 = GraphResourceGetPropertiesOptions.DeserializeGraphResourceGetPropertiesOptions(property0.Value);
+                            options0 = GraphResourceGetPropertiesOptions.DeserializeGraphResourceGetPropertiesOptions(property0.Value, options);
                             continue;
                         }
                     }

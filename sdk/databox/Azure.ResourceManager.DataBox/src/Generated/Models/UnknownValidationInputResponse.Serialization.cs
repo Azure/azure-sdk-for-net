@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownValidationInputResponse(document.RootElement, options);
+            return DeserializeDataBoxValidationInputResult(document.RootElement, options);
         }
 
         internal static UnknownValidationInputResponse DeserializeUnknownValidationInputResponse(JsonElement element, ModelReaderWriterOptions options = null)

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateMySqlAzureDBForMySqlSyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput DeserializeUnknownMigrateMySqlAzureDBForMySqlSyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)

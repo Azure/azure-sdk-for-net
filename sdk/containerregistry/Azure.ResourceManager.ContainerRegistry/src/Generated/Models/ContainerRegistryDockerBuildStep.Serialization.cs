@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryRunArgument> array = new List<ContainerRegistryRunArgument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item));
+                        array.Add(ContainerRegistryRunArgument.DeserializeContainerRegistryRunArgument(item, options));
                     }
                     arguments = array;
                     continue;
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;

@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value);
+                    connectionState = ConnectionStateProperties.DeserializeConnectionStateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("fqdns"u8))

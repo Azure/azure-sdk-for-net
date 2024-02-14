@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataSet(document.RootElement, options);
+            return DeserializeShareDataSetData(document.RootElement, options);
         }
 
         internal static UnknownDataSet DeserializeUnknownDataSet(JsonElement element, ModelReaderWriterOptions options = null)

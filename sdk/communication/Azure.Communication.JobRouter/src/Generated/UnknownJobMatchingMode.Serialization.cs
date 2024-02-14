@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobMatchingMode(document.RootElement, options);
+            return DeserializeJobMatchingMode(document.RootElement, options);
         }
 
         internal static UnknownJobMatchingMode DeserializeUnknownJobMatchingMode(JsonElement element, ModelReaderWriterOptions options = null)

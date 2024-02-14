@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareTriggerData> array = new List<DataShareTriggerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareTriggerData.DeserializeDataShareTriggerData(item));
+                        array.Add(DataShareTriggerData.DeserializeDataShareTriggerData(item, options));
                     }
                     value = array;
                     continue;

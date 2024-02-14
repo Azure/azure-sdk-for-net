@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDependencyReference(document.RootElement, options);
+            return DeserializeDependencyReference(document.RootElement, options);
         }
 
         internal static UnknownDependencyReference DeserializeUnknownDependencyReference(JsonElement element, ModelReaderWriterOptions options = null)

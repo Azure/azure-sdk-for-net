@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatasetLocation(document.RootElement, options);
+            return DeserializeDatasetLocation(document.RootElement, options);
         }
 
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element, ModelReaderWriterOptions options = null)

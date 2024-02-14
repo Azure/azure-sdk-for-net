@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+            return DeserializeBenefitUtilizationSummary(document.RootElement, options);
         }
 
         internal static UnknownBenefitUtilizationSummary DeserializeUnknownBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value);
+                    invokedBy = DataFactoryPipelineRunEntityInfo.DeserializeDataFactoryPipelineRunEntityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdated"u8))

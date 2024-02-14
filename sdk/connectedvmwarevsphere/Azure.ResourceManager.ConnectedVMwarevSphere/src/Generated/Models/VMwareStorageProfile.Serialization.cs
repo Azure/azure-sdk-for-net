@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVirtualDisk> array = new List<VMwareVirtualDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                        array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item, options));
                     }
                     disks = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VirtualScsiController> array = new List<VirtualScsiController>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualScsiController.DeserializeVirtualScsiController(item));
+                        array.Add(VirtualScsiController.DeserializeVirtualScsiController(item, options));
                     }
                     scsiControllers = array;
                     continue;

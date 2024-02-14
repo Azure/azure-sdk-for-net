@@ -71,7 +71,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDistributionMode(document.RootElement, options);
+            return DeserializeDistributionMode(document.RootElement, options);
         }
 
         internal static UnknownDistributionMode DeserializeUnknownDistributionMode(JsonElement element, ModelReaderWriterOptions options = null)

@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value);
+                    timePeriod = QueryTimePeriod.DeserializeQueryTimePeriod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = QueryDataset.DeserializeQueryDataset(property.Value);
+                    dataset = QueryDataset.DeserializeQueryDataset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

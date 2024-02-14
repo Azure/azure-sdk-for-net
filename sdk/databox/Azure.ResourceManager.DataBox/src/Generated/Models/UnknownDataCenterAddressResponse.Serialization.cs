@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataCenterAddressResponse(document.RootElement, options);
+            return DeserializeDataCenterAddressResult(document.RootElement, options);
         }
 
         internal static UnknownDataCenterAddressResponse DeserializeUnknownDataCenterAddressResponse(JsonElement element, ModelReaderWriterOptions options = null)

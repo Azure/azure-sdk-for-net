@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    importSettings = SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(property.Value);
+                    importSettings = SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAuthCredentials(document.RootElement, options);
+            return DeserializeDataProtectionBackupAuthCredentials(document.RootElement, options);
         }
 
         internal static UnknownAuthCredentials DeserializeUnknownAuthCredentials(JsonElement element, ModelReaderWriterOptions options = null)

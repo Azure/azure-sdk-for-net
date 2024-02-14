@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseResourceProperties(document.RootElement, options);
+            return DeserializeBaseResourceProperties(document.RootElement, options);
         }
 
         internal static UnknownBaseResourceProperties DeserializeUnknownBaseResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)

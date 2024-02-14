@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLinkedIntegrationRuntimeType(document.RootElement, options);
+            return DeserializeLinkedIntegrationRuntimeType(document.RootElement, options);
         }
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element, ModelReaderWriterOptions options = null)

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDatasetData> array = new List<DataFactoryDatasetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDatasetData.DeserializeDataFactoryDatasetData(item));
+                        array.Add(DataFactoryDatasetData.DeserializeDataFactoryDatasetData(item, options));
                     }
                     value = array;
                     continue;

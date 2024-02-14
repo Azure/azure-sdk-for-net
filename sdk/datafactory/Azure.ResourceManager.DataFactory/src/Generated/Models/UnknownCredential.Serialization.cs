@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCredential(document.RootElement, options);
+            return DeserializeDataFactoryCredential(document.RootElement, options);
         }
 
         internal static UnknownCredential DeserializeUnknownCredential(JsonElement element, ModelReaderWriterOptions options = null)

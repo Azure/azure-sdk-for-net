@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSynchronizationSetting(document.RootElement, options);
+            return DeserializeDataShareSynchronizationSettingData(document.RootElement, options);
         }
 
         internal static UnknownSynchronizationSetting DeserializeUnknownSynchronizationSetting(JsonElement element, ModelReaderWriterOptions options = null)

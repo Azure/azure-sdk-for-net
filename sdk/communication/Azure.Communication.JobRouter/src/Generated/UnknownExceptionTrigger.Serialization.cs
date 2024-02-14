@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExceptionTrigger(document.RootElement, options);
+            return DeserializeExceptionTrigger(document.RootElement, options);
         }
 
         internal static UnknownExceptionTrigger DeserializeUnknownExceptionTrigger(JsonElement element, ModelReaderWriterOptions options = null)

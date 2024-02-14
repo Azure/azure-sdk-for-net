@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCompressionReadSettings(document.RootElement, options);
+            return DeserializeCompressionReadSettings(document.RootElement, options);
         }
 
         internal static UnknownCompressionReadSettings DeserializeUnknownCompressionReadSettings(JsonElement element, ModelReaderWriterOptions options = null)

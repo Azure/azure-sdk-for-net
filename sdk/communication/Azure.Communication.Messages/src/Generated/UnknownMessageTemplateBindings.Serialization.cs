@@ -56,7 +56,7 @@ namespace Azure.Communication.Messages
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMessageTemplateBindings(document.RootElement, options);
+            return DeserializeMessageTemplateBindings(document.RootElement, options);
         }
 
         internal static UnknownMessageTemplateBindings DeserializeUnknownMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options = null)

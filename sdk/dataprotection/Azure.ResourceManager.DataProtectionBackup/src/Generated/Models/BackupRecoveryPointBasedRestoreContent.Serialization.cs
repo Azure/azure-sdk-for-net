@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element);
+                    case "AzureBackupRestoreWithRehydrationRequest": return BackupRestoreWithRehydrationContent.DeserializeBackupRestoreWithRehydrationContent(element, options);
                 }
             }
             string recoveryPointId = default;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("restoreTargetInfo"u8))
                 {
-                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value);
+                    restoreTargetInfo = RestoreTargetInfoBase.DeserializeRestoreTargetInfoBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDataStoreType"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(document.RootElement, options);
+            return DeserializeMigrateSqlServerSqlMISyncTaskOutput(document.RootElement, options);
         }
 
         internal static UnknownMigrateSqlServerSqlMISyncTaskOutput DeserializeUnknownMigrateSqlServerSqlMISyncTaskOutput(JsonElement element, ModelReaderWriterOptions options = null)

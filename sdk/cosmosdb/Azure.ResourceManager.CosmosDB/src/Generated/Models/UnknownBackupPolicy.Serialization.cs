@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupPolicy(document.RootElement, options);
+            return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
         }
 
         internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);
+                    migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

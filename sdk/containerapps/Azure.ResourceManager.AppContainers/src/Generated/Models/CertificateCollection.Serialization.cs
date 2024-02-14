@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCertificateData> array = new List<ContainerAppCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCertificateData.DeserializeContainerAppCertificateData(item));
+                        array.Add(ContainerAppCertificateData.DeserializeContainerAppCertificateData(item, options));
                     }
                     value = array;
                     continue;

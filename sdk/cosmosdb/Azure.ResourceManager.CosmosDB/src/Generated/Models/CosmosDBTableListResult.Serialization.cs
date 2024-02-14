@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBTableData> array = new List<CosmosDBTableData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBTableData.DeserializeCosmosDBTableData(item));
+                        array.Add(CosmosDBTableData.DeserializeCosmosDBTableData(item, options));
                     }
                     value = array;
                     continue;

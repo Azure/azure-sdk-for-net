@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNotificationContent(document.RootElement, options);
+            return DeserializeNotificationContent(document.RootElement, options);
         }
 
         internal static UnknownNotificationContent DeserializeUnknownNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)

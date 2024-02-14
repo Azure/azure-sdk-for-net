@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<DatabaseTable> array = new List<DatabaseTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatabaseTable.DeserializeDatabaseTable(item));
+                        array.Add(DatabaseTable.DeserializeDatabaseTable(item, options));
                     }
                     tables = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;

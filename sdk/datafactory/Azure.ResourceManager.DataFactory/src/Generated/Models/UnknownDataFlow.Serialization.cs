@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataFlow(document.RootElement, options);
+            return DeserializeDataFactoryDataFlowProperties(document.RootElement, options);
         }
 
         internal static UnknownDataFlow DeserializeUnknownDataFlow(JsonElement element, ModelReaderWriterOptions options = null)
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

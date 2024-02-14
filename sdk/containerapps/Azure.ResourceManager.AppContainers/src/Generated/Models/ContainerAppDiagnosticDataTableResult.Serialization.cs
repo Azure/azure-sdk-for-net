@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticDataColumn> array = new List<ContainerAppDiagnosticDataColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticDataColumn.DeserializeContainerAppDiagnosticDataColumn(item));
+                        array.Add(ContainerAppDiagnosticDataColumn.DeserializeContainerAppDiagnosticDataColumn(item, options));
                     }
                     columns = array;
                     continue;

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReservationRecommendation(document.RootElement, options);
+            return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
         }
 
         internal static UnknownReservationRecommendation DeserializeUnknownReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)

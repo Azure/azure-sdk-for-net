@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownQueueSelectorAttachment(document.RootElement, options);
+            return DeserializeQueueSelectorAttachment(document.RootElement, options);
         }
 
         internal static UnknownQueueSelectorAttachment DeserializeUnknownQueueSelectorAttachment(JsonElement element, ModelReaderWriterOptions options = null)

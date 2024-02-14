@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCommandProperties(document.RootElement, options);
+            return DeserializeCommandProperties(document.RootElement, options);
         }
 
         internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        array.Add(ODataError.DeserializeODataError(item, options));
                     }
                     errors = array;
                     continue;

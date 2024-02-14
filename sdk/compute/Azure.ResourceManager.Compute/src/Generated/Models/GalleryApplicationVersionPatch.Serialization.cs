@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value);
+                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value);
+                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
+                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
                             continue;
                         }
                     }

@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopySource(document.RootElement, options);
+            return DeserializeCopyActivitySource(document.RootElement, options);
         }
 
         internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element, ModelReaderWriterOptions options = null)

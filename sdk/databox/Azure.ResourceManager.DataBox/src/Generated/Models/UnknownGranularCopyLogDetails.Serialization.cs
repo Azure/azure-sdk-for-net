@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBox.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownGranularCopyLogDetails(document.RootElement, options);
+            return DeserializeGranularCopyLogDetails(document.RootElement, options);
         }
 
         internal static UnknownGranularCopyLogDetails DeserializeUnknownGranularCopyLogDetails(JsonElement element, ModelReaderWriterOptions options = null)

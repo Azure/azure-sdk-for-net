@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceEndpointDetail> array = new List<ContainerServiceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceEndpointDetail.DeserializeContainerServiceEndpointDetail(item));
+                        array.Add(ContainerServiceEndpointDetail.DeserializeContainerServiceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWebLinkedServiceTypeProperties(document.RootElement, options);
+            return DeserializeWebLinkedServiceTypeProperties(document.RootElement, options);
         }
 
         internal static UnknownWebLinkedServiceTypeProperties DeserializeUnknownWebLinkedServiceTypeProperties(JsonElement element, ModelReaderWriterOptions options = null)

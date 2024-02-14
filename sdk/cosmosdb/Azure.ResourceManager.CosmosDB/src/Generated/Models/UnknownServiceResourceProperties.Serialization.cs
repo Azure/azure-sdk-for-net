@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+            return DeserializeCosmosDBServiceProperties(document.RootElement, options);
         }
 
         internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)

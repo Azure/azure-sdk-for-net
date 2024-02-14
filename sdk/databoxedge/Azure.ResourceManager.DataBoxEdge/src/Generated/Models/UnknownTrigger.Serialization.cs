@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrigger(document.RootElement, options);
+            return DeserializeDataBoxEdgeTriggerData(document.RootElement, options);
         }
 
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element, ModelReaderWriterOptions options = null)

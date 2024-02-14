@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUsageDetail(document.RootElement, options);
+            return DeserializeConsumptionUsageDetail(document.RootElement, options);
         }
 
         internal static UnknownUsageDetail DeserializeUnknownUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
