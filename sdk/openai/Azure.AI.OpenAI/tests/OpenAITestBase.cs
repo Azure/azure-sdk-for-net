@@ -48,9 +48,7 @@ namespace Azure.AI.OpenAI.Tests
 
         protected OpenAIClient GetAzureClientWithKey(
             Scenario scenario,
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null,
-            string azureResourceUrlVariableName = null,
-            string azureResourceApiKeyVariableName = null)
+            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
         {
             string endpointVariableName = GetAzureEndpointVariableNameForScenario(scenario);
             string keyVariableName = GetAzureKeyVariableNameForScenario(scenario);
@@ -89,8 +87,12 @@ namespace Azure.AI.OpenAI.Tests
                     GetInstrumentedClientOptions(azureServiceVersionOverride)));
         }
 
-        protected OpenAIClient GetNonAzureClientWithKey() => InstrumentClient(
-            new OpenAIClient(GetNonAzureApiKey(), GetInstrumentedClientOptions()));
+        protected OpenAIClient GetNonAzureClientWithKey() =>
+            InstrumentClient(
+                new OpenAIClient(
+                    new Uri($"https://api.openai.com"),
+                    new AzureKeyCredential(GetNonAzureApiKey()),
+                    GetInstrumentedClientOptions(OpenAIClientOptions.ServiceVersion.OpenAI_V1)));
 
         protected string GetNonAzureApiKey()
             => string.IsNullOrEmpty(TestEnvironment.NonAzureOpenAIApiKey)
@@ -295,10 +297,10 @@ namespace Azure.AI.OpenAI.Tests
         }
 
         private OpenAIClientOptions GetInstrumentedClientOptions(
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
+            OpenAIClientOptions.ServiceVersion? serviceVersionOverride = null)
         {
-            OpenAIClientOptions uninstrumentedClientOptions = azureServiceVersionOverride.HasValue
-                ? new OpenAIClientOptions(azureServiceVersionOverride.Value)
+            OpenAIClientOptions uninstrumentedClientOptions = serviceVersionOverride.HasValue
+                ? new OpenAIClientOptions(serviceVersionOverride.Value)
                 : new OpenAIClientOptions();
             return InstrumentClientOptions(uninstrumentedClientOptions);
         }
@@ -442,38 +444,6 @@ namespace Azure.AI.OpenAI.Tests
             TestAuthType authenticationType = TestAuthType.ApiKey,
             OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
             => GetTestClient(serviceTarget, _defaultScenario, authenticationType, azureServiceVersionOverride);
-
-        public OpenAIClient GetDevelopmentTestClient(
-            Scenario scenario,
-            Service serviceTarget,
-            string azureDevelopmentResourceUrlVariableName,
-            string azureDevelopmentResourceApiKeyVariableName,
-            TestAuthType authenticationType = TestAuthType.ApiKey,
-            OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
-        {
-            if (serviceTarget == Service.NonAzure)
-            {
-                return GetTestClient(serviceTarget, scenario, authenticationType, azureServiceVersionOverride);
-            }
-            else
-            {
-                return authenticationType switch
-                {
-                    TestAuthType.ApiKey
-                        => GetAzureClientWithKey(
-                            scenario,
-                            azureServiceVersionOverride,
-                            azureDevelopmentResourceUrlVariableName,
-                            azureDevelopmentResourceApiKeyVariableName),
-                    TestAuthType.Token
-                        => GetAzureClientWithToken(
-                            scenario,
-                            azureServiceVersionOverride,
-                            azureDevelopmentResourceUrlVariableName),
-                    _ => throw new NotImplementedException()
-                };
-            }
-        }
 
         public enum Scenario
         {

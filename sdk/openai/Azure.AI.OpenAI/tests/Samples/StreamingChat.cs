@@ -14,8 +14,9 @@ public partial class StreamingChat
     public async Task StreamingChatWithNonAzureOpenAI()
     {
         #region Snippet:StreamChatMessages
-        string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
-        var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
+        Uri nonAzureOpenAIEndpoint = new("https://api.openai.com");
+        AzureKeyCredential nonAzureOpenAIApiKey = new("your-api-key-from-platform.openai.com");
+        var client = new OpenAIClient(nonAzureOpenAIEndpoint, nonAzureOpenAIApiKey, new OpenAIClientOptions());
         var chatCompletionsOptions = new ChatCompletionsOptions()
         {
             DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
@@ -46,8 +47,9 @@ public partial class StreamingChat
     [Ignore("Only verifying that the sample builds")]
     public async Task StreamingChatWithMultipleChoices()
     {
-        string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
-        var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
+        Uri nonAzureOpenAIEndpoint = new("https://api.openai.com");
+        AzureKeyCredential nonAzureOpenAIApiKey = new("your-api-key-from-platform.openai.com");
+        var client = new OpenAIClient(nonAzureOpenAIEndpoint, nonAzureOpenAIApiKey, new OpenAIClientOptions());
         (object, string Text)[] textBoxes = new (object, string)[4];
 
         #region Snippet:StreamChatMessagesWithMultipleChoices
