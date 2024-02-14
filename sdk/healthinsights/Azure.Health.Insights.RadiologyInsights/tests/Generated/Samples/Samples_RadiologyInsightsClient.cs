@@ -280,11 +280,11 @@ orderedProcedures = new object[]
 {
 new
 {
+description = "<description>",
 extension = new object[]
 {
 null
 },
-description = "<description>",
 }
 },
 encounterId = "<encounterId>",
@@ -611,11 +611,11 @@ orderedProcedures = new object[]
 {
 new
 {
+description = "<description>",
 extension = new object[]
 {
 null
 },
-description = "<description>",
 }
 },
 encounterId = "<encounterId>",
@@ -805,11 +805,11 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
 Code = default,
 Description = "<description>",
+Extension = {default},
 }},
 EncounterId = "<encounterId>",
 },
@@ -905,11 +905,11 @@ FullName = "<fullName>",
 SpecialtyType = SpecialtyType.Pathology,
 AdministrativeMetadata = new DocumentAdministrativeMetadata
 {
-OrderedProcedures = {new FhirR4Extendible
+OrderedProcedures = {new OrderedProcedure
 {
-Extension = {default},
 Code = default,
 Description = "<description>",
+Extension = {default},
 }},
 EncounterId = "<encounterId>",
 },

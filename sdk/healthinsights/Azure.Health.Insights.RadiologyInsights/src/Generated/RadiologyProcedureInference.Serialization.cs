@@ -98,7 +98,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
             Optional<IList<FhirR4CodeableConcept>> procedureCodes = default;
             IList<ImagingProcedure> imagingProcedures = default;
-            FhirR4Extendible orderedProcedure = default;
+            OrderedProcedure orderedProcedure = default;
             string kind = default;
             Optional<IList<FhirR4Extension>> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,7 +131,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (property.NameEquals("orderedProcedure"u8))
                 {
-                    orderedProcedure = FhirR4Extendible.DeserializeFhirR4Extendible(property.Value);
+                    orderedProcedure = OrderedProcedure.DeserializeOrderedProcedure(property.Value);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

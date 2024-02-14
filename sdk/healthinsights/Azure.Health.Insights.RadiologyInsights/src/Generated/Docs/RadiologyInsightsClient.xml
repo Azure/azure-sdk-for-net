@@ -73,11 +73,11 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
                 SpecialtyType = SpecialtyType.Pathology,
                 AdministrativeMetadata = new DocumentAdministrativeMetadata
                 {
-                    OrderedProcedures = {new FhirR4Extendible
+                    OrderedProcedures = {new OrderedProcedure
                     {
-                        Extension = {default},
                         Code = default,
                         Description = "<description>",
+                        Extension = {default},
                     }},
                     EncounterId = "<encounterId>",
                 },
@@ -183,11 +183,11 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
                 SpecialtyType = SpecialtyType.Pathology,
                 AdministrativeMetadata = new DocumentAdministrativeMetadata
                 {
-                    OrderedProcedures = {new FhirR4Extendible
+                    OrderedProcedures = {new OrderedProcedure
                     {
-                        Extension = {default},
                         Code = default,
                         Description = "<description>",
+                        Extension = {default},
                     }},
                     EncounterId = "<encounterId>",
                 },
@@ -435,11 +435,11 @@ using RequestContent content = RequestContent.Create(new
                             {
                                 new
                                 {
+                                    description = "<description>",
                                     extension = new object[]
                                     {
                                         null
                                     },
-                                    description = "<description>",
                                 }
                             },
                             encounterId = "<encounterId>",
@@ -781,11 +781,11 @@ using RequestContent content = RequestContent.Create(new
                             {
                                 new
                                 {
+                                    description = "<description>",
                                     extension = new object[]
                                     {
                                         null
                                     },
-                                    description = "<description>",
                                 }
                             },
                             encounterId = "<encounterId>",

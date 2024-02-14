@@ -14,29 +14,19 @@ using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    public partial class FhirR4Extendible : IUtf8JsonSerializable, IJsonModel<FhirR4Extendible>
+    public partial class OrderedProcedure : IUtf8JsonSerializable, IJsonModel<OrderedProcedure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FhirR4Extendible>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OrderedProcedure>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<FhirR4Extendible>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<OrderedProcedure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderedProcedure)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Extension))
-            {
-                writer.WritePropertyName("extension"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extension)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
@@ -46,6 +36,16 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsCollectionDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extension)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,19 +65,19 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteEndObject();
         }
 
-        FhirR4Extendible IJsonModel<FhirR4Extendible>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        OrderedProcedure IJsonModel<OrderedProcedure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrderedProcedure)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFhirR4Extendible(document.RootElement, options);
+            return DeserializeOrderedProcedure(document.RootElement, options);
         }
 
-        internal static FhirR4Extendible DeserializeFhirR4Extendible(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static OrderedProcedure DeserializeOrderedProcedure(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -85,27 +85,13 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            Optional<IList<FhirR4Extension>> extension = default;
             Optional<FhirR4CodeableConcept> code = default;
             Optional<string> description = default;
+            Optional<IList<FhirR4Extension>> extension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("extension"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<FhirR4Extension> array = new List<FhirR4Extension>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item));
-                    }
-                    extension = array;
-                    continue;
-                }
                 if (property.NameEquals("code"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -120,52 +106,66 @@ namespace Azure.Health.Insights.RadiologyInsights
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FhirR4Extension> array = new List<FhirR4Extension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FhirR4Extension.DeserializeFhirR4Extension(item));
+                    }
+                    extension = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FhirR4Extendible(Optional.ToList(extension), code.Value, description.Value, serializedAdditionalRawData);
+            return new OrderedProcedure(code.Value, description.Value, Optional.ToList(extension), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FhirR4Extendible>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<OrderedProcedure>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderedProcedure)} does not support '{options.Format}' format.");
             }
         }
 
-        FhirR4Extendible IPersistableModel<FhirR4Extendible>.Create(BinaryData data, ModelReaderWriterOptions options)
+        OrderedProcedure IPersistableModel<OrderedProcedure>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FhirR4Extendible>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<OrderedProcedure>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFhirR4Extendible(document.RootElement, options);
+                        return DeserializeOrderedProcedure(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4Extendible)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrderedProcedure)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FhirR4Extendible>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<OrderedProcedure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FhirR4Extendible FromResponse(Response response)
+        internal static OrderedProcedure FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFhirR4Extendible(document.RootElement);
+            return DeserializeOrderedProcedure(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

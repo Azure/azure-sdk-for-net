@@ -80,7 +80,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 return null;
             }
-            Optional<IList<FhirR4Extendible>> orderedProcedures = default;
+            Optional<IList<OrderedProcedure>> orderedProcedures = default;
             Optional<string> encounterId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<OrderedProcedure> array = new List<OrderedProcedure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item));
+                        array.Add(OrderedProcedure.DeserializeOrderedProcedure(item));
                     }
                     orderedProcedures = array;
                     continue;

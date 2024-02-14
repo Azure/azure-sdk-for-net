@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Health.Insights.RadiologyInsights
 {
     /// <summary> Procedure information. </summary>
-    public partial class FhirR4Extendible
+    public partial class OrderedProcedure
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,30 +46,30 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        public FhirR4Extendible()
+        /// <summary> Initializes a new instance of <see cref="OrderedProcedure"/>. </summary>
+        public OrderedProcedure()
         {
             Extension = new ChangeTrackingList<FhirR4Extension>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="FhirR4Extendible"/>. </summary>
-        /// <param name="extension"> Additional Content defined by implementations. </param>
+        /// <summary> Initializes a new instance of <see cref="OrderedProcedure"/>. </summary>
         /// <param name="code"> Procedure code. </param>
         /// <param name="description"> Procedure description. </param>
+        /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FhirR4Extendible(IList<FhirR4Extension> extension, FhirR4CodeableConcept code, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OrderedProcedure(FhirR4CodeableConcept code, string description, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Extension = extension;
             Code = code;
             Description = description;
+            Extension = extension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Additional Content defined by implementations. </summary>
-        public IList<FhirR4Extension> Extension { get; }
         /// <summary> Procedure code. </summary>
         public FhirR4CodeableConcept Code { get; set; }
         /// <summary> Procedure description. </summary>
         public string Description { get; set; }
+        /// <summary> Additional Content defined by implementations. </summary>
+        public IList<FhirR4Extension> Extension { get; }
     }
 }
