@@ -76,7 +76,7 @@ class MatrixParameter {
             $displayName = $this.Value.ToString()
         }
 
-        if ($displayNamesLookup.ContainsKey($displayName)) {
+        if ($displayNamesLookup -and $displayNamesLookup.ContainsKey($displayName)) {
             $displayName = $displayNamesLookup[$displayName]
         }
 
@@ -339,6 +339,9 @@ function ProcessReplace {
 
     foreach ($element in $matrix) {
         $replacement = [MatrixParameter[]]@()
+        if (!$element -or $element.Count -eq 0) {
+            continue
+        }
 
         foreach ($perm in $element._permutation) {
             $replace = $perm
@@ -372,11 +375,14 @@ function ProcessEnvironmentVariableReferences([array]$matrix, $displayNamesLooku
 
     foreach ($element in $matrix) {
         $updated = [MatrixParameter[]]@()
+        if (!$element -or $element.Count -eq 0) {
+            continue
+        }
 
         foreach ($perm in $element._permutation) {
             # Iterate nested permutations or run once for singular values (int, string, bool)
             foreach ($flattened in $perm.Flatten()) {
-                if ($flattened.Value?.GetType() -eq "".GetType() -and $flattened.Value.StartsWith("env:")) {
+                if ($flattened.Value -is [string] -and $flattened.Value.StartsWith("env:")) {
                     $envKey = $flattened.Value.Replace("env:", "")
                     $value = [System.Environment]::GetEnvironmentVariable($envKey) ?? ""
                     if (!$value) {
