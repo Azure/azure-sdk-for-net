@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SqlPoolUsage> array = new List<SqlPoolUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPoolUsage.DeserializeSqlPoolUsage(item));
+                        array.Add(SqlPoolUsage.DeserializeSqlPoolUsage(item, options));
                     }
                     value = array;
                     continue;

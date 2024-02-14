@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.StorageCache
                             List<NamespaceJunction> array = new List<NamespaceJunction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NamespaceJunction.DeserializeNamespaceJunction(item));
+                                array.Add(NamespaceJunction.DeserializeNamespaceJunction(item, options));
                             }
                             junctions = array;
                             continue;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            nfs3 = Nfs3Target.DeserializeNfs3Target(property0.Value);
+                            nfs3 = Nfs3Target.DeserializeNfs3Target(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clfs"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            clfs = Models.ClfsTarget.DeserializeClfsTarget(property0.Value);
+                            clfs = Models.ClfsTarget.DeserializeClfsTarget(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("unknown"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            unknown = UnknownTarget.DeserializeUnknownTarget(property0.Value);
+                            unknown = UnknownTarget.DeserializeUnknownTarget(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("blobNfs"u8))
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.StorageCache
                             {
                                 continue;
                             }
-                            blobNfs = BlobNfsTarget.DeserializeBlobNfsTarget(property0.Value);
+                            blobNfs = BlobNfsTarget.DeserializeBlobNfsTarget(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("allocationPercentage"u8))

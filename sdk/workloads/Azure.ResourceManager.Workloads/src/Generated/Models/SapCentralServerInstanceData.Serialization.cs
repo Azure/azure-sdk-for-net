@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value);
+                            messageServerProperties = MessageServerProperties.DeserializeMessageServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enqueueServerProperties"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value);
+                            enqueueServerProperties = EnqueueServerProperties.DeserializeEnqueueServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("gatewayServerProperties"u8))
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value);
+                            gatewayServerProperties = GatewayServerProperties.DeserializeGatewayServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enqueueReplicationServerProperties"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value);
+                            enqueueReplicationServerProperties = EnqueueReplicationServerProperties.DeserializeEnqueueReplicationServerProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("kernelVersion"u8))
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Workloads
                             List<CentralServerVmDetails> array = new List<CentralServerVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item));
+                                array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item, options));
                             }
                             vmDetails = array;
                             continue;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value);
+                            errors = SapVirtualInstanceError.DeserializeSapVirtualInstanceError(property0.Value, options);
                             continue;
                         }
                     }

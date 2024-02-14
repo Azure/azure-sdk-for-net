@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInfrastructureConfiguration(document.RootElement, options);
+            return DeserializeInfrastructureConfiguration(document.RootElement, options);
         }
 
         internal static UnknownInfrastructureConfiguration DeserializeUnknownInfrastructureConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInfrastructureConfiguration(document.RootElement, options);
+                        return DeserializeInfrastructureConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(InfrastructureConfiguration)} does not support '{options.Format}' format.");

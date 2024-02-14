@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
                             List<PrivateEndpointConnectionForPrivateLinkHubBasic> array = new List<PrivateEndpointConnectionForPrivateLinkHubBasic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionForPrivateLinkHubBasic.DeserializePrivateEndpointConnectionForPrivateLinkHubBasic(item));
+                                array.Add(PrivateEndpointConnectionForPrivateLinkHubBasic.DeserializePrivateEndpointConnectionForPrivateLinkHubBasic(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

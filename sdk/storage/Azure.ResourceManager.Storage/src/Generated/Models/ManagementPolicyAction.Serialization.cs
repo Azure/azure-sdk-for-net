@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value);
+                    baseBlob = ManagementPolicyBaseBlob.DeserializeManagementPolicyBaseBlob(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("snapshot"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value);
+                    snapshot = ManagementPolicySnapShot.DeserializeManagementPolicySnapShot(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("version"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value);
+                    version = ManagementPolicyVersion.DeserializeManagementPolicyVersion(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

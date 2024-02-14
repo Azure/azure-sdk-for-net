@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DomainOwnershipIdentifierData> array = new List<DomainOwnershipIdentifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(item));
+                        array.Add(DomainOwnershipIdentifierData.DeserializeDomainOwnershipIdentifierData(item, options));
                     }
                     value = array;
                     continue;

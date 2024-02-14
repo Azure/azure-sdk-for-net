@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<StorageCacheUsageModel> array = new List<StorageCacheUsageModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCacheUsageModel.DeserializeStorageCacheUsageModel(item));
+                        array.Add(StorageCacheUsageModel.DeserializeStorageCacheUsageModel(item, options));
                     }
                     value = array;
                     continue;

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                     {
                         continue;
                     }
-                    properties = StreamingJobFunctionProperties.DeserializeStreamingJobFunctionProperties(property.Value);
+                    properties = StreamingJobFunctionProperties.DeserializeStreamingJobFunctionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

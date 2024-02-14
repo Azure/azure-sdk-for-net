@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportFileDetailData> array = new List<SupportFileDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportFileDetailData.DeserializeSupportFileDetailData(item));
+                        array.Add(SupportFileDetailData.DeserializeSupportFileDetailData(item, options));
                     }
                     value = array;
                     continue;

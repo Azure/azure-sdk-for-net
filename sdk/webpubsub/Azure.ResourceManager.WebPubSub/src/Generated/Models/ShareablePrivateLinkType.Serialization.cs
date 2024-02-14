@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value);
+                    properties = ShareablePrivateLinkProperties.DeserializeShareablePrivateLinkProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

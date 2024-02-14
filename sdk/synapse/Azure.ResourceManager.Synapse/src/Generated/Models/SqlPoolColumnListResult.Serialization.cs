@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolColumnData> array = new List<SynapseSqlPoolColumnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(item));
+                        array.Add(SynapseSqlPoolColumnData.DeserializeSynapseSqlPoolColumnData(item, options));
                     }
                     value = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<NfsAccessPolicy> array = new List<NfsAccessPolicy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NfsAccessPolicy.DeserializeNfsAccessPolicy(item));
+                        array.Add(NfsAccessPolicy.DeserializeNfsAccessPolicy(item, options));
                     }
                     accessPolicies = array;
                     continue;

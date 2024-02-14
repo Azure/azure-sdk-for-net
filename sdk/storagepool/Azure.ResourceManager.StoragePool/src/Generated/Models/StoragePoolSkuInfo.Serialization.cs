@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuCapability> array = new List<StoragePoolSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item));
+                        array.Add(StoragePoolSkuCapability.DeserializeStoragePoolSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     {
                         continue;
                     }
-                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value);
+                    locationInfo = StoragePoolSkuLocationInfo.DeserializeStoragePoolSkuLocationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuRestrictions> array = new List<StoragePoolSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item));
+                        array.Add(StoragePoolSkuRestrictions.DeserializeStoragePoolSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
