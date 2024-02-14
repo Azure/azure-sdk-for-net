@@ -1,12 +1,11 @@
 # Release History
 
-## 7.18.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 7.17.3 (2024-02-14)
 
 ### Bugs Fixed
+
+- Fixed draining of credits when prefetch is enabled.
+- No longer drain credits when using the `ServiceBusSessionProcessor` as it is not necessary unless the `ServiceBusSessionProcessorOptions.SessionIds` property is set.
 
 ### Other Changes
 
