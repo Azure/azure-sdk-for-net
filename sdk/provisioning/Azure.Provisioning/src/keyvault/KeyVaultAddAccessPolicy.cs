@@ -39,7 +39,7 @@ namespace Azure.Provisioning.KeyVaults
         {
             if (principalIdParameter.Source is null || ReferenceEquals(principalIdParameter.Source, scope))
             {
-                return principalIdParameter.Name;
+                return principalIdParameter.Value!;
             }
             else
             {
