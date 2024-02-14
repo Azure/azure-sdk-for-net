@@ -50,7 +50,7 @@ resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPoli
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: 'TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID'
+        objectId: TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
         permissions: {
           secrets: [
             'get'
