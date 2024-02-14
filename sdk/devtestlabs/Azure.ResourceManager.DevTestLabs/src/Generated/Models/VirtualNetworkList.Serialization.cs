@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabVirtualNetworkData> array = new List<DevTestLabVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(item));
+                        array.Add(DevTestLabVirtualNetworkData.DeserializeDevTestLabVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

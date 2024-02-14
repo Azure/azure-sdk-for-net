@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownClusterJobProperties(document.RootElement, options);
+            return DeserializeClusterJobProperties(document.RootElement, options);
         }
 
         internal static UnknownClusterJobProperties DeserializeUnknownClusterJobProperties(JsonElement element, ModelReaderWriterOptions options = null)

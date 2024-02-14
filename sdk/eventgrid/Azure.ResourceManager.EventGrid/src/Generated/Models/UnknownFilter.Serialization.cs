@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFilter(document.RootElement, options);
+            return DeserializeEventGridFilter(document.RootElement, options);
         }
 
         internal static UnknownFilter DeserializeUnknownFilter(JsonElement element, ModelReaderWriterOptions options = null)

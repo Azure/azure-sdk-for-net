@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerUpdateDestinationInfo(document.RootElement, options);
+            return DeserializePartnerUpdateDestinationInfo(document.RootElement, options);
         }
 
         internal static UnknownPartnerUpdateDestinationInfo DeserializeUnknownPartnerUpdateDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)

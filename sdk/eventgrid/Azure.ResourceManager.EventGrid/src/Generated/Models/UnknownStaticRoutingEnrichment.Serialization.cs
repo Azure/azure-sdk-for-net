@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStaticRoutingEnrichment(document.RootElement, options);
+            return DeserializeStaticRoutingEnrichment(document.RootElement, options);
         }
 
         internal static UnknownStaticRoutingEnrichment DeserializeUnknownStaticRoutingEnrichment(JsonElement element, ModelReaderWriterOptions options = null)

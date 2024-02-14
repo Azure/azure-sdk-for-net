@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     List<FluidRelayContainerData> array = new List<FluidRelayContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FluidRelayContainerData.DeserializeFluidRelayContainerData(item));
+                        array.Add(FluidRelayContainerData.DeserializeFluidRelayContainerData(item, options));
                     }
                     value = array;
                     continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerClientAuthentication(document.RootElement, options);
+            return DeserializePartnerClientAuthentication(document.RootElement, options);
         }
 
         internal static UnknownPartnerClientAuthentication DeserializeUnknownPartnerClientAuthentication(JsonElement element, ModelReaderWriterOptions options = null)

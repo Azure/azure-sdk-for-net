@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Dns.Models
                             List<DnsResourceReference> array = new List<DnsResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item, options));
                             }
                             dnsResourceReferences = array;
                             continue;

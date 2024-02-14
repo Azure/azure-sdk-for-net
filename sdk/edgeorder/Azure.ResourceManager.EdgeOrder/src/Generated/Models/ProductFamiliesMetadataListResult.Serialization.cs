@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ProductFamiliesMetadata> array = new List<ProductFamiliesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(item));
+                        array.Add(ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(item, options));
                     }
                     value = array;
                     continue;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEventHubsApplicationGroupPolicy(document.RootElement, options);
+            return DeserializeEventHubsApplicationGroupPolicy(document.RootElement, options);
         }
 
         internal static UnknownEventHubsApplicationGroupPolicy DeserializeUnknownEventHubsApplicationGroupPolicy(JsonElement element, ModelReaderWriterOptions options = null)

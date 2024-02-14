@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInputSchemaMapping(document.RootElement, options);
+            return DeserializeEventGridInputSchemaMapping(document.RootElement, options);
         }
 
         internal static UnknownInputSchemaMapping DeserializeUnknownInputSchemaMapping(JsonElement element, ModelReaderWriterOptions options = null)

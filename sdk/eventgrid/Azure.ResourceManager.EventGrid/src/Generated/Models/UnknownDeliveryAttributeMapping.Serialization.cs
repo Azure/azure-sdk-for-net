@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeliveryAttributeMapping(document.RootElement, options);
+            return DeserializeDeliveryAttributeMapping(document.RootElement, options);
         }
 
         internal static UnknownDeliveryAttributeMapping DeserializeUnknownDeliveryAttributeMapping(JsonElement element, ModelReaderWriterOptions options = null)

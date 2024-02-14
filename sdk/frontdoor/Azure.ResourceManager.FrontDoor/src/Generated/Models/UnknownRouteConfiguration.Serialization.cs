@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRouteConfiguration(document.RootElement, options);
+            return DeserializeRouteConfiguration(document.RootElement, options);
         }
 
         internal static UnknownRouteConfiguration DeserializeUnknownRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

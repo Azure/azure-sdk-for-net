@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmLabelData> array = new List<EasmLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmLabelData.DeserializeEasmLabelData(item));
+                        array.Add(EasmLabelData.DeserializeEasmLabelData(item, options));
                     }
                     value = array;
                     continue;

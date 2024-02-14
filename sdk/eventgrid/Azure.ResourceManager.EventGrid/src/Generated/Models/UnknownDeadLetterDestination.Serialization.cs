@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeadLetterDestination(document.RootElement, options);
+            return DeserializeDeadLetterDestination(document.RootElement, options);
         }
 
         internal static UnknownDeadLetterDestination DeserializeUnknownDeadLetterDestination(JsonElement element, ModelReaderWriterOptions options = null)

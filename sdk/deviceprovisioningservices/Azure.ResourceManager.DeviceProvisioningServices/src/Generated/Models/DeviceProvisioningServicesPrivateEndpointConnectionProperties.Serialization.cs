@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    privateLinkServiceConnectionState = DeviceProvisioningServicesPrivateLinkServiceConnectionState.DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(property.Value);
+                    privateLinkServiceConnectionState = DeviceProvisioningServicesPrivateLinkServiceConnectionState.DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

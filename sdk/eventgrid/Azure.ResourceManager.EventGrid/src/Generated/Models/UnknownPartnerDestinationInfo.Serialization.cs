@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartnerDestinationInfo(document.RootElement, options);
+            return DeserializePartnerDestinationInfo(document.RootElement, options);
         }
 
         internal static UnknownPartnerDestinationInfo DeserializeUnknownPartnerDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<ResourceMoveChangeHistory> array = new List<ResourceMoveChangeHistory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item));
+                        array.Add(Models.ResourceMoveChangeHistory.DeserializeResourceMoveChangeHistory(item, options));
                     }
                     resourceMoveChangeHistory = array;
                     continue;

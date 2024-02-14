@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value);
+                            routeConfiguration = RouteConfiguration.DeserializeRouteConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rulesEngine"u8))

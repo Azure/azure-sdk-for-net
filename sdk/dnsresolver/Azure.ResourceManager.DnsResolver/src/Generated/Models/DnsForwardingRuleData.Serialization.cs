@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DnsResolver
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item, options));
                             }
                             targetDnsServers = array;
                             continue;

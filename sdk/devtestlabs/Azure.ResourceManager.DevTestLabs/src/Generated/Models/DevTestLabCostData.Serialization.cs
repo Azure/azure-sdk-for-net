@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value);
+                            targetCost = DevTestLabTargetCost.DeserializeDevTestLabTargetCost(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labCostSummary"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             {
                                 continue;
                             }
-                            labCostSummary = LabCostSummaryProperties.DeserializeLabCostSummaryProperties(property0.Value);
+                            labCostSummary = LabCostSummaryProperties.DeserializeLabCostSummaryProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("labCostDetails"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabCostDetails> array = new List<DevTestLabCostDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item));
+                                array.Add(DevTestLabCostDetails.DeserializeDevTestLabCostDetails(item, options));
                             }
                             labCostDetails = array;
                             continue;
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabResourceCost> array = new List<DevTestLabResourceCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item));
+                                array.Add(DevTestLabResourceCost.DeserializeDevTestLabResourceCost(item, options));
                             }
                             resourceCosts = array;
                             continue;

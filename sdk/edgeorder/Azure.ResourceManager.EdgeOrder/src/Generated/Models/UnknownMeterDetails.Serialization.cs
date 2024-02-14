@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMeterDetails(document.RootElement, options);
+            return DeserializeEdgeOrderProductMeterDetails(document.RootElement, options);
         }
 
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element, ModelReaderWriterOptions options = null)

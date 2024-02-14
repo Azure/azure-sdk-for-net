@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DeviceProvisioningServicesPrivateEndpointConnectionProperties.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionProperties(property.Value);
+                    properties = DeviceProvisioningServicesPrivateEndpointConnectionProperties.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, HDInsightVersionsCapability> dictionary = new Dictionary<string, HDInsightVersionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, HDInsightVersionsCapability.DeserializeHDInsightVersionsCapability(property0.Value, options));
                     }
                     versions = dictionary;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     Dictionary<string, RegionsCapability> dictionary = new Dictionary<string, RegionsCapability>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value));
+                        dictionary.Add(property0.Name, RegionsCapability.DeserializeRegionsCapability(property0.Value, options));
                     }
                     regions = dictionary;
                     continue;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     {
                         continue;
                     }
-                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value);
+                    quota = QuotaCapability.DeserializeQuotaCapability(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

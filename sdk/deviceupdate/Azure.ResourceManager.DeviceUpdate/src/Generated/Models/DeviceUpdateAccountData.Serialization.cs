@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdatePrivateEndpointConnectionData> array = new List<DeviceUpdatePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(item));
+                                array.Add(DeviceUpdatePrivateEndpointConnectionData.DeserializeDeviceUpdatePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             {
                                 continue;
                             }
-                            encryption = DeviceUpdateEncryption.DeserializeDeviceUpdateEncryption(property0.Value);
+                            encryption = DeviceUpdateEncryption.DeserializeDeviceUpdateEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("locations"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdateAccountLocationDetail> array = new List<DeviceUpdateAccountLocationDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item));
+                                array.Add(DeviceUpdateAccountLocationDetail.DeserializeDeviceUpdateAccountLocationDetail(item, options));
                             }
                             locations = array;
                             continue;
