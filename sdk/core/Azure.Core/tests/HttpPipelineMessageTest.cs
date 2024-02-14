@@ -20,7 +20,6 @@ namespace Azure.Core.Tests
             var requestMock = new Mock<Request>();
             HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Dispose();
-
             requestMock.Verify(r => r.Dispose(), Times.Once);
         }
 
@@ -32,7 +31,6 @@ namespace Azure.Core.Tests
             HttpMessage message = new HttpMessage(requestMock.Object, _classifier);
             message.Response = responseMock.Object;
             message.Dispose();
-
             requestMock.Verify(r => r.Dispose(), Times.Once);
             responseMock.Verify(r => r.Dispose(), Times.Once);
         }
