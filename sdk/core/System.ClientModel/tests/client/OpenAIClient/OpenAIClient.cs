@@ -14,7 +14,7 @@ public class OpenAIClient
     private readonly ApiKeyCredential _credential;
     private readonly ClientPipeline _pipeline;
 
-    public OpenAIClient(Uri endpoint, ApiKeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(Uri endpoint, ApiKeyCredential credential, OpenAIClientOptions? options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -46,7 +46,7 @@ public class OpenAIClient
         return ClientResult.FromValue(completions, response);
     }
 
-    public virtual ClientResult GetCompletions(string deploymentId, BinaryContent content, RequestOptions options = null)
+    public virtual ClientResult GetCompletions(string deploymentId, BinaryContent content, RequestOptions? options = null)
     {
         if (deploymentId is null) throw new ArgumentNullException(nameof(deploymentId));
         if (deploymentId.Length == 0) throw new ArgumentException("Value cannot be an empty string.", nameof(deploymentId));
@@ -58,7 +58,7 @@ public class OpenAIClient
 
         _pipeline.Send(message);
 
-        PipelineResponse response = message.Response;
+        PipelineResponse response = message.Response!;
 
         if (response.IsError && options.ErrorOptions == ClientErrorBehaviors.Default)
         {
@@ -95,6 +95,6 @@ public class OpenAIClient
         return message;
     }
 
-    private static PipelineMessageClassifier _messageClassifier200;
+    private static PipelineMessageClassifier? _messageClassifier200;
     private static PipelineMessageClassifier MessageClassifier200 => _messageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 }

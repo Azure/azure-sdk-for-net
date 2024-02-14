@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Net;
 using System.Text.Json;
 
 namespace Maps;
@@ -25,11 +24,11 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
     {
         if (element.ValueKind == JsonValueKind.Null)
         {
-            return null;
+            throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}'");
         }
 
-        CountryRegion countryRegion = default;
-        IPAddress ipAddress = default;
+        CountryRegion? countryRegion = default;
+        IPAddress? ipAddress = default;
 
         foreach (var property in element.EnumerateObject())
         {
@@ -51,9 +50,25 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
                     continue;
                 }
 
-                ipAddress = IPAddress.Parse(property.Value.GetString());
+                string? ipAddressValue = property.Value.GetString();
+                if (ipAddressValue is null)
+                {
+                    throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}': Missing 'ipAddress' property");
+                }
+
+                ipAddress = IPAddress.Parse(ipAddressValue);
                 continue;
             }
+        }
+
+        if (countryRegion is null)
+        {
+            throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}': Missing 'countryRegion' property");
+        }
+
+        if (ipAddress is null)
+        {
+            throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}': Missing 'ipAddress' property");
         }
 
         return new IPAddressCountryPair(countryRegion, ipAddress);

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
@@ -21,18 +20,23 @@ public class CountryRegion : IJsonModel<CountryRegion>
     {
         if (element.ValueKind == JsonValueKind.Null)
         {
-            return null;
+            throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(CountryRegion)}'");
         }
 
-        string isoCode = default;
+        string? isoCode = default;
 
-        foreach (var property in element.EnumerateObject())
+        foreach (JsonProperty property in element.EnumerateObject())
         {
             if (property.NameEquals("isoCode"u8))
             {
                 isoCode = property.Value.GetString();
                 continue;
             }
+        }
+
+        if (isoCode is null)
+        {
+            throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(CountryRegion)}': Missing 'isoCode' property");
         }
 
         return new CountryRegion(isoCode);
