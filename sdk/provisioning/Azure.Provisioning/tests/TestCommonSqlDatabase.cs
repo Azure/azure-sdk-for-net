@@ -34,7 +34,7 @@ namespace Azure.Provisioning.Tests
             appUserSecret.AssignParameter(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(this, "sqlserver");
-            sqlServer.AssignParameter(sql => sql.AdministratorLogin, sqlAdminPasswordParam);
+            sqlServer.AssignParameter(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
             SqlDatabase = new SqlDatabase(this);
 
             KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(this, "connectionString", SqlDatabase.GetConnectionString(appUserPasswordParam));
