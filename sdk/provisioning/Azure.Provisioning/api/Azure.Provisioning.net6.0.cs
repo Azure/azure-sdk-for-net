@@ -86,8 +86,6 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(string name, object instance, string propertyName, bool isLiteral = false, bool isSecure = false) { throw null; }
-        public void AssignParameter(object instance, string propertyName, Azure.Provisioning.Parameter parameter) { }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

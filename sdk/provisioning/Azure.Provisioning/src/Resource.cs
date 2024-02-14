@@ -102,7 +102,7 @@ namespace Azure.Provisioning
         /// <param name="instance">The property instance.</param>
         /// <param name="propertyName">The property name.</param>
         /// <param name="parameter">The <see cref="Parameter"/> to assign.</param>
-        public void AssignParameter(object instance, string propertyName, Parameter parameter)
+        private protected void AssignParameter(object instance, string propertyName, Parameter parameter)
         {
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
@@ -125,7 +125,7 @@ namespace Azure.Provisioning
         /// <param name="isSecure">Is the output secure.</param>
         /// <returns>The <see cref="Output"/>.</returns>
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
-        public Output AddOutput(string name, object instance, string propertyName, bool isLiteral = false, bool isSecure = false)
+        private protected Output AddOutput(string name, object instance, string propertyName, bool isLiteral = false, bool isSecure = false)
         {
             string? reference = GetReference(instance.GetType(), Properties.GetType(), propertyName, Name.ToCamelCase());
 
