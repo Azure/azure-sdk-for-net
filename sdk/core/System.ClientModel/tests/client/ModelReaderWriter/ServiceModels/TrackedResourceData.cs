@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.ClientShared;
 using System.Collections.Generic;
-using System.Security.Cryptography;
+using ClientModel.Tests.ClientShared;
 
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {

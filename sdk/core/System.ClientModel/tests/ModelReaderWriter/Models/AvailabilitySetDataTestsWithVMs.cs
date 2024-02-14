@@ -44,8 +44,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.AreEqual(3, model.PlatformFaultDomainCount);
             Assert.AreEqual("Classic", model.Sku.Name);
             Assert.AreEqual(2, model.VirtualMachines.Count);
-            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1", model.VirtualMachines[0].Id.ToString());
-            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2", model.VirtualMachines[1].Id.ToString());
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS1", model.VirtualMachines[0].Id!);
+            Assert.AreEqual("/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/testRG-6497/providers/Microsoft.Compute/availabilitySets/testAS2", model.VirtualMachines[1].Id!);
         }
 
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)

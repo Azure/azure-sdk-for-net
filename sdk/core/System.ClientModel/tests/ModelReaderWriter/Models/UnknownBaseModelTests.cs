@@ -7,19 +7,19 @@ using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal class UnknownBaseModelTests : ModelJsonTests<BaseModel>
+    internal class UnknownBaseModelTests : ModelJsonTests<BaseModel.NonNullable>
     {
-        protected override BaseModel GetModelInstance()
+        protected override BaseModel.NonNullable GetModelInstance()
         {
             var typeToActivate = typeof(BaseModel).Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{typeof(BaseModel).Name}") ?? throw new InvalidOperationException("Unable to find BaseModel type");
-            return Activator.CreateInstance(typeToActivate, true) as BaseModel ?? throw new InvalidOperationException($"Unable to create model instance of BaseModel");
+            return Activator.CreateInstance(typeToActivate, true) as BaseModel.NonNullable ?? throw new InvalidOperationException($"Unable to create model instance of BaseModel");
         }
 
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
 
-        protected override void CompareModels(BaseModel model, BaseModel model2, string format)
+        protected override void CompareModels(BaseModel.NonNullable model, BaseModel.NonNullable model2, string format)
         {
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("UnknownBaseModel", model2.GetType().Name);
@@ -46,7 +46,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return expected;
         }
 
-        protected override void VerifyModel(BaseModel model, string format)
+        protected override void VerifyModel(BaseModel.NonNullable model, string format)
         {
             Assert.AreEqual("UnknownBaseModel", model.GetType().Name);
             Assert.AreEqual("Z", model.Kind);

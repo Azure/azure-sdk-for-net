@@ -108,7 +108,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IPersistableModel<ModelY?>.Write(ModelReaderWriterOptions options)
         {
-            NonNullable model = new(this);
+            NonNullableModelY model = new(this);
 
             ModelReaderWriterHelper.ValidateFormat(model, options.Format);
             return ModelReaderWriter.Write(model, options);
@@ -116,11 +116,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         string IPersistableModel<ModelY?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        private class NonNullable : ModelY, IPersistableModel<NonNullable>, IJsonModel<NonNullable>
+        private class NonNullableModelY : ModelY, IPersistableModel<NonNullableModelY>, IJsonModel<NonNullableModelY>
         {
             private readonly ModelY _value;
 
-            public NonNullable(ModelY model) : base()
+            public NonNullableModelY(ModelY model) : base()
             {
                 if (model is null)
                     throw new ArgumentNullException(nameof(model));
@@ -128,19 +128,19 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 _value = model;
             }
 
-            NonNullable IJsonModel<NonNullable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            NonNullableModelY IJsonModel<NonNullableModelY>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
                 => new(((IJsonModel<ModelY>)_value).Create(ref reader, options));
 
-            void IJsonModel<NonNullable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            void IJsonModel<NonNullableModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
                 => ((IJsonModel<ModelY>)_value).Write(writer, options);
 
-            NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
+            NonNullableModelY IPersistableModel<NonNullableModelY>.Create(BinaryData data, ModelReaderWriterOptions options)
                 => new(((IPersistableModel<ModelY>)_value).Create(data, options));
 
-            string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            string IPersistableModel<NonNullableModelY>.GetFormatFromOptions(ModelReaderWriterOptions options)
                 => ((IPersistableModel<ModelY>)_value).GetFormatFromOptions(options);
 
-            BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
+            BinaryData IPersistableModel<NonNullableModelY>.Write(ModelReaderWriterOptions options)
                 => ((IPersistableModel<ModelY>)_value).Write(options);
         }
     }

@@ -105,7 +105,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
             //Deserialize unknown subtype
             string? kind = default;
-            OptionalProperty<string>? name = default;
+            OptionalProperty<string> name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         string IPersistableModel<BaseModel?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        private class NonNullable : BaseModel, IPersistableModel<NonNullable>
+        public class NonNullable : BaseModel, IJsonModel<NonNullable>
         {
             private readonly BaseModel _value;
 
@@ -167,11 +167,17 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
                 => new(((IPersistableModel<BaseModel>)_value).Create(data, options));
 
+            NonNullable IJsonModel<NonNullable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+                => new(((IJsonModel<BaseModel>)_value).Create(ref reader, options));
+
             string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
                 => ((IPersistableModel<BaseModel>)_value).GetFormatFromOptions(options);
 
             BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
                 => ((IPersistableModel<BaseModel>)_value).Write(options);
+
+            void IJsonModel<NonNullable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+                => ((IJsonModel<BaseModel>)_value).Write(writer, options);
         }
     }
 }
