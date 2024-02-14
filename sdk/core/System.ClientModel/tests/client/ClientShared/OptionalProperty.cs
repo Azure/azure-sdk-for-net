@@ -22,7 +22,8 @@ internal static class OptionalProperty
     public static bool IsCollectionDefined<TKey, TValue>(IDictionary<TKey, TValue>? collection)
         where TKey : notnull
     {
-        if (collection is null) return false;
+        if (collection is null)
+            return false;
 
         return !(collection is OptionalDictionary<TKey, TValue> changeTrackingList && changeTrackingList.IsUndefined);
     }
@@ -100,17 +101,15 @@ internal static class OptionalProperty
 
 public readonly struct OptionalProperty<T>
 {
-    public OptionalProperty(T value) : this()
+    public OptionalProperty(T? value) : this()
     {
         Value = value;
+        HasValue = value is not null;
     }
 
     public T? Value { get; }
-    public bool HasValue => Value is not null;
+    public bool HasValue { get; }
 
-    public static implicit operator OptionalProperty<T>(T? value)
-        => value is not null ? new OptionalProperty<T>(value) : default;
-
-    public static implicit operator T?(OptionalProperty<T> optional)
-        => optional.HasValue ? optional.Value : default;
+    public static implicit operator OptionalProperty<T>(T? value) => new OptionalProperty<T>(value);
+    public static implicit operator T?(OptionalProperty<T> optional) => optional.Value;
 }

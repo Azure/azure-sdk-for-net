@@ -38,16 +38,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         }
 
         public string? Name { get; }
-        //private string? _name;
-        //public string Name
-        //{
-        //    get
-        //    {
-        //        AssertHasValue(_name, nameof(Name));
-        //        return _name!;
-        //    }
-        //    set => _name = value;
-        //}
 
         private int? _xProperty;
         public int XProperty
@@ -155,7 +145,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("fields"u8))
                 {
-                    // TODO: May do something different depending on the semantics of expected values
                     fields = property.Value.EnumerateArray().Select(element => element.GetString()!).ToList();
                     continue;
                 }
@@ -173,7 +162,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (JsonProperty property0 in property.Value.EnumerateObject())
                     {
-                        // TODO: May do something different depending on the semantics of expected values
                         dictionary.Add(property0.Name, property0.Value.GetString()!);
                     }
                     keyValuePairs = dictionary;

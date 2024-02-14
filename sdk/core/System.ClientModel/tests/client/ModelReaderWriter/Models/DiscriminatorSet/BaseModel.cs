@@ -34,10 +34,9 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         protected internal BaseModel(Dictionary<string, BinaryData>? rawData)
         {
             _rawData = rawData ?? new Dictionary<string, BinaryData>();
-            Kind = string.Empty;
         }
 
-        public string Kind { get; internal set; }
+        public string? Kind { get; internal set; }
         public string? Name { get; set; }
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
@@ -122,11 +121,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     //this means it's an unknown property we got
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
-            }
-
-            if (kind is null)
-            {
-                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(BaseModel)}': Missing 'kind' property");
             }
 
             return new UnknownBaseModel(kind, name, rawData);

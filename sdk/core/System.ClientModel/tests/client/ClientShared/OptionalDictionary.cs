@@ -7,8 +7,7 @@ using System.Collections.Generic;
 
 namespace ClientModel.Tests.ClientShared;
 
-internal class OptionalDictionary<TKey, TValue> :
-    IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
+internal class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
 {
     private IDictionary<TKey, TValue>? _innerDictionary;
 
@@ -16,13 +15,11 @@ internal class OptionalDictionary<TKey, TValue> :
     {
     }
 
-    public OptionalDictionary(OptionalProperty<IReadOnlyDictionary<TKey, TValue>> optionalDictionary)
-        : this(optionalDictionary.Value)
+    public OptionalDictionary(OptionalProperty<IReadOnlyDictionary<TKey, TValue>> optionalDictionary) : this(optionalDictionary.Value)
     {
     }
 
-    public OptionalDictionary(OptionalProperty<IDictionary<TKey, TValue>> optionalDictionary)
-        : this(optionalDictionary.Value)
+    public OptionalDictionary(OptionalProperty<IDictionary<TKey, TValue>> optionalDictionary) : this(optionalDictionary.Value)
     {
     }
 

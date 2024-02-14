@@ -144,7 +144,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("fields"u8))
                 {
-                    // TODO: May do something different depending on the semantics of expected values
                     fields = property.Value.EnumerateArray().Select(element => element.GetString()!).ToList();
                     continue;
                 }
@@ -162,7 +161,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        // TODO: May do something different depending on the semantics of expected values
                         dictionary.Add(property0.Name, property0.Value.GetString()!);
                     }
                     keyValuePairs = dictionary;
@@ -191,7 +189,6 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         ModelX IPersistableModel<ModelX>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
-
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 

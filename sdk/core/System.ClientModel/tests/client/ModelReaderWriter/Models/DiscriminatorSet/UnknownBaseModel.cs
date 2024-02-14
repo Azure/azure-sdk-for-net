@@ -16,7 +16,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = "Unknown";
         }
 
-        internal UnknownBaseModel(string kind, string? name, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string? kind, string? name, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
