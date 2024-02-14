@@ -97,6 +97,7 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, T properties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(object)) { }
         public T Properties { get { throw null; } }
+        public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, string>> selector, Azure.Provisioning.Parameter parameter) { }
     }
 }
 namespace Azure.Provisioning.AppService

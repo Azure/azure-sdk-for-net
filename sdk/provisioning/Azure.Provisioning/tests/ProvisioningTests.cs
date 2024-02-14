@@ -41,13 +41,13 @@ namespace Azure.Provisioning.Tests
                 .AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
 
             KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, "sqlAdminPassword");
-            sqlAdminSecret.AssignParameter(sqlAdminSecret.Properties.Properties, nameof(sqlAdminSecret.Properties.Properties.Value), sqlAdminPasswordParam);
+            sqlAdminSecret.AssignParameter(secret => secret.Properties.Value, sqlAdminPasswordParam);
 
             KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, "appUserPassword");
-            appUserSecret.AssignParameter(appUserSecret.Properties.Properties, nameof(appUserSecret.Properties.Properties.Value), appUserPasswordParam);
+            appUserSecret.AssignParameter(secret => secret.Properties.Value, appUserPasswordParam);
 
             SqlServer sqlServer = new SqlServer(infra, "sqlserver");
-            sqlServer.AssignParameter(sqlServer.Properties, nameof(sqlServer.Properties.AdministratorLoginPassword), sqlAdminPasswordParam);
+            sqlServer.AssignParameter(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
 
             SqlDatabase sqlDatabase = new SqlDatabase(infra);
 

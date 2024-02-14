@@ -9,9 +9,9 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource storageAccount_wIOls6qWR 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount_64QAbICpM 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   scope: resourceGroup_I6QNkoPsb
-  name: 'photoAcct-b238b0e606ba44'
+  name: 'photoAcct-47cc88f8-4ec0-'
   location: 'westus'
   sku: {
     name: 'Premium_LRS'
@@ -21,8 +21,8 @@ resource storageAccount_wIOls6qWR 'Microsoft.Storage/storageAccounts@2022-09-01'
   }
 }
 
-resource blobService_gWmK7aIWs 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
-  parent: storageAccount_wIOls6qWR
+resource blobService_hzBGHAAO1 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
+  parent: storageAccount_64QAbICpM
   name: 'photos-TEST'
   properties: {
     cors: {
