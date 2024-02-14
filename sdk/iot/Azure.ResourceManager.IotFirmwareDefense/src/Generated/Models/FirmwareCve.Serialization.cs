@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<CveLink> array = new List<CveLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveLink.DeserializeCveLink(item));
+                        array.Add(CveLink.DeserializeCveLink(item, options));
                     }
                     links = array;
                     continue;

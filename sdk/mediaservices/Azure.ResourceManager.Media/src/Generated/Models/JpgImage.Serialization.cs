@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<JpgLayer> array = new List<JpgLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JpgLayer.DeserializeJpgLayer(item));
+                        array.Add(JpgLayer.DeserializeJpgLayer(item, options));
                     }
                     layers = array;
                     continue;

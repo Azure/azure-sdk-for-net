@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.KeyVault
                     {
                         continue;
                     }
-                    properties = DeletedManagedHsmProperties.DeserializeDeletedManagedHsmProperties(property.Value);
+                    properties = DeletedManagedHsmProperties.DeserializeDeletedManagedHsmProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

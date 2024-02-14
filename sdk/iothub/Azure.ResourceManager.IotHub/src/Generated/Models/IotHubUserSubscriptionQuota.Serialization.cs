@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    name = IotHubTypeName.DeserializeIotHubTypeName(property.Value);
+                    name = IotHubTypeName.DeserializeIotHubTypeName(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<PngLayer> array = new List<PngLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PngLayer.DeserializePngLayer(item));
+                        array.Add(PngLayer.DeserializePngLayer(item, options));
                     }
                     layers = array;
                     continue;

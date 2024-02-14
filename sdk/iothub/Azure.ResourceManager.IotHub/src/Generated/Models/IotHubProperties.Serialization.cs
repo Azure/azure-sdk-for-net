@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<SharedAccessSignatureAuthorizationRule> array = new List<SharedAccessSignatureAuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item));
+                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item, options));
                     }
                     authorizationPolicies = array;
                     continue;
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item, options));
                     }
                     ipFilterRules = array;
                     continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value);
+                    networkRuleSets = IotHubNetworkRuleSetProperties.DeserializeIotHubNetworkRuleSetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minTlsVersion"u8))
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubPrivateEndpointConnectionData> array = new List<IotHubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item));
+                        array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, EventHubCompatibleEndpointProperties> dictionary = new Dictionary<string, EventHubCompatibleEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value, options));
                     }
                     eventHubEndpoints = dictionary;
                     continue;
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value);
+                    routing = IotHubRoutingProperties.DeserializeIotHubRoutingProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageEndpoints"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, IotHubStorageEndpointProperties> dictionary = new Dictionary<string, IotHubStorageEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value, options));
                     }
                     storageEndpoints = dictionary;
                     continue;
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, MessagingEndpointProperties> dictionary = new Dictionary<string, MessagingEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value));
+                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value, options));
                     }
                     messagingEndpoints = dictionary;
                     continue;
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value);
+                    cloudToDevice = CloudToDeviceProperties.DeserializeCloudToDeviceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("comments"u8))
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubLocationDescription> array = new List<IotHubLocationDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item));
+                        array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item, options));
                     }
                     locations = array;
                     continue;

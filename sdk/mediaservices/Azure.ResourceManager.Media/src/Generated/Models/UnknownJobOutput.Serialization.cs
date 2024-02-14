@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobOutput(document.RootElement, options);
+            return DeserializeMediaJobOutput(document.RootElement, options);
         }
 
         internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownJobOutput(document.RootElement, options);
+                        return DeserializeMediaJobOutput(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MediaJobOutput)} does not support '{options.Format}' format.");

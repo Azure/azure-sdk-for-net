@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic
                     {
                         continue;
                     }
-                    properties = LogicWorkflowRequestHistoryProperties.DeserializeLogicWorkflowRequestHistoryProperties(property.Value);
+                    properties = LogicWorkflowRequestHistoryProperties.DeserializeLogicWorkflowRequestHistoryProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

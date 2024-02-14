@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultIPRule> array = new List<KeyVaultIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item));
+                        array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item, options));
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultVirtualNetworkRule> array = new List<KeyVaultVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item));
+                        array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item, options));
                     }
                     virtualNetworkRules = array;
                     continue;

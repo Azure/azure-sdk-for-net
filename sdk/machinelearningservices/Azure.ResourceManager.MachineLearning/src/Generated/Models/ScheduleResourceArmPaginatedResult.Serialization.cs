@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningScheduleData> array = new List<MachineLearningScheduleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningScheduleData.DeserializeMachineLearningScheduleData(item));
+                        array.Add(MachineLearningScheduleData.DeserializeMachineLearningScheduleData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetData> array = new List<MediaAssetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetData.DeserializeMediaAssetData(item));
+                        array.Add(MediaAssetData.DeserializeMediaAssetData(item, options));
                     }
                     value = array;
                     continue;

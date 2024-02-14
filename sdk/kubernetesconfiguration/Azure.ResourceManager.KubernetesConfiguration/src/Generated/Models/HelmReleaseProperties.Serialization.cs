@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         helmChartRef = null;
                         continue;
                     }
-                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value);
+                    helmChartRef = KubernetesObjectReference.DeserializeKubernetesObjectReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("failureCount"u8))

@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value);
+                    imageReference = LabVirtualMachineImageReference.DeserializeLabVirtualMachineImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value);
+                    sku = LabServicesSku.DeserializeLabServicesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalCapabilities"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value);
+                    additionalCapabilities = LabVirtualMachineAdditionalCapability.DeserializeLabVirtualMachineAdditionalCapability(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("usageQuota"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 if (property.NameEquals("adminUser"u8))
                 {
-                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    adminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nonAdminUser"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     {
                         continue;
                     }
-                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value);
+                    nonAdminUser = LabVirtualMachineCredential.DeserializeLabVirtualMachineCredential(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

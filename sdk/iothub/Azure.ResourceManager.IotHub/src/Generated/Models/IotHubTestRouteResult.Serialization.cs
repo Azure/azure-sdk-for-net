@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value);
+                    details = IotHubTestRouteResultDetails.DeserializeIotHubTestRouteResultDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

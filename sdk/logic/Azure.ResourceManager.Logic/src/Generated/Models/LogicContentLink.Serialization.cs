@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value);
+                    contentHash = LogicContentHash.DeserializeLogicContentHash(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metadata"u8))

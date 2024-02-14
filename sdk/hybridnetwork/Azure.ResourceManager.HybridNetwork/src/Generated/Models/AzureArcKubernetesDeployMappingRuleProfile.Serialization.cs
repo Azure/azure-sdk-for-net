@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value);
+                    helmMappingRuleProfile = HelmMappingRuleProfile.DeserializeHelmMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))

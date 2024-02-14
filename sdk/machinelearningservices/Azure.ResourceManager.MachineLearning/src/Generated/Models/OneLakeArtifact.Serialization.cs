@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "LakeHouse": return LakeHouseArtifact.DeserializeLakeHouseArtifact(element);
+                    case "LakeHouse": return LakeHouseArtifact.DeserializeLakeHouseArtifact(element, options);
                 }
             }
-            return UnknownOneLakeArtifact.DeserializeUnknownOneLakeArtifact(element);
+            return UnknownOneLakeArtifact.DeserializeUnknownOneLakeArtifact(element, options);
         }
 
         BinaryData IPersistableModel<OneLakeArtifact>.Write(ModelReaderWriterOptions options)

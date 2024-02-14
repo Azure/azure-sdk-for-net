@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Media
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MediaPrivateLinkServiceConnectionState.DeserializeMediaPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MediaPrivateLinkServiceConnectionState.DeserializeMediaPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

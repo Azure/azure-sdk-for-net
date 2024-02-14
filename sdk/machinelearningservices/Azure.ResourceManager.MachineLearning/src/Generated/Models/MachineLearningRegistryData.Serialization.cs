@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MachineLearning
                                 managedResourceGroup = null;
                                 continue;
                             }
-                            managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value);
+                            managedResourceGroup = ArmResourceId.DeserializeArmResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("mlFlowRegistryUri"u8))
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryPrivateEndpointConnection> array = new List<RegistryPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item));
+                                array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryRegionArmDetails> array = new List<RegistryRegionArmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item));
+                                array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item, options));
                             }
                             regionDetails = array;
                             continue;

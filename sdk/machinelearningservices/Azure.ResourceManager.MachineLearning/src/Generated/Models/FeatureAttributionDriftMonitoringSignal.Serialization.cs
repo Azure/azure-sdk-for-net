@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("metricThreshold"u8))
                 {
-                    metricThreshold = FeatureAttributionMetricThreshold.DeserializeFeatureAttributionMetricThreshold(property.Value);
+                    metricThreshold = FeatureAttributionMetricThreshold.DeserializeFeatureAttributionMetricThreshold(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("productionData"u8))
@@ -120,14 +120,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item, options));
                     }
                     productionData = array;
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))

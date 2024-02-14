@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("dataImportDefinition"u8))
                 {
-                    dataImportDefinition = DataImport.DeserializeDataImport(property.Value);
+                    dataImportDefinition = DataImport.DeserializeDataImport(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actionType"u8))
