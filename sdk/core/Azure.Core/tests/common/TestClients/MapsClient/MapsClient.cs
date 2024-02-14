@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -30,6 +30,42 @@ public class MapsClient
         _apiVersion = options.Version;
 
         _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_credential, "subscription-key") }, new ResponseClassifier());
+    }
+
+    public virtual async Task<Response<IPAddressCountryPair>> GetCountryCodeAsync(IPAddress ipAddress, CancellationToken cancellationToken = default)
+    {
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
+
+        RequestContext options = cancellationToken.CanBeCanceled ?
+            new RequestContext() { CancellationToken = cancellationToken } :
+            new RequestContext();
+
+        Response response = await GetCountryCodeAsync(ipAddress.ToString(), options).ConfigureAwait(false);
+
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+
+        return Response.FromValue(value, response);
+    }
+    public virtual async Task<Response> GetCountryCodeAsync(string ipAddress, RequestContext context = null)
+    {
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
+
+        context ??= new RequestContext();
+
+        using HttpMessage message = CreateGetLocationRequest(ipAddress, context);
+
+        await _pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+
+        Response response = message.Response;
+
+        if (response.IsError && context.ErrorOptions == ErrorOptions.Default)
+        {
+            throw new RequestFailedException(response);
+        }
+
+        return response;
     }
 
     public virtual Response<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)

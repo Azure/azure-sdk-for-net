@@ -25,7 +25,7 @@ public class CountryRegion : IJsonModel<CountryRegion>
 
         string? isoCode = default;
 
-        foreach (JsonProperty property in element.EnumerateObject())
+        foreach (var property in element.EnumerateObject())
         {
             if (property.NameEquals("isoCode"u8))
             {

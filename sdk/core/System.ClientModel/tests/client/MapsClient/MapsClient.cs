@@ -40,9 +40,9 @@ public class MapsClient
         if (ipAddress is null)
             throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult output = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
+        ClientResult result = await GetCountryCodeAsync(ipAddress.ToString()).ConfigureAwait(false);
 
-        PipelineResponse response = output.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return ClientResult.FromValue(value, response);
@@ -73,9 +73,9 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult output = GetCountryCode(ipAddress.ToString());
+        ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        PipelineResponse response = output.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return ClientResult.FromValue(value, response);

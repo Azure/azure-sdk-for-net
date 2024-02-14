@@ -50,13 +50,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
                     continue;
                 }
 
-                string? ipAddressValue = property.Value.GetString();
-                if (ipAddressValue is null)
-                {
-                    throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(IPAddressCountryPair)}': Missing 'ipAddress' property");
-                }
-
-                ipAddress = IPAddress.Parse(ipAddressValue);
+                ipAddress = IPAddress.Parse(property.Value.GetString()!);
                 continue;
             }
         }

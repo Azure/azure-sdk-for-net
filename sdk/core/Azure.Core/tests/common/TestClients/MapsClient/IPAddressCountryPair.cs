@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net;
-using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Net;
 using System.Text.Json;
 
 namespace Maps;
