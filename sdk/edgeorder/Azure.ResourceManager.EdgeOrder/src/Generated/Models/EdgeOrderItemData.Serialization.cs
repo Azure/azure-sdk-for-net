@@ -181,12 +181,12 @@ namespace Azure.ResourceManager.EdgeOrder
                     {
                         if (property0.NameEquals("orderItemDetails"u8))
                         {
-                            orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value);
+                            orderItemDetails = EdgeOrderItemDetails.DeserializeEdgeOrderItemDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("addressDetails"u8))
                         {
-                            addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value);
+                            addressDetails = EdgeOrderItemAddressDetails.DeserializeEdgeOrderItemAddressDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("startTime"u8))

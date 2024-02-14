@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item, options));
                             }
                             schedules = array;
                             continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item, options));
                             }
                             hostPoolReferences = array;
                             continue;

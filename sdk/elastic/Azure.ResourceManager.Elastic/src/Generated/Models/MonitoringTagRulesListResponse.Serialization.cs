@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     List<MonitoringTagRuleData> array = new List<MonitoringTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringTagRuleData.DeserializeMonitoringTagRuleData(item));
+                        array.Add(MonitoringTagRuleData.DeserializeMonitoringTagRuleData(item, options));
                     }
                     value = array;
                     continue;

@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabSubnet> array = new List<DevTestLabSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabSubnet.DeserializeDevTestLabSubnet(item));
+                                array.Add(DevTestLabSubnet.DeserializeDevTestLabSubnet(item, options));
                             }
                             allowedSubnets = array;
                             continue;
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabExternalSubnet> array = new List<DevTestLabExternalSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabExternalSubnet.DeserializeDevTestLabExternalSubnet(item));
+                                array.Add(DevTestLabExternalSubnet.DeserializeDevTestLabExternalSubnet(item, options));
                             }
                             externalSubnets = array;
                             continue;
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabSubnetOverride> array = new List<DevTestLabSubnetOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabSubnetOverride.DeserializeDevTestLabSubnetOverride(item));
+                                array.Add(DevTestLabSubnetOverride.DeserializeDevTestLabSubnetOverride(item, options));
                             }
                             subnetOverrides = array;
                             continue;

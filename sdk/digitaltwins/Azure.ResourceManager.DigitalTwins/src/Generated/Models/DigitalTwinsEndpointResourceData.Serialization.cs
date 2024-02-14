@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DigitalTwins
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DigitalTwinsEndpointResourceProperties.DeserializeDigitalTwinsEndpointResourceProperties(property.Value);
+                    properties = DigitalTwinsEndpointResourceProperties.DeserializeDigitalTwinsEndpointResourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<MsixPackageData> array = new List<MsixPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MsixPackageData.DeserializeMsixPackageData(item));
+                        array.Add(MsixPackageData.DeserializeMsixPackageData(item, options));
                     }
                     value = array;
                     continue;

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     List<DevCenterEndpointDetail> array = new List<DevCenterEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevCenterEndpointDetail.DeserializeDevCenterEndpointDetail(item));
+                        array.Add(DevCenterEndpointDetail.DeserializeDevCenterEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
