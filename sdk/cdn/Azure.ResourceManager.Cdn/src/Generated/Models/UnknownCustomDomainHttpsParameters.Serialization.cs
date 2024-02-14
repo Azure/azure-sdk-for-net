@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+            return DeserializeCustomDomainHttpsContent(document.RootElement, options);
         }
 
         internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options = null)

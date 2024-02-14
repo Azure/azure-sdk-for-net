@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityPolicyProperties(document.RootElement, options);
+            return DeserializeSecurityPolicyProperties(document.RootElement, options);
         }
 
         internal static UnknownSecurityPolicyProperties DeserializeUnknownSecurityPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)

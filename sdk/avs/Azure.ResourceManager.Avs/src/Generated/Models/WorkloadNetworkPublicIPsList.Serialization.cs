@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<WorkloadNetworkPublicIPData> array = new List<WorkloadNetworkPublicIPData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(item));
+                        array.Add(WorkloadNetworkPublicIPData.DeserializeWorkloadNetworkPublicIPData(item, options));
                     }
                     value = array;
                     continue;

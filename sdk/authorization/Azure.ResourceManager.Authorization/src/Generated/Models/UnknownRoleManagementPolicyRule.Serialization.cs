@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRoleManagementPolicyRule(document.RootElement, options);
+            return DeserializeRoleManagementPolicyRule(document.RootElement, options);
         }
 
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value);
+                    target = RoleManagementPolicyRuleTarget.DeserializeRoleManagementPolicyRuleTarget(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

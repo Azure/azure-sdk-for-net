@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAlertsMetaDataProperties(document.RootElement, options);
+            return DeserializeServiceAlertMetadataProperties(document.RootElement, options);
         }
 
         internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element, ModelReaderWriterOptions options = null)

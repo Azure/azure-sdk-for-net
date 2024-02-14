@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadNetworkDhcpEntity(document.RootElement, options);
+            return DeserializeWorkloadNetworkDhcpEntity(document.RootElement, options);
         }
 
         internal static UnknownWorkloadNetworkDhcpEntity DeserializeUnknownWorkloadNetworkDhcpEntity(JsonElement element, ModelReaderWriterOptions options = null)

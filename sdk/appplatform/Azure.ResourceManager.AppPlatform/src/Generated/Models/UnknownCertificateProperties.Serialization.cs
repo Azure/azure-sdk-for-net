@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCertificateProperties(document.RootElement, options);
+            return DeserializeAppPlatformCertificateProperties(document.RootElement, options);
         }
 
         internal static UnknownCertificateProperties DeserializeUnknownCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)

@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value);
+                    uefiSettings = VirtualMachineInstancePropertiesSecurityProfileUefiSettings.DeserializeVirtualMachineInstancePropertiesSecurityProfileUefiSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityType"u8))

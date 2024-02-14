@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            properties = BackendProperties.DeserializeBackendProperties(property0.Value);
+                            properties = BackendProperties.DeserializeBackendProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("credentials"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value);
+                            credentials = BackendCredentialsContract.DeserializeBackendCredentialsContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("proxy"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value);
+                            proxy = BackendProxyContract.DeserializeBackendProxyContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("tls"u8))
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value);
+                            tls = BackendTlsProperties.DeserializeBackendTlsProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("url"u8))

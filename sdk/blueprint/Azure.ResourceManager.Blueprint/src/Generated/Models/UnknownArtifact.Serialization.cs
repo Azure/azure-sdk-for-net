@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifact(document.RootElement, options);
+            return DeserializeArtifactData(document.RootElement, options);
         }
 
         internal static UnknownArtifact DeserializeUnknownArtifact(JsonElement element, ModelReaderWriterOptions options = null)

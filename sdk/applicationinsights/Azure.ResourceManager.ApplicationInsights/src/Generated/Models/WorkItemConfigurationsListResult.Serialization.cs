@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkItemConfiguration> array = new List<WorkItemConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkItemConfiguration.DeserializeWorkItemConfiguration(item));
+                        array.Add(WorkItemConfiguration.DeserializeWorkItemConfiguration(item, options));
                     }
                     value = array;
                     continue;

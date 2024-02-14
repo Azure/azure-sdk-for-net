@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ApiManagement
                             {
                                 continue;
                             }
-                            locationData = ResourceLocationDataContract.DeserializeResourceLocationDataContract(property0.Value);
+                            locationData = ResourceLocationDataContract.DeserializeResourceLocationDataContract(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("description"u8))

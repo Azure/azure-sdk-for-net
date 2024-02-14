@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = VirtualHardDiskStatusProvisioningStatus.DeserializeVirtualHardDiskStatusProvisioningStatus(property.Value);
+                    provisioningStatus = VirtualHardDiskStatusProvisioningStatus.DeserializeVirtualHardDiskStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

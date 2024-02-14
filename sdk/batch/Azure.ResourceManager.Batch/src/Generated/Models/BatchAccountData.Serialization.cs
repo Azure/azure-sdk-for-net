@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value);
+                            keyVaultReference = BatchKeyVaultReference.DeserializeBatchKeyVaultReference(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Batch
                                 networkProfile = null;
                                 continue;
                             }
-                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value);
+                            networkProfile = BatchNetworkProfile.DeserializeBatchNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchPrivateEndpointConnectionData> array = new List<BatchPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item));
+                                array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            autoStorage = BatchAccountAutoStorageConfiguration.DeserializeBatchAccountAutoStorageConfiguration(property0.Value);
+                            autoStorage = BatchAccountAutoStorageConfiguration.DeserializeBatchAccountAutoStorageConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value);
+                            encryption = BatchAccountEncryptionConfiguration.DeserializeBatchAccountEncryptionConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dedicatedCoreQuota"u8))
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Batch
                             List<BatchVmFamilyCoreQuota> array = new List<BatchVmFamilyCoreQuota>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item));
+                                array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item, options));
                             }
                             dedicatedCoreQuotaPerVmFamily = array;
                             continue;

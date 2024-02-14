@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertData> array = new List<ServiceAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item));
+                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item, options));
                     }
                     value = array;
                     continue;

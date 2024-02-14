@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScriptExecutionParameter(document.RootElement, options);
+            return DeserializeScriptExecutionParameterDetails(document.RootElement, options);
         }
 
         internal static UnknownScriptExecutionParameter DeserializeUnknownScriptExecutionParameter(JsonElement element, ModelReaderWriterOptions options = null)

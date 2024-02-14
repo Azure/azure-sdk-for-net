@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceData> array = new List<AppPlatformConfigurationServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(item));
+                        array.Add(AppPlatformConfigurationServiceData.DeserializeAppPlatformConfigurationServiceData(item, options));
                     }
                     value = array;
                     continue;

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<AssessmentResourceContent> array = new List<AssessmentResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item));
+                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item, options));
                     }
                     resourceList = array;
                     continue;

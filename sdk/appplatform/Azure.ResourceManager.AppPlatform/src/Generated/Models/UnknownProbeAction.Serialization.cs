@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProbeAction(document.RootElement, options);
+            return DeserializeAppInstanceProbeAction(document.RootElement, options);
         }
 
         internal static UnknownProbeAction DeserializeUnknownProbeAction(JsonElement element, ModelReaderWriterOptions options = null)

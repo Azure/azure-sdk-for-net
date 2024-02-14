@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeliveryRuleAction(document.RootElement, options);
+            return DeserializeDeliveryRuleAction(document.RootElement, options);
         }
 
         internal static UnknownDeliveryRuleAction DeserializeUnknownDeliveryRuleAction(JsonElement element, ModelReaderWriterOptions options = null)

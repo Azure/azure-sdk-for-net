@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<AgFoodPlatformPrivateLinkResourceData> array = new List<AgFoodPlatformPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgFoodPlatformPrivateLinkResourceData.DeserializeAgFoodPlatformPrivateLinkResourceData(item));
+                        array.Add(AgFoodPlatformPrivateLinkResourceData.DeserializeAgFoodPlatformPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;

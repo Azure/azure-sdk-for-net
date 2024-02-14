@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            sku = AutomationSku.DeserializeAutomationSku(property0.Value);
+                            sku = AutomationSku.DeserializeAutomationSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value);
+                            encryption = AutomationEncryptionProperties.DeserializeAutomationEncryptionProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))

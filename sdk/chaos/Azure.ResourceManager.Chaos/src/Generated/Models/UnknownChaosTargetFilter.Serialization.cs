@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChaosTargetFilter(document.RootElement, options);
+            return DeserializeChaosTargetFilter(document.RootElement, options);
         }
 
         internal static UnknownChaosTargetFilter DeserializeUnknownChaosTargetFilter(JsonElement element, ModelReaderWriterOptions options = null)

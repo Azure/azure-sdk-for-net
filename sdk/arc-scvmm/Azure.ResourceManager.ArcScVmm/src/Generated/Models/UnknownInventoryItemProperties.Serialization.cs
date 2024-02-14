@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInventoryItemProperties(document.RootElement, options);
+            return DeserializeInventoryItemProperties(document.RootElement, options);
         }
 
         internal static UnknownInventoryItemProperties DeserializeUnknownInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)

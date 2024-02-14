@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddonProperties(document.RootElement, options);
+            return DeserializeAvsPrivateCloudAddonProperties(document.RootElement, options);
         }
 
         internal static UnknownAddonProperties DeserializeUnknownAddonProperties(JsonElement element, ModelReaderWriterOptions options = null)

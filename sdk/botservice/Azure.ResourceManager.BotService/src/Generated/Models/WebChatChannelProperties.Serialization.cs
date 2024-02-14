@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<WebChatSite> array = new List<WebChatSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebChatSite.DeserializeWebChatSite(item));
+                        array.Add(WebChatSite.DeserializeWebChatSite(item, options));
                     }
                     sites = array;
                     continue;

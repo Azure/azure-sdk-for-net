@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value);
+                    imageReference = BatchImageReference.DeserializeBatchImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodeAgentSkuId"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value);
+                    windowsConfiguration = WindowsConfiguration.DeserializeWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDisks"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmDataDisk> array = new List<BatchVmDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item));
+                        array.Add(BatchVmDataDisk.DeserializeBatchVmDataDisk(item, options));
                     }
                     dataDisks = array;
                     continue;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value);
+                    containerConfiguration = BatchVmContainerConfiguration.DeserializeBatchVmContainerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionConfiguration"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value);
+                    diskEncryptionConfiguration = DiskEncryptionConfiguration.DeserializeDiskEncryptionConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodePlacementConfiguration"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value);
+                    nodePlacementConfiguration = NodePlacementConfiguration.DeserializeNodePlacementConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("extensions"u8))
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmExtension> array = new List<BatchVmExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item));
+                        array.Add(BatchVmExtension.DeserializeBatchVmExtension(item, options));
                     }
                     extensions = array;
                     continue;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value);
+                    osDisk = BatchOSDisk.DeserializeBatchOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityProfile"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value);
+                    securityProfile = BatchSecurityProfile.DeserializeBatchSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceArtifactReference"u8))

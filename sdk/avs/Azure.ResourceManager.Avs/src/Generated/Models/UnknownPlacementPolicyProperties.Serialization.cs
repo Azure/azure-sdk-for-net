@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Avs.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPlacementPolicyProperties(document.RootElement, options);
+            return DeserializePlacementPolicyProperties(document.RootElement, options);
         }
 
         internal static UnknownPlacementPolicyProperties DeserializeUnknownPlacementPolicyProperties(JsonElement element, ModelReaderWriterOptions options = null)

@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value);
+                            privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AttestationPrivateLinkServiceConnectionState.DeserializeAttestationPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = AttestationPrivateLinkServiceConnectionState.DeserializeAttestationPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

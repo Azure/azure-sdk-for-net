@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUserSourceInfo(document.RootElement, options);
+            return DeserializeAppPlatformUserSourceInfo(document.RootElement, options);
         }
 
         internal static UnknownUserSourceInfo DeserializeUnknownUserSourceInfo(JsonElement element, ModelReaderWriterOptions options = null)

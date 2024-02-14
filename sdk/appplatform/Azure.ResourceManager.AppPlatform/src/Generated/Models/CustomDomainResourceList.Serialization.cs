@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformCustomDomainData> array = new List<AppPlatformCustomDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(item));
+                        array.Add(AppPlatformCustomDomainData.DeserializeAppPlatformCustomDomainData(item, options));
                     }
                     value = array;
                     continue;

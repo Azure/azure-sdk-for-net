@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecurrence(document.RootElement, options);
+            return DeserializeAlertProcessingRuleRecurrence(document.RootElement, options);
         }
 
         internal static UnknownRecurrence DeserializeUnknownRecurrence(JsonElement element, ModelReaderWriterOptions options = null)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChannel(document.RootElement, options);
+            return DeserializeBotChannelProperties(document.RootElement, options);
         }
 
         internal static UnknownChannel DeserializeUnknownChannel(JsonElement element, ModelReaderWriterOptions options = null)

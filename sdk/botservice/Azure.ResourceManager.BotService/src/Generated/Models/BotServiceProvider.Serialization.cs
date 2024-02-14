@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotServiceProviderProperties.DeserializeBotServiceProviderProperties(property.Value);
+                    properties = BotServiceProviderProperties.DeserializeBotServiceProviderProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

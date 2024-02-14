@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ProductGroupData> array = new List<ProductGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductGroupData.DeserializeProductGroupData(item));
+                        array.Add(ProductGroupData.DeserializeProductGroupData(item, options));
                     }
                     value = array;
                     continue;

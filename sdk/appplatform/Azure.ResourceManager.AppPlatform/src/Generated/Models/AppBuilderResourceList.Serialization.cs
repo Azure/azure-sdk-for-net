@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformBuilderData> array = new List<AppPlatformBuilderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuilderData.DeserializeAppPlatformBuilderData(item));
+                        array.Add(AppPlatformBuilderData.DeserializeAppPlatformBuilderData(item, options));
                     }
                     value = array;
                     continue;

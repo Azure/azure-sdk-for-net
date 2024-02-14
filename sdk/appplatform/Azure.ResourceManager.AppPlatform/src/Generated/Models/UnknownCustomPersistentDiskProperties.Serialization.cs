@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomPersistentDiskProperties(document.RootElement, options);
+            return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
         }
 
         internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
