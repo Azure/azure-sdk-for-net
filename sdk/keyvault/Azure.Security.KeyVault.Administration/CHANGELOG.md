@@ -1,6 +1,6 @@
 # Release History
 
-## 4.4.0 (2024-02-13)
+## 4.4.0 (2024-02-14)
 
 Changes from both the last release and the last beta include:
 
@@ -12,7 +12,7 @@ Changes from both the last release and the last beta include:
 
 ### Breaking Changes
 
-- `KeyVaultBackupOperation`, `KeyVaultRestoreOperation`, and `KeyVaultSelectiveKeyRestoreOperation` now throw a `RequestFailedException` when the service returns an error response. ([#41855](https://github.com/Azure/azure-sdk-for-net/issues/41855))
+- `KeyVaultBackupOperation`, `KeyVaultRestoreOperation`, and `KeyVaultSelectiveKeyRestoreOperation` now throw a `RequestFailedException` with a different error message - but a raw `Response` with more details - when the service returns an error response. ([#41855](https://github.com/Azure/azure-sdk-for-net/issues/41855))
 
 ### Bugs Fixed
 
