@@ -18,12 +18,12 @@ namespace Azure.Core.Pipeline
     /// hold System.ClientModel policies internally and call their process methods
     /// in a way that will continue passing control down the chain of policies.
     /// </summary>
-    internal struct ClientModelPolicyCollectionAdapter : IReadOnlyList<PipelinePolicy>
+    internal struct AzureCorePipelineProcessor : IReadOnlyList<PipelinePolicy>
     {
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _policies;
         private PolicyEnumerator? _enumerator;
 
-        public ClientModelPolicyCollectionAdapter(ReadOnlyMemory<HttpPipelinePolicy> policies)
+        public AzureCorePipelineProcessor(ReadOnlyMemory<HttpPipelinePolicy> policies)
             => _policies = policies;
 
         public ReadOnlyMemory<HttpPipelinePolicy> Policies

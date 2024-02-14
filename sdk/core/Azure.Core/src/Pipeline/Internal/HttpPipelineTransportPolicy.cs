@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            await _transport.ProcessAsync(message).ConfigureAwait(false);
+            await _transport.ProcessInternalAsync(message).ConfigureAwait(false);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
@@ -35,7 +35,7 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            _transport.Process(message);
+            _transport.ProcessInternal(message);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;

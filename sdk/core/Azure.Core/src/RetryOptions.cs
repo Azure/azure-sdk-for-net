@@ -20,7 +20,7 @@ namespace Azure.Core
         private TimeSpan _delay = DefaultInitialDelay;
         private TimeSpan _maxDelay = DefaultMaxDelay;
         private RetryMode _retryMode = RetryMode.Exponential;
-        private TimeSpan _networkTimeout = TimeSpan.FromSeconds(100);
+        private TimeSpan _networkTimeout = ClientOptions.DefaultNetworkTimeout;
 
         private bool _frozen;
 

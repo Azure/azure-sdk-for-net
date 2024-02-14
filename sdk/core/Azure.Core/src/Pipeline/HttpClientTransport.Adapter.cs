@@ -17,9 +17,9 @@ namespace Azure.Core.Pipeline
         /// and <see cref="OnReceivedResponse(PipelineMessage, HttpResponseMessage)"/> to add
         /// features specific to Azure, such as <see cref="Request.ClientRequestId"/>.
         /// </summary>
-        private class ClientModelHttpClientTransport : HttpClientPipelineTransport
+        private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
         {
-            public ClientModelHttpClientTransport(HttpClient client) : base(client)
+            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
             {
             }
 

@@ -26,7 +26,7 @@ namespace Azure.Core.Pipeline
         // The transport's private HttpClient is internal because it is used by tests.
         internal HttpClient Client { get; }
 
-        private readonly ClientModelHttpClientTransport _transport;
+        private readonly AzureCoreHttpPipelineTransport _transport;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -52,7 +52,7 @@ namespace Azure.Core.Pipeline
         {
             Client = client ?? throw new ArgumentNullException(nameof(client));
 
-            _transport = new ClientModelHttpClientTransport(client);
+            _transport = new AzureCoreHttpPipelineTransport(client);
         }
 
         /// <summary>
@@ -99,11 +99,11 @@ namespace Azure.Core.Pipeline
             {
                 if (message.HasResponse)
                 {
-                    throw new RequestFailedException(message.Response, e.InnerException);
+                    throw await RequestFailedException.CreateAsync(message.Response, innerException: e.InnerException).ConfigureAwait(false);
                 }
                 else
                 {
-                    throw new RequestFailedException(e.Message, e.InnerException);
+                    throw new RequestFailedException(e.Message, innerException: e.InnerException);
                 }
             }
         }

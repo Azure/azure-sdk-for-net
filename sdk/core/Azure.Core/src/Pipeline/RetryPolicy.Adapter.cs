@@ -15,7 +15,7 @@ public partial class RetryPolicy
     /// <summary>
     /// Adds Azure.Core features to the System.ClientModel retry policy.
     /// </summary>
-    internal class ClientModelRetryPolicy : ClientRetryPolicy
+    internal class AzureCoreRetryPolicy : ClientRetryPolicy
     {
         private readonly RetryPolicy _pipelinePolicy;
         private readonly DelayStrategy _delayStrategy;
@@ -24,7 +24,7 @@ public partial class RetryPolicy
         private long _afterProcess;
         private double _elapsedTime;
 
-        public ClientModelRetryPolicy(int maxRetries, DelayStrategy delay, RetryPolicy policy)
+        public AzureCoreRetryPolicy(int maxRetries, DelayStrategy delay, RetryPolicy policy)
             : base(maxRetries)
         {
             _delayStrategy = delay;

@@ -5,8 +5,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-#nullable enable
-
 namespace ClientModel.Tests.ClientShared;
 
 internal class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IReadOnlyDictionary<TKey, TValue> where TKey : notnull
@@ -25,14 +23,14 @@ internal class OptionalDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IRe
     {
     }
 
-    private OptionalDictionary(IDictionary<TKey, TValue> dictionary)
+    private OptionalDictionary(IDictionary<TKey, TValue>? dictionary)
     {
         if (dictionary == null) return;
 
         _innerDictionary = new Dictionary<TKey, TValue>(dictionary);
     }
 
-    private OptionalDictionary(IReadOnlyDictionary<TKey, TValue> dictionary)
+    private OptionalDictionary(IReadOnlyDictionary<TKey, TValue>? dictionary)
     {
         if (dictionary == null) return;
 
