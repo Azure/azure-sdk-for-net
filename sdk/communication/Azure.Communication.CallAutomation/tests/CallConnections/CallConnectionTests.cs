@@ -396,12 +396,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void MuteParticipant_200Accepted(CommunicationIdentifier participant)
+        public void MuteParticipant_200Ok(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 
             var response = callConnection.MuteParticipant(participant);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
@@ -414,7 +414,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [TestCaseSource(nameof(TestData_MuteParticipant))]
-        public void MuteParticipant_WithOptions_200Accepted(CommunicationIdentifier participant)
+        public void MuteParticipant_WithOptions_200Ok(CommunicationIdentifier participant)
         {
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
             var options = new MuteParticipantOptions(participant)
@@ -422,7 +422,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 OperationContext = OperationContext
             };
             var response = callConnection.MuteParticipant(options);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
@@ -446,7 +446,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var callConnection = CreateMockCallConnection(200, OperationContextPayload);
 
             var response = await callConnection.MuteParticipantAsync(participant);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
         }
 
         [Test]
@@ -484,7 +484,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
 
             var response = await callConnection.MuteParticipantAsync(options);
-            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.GetRawResponse().Status);
             Assert.AreEqual(OperationContext, response.Value.OperationContext);
         }
 
