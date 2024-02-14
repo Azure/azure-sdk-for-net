@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<RestorableLocationResourceInfo> array = new List<RestorableLocationResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item));
+                                array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item, options));
                             }
                             restorableLocations = array;
                             continue;

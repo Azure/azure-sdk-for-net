@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeRoleData> array = new List<DataBoxEdgeRoleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(item));
+                        array.Add(DataBoxEdgeRoleData.DeserializeDataBoxEdgeRoleData(item, options));
                     }
                     value = array;
                     continue;

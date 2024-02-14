@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentBalance"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
+                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

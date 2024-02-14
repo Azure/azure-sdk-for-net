@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value);
+                    subscription = EdgeProfileSubscription.DeserializeEdgeProfileSubscription(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

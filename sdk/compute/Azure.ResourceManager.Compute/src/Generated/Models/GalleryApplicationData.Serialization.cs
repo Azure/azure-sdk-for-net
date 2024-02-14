@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Compute
                             List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                                array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                             }
                             customActions = array;
                             continue;

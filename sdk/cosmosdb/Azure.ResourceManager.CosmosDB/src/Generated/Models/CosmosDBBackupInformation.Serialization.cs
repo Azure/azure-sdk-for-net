@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    continuousBackupInformation = ContinuousBackupInformation.DeserializeContinuousBackupInformation(property.Value);
+                    continuousBackupInformation = ContinuousBackupInformation.DeserializeContinuousBackupInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

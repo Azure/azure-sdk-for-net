@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryRecurrenceScheduleOccurrence> array = new List<DataFactoryRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item));
+                        array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item, options));
                     }
                     monthlyOccurrences = array;
                     continue;

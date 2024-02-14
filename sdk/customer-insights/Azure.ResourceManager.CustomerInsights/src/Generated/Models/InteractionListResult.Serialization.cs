@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<InteractionResourceFormatData> array = new List<InteractionResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InteractionResourceFormatData.DeserializeInteractionResourceFormatData(item));
+                        array.Add(InteractionResourceFormatData.DeserializeInteractionResourceFormatData(item, options));
                     }
                     value = array;
                     continue;

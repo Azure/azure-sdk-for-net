@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value);
+                    repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

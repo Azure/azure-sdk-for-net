@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<MongoDBPrivilege> array = new List<MongoDBPrivilege>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item));
+                                array.Add(MongoDBPrivilege.DeserializeMongoDBPrivilege(item, options));
                             }
                             privileges = array;
                             continue;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB
                             List<MongoDBRole> array = new List<MongoDBRole>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MongoDBRole.DeserializeMongoDBRole(item));
+                                array.Add(MongoDBRole.DeserializeMongoDBRole(item, options));
                             }
                             roles = array;
                             continue;

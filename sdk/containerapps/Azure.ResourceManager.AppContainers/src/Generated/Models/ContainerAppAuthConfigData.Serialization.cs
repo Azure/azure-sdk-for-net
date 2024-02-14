@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            platform = ContainerAppAuthPlatform.DeserializeContainerAppAuthPlatform(property0.Value);
+                            platform = ContainerAppAuthPlatform.DeserializeContainerAppAuthPlatform(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("globalValidation"u8))
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            globalValidation = ContainerAppGlobalValidation.DeserializeContainerAppGlobalValidation(property0.Value);
+                            globalValidation = ContainerAppGlobalValidation.DeserializeContainerAppGlobalValidation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("identityProviders"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            identityProviders = ContainerAppIdentityProvidersConfiguration.DeserializeContainerAppIdentityProvidersConfiguration(property0.Value);
+                            identityProviders = ContainerAppIdentityProvidersConfiguration.DeserializeContainerAppIdentityProvidersConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("login"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value);
+                            login = ContainerAppLogin.DeserializeContainerAppLogin(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("httpSettings"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers
                             {
                                 continue;
                             }
-                            httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value);
+                            httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value, options);
                             continue;
                         }
                     }

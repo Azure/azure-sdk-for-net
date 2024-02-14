@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerInstanceUsage> array = new List<ContainerInstanceUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerInstanceUsage.DeserializeContainerInstanceUsage(item));
+                        array.Add(ContainerInstanceUsage.DeserializeContainerInstanceUsage(item, options));
                     }
                     value = array;
                     continue;

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute
                     {
                         continue;
                     }
-                    sku = InstanceSku.DeserializeInstanceSku(property.Value);
+                    sku = InstanceSku.DeserializeInstanceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value);
+                            networkProfile = RoleInstanceNetworkProfile.DeserializeRoleInstanceNetworkProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("instanceView"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value);
+                            instanceView = RoleInstanceView.DeserializeRoleInstanceView(property0.Value, options);
                             continue;
                         }
                     }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryChangeDataCaptureData> array = new List<DataFactoryChangeDataCaptureData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(item));
+                        array.Add(DataFactoryChangeDataCaptureData.DeserializeDataFactoryChangeDataCaptureData(item, options));
                     }
                     value = array;
                     continue;

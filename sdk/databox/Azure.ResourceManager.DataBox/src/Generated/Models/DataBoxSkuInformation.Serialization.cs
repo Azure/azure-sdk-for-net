@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
+                    sku = DataBoxSku.DeserializeDataBoxSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enabled"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataLocationToServiceLocationMap> array = new List<DataLocationToServiceLocationMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item));
+                                array.Add(Models.DataLocationToServiceLocationMap.DeserializeDataLocationToServiceLocationMap(item, options));
                             }
                             dataLocationToServiceLocationMap = array;
                             continue;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             {
                                 continue;
                             }
-                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
+                            capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("costs"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item));
+                                array.Add(DataBoxSkuCost.DeserializeDataBoxSkuCost(item, options));
                             }
                             costs = array;
                             continue;

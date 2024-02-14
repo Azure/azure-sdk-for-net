@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value);
+                    ipSettings = NicIPSettings.DeserializeNicIPSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

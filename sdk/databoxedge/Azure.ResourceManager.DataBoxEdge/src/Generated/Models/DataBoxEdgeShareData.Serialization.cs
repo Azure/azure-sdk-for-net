@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value);
+                            azureContainerInfo = DataBoxEdgeStorageContainerInfo.DeserializeDataBoxEdgeStorageContainerInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("accessProtocol"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<UserAccessRight> array = new List<UserAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserAccessRight.DeserializeUserAccessRight(item));
+                                array.Add(UserAccessRight.DeserializeUserAccessRight(item, options));
                             }
                             userAccessRights = array;
                             continue;
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<ClientAccessRight> array = new List<ClientAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClientAccessRight.DeserializeClientAccessRight(item));
+                                array.Add(ClientAccessRight.DeserializeClientAccessRight(item, options));
                             }
                             clientAccessRights = array;
                             continue;
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             {
                                 continue;
                             }
-                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value);
+                            refreshDetails = DataBoxEdgeRefreshDetails.DeserializeDataBoxEdgeRefreshDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("shareMappings"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item, options));
                             }
                             shareMappings = array;
                             continue;

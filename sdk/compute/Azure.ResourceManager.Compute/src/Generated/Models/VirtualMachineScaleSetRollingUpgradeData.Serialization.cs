@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value);
+                            policy = RollingUpgradePolicy.DeserializeRollingUpgradePolicy(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("runningStatus"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value);
+                            runningStatus = RollingUpgradeRunningStatus.DeserializeRollingUpgradeRunningStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("progress"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value);
+                            progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("error"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            error = ComputeApiError.DeserializeComputeApiError(property0.Value);
+                            error = ComputeApiError.DeserializeComputeApiError(property0.Value, options);
                             continue;
                         }
                     }

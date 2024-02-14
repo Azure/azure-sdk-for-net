@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PowerQuerySink> array = new List<PowerQuerySink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item));
+                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item, options));
                     }
                     dataflowSinks = array;
                     continue;

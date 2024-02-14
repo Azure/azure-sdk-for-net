@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("zones"u8))
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value);
+                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))

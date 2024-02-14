@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareResourcePoolData> array = new List<VMwareResourcePoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareResourcePoolData.DeserializeVMwareResourcePoolData(item));
+                        array.Add(VMwareResourcePoolData.DeserializeVMwareResourcePoolData(item, options));
                     }
                     value = array;
                     continue;

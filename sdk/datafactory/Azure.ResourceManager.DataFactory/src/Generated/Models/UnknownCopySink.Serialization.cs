@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopySink(document.RootElement, options);
+            return DeserializeCopySink(document.RootElement, options);
         }
 
         internal static UnknownCopySink DeserializeUnknownCopySink(JsonElement element, ModelReaderWriterOptions options = null)
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCopySink(document.RootElement, options);
+                        return DeserializeCopySink(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CopySink)} does not support '{options.Format}' format.");

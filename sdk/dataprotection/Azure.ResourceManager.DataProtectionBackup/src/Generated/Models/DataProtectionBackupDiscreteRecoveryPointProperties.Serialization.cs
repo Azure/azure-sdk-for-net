@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<RecoveryPointDataStoreDetail> array = new List<RecoveryPointDataStoreDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryPointDataStoreDetail.DeserializeRecoveryPointDataStoreDetail(item));
+                        array.Add(RecoveryPointDataStoreDetail.DeserializeRecoveryPointDataStoreDetail(item, options));
                     }
                     recoveryPointDataStoresDetails = array;
                     continue;

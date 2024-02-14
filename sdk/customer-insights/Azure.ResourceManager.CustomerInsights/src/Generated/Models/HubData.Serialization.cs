@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CustomerInsights
                             {
                                 continue;
                             }
-                            hubBillingInfo = HubBillingInfoFormat.DeserializeHubBillingInfoFormat(property0.Value);
+                            hubBillingInfo = HubBillingInfoFormat.DeserializeHubBillingInfoFormat(property0.Value, options);
                             continue;
                         }
                     }

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value);
+                    recurrencePeriod = ExportRecurrencePeriod.DeserializeExportRecurrencePeriod(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

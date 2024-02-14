@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceManagedClusterData> array = new List<ContainerServiceManagedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(item));
+                        array.Add(ContainerServiceManagedClusterData.DeserializeContainerServiceManagedClusterData(item, options));
                     }
                     value = array;
                     continue;

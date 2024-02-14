@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value);
+                    source = UserArtifactSource.DeserializeUserArtifactSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("manageActions"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value);
+                    manageActions = UserArtifactManagement.DeserializeUserArtifactManagement(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value);
+                    settings = UserArtifactSettings.DeserializeUserArtifactSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("advancedSettings"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryApplicationCustomAction> array = new List<GalleryApplicationCustomAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item));
+                        array.Add(GalleryApplicationCustomAction.DeserializeGalleryApplicationCustomAction(item, options));
                     }
                     customActions = array;
                     continue;
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<TargetRegion> array = new List<TargetRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRegion.DeserializeTargetRegion(item));
+                        array.Add(TargetRegion.DeserializeTargetRegion(item, options));
                     }
                     targetRegions = array;
                     continue;
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryTargetExtendedLocation> array = new List<GalleryTargetExtendedLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item));
+                        array.Add(GalleryTargetExtendedLocation.DeserializeGalleryTargetExtendedLocation(item, options));
                     }
                     targetExtendedLocations = array;
                     continue;

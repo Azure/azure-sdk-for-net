@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value);
+                    transferFilterDetails = TransferConfigurationTransferFilterDetails.DeserializeTransferConfigurationTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("transferAllDetails"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value);
+                    transferAllDetails = TransferConfigurationTransferAllDetails.DeserializeTransferConfigurationTransferAllDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

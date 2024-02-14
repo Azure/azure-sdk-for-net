@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Compute
                             List<ComputePrivateEndpointConnectionData> array = new List<ComputePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item));
+                                array.Add(ComputePrivateEndpointConnectionData.DeserializeComputePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

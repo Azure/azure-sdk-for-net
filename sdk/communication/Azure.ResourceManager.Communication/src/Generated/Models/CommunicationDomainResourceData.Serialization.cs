@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value);
+                            verificationStates = DomainPropertiesVerificationStates.DeserializeDomainPropertiesVerificationStates(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("verificationRecords"u8))
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Communication
                             {
                                 continue;
                             }
-                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value);
+                            verificationRecords = DomainPropertiesVerificationRecords.DeserializeDomainPropertiesVerificationRecords(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userEngagementTracking"u8))

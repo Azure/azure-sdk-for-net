@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value);
+                    source = GalleryArtifactVersionFullSource.DeserializeGalleryArtifactVersionFullSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osDiskImage"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dataDiskImages"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<GalleryDataDiskImage> array = new List<GalleryDataDiskImage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item));
+                        array.Add(GalleryDataDiskImage.DeserializeGalleryDataDiskImage(item, options));
                     }
                     dataDiskImages = array;
                     continue;

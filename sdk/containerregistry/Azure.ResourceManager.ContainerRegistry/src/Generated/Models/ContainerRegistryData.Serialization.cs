@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 if (property.NameEquals("sku"u8))
                 {
-                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value);
+                    sku = ContainerRegistrySku.DeserializeContainerRegistrySku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value);
+                            status = ContainerRegistryResourceStatus.DeserializeContainerRegistryResourceStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adminUserEnabled"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value);
+                            networkRuleSet = ContainerRegistryNetworkRuleSet.DeserializeContainerRegistryNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("policies"u8))
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value);
+                            policies = ContainerRegistryPolicies.DeserializeContainerRegistryPolicies(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value);
+                            encryption = ContainerRegistryEncryption.DeserializeContainerRegistryEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dataEndpointEnabled"u8))
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             List<ContainerRegistryPrivateEndpointConnectionData> array = new List<ContainerRegistryPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(item));
+                                array.Add(ContainerRegistryPrivateEndpointConnectionData.DeserializeContainerRegistryPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

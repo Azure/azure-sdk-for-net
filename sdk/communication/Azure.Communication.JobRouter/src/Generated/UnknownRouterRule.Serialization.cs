@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRouterRule(document.RootElement, options);
+            return DeserializeRouterRule(document.RootElement, options);
         }
 
         internal static UnknownRouterRule DeserializeUnknownRouterRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRouterRule(document.RootElement, options);
+                        return DeserializeRouterRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RouterRule)} does not support '{options.Format}' format.");

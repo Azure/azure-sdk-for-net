@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    rollbackError = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
