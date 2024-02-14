@@ -76,7 +76,7 @@ namespace Azure.Core
         // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, out bool isError)
         {
-            HttpMessage httpMessage = AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
 
             isError = IsErrorResponse(httpMessage);
 
@@ -96,24 +96,13 @@ namespace Azure.Core
         // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
         {
-            HttpMessage httpMessage = AssertHttpMessage(message);
+            HttpMessage httpMessage = HttpMessage.AssertHttpMessage(message);
 
             isRetriable = exception is null ?
                 IsRetriableResponse(httpMessage) :
                 IsRetriable(httpMessage, exception);
 
             return true;
-        }
-
-        // TODO: remove duplication with this and other instances
-        private static HttpMessage AssertHttpMessage(PipelineMessage message)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'.");
-            }
-
-            return httpMessage;
         }
     }
 }

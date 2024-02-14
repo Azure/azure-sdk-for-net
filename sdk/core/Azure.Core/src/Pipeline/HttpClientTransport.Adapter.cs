@@ -9,6 +9,14 @@ namespace Azure.Core.Pipeline
 {
     public partial class HttpClientTransport
     {
+        /// <summary>
+        /// Adds Azure.Core features to the System.ClientModel HttpClient-based transport.
+        ///
+        /// This type inherits from System.ClientModel's <see cref="HttpClientPipelineTransport"/>
+        /// and overrides the extensibility points for <see cref="OnSendingRequest(PipelineMessage, HttpRequestMessage)"/>
+        /// and <see cref="OnReceivedResponse(PipelineMessage, HttpResponseMessage)"/> to add
+        /// features specific to Azure, such as <see cref="Request.ClientRequestId"/>.
+        /// </summary>
         private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
         {
             public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)

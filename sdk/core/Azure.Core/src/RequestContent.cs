@@ -92,7 +92,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IPersistableModel{T}"/>.</returns>
         public static new RequestContent Create<T>(T model, ModelReaderWriterOptions? options = default) where T : IPersistableModel<T>
-            => new AzureInputContent(BinaryContent.Create(model, options ?? ModelWriteWireOptions));
+            => new AzureBinaryContent(BinaryContent.Create(model, options ?? ModelWriteWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -152,11 +152,11 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
-        private sealed class AzureInputContent : RequestContent
+        private sealed class AzureBinaryContent : RequestContent
         {
             private readonly BinaryContent _content;
 
-            public AzureInputContent(BinaryContent content)
+            public AzureBinaryContent(BinaryContent content)
             {
                 _content = content;
             }

@@ -42,10 +42,7 @@ namespace Azure
         /// <exception cref="NotImplementedException"></exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected override PipelineResponseHeaders GetHeadersCore()
-        {
-            // TODO: we'll need to add an adapter in case someone were to override this.
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException("Subtypes must implement this method.");
 
         /// <summary>
         /// Gets the contents of HTTP response, if it is available.

@@ -40,7 +40,6 @@ internal class GlobalTimeoutRetryPolicy : RetryPolicy
     {
         return ShouldRetryInternalAsync(message, exception, false).EnsureCompleted();
     }
-
     protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
     {
         return ShouldRetryInternalAsync(message, exception, true);

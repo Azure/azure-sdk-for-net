@@ -103,11 +103,7 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-        {
-            Request request = CreateRequest();
-            HttpMessage message = new(request, ResponseClassifier);
-            return message;
-        }
+            => new HttpMessage(CreateRequest(), ResponseClassifier);
 
         /// <summary>
         /// </summary>

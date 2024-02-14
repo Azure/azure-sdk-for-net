@@ -21,7 +21,6 @@ namespace Azure.Core.Samples
         {
             return ShouldRetryInternalAsync(message, exception, false).EnsureCompleted();
         }
-
         protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
         {
             return ShouldRetryInternalAsync(message, exception, true);

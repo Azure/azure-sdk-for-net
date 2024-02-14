@@ -28,8 +28,6 @@ namespace Azure.Core.Pipeline
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
-
-            // TODO: I think we can remove the call to below?
             message.Response.SetIsError(message.ResponseClassifier.IsErrorResponse(message));
         }
 
