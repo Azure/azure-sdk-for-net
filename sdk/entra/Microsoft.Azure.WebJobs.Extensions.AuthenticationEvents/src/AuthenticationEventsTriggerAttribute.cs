@@ -33,12 +33,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public string OidcMetadataUrl { get; set; }
 
         /// <summary>
-        /// Token Issuer for all versions of tokens.
+        /// Token Issuer for v1 versions of tokens.
         /// </summary>
         public string TokenIssuerV1 { get; set; }
 
         /// <summary>
-        /// Token Issuer for all versions of tokens.
+        /// Token Issuer for v2 versions of tokens.
         /// </summary>
         public string TokenIssuerV2 { get; set; }
 

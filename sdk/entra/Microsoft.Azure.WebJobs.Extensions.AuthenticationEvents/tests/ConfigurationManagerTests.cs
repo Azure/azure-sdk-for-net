@@ -81,7 +81,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         [Test]
-        public void Test_When_Attributes_OpenIdConnectionHost_Is_Null()
+        public void Test_When_Attributes_TokenIssuerV1_and_TokenIssuerV2_Is_Null()
+        {
+            var attribute = new AuthenticationEventsTriggerAttribute
+            {
+                TenantId = tenantId,
+                AudienceAppId = audienceAppId,
+                TokenIssuerV1 = null,
+                TokenIssuerV2 = null,
+                OidcMetadataUrl = oidcHost
+            };
+            ConfigurationManager configurationManager = null;
+            Assert.DoesNotThrow(() => configurationManager = new ConfigurationManager(attribute), "Test when attribute's TokenIssuerV1 and TokenIssuerV2 is null");
+            Assert.IsNotNull(configurationManager, "Test when attribute's TokenIssuerV1 and TokenIssuerV2 is null");
+            Assert.IsTrue(configurationManager.ConfiguredService.IsDefault, "When full configuration not provided, default service should be set");
+        }
+
+        [Test]
+        public void Test_When_Attributes_OidcMetadataUrl_Is_Null()
         {
             var attribute = new AuthenticationEventsTriggerAttribute
             {

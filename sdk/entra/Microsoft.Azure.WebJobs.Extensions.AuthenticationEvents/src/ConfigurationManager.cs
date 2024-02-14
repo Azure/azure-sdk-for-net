@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             // if any of the values are missing, use the default AAD service info.
             // Don't need to check tenant id or application id
             // because they are required and will throw an exception if missing.
-            if (string.IsNullOrEmpty(OpenIdConnectionHost)
+            if (string.IsNullOrEmpty(OpenIdMetadataUrl)
                 || string.IsNullOrEmpty(TokenIssuerV1)
                 || string.IsNullOrEmpty(TokenIssuerV2))
             {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 {
                     TenantId = TenantId,
                     ApplicationId = AudienceAppId,
-                    OidcMetadataUrl = OpenIdConnectionHost,
+                    OidcMetadataUrl = OpenIdMetadataUrl,
                     TokenIssuerV1 = TokenIssuerV1,
                     TokenIssuerV2 = TokenIssuerV2,
                     IsDefault = false
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// Get the OpenId connection host from the environment variable or use the default value.
         /// </summary>
-        internal string OpenIdConnectionHost => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute?.OidcMetadataUrl);
+        internal string OpenIdMetadataUrl => GetConfigValue(OIDC_METADATA_KEY, triggerAttribute?.OidcMetadataUrl);
 
         /// <summary>
         /// Get the version 1 of the token issuer from the environment variable or use the default value.
