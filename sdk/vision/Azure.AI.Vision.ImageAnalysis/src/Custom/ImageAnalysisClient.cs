@@ -22,7 +22,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageData"/> is null. </exception>
         [ForwardsClientCalls]
@@ -32,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageData"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageData"/> is null. </exception>
         [ForwardsClientCalls]
@@ -42,7 +42,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageUri"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageUri"/> is null. </exception>
         [ForwardsClientCalls]
@@ -52,7 +52,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Performs a single Image Analysis operation. </summary>
         /// <param name="imageUri"> The image to be analyzed. </param>
         /// <param name="visualFeatures"> A flags enumeration indicating what visual feature types to return. Valid visual feature types include: Tags, Caption, DenseCaptions, Objects, Read, SmartCrops, People. At least one visual feature must be specified for Image Analysis. </param>
-        /// <param name="options">A structure containg the per call analysis options.</param>
+        /// <param name="options">A structure containing the per call analysis options.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageUri"/> is null. </exception>
         [ForwardsClientCalls]
