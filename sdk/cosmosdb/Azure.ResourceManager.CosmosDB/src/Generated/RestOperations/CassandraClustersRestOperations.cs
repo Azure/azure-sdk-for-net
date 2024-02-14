@@ -967,7 +967,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        internal HttpMessage CreateDeallocateRequest(string subscriptionId, string resourceGroupName, string clusterName, bool? xMsForceDeallocate)
+        internal HttpMessage CreateDeallocateRequest(string subscriptionId, string resourceGroupName, string clusterName, string xMsForceDeallocate)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.CosmosDB
             request.Uri = uri;
             if (xMsForceDeallocate != null)
             {
-                request.Headers.Add("x-ms-force-deallocate", xMsForceDeallocate.Value);
+                request.Headers.Add("x-ms-force-deallocate", xMsForceDeallocate);
             }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeallocateAsync(string subscriptionId, string resourceGroupName, string clusterName, bool? xMsForceDeallocate = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeallocateAsync(string subscriptionId, string resourceGroupName, string clusterName, string xMsForceDeallocate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Deallocate(string subscriptionId, string resourceGroupName, string clusterName, bool? xMsForceDeallocate = null, CancellationToken cancellationToken = default)
+        public Response Deallocate(string subscriptionId, string resourceGroupName, string clusterName, string xMsForceDeallocate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
