@@ -68,6 +68,9 @@ acronym-mapping:
   GenerateCryptoKeySummary: GetCryptoKeySummary
   GenerateSummary: GetFirmwareSummary
 
+override-operation-name:
+  BinaryHardening_ListByFirmware: GetBinaryHardeningResults
+
 rename-mapping:
   GenerateUploadUrlRequest: UploadUrlRequest
   Models.Status: AnalysisStatus

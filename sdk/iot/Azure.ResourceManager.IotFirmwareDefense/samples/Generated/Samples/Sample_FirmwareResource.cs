@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         // BinaryHardening_ListByFirmware_MaximumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBinaryHardenings_BinaryHardeningListByFirmwareMaximumSetGen()
+        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMaximumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MaximumSet_Gen.json
             // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResult item in firmware.GetBinaryHardeningsAsync())
+            await foreach (BinaryHardeningResult item in firmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
         // BinaryHardening_ListByFirmware_MinimumSet_Gen
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetBinaryHardenings_BinaryHardeningListByFirmwareMinimumSetGen()
+        public async Task GetBinaryHardeningResults_BinaryHardeningListByFirmwareMinimumSetGen()
         {
             // Generated from example definition: specification/fist/resource-manager/Microsoft.IoTFirmwareDefense/stable/2024-01-10/examples/BinaryHardening_ListByFirmware_MinimumSet_Gen.json
             // this example is just showing the usage of "BinaryHardening_ListByFirmware" operation, for the dependent resources, they will have to be created separately.
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Samples
             FirmwareResource firmware = client.GetFirmwareResource(firmwareResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (BinaryHardeningResult item in firmware.GetBinaryHardeningsAsync())
+            await foreach (BinaryHardeningResult item in firmware.GetBinaryHardeningResultsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

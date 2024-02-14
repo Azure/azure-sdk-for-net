@@ -448,11 +448,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BinaryHardeningResult> GetBinaryHardeningsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BinaryHardeningResult> GetBinaryHardeningResultsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -474,11 +474,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="BinaryHardeningResult"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BinaryHardeningResult> GetBinaryHardenings(CancellationToken cancellationToken = default)
+        public virtual Pageable<BinaryHardeningResult> GetBinaryHardeningResults(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _binaryHardeningRestClient.CreateListByFirmwareRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _binaryHardeningRestClient.CreateListByFirmwareNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardenings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryHardeningResult.DeserializeBinaryHardeningResult(e), _binaryHardeningClientDiagnostics, Pipeline, "FirmwareResource.GetBinaryHardeningResults", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
