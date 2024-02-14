@@ -83,7 +83,7 @@ resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPoli
     accessPolicies: [
       {
         tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: 'SERVICE_API_IDENTITY_PRINCIPAL_ID'
+        objectId: webSite_W5EweSXEq.identity.principalId
         permissions: {
           secrets: [
             'get'
@@ -99,7 +99,7 @@ resource keyVaultSecret_nMDmVNMVq 'Microsoft.KeyVault/vaults/secrets@2023-02-01'
   parent: keyVault_CRoMbemLF
   name: 'sqlAdminPassword'
   properties: {
-    value: '00000000-0000-0000-0000-000000000000'
+    value: sqlAdminPassword
   }
 }
 

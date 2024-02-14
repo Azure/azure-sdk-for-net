@@ -20,7 +20,8 @@ namespace Azure.Provisioning.KeyVaults
                 {
                     new KeyVaultAccessPolicy(
                         scope.Root.Properties.TenantId!.Value,
-                        GetParamValue(principalIdParameter, scope),
+                        // this value will be replaced by the parameter reference
+                        "dummy",
                         new IdentityAccessPermissions()
                         {
                             Secrets =
@@ -31,14 +32,14 @@ namespace Azure.Provisioning.KeyVaults
                         })
                 }))
         {
-            ParameterOverrides.Add(Properties, new Dictionary<string, string> { { "objectId", GetParamValue(principalIdParameter, scope) } });
+            ParameterOverrides.Add(Properties.AccessPolicies[0], new Dictionary<string, string> { { nameof(KeyVaultAccessPolicy.ObjectId), GetParamValue(principalIdParameter, scope) } });
         }
 
         private static string GetParamValue(Parameter principalIdParameter, IConstruct scope)
         {
             if (principalIdParameter.Source is null || ReferenceEquals(principalIdParameter.Source, scope))
             {
-                return principalIdParameter.Name;
+                return principalIdParameter.Value!;
             }
             else
             {
