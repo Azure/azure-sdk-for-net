@@ -8,13 +8,13 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// The Call Recording state changed event
+    /// The Teams Recording state changed event
     /// </summary>
     [CodeGenModel("TeamsComplianceRecordingStateChanged", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class TeamsComplianceRecordingStateChanged : CallAutomationEventBase
     {
         /// <summary>
-        /// THe recording state
+        /// The recording state
         /// </summary>
         [JsonConverter(typeof(EquatableEnumJsonConverter<RecordingState>))]
         public RecordingState State { get; set; }

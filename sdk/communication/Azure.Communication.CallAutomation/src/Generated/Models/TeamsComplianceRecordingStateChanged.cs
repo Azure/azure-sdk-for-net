@@ -10,23 +10,31 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TeamsComplianceRecordingStateChanged. </summary>
-    internal partial class TeamsComplianceRecordingStateChanged
+    public partial class TeamsComplianceRecordingStateChanged
     {
         /// <summary> Initializes a new instance of TeamsComplianceRecordingStateChanged. </summary>
         internal TeamsComplianceRecordingStateChanged()
         {
         }
 
-        /// <summary> Call connection ID. </summary>
-        public string CallConnectionId { get; }
-        /// <summary> Server call ID. </summary>
-        public string ServerCallId { get; }
-        /// <summary> Correlation ID for event to call correlation. </summary>
-        public string CorrelationId { get; }
+        /// <summary> Initializes a new instance of TeamsComplianceRecordingStateChanged. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        internal TeamsComplianceRecordingStateChanged(string callConnectionId, string serverCallId, string correlationId, string recordingId, RecordingState state, DateTimeOffset? startDateTime)
+        {
+            CallConnectionId = callConnectionId;
+            ServerCallId = serverCallId;
+            CorrelationId = correlationId;
+            RecordingId = recordingId;
+            State = state;
+            StartDateTime = startDateTime;
+        }
         /// <summary> The call recording id. </summary>
         public string RecordingId { get; }
-        /// <summary> Gets the state. </summary>
-        public RecordingState? State { get; }
         /// <summary> The time of the recording started. </summary>
         public DateTimeOffset? StartDateTime { get; }
     }
