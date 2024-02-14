@@ -596,16 +596,16 @@
 #/<NotInRepo>/                                                     @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
 # PRLabel: %Monitor
-/sdk/monitor
-
 /sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # AzureSDKOwners: @nisha-bhatia
 # ServiceLabel: %Monitor
+# PRLabel: %Monitor
 /sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # AzureSDKOwners: @nisha-bhatia
 # ServiceLabel: %Monitor - Query
+# PRLabel: %Monitor - Query
 /sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
@@ -633,7 +633,7 @@
 /sdk/mixedreality/                                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Network %Service Attention
-/sdk/network*/                                                      @aznetsuppgithub
+/sdk/network*/                                                     @aznetsuppgithub
 
 # ServiceLabel: %Network - Application Gateway %Service Attention
 #/<NotInRepo>/                                                     @appgwsuppgithub
