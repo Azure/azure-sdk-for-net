@@ -34,11 +34,11 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        public static implicit operator BinaryContent(ModelX modelX)
+        public static implicit operator BinaryContent?(ModelX? modelX)
         {
             if (modelX == null)
             {
-                throw new ArgumentNullException(nameof(modelX));
+                return null;
             }
 
             return BinaryContent.Create(modelX, ModelReaderWriterHelper.WireOptions);

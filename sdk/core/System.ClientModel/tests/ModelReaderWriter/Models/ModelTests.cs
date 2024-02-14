@@ -58,6 +58,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             string serviceResponse = format == "J" ? JsonPayload : WirePayload;
 
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            //options.ObjectSerializerResolver = GetObjectSerializerFactory(format);
 
             var expectedSerializedString = GetExpectedResult(format);
 
@@ -85,7 +86,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 {
                     if (strategy.GetType().Name.StartsWith("ModelJsonConverterStrategy"))
                     {
-                        // we never get to the interface implementation because JsonSerializer errors before that
+                        //we never get to the interface implementation because JsonSerializer errors before that
                         Assert.Throws<JsonException>(() => { T model = (T)strategy.Read(serviceResponse, ModelInstance, options); });
                         result = true;
                     }

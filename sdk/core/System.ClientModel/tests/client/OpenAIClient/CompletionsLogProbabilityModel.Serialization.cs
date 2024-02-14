@@ -13,7 +13,7 @@ public partial class CompletionsLogProbabilityModel
     {
         if (element.ValueKind == JsonValueKind.Null)
         {
-            throw new JsonException($"Nested models be set to null by parent model.");
+            throw new JsonException($"Nested models should be set to null by parent model.");
         }
 
         IReadOnlyList<string>? tokens = default;
