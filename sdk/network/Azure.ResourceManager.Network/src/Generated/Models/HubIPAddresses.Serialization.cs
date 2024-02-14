@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value);
+                    publicIPs = HubPublicIPAddresses.DeserializeHubPublicIPAddresses(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateIPAddress"u8))

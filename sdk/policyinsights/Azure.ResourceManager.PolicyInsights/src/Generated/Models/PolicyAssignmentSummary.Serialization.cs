@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value);
+                    results = PolicySummaryResults.DeserializePolicySummaryResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("policyDefinitions"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyDefinitionSummary> array = new List<PolicyDefinitionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item));
+                        array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item, options));
                     }
                     policyDefinitions = array;
                     continue;
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyGroupSummary> array = new List<PolicyGroupSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item));
+                        array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item, options));
                     }
                     policyGroups = array;
                     continue;

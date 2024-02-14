@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<NameDescriptionObject> array = new List<NameDescriptionObject>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item));
+                        array.Add(NameDescriptionObject.DeserializeNameDescriptionObject(item, options));
                     }
                     entry = array;
                     continue;

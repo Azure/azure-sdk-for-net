@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateDnsZoneConfig> array = new List<PrivateDnsZoneConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateDnsZoneConfig.DeserializePrivateDnsZoneConfig(item));
+                                array.Add(PrivateDnsZoneConfig.DeserializePrivateDnsZoneConfig(item, options));
                             }
                             privateDnsZoneConfigs = array;
                             continue;

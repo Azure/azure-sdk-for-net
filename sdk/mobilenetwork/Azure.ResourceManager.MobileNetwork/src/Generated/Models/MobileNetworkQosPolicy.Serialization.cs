@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 if (property.NameEquals("maximumBitRate"u8))
                 {
-                    maximumBitRate = Ambr.DeserializeAmbr(property.Value);
+                    maximumBitRate = Ambr.DeserializeAmbr(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

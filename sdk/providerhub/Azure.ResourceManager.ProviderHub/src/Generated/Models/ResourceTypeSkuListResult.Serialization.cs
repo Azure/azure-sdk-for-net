@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuData> array = new List<ResourceTypeSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuData.DeserializeResourceTypeSkuData(item));
+                        array.Add(ResourceTypeSkuData.DeserializeResourceTypeSkuData(item, options));
                     }
                     value = array;
                     continue;

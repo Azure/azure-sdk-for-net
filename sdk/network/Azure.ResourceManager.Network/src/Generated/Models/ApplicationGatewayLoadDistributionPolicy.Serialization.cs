@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayLoadDistributionTarget> array = new List<ApplicationGatewayLoadDistributionTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayLoadDistributionTarget.DeserializeApplicationGatewayLoadDistributionTarget(item));
+                                array.Add(ApplicationGatewayLoadDistributionTarget.DeserializeApplicationGatewayLoadDistributionTarget(item, options));
                             }
                             loadDistributionTargets = array;
                             continue;

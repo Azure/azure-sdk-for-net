@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkPrivateEndpointConnectionData> array = new List<NetworkPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
+                        array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;

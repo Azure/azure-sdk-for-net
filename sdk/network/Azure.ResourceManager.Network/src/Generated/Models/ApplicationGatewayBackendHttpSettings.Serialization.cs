@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value);
+                            connectionDraining = ApplicationGatewayConnectionDraining.DeserializeApplicationGatewayConnectionDraining(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))

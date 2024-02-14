@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value);
+                    backendHttpSettings = ApplicationGatewayBackendHttpSettings.DeserializeApplicationGatewayBackendHttpSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("servers"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayBackendHealthServer> array = new List<ApplicationGatewayBackendHealthServer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item));
+                        array.Add(ApplicationGatewayBackendHealthServer.DeserializeApplicationGatewayBackendHealthServer(item, options));
                     }
                     servers = array;
                     continue;

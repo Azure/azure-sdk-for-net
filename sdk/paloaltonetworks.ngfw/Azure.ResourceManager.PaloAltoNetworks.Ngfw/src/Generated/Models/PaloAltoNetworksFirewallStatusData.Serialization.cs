@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             {
                                 continue;
                             }
-                            panoramaStatus = FirewallPanoramaStatus.DeserializeFirewallPanoramaStatus(property0.Value);
+                            panoramaStatus = FirewallPanoramaStatus.DeserializeFirewallPanoramaStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

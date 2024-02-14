@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    context = NotificationContext.DeserializeNotificationContext(property.Value);
+                    context = NotificationContext.DeserializeNotificationContext(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<NotificationActionDetail> array = new List<NotificationActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item));
+                        array.Add(NotificationActionDetail.DeserializeNotificationActionDetail(item, options));
                     }
                     actionDetails = array;
                     continue;

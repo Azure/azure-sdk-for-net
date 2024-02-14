@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value);
+                    httpConfiguration = ConnectionMonitorHttpConfiguration.DeserializeConnectionMonitorHttpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tcpConfiguration"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value);
+                    tcpConfiguration = ConnectionMonitorTcpConfiguration.DeserializeConnectionMonitorTcpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("icmpConfiguration"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value);
+                    icmpConfiguration = ConnectionMonitorIcmpConfiguration.DeserializeConnectionMonitorIcmpConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("successThreshold"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value);
+                    successThreshold = ConnectionMonitorSuccessThreshold.DeserializeConnectionMonitorSuccessThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

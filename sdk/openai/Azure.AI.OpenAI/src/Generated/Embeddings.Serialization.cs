@@ -85,14 +85,14 @@ namespace Azure.AI.OpenAI
                     List<EmbeddingItem> array = new List<EmbeddingItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmbeddingItem.DeserializeEmbeddingItem(item));
+                        array.Add(EmbeddingItem.DeserializeEmbeddingItem(item, options));
                     }
                     data = array;
                     continue;
                 }
                 if (property.NameEquals("usage"u8))
                 {
-                    usage = EmbeddingsUsage.DeserializeEmbeddingsUsage(property.Value);
+                    usage = EmbeddingsUsage.DeserializeEmbeddingsUsage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

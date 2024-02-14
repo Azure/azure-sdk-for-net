@@ -95,11 +95,11 @@ namespace Azure.ResourceManager.Network
             {
                 switch (discriminator.GetString())
                 {
-                    case "Custom": return NetworkAdminRule.DeserializeNetworkAdminRule(element);
-                    case "Default": return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element);
+                    case "Custom": return NetworkAdminRule.DeserializeNetworkAdminRule(element, options);
+                    case "Default": return NetworkDefaultAdminRule.DeserializeNetworkDefaultAdminRule(element, options);
                 }
             }
-            return UnknownBaseAdminRule.DeserializeUnknownBaseAdminRule(element);
+            return UnknownBaseAdminRule.DeserializeUnknownBaseAdminRule(element, options);
         }
 
         BinaryData IPersistableModel<BaseAdminRuleData>.Write(ModelReaderWriterOptions options)

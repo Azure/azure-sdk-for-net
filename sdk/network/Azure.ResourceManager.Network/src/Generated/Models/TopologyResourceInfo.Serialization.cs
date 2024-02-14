@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<TopologyAssociation> array = new List<TopologyAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item));
+                        array.Add(TopologyAssociation.DeserializeTopologyAssociation(item, options));
                     }
                     associations = array;
                     continue;

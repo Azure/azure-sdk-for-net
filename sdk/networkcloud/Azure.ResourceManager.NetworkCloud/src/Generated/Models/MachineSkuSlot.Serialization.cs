@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<MachineDisk> array = new List<MachineDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineDisk.DeserializeMachineDisk(item));
+                                array.Add(MachineDisk.DeserializeMachineDisk(item, options));
                             }
                             disks = array;
                             continue;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudNetworkInterface> array = new List<NetworkCloudNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item));
+                                array.Add(NetworkCloudNetworkInterface.DeserializeNetworkCloudNetworkInterface(item, options));
                             }
                             networkInterfaces = array;
                             continue;

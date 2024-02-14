@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkPlatform> array = new List<MobileNetworkPlatform>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkPlatform.DeserializeMobileNetworkPlatform(item));
+                                array.Add(MobileNetworkPlatform.DeserializeMobileNetworkPlatform(item, options));
                             }
                             platforms = array;
                             continue;

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleRuleMetricDimension> array = new List<AutoscaleRuleMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item));
+                        array.Add(AutoscaleRuleMetricDimension.DeserializeAutoscaleRuleMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;

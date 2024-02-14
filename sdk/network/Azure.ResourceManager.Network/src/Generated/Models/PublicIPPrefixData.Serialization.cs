@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    sku = PublicIPPrefixSku.DeserializePublicIPPrefixSku(property.Value);
+                    sku = PublicIPPrefixSku.DeserializePublicIPPrefixSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Network
                             List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPTag.DeserializeIPTag(item));
+                                array.Add(IPTag.DeserializeIPTag(item, options));
                             }
                             ipTags = array;
                             continue;
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value);
+                            natGateway = NatGatewayData.DeserializeNatGatewayData(property0.Value, options);
                             continue;
                         }
                     }

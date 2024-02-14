@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HubIPConfigurationData> array = new List<HubIPConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HubIPConfigurationData.DeserializeHubIPConfigurationData(item));
+                        array.Add(HubIPConfigurationData.DeserializeHubIPConfigurationData(item, options));
                     }
                     value = array;
                     continue;
