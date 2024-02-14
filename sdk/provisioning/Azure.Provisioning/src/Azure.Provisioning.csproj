@@ -14,6 +14,7 @@
     <PackageReference Include="Azure.ResourceManager.KeyVault" />
     <PackageReference Include="Azure.ResourceManager.Sql" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
+    <PackageReference Include="Azure.ResourceManager.Storage" />
     <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
