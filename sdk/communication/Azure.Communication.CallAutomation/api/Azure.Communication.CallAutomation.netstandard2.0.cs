@@ -165,6 +165,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.SpeechResult SpeechResult(string speech = null) { throw null; }
+        public static Azure.Communication.CallAutomation.TeamsComplianceRecordingStateChanged TeamsComplianceRecordingStateChanged(string callConnectionId = null, string serverCallId = null, string correlationId = null, string recordingId = null, Azure.Communication.CallAutomation.RecordingState state = default(Azure.Communication.CallAutomation.RecordingState), System.DateTimeOffset? startDateTime = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.Communication.CallAutomation.TransferCallToParticipantResult TransferCallToParticipantResult(string operationContext = null) { throw null; }
     }
     public partial class CallConnected : Azure.Communication.CallAutomation.CallAutomationEventBase
@@ -1000,6 +1001,14 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.RecordingContent RecordingContent { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.RecordingFormat RecordingFormat { get { throw null; } set { } }
         public System.Uri RecordingStateCallbackUri { get { throw null; } set { } }
+    }
+    public partial class TeamsComplianceRecordingStateChanged : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal TeamsComplianceRecordingStateChanged() { }
+        public string RecordingId { get { throw null; } }
+        public System.DateTimeOffset? StartDateTime { get { throw null; } }
+        public Azure.Communication.CallAutomation.RecordingState State { get { throw null; } set { } }
+        public static Azure.Communication.CallAutomation.TeamsComplianceRecordingStateChanged Deserialize(string content) { throw null; }
     }
     public partial class TextSource : Azure.Communication.CallAutomation.PlaySource
     {
