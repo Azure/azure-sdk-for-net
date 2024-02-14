@@ -23,10 +23,12 @@ public class AudioSpeechTests : OpenAITestBase
         OpenAIClient client = GetTestClient(serviceTarget);
         string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
 
-        AudioSpeechOptions requestOptions = new(deploymentOrModelName, "Hello World", AudioSpeechVoice.Alloy)
+        AudioSpeechOptions requestOptions = new()
         {
+            DeploymentName = deploymentOrModelName,
+            Input = "Hello World",
+            Voice = AudioSpeechVoice.Alloy,
             ResponseFormat = AudioSpeechOutputFormat.Mp3,
-            Speed = 0.8f
         };
 
         Response<BinaryData> response = await client.GetAudioSpeechAsync(requestOptions);
