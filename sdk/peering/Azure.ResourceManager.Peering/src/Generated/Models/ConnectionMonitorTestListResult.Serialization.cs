@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<ConnectionMonitorTestData> array = new List<ConnectionMonitorTestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(item));
+                        array.Add(ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(item, options));
                     }
                     value = array;
                     continue;

@@ -62,7 +62,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMessageTextAnnotation(document.RootElement, options);
+            return DeserializeMessageTextAnnotation(document.RootElement, options);
         }
 
         internal static UnknownMessageTextAnnotation DeserializeUnknownMessageTextAnnotation(JsonElement element, ModelReaderWriterOptions options = null)

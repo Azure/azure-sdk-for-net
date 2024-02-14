@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             computeMachines = array;
                             continue;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item, options));
                             }
                             controllerMachines = array;
                             continue;
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<StorageApplianceSkuSlot> array = new List<StorageApplianceSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item));
+                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item, options));
                             }
                             storageAppliances = array;
                             continue;

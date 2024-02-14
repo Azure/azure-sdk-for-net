@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Network
                             List<IPsecPolicy> array = new List<IPsecPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item));
+                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
                             }
                             ipsecPolicies = array;
                             continue;
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Network
                             List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item));
+                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
                             }
                             trafficSelectorPolicies = array;
                             continue;
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item));
+                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item, options));
                             }
                             vpnLinkConnections = array;
                             continue;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value);
+                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
                             continue;
                         }
                     }

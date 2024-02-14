@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlAdvisorData> array = new List<MySqlAdvisorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlAdvisorData.DeserializeMySqlAdvisorData(item));
+                        array.Add(MySqlAdvisorData.DeserializeMySqlAdvisorData(item, options));
                     }
                     value = array;
                     continue;

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUser> array = new List<KeySetUser>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                array.Add(KeySetUser.DeserializeKeySetUser(item, options));
                             }
                             userList = array;
                             continue;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUserStatus> array = new List<KeySetUserStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item));
+                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item, options));
                             }
                             userListStatus = array;
                             continue;

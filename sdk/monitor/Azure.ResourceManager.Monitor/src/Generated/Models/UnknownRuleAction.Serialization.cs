@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleAction(document.RootElement, options);
+            return DeserializeAlertRuleAction(document.RootElement, options);
         }
 
         internal static UnknownRuleAction DeserializeUnknownRuleAction(JsonElement element, ModelReaderWriterOptions options = null)

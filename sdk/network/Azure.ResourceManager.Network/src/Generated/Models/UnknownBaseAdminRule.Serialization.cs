@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseAdminRule(document.RootElement, options);
+            return DeserializeBaseAdminRuleData(document.RootElement, options);
         }
 
         internal static UnknownBaseAdminRule DeserializeUnknownBaseAdminRule(JsonElement element, ModelReaderWriterOptions options = null)

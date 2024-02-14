@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnYourDataVectorizationSource(document.RootElement, options);
+            return DeserializeOnYourDataVectorizationSource(document.RootElement, options);
         }
 
         internal static UnknownOnYourDataVectorizationSource DeserializeUnknownOnYourDataVectorizationSource(JsonElement element, ModelReaderWriterOptions options = null)

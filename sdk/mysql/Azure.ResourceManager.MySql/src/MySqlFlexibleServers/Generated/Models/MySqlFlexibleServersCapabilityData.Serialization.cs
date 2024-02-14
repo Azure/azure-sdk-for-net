@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             List<ServerEditionCapabilityV2> array = new List<ServerEditionCapabilityV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerEditionCapabilityV2.DeserializeServerEditionCapabilityV2(item));
+                                array.Add(ServerEditionCapabilityV2.DeserializeServerEditionCapabilityV2(item, options));
                             }
                             supportedFlexibleServerEditions = array;
                             continue;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             List<ServerVersionCapabilityV2> array = new List<ServerVersionCapabilityV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerVersionCapabilityV2.DeserializeServerVersionCapabilityV2(item));
+                                array.Add(ServerVersionCapabilityV2.DeserializeServerVersionCapabilityV2(item, options));
                             }
                             supportedServerVersions = array;
                             continue;

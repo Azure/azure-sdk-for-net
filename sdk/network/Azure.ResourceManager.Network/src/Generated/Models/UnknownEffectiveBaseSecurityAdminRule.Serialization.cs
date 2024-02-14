@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEffectiveBaseSecurityAdminRule(document.RootElement, options);
+            return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
         }
 
         internal static UnknownEffectiveBaseSecurityAdminRule DeserializeUnknownEffectiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;

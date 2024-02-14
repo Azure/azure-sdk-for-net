@@ -58,7 +58,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRequiredToolCall(document.RootElement, options);
+            return DeserializeRequiredToolCall(document.RootElement, options);
         }
 
         internal static UnknownRequiredToolCall DeserializeUnknownRequiredToolCall(JsonElement element, ModelReaderWriterOptions options = null)

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMetricAlertCriteria(document.RootElement, options);
+            return DeserializeMetricAlertCriteria(document.RootElement, options);
         }
 
         internal static UnknownMetricAlertCriteria DeserializeUnknownMetricAlertCriteria(JsonElement element, ModelReaderWriterOptions options = null)

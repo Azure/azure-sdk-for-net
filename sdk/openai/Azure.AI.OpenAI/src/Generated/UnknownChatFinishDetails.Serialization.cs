@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChatFinishDetails(document.RootElement, options);
+            return DeserializeChatFinishDetails(document.RootElement, options);
         }
 
         internal static UnknownChatFinishDetails DeserializeUnknownChatFinishDetails(JsonElement element, ModelReaderWriterOptions options = null)

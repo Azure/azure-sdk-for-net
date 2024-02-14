@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleDataSource(document.RootElement, options);
+            return DeserializeRuleDataSource(document.RootElement, options);
         }
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element, ModelReaderWriterOptions options = null)

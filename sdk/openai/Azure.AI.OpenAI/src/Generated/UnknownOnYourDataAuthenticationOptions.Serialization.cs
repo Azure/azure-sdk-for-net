@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnYourDataAuthenticationOptions(document.RootElement, options);
+            return DeserializeOnYourDataAuthenticationOptions(document.RootElement, options);
         }
 
         internal static UnknownOnYourDataAuthenticationOptions DeserializeUnknownOnYourDataAuthenticationOptions(JsonElement element, ModelReaderWriterOptions options = null)

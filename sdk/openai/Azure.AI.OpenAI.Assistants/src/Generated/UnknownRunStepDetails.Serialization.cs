@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRunStepDetails(document.RootElement, options);
+            return DeserializeRunStepDetails(document.RootElement, options);
         }
 
         internal static UnknownRunStepDetails DeserializeUnknownRunStepDetails(JsonElement element, ModelReaderWriterOptions options = null)

@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("image_file"u8))
                 {
-                    imageFile = InternalMessageImageFileDetails.DeserializeInternalMessageImageFileDetails(property.Value);
+                    imageFile = InternalMessageImageFileDetails.DeserializeInternalMessageImageFileDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

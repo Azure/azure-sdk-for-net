@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringServiceCountry> array = new List<PeeringServiceCountry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringServiceCountry.DeserializePeeringServiceCountry(item));
+                        array.Add(PeeringServiceCountry.DeserializePeeringServiceCountry(item, options));
                     }
                     value = array;
                     continue;

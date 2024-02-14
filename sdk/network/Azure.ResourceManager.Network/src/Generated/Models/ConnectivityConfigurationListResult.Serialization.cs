@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityConfigurationData> array = new List<ConnectivityConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(item));
+                        array.Add(ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(item, options));
                     }
                     value = array;
                     continue;

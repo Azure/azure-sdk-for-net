@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<FirewallPolicyRuleCollectionGroupData> array = new List<FirewallPolicyRuleCollectionGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(item));
+                        array.Add(FirewallPolicyRuleCollectionGroupData.DeserializeFirewallPolicyRuleCollectionGroupData(item, options));
                     }
                     value = array;
                     continue;

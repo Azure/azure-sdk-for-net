@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsSignatureResult> array = new List<IdpsSignatureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item));
+                        array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item, options));
                     }
                     signatures = array;
                     continue;

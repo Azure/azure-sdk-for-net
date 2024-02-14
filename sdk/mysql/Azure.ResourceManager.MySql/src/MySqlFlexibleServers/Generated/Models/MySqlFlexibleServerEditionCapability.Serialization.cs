@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerStorageEditionCapability> array = new List<MySqlFlexibleServerStorageEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item));
+                        array.Add(MySqlFlexibleServerStorageEditionCapability.DeserializeMySqlFlexibleServerStorageEditionCapability(item, options));
                     }
                     supportedStorageEditions = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerServerVersionCapability> array = new List<MySqlFlexibleServerServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerServerVersionCapability.DeserializeMySqlFlexibleServerServerVersionCapability(item));
+                        array.Add(MySqlFlexibleServerServerVersionCapability.DeserializeMySqlFlexibleServerServerVersionCapability(item, options));
                     }
                     supportedServerVersions = array;
                     continue;

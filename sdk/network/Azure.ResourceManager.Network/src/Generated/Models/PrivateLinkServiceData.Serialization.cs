@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Network
                             List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item, options));
                             }
                             loadBalancerFrontendIPConfigurations = array;
                             continue;
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Network
                             List<PrivateLinkServiceIPConfiguration> array = new List<PrivateLinkServiceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceIPConfiguration.DeserializePrivateLinkServiceIPConfiguration(item));
+                                array.Add(PrivateLinkServiceIPConfiguration.DeserializePrivateLinkServiceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item, options));
                             }
                             networkInterfaces = array;
                             continue;
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateEndpointConnectionData> array = new List<NetworkPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
+                                array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            visibility = PrivateLinkServicePropertiesVisibility.DeserializePrivateLinkServicePropertiesVisibility(property0.Value);
+                            visibility = PrivateLinkServicePropertiesVisibility.DeserializePrivateLinkServicePropertiesVisibility(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoApproval"u8))
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            autoApproval = PrivateLinkServicePropertiesAutoApproval.DeserializePrivateLinkServicePropertiesAutoApproval(property0.Value);
+                            autoApproval = PrivateLinkServicePropertiesAutoApproval.DeserializePrivateLinkServicePropertiesAutoApproval(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("fqdns"u8))

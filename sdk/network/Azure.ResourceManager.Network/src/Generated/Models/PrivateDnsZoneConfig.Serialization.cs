@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<RecordSet> array = new List<RecordSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecordSet.DeserializeRecordSet(item));
+                                array.Add(RecordSet.DeserializeRecordSet(item, options));
                             }
                             recordSets = array;
                             continue;

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
+            return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
         }
 
         internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleCondition(document.RootElement, options);
+            return DeserializeAlertRuleCondition(document.RootElement, options);
         }
 
         internal static UnknownRuleCondition DeserializeUnknownRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value);
+                    dataSource = RuleDataSource.DeserializeRuleDataSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

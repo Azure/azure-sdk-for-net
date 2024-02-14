@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         }
                         if (property0.NameEquals("cloudServicesNetworkAttachment"u8))
                         {
-                            cloudServicesNetworkAttachment = NetworkAttachment.DeserializeNetworkAttachment(property0.Value);
+                            cloudServicesNetworkAttachment = NetworkAttachment.DeserializeNetworkAttachment(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("clusterId"u8))
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkAttachment> array = new List<NetworkAttachment>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkAttachment.DeserializeNetworkAttachment(item));
+                                array.Add(NetworkAttachment.DeserializeNetworkAttachment(item, options));
                             }
                             networkAttachments = array;
                             continue;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<VirtualMachinePlacementHint> array = new List<VirtualMachinePlacementHint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachinePlacementHint.DeserializeVirtualMachinePlacementHint(item));
+                                array.Add(VirtualMachinePlacementHint.DeserializeVirtualMachinePlacementHint(item, options));
                             }
                             placementHints = array;
                             continue;
@@ -458,14 +458,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                                array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item, options));
                             }
                             sshPublicKeys = array;
                             continue;
                         }
                         if (property0.NameEquals("storageProfile"u8))
                         {
-                            storageProfile = NetworkCloudStorageProfile.DeserializeNetworkCloudStorageProfile(property0.Value);
+                            storageProfile = NetworkCloudStorageProfile.DeserializeNetworkCloudStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("userData"u8))
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value);
+                            vmImageRepositoryCredentials = ImageRepositoryCredentials.DeserializeImageRepositoryCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumes"u8))

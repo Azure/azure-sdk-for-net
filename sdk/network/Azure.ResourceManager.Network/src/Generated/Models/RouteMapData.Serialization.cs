@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Network
                             List<RouteMapRule> array = new List<RouteMapRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteMapRule.DeserializeRouteMapRule(item));
+                                array.Add(RouteMapRule.DeserializeRouteMapRule(item, options));
                             }
                             rules = array;
                             continue;

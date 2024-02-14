@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFirewallPolicyRuleCollection(document.RootElement, options);
+            return DeserializeFirewallPolicyRuleCollectionInfo(document.RootElement, options);
         }
 
         internal static UnknownFirewallPolicyRuleCollection DeserializeUnknownFirewallPolicyRuleCollection(JsonElement element, ModelReaderWriterOptions options = null)

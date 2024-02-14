@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
+            return DeserializePostgreSqlServerPropertiesForCreate(document.RootElement, options);
         }
 
         internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     {
                         continue;
                     }
-                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value);
+                    storageProfile = PostgreSqlStorageProfile.DeserializePostgreSqlStorageProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("createMode"u8))

@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    related = LogAnalyticsQuerySearchRelatedMetadata.DeserializeLogAnalyticsQuerySearchRelatedMetadata(property.Value);
+                    related = LogAnalyticsQuerySearchRelatedMetadata.DeserializeLogAnalyticsQuerySearchRelatedMetadata(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlServerSecurityAlertPolicyData> array = new List<MySqlServerSecurityAlertPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(item));
+                        array.Add(MySqlServerSecurityAlertPolicyData.DeserializeMySqlServerSecurityAlertPolicyData(item, options));
                     }
                     value = array;
                     continue;

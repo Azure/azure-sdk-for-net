@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchVariable.DeserializeMatchVariable(item));
+                        array.Add(MatchVariable.DeserializeMatchVariable(item, options));
                     }
                     matchVariables = array;
                     continue;

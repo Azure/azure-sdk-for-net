@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value);
+                            storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("status"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value);
+                            status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value, options);
                             continue;
                         }
                     }

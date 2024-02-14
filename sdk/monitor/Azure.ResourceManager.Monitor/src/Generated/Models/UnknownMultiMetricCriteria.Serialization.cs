@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMultiMetricCriteria(document.RootElement, options);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
         }
 
         internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;

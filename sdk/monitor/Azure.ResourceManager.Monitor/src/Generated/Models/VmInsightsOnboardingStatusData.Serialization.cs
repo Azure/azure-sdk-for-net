@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor
                             List<DataContainer> array = new List<DataContainer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataContainer.DeserializeDataContainer(item));
+                                array.Add(DataContainer.DeserializeDataContainer(item, options));
                             }
                             data = array;
                             continue;

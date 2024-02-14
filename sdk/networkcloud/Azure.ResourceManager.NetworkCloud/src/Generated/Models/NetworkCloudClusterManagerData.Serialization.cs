@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableVersion> array = new List<ClusterAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item));
+                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item, options));
                             }
                             clusterVersions = array;
                             continue;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value);
+                            managedResourceGroupConfiguration = ManagedResourceGroupConfiguration.DeserializeManagedResourceGroupConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("managerExtendedLocation"u8))
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.NetworkCloud
                             {
                                 continue;
                             }
-                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value);
+                            managerExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

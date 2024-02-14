@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsQueryFilterItems> array = new List<IdpsQueryFilterItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item));
+                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item, options));
                     }
                     filters = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    orderBy = IdpsQueryOrderBy.DeserializeIdpsQueryOrderBy(property.Value);
+                    orderBy = IdpsQueryOrderBy.DeserializeIdpsQueryOrderBy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resultsPerPage"u8))

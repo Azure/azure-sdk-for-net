@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value);
+                    propagatedRouteTables = PropagatedRouteTable.DeserializePropagatedRouteTable(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vnetRoutes"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vnetRoutes = VnetRoute.DeserializeVnetRoute(property.Value);
+                    vnetRoutes = VnetRoute.DeserializeVnetRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("inboundRouteMap"u8))
