@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceGitReposValidationMessages> array = new List<AppPlatformConfigurationServiceGitReposValidationMessages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item));
+                        array.Add(AppPlatformConfigurationServiceGitReposValidationMessages.DeserializeAppPlatformConfigurationServiceGitReposValidationMessages(item, options));
                     }
                     gitReposValidationResult = array;
                     continue;

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         if (property0.NameEquals("configuration"u8))
                         {
-                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value);
+                            configuration = DscConfigurationAssociationProperty.DeserializeDscConfigurationAssociationProperty(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parameters"u8))

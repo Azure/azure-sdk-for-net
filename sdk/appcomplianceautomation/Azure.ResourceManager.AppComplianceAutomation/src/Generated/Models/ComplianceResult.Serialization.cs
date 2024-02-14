@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Category> array = new List<Category>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Category.DeserializeCategory(item));
+                        array.Add(Category.DeserializeCategory(item, options));
                     }
                     categories = array;
                     continue;

@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Automation
                             List<DscNodeExtensionHandlerAssociationProperty> array = new List<DscNodeExtensionHandlerAssociationProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item));
+                                array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item, options));
                             }
                             extensionHandler = array;
                             continue;

@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
+                            lastMonthCharges = BillingAmount.DeserializeBillingAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("monthToDateCharges"u8))
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value);
+                            monthToDateCharges = BillingAmount.DeserializeBillingAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("nextBillingCycleDetails"u8))
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            nextBillingCycleDetails = NextBillingCycleDetails.DeserializeNextBillingCycleDetails(property0.Value);
+                            nextBillingCycleDetails = NextBillingCycleDetails.DeserializeNextBillingCycleDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("offerId"u8))
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value);
+                            reseller = CreatedSubscriptionReseller.DeserializeCreatedSubscriptionReseller(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("renewalTermDetails"u8))
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.Billing
                             {
                                 continue;
                             }
-                            renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value);
+                            renewalTermDetails = SubscriptionRenewalTermDetails.DeserializeSubscriptionRenewalTermDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("skuDescription"u8))

@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Cdn
                                 sharedPrivateLinkResource = null;
                                 continue;
                             }
-                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value);
+                            sharedPrivateLinkResource = SharedPrivateLinkResourceProperties.DeserializeSharedPrivateLinkResourceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enabledState"u8))

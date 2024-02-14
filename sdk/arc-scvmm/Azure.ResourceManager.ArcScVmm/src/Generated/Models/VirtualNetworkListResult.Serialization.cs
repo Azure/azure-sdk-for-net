@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmVirtualNetworkData> array = new List<ScVmmVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(item));
+                        array.Add(ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(item, options));
                     }
                     value = array;
                     continue;

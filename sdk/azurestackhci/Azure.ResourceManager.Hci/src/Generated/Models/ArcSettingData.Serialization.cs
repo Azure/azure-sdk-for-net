@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci
                             List<PerNodeArcState> array = new List<PerNodeArcState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
+                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item, options));
                             }
                             perNodeDetails = array;
                             continue;

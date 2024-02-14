@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRegistryData> array = new List<AppPlatformServiceRegistryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(item));
+                        array.Add(AppPlatformServiceRegistryData.DeserializeAppPlatformServiceRegistryData(item, options));
                     }
                     value = array;
                     continue;

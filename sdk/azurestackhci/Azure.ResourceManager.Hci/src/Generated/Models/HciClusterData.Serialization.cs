@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value);
+                            softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("desiredProperties"u8))
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value);
+                            desiredProperties = HciClusterDesiredProperties.DeserializeHciClusterDesiredProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reportedProperties"u8))
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value);
+                            reportedProperties = HciClusterReportedProperties.DeserializeHciClusterReportedProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("trialDaysRemaining"u8))

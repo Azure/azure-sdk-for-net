@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = AutomationPrivateLinkServiceConnectionStateProperty.DeserializeAutomationPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = AutomationPrivateLinkServiceConnectionStateProperty.DeserializeAutomationPrivateLinkServiceConnectionStateProperty(property0.Value, options);
                             continue;
                         }
                     }

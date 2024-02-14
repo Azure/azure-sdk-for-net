@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Chaos
                             {
                                 continue;
                             }
-                            runtimeProperties = ChaosCapabilityTypeRuntimeProperties.DeserializeChaosCapabilityTypeRuntimeProperties(property0.Value);
+                            runtimeProperties = ChaosCapabilityTypeRuntimeProperties.DeserializeChaosCapabilityTypeRuntimeProperties(property0.Value, options);
                             continue;
                         }
                     }
