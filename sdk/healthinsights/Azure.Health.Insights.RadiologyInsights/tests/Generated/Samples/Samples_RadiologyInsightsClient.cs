@@ -323,7 +323,7 @@ value = "<value>",
                     },
                 },
             });
-            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: "jobData");
+            Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -654,7 +654,7 @@ value = "<value>",
                     },
                 },
             });
-            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: "jobData");
+            Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -839,7 +839,7 @@ EncounterId = "<encounterId>",
                     },
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: ExpandQueryParamsType.JobData);
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
 
@@ -939,7 +939,7 @@ EncounterId = "<encounterId>",
                     },
                 },
             };
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: ExpandQueryParamsType.JobData);
+            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
             RadiologyInsightsInferenceResult responseData = operation.Value;
         }
     }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -66,20 +67,20 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The unique ID of the job. </param>
         /// <param name="resource"> The resource instance. </param>
-        /// <param name="expand"> A comma separated list of related properties to be included in line with the job. </param>
+        /// <param name="expand"> Expand the indicated resources into the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)']/*" />
-        public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, string id, RadiologyInsightsJob resource, ExpandQueryParamsType? expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)']/*" />
+        public virtual async Task<Operation<RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(WaitUntil waitUntil, string id, RadiologyInsightsJob resource, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(resource, nameof(resource));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = resource.ToRequestContent();
-            Operation<BinaryData> response = await InferRadiologyInsightsAsync(waitUntil, id, content, expand?.ToString(), context).ConfigureAwait(false);
+            Operation<BinaryData> response = await InferRadiologyInsightsAsync(waitUntil, id, content, expand, context).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsJob, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }
 
@@ -87,20 +88,20 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The unique ID of the job. </param>
         /// <param name="resource"> The resource instance. </param>
-        /// <param name="expand"> A comma separated list of related properties to be included in line with the job. </param>
+        /// <param name="expand"> Expand the indicated resources into the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> Creates a Radiology Insights job with the given request body. </remarks>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)']/*" />
-        public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, string id, RadiologyInsightsJob resource, ExpandQueryParamsType? expand = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)']/*" />
+        public virtual Operation<RadiologyInsightsInferenceResult> InferRadiologyInsights(WaitUntil waitUntil, string id, RadiologyInsightsJob resource, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(resource, nameof(resource));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = resource.ToRequestContent();
-            Operation<BinaryData> response = InferRadiologyInsights(waitUntil, id, content, expand?.ToString(), context);
+            Operation<BinaryData> response = InferRadiologyInsights(waitUntil, id, content, expand, context);
             return ProtocolOperationHelpers.Convert(response, FetchRadiologyInsightsInferenceResultFromRadiologyInsightsJob, ClientDiagnostics, "RadiologyInsightsClient.InferRadiologyInsights");
         }
 
@@ -114,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -122,14 +123,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The unique ID of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="expand"> A comma separated list of related properties to be included in line with the job. Allowed values: "jobData". </param>
+        /// <param name="expand"> Expand the indicated resources into the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> InferRadiologyInsightsAsync(WaitUntil waitUntil, string id, RequestContent content, string expand = null, RequestContext context = null)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)']/*" />
+        public virtual async Task<Operation<BinaryData>> InferRadiologyInsightsAsync(WaitUntil waitUntil, string id, RequestContent content, IEnumerable<string> expand = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -158,7 +159,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -166,14 +167,14 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="id"> The unique ID of the job. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="expand"> A comma separated list of related properties to be included in line with the job. Allowed values: "jobData". </param>
+        /// <param name="expand"> Expand the indicated resources into the response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> InferRadiologyInsights(WaitUntil waitUntil, string id, RequestContent content, string expand = null, RequestContext context = null)
+        /// <include file="Docs/RadiologyInsightsClient.xml" path="doc/members/member[@name='InferRadiologyInsights(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)']/*" />
+        public virtual Operation<BinaryData> InferRadiologyInsights(WaitUntil waitUntil, string id, RequestContent content, IEnumerable<string> expand = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(content, nameof(content));
@@ -192,7 +193,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             }
         }
 
-        internal HttpMessage CreateInferRadiologyInsightsRequest(string id, RequestContent content, string expand, RequestContext context)
+        internal HttpMessage CreateInferRadiologyInsightsRequest(string id, RequestContent content, IEnumerable<string> expand, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -203,9 +204,12 @@ namespace Azure.Health.Insights.RadiologyInsights
             uri.AppendPath("/radiology-insights/jobs/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (expand != null)
+            if (expand != null && Optional.IsCollectionDefined(expand))
             {
-                uri.AppendQueryDelimited("expand", expand, ",", true);
+                foreach (var param in expand)
+                {
+                    uri.AppendQuery("expand", param, true);
+                }
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");

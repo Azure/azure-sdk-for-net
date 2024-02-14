@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)">
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsightsAsync.
 <code><![CDATA[
@@ -107,11 +107,11 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
         },
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: ExpandQueryParamsType.JobData);
+Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,ExpandQueryParamsType?,CancellationToken)">
+    <member name="InferRadiologyInsights(WaitUntil,string,RadiologyInsightsJob,IEnumerable{string},CancellationToken)">
       <example>
 This sample shows how to call InferRadiologyInsights.
 <code><![CDATA[
@@ -217,11 +217,11 @@ RadiologyInsightsJob resource = new RadiologyInsightsJob
         },
     },
 };
-Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: ExpandQueryParamsType.JobData);
+Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", resource, expand: new string[] { "<expand>" });
 RadiologyInsightsInferenceResult responseData = operation.Value;
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="InferRadiologyInsightsAsync(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call InferRadiologyInsightsAsync and parse the result.
 <code><![CDATA[
@@ -478,7 +478,7 @@ using RequestContent content = RequestContent.Create(new
         },
     },
 });
-Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: "jobData");
+Operation<BinaryData> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -567,7 +567,7 @@ Console.WriteLine(result.GetProperty("patientResults")[0].GetProperty("inference
 Console.WriteLine(result.GetProperty("modelVersion").ToString());
 ]]></code></example>
     </member>
-    <member name="InferRadiologyInsights(WaitUntil,string,RequestContent,string,RequestContext)">
+    <member name="InferRadiologyInsights(WaitUntil,string,RequestContent,IEnumerable{string},RequestContext)">
       <example>
 This sample shows how to call InferRadiologyInsights and parse the result.
 <code><![CDATA[
@@ -824,7 +824,7 @@ using RequestContent content = RequestContent.Create(new
         },
     },
 });
-Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: "jobData");
+Operation<BinaryData> operation = client.InferRadiologyInsights(WaitUntil.Completed, "<id>", content, expand: new string[] { "<expand>" });
 BinaryData responseData = operation.Value;
 
 JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

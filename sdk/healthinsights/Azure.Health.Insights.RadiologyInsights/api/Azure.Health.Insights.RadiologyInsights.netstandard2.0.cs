@@ -159,23 +159,6 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static bool operator !=(Azure.Health.Insights.RadiologyInsights.EncounterClass left, Azure.Health.Insights.RadiologyInsights.EncounterClass right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExpandQueryParamsType : System.IEquatable<Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExpandQueryParamsType(string value) { throw null; }
-        public static Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType JobData { get { throw null; } }
-        public bool Equals(Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType left, Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType right) { throw null; }
-        public static implicit operator Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType (string value) { throw null; }
-        public static bool operator !=(Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType left, Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FhirR4Annotation : Azure.Health.Insights.RadiologyInsights.FhirR4Element, System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.RadiologyInsights.FhirR4Annotation>
     {
         public FhirR4Annotation(string text) { }
@@ -805,10 +788,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         public RadiologyInsightsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public RadiologyInsightsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Operation<System.BinaryData> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Core.RequestContent content, string expand = null, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsJob resource, Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType? expand = default(Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, string id, Azure.Core.RequestContent content, string expand = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, string id, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsJob resource, Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType? expand = default(Azure.Health.Insights.RadiologyInsights.ExpandQueryParamsType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<System.BinaryData> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> expand = null, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult> InferRadiologyInsights(Azure.WaitUntil waitUntil, string id, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsJob resource, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, string id, Azure.Core.RequestContent content, System.Collections.Generic.IEnumerable<string> expand = null, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.RadiologyInsights.RadiologyInsightsInferenceResult>> InferRadiologyInsightsAsync(Azure.WaitUntil waitUntil, string id, Azure.Health.Insights.RadiologyInsights.RadiologyInsightsJob resource, System.Collections.Generic.IEnumerable<string> expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RadiologyInsightsClientOptions : Azure.Core.ClientOptions
     {
