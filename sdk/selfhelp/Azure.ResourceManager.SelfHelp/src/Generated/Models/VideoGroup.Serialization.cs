@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroupVideo> array = new List<VideoGroupVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item, options));
                     }
                     videos = array;
                     continue;

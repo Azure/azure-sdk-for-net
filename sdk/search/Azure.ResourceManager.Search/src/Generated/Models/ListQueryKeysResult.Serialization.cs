@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceQueryKey> array = new List<SearchServiceQueryKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item));
+                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item, options));
                     }
                     value = array;
                     continue;

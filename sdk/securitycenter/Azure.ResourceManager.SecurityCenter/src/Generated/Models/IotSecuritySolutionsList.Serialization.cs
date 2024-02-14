@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<IotSecuritySolutionData> array = new List<IotSecuritySolutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotSecuritySolutionData.DeserializeIotSecuritySolutionData(item));
+                        array.Add(IotSecuritySolutionData.DeserializeIotSecuritySolutionData(item, options));
                     }
                     value = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryPolicyData> array = new List<SiteRecoveryPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(item));
+                        array.Add(SiteRecoveryPolicyData.DeserializeSiteRecoveryPolicyData(item, options));
                     }
                     value = array;
                     continue;

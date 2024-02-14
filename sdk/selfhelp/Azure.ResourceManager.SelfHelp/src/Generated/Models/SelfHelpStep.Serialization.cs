@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<StepInput> array = new List<StepInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepInput.DeserializeStepInput(item));
+                        array.Add(StepInput.DeserializeStepInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    automatedCheckResults = AutomatedCheckResult.DeserializeAutomatedCheckResult(property.Value);
+                    automatedCheckResults = AutomatedCheckResult.DeserializeAutomatedCheckResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("insights"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item, options));
                     }
                     insights = array;
                     continue;

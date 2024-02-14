@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsWatchlistData> array = new List<SecurityInsightsWatchlistData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(item));
+                        array.Add(SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(item, options));
                     }
                     value = array;
                     continue;

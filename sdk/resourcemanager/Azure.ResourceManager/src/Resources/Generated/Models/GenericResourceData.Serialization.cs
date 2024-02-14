@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    sku = ResourcesSku.DeserializeResourcesSku(property.Value);
+                    sku = ResourcesSku.DeserializeResourcesSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))

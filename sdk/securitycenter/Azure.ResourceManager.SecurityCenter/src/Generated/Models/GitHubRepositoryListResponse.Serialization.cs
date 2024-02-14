@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityConnectorGitHubRepositoryData> array = new List<SecurityConnectorGitHubRepositoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityConnectorGitHubRepositoryData.DeserializeSecurityConnectorGitHubRepositoryData(item));
+                        array.Add(SecurityConnectorGitHubRepositoryData.DeserializeSecurityConnectorGitHubRepositoryData(item, options));
                     }
                     value = array;
                     continue;

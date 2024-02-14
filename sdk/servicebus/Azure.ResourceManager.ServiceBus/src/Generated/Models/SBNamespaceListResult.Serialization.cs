@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusNamespaceData> array = new List<ServiceBusNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(item));
+                        array.Add(ServiceBusNamespaceData.DeserializeServiceBusNamespaceData(item, options));
                     }
                     value = array;
                     continue;

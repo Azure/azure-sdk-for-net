@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereDeviceInsight> array = new List<SphereDeviceInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item));
+                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item, options));
                     }
                     value = array;
                     continue;

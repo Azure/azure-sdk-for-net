@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    processServer = SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(property.Value);
+                    processServer = SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rcmProxy"u8))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    rcmProxy = RcmProxyDetails.DeserializeRcmProxyDetails(property.Value);
+                    rcmProxy = RcmProxyDetails.DeserializeRcmProxyDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("pushInstaller"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    pushInstaller = PushInstallerDetails.DeserializePushInstallerDetails(property.Value);
+                    pushInstaller = PushInstallerDetails.DeserializePushInstallerDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("replicationAgent"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    replicationAgent = ReplicationAgentDetails.DeserializeReplicationAgentDetails(property.Value);
+                    replicationAgent = ReplicationAgentDetails.DeserializeReplicationAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reprotectAgent"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    reprotectAgent = ReprotectAgentDetails.DeserializeReprotectAgentDetails(property.Value);
+                    reprotectAgent = ReprotectAgentDetails.DeserializeReprotectAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("marsAgent"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    marsAgent = MarsAgentDetails.DeserializeMarsAgentDetails(property.Value);
+                    marsAgent = MarsAgentDetails.DeserializeMarsAgentDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("dra"u8))
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    dra = SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(property.Value);
+                    dra = SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("switchProviderBlockingErrorDetails"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmFabricSwitchProviderBlockingErrorDetails> array = new List<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmFabricSwitchProviderBlockingErrorDetails.DeserializeInMageRcmFabricSwitchProviderBlockingErrorDetails(item));
+                        array.Add(InMageRcmFabricSwitchProviderBlockingErrorDetails.DeserializeInMageRcmFabricSwitchProviderBlockingErrorDetails(item, options));
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryOSVersionWrapper> array = new List<SiteRecoveryOSVersionWrapper>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryOSVersionWrapper.DeserializeSiteRecoveryOSVersionWrapper(item));
+                        array.Add(SiteRecoveryOSVersionWrapper.DeserializeSiteRecoveryOSVersionWrapper(item, options));
                     }
                     osVersions = array;
                     continue;

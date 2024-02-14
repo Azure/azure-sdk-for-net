@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationScope> array = new List<SecurityAutomationScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item));
+                                array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item, options));
                             }
                             scopes = array;
                             continue;
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationSource> array = new List<SecurityAutomationSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationSource.DeserializeSecurityAutomationSource(item));
+                                array.Add(SecurityAutomationSource.DeserializeSecurityAutomationSource(item, options));
                             }
                             sources = array;
                             continue;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationAction> array = new List<SecurityAutomationAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item));
+                                array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item, options));
                             }
                             actions = array;
                             continue;

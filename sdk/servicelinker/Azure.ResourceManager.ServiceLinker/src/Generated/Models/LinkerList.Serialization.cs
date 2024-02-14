@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     List<LinkerResourceData> array = new List<LinkerResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item));
+                        array.Add(LinkerResourceData.DeserializeLinkerResourceData(item, options));
                     }
                     value = array;
                     continue;

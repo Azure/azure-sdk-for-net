@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = DiscoverProtectableItemProperties.DeserializeDiscoverProtectableItemProperties(property.Value);
+                    properties = DiscoverProtectableItemProperties.DeserializeDiscoverProtectableItemProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

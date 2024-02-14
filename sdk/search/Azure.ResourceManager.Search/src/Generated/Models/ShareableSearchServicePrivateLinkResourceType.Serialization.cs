@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value);
+                    properties = ShareableSearchServicePrivateLinkResourceProperties.DeserializeShareableSearchServicePrivateLinkResourceProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

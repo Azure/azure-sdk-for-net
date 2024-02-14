@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySubnet> array = new List<SiteRecoverySubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item));
+                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item, options));
                     }
                     subnets = array;
                     continue;

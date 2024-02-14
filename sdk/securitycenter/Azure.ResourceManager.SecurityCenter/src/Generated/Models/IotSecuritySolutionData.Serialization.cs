@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             {
                                 continue;
                             }
-                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value);
+                            userDefinedResources = UserDefinedResourcesProperties.DeserializeUserDefinedResourcesProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("autoDiscoveredResources"u8))
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item, options));
                             }
                             recommendationsConfiguration = array;
                             continue;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AdditionalWorkspacesProperties> array = new List<AdditionalWorkspacesProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalWorkspacesProperties.DeserializeAdditionalWorkspacesProperties(item));
+                                array.Add(AdditionalWorkspacesProperties.DeserializeAdditionalWorkspacesProperties(item, options));
                             }
                             additionalWorkspaces = array;
                             continue;

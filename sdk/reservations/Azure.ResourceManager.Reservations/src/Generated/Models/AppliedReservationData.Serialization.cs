@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value);
+                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value, options);
                             continue;
                         }
                     }

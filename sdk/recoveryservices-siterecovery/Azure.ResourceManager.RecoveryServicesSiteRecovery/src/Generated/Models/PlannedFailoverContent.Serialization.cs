@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = PlannedFailoverProperties.DeserializePlannedFailoverProperties(property.Value);
+                    properties = PlannedFailoverProperties.DeserializePlannedFailoverProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupManagementUsage> array = new List<BackupManagementUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupManagementUsage.DeserializeBackupManagementUsage(item));
+                        array.Add(BackupManagementUsage.DeserializeBackupManagementUsage(item, options));
                     }
                     value = array;
                     continue;

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Purview
                             {
                                 continue;
                             }
-                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value);
+                            credentials = PurviewCredentials.DeserializePurviewCredentials(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventHubPartitionId"u8))
