@@ -10,9 +10,9 @@ using System.Text.Json.Serialization;
 namespace System.ClientModel.Tests.Client.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : IJsonModel<SystemData?>
+    public partial class SystemData : IJsonModel<SystemData>
     {
-        void IJsonModel<SystemData?>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions? options)
+        void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions? options)
             => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions? options)
@@ -21,13 +21,13 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             writer.WriteEndObject();
         }
 
-        internal static SystemData? DeserializeSystemData(JsonElement element, ModelReaderWriterOptions? options = default)
+        internal static SystemData DeserializeSystemData(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(SystemData)}'");
             }
             OptionalProperty<string> createdBy = default;
             OptionalProperty<CreatedByType> createdByType = default;
@@ -97,7 +97,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             public OptionalProperty<DateTimeOffset> LastModifiedOn { get; set; }
         }
 
-        SystemData? IJsonModel<SystemData?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SystemData IJsonModel<SystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeSystemData(doc.RootElement, options);
@@ -158,7 +158,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             reader.Skip();
         }
 
-        SystemData? IPersistableModel<SystemData?>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SystemData IPersistableModel<SystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var doc = JsonDocument.Parse(data);
             return DeserializeSystemData(doc.RootElement, options);
@@ -170,42 +170,20 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             {
                 writer.WriteObjectValue(model);
             }
-            public override SystemData? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
                 return DeserializeSystemData(document.RootElement, ModelReaderWriterHelper.WireOptions);
             }
         }
 
-        BinaryData IPersistableModel<SystemData?>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SystemData>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.Write(new NonNullable(this), options);
+            return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<SystemData?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        private class NonNullable : SystemData, IPersistableModel<NonNullable>
-        {
-            private readonly SystemData _value;
-
-            public NonNullable(SystemData model) : base()
-            {
-                if (model is null)
-                    throw new ArgumentNullException(nameof(model));
-
-                _value = model;
-            }
-
-            NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
-                => new(((IPersistableModel<SystemData>)_value).Create(data, options));
-
-            string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
-                => ((IPersistableModel<SystemData>)_value).GetFormatFromOptions(options);
-
-            BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
-                => ((IPersistableModel<SystemData>)_value).Write(options);
-        }
+        string IPersistableModel<SystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

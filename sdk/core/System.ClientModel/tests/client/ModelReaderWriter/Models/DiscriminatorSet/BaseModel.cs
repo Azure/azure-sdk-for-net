@@ -9,16 +9,9 @@ using System.Text.Json;
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     [PersistableModelProxy(typeof(UnknownBaseModel))]
-    public abstract class BaseModel : IJsonModel<BaseModel?>
+    public abstract class BaseModel : IJsonModel<BaseModel>
     {
-        private readonly Dictionary<string, BinaryData> _rawData;
-
-        protected internal BaseModel(Dictionary<string, BinaryData>? rawData)
-        {
-            _rawData = rawData ?? new Dictionary<string, BinaryData>();
-        }
-
-        internal Dictionary<string, BinaryData> GetRawData() => _rawData;
+        private Dictionary<string, BinaryData> _rawData;
 
         public static implicit operator BinaryContent?(BaseModel? baseModel)
         {
@@ -27,19 +20,24 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return BinaryContent.Create(new NonNullable(baseModel), ModelReaderWriterHelper.WireOptions);
+            return BinaryContent.Create(baseModel, ModelReaderWriterHelper.WireOptions);
         }
 
-        public static explicit operator BaseModel?(ClientResult result)
+        public static explicit operator BaseModel(ClientResult result)
         {
-            if (result is null)
-                throw new ArgumentNullException(nameof(result));
+            if (result is null) throw new ArgumentNullException(nameof(result));
 
             using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterHelper.WireOptions);
         }
 
-        public string? Kind { get; internal set; }
+        protected internal BaseModel(Dictionary<string, BinaryData>? rawData)
+        {
+            _rawData = rawData ?? new Dictionary<string, BinaryData>();
+            Kind = string.Empty;
+        }
+
+        public string Kind { get; internal set; }
         public string? Name { get; set; }
 
         protected internal void SerializeRawData(Utf8JsonWriter writer)
@@ -56,7 +54,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             }
         }
 
-        void IJsonModel<BaseModel?>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -80,18 +78,17 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel? DeserializeBaseModel(BinaryData data, ModelReaderWriterOptions options)
+        internal static BaseModel DeserializeBaseModel(BinaryData data, ModelReaderWriterOptions? options)
             => DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
 
-        internal static BaseModel? DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions? options = default)
+        internal static BaseModel DeserializeBaseModel(JsonElement element, ModelReaderWriterOptions? options = default)
         {
             options ??= ModelReaderWriterHelper.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
-                return null;
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(BaseModel)}'");
             }
-
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -107,6 +104,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             string? kind = default;
             OptionalProperty<string> name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
+
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,17 +123,23 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                     rawData.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
+
+            if (kind is null)
+            {
+                throw new JsonException($"Invalid JSON provided to deserialize type '{nameof(BaseModel)}': Missing 'kind' property");
+            }
+
             return new UnknownBaseModel(kind, name, rawData);
         }
 
-        BaseModel? IPersistableModel<BaseModel?>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        BaseModel? IJsonModel<BaseModel?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BaseModel IJsonModel<BaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -143,41 +147,13 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IPersistableModel<BaseModel?>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.Write(new NonNullable(this), options);
+            return ModelReaderWriter.Write(this, options);
         }
 
-        string IPersistableModel<BaseModel?>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        public class NonNullable : BaseModel, IJsonModel<NonNullable>
-        {
-            private readonly BaseModel _value;
-
-            public NonNullable(BaseModel model) : base(model.GetRawData())
-            {
-                if (model is null)
-                    throw new ArgumentNullException(nameof(model));
-
-                _value = model;
-            }
-
-            NonNullable IPersistableModel<NonNullable>.Create(BinaryData data, ModelReaderWriterOptions options)
-                => new(((IPersistableModel<BaseModel>)_value).Create(data, options));
-
-            NonNullable IJsonModel<NonNullable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-                => new(((IJsonModel<BaseModel>)_value).Create(ref reader, options));
-
-            string IPersistableModel<NonNullable>.GetFormatFromOptions(ModelReaderWriterOptions options)
-                => ((IPersistableModel<BaseModel>)_value).GetFormatFromOptions(options);
-
-            BinaryData IPersistableModel<NonNullable>.Write(ModelReaderWriterOptions options)
-                => ((IPersistableModel<BaseModel>)_value).Write(options);
-
-            void IJsonModel<NonNullable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-                => ((IJsonModel<BaseModel>)_value).Write(writer, options);
-        }
+        string IPersistableModel<BaseModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

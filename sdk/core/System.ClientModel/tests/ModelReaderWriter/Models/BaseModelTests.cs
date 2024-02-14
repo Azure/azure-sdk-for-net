@@ -7,21 +7,19 @@ using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 {
-    internal class BaseModelTests : ModelJsonTests<BaseModel.NonNullable>
+    internal class BaseModelTests : ModelJsonTests<BaseModel>
     {
-        protected override BaseModel.NonNullable GetModelInstance()
+        protected override BaseModel GetModelInstance()
         {
-            Type typeToActivate = typeof(BaseModel).Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{typeof(BaseModel).Name}") ??
-                throw new InvalidOperationException("Unable to find BaseModel type");
-            return Activator.CreateInstance(typeToActivate, true) as BaseModel.NonNullable
-                ?? throw new InvalidOperationException($"Unable to create model instance of BaseModel");
+            var typeToActivate = typeof(BaseModel).Assembly.GetTypes().FirstOrDefault(t => t.Name == $"Unknown{typeof(BaseModel).Name}") ?? throw new InvalidOperationException("Unable to find BaseModel type");
+            return Activator.CreateInstance(typeToActivate, true) as BaseModel ?? throw new InvalidOperationException($"Unable to create model instance of BaseModel");
         }
 
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
-        protected override void CompareModels(BaseModel.NonNullable model, BaseModel.NonNullable model2, string format)
+        protected override void CompareModels(BaseModel model, BaseModel model2, string format)
         {
             Assert.AreEqual(model.Name, model2.Name);
             Assert.AreEqual(model.Kind, model2.Kind);
@@ -47,7 +45,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             return expected;
         }
 
-        protected override void VerifyModel(BaseModel.NonNullable model, string format)
+        protected override void VerifyModel(BaseModel model, string format)
         {
             Assert.AreEqual("X", model.Kind);
             Assert.AreEqual("xmodel", model.Name);

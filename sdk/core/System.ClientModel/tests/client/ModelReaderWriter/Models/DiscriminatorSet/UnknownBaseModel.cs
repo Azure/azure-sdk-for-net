@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IJsonModel<BaseModel?>
+    internal class UnknownBaseModel : BaseModel, IJsonModel<BaseModel>
     {
         public UnknownBaseModel()
             : base(null)
@@ -16,14 +16,14 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = "Unknown";
         }
 
-        internal UnknownBaseModel(string? kind, string? name, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string kind, string? name, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
             Name = name;
         }
 
-        void IJsonModel<BaseModel?>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -47,17 +47,16 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel? DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions? options = default)
-            => DeserializeBaseModel(element, options);
+        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions? options = default) => DeserializeBaseModel(element, options);
 
-        BaseModel? IPersistableModel<BaseModel?>.Create(BinaryData data, ModelReaderWriterOptions options)
+        BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeUnknownBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        BaseModel? IJsonModel<BaseModel?>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BaseModel IJsonModel<BaseModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
@@ -65,7 +64,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeUnknownBaseModel(doc.RootElement, options);
         }
 
-        BinaryData IPersistableModel<BaseModel?>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
