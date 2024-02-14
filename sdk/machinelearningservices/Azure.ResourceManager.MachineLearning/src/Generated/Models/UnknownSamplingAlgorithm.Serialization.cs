@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSamplingAlgorithm(document.RootElement, options);
+            return DeserializeSamplingAlgorithm(document.RootElement, options);
         }
 
         internal static UnknownSamplingAlgorithm DeserializeUnknownSamplingAlgorithm(JsonElement element, ModelReaderWriterOptions options = null)

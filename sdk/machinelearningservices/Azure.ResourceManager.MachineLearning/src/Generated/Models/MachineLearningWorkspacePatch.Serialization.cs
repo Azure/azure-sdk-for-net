@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value);
+                            encryption = EncryptionUpdateProperties.DeserializeEncryptionUpdateProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("featureStoreSettings"u8))
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value);
+                            featureStoreSettings = FeatureStoreSettings.DeserializeFeatureStoreSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("friendlyName"u8))
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value);
+                            managedNetwork = ManagedNetworkSettings.DeserializeManagedNetworkSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("primaryUserAssignedIdentity"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                             {
                                 continue;
                             }
-                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value);
+                            serviceManagedResourcesSettings = ServiceManagedResourcesSettings.DeserializeServiceManagedResourcesSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("softDeleteRetentionInDays"u8))

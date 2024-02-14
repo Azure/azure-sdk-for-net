@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNodes(document.RootElement, options);
+            return DeserializeJobNodes(document.RootElement, options);
         }
 
         internal static UnknownNodes DeserializeUnknownNodes(JsonElement element, ModelReaderWriterOptions options = null)

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMonitoringSignalBase(document.RootElement, options);
+            return DeserializeMonitoringSignalBase(document.RootElement, options);
         }
 
         internal static UnknownMonitoringSignalBase DeserializeUnknownMonitoringSignalBase(JsonElement element, ModelReaderWriterOptions options = null)

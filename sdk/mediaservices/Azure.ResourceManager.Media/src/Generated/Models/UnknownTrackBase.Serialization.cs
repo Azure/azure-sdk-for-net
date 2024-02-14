@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrackBase(document.RootElement, options);
+            return DeserializeMediaAssetTrackBase(document.RootElement, options);
         }
 
         internal static UnknownTrackBase DeserializeUnknownTrackBase(JsonElement element, ModelReaderWriterOptions options = null)

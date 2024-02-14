@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatastoreCredentials(document.RootElement, options);
+            return DeserializeMachineLearningDatastoreCredentials(document.RootElement, options);
         }
 
         internal static UnknownDatastoreCredentials DeserializeUnknownDatastoreCredentials(JsonElement element, ModelReaderWriterOptions options = null)

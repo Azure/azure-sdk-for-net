@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value);
+                    configurations = EncoderPresetConfigurations.DeserializeEncoderPresetConfigurations(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetName"u8))

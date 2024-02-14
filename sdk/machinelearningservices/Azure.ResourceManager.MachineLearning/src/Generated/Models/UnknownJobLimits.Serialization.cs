@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobLimits(document.RootElement, options);
+            return DeserializeMachineLearningJobLimits(document.RootElement, options);
         }
 
         internal static UnknownJobLimits DeserializeUnknownJobLimits(JsonElement element, ModelReaderWriterOptions options = null)

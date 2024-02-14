@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownClipTime(document.RootElement, options);
+            return DeserializeClipTime(document.RootElement, options);
         }
 
         internal static UnknownClipTime DeserializeUnknownClipTime(JsonElement element, ModelReaderWriterOptions options = null)

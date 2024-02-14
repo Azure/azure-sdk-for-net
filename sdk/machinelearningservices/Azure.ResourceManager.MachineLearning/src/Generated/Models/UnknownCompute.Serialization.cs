@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCompute(document.RootElement, options);
+            return DeserializeMachineLearningComputeProperties(document.RootElement, options);
         }
 
         internal static UnknownCompute DeserializeUnknownCompute(JsonElement element, ModelReaderWriterOptions options = null)
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningError> array = new List<MachineLearningError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningError.DeserializeMachineLearningError(item));
+                        array.Add(MachineLearningError.DeserializeMachineLearningError(item, options));
                     }
                     provisioningErrors = array;
                     continue;

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArtifactAccessCredential(document.RootElement, options);
+            return DeserializeArtifactAccessCredential(document.RootElement, options);
         }
 
         internal static UnknownArtifactAccessCredential DeserializeUnknownArtifactAccessCredential(JsonElement element, ModelReaderWriterOptions options = null)

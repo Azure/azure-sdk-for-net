@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJobInput(document.RootElement, options);
+            return DeserializeMachineLearningJobInput(document.RootElement, options);
         }
 
         internal static UnknownJobInput DeserializeUnknownJobInput(JsonElement element, ModelReaderWriterOptions options = null)

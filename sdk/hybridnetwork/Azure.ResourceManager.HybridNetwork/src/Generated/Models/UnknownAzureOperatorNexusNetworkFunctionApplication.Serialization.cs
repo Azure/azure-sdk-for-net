@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
+            return DeserializeAzureOperatorNexusNetworkFunctionApplication(document.RootElement, options);
         }
 
         internal static UnknownAzureOperatorNexusNetworkFunctionApplication DeserializeUnknownAzureOperatorNexusNetworkFunctionApplication(JsonElement element, ModelReaderWriterOptions options = null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    configurationGroupSchemaResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

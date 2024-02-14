@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInferencingServer(document.RootElement, options);
+            return DeserializeInferencingServer(document.RootElement, options);
         }
 
         internal static UnknownInferencingServer DeserializeUnknownInferencingServer(JsonElement element, ModelReaderWriterOptions options = null)

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataImportSource(document.RootElement, options);
+            return DeserializeDataImportSource(document.RootElement, options);
         }
 
         internal static UnknownDataImportSource DeserializeUnknownDataImportSource(JsonElement element, ModelReaderWriterOptions options = null)

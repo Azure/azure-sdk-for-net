@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         subject = null;
                         continue;
                     }
-                    subject = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
+                    subject = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("issuer"u8))
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         issuer = null;
                         continue;
                     }
-                    issuer = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value);
+                    issuer = FirmwareCryptoCertificateEntity.DeserializeFirmwareCryptoCertificateEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("issuedDate"u8))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         pairedKey = null;
                         continue;
                     }
-                    pairedKey = PairedKey.DeserializePairedKey(property.Value);
+                    pairedKey = PairedKey.DeserializePairedKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isExpired"u8))

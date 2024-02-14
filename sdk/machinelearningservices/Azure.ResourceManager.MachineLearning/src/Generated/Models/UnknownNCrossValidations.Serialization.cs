@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNCrossValidations(document.RootElement, options);
+            return DeserializeNCrossValidations(document.RootElement, options);
         }
 
         internal static UnknownNCrossValidations DeserializeUnknownNCrossValidations(JsonElement element, ModelReaderWriterOptions options = null)

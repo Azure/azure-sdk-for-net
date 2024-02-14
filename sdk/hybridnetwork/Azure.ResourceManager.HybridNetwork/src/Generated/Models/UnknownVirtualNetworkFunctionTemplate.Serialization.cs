@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownVirtualNetworkFunctionTemplate(document.RootElement, options);
+            return DeserializeVirtualNetworkFunctionTemplate(document.RootElement, options);
         }
 
         internal static UnknownVirtualNetworkFunctionTemplate DeserializeUnknownVirtualNetworkFunctionTemplate(JsonElement element, ModelReaderWriterOptions options = null)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseEnvironmentSource(document.RootElement, options);
+            return DeserializeBaseEnvironmentSource(document.RootElement, options);
         }
 
         internal static UnknownBaseEnvironmentSource DeserializeUnknownBaseEnvironmentSource(JsonElement element, ModelReaderWriterOptions options = null)

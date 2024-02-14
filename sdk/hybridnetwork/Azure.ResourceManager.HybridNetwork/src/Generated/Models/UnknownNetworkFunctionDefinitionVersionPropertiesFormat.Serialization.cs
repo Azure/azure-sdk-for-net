@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
+            return DeserializeNetworkFunctionDefinitionVersionPropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownNetworkFunctionDefinitionVersionPropertiesFormat DeserializeUnknownNetworkFunctionDefinitionVersionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)

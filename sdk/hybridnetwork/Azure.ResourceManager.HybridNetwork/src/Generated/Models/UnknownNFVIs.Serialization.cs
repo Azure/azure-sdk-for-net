@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNFVIs(document.RootElement, options);
+            return DeserializeNFVIs(document.RootElement, options);
         }
 
         internal static UnknownNFVIs DeserializeUnknownNFVIs(JsonElement element, ModelReaderWriterOptions options = null)

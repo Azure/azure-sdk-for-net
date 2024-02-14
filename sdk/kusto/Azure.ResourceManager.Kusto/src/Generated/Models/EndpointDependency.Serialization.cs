@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<EndpointDetail> array = new List<EndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDetail.DeserializeEndpointDetail(item));
+                        array.Add(EndpointDetail.DeserializeEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;

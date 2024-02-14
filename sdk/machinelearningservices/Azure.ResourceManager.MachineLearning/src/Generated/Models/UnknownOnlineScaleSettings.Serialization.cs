@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnlineScaleSettings(document.RootElement, options);
+            return DeserializeMachineLearningOnlineScaleSettings(document.RootElement, options);
         }
 
         internal static UnknownOnlineScaleSettings DeserializeUnknownOnlineScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)

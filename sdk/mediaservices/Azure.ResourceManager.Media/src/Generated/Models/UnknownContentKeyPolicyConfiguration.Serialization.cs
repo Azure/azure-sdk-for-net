@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownContentKeyPolicyConfiguration(document.RootElement, options);
+            return DeserializeContentKeyPolicyConfiguration(document.RootElement, options);
         }
 
         internal static UnknownContentKeyPolicyConfiguration DeserializeUnknownContentKeyPolicyConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

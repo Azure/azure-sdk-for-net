@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSeasonality(document.RootElement, options);
+            return DeserializeForecastingSeasonality(document.RootElement, options);
         }
 
         internal static UnknownSeasonality DeserializeUnknownSeasonality(JsonElement element, ModelReaderWriterOptions options = null)

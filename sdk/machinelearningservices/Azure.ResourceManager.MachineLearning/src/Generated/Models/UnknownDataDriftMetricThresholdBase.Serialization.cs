@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataDriftMetricThresholdBase(document.RootElement, options);
+            return DeserializeDataDriftMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownDataDriftMetricThresholdBase DeserializeUnknownDataDriftMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         threshold = null;
                         continue;
                     }
-                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value);
+                    threshold = MonitoringThreshold.DeserializeMonitoringThreshold(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingOutboundEnvironmentEndpoint> array = new List<LoadTestingOutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint(item));
+                        array.Add(LoadTestingOutboundEnvironmentEndpoint.DeserializeLoadTestingOutboundEnvironmentEndpoint(item, options));
                     }
                     value = array;
                     continue;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFormat(document.RootElement, options);
+            return DeserializeMediaFormatBase(document.RootElement, options);
         }
 
         internal static UnknownFormat DeserializeUnknownFormat(JsonElement element, ModelReaderWriterOptions options = null)

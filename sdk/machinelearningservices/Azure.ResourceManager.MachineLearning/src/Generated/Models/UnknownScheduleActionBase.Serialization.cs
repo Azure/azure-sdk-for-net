@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScheduleActionBase(document.RootElement, options);
+            return DeserializeMachineLearningScheduleAction(document.RootElement, options);
         }
 
         internal static UnknownScheduleActionBase DeserializeUnknownScheduleActionBase(JsonElement element, ModelReaderWriterOptions options = null)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownForecastHorizon(document.RootElement, options);
+            return DeserializeForecastHorizon(document.RootElement, options);
         }
 
         internal static UnknownForecastHorizon DeserializeUnknownForecastHorizon(JsonElement element, ModelReaderWriterOptions options = null)

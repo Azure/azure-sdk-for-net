@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.LabServices
                             {
                                 continue;
                             }
-                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
+                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("claimedByUserId"u8))

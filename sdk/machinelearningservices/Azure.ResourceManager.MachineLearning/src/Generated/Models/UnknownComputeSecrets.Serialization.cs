@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownComputeSecrets(document.RootElement, options);
+            return DeserializeMachineLearningComputeSecrets(document.RootElement, options);
         }
 
         internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element, ModelReaderWriterOptions options = null)

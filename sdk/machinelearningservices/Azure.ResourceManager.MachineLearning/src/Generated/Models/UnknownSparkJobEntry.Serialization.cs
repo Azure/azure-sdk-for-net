@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSparkJobEntry(document.RootElement, options);
+            return DeserializeSparkJobEntry(document.RootElement, options);
         }
 
         internal static UnknownSparkJobEntry DeserializeUnknownSparkJobEntry(JsonElement element, ModelReaderWriterOptions options = null)

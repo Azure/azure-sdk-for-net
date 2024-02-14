@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEarlyTerminationPolicy(document.RootElement, options);
+            return DeserializeMachineLearningEarlyTerminationPolicy(document.RootElement, options);
         }
 
         internal static UnknownEarlyTerminationPolicy DeserializeUnknownEarlyTerminationPolicy(JsonElement element, ModelReaderWriterOptions options = null)

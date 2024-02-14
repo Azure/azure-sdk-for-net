@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value);
+                    sku = IntegrationServiceEnvironmentSkuDefinitionSku.DeserializeIntegrationServiceEnvironmentSkuDefinitionSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    capacity = IntegrationServiceEnvironmentSkuCapacity.DeserializeIntegrationServiceEnvironmentSkuCapacity(property.Value);
+                    capacity = IntegrationServiceEnvironmentSkuCapacity.DeserializeIntegrationServiceEnvironmentSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

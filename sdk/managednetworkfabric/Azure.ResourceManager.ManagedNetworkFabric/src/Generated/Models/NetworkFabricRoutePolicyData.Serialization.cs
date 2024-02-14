@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item, options));
                             }
                             statements = array;
                             continue;

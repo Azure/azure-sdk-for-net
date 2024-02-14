@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTargetRollingWindowSize(document.RootElement, options);
+            return DeserializeTargetRollingWindowSize(document.RootElement, options);
         }
 
         internal static UnknownTargetRollingWindowSize DeserializeUnknownTargetRollingWindowSize(JsonElement element, ModelReaderWriterOptions options = null)

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOutboundRule(document.RootElement, options);
+            return DeserializeMachineLearningOutboundRule(document.RootElement, options);
         }
 
         internal static UnknownOutboundRule DeserializeUnknownOutboundRule(JsonElement element, ModelReaderWriterOptions options = null)

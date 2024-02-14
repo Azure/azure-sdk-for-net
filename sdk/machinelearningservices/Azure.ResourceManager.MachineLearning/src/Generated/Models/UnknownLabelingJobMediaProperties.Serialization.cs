@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLabelingJobMediaProperties(document.RootElement, options);
+            return DeserializeLabelingJobMediaProperties(document.RootElement, options);
         }
 
         internal static UnknownLabelingJobMediaProperties DeserializeUnknownLabelingJobMediaProperties(JsonElement element, ModelReaderWriterOptions options = null)

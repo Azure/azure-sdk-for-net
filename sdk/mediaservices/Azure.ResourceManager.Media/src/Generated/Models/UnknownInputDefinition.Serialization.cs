@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInputDefinition(document.RootElement, options);
+            return DeserializeMediaJobInputDefinition(document.RootElement, options);
         }
 
         internal static UnknownInputDefinition DeserializeUnknownInputDefinition(JsonElement element, ModelReaderWriterOptions options = null)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackDescriptor> array = new List<TrackDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item));
+                        array.Add(TrackDescriptor.DeserializeTrackDescriptor(item, options));
                     }
                     includedTracks = array;
                     continue;

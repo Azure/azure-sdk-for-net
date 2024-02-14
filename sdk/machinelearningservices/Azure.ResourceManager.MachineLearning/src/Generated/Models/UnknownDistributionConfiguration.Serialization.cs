@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDistributionConfiguration(document.RootElement, options);
+            return DeserializeMachineLearningDistributionConfiguration(document.RootElement, options);
         }
 
         internal static UnknownDistributionConfiguration DeserializeUnknownDistributionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

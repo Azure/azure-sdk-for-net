@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataConnection(document.RootElement, options);
+            return DeserializeKustoDataConnectionData(document.RootElement, options);
         }
 
         internal static UnknownDataConnection DeserializeUnknownDataConnection(JsonElement element, ModelReaderWriterOptions options = null)

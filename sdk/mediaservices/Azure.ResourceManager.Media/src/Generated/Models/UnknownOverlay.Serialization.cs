@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOverlay(document.RootElement, options);
+            return DeserializeMediaOverlayBase(document.RootElement, options);
         }
 
         internal static UnknownOverlay DeserializeUnknownOverlay(JsonElement element, ModelReaderWriterOptions options = null)

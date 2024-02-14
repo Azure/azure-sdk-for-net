@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTriggerBase(document.RootElement, options);
+            return DeserializeMachineLearningTriggerBase(document.RootElement, options);
         }
 
         internal static UnknownTriggerBase DeserializeUnknownTriggerBase(JsonElement element, ModelReaderWriterOptions options = null)

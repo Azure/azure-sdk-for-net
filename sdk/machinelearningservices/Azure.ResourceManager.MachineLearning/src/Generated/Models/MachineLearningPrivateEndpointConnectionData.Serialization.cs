@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning
                     {
                         continue;
                     }
-                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value);
+                    sku = MachineLearningSku.DeserializeMachineLearningSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value);
+                            privateEndpoint = MachineLearningPrivateEndpoint.DeserializeMachineLearningPrivateEndpoint(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = MachineLearningPrivateLinkServiceConnectionState.DeserializeMachineLearningPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

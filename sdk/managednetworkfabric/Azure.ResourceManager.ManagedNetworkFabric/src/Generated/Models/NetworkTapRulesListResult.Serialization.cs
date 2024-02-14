@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleData> array = new List<NetworkTapRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleData.DeserializeNetworkTapRuleData(item));
+                        array.Add(NetworkTapRuleData.DeserializeNetworkTapRuleData(item, options));
                     }
                     value = array;
                     continue;

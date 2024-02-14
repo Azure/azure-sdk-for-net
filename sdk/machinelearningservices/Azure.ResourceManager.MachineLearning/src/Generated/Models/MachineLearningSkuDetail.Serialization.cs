@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         capacity = null;
                         continue;
                     }
-                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value);
+                    capacity = MachineLearningSkuCapacity.DeserializeMachineLearningSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         sku = null;
                         continue;
                     }
-                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value);
+                    sku = MachineLearningSkuSetting.DeserializeMachineLearningSkuSetting(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Media.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element);
-                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element);
+                    case "#Microsoft.Media.SelectVideoTrackByAttribute": return SelectVideoTrackByAttribute.DeserializeSelectVideoTrackByAttribute(element, options);
+                    case "#Microsoft.Media.SelectVideoTrackById": return SelectVideoTrackById.DeserializeSelectVideoTrackById(element, options);
                 }
             }
             string odataType = "#Microsoft.Media.VideoTrackDescriptor";

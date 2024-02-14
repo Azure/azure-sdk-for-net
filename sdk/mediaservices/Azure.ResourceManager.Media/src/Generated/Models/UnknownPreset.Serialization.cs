@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPreset(document.RootElement, options);
+            return DeserializeMediaTransformPreset(document.RootElement, options);
         }
 
         internal static UnknownPreset DeserializeUnknownPreset(JsonElement element, ModelReaderWriterOptions options = null)

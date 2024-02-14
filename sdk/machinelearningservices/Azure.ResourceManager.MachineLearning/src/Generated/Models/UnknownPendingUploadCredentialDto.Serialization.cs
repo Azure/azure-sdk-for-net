@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPendingUploadCredentialDto(document.RootElement, options);
+            return DeserializePendingUploadCredentialDto(document.RootElement, options);
         }
 
         internal static UnknownPendingUploadCredentialDto DeserializeUnknownPendingUploadCredentialDto(JsonElement element, ModelReaderWriterOptions options = null)

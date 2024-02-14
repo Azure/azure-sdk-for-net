@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExportSummary(document.RootElement, options);
+            return DeserializeExportSummary(document.RootElement, options);
         }
 
         internal static UnknownExportSummary DeserializeUnknownExportSummary(JsonElement element, ModelReaderWriterOptions options = null)

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNetworkFunctionPropertiesFormat(document.RootElement, options);
+            return DeserializeNetworkFunctionPropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownNetworkFunctionPropertiesFormat DeserializeUnknownNetworkFunctionPropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value);
+                    networkFunctionDefinitionVersionResourceReference = DeploymentResourceIdReference.DeserializeDeploymentResourceIdReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nfviType"u8))

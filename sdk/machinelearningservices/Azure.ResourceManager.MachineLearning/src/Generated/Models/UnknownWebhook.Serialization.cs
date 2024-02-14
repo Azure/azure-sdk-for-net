@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWebhook(document.RootElement, options);
+            return DeserializeMachineLearningWebhook(document.RootElement, options);
         }
 
         internal static UnknownWebhook DeserializeUnknownWebhook(JsonElement element, ModelReaderWriterOptions options = null)

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCodec(document.RootElement, options);
+            return DeserializeMediaCodecBase(document.RootElement, options);
         }
 
         internal static UnknownCodec DeserializeUnknownCodec(JsonElement element, ModelReaderWriterOptions options = null)

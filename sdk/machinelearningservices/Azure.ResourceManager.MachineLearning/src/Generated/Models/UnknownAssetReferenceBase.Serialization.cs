@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAssetReferenceBase(document.RootElement, options);
+            return DeserializeMachineLearningAssetReferenceBase(document.RootElement, options);
         }
 
         internal static UnknownAssetReferenceBase DeserializeUnknownAssetReferenceBase(JsonElement element, ModelReaderWriterOptions options = null)

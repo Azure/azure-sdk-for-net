@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDeploymentResourceIdReference(document.RootElement, options);
+            return DeserializeDeploymentResourceIdReference(document.RootElement, options);
         }
 
         internal static UnknownDeploymentResourceIdReference DeserializeUnknownDeploymentResourceIdReference(JsonElement element, ModelReaderWriterOptions options = null)

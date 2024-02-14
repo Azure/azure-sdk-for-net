@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value);
+                    schedule = LogicWorkflowRecurrenceSchedule.DeserializeLogicWorkflowRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

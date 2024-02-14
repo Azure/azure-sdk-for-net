@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<DeletedManagedHsmData> array = new List<DeletedManagedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedManagedHsmData.DeserializeDeletedManagedHsmData(item));
+                        array.Add(DeletedManagedHsmData.DeserializeDeletedManagedHsmData(item, options));
                     }
                     value = array;
                     continue;
