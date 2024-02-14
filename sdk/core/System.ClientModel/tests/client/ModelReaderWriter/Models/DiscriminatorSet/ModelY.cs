@@ -72,12 +72,12 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = new(property.Value.GetString());
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("yProperty"u8))
                 {
-                    yProperty = new(property.Value.GetString());
+                    yProperty = property.Value.GetString();
                     continue;
                 }
                 if (options.Format == "J")

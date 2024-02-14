@@ -39,7 +39,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
             {
                 if (property.NameEquals("createdBy"u8))
                 {
-                    createdBy = new(property.Value.GetString());
+                    createdBy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("createdByType"u8))
@@ -62,7 +62,7 @@ namespace System.ClientModel.Tests.Client.Models.ResourceManager
                 }
                 if (property.NameEquals("lastModifiedBy"u8))
                 {
-                    lastModifiedBy = new(property.Value.GetString());
+                    lastModifiedBy = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastModifiedByType"u8))

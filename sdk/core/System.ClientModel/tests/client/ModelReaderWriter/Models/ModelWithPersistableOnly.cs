@@ -150,7 +150,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             {
                 if (property.NameEquals("name"u8))
                 {
-                    name = new(property.Value.GetString());
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("fields"u8))

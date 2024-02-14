@@ -103,7 +103,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
             }
 
-            //Deserialize unknown subtype
+            // Deserialize unknown subtype
             string? kind = default;
             OptionalProperty<string> name = default;
             Dictionary<string, BinaryData> rawData = new Dictionary<string, BinaryData>();
@@ -116,7 +116,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = new(property.Value.GetString());
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format == "J")
