@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSapSizingRecommendationResult(document.RootElement, options);
+            return DeserializeSapSizingRecommendationResult(document.RootElement, options);
         }
 
         internal static UnknownSapSizingRecommendationResult DeserializeUnknownSapSizingRecommendationResult(JsonElement element, ModelReaderWriterOptions options = null)

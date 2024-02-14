@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointSubnetInfo> array = new List<TrafficManagerEndpointSubnetInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointSubnetInfo.DeserializeTrafficManagerEndpointSubnetInfo(item));
+                                array.Add(TrafficManagerEndpointSubnetInfo.DeserializeTrafficManagerEndpointSubnetInfo(item, options));
                             }
                             subnets = array;
                             continue;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointCustomHeaderInfo> array = new List<TrafficManagerEndpointCustomHeaderInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointCustomHeaderInfo.DeserializeTrafficManagerEndpointCustomHeaderInfo(item));
+                                array.Add(TrafficManagerEndpointCustomHeaderInfo.DeserializeTrafficManagerEndpointCustomHeaderInfo(item, options));
                             }
                             customHeaders = array;
                             continue;

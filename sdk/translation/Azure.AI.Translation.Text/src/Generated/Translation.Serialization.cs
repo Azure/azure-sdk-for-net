@@ -109,7 +109,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value);
+                    transliteration = TransliteratedText.DeserializeTransliteratedText(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("alignment"u8))
@@ -118,7 +118,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value);
+                    alignment = TranslatedTextAlignment.DeserializeTranslatedTextAlignment(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sentLen"u8))
@@ -127,7 +127,7 @@ namespace Azure.AI.Translation.Text
                     {
                         continue;
                     }
-                    sentLen = SentenceLength.DeserializeSentenceLength(property.Value);
+                    sentLen = SentenceLength.DeserializeSentenceLength(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

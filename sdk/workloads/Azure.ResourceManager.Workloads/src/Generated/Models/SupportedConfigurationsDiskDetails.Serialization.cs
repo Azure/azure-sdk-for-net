@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value);
+                    sku = SapDiskSku.DeserializeSapDiskSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sizeGB"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOutputDataSource(document.RootElement, options);
+            return DeserializeStreamingJobOutputDataSource(document.RootElement, options);
         }
 
         internal static UnknownOutputDataSource DeserializeUnknownOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)

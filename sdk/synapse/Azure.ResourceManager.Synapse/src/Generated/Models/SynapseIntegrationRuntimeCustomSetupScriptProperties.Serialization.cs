@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     {
                         continue;
                     }
-                    sasToken = SynapseSecureString.DeserializeSynapseSecureString(property.Value);
+                    sasToken = SynapseSecureString.DeserializeSynapseSecureString(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

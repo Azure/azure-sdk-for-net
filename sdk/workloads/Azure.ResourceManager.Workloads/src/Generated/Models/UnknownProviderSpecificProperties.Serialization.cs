@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProviderSpecificProperties(document.RootElement, options);
+            return DeserializeProviderSpecificProperties(document.RootElement, options);
         }
 
         internal static UnknownProviderSpecificProperties DeserializeUnknownProviderSpecificProperties(JsonElement element, ModelReaderWriterOptions options = null)

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecretBase(document.RootElement, options);
+            return DeserializeSynapseSecretBase(document.RootElement, options);
         }
 
         internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element, ModelReaderWriterOptions options = null)

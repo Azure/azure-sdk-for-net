@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSingleServerCustomResourceNames(document.RootElement, options);
+            return DeserializeSingleServerCustomResourceNames(document.RootElement, options);
         }
 
         internal static UnknownSingleServerCustomResourceNames DeserializeUnknownSingleServerCustomResourceNames(JsonElement element, ModelReaderWriterOptions options = null)

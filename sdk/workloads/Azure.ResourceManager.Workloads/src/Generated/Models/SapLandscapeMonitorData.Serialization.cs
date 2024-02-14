@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Workloads
                             {
                                 continue;
                             }
-                            grouping = SapLandscapeMonitorPropertiesGrouping.DeserializeSapLandscapeMonitorPropertiesGrouping(property0.Value);
+                            grouping = SapLandscapeMonitorPropertiesGrouping.DeserializeSapLandscapeMonitorPropertiesGrouping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("topMetricsThresholds"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Workloads
                             List<SapLandscapeMonitorMetricThresholds> array = new List<SapLandscapeMonitorMetricThresholds>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item));
+                                array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item, options));
                             }
                             topMetricsThresholds = array;
                             continue;

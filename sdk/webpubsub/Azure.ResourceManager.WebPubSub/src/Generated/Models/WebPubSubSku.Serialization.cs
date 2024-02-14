@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value);
+                    sku = BillingInfoSku.DeserializeBillingInfoSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacity"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    capacity = WebPubSubSkuCapacity.DeserializeWebPubSubSkuCapacity(property.Value);
+                    capacity = WebPubSubSkuCapacity.DeserializeWebPubSubSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

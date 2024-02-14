@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCredentials(document.RootElement, options);
+            return DeserializeStorageMoverCredentials(document.RootElement, options);
         }
 
         internal static UnknownCredentials DeserializeUnknownCredentials(JsonElement element, ModelReaderWriterOptions options = null)

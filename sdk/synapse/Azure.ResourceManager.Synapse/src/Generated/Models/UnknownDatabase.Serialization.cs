@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatabase(document.RootElement, options);
+            return DeserializeSynapseDatabaseData(document.RootElement, options);
         }
 
         internal static UnknownDatabase DeserializeUnknownDatabase(JsonElement element, ModelReaderWriterOptions options = null)

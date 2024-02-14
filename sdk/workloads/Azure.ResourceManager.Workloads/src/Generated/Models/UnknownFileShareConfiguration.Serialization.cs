@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFileShareConfiguration(document.RootElement, options);
+            return DeserializeFileShareConfiguration(document.RootElement, options);
         }
 
         internal static UnknownFileShareConfiguration DeserializeUnknownFileShareConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

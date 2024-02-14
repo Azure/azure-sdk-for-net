@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisEnvironmentReference> array = new List<SynapseSsisEnvironmentReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisEnvironmentReference.DeserializeSynapseSsisEnvironmentReference(item));
+                        array.Add(SynapseSsisEnvironmentReference.DeserializeSynapseSsisEnvironmentReference(item, options));
                     }
                     environmentRefs = array;
                     continue;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSsisParameter> array = new List<SynapseSsisParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item));
+                        array.Add(SynapseSsisParameter.DeserializeSynapseSsisParameter(item, options));
                     }
                     parameters = array;
                     continue;

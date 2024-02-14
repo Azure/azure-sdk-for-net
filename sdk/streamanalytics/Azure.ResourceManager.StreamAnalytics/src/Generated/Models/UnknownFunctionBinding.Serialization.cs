@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFunctionBinding(document.RootElement, options);
+            return DeserializeStreamingJobFunctionBinding(document.RootElement, options);
         }
 
         internal static UnknownFunctionBinding DeserializeUnknownFunctionBinding(JsonElement element, ModelReaderWriterOptions options = null)

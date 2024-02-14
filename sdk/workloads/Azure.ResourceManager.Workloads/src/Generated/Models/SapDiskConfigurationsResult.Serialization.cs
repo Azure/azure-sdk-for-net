@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, SapDiskConfiguration> dictionary = new Dictionary<string, SapDiskConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SapDiskConfiguration.DeserializeSapDiskConfiguration(property0.Value));
+                        dictionary.Add(property0.Name, SapDiskConfiguration.DeserializeSapDiskConfiguration(property0.Value, options));
                     }
                     volumeConfigurations = dictionary;
                     continue;

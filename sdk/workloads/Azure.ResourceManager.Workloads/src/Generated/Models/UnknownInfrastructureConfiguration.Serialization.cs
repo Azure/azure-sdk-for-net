@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInfrastructureConfiguration(document.RootElement, options);
+            return DeserializeInfrastructureConfiguration(document.RootElement, options);
         }
 
         internal static UnknownInfrastructureConfiguration DeserializeUnknownInfrastructureConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

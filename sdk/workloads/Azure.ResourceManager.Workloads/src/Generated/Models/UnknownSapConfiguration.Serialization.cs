@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSapConfiguration(document.RootElement, options);
+            return DeserializeSapConfiguration(document.RootElement, options);
         }
 
         internal static UnknownSapConfiguration DeserializeUnknownSapConfiguration(JsonElement element, ModelReaderWriterOptions options = null)

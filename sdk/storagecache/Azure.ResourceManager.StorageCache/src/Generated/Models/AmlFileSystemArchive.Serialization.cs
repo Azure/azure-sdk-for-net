@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                     {
                         continue;
                     }
-                    status = AmlFileSystemArchiveStatus.DeserializeAmlFileSystemArchiveStatus(property.Value);
+                    status = AmlFileSystemArchiveStatus.DeserializeAmlFileSystemArchiveStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

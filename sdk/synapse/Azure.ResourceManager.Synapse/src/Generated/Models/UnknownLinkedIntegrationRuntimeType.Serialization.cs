@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLinkedIntegrationRuntimeType(document.RootElement, options);
+            return DeserializeSynapseLinkedIntegrationRuntimeType(document.RootElement, options);
         }
 
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element, ModelReaderWriterOptions options = null)

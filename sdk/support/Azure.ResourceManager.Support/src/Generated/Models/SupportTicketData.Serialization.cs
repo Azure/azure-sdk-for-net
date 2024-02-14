@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value);
+                            contactDetails = SupportContactProfile.DeserializeSupportContactProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("serviceLevelAgreement"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value);
+                            serviceLevelAgreement = SupportServiceLevelAgreement.DeserializeSupportServiceLevelAgreement(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportEngineer"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value);
+                            supportEngineer = SupportEngineer.DeserializeSupportEngineer(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("supportPlanType"u8))
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value);
+                            technicalTicketDetails = TechnicalTicketDetails.DeserializeTechnicalTicketDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("quotaTicketDetails"u8))
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Support
                             {
                                 continue;
                             }
-                            quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value);
+                            quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("secondaryConsent"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsent> array = new List<SecondaryConsent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item, options));
                             }
                             secondaryConsent = array;
                             continue;

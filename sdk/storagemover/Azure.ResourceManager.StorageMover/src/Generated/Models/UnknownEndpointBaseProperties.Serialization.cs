@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEndpointBaseProperties(document.RootElement, options);
+            return DeserializeEndpointBaseProperties(document.RootElement, options);
         }
 
         internal static UnknownEndpointBaseProperties DeserializeUnknownEndpointBaseProperties(JsonElement element, ModelReaderWriterOptions options = null)

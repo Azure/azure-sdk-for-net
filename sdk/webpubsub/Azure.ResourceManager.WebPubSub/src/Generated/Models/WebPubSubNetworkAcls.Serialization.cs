@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     {
                         continue;
                     }
-                    publicNetwork = PublicNetworkAcls.DeserializePublicNetworkAcls(property.Value);
+                    publicNetwork = PublicNetworkAcls.DeserializePublicNetworkAcls(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("privateEndpoints"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<PrivateEndpointAcl> array = new List<PrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointAcl.DeserializePrivateEndpointAcl(item));
+                        array.Add(PrivateEndpointAcl.DeserializePrivateEndpointAcl(item, options));
                     }
                     privateEndpoints = array;
                     continue;

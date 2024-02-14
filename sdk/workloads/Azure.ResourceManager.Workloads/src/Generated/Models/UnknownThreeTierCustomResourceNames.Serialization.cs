@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownThreeTierCustomResourceNames(document.RootElement, options);
+            return DeserializeThreeTierCustomResourceNames(document.RootElement, options);
         }
 
         internal static UnknownThreeTierCustomResourceNames DeserializeUnknownThreeTierCustomResourceNames(JsonElement element, ModelReaderWriterOptions options = null)

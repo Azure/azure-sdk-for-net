@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                        array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item, options));
                     }
                     routes = array;
                     continue;

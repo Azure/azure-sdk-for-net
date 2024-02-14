@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Synapse.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSsisObjectMetadata(document.RootElement, options);
+            return DeserializeSynapseSsisObjectMetadata(document.RootElement, options);
         }
 
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element, ModelReaderWriterOptions options = null)

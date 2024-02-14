@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOSConfiguration(document.RootElement, options);
+            return DeserializeSapOSConfiguration(document.RootElement, options);
         }
 
         internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
