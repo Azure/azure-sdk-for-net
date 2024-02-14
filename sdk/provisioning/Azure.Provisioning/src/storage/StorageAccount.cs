@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage
 
         private static string GetName(IConstruct scope, string name)
         {
-            var result = $"{name}-{Guid.NewGuid()}";
+            var result = $"{name}-{Guid.NewGuid().ToString().Replace("-", "")}";
             return result.Substring(0, Math.Min(result.Length, 24));
         }
 
