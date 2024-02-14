@@ -420,6 +420,31 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         }
 
         [Test]
+        public void TeamsComplianceRecordingStateChangedEventParsed_Test()
+        {
+            TeamsComplianceRecordingStateChanged @event = CallAutomationModelFactory.TeamsComplianceRecordingStateChanged(
+                callConnectionId: "callConnectionId",
+                serverCallId: "serverCallId",
+                correlationId: "correlationId",
+                recordingId: "recordingId",
+                state: RecordingState.Active,
+                startDateTime: DateTimeOffset.UtcNow);
+            JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+            string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TeamsComplianceRecordingStateChanged");
+            if (parsedEvent is TeamsComplianceRecordingStateChanged recordingEvent)
+            {
+                Assert.AreEqual("recordingId", recordingEvent.RecordingId);
+                Assert.AreEqual("serverCallId", recordingEvent.ServerCallId);
+                Assert.AreEqual(RecordingState.Active, recordingEvent.State);
+            }
+            else
+            {
+                Assert.Fail("Event parsed wrongfully");
+            }
+        }
+
+        [Test]
         public void PlayCompletedEventParsed_Test()
         {
             PlayCompleted @event = CallAutomationModelFactory.PlayCompleted(

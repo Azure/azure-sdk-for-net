@@ -14,7 +14,7 @@ namespace Azure.Communication.CallAutomation
     public partial class RecordingStateChanged : CallAutomationEventBase
     {
         /// <summary>
-        /// THe recording state
+        /// The recording state
         /// </summary>
         [JsonConverter(typeof(EquatableEnumJsonConverter<RecordingState>))]
         public RecordingState State { get; set; }
