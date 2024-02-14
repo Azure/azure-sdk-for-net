@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCloudOffering(document.RootElement, options);
+            return DeserializeSecurityCenterCloudOffering(document.RootElement, options);
         }
 
         internal static UnknownCloudOffering DeserializeUnknownCloudOffering(JsonElement element, ModelReaderWriterOptions options = null)

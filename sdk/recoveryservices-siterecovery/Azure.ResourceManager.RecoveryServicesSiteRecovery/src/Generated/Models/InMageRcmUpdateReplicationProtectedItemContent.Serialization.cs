@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicContent> array = new List<InMageRcmNicContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item));
+                        array.Add(InMageRcmNicContent.DeserializeInMageRcmNicContent(item, options));
                     }
                     vmNics = array;
                     continue;

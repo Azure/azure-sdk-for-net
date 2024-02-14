@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownJob(document.RootElement, options);
+            return DeserializeBackupGenericJob(document.RootElement, options);
         }
 
         internal static UnknownJob DeserializeUnknownJob(JsonElement element, ModelReaderWriterOptions options = null)

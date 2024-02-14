@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownArmDeploymentScript(document.RootElement, options);
+            return DeserializeArmDeploymentScriptData(document.RootElement, options);
         }
 
         internal static UnknownArmDeploymentScript DeserializeUnknownArmDeploymentScript(JsonElement element, ModelReaderWriterOptions options = null)
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
+                    identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("location"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownGcpOrganizationalData(document.RootElement, options);
+            return DeserializeGcpOrganizationalInfo(document.RootElement, options);
         }
 
         internal static UnknownGcpOrganizationalData DeserializeUnknownGcpOrganizationalData(JsonElement element, ModelReaderWriterOptions options = null)

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    aad = ProviderPropertiesAad.DeserializeProviderPropertiesAad(property.Value);
+                    aad = ProviderPropertiesAad.DeserializeProviderPropertiesAad(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("managedApplication"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     {
                         continue;
                     }
-                    managedApplication = ProviderPropertiesManagedApplication.DeserializeProviderPropertiesManagedApplication(property.Value);
+                    managedApplication = ProviderPropertiesManagedApplication.DeserializeProviderPropertiesManagedApplication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targets"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<TargetDescription> array = new List<TargetDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetDescription.DeserializeTargetDescription(item));
+                        array.Add(TargetDescription.DeserializeTargetDescription(item, options));
                     }
                     targets = array;
                     continue;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<SkuDescription> array = new List<SkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDescription.DeserializeSkuDescription(item));
+                        array.Add(SkuDescription.DeserializeSkuDescription(item, options));
                     }
                     skus = array;
                     continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        array.Add(QuotaDimension.DeserializeQuotaDimension(item, options));
                     }
                     quotaDimensions = array;
                     continue;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDimension> array = new List<PricingDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDimension.DeserializePricingDimension(item));
+                        array.Add(PricingDimension.DeserializePricingDimension(item, options));
                     }
                     pricingDimensions = array;
                     continue;

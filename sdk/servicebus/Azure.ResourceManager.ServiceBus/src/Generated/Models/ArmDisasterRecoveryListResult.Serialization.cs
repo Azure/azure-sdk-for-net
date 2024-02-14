@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusDisasterRecoveryData> array = new List<ServiceBusDisasterRecoveryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(item));
+                        array.Add(ServiceBusDisasterRecoveryData.DeserializeServiceBusDisasterRecoveryData(item, options));
                     }
                     value = array;
                     continue;

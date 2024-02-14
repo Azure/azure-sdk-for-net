@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeManagementGroupChildInfo(item));
+                        array.Add(DeserializeManagementGroupChildInfo(item, options));
                     }
                     children = array;
                     continue;

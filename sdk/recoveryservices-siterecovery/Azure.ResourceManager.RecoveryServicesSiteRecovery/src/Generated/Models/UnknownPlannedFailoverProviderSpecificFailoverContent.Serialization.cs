@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPlannedFailoverProviderSpecificFailoverContent(document.RootElement, options);
+            return DeserializePlannedFailoverProviderSpecificFailoverContent(document.RootElement, options);
         }
 
         internal static UnknownPlannedFailoverProviderSpecificFailoverContent DeserializeUnknownPlannedFailoverProviderSpecificFailoverContent(JsonElement element, ModelReaderWriterOptions options = null)

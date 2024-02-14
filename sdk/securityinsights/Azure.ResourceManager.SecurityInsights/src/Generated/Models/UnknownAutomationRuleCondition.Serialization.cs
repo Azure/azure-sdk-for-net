@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAutomationRuleCondition(document.RootElement, options);
+            return DeserializeSecurityInsightsAutomationRuleCondition(document.RootElement, options);
         }
 
         internal static UnknownAutomationRuleCondition DeserializeUnknownAutomationRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)

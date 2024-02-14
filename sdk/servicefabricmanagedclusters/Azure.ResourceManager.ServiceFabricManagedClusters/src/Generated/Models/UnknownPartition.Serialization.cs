@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPartition(document.RootElement, options);
+            return DeserializeManagedServicePartitionScheme(document.RootElement, options);
         }
 
         internal static UnknownPartition DeserializeUnknownPartition(JsonElement element, ModelReaderWriterOptions options = null)

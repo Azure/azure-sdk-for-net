@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProtectionContainer(document.RootElement, options);
+            return DeserializeBackupGenericProtectionContainer(document.RootElement, options);
         }
 
         internal static UnknownProtectionContainer DeserializeUnknownProtectionContainer(JsonElement element, ModelReaderWriterOptions options = null)

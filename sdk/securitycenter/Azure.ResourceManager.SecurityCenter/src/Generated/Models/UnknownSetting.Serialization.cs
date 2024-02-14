@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSetting(document.RootElement, options);
+            return DeserializeSecuritySettingData(document.RootElement, options);
         }
 
         internal static UnknownSetting DeserializeUnknownSetting(JsonElement element, ModelReaderWriterOptions options = null)

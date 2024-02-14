@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAuthenticationDetailsProperties(document.RootElement, options);
+            return DeserializeAuthenticationDetailsProperties(document.RootElement, options);
         }
 
         internal static UnknownAuthenticationDetailsProperties DeserializeUnknownAuthenticationDetailsProperties(JsonElement element, ModelReaderWriterOptions options = null)

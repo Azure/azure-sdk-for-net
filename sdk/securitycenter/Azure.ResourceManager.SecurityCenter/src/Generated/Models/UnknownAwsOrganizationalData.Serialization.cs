@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAwsOrganizationalData(document.RootElement, options);
+            return DeserializeAwsOrganizationalInfo(document.RootElement, options);
         }
 
         internal static UnknownAwsOrganizationalData DeserializeUnknownAwsOrganizationalData(JsonElement element, ModelReaderWriterOptions options = null)

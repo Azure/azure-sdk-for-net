@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterPricingData> array = new List<SecurityCenterPricingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterPricingData.DeserializeSecurityCenterPricingData(item));
+                        array.Add(SecurityCenterPricingData.DeserializeSecurityCenterPricingData(item, options));
                     }
                     value = array;
                     continue;

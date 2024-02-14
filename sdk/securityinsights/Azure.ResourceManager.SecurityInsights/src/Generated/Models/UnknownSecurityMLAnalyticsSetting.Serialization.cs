@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecurityMLAnalyticsSetting(document.RootElement, options);
+            return DeserializeSecurityMLAnalyticsSettingData(document.RootElement, options);
         }
 
         internal static UnknownSecurityMLAnalyticsSetting DeserializeUnknownSecurityMLAnalyticsSetting(JsonElement element, ModelReaderWriterOptions options = null)

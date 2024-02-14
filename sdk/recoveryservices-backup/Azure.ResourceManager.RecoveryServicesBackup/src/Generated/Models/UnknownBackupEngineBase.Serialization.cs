@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupEngineBase(document.RootElement, options);
+            return DeserializeBackupGenericEngine(document.RootElement, options);
         }
 
         internal static UnknownBackupEngineBase DeserializeUnknownBackupEngineBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value);
+                    extendedInfo = BackupEngineExtendedInfo.DeserializeBackupEngineExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

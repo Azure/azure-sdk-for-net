@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomAlertRule(document.RootElement, options);
+            return DeserializeCustomAlertRule(document.RootElement, options);
         }
 
         internal static UnknownCustomAlertRule DeserializeUnknownCustomAlertRule(JsonElement element, ModelReaderWriterOptions options = null)

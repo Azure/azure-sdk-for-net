@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceCertificateDetails(document.RootElement, options);
+            return DeserializeResourceCertificateDetails(document.RootElement, options);
         }
 
         internal static UnknownResourceCertificateDetails DeserializeUnknownResourceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)

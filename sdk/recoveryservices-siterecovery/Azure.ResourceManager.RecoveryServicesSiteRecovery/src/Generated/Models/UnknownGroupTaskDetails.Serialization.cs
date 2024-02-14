@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownGroupTaskDetails(document.RootElement, options);
+            return DeserializeSiteRecoveryGroupTaskDetails(document.RootElement, options);
         }
 
         internal static UnknownGroupTaskDetails DeserializeUnknownGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     childTasks = array;
                     continue;

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceSetData> array = new List<MoverResourceSetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceSetData.DeserializeMoverResourceSetData(item));
+                        array.Add(MoverResourceSetData.DeserializeMoverResourceSetData(item, options));
                     }
                     value = array;
                     continue;

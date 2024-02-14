@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFacet(document.RootElement, options);
+            return DeserializeFacet(document.RootElement, options);
         }
 
         internal static UnknownFacet DeserializeUnknownFacet(JsonElement element, ModelReaderWriterOptions options = null)

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverSummaryItemInfo> array = new List<MoverSummaryItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item));
+                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item, options));
                     }
                     summary = array;
                     continue;

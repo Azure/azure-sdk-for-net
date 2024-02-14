@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Reservations
                     {
                         continue;
                     }
-                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value);
+                    sku = ReservationsSkuName.DeserializeReservationsSkuName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Reservations
                     {
                         continue;
                     }
-                    properties = ReservationProperties.DeserializeReservationProperties(property.Value);
+                    properties = ReservationProperties.DeserializeReservationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

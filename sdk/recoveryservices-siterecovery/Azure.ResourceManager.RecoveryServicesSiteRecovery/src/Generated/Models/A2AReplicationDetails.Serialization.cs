@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryExtendedLocation"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialRecoveryFabricLocation"u8))
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectedDiskDetails> array = new List<A2AProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectedDiskDetails.DeserializeA2AProtectedDiskDetails(item));
+                        array.Add(A2AProtectedDiskDetails.DeserializeA2AProtectedDiskDetails(item, options));
                     }
                     protectedDisks = array;
                     continue;
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AUnprotectedDiskDetails> array = new List<A2AUnprotectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AUnprotectedDiskDetails.DeserializeA2AUnprotectedDiskDetails(item));
+                        array.Add(A2AUnprotectedDiskDetails.DeserializeA2AUnprotectedDiskDetails(item, options));
                     }
                     unprotectedDisks = array;
                     continue;
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectedManagedDiskDetails> array = new List<A2AProtectedManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectedManagedDiskDetails.DeserializeA2AProtectedManagedDiskDetails(item));
+                        array.Add(A2AProtectedManagedDiskDetails.DeserializeA2AProtectedManagedDiskDetails(item, options));
                     }
                     protectedManagedDisks = array;
                     continue;
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        array.Add(VmNicDetails.DeserializeVmNicDetails(item, options));
                     }
                     vmNics = array;
                     continue;
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value);
+                    vmSyncedConfigDetails = A2AVmSyncedConfigDetails.DeserializeA2AVmSyncedConfigDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("monitoringPercentageCompletion"u8))
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmEncryptionType"u8))

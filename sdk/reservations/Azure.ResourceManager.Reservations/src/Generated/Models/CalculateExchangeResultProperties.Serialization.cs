@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    netPayable = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("refundsTotal"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    refundsTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("purchasesTotal"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    purchasesTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("reservationsToPurchase"u8))
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToPurchaseCalculateExchange> array = new List<ReservationToPurchaseCalculateExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToPurchaseCalculateExchange.DeserializeReservationToPurchaseCalculateExchange(item));
+                        array.Add(ReservationToPurchaseCalculateExchange.DeserializeReservationToPurchaseCalculateExchange(item, options));
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanToPurchaseCalculateExchange> array = new List<SavingsPlanToPurchaseCalculateExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanToPurchaseCalculateExchange.DeserializeSavingsPlanToPurchaseCalculateExchange(item));
+                        array.Add(SavingsPlanToPurchaseCalculateExchange.DeserializeSavingsPlanToPurchaseCalculateExchange(item, options));
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToExchange> array = new List<ReservationToExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToExchange.DeserializeReservationToExchange(item));
+                        array.Add(ReservationToExchange.DeserializeReservationToExchange(item, options));
                     }
                     reservationsToExchange = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value);
+                    policyResult = ExchangePolicyErrors.DeserializeExchangePolicyErrors(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

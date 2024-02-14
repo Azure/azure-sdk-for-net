@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRPrivateLinkResource> array = new List<SignalRPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRPrivateLinkResource.DeserializeSignalRPrivateLinkResource(item));
+                        array.Add(SignalRPrivateLinkResource.DeserializeSignalRPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;

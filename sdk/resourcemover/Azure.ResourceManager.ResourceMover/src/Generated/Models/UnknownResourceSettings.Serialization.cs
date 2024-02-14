@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceSettings(document.RootElement, options);
+            return DeserializeMoverResourceSettings(document.RootElement, options);
         }
 
         internal static UnknownResourceSettings DeserializeUnknownResourceSettings(JsonElement element, ModelReaderWriterOptions options = null)

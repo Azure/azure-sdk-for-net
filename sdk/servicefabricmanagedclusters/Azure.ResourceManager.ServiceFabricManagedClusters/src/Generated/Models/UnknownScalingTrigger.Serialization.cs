@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownScalingTrigger(document.RootElement, options);
+            return DeserializeManagedServiceScalingTrigger(document.RootElement, options);
         }
 
         internal static UnknownScalingTrigger DeserializeUnknownScalingTrigger(JsonElement element, ModelReaderWriterOptions options = null)

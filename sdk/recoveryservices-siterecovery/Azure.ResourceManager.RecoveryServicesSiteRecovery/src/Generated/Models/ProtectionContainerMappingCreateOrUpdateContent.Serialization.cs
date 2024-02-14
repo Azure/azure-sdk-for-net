@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    properties = SiteRecoveryCreateProtectionContainerMappingProperties.DeserializeSiteRecoveryCreateProtectionContainerMappingProperties(property.Value);
+                    properties = SiteRecoveryCreateProtectionContainerMappingProperties.DeserializeSiteRecoveryCreateProtectionContainerMappingProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

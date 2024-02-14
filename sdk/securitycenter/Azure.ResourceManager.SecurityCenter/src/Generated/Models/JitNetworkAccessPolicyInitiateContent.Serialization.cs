@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyInitiateVirtualMachine> array = new List<JitNetworkAccessPolicyInitiateVirtualMachine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item));
+                        array.Add(JitNetworkAccessPolicyInitiateVirtualMachine.DeserializeJitNetworkAccessPolicyInitiateVirtualMachine(item, options));
                     }
                     virtualMachines = array;
                     continue;

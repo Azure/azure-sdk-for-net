@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownWorkloadProtectableItem(document.RootElement, options);
+            return DeserializeWorkloadProtectableItem(document.RootElement, options);
         }
 
         internal static UnknownWorkloadProtectableItem DeserializeUnknownWorkloadProtectableItem(JsonElement element, ModelReaderWriterOptions options = null)

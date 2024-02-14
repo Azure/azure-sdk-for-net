@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<GitHubOwnerData> array = new List<GitHubOwnerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GitHubOwnerData.DeserializeGitHubOwnerData(item));
+                        array.Add(GitHubOwnerData.DeserializeGitHubOwnerData(item, options));
                     }
                     value = array;
                     continue;

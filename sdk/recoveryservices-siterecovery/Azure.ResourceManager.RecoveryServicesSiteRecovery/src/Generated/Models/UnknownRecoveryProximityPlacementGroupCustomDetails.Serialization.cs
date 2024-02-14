@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
+            return DeserializeRecoveryProximityPlacementGroupCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownRecoveryProximityPlacementGroupCustomDetails DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)

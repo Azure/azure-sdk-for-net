@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value);
+                    sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             {
                                 continue;
                             }
-                            encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value);
+                            encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             List<RedisEnterprisePrivateEndpointConnectionData> array = new List<RedisEnterprisePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(item));
+                                array.Add(RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;

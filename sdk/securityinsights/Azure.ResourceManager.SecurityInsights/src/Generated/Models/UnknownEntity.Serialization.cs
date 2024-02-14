@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEntity(document.RootElement, options);
+            return DeserializeSecurityInsightsEntity(document.RootElement, options);
         }
 
         internal static UnknownEntity DeserializeUnknownEntity(JsonElement element, ModelReaderWriterOptions options = null)

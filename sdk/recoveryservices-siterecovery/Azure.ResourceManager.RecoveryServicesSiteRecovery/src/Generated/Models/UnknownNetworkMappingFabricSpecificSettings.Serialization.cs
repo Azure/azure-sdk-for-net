@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNetworkMappingFabricSpecificSettings(document.RootElement, options);
+            return DeserializeNetworkMappingFabricSpecificSettings(document.RootElement, options);
         }
 
         internal static UnknownNetworkMappingFabricSpecificSettings DeserializeUnknownNetworkMappingFabricSpecificSettings(JsonElement element, ModelReaderWriterOptions options = null)

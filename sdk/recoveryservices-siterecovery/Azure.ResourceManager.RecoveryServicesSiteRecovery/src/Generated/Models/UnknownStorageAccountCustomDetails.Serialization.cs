@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStorageAccountCustomDetails(document.RootElement, options);
+            return DeserializeStorageAccountCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownStorageAccountCustomDetails DeserializeUnknownStorageAccountCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)

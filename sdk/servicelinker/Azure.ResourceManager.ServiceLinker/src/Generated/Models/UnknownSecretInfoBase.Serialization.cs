@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecretInfoBase(document.RootElement, options);
+            return DeserializeSecretBaseInfo(document.RootElement, options);
         }
 
         internal static UnknownSecretInfoBase DeserializeUnknownSecretInfoBase(JsonElement element, ModelReaderWriterOptions options = null)

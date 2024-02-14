@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReplicationExtensionModelCustomProperties(document.RootElement, options);
+            return DeserializeReplicationExtensionModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownReplicationExtensionModelCustomProperties DeserializeUnknownReplicationExtensionModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)

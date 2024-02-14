@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            author = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value);
+                            author = SecurityInsightsClientInfo.DeserializeSecurityInsightsClientInfo(property0.Value, options);
                             continue;
                         }
                     }

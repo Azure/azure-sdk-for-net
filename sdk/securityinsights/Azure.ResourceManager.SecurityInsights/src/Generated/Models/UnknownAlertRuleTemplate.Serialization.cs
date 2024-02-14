@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAlertRuleTemplate(document.RootElement, options);
+            return DeserializeSecurityInsightsAlertRuleTemplateData(document.RootElement, options);
         }
 
         internal static UnknownAlertRuleTemplate DeserializeUnknownAlertRuleTemplate(JsonElement element, ModelReaderWriterOptions options = null)

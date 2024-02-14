@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFabricSpecificCreationContent(document.RootElement, options);
+            return DeserializeFabricSpecificCreationContent(document.RootElement, options);
         }
 
         internal static UnknownFabricSpecificCreationContent DeserializeUnknownFabricSpecificCreationContent(JsonElement element, ModelReaderWriterOptions options = null)

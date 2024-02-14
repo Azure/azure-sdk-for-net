@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupRequest(document.RootElement, options);
+            return DeserializeBackupContent(document.RootElement, options);
         }
 
         internal static UnknownBackupRequest DeserializeUnknownBackupRequest(JsonElement element, ModelReaderWriterOptions options = null)

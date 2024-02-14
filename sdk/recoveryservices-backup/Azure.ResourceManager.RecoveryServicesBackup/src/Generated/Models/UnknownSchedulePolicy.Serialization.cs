@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSchedulePolicy(document.RootElement, options);
+            return DeserializeBackupSchedulePolicy(document.RootElement, options);
         }
 
         internal static UnknownSchedulePolicy DeserializeUnknownSchedulePolicy(JsonElement element, ModelReaderWriterOptions options = null)

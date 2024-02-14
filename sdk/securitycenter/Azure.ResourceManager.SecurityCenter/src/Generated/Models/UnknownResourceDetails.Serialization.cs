@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceDetails(document.RootElement, options);
+            return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
         }
 
         internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)

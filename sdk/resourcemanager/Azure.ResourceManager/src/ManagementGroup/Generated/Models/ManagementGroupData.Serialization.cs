@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             {
                                 continue;
                             }
-                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value);
+                            details = ManagementGroupInfo.DeserializeManagementGroupInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("children"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagementGroups
                             List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item));
+                                array.Add(ManagementGroupChildInfo.DeserializeManagementGroupChildInfo(item, options));
                             }
                             children = array;
                             continue;

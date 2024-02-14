@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownThreatIntelligenceInformation(document.RootElement, options);
+            return DeserializeSecurityInsightsThreatIntelligenceIndicatorBaseData(document.RootElement, options);
         }
 
         internal static UnknownThreatIntelligenceInformation DeserializeUnknownThreatIntelligenceInformation(JsonElement element, ModelReaderWriterOptions options = null)

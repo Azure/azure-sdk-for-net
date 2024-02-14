@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            createdBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("displayName"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value);
+                            updatedBy = SecurityInsightsUserInfo.DeserializeSecurityInsightsUserInfo(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventTime"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.SecurityInsights
                             {
                                 continue;
                             }
-                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value);
+                            incidentInfo = SecurityInsightsBookmarkIncidentInfo.DeserializeSecurityInsightsBookmarkIncidentInfo(property0.Value, options);
                             continue;
                         }
                     }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServicePlacementPolicyDescription(document.RootElement, options);
+            return DeserializeServicePlacementPolicyDescription(document.RootElement, options);
         }
 
         internal static UnknownServicePlacementPolicyDescription DeserializeUnknownServicePlacementPolicyDescription(JsonElement element, ModelReaderWriterOptions options = null)

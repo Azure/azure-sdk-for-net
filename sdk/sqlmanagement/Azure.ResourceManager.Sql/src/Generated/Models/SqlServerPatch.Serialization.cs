@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item));
+                                array.Add(SqlServerPrivateEndpointConnection.DeserializeSqlServerPrivateEndpointConnection(item, options));
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
+                            administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("restrictOutboundNetworkAccess"u8))

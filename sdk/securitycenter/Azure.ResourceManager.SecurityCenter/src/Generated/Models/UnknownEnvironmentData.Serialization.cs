@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEnvironmentData(document.RootElement, options);
+            return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
         }
 
         internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)

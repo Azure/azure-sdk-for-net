@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceData> array = new List<SearchServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceData.DeserializeSearchServiceData(item));
+                        array.Add(SearchServiceData.DeserializeSearchServiceData(item, options));
                     }
                     value = array;
                     continue;

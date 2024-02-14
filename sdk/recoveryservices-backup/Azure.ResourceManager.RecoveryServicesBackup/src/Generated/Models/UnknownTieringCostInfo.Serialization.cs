@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTieringCostInfo(document.RootElement, options);
+            return DeserializeTieringCostInfo(document.RootElement, options);
         }
 
         internal static UnknownTieringCostInfo DeserializeUnknownTieringCostInfo(JsonElement element, ModelReaderWriterOptions options = null)

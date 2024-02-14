@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);
+                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))

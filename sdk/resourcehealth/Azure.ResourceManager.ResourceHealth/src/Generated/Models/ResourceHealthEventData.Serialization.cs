@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            article = ResourceHealthEventArticle.DeserializeResourceHealthEventArticle(property0.Value);
+                            article = ResourceHealthEventArticle.DeserializeResourceHealthEventArticle(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("links"u8))
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventLink> array = new List<ResourceHealthEventLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventLink.DeserializeResourceHealthEventLink(item));
+                                array.Add(ResourceHealthEventLink.DeserializeResourceHealthEventLink(item, options));
                             }
                             links = array;
                             continue;
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventImpact> array = new List<ResourceHealthEventImpact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventImpact.DeserializeResourceHealthEventImpact(item));
+                                array.Add(ResourceHealthEventImpact.DeserializeResourceHealthEventImpact(item, options));
                             }
                             impact = array;
                             continue;
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            recommendedActions = ResourceHealthEventRecommendedActions.DeserializeResourceHealthEventRecommendedActions(property0.Value);
+                            recommendedActions = ResourceHealthEventRecommendedActions.DeserializeResourceHealthEventRecommendedActions(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("faqs"u8))
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventFaq> array = new List<ResourceHealthEventFaq>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventFaq.DeserializeResourceHealthEventFaq(item));
+                                array.Add(ResourceHealthEventFaq.DeserializeResourceHealthEventFaq(item, options));
                             }
                             faqs = array;
                             continue;
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             {
                                 continue;
                             }
-                            additionalInformation = ResourceHealthEventAdditionalInformation.DeserializeResourceHealthEventAdditionalInformation(property0.Value);
+                            additionalInformation = ResourceHealthEventAdditionalInformation.DeserializeResourceHealthEventAdditionalInformation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("duration"u8))

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownLimitJsonObject(document.RootElement, options);
+            return DeserializeQuotaLimitJsonObject(document.RootElement, options);
         }
 
         internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options = null)

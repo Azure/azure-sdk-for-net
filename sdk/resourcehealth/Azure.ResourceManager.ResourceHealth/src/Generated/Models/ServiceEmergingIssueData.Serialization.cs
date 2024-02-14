@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueBannerType> array = new List<EmergingIssueBannerType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item));
+                                array.Add(EmergingIssueBannerType.DeserializeEmergingIssueBannerType(item, options));
                             }
                             statusBanners = array;
                             continue;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<EmergingIssueActiveEventType> array = new List<EmergingIssueActiveEventType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item));
+                                array.Add(EmergingIssueActiveEventType.DeserializeEmergingIssueActiveEventType(item, options));
                             }
                             statusActiveEvents = array;
                             continue;

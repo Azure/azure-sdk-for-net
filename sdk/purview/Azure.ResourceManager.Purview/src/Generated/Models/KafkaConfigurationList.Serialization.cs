@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewKafkaConfigurationData> array = new List<PurviewKafkaConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item));
+                        array.Add(PurviewKafkaConfigurationData.DeserializePurviewKafkaConfigurationData(item, options));
                     }
                     value = array;
                     continue;

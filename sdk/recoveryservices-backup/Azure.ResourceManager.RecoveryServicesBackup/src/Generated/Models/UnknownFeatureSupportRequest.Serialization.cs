@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFeatureSupportRequest(document.RootElement, options);
+            return DeserializeFeatureSupportContent(document.RootElement, options);
         }
 
         internal static UnknownFeatureSupportRequest DeserializeUnknownFeatureSupportRequest(JsonElement element, ModelReaderWriterOptions options = null)

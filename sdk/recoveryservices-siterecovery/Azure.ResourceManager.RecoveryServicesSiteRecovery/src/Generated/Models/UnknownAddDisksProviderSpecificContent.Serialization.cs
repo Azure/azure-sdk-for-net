@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddDisksProviderSpecificContent(document.RootElement, options);
+            return DeserializeSiteRecoveryAddDisksProviderSpecificContent(document.RootElement, options);
         }
 
         internal static UnknownAddDisksProviderSpecificContent DeserializeUnknownAddDisksProviderSpecificContent(JsonElement element, ModelReaderWriterOptions options = null)

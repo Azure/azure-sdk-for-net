@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    protectionProfileCustomContent = ProtectionProfileCustomDetails.DeserializeProtectionProfileCustomDetails(property.Value);
+                    protectionProfileCustomContent = ProtectionProfileCustomDetails.DeserializeProtectionProfileCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryResourceGroupId"u8))
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    primaryStagingStorageAccountCustomContent = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAvailabilitySetCustomInput"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryAvailabilitySetCustomContent = RecoveryAvailabilitySetCustomDetails.DeserializeRecoveryAvailabilitySetCustomDetails(property.Value);
+                    recoveryAvailabilitySetCustomContent = RecoveryAvailabilitySetCustomDetails.DeserializeRecoveryAvailabilitySetCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryVirtualNetworkCustomInput"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryVirtualNetworkCustomContent = RecoveryVirtualNetworkCustomDetails.DeserializeRecoveryVirtualNetworkCustomDetails(property.Value);
+                    recoveryVirtualNetworkCustomContent = RecoveryVirtualNetworkCustomDetails.DeserializeRecoveryVirtualNetworkCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryProximityPlacementGroupCustomInput"u8))
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryProximityPlacementGroupCustomContent = RecoveryProximityPlacementGroupCustomDetails.DeserializeRecoveryProximityPlacementGroupCustomDetails(property.Value);
+                    recoveryProximityPlacementGroupCustomContent = RecoveryProximityPlacementGroupCustomDetails.DeserializeRecoveryProximityPlacementGroupCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoProtectionOfDataDisk"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectionIntentDiskDetails> array = new List<A2AProtectionIntentDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectionIntentDiskDetails.DeserializeA2AProtectionIntentDiskDetails(item));
+                        array.Add(A2AProtectionIntentDiskDetails.DeserializeA2AProtectionIntentDiskDetails(item, options));
                     }
                     vmDisks = array;
                     continue;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectionIntentManagedDiskDetails> array = new List<A2AProtectionIntentManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectionIntentManagedDiskDetails.DeserializeA2AProtectionIntentManagedDiskDetails(item));
+                        array.Add(A2AProtectionIntentManagedDiskDetails.DeserializeA2AProtectionIntentManagedDiskDetails(item, options));
                     }
                     vmManagedDisks = array;
                     continue;
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    recoveryBootDiagStorageAccount = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value);
+                    recoveryBootDiagStorageAccount = StorageAccountCustomDetails.DeserializeStorageAccountCustomDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionInfo"u8))
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value);
+                    diskEncryptionInfo = SiteRecoveryDiskEncryptionInfo.DeserializeSiteRecoveryDiskEncryptionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recoveryAvailabilityZone"u8))

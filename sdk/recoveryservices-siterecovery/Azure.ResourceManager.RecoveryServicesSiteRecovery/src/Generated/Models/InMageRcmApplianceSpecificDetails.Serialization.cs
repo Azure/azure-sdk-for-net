@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmApplianceDetails> array = new List<InMageRcmApplianceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item));
+                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item, options));
                     }
                     appliances = array;
                     continue;

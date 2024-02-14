@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRecoveryResourceGroupCustomDetails(document.RootElement, options);
+            return DeserializeRecoveryResourceGroupCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownRecoveryResourceGroupCustomDetails DeserializeUnknownRecoveryResourceGroupCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
