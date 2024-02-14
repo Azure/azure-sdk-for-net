@@ -29,10 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
-        private Dictionary<string, string> DefaultTags = new Dictionary<string, string>{
-                    { "tag1", "value1" },
-                    { "tag2", "value2" },
-                    { "tag3", "value3" }};
         private AccessTier DefaultAccessTier = AccessTier.Cold;
 
     public BlockBlobStorageResourceTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
@@ -268,7 +264,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(mock.Object);
 
             // Act
-            IDictionary<string, string> metadata = BuildMetadata();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -278,7 +275,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 { "ContentDisposition", DefaultContentDisposition },
                 { "CacheControl", DefaultCacheControl },
                 { "Metadata", metadata },
-                { "Tags", DefaultTags }
+                { "Tags", tags }
             };
             StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
             {
@@ -306,7 +303,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(DefaultTags)),
+                        options.Tags.SequenceEqual(tags)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.VerifyNoOtherCalls();
@@ -487,7 +484,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlockBlobStorageResource destinationResource = new BlockBlobStorageResource(mockDestination.Object);
 
             // Act
-            IDictionary<string, string> metadata = BuildMetadata();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
 
             Dictionary<string, object> sourceProperties = new()
             {
@@ -497,7 +495,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 { "ContentDisposition", DefaultContentDisposition },
                 { "CacheControl", DefaultCacheControl },
                 { "Metadata", metadata },
-                { "Tags", DefaultTags }
+                { "Tags", tags }
             };
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
@@ -524,7 +522,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(DefaultTags)),
+                        options.Tags.SequenceEqual(tags)),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
@@ -882,7 +880,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 completeLength: completeLength);
 
             // Act
-            IDictionary<string, string> metadata = BuildMetadata();
+            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
+            IDictionary<string, string> tags = DataProvider.BuildTags();
             Dictionary<string, object> rawProperties = new()
             {
                 { "ContentType", DefaultContentType },
@@ -891,7 +890,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 { "ContentDisposition", DefaultContentDisposition },
                 { "CacheControl", DefaultCacheControl },
                 { "Metadata", metadata },
-                { "Tags", DefaultTags },
+                { "Tags", tags },
                 { "AccessTier", DefaultAccessTier },
             };
             StorageResourceItemProperties sourceProperties = new(
@@ -913,7 +912,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
                         options.HttpHeaders.CacheControl == DefaultCacheControl &&
                         options.Metadata.SequenceEqual(metadata) &&
-                        options.Tags.SequenceEqual(DefaultTags) &&
+                        options.Tags.SequenceEqual(tags) &&
                         options.AccessTier == DefaultAccessTier),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
