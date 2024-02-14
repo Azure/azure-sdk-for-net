@@ -73,7 +73,7 @@ class MatrixParameter {
             $displayName = $this.Value.ToString()
         }
 
-        if ($displayNamesLookup.ContainsKey($displayName)) {
+        if ($displayNamesLookup -and $displayNamesLookup.ContainsKey($displayName)) {
             $displayName = $displayNamesLookup[$displayName]
         }
 
@@ -336,6 +336,9 @@ function ProcessReplace
     $replaceMatrix = @()
 
     foreach ($element in $matrix) {
+        if (!$element -or $element.Count -eq 0) {
+            continue
+        }
         $replacement = [MatrixParameter[]]@()
 
         foreach ($perm in $element._permutation) {
