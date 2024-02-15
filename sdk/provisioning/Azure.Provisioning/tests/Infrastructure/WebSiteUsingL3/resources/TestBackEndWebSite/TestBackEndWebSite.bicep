@@ -30,7 +30,7 @@ resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {

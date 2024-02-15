@@ -14,8 +14,6 @@ namespace Azure.Provisioning.AppService
     {
         private const string ResourceTypeName = "Microsoft.Web/sites/config";
 
-        private static string GetName(IConstruct scope, string? name) => name is null ? $"logs-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="WebSiteConfigLogs"/>.
         /// </summary>
@@ -25,8 +23,8 @@ namespace Azure.Provisioning.AppService
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
         public WebSiteConfigLogs(IConstruct scope, string resourceName, WebSite? parent = null, string version = "2021-02-01", AzureLocation? location = default)
-            : base(scope, parent, resourceName, ResourceTypeName, version, ArmAppServiceModelFactory.SiteLogsConfigData(
-                name: resourceName,
+            : base(scope, parent, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.SiteLogsConfigData(
+                name: name,
                 applicationLogs: new ApplicationLogsConfig()
                 {
                     FileSystemLevel = WebAppLogLevel.Verbose
@@ -44,5 +42,8 @@ namespace Azure.Provisioning.AppService
                 }))
         {
         }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName) => resourceName;
     }
 }

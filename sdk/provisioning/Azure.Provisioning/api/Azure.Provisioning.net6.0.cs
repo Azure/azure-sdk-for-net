@@ -79,7 +79,7 @@ namespace Azure.Provisioning
     }
     public abstract partial class Resource : System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>
     {
-        protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, object properties) { }
+        protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, object> createProperties) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Parameter> Parameters { get { throw null; } }
@@ -87,13 +87,14 @@ namespace Azure.Provisioning
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class Resource<T> : Azure.Provisioning.Resource where T : notnull
     {
-        protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, T properties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(object)) { }
+        protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, T> createProperties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, object>)) { }
         public T Properties { get { throw null; } }
         public Azure.Provisioning.Output AddOutput(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false) { throw null; }
         public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
@@ -103,7 +104,7 @@ namespace Azure.Provisioning.AppService
 {
     public partial class AppServicePlan : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.AppServicePlanData>
     {
-        public AppServicePlan(Azure.Provisioning.IConstruct scope, string resourceName, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.AppService.AppServicePlanData)) { }
+        public AppServicePlan(Azure.Provisioning.IConstruct scope, string resourceName, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.AppServicePlanData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
     public static partial class AppServicesExtensions
@@ -112,7 +113,7 @@ namespace Azure.Provisioning.AppService
     }
     public partial class WebSite : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.WebSiteData>
     {
-        public WebSite(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.AppService.AppServicePlan appServicePlan, Azure.Provisioning.AppService.WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.AppService.WebSiteData)) { }
+        public WebSite(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.AppService.AppServicePlan appServicePlan, Azure.Provisioning.AppService.WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.WebSiteData>)) { }
         public void AddApplicationSetting(string key, Azure.Provisioning.Parameter value) { }
         public void AddApplicationSetting(string key, string value) { }
         public void AddLogConfig(string resourceName) { }
@@ -120,11 +121,12 @@ namespace Azure.Provisioning.AppService
     }
     public partial class WebSiteConfigLogs : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.SiteLogsConfigData>
     {
-        public WebSiteConfigLogs(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.AppService.WebSite? parent = null, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.AppService.SiteLogsConfigData)) { }
+        public WebSiteConfigLogs(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.AppService.WebSite? parent = null, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.SiteLogsConfigData>)) { }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
     public partial class WebSitePublishingCredentialPolicy : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>
     {
-        public WebSitePublishingCredentialPolicy(Azure.Provisioning.IConstruct scope, string resourceName, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData)) { }
+        public WebSitePublishingCredentialPolicy(Azure.Provisioning.IConstruct scope, string resourceName, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>)) { }
     }
     public enum WebSiteRuntime
     {
@@ -136,7 +138,7 @@ namespace Azure.Provisioning.KeyVaults
 {
     public partial class KeyVault : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultData>
     {
-        public KeyVault(Azure.Provisioning.IConstruct scope, string? name = null, string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.KeyVault.KeyVaultData)) { }
+        public KeyVault(Azure.Provisioning.IConstruct scope, string name = "kv", string version = "2023-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultData>)) { }
         public void AddAccessPolicy(Azure.Provisioning.Output output) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
@@ -147,8 +149,8 @@ namespace Azure.Provisioning.KeyVaults
     }
     public partial class KeyVaultSecret : Azure.Provisioning.Resource<Azure.ResourceManager.KeyVault.KeyVaultSecretData>
     {
-        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.ConnectionString connectionString, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.KeyVault.KeyVaultSecretData)) { }
-        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.KeyVault.KeyVaultSecretData)) { }
+        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.ConnectionString connectionString, string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
+        public KeyVaultSecret(Azure.Provisioning.IConstruct scope, string name = "kvs", string version = "2023-02-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.KeyVault.KeyVaultSecretData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
@@ -156,7 +158,7 @@ namespace Azure.Provisioning.ResourceManager
 {
     public partial class ResourceGroup : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.ResourceGroupData>
     {
-        public ResourceGroup(Azure.Provisioning.IConstruct scope, string? name = null, string version = "2023-07-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Resources.ResourceGroupData)) { }
+        public ResourceGroup(Azure.Provisioning.IConstruct scope, string name = "rg", string version = "2023-07-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.ResourceGroupData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
     public static partial class ResourceManagerExtensions
@@ -167,19 +169,21 @@ namespace Azure.Provisioning.ResourceManager
     }
     public partial class Subscription : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.SubscriptionData>
     {
-        public Subscription(Azure.Provisioning.IConstruct scope, System.Guid? guid = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Resources.SubscriptionData)) { }
+        public Subscription(Azure.Provisioning.IConstruct scope, System.Guid? guid = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.SubscriptionData>)) { }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
     public partial class Tenant : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.TenantData>
     {
-        public Tenant(Azure.Provisioning.IConstruct scope, System.Guid? tenantId = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Resources.TenantData)) { }
+        public Tenant(Azure.Provisioning.IConstruct scope, System.Guid? tenantId = default(System.Guid?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.TenantData>)) { }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.Resources
 {
     public partial class DeploymentScript : Azure.Provisioning.Resource<Azure.ResourceManager.Resources.Models.AzureCliScript>
     {
-        public DeploymentScript(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.Resource database, Azure.Provisioning.Parameter appUserPasswordSecret, Azure.Provisioning.Parameter sqlAdminPasswordSecret, string version = "2020-10-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Resources.Models.AzureCliScript)) { }
-        public DeploymentScript(Azure.Provisioning.IConstruct scope, string resourceName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = "2020-10-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Resources.Models.AzureCliScript)) { }
+        public DeploymentScript(Azure.Provisioning.IConstruct scope, string resourceName, Azure.Provisioning.Resource database, Azure.Provisioning.Parameter appUserPasswordSecret, Azure.Provisioning.Parameter sqlAdminPasswordSecret, string version = "2020-10-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.Models.AzureCliScript>)) { }
+        public DeploymentScript(Azure.Provisioning.IConstruct scope, string resourceName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> scriptEnvironmentVariables, string scriptContent, string version = "2020-10-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Resources.Models.AzureCliScript>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
@@ -192,18 +196,18 @@ namespace Azure.Provisioning.Sql
     }
     public partial class SqlDatabase : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlDatabaseData>
     {
-        public SqlDatabase(Azure.Provisioning.IConstruct scope, string? name = null, string version = "2022-08-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Sql.SqlDatabaseData)) { }
+        public SqlDatabase(Azure.Provisioning.IConstruct scope, string name = "db", string version = "2022-08-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlDatabaseData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public Azure.Provisioning.Sql.ConnectionString GetConnectionString(Azure.Provisioning.Parameter passwordSecret, string userName = "appUser") { throw null; }
     }
     public partial class SqlFirewallRule : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlFirewallRuleData>
     {
-        public SqlFirewallRule(Azure.Provisioning.IConstruct scope, string? name = null, string version = "2020-11-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Sql.SqlFirewallRuleData)) { }
+        public SqlFirewallRule(Azure.Provisioning.IConstruct scope, string name = "fw", string version = "2020-11-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlFirewallRuleData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
     public partial class SqlServer : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlServerData>
     {
-        public SqlServer(Azure.Provisioning.IConstruct scope, string name, string? version = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Sql.SqlServerData)) { }
+        public SqlServer(Azure.Provisioning.IConstruct scope, string name, string version = "2022-08-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlServerData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
 }
@@ -211,13 +215,14 @@ namespace Azure.Provisioning.Storage
 {
     public partial class BlobService : Azure.Provisioning.Resource<Azure.ResourceManager.Storage.BlobServiceData>
     {
-        public BlobService(Azure.Provisioning.IConstruct scope, string name = "blob") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Storage.BlobServiceData)) { }
+        public BlobService(Azure.Provisioning.IConstruct scope, string name = "blob") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Storage.BlobServiceData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
     }
     public partial class StorageAccount : Azure.Provisioning.Resource<Azure.ResourceManager.Storage.StorageAccountData>
     {
-        public StorageAccount(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Storage.Models.StorageKind kind, Azure.ResourceManager.Storage.Models.StorageSkuName sku, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "sa") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(Azure.ResourceManager.Storage.StorageAccountData)) { }
+        public StorageAccount(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.Storage.Models.StorageKind kind, Azure.ResourceManager.Storage.Models.StorageSkuName sku, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "sa") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Storage.StorageAccountData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
     public static partial class StorageExtensions
     {
