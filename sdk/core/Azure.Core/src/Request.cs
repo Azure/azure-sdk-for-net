@@ -89,10 +89,20 @@ namespace Azure.Core
         /// <summary>
         /// TBD.
         /// </summary>
-        protected override Uri UriCore
+        protected override Uri? UriCore
         {
             get => Uri.ToUri();
-            set => Uri.Reset(value);
+            set
+            {
+                if (value is null)
+                {
+                    Uri = new();
+                }
+                else
+                {
+                    Uri.Reset(value);
+                }
+            }
         }
 
         /// <summary>

@@ -335,9 +335,9 @@ public class MapsClientTests
                 set => _method = value;
             }
 
-            protected override Uri UriCore
+            protected override Uri? UriCore
             {
-                get => _uri!;
+                get => _uri;
                 set => _uri = value;
             }
 

@@ -531,7 +531,7 @@ namespace Azure.Core
         public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
         protected override string MethodCore { get { throw null; } set { } }
         public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
-        protected override System.Uri UriCore { get { throw null; } set { } }
+        protected override System.Uri? UriCore { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();

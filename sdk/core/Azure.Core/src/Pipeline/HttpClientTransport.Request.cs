@@ -50,7 +50,7 @@ namespace Azure.Core.Pipeline
                     _pipelineRequest.Method = value;
                 }
             }
-            protected override Uri UriCore
+            protected override Uri? UriCore
             {
                 get
                 {

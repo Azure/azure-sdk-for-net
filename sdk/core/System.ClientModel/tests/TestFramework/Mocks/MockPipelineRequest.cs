@@ -37,18 +37,9 @@ public class MockPipelineRequest : PipelineRequest
         set => _method = value;
     }
 
-    protected override Uri UriCore
+    protected override Uri? UriCore
     {
-        get
-        {
-            if (_uri is null)
-            {
-                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
-            }
-
-            return _uri;
-        }
-
+        get => _uri;
         set => _uri = value;
     }
 

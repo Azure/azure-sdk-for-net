@@ -185,8 +185,8 @@ namespace System.ClientModel.Primitives
         protected abstract System.ClientModel.Primitives.PipelineRequestHeaders HeadersCore { get; }
         public string Method { get { throw null; } set { } }
         protected abstract string MethodCore { get; set; }
-        public System.Uri Uri { get { throw null; } set { } }
-        protected abstract System.Uri UriCore { get; set; }
+        public System.Uri? Uri { get { throw null; } set { } }
+        protected abstract System.Uri? UriCore { get; set; }
         public abstract void Dispose();
     }
     public abstract partial class PipelineRequestHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable

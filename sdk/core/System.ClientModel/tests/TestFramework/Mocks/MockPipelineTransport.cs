@@ -119,7 +119,7 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
-        private Uri _uri;
+        private Uri? _uri;
         private readonly PipelineRequestHeaders _headers;
 
         public TransportRequest()
@@ -145,7 +145,7 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override Uri UriCore
+        protected override Uri? UriCore
         {
             get => _uri;
             set => _uri = value;
