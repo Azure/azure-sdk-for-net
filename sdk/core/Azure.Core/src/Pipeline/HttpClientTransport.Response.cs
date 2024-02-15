@@ -48,7 +48,7 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    HttpClientTransportResponse.ResetContentStreamPosition(_pipelineResponse);
+                    ResetContentStreamPosition(_pipelineResponse);
                     return _pipelineResponse.Content;
                 }
             }
@@ -79,7 +79,7 @@ namespace Azure.Core.Pipeline
             public override void Dispose()
             {
                 PipelineResponse response = _pipelineResponse;
-                HttpClientTransportResponse.ResetContentStreamPosition(response);
+                ResetContentStreamPosition(response);
                 response?.Dispose();
             }
 
