@@ -17,10 +17,9 @@ namespace Azure.Provisioning.Storage
         /// Initializes a new instance of the <see cref="BlobService"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="name">The name.</param>
-        public BlobService(IConstruct scope, string name = "blob")
-            : base(scope, null, name, ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.BlobServiceData(
-                name: name,
+        public BlobService(IConstruct scope)
+            : base(scope, null, "default", ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.BlobServiceData(
+                name: "default",
                 resourceType: ResourceTypeName))
         {
         }
