@@ -100,6 +100,18 @@ namespace Azure.Provisioning
         public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
     }
 }
+namespace Azure.Provisioning.AppConfiguration
+{
+    public static partial class AppConfigurationExtensions
+    {
+        public static Azure.Provisioning.AppConfiguration.AppConfigurationStore AddAppConfigurationStore(this Azure.Provisioning.IConstruct construct, string name = "store") { throw null; }
+    }
+    public partial class AppConfigurationStore : Azure.Provisioning.Resource<Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData>
+    {
+        public AppConfigurationStore(Azure.Provisioning.IConstruct scope, string name = "store", string version = "2023-03-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData>)) { }
+        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+    }
+}
 namespace Azure.Provisioning.AppService
 {
     public partial class AppServicePlan : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.AppServicePlanData>
