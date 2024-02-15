@@ -21,9 +21,9 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="scope">The scope.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
-        public KeyVaultSecret(IConstruct scope, string name, string version = "2023-02-01")
-            : base(scope, null, GetName(scope, name), ResourceTypeName, version, ArmKeyVaultModelFactory.KeyVaultSecretData(
-                name: GetName(scope, name),
+        public KeyVaultSecret(IConstruct scope, string name = "kvs", string version = "2023-02-01")
+            : base(scope, null, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+                name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
                     value: Guid.Empty.ToString())
@@ -39,8 +39,8 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="connectionString">The connection string.</param>
         /// <param name="version">The version.</param>
         public KeyVaultSecret(IConstruct scope, string name, ConnectionString connectionString, string version = "2023-02-01")
-            : base(scope, null, GetName(scope, name), ResourceTypeName, version, ArmKeyVaultModelFactory.KeyVaultSecretData(
-                name: GetName(scope, name),
+            : base(scope, null, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultSecretData(
+                name: name,
                 resourceType: ResourceTypeName,
                 properties: ArmKeyVaultModelFactory.SecretProperties(
                     value: connectionString.Value)
@@ -48,15 +48,13 @@ namespace Azure.Provisioning.KeyVaults
         {
         }
 
-        private static string GetName(IConstruct scope, string? name) => name is null ? $"kvs-{scope.EnvironmentName}" : name;
-
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)
         {
             var result = base.FindParentInScope(scope);
             if (result is null)
             {
-                result = scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope, "kv");
+                result = scope.GetSingleResource<KeyVault>() ?? new KeyVault(scope);
             }
             return result;
         }

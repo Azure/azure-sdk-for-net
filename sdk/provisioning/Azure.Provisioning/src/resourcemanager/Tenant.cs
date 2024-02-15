@@ -16,17 +16,21 @@ namespace Azure.Provisioning.ResourceManager
     {
         private const string ResourceTypeName = "Microsoft.Resources/tenants";
 
-        private static string GetName() => Environment.GetEnvironmentVariable("AZURE_TENANT_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_TENANT_ID' found");
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Tenant"/>.
         /// </summary>
         /// <param name="scope">The scope the tenant belongs to.</param>
         /// <param name="tenantId">The tenant id.</param>
         public Tenant(IConstruct scope, Guid? tenantId = null)
-            : base(scope, null, tenantId.HasValue ? tenantId.Value.ToString() : GetName(), ResourceTypeName, "2022-12-01", ResourceManagerModelFactory.TenantData(
-                tenantId: tenantId.HasValue ? tenantId.Value : Guid.Parse(GetName())))
+            : base(scope, null, tenantId?.ToString()!, ResourceTypeName, "2022-12-01", (name) => ResourceManagerModelFactory.TenantData(
+                tenantId: tenantId.HasValue ? tenantId.Value : Guid.Parse(name)))
         {
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName)
+        {
+            return resourceName is not null ? resourceName : Environment.GetEnvironmentVariable("AZURE_TENANT_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_TENANT_ID' found");
         }
     }
 }

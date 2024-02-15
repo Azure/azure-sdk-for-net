@@ -34,7 +34,7 @@ namespace Azure.Provisioning
         /// Gets the parent <see cref="Resource"/>.
         /// </summary>
         public Resource? Parent { get; }
-        private object Properties { get; }
+        private protected object ResourceData { get; }
         /// <summary>
         /// Gets the version of the resource.
         /// </summary>
@@ -67,23 +67,62 @@ namespace Azure.Provisioning
         /// <param name="resourceName">The resource name.</param>
         /// <param name="resourceType">The resource type.</param>
         /// <param name="version">The resource version.</param>
-        /// <param name="properties">The resource properties</param>
+        /// <param name="createProperties">Lambda to create the ARM properties.</param>
         /// <exception cref="ArgumentNullException">If <paramref name="scope"/> is null.</exception>
-        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, object properties)
+        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, object> createProperties)
         {
             if (scope is null) throw new ArgumentNullException(nameof(scope));
 
+            var azureName = GetAzureName(scope, resourceName);
             Scope = scope;
             Parameters = new List<Parameter>();
             Parent =  parent ?? FindParentInScope(scope);
             Scope.AddResource(this);
-            Properties = properties;
+            ResourceData = createProperties(azureName);
             Version = version;
             ParameterOverrides = new Dictionary<object, Dictionary<string, string>>();
             Dependencies = new List<Resource>();
             ResourceType = resourceType;
-            Id = Parent is null ? ResourceIdentifier.Root : Parent is ResourceGroup ? Parent.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.GetLastType(), resourceName) : Parent.Id.AppendChildResource(ResourceType.GetLastType(), resourceName);
+            Id = Parent is null
+                ? ResourceIdentifier.Root
+                : Parent is ResourceGroup
+                    ? Parent.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.GetLastType(), azureName)
+                    : Parent.Id.AppendChildResource(ResourceType.GetLastType(), azureName);
             Name = GetHash();
+        }
+
+        /// <summary>
+        /// Validate and sanitize the resource name.
+        /// </summary>
+        /// <param name="scope">The scope.</param>
+        /// <param name="resourceName">The resource name.</param>
+        /// <returns>Sanitized resource name.</returns>
+        /// <exception cref="ArgumentException">If the resource name violates rules that cannot be sanitized.</exception>
+        protected virtual string GetAzureName(IConstruct scope, string resourceName)
+        {
+            var span = resourceName.AsSpan();
+            if (!char.IsLetter(span[0]))
+            {
+                throw new ArgumentException("Resource name must start with a letter", nameof(resourceName));
+            }
+            if (!char.IsLetterOrDigit(span[span.Length - 1]))
+            {
+                throw new ArgumentException("Resource name must end with a letter or digit", nameof(resourceName));
+            }
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < span.Length; i++)
+            {
+                char c = span[i];
+                if (!char.IsLetterOrDigit(c) && c != '-')
+                {
+                    continue;
+                }
+                stringBuilder.Append(c);
+            }
+
+            stringBuilder.Append('-');
+            stringBuilder.Append(scope.EnvironmentName);
+            return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));
         }
 
         /// <summary>
@@ -126,9 +165,9 @@ namespace Azure.Provisioning
         /// <exception cref="ArgumentException">If the <paramref name="propertyName"/> is not found on the resources properties.</exception>
         public Output AddOutput(string name, string propertyName, bool isLiteral = false, bool isSecure = false)
         {
-            string? reference = GetReference(Properties.GetType(), propertyName, Name.ToCamelCase());
+            string? reference = GetReference(ResourceData.GetType(), propertyName, Name.ToCamelCase());
             if (reference is null)
-                throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {Properties.GetType().Name}");
+                throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {ResourceData.GetType().Name}");
             var result = new Output(name, reference, Scope, isLiteral, isSecure);
             Scope.AddOutput(result);
             return result;
@@ -192,7 +231,7 @@ namespace Azure.Provisioning
             {
                 bicepOptions.ParameterOverrides.Add(parameter.Key, parameter.Value);
             }
-            var data = ModelReaderWriter.Write(Properties, bicepOptions).ToMemory();
+            var data = ModelReaderWriter.Write(ResourceData, bicepOptions).ToMemory();
 
 #if NET6_0_OR_GREATER
             WriteLines(0, BinaryData.FromBytes(data[2..]), stream, this);
