@@ -78,7 +78,8 @@ public class MockPipelineResponse : PipelineResponse
         }
     }
 
-    protected override PipelineResponseHeaders GetHeadersCore() => _headers;
+    protected override PipelineResponseHeaders HeadersCore
+        => _headers;
 
     public sealed override void Dispose()
     {
