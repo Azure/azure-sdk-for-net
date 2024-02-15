@@ -176,12 +176,12 @@ public class MockPipelineTransport : PipelineTransport
 
         public override void Dispose() { }
 
-        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
 
-        public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
