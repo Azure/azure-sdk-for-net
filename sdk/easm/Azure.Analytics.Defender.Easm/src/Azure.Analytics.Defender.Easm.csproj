@@ -8,8 +8,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <!--Suppress XML comments warnings-->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <!--Suppress single word class name-->
-    <NoWarn>$(NoWarn);AZC0012</NoWarn>
     <!--Suppress model names end with Data-->
     <NoWarn>$(NoWarn);AZC0032</NoWarn>
     <!--Suppress model names end with Request-->

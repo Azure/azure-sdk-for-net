@@ -12,14 +12,14 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The ContactAsset. </summary>
-    public partial class ContactAsset : InventoryAsset
+    public partial class ContactAsset
     {
         /// <summary> Initializes a new instance of <see cref="ContactAsset"/>. </summary>
         internal ContactAsset()
         {
             Names = new ChangeTrackingList<ObservedString>();
             Organizations = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContactAsset"/>. </summary>
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="firstSeen"></param>
         /// <param name="lastSeen"></param>
         /// <param name="count"></param>
-        internal ContactAsset(string email, IReadOnlyList<ObservedString> names, IReadOnlyList<ObservedString> organizations, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count)
+        internal ContactAsset(string email, IReadOnlyList<ObservedString> names, IReadOnlyList<ObservedString> organizations, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count)
         {
             Email = email;
             Names = names;
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the organizations. </summary>
         public IReadOnlyList<ObservedString> Organizations { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

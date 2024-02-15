@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The AsAsset. </summary>
-    public partial class AsAsset : InventoryAsset
+    public partial class AsAsset
     {
         /// <summary> Initializes a new instance of <see cref="AsAsset"/>. </summary>
         internal AsAsset()
@@ -22,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             OrgIds = new ChangeTrackingList<ObservedString>();
             Countries = new ChangeTrackingList<ObservedString>();
             Registries = new ChangeTrackingList<ObservedString>();
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
             RegistrarCreatedAt = new ChangeTrackingList<ObservedLong>();
             RegistrarUpdatedAt = new ChangeTrackingList<ObservedLong>();
             RegistrantContacts = new ChangeTrackingList<ObservedString>();
@@ -65,7 +65,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="adminPhones"></param>
         /// <param name="technicalPhones"></param>
         /// <param name="detailedFromWhoisAt"></param>
-        internal AsAsset(long? asn, IReadOnlyList<ObservedString> asNames, IReadOnlyList<ObservedString> orgNames, IReadOnlyList<ObservedString> orgIds, IReadOnlyList<ObservedString> countries, IReadOnlyList<ObservedString> registries, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedString> registrarNames, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisAt)
+        internal AsAsset(long? asn, IReadOnlyList<ObservedString> asNames, IReadOnlyList<ObservedString> orgNames, IReadOnlyList<ObservedString> orgIds, IReadOnlyList<ObservedString> countries, IReadOnlyList<ObservedString> registries, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedString> registrarNames, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, DateTimeOffset? detailedFromWhoisAt)
         {
             Asn = asn;
             AsNames = asNames;
@@ -107,7 +107,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the registries. </summary>
         public IReadOnlyList<ObservedString> Registries { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

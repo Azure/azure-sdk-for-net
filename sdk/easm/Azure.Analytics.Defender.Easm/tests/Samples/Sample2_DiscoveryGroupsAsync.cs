@@ -17,43 +17,40 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [Test]
         public async System.Threading.Tasks.Task DiscoveryGroupsScenarioAsync()
         {
-            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName,
-                TestEnvironment.WorkspaceName,
                 TestEnvironment.Credential);
             string discoveryGroupName = "Sample Disco";
             string discoveryGroupDescription = "This is a sample discovery group generated from C#";
             string[] hosts = TestEnvironment.Hosts.Split(',');
             string[] domains = TestEnvironment.Domains.Split(',');
-            DiscoGroupData request = new DiscoGroupData();
+            DiscoveryGroupData request = new DiscoveryGroupData();
             foreach (string host in hosts)
             {
-                DiscoSource seed = new DiscoSource();
-                seed.Kind = DiscoSourceKind.Host;
+                DiscoverySource seed = new DiscoverySource();
+                seed.Kind = DiscoverySourceKind.Host;
                 seed.Name = host;
                 request.Seeds.Add(seed);
             }
             foreach (string domain in domains)
             {
-                DiscoSource seed = new DiscoSource();
-                seed.Kind = DiscoSourceKind.Domain;
+                DiscoverySource seed = new DiscoverySource();
+                seed.Kind = DiscoverySourceKind.Domain;
                 seed.Name = domain;
                 request.Seeds.Add(seed);
             }
 
             request.Description = discoveryGroupDescription;
 
-            await client.CreateOrReplaceDiscoGroupAsync(discoveryGroupName, request);
+            await client.CreateOrReplaceDiscoveryGroupAsync(discoveryGroupName, request);
 
-            await client.RunDiscoGroupAsync(discoveryGroupName);
+            await client.RunDiscoveryGroupAsync(discoveryGroupName);
 
-            var discoGroups = client.GetDiscoGroupsAsync();
+            var discoGroups = client.GetDiscoveryGroupsAsync();
             await foreach (var discoGroup in discoGroups)
             {
                 Console.WriteLine(discoGroup.Name);
-                var discoRuns = client.GetRunsAsync(discoGroup.Name);
+                var discoRuns = client.GetDiscoveryGroupRunsAsync(discoGroup.Name);
                 int index = 0;
                 await foreach (var discoRun in discoRuns)
                 {

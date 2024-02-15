@@ -40,16 +40,16 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> titles = default;
             Optional<IReadOnlyList<ObservedString>> languages = default;
             Optional<IReadOnlyList<ObservedHeader>> responseHeaders = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<CookieDetails>> cookies = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
-            Optional<IReadOnlyList<Attribute>> attributes = default;
+            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
             Optional<IReadOnlyList<AssetSecurityPolicy>> assetSecurityPolicies = default;
             Optional<IReadOnlyList<ObservedIntegers>> responseBodyMinhashSignatures = default;
             Optional<IReadOnlyList<ObservedIntegers>> fullDomMinhashSignatures = default;
             Optional<IReadOnlyList<ObservedString>> responseBodyHashSignatures = default;
             Optional<IReadOnlyList<ObservedString>> errors = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
@@ -60,7 +60,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<IReadOnlyList<ObservedString>> finalUrls = default;
             Optional<IReadOnlyList<ObservedInteger>> finalResponseCodes = default;
             Optional<IReadOnlyList<ObservedBoolean>> parkedPage = default;
-            Optional<IReadOnlyList<ResourceUrl>> resourceUrls = default;
+            Optional<IReadOnlyList<ResourceUri>> resourceUrls = default;
             Optional<IReadOnlyList<GuidPair>> guids = default;
             Optional<IReadOnlyList<ObservedString>> finalIpAddresses = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<ObservedBoolean> rootUrl = default;
             Optional<bool> isRootUrl = default;
             Optional<IReadOnlyList<ObservedLocation>> location = default;
-            Optional<IReadOnlyList<Service>> services = default;
+            Optional<IReadOnlyList<AssetService>> services = default;
             Optional<string> siteStatus = default;
             Optional<IReadOnlyList<ObservedString>> cnames = default;
             Optional<IReadOnlyList<ObservedString>> cdns = default;
@@ -333,10 +333,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item));
                     }
                     cookies = array;
                     continue;
@@ -361,10 +361,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Attribute> array = new List<Attribute>();
+                    List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Attribute.DeserializeAttribute(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
                     }
                     attributes = array;
                     continue;
@@ -459,10 +459,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -579,10 +579,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<ResourceUrl> array = new List<ResourceUrl>();
+                    List<ResourceUri> array = new List<ResourceUri>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceUrl.DeserializeResourceUrl(item));
+                        array.Add(ResourceUri.DeserializeResourceUri(item));
                     }
                     resourceUrls = array;
                     continue;
@@ -732,10 +732,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Service> array = new List<Service>();
+                    List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Easm.Service.DeserializeService(item));
+                        array.Add(AssetService.DeserializeAssetService(item));
                     }
                     services = array;
                     continue;

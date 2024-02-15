@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The IpBlockAsset. </summary>
-    public partial class IpBlockAsset : InventoryAsset
+    public partial class IpBlockAsset
     {
         /// <summary> Initializes a new instance of <see cref="IpBlockAsset"/>. </summary>
         internal IpBlockAsset()
@@ -27,8 +27,8 @@ namespace Azure.Analytics.Defender.Easm
             RegistrarCreatedAt = new ChangeTrackingList<ObservedLong>();
             RegistrarUpdatedAt = new ChangeTrackingList<ObservedLong>();
             NetRanges = new ChangeTrackingList<ObservedString>();
-            Reputations = new ChangeTrackingList<Reputation>();
-            Sources = new ChangeTrackingList<Source>();
+            Reputations = new ChangeTrackingList<ReputationDetails>();
+            Sources = new ChangeTrackingList<SourceDetails>();
             Location = new ChangeTrackingList<ObservedLocation>();
             RegistrarExpiresAt = new ChangeTrackingList<ObservedLong>();
             RegistrantNames = new ChangeTrackingList<ObservedString>();
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="technicalPhones"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal IpBlockAsset(string ipBlock, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ObservedString> bgpPrefixes, IReadOnlyList<ObservedString> netNames, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> netRanges, string startIp, string endIp, IReadOnlyList<Reputation> reputations, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6)
+        internal IpBlockAsset(string ipBlock, IReadOnlyList<ObservedLong> asns, IReadOnlyList<ObservedString> bgpPrefixes, IReadOnlyList<ObservedString> netNames, IReadOnlyList<ObservedString> registrantContacts, IReadOnlyList<ObservedString> registrantOrgs, IReadOnlyList<ObservedString> adminContacts, IReadOnlyList<ObservedString> technicalContacts, IReadOnlyList<ObservedLong> registrarCreatedAt, IReadOnlyList<ObservedLong> registrarUpdatedAt, IReadOnlyList<ObservedString> netRanges, string startIp, string endIp, IReadOnlyList<ReputationDetails> reputations, DateTimeOffset? detailedFromWhoisAt, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, IReadOnlyList<ObservedLocation> location, IReadOnlyList<ObservedLong> registrarExpiresAt, IReadOnlyList<ObservedString> registrantNames, IReadOnlyList<ObservedString> adminNames, IReadOnlyList<ObservedString> technicalNames, IReadOnlyList<ObservedString> adminOrgs, IReadOnlyList<ObservedString> technicalOrgs, IReadOnlyList<ObservedString> registrantPhones, IReadOnlyList<ObservedString> adminPhones, IReadOnlyList<ObservedString> technicalPhones, bool? ipv4, bool? ipv6)
         {
             IpBlock = ipBlock;
             Asns = asns;
@@ -135,11 +135,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the end ip. </summary>
         public string EndIp { get; }
         /// <summary> Gets the reputations. </summary>
-        public IReadOnlyList<Reputation> Reputations { get; }
+        public IReadOnlyList<ReputationDetails> Reputations { get; }
         /// <summary> Gets the detailed from whois at. </summary>
         public DateTimeOffset? DetailedFromWhoisAt { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

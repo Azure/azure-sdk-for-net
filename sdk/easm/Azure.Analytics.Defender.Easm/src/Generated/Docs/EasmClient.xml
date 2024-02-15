@@ -7,16 +7,16 @@ This sample shows how to call UpdateAssetsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 AssetUpdateData assetUpdateData = new AssetUpdateData();
-Response<Task> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
+Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
 ]]></code>
 This sample shows how to call UpdateAssetsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 AssetUpdateData assetUpdateData = new AssetUpdateData
 {
@@ -28,7 +28,7 @@ AssetUpdateData assetUpdateData = new AssetUpdateData
     },
     Transfers = AssetUpdateTransfers.As,
 };
-Response<Task> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
+Response<TaskResource> response = await client.UpdateAssetsAsync("<filter>", assetUpdateData);
 ]]></code></example>
     </member>
     <member name="UpdateAssets(string,AssetUpdateData,CancellationToken)">
@@ -37,16 +37,16 @@ This sample shows how to call UpdateAssets.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 AssetUpdateData assetUpdateData = new AssetUpdateData();
-Response<Task> response = client.UpdateAssets("<filter>", assetUpdateData);
+Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdateData);
 ]]></code>
 This sample shows how to call UpdateAssets with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 AssetUpdateData assetUpdateData = new AssetUpdateData
 {
@@ -58,7 +58,7 @@ AssetUpdateData assetUpdateData = new AssetUpdateData
     },
     Transfers = AssetUpdateTransfers.As,
 };
-Response<Task> response = client.UpdateAssets("<filter>", assetUpdateData);
+Response<TaskResource> response = client.UpdateAssets("<filter>", assetUpdateData);
 ]]></code></example>
     </member>
     <member name="UpdateAssetsAsync(string,RequestContent,RequestContext)">
@@ -67,7 +67,7 @@ This sample shows how to call UpdateAssetsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAssetsAsync("<filter>", content);
@@ -79,7 +79,7 @@ This sample shows how to call UpdateAssetsAsync with all parameters and request 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -110,7 +110,7 @@ This sample shows how to call UpdateAssets and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateAssets("<filter>", content);
@@ -122,7 +122,7 @@ This sample shows how to call UpdateAssets with all parameters and request conte
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -153,7 +153,7 @@ This sample shows how to call GetAssetResourceAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<AssetResource> response = await client.GetAssetResourceAsync("<assetId>");
 ]]></code>
@@ -161,7 +161,7 @@ This sample shows how to call GetAssetResourceAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<AssetResource> response = await client.GetAssetResourceAsync("<assetId>");
 ]]></code></example>
@@ -172,7 +172,7 @@ This sample shows how to call GetAssetResource.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<AssetResource> response = client.GetAssetResource("<assetId>");
 ]]></code>
@@ -180,7 +180,7 @@ This sample shows how to call GetAssetResource with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<AssetResource> response = client.GetAssetResource("<assetId>");
 ]]></code></example>
@@ -191,7 +191,7 @@ This sample shows how to call GetAssetResourceAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetAssetResourceAsync("<assetId>", null);
 
@@ -203,7 +203,7 @@ This sample shows how to call GetAssetResourceAsync with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetAssetResourceAsync("<assetId>", null);
 
@@ -234,7 +234,7 @@ This sample shows how to call GetAssetResource and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetAssetResource("<assetId>", null);
 
@@ -246,7 +246,7 @@ This sample shows how to call GetAssetResource with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetAssetResource("<assetId>", null);
 
@@ -277,7 +277,7 @@ This sample shows how to call ValidateDataConnectionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties());
 Response<ValidateResult> response = await client.ValidateDataConnectionAsync(dataConnectionData);
@@ -286,7 +286,7 @@ This sample shows how to call ValidateDataConnectionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties
 {
@@ -308,7 +308,7 @@ This sample shows how to call ValidateDataConnection.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties());
 Response<ValidateResult> response = client.ValidateDataConnection(dataConnectionData);
@@ -317,7 +317,7 @@ This sample shows how to call ValidateDataConnection with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties
 {
@@ -339,7 +339,7 @@ This sample shows how to call ValidateDataConnectionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -355,7 +355,7 @@ This sample shows how to call ValidateDataConnectionAsync with all request conte
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -386,7 +386,7 @@ This sample shows how to call ValidateDataConnection and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -402,7 +402,7 @@ This sample shows how to call ValidateDataConnection with all request content an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -433,7 +433,7 @@ This sample shows how to call GetDataConnectionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<DataConnection> response = await client.GetDataConnectionAsync("<dataConnectionName>");
 ]]></code>
@@ -441,7 +441,7 @@ This sample shows how to call GetDataConnectionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<DataConnection> response = await client.GetDataConnectionAsync("<dataConnectionName>");
 ]]></code></example>
@@ -452,7 +452,7 @@ This sample shows how to call GetDataConnection.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<DataConnection> response = client.GetDataConnection("<dataConnectionName>");
 ]]></code>
@@ -460,7 +460,7 @@ This sample shows how to call GetDataConnection with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<DataConnection> response = client.GetDataConnection("<dataConnectionName>");
 ]]></code></example>
@@ -471,7 +471,7 @@ This sample shows how to call GetDataConnectionAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetDataConnectionAsync("<dataConnectionName>", null);
 
@@ -483,7 +483,7 @@ This sample shows how to call GetDataConnectionAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetDataConnectionAsync("<dataConnectionName>", null);
 
@@ -508,7 +508,7 @@ This sample shows how to call GetDataConnection and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetDataConnection("<dataConnectionName>", null);
 
@@ -520,7 +520,7 @@ This sample shows how to call GetDataConnection with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetDataConnection("<dataConnectionName>", null);
 
@@ -545,7 +545,7 @@ This sample shows how to call CreateOrReplaceDataConnectionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties());
 Response<DataConnection> response = await client.CreateOrReplaceDataConnectionAsync("<dataConnectionName>", dataConnectionData);
@@ -554,7 +554,7 @@ This sample shows how to call CreateOrReplaceDataConnectionAsync with all parame
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties
 {
@@ -576,7 +576,7 @@ This sample shows how to call CreateOrReplaceDataConnection.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties());
 Response<DataConnection> response = client.CreateOrReplaceDataConnection("<dataConnectionName>", dataConnectionData);
@@ -585,7 +585,7 @@ This sample shows how to call CreateOrReplaceDataConnection with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 DataConnectionData dataConnectionData = new LogAnalyticsDataConnectionData(new LogAnalyticsDataConnectionProperties
 {
@@ -607,7 +607,7 @@ This sample shows how to call CreateOrReplaceDataConnectionAsync and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -624,7 +624,7 @@ This sample shows how to call CreateOrReplaceDataConnectionAsync with all parame
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -662,7 +662,7 @@ This sample shows how to call CreateOrReplaceDataConnection and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -679,7 +679,7 @@ This sample shows how to call CreateOrReplaceDataConnection with all parameters 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -717,7 +717,7 @@ This sample shows how to call DeleteDataConnectionAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.DeleteDataConnectionAsync("<dataConnectionName>");
 
@@ -727,7 +727,7 @@ This sample shows how to call DeleteDataConnectionAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.DeleteDataConnectionAsync("<dataConnectionName>");
 
@@ -740,7 +740,7 @@ This sample shows how to call DeleteDataConnection.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.DeleteDataConnection("<dataConnectionName>");
 
@@ -750,102 +750,102 @@ This sample shows how to call DeleteDataConnection with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.DeleteDataConnection("<dataConnectionName>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoGroupAsync(DiscoGroupData,CancellationToken)">
+    <member name="ValidateDiscoveryGroupAsync(DiscoveryGroupData,CancellationToken)">
       <example>
-This sample shows how to call ValidateDiscoGroupAsync.
+This sample shows how to call ValidateDiscoveryGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData();
-Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(discoGroupData);
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData();
+Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupData);
 ]]></code>
-This sample shows how to call ValidateDiscoGroupAsync with all parameters.
+This sample shows how to call ValidateDiscoveryGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData
 {
     Name = "<name>",
     Description = "<description>",
     Tier = "<tier>",
     FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoSource
+    Seeds = {new DiscoverySource
     {
-        Kind = DiscoSourceKind.As,
+        Kind = DiscoverySourceKind.As,
         Name = "<name>",
     }},
     Names = { "<names>" },
     Excludes = { default },
     TemplateId = "<templateId>",
 };
-Response<ValidateResult> response = await client.ValidateDiscoGroupAsync(discoGroupData);
+Response<ValidateResult> response = await client.ValidateDiscoveryGroupAsync(discoveryGroupData);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoGroup(DiscoGroupData,CancellationToken)">
+    <member name="ValidateDiscoveryGroup(DiscoveryGroupData,CancellationToken)">
       <example>
-This sample shows how to call ValidateDiscoGroup.
+This sample shows how to call ValidateDiscoveryGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData();
-Response<ValidateResult> response = client.ValidateDiscoGroup(discoGroupData);
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData();
+Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupData);
 ]]></code>
-This sample shows how to call ValidateDiscoGroup with all parameters.
+This sample shows how to call ValidateDiscoveryGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData
 {
     Name = "<name>",
     Description = "<description>",
     Tier = "<tier>",
     FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoSource
+    Seeds = {new DiscoverySource
     {
-        Kind = DiscoSourceKind.As,
+        Kind = DiscoverySourceKind.As,
         Name = "<name>",
     }},
     Names = { "<names>" },
     Excludes = { default },
     TemplateId = "<templateId>",
 };
-Response<ValidateResult> response = client.ValidateDiscoGroup(discoGroupData);
+Response<ValidateResult> response = client.ValidateDiscoveryGroup(discoveryGroupData);
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoGroupAsync(RequestContent,RequestContext)">
+    <member name="ValidateDiscoveryGroupAsync(RequestContent,RequestContext)">
       <example>
-This sample shows how to call ValidateDiscoGroupAsync and parse the result.
+This sample shows how to call ValidateDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = await client.ValidateDiscoGroupAsync(content);
+Response response = await client.ValidateDiscoveryGroupAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ValidateDiscoGroupAsync with all request content and parse the result.
+This sample shows how to call ValidateDiscoveryGroupAsync with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -871,7 +871,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = await client.ValidateDiscoGroupAsync(content);
+Response response = await client.ValidateDiscoveryGroupAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -881,25 +881,25 @@ Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
 ]]></code></example>
     </member>
-    <member name="ValidateDiscoGroup(RequestContent,RequestContext)">
+    <member name="ValidateDiscoveryGroup(RequestContent,RequestContext)">
       <example>
-This sample shows how to call ValidateDiscoGroup and parse the result.
+This sample shows how to call ValidateDiscoveryGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = client.ValidateDiscoGroup(content);
+Response response = client.ValidateDiscoveryGroup(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call ValidateDiscoGroup with all request content and parse the result.
+This sample shows how to call ValidateDiscoveryGroup with all request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -925,7 +925,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = client.ValidateDiscoGroup(content);
+Response response = client.ValidateDiscoveryGroup(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
@@ -935,112 +935,64 @@ Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetPrope
 Console.WriteLine(result.GetProperty("error").GetProperty("innererror").GetProperty("value").ToString());
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroupAsync(string,CancellationToken)">
+    <member name="GetDiscoveryGroupAsync(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoGroupAsync.
+This sample shows how to call GetDiscoveryGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoGroup> response = await client.GetDiscoGroupAsync("<groupName>");
+Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
 ]]></code>
-This sample shows how to call GetDiscoGroupAsync with all parameters.
+This sample shows how to call GetDiscoveryGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoGroup> response = await client.GetDiscoGroupAsync("<groupName>");
+Response<DiscoveryGroup> response = await client.GetDiscoveryGroupAsync("<groupName>");
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroup(string,CancellationToken)">
+    <member name="GetDiscoveryGroup(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoGroup.
+This sample shows how to call GetDiscoveryGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoGroup> response = client.GetDiscoGroup("<groupName>");
+Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
 ]]></code>
-This sample shows how to call GetDiscoGroup with all parameters.
+This sample shows how to call GetDiscoveryGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoGroup> response = client.GetDiscoGroup("<groupName>");
+Response<DiscoveryGroup> response = client.GetDiscoveryGroup("<groupName>");
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroupAsync(string,RequestContext)">
+    <member name="GetDiscoveryGroupAsync(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoGroupAsync and parse the result.
+This sample shows how to call GetDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoGroupAsync("<groupName>", null);
+Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call GetDiscoGroupAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoveryGroupAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoGroupAsync("<groupName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("tier").ToString());
-Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
-Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("names")[0].ToString());
-Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
-Console.WriteLine(result.GetProperty("createdDate").ToString());
-Console.WriteLine(result.GetProperty("templateId").ToString());
-]]></code></example>
-    </member>
-    <member name="GetDiscoGroup(string,RequestContext)">
-      <example>
-This sample shows how to call GetDiscoGroup and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
-
-Response response = client.GetDiscoGroup("<groupName>", null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("name").ToString());
-]]></code>
-This sample shows how to call GetDiscoGroup with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
-
-Response response = client.GetDiscoGroup("<groupName>", null);
+Response response = await client.GetDiscoveryGroupAsync("<groupName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1069,95 +1021,143 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoGroupAsync(string,DiscoGroupData,CancellationToken)">
+    <member name="GetDiscoveryGroup(string,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoGroupAsync.
+This sample shows how to call GetDiscoveryGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData();
-Response<DiscoGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", discoGroupData);
+Response response = client.GetDiscoveryGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters.
+This sample shows how to call GetDiscoveryGroup with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData
+Response response = client.GetDiscoveryGroup("<groupName>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("frequencyMilliseconds").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("submittedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("startedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("completedDate").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("tier").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("state").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("totalAssetsFoundCount").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("seeds")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("excludes")[0].GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("latestRun").GetProperty("names")[0].ToString());
+Console.WriteLine(result.GetProperty("createdDate").ToString());
+Console.WriteLine(result.GetProperty("templateId").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrReplaceDiscoveryGroupAsync(string,DiscoveryGroupData,CancellationToken)">
+      <example>
+This sample shows how to call CreateOrReplaceDiscoveryGroupAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData();
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupData);
+]]></code>
+This sample shows how to call CreateOrReplaceDiscoveryGroupAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData
 {
     Name = "<name>",
     Description = "<description>",
     Tier = "<tier>",
     FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoSource
+    Seeds = {new DiscoverySource
     {
-        Kind = DiscoSourceKind.As,
+        Kind = DiscoverySourceKind.As,
         Name = "<name>",
     }},
     Names = { "<names>" },
     Excludes = { default },
     TemplateId = "<templateId>",
 };
-Response<DiscoGroup> response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", discoGroupData);
+Response<DiscoveryGroup> response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", discoveryGroupData);
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoGroup(string,DiscoGroupData,CancellationToken)">
+    <member name="CreateOrReplaceDiscoveryGroup(string,DiscoveryGroupData,CancellationToken)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoGroup.
+This sample shows how to call CreateOrReplaceDiscoveryGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData();
-Response<DiscoGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>", discoGroupData);
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData();
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupData);
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoGroup with all parameters.
+This sample shows how to call CreateOrReplaceDiscoveryGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-DiscoGroupData discoGroupData = new DiscoGroupData
+DiscoveryGroupData discoveryGroupData = new DiscoveryGroupData
 {
     Name = "<name>",
     Description = "<description>",
     Tier = "<tier>",
     FrequencyMilliseconds = 1234L,
-    Seeds = {new DiscoSource
+    Seeds = {new DiscoverySource
     {
-        Kind = DiscoSourceKind.As,
+        Kind = DiscoverySourceKind.As,
         Name = "<name>",
     }},
     Names = { "<names>" },
     Excludes = { default },
     TemplateId = "<templateId>",
 };
-Response<DiscoGroup> response = client.CreateOrReplaceDiscoGroup("<groupName>", discoGroupData);
+Response<DiscoveryGroup> response = client.CreateOrReplaceDiscoveryGroup("<groupName>", discoveryGroupData);
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoGroupAsync(string,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceDiscoveryGroupAsync(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoGroupAsync and parse the result.
+This sample shows how to call CreateOrReplaceDiscoveryGroupAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
+Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoGroupAsync with all parameters and request content and parse the result.
+This sample shows how to call CreateOrReplaceDiscoveryGroupAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1183,7 +1183,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = await client.CreateOrReplaceDiscoGroupAsync("<groupName>", content);
+Response response = await client.CreateOrReplaceDiscoveryGroupAsync("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1212,25 +1212,25 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="CreateOrReplaceDiscoGroup(string,RequestContent,RequestContext)">
+    <member name="CreateOrReplaceDiscoveryGroup(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CreateOrReplaceDiscoGroup and parse the result.
+This sample shows how to call CreateOrReplaceDiscoveryGroup and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
-Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
+Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
 ]]></code>
-This sample shows how to call CreateOrReplaceDiscoGroup with all parameters and request content and parse the result.
+This sample shows how to call CreateOrReplaceDiscoveryGroup with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1256,7 +1256,7 @@ using RequestContent content = RequestContent.Create(new
     },
     templateId = "<templateId>",
 });
-Response response = client.CreateOrReplaceDiscoGroup("<groupName>", content);
+Response response = client.CreateOrReplaceDiscoveryGroup("<groupName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1285,110 +1285,110 @@ Console.WriteLine(result.GetProperty("createdDate").ToString());
 Console.WriteLine(result.GetProperty("templateId").ToString());
 ]]></code></example>
     </member>
-    <member name="RunDiscoGroupAsync(string,RequestContext)">
+    <member name="RunDiscoveryGroupAsync(string,RequestContext)">
       <example>
-This sample shows how to call RunDiscoGroupAsync.
+This sample shows how to call RunDiscoveryGroupAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.RunDiscoGroupAsync("<groupName>");
+Response response = await client.RunDiscoveryGroupAsync("<groupName>");
 
 Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call RunDiscoGroupAsync with all parameters.
+This sample shows how to call RunDiscoveryGroupAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.RunDiscoGroupAsync("<groupName>");
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="RunDiscoGroup(string,RequestContext)">
-      <example>
-This sample shows how to call RunDiscoGroup.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
-
-Response response = client.RunDiscoGroup("<groupName>");
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call RunDiscoGroup with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
-
-Response response = client.RunDiscoGroup("<groupName>");
+Response response = await client.RunDiscoveryGroupAsync("<groupName>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplateAsync(string,CancellationToken)">
+    <member name="RunDiscoveryGroup(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoTemplateAsync.
+This sample shows how to call RunDiscoveryGroup.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoTemplate> response = await client.GetDiscoTemplateAsync("<templateId>");
+Response response = client.RunDiscoveryGroup("<groupName>");
+
+Console.WriteLine(response.Status);
 ]]></code>
-This sample shows how to call GetDiscoTemplateAsync with all parameters.
+This sample shows how to call RunDiscoveryGroup with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoTemplate> response = await client.GetDiscoTemplateAsync("<templateId>");
+Response response = client.RunDiscoveryGroup("<groupName>");
+
+Console.WriteLine(response.Status);
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplate(string,CancellationToken)">
+    <member name="GetDiscoveryTemplateAsync(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoTemplate.
+This sample shows how to call GetDiscoveryTemplateAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoTemplate> response = client.GetDiscoTemplate("<templateId>");
+Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
 ]]></code>
-This sample shows how to call GetDiscoTemplate with all parameters.
+This sample shows how to call GetDiscoveryTemplateAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<DiscoTemplate> response = client.GetDiscoTemplate("<templateId>");
+Response<DiscoveryTemplate> response = await client.GetDiscoveryTemplateAsync("<templateId>");
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplateAsync(string,RequestContext)">
+    <member name="GetDiscoveryTemplate(string,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoTemplateAsync and parse the result.
+This sample shows how to call GetDiscoveryTemplate.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoTemplateAsync("<templateId>", null);
+Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
+]]></code>
+This sample shows how to call GetDiscoveryTemplate with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response<DiscoveryTemplate> response = client.GetDiscoveryTemplate("<templateId>");
+]]></code></example>
+    </member>
+    <member name="GetDiscoveryTemplateAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDiscoveryTemplateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+EasmClient client = new EasmClient(endpoint, credential);
+
+Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call GetDiscoTemplateAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoveryTemplateAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetDiscoTemplateAsync("<templateId>", null);
+Response response = await client.GetDiscoveryTemplateAsync("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1404,26 +1404,26 @@ Console.WriteLine(result.GetProperty("seeds")[0].GetProperty("name").ToString())
 Console.WriteLine(result.GetProperty("names")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplate(string,RequestContext)">
+    <member name="GetDiscoveryTemplate(string,RequestContext)">
       <example>
-This sample shows how to call GetDiscoTemplate and parse the result.
+This sample shows how to call GetDiscoveryTemplate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetDiscoTemplate("<templateId>", null);
+Response response = client.GetDiscoveryTemplate("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
-This sample shows how to call GetDiscoTemplate with all parameters and parse the result.
+This sample shows how to call GetDiscoveryTemplate with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetDiscoTemplate("<templateId>", null);
+Response response = client.GetDiscoveryTemplate("<templateId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1445,7 +1445,7 @@ This sample shows how to call GetBillableAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<ReportBillableAssetSummaryResult> response = await client.GetBillableAsync();
 ]]></code>
@@ -1453,7 +1453,7 @@ This sample shows how to call GetBillableAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<ReportBillableAssetSummaryResult> response = await client.GetBillableAsync();
 ]]></code></example>
@@ -1464,7 +1464,7 @@ This sample shows how to call GetBillable.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<ReportBillableAssetSummaryResult> response = client.GetBillable();
 ]]></code>
@@ -1472,7 +1472,7 @@ This sample shows how to call GetBillable with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response<ReportBillableAssetSummaryResult> response = client.GetBillable();
 ]]></code></example>
@@ -1483,7 +1483,7 @@ This sample shows how to call GetBillableAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetBillableAsync(null);
 
@@ -1494,7 +1494,7 @@ This sample shows how to call GetBillableAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetBillableAsync(null);
 
@@ -1511,7 +1511,7 @@ This sample shows how to call GetBillable and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetBillable(null);
 
@@ -1522,7 +1522,7 @@ This sample shows how to call GetBillable with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetBillable(null);
 
@@ -1539,7 +1539,7 @@ This sample shows how to call GetSnapshotAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest();
 Response<ReportAssetSnapshotResult> response = await client.GetSnapshotAsync(reportAssetSnapshotRequest);
@@ -1548,7 +1548,7 @@ This sample shows how to call GetSnapshotAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest
 {
@@ -1566,7 +1566,7 @@ This sample shows how to call GetSnapshot.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest();
 Response<ReportAssetSnapshotResult> response = client.GetSnapshot(reportAssetSnapshotRequest);
@@ -1575,7 +1575,7 @@ This sample shows how to call GetSnapshot with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSnapshotRequest reportAssetSnapshotRequest = new ReportAssetSnapshotRequest
 {
@@ -1593,7 +1593,7 @@ This sample shows how to call GetSnapshotAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.GetSnapshotAsync(content);
@@ -1605,7 +1605,7 @@ This sample shows how to call GetSnapshotAsync with all request content and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1651,7 +1651,7 @@ This sample shows how to call GetSnapshot and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.GetSnapshot(content);
@@ -1663,7 +1663,7 @@ This sample shows how to call GetSnapshot with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1709,7 +1709,7 @@ This sample shows how to call GetSummaryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSummaryRequest reportAssetSummaryRequest = new ReportAssetSummaryRequest();
 Response<ReportAssetSummaryResult> response = await client.GetSummaryAsync(reportAssetSummaryRequest);
@@ -1718,7 +1718,7 @@ This sample shows how to call GetSummaryAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSummaryRequest reportAssetSummaryRequest = new ReportAssetSummaryRequest
 {
@@ -1738,7 +1738,7 @@ This sample shows how to call GetSummary.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSummaryRequest reportAssetSummaryRequest = new ReportAssetSummaryRequest();
 Response<ReportAssetSummaryResult> response = client.GetSummary(reportAssetSummaryRequest);
@@ -1747,7 +1747,7 @@ This sample shows how to call GetSummary with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 ReportAssetSummaryRequest reportAssetSummaryRequest = new ReportAssetSummaryRequest
 {
@@ -1767,7 +1767,7 @@ This sample shows how to call GetSummaryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.GetSummaryAsync(content);
@@ -1779,7 +1779,7 @@ This sample shows how to call GetSummaryAsync with all request content and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1819,7 +1819,7 @@ This sample shows how to call GetSummary and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.GetSummary(content);
@@ -1831,7 +1831,7 @@ This sample shows how to call GetSummary with all request content and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1871,17 +1871,17 @@ This sample shows how to call GetSavedFilterAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<SavedFilter> response = await client.GetSavedFilterAsync("<filterName>");
+Response<SavedFilter> response = await client.GetSavedFilterAsync("<savedFilterName>");
 ]]></code>
 This sample shows how to call GetSavedFilterAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<SavedFilter> response = await client.GetSavedFilterAsync("<filterName>");
+Response<SavedFilter> response = await client.GetSavedFilterAsync("<savedFilterName>");
 ]]></code></example>
     </member>
     <member name="GetSavedFilter(string,CancellationToken)">
@@ -1890,17 +1890,17 @@ This sample shows how to call GetSavedFilter.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<SavedFilter> response = client.GetSavedFilter("<filterName>");
+Response<SavedFilter> response = client.GetSavedFilter("<savedFilterName>");
 ]]></code>
 This sample shows how to call GetSavedFilter with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<SavedFilter> response = client.GetSavedFilter("<filterName>");
+Response<SavedFilter> response = client.GetSavedFilter("<savedFilterName>");
 ]]></code></example>
     </member>
     <member name="GetSavedFilterAsync(string,RequestContext)">
@@ -1909,9 +1909,9 @@ This sample shows how to call GetSavedFilterAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetSavedFilterAsync("<filterName>", null);
+Response response = await client.GetSavedFilterAsync("<savedFilterName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1920,9 +1920,9 @@ This sample shows how to call GetSavedFilterAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.GetSavedFilterAsync("<filterName>", null);
+Response response = await client.GetSavedFilterAsync("<savedFilterName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1938,9 +1938,9 @@ This sample shows how to call GetSavedFilter and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetSavedFilter("<filterName>", null);
+Response response = client.GetSavedFilter("<savedFilterName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -1949,9 +1949,9 @@ This sample shows how to call GetSavedFilter with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.GetSavedFilter("<filterName>", null);
+Response response = client.GetSavedFilter("<savedFilterName>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1967,19 +1967,19 @@ This sample shows how to call CreateOrReplaceSavedFilterAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
-Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterData);
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<savedFilterName>", savedFilterData);
 ]]></code>
 This sample shows how to call CreateOrReplaceSavedFilterAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
-Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", savedFilterData);
+Response<SavedFilter> response = await client.CreateOrReplaceSavedFilterAsync("<savedFilterName>", savedFilterData);
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceSavedFilter(string,SavedFilterData,CancellationToken)">
@@ -1988,19 +1988,19 @@ This sample shows how to call CreateOrReplaceSavedFilter.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
-Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterData);
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<savedFilterName>", savedFilterData);
 ]]></code>
 This sample shows how to call CreateOrReplaceSavedFilter with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 SavedFilterData savedFilterData = new SavedFilterData("<filter>", "<description>");
-Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<filterName>", savedFilterData);
+Response<SavedFilter> response = client.CreateOrReplaceSavedFilter("<savedFilterName>", savedFilterData);
 ]]></code></example>
     </member>
     <member name="CreateOrReplaceSavedFilterAsync(string,RequestContent,RequestContext)">
@@ -2009,14 +2009,14 @@ This sample shows how to call CreateOrReplaceSavedFilterAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
     filter = "<filter>",
     description = "<description>",
 });
-Response response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", content);
+Response response = await client.CreateOrReplaceSavedFilterAsync("<savedFilterName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -2025,14 +2025,14 @@ This sample shows how to call CreateOrReplaceSavedFilterAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
     filter = "<filter>",
     description = "<description>",
 });
-Response response = await client.CreateOrReplaceSavedFilterAsync("<filterName>", content);
+Response response = await client.CreateOrReplaceSavedFilterAsync("<savedFilterName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -2048,14 +2048,14 @@ This sample shows how to call CreateOrReplaceSavedFilter and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
     filter = "<filter>",
     description = "<description>",
 });
-Response response = client.CreateOrReplaceSavedFilter("<filterName>", content);
+Response response = client.CreateOrReplaceSavedFilter("<savedFilterName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("name").ToString());
@@ -2064,14 +2064,14 @@ This sample shows how to call CreateOrReplaceSavedFilter with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
     filter = "<filter>",
     description = "<description>",
 });
-Response response = client.CreateOrReplaceSavedFilter("<filterName>", content);
+Response response = client.CreateOrReplaceSavedFilter("<savedFilterName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("id").ToString());
@@ -2087,9 +2087,9 @@ This sample shows how to call DeleteSavedFilterAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.DeleteSavedFilterAsync("<filterName>");
+Response response = await client.DeleteSavedFilterAsync("<savedFilterName>");
 
 Console.WriteLine(response.Status);
 ]]></code>
@@ -2097,9 +2097,9 @@ This sample shows how to call DeleteSavedFilterAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = await client.DeleteSavedFilterAsync("<filterName>");
+Response response = await client.DeleteSavedFilterAsync("<savedFilterName>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -2110,9 +2110,9 @@ This sample shows how to call DeleteSavedFilter.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.DeleteSavedFilter("<filterName>");
+Response response = client.DeleteSavedFilter("<savedFilterName>");
 
 Console.WriteLine(response.Status);
 ]]></code>
@@ -2120,9 +2120,9 @@ This sample shows how to call DeleteSavedFilter with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response response = client.DeleteSavedFilter("<filterName>");
+Response response = client.DeleteSavedFilter("<savedFilterName>");
 
 Console.WriteLine(response.Status);
 ]]></code></example>
@@ -2133,17 +2133,17 @@ This sample shows how to call GetTaskAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = await client.GetTaskAsync("<taskId>");
+Response<TaskResource> response = await client.GetTaskAsync("<taskId>");
 ]]></code>
 This sample shows how to call GetTaskAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = await client.GetTaskAsync("<taskId>");
+Response<TaskResource> response = await client.GetTaskAsync("<taskId>");
 ]]></code></example>
     </member>
     <member name="GetTask(string,CancellationToken)">
@@ -2152,17 +2152,17 @@ This sample shows how to call GetTask.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = client.GetTask("<taskId>");
+Response<TaskResource> response = client.GetTask("<taskId>");
 ]]></code>
 This sample shows how to call GetTask with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = client.GetTask("<taskId>");
+Response<TaskResource> response = client.GetTask("<taskId>");
 ]]></code></example>
     </member>
     <member name="GetTaskAsync(string,RequestContext)">
@@ -2171,7 +2171,7 @@ This sample shows how to call GetTaskAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetTaskAsync("<taskId>", null);
 
@@ -2182,7 +2182,7 @@ This sample shows how to call GetTaskAsync with all parameters and parse the res
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.GetTaskAsync("<taskId>", null);
 
@@ -2203,7 +2203,7 @@ This sample shows how to call GetTask and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetTask("<taskId>", null);
 
@@ -2214,7 +2214,7 @@ This sample shows how to call GetTask with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.GetTask("<taskId>", null);
 
@@ -2235,17 +2235,17 @@ This sample shows how to call CancelTaskAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = await client.CancelTaskAsync("<taskId>");
+Response<TaskResource> response = await client.CancelTaskAsync("<taskId>");
 ]]></code>
 This sample shows how to call CancelTaskAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = await client.CancelTaskAsync("<taskId>");
+Response<TaskResource> response = await client.CancelTaskAsync("<taskId>");
 ]]></code></example>
     </member>
     <member name="CancelTask(string,CancellationToken)">
@@ -2254,17 +2254,17 @@ This sample shows how to call CancelTask.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = client.CancelTask("<taskId>");
+Response<TaskResource> response = client.CancelTask("<taskId>");
 ]]></code>
 This sample shows how to call CancelTask with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-Response<Task> response = client.CancelTask("<taskId>");
+Response<TaskResource> response = client.CancelTask("<taskId>");
 ]]></code></example>
     </member>
     <member name="CancelTaskAsync(string,RequestContext)">
@@ -2273,7 +2273,7 @@ This sample shows how to call CancelTaskAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.CancelTaskAsync("<taskId>", null);
 
@@ -2284,7 +2284,7 @@ This sample shows how to call CancelTaskAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = await client.CancelTaskAsync("<taskId>", null);
 
@@ -2305,7 +2305,7 @@ This sample shows how to call CancelTask and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.CancelTask("<taskId>", null);
 
@@ -2316,7 +2316,7 @@ This sample shows how to call CancelTask with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 Response response = client.CancelTask("<taskId>", null);
 
@@ -2337,7 +2337,7 @@ This sample shows how to call GetAssetResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (AssetResource item in client.GetAssetResourcesAsync())
 {
@@ -2347,7 +2347,7 @@ This sample shows how to call GetAssetResourcesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (AssetResource item in client.GetAssetResourcesAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
 {
@@ -2360,7 +2360,7 @@ This sample shows how to call GetAssetResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (AssetResource item in client.GetAssetResources())
 {
@@ -2370,7 +2370,7 @@ This sample shows how to call GetAssetResources with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (AssetResource item in client.GetAssetResources(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234, mark: "<mark>"))
 {
@@ -2383,7 +2383,7 @@ This sample shows how to call GetAssetResourcesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetAssetResourcesAsync(null, null, null, null, null, null))
 {
@@ -2396,7 +2396,7 @@ This sample shows how to call GetAssetResourcesAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetAssetResourcesAsync("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
 {
@@ -2428,7 +2428,7 @@ This sample shows how to call GetAssetResources and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetAssetResources(null, null, null, null, null, null))
 {
@@ -2441,7 +2441,7 @@ This sample shows how to call GetAssetResources with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetAssetResources("<filter>", "<orderby>", 1234, 1234, "<mark>", null))
 {
@@ -2473,7 +2473,7 @@ This sample shows how to call GetDataConnectionsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (DataConnection item in client.GetDataConnectionsAsync())
 {
@@ -2483,7 +2483,7 @@ This sample shows how to call GetDataConnectionsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (DataConnection item in client.GetDataConnectionsAsync(skip: 1234, maxpagesize: 1234))
 {
@@ -2496,7 +2496,7 @@ This sample shows how to call GetDataConnections.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (DataConnection item in client.GetDataConnections())
 {
@@ -2506,7 +2506,7 @@ This sample shows how to call GetDataConnections with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (DataConnection item in client.GetDataConnections(skip: 1234, maxpagesize: 1234))
 {
@@ -2519,7 +2519,7 @@ This sample shows how to call GetDataConnectionsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetDataConnectionsAsync(null, null, null))
 {
@@ -2532,7 +2532,7 @@ This sample shows how to call GetDataConnectionsAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetDataConnectionsAsync(1234, 1234, null))
 {
@@ -2558,7 +2558,7 @@ This sample shows how to call GetDataConnections and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetDataConnections(null, null, null))
 {
@@ -2571,7 +2571,7 @@ This sample shows how to call GetDataConnections with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetDataConnections(1234, 1234, null))
 {
@@ -2591,73 +2591,73 @@ foreach (BinaryData item in client.GetDataConnections(1234, 1234, null))
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroupsAsync(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryGroupsAsync(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoGroupsAsync.
+This sample shows how to call GetDiscoveryGroupsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoGroup item in client.GetDiscoGroupsAsync())
+await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoGroupsAsync with all parameters.
+This sample shows how to call GetDiscoveryGroupsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoGroup item in client.GetDiscoGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryGroup item in client.GetDiscoveryGroupsAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroups(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryGroups(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoGroups.
+This sample shows how to call GetDiscoveryGroups.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoGroup item in client.GetDiscoGroups())
+foreach (DiscoveryGroup item in client.GetDiscoveryGroups())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoGroups with all parameters.
+This sample shows how to call GetDiscoveryGroups with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoGroup item in client.GetDiscoGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryGroup item in client.GetDiscoveryGroups(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroupsAsync(string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryGroupsAsync(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoGroupsAsync and parse the result.
+This sample shows how to call GetDiscoveryGroupsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoGroupsAsync(null, null, null, null))
+await foreach (BinaryData item in client.GetDiscoveryGroupsAsync(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoGroupsAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoveryGroupsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoGroupsAsync("<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetDiscoveryGroupsAsync("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2687,27 +2687,27 @@ await foreach (BinaryData item in client.GetDiscoGroupsAsync("<filter>", 1234, 1
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoGroups(string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryGroups(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoGroups and parse the result.
+This sample shows how to call GetDiscoveryGroups and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoGroups(null, null, null, null))
+foreach (BinaryData item in client.GetDiscoveryGroups(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("name").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoGroups with all parameters and parse the result.
+This sample shows how to call GetDiscoveryGroups with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoGroups("<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetDiscoveryGroups("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2737,73 +2737,73 @@ foreach (BinaryData item in client.GetDiscoGroups("<filter>", 1234, 1234, null))
 }
 ]]></code></example>
     </member>
-    <member name="GetRunsAsync(string,string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryGroupRunsAsync(string,string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetRunsAsync.
+This sample shows how to call GetDiscoveryGroupRunsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoRunResult item in client.GetRunsAsync("<groupName>"))
+await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>"))
 {
 }
 ]]></code>
-This sample shows how to call GetRunsAsync with all parameters.
+This sample shows how to call GetDiscoveryGroupRunsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoRunResult item in client.GetRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRunsAsync("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetRuns(string,string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryGroupRuns(string,string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetRuns.
+This sample shows how to call GetDiscoveryGroupRuns.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoRunResult item in client.GetRuns("<groupName>"))
+foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>"))
 {
 }
 ]]></code>
-This sample shows how to call GetRuns with all parameters.
+This sample shows how to call GetDiscoveryGroupRuns with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoRunResult item in client.GetRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryRunResult item in client.GetDiscoveryGroupRuns("<groupName>", filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetRunsAsync(string,string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryGroupRunsAsync(string,string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetRunsAsync and parse the result.
+This sample shows how to call GetDiscoveryGroupRunsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetRunsAsync("<groupName>", null, null, null, null))
+await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetRunsAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoveryGroupRunsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetDiscoveryGroupRunsAsync("<groupName>", "<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("submittedDate").ToString());
@@ -2820,27 +2820,27 @@ await foreach (BinaryData item in client.GetRunsAsync("<groupName>", "<filter>",
 }
 ]]></code></example>
     </member>
-    <member name="GetRuns(string,string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryGroupRuns(string,string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetRuns and parse the result.
+This sample shows how to call GetDiscoveryGroupRuns and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetRuns("<groupName>", null, null, null, null))
+foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
 ]]></code>
-This sample shows how to call GetRuns with all parameters and parse the result.
+This sample shows how to call GetDiscoveryGroupRuns with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetRuns("<groupName>", "<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetDiscoveryGroupRuns("<groupName>", "<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("submittedDate").ToString());
@@ -2857,73 +2857,73 @@ foreach (BinaryData item in client.GetRuns("<groupName>", "<filter>", 1234, 1234
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplatesAsync(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryTemplatesAsync(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoTemplatesAsync.
+This sample shows how to call GetDiscoveryTemplatesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoTemplate item in client.GetDiscoTemplatesAsync())
+await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoTemplatesAsync with all parameters.
+This sample shows how to call GetDiscoveryTemplatesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (DiscoTemplate item in client.GetDiscoTemplatesAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+await foreach (DiscoveryTemplate item in client.GetDiscoveryTemplatesAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplates(string,int?,int?,CancellationToken)">
+    <member name="GetDiscoveryTemplates(string,int?,int?,CancellationToken)">
       <example>
-This sample shows how to call GetDiscoTemplates.
+This sample shows how to call GetDiscoveryTemplates.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoTemplate item in client.GetDiscoTemplates())
+foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates())
 {
 }
 ]]></code>
-This sample shows how to call GetDiscoTemplates with all parameters.
+This sample shows how to call GetDiscoveryTemplates with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (DiscoTemplate item in client.GetDiscoTemplates(filter: "<filter>", skip: 1234, maxpagesize: 1234))
+foreach (DiscoveryTemplate item in client.GetDiscoveryTemplates(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplatesAsync(string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryTemplatesAsync(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoTemplatesAsync and parse the result.
+This sample shows how to call GetDiscoveryTemplatesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoTemplatesAsync(null, null, null, null))
+await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoTemplatesAsync with all parameters and parse the result.
+This sample shows how to call GetDiscoveryTemplatesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetDiscoTemplatesAsync("<filter>", 1234, 1234, null))
+await foreach (BinaryData item in client.GetDiscoveryTemplatesAsync("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2940,27 +2940,27 @@ await foreach (BinaryData item in client.GetDiscoTemplatesAsync("<filter>", 1234
 }
 ]]></code></example>
     </member>
-    <member name="GetDiscoTemplates(string,int?,int?,RequestContext)">
+    <member name="GetDiscoveryTemplates(string,int?,int?,RequestContext)">
       <example>
-This sample shows how to call GetDiscoTemplates and parse the result.
+This sample shows how to call GetDiscoveryTemplates and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoTemplates(null, null, null, null))
+foreach (BinaryData item in client.GetDiscoveryTemplates(null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
 }
 ]]></code>
-This sample shows how to call GetDiscoTemplates with all parameters and parse the result.
+This sample shows how to call GetDiscoveryTemplates with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetDiscoTemplates("<filter>", 1234, 1234, null))
+foreach (BinaryData item in client.GetDiscoveryTemplates("<filter>", 1234, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -2983,7 +2983,7 @@ This sample shows how to call GetSavedFiltersAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (SavedFilter item in client.GetSavedFiltersAsync())
 {
@@ -2993,7 +2993,7 @@ This sample shows how to call GetSavedFiltersAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (SavedFilter item in client.GetSavedFiltersAsync(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
@@ -3006,7 +3006,7 @@ This sample shows how to call GetSavedFilters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (SavedFilter item in client.GetSavedFilters())
 {
@@ -3016,7 +3016,7 @@ This sample shows how to call GetSavedFilters with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (SavedFilter item in client.GetSavedFilters(filter: "<filter>", skip: 1234, maxpagesize: 1234))
 {
@@ -3029,7 +3029,7 @@ This sample shows how to call GetSavedFiltersAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetSavedFiltersAsync(null, null, null, null))
 {
@@ -3041,7 +3041,7 @@ This sample shows how to call GetSavedFiltersAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetSavedFiltersAsync("<filter>", 1234, 1234, null))
 {
@@ -3060,7 +3060,7 @@ This sample shows how to call GetSavedFilters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetSavedFilters(null, null, null, null))
 {
@@ -3072,7 +3072,7 @@ This sample shows how to call GetSavedFilters with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetSavedFilters("<filter>", 1234, 1234, null))
 {
@@ -3091,9 +3091,9 @@ This sample shows how to call GetTasksAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (Task item in client.GetTasksAsync())
+await foreach (TaskResource item in client.GetTasksAsync())
 {
 }
 ]]></code>
@@ -3101,9 +3101,9 @@ This sample shows how to call GetTasksAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-await foreach (Task item in client.GetTasksAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234))
+await foreach (TaskResource item in client.GetTasksAsync(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -3114,9 +3114,9 @@ This sample shows how to call GetTasks.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (Task item in client.GetTasks())
+foreach (TaskResource item in client.GetTasks())
 {
 }
 ]]></code>
@@ -3124,9 +3124,9 @@ This sample shows how to call GetTasks with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
-foreach (Task item in client.GetTasks(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234))
+foreach (TaskResource item in client.GetTasks(filter: "<filter>", orderby: "<orderby>", skip: 1234, maxpagesize: 1234))
 {
 }
 ]]></code></example>
@@ -3137,7 +3137,7 @@ This sample shows how to call GetTasksAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetTasksAsync(null, null, null, null, null))
 {
@@ -3149,7 +3149,7 @@ This sample shows how to call GetTasksAsync with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetTasksAsync("<filter>", "<orderby>", 1234, 1234, null))
 {
@@ -3171,7 +3171,7 @@ This sample shows how to call GetTasks and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetTasks(null, null, null, null, null))
 {
@@ -3183,7 +3183,7 @@ This sample shows how to call GetTasks with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-EasmClient client = new EasmClient(endpoint, "<subscriptionId>", "<resourceGroupName>", "<workspaceName>", credential);
+EasmClient client = new EasmClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetTasks("<filter>", "<orderby>", 1234, 1234, null))
 {

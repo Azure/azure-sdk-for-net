@@ -3,9 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -20,18 +17,12 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         {
             #region Snippet:Sample5_ExternalIds_Create_Client
             #if SNIPPET
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                            "<Your_Subscription_Id>",
-                            "<Your_Resource_Group_Name>",
-                            "<Your_Workspace_Name>",
                             new DefaultAzureCredential());
             #else
-            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName,
-                TestEnvironment.WorkspaceName,
                 TestEnvironment.Credential);
             #endif
             #endregion

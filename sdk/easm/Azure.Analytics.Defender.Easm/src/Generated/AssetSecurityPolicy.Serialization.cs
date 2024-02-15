@@ -28,7 +28,7 @@ namespace Azure.Analytics.Defender.Easm
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
             Optional<bool> recent = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyName"u8))
@@ -92,10 +92,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;

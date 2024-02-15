@@ -49,10 +49,10 @@ namespace Azure.Analytics.Defender.Easm.Tests
             AssetUpdateData assetUpdateData = new AssetUpdateData();
             assetUpdateData.ExternalId = "EXT040";
 
-            Response<Task> result = await client.UpdateAssetsAsync(filter, assetUpdateData);
-            Task task = result.Value;
-            Assert.AreEqual(TaskState.Complete, task.State);
-            Assert.AreEqual(TaskPhase.Complete, task.Phase);
+            Response<TaskResource> result = await client.UpdateAssetsAsync(filter, assetUpdateData);
+            TaskResource task = result.Value;
+            Assert.AreEqual(TaskResourceState.Complete, task.State);
+            Assert.AreEqual(TaskResourcePhase.Complete, task.Phase);
             Assert.IsNotEmpty(UUID_REGEX.Matches(task.Id));
         }
     }

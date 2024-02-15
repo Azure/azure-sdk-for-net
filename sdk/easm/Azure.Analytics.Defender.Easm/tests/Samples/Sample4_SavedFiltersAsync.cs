@@ -1,11 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -17,11 +11,8 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [AsyncOnly]
         public async System.Threading.Tasks.Task SavedFiltersScenarioAsync()
         {
-            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName,
-                TestEnvironment.WorkspaceName,
                 TestEnvironment.Credential);
 
             string savedFilterName = "Sample saved filter";

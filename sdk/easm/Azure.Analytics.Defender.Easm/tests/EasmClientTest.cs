@@ -24,8 +24,7 @@ namespace Azure.Analytics.Defender.Easm.Tests
         [SetUp]
         public void SetUp()
         {
-            client = InstrumentClient(new EasmClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName, TestEnvironment.WorkspaceName,
+            client = InstrumentClient(new EasmClient(new System.Uri(TestEnvironment.Endpoint),
                 TestEnvironment.Credential, InstrumentClientOptions(new EasmClientOptions())));
         }
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */

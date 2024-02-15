@@ -7,7 +7,7 @@
 
 namespace Azure.Analytics.Defender.Easm
 {
-    /// <summary> The ValidateResult. </summary>
+    /// <summary> Validate result for validate action endpoints. </summary>
     public partial class ValidateResult
     {
         /// <summary> Initializes a new instance of <see cref="ValidateResult"/>. </summary>

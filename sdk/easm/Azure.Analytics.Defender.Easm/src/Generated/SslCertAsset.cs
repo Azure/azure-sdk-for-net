@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.Analytics.Defender.Easm
 {
     /// <summary> The SslCertAsset. </summary>
-    public partial class SslCertAsset : InventoryAsset
+    public partial class SslCertAsset
     {
         /// <summary> Initializes a new instance of <see cref="SslCertAsset"/>. </summary>
         internal SslCertAsset()
@@ -23,7 +23,7 @@ namespace Azure.Analytics.Defender.Easm
             IssuerCommonNames = new ChangeTrackingList<string>();
             SubjectAlternativeNames = new ChangeTrackingList<string>();
             IssuerAlternativeNames = new ChangeTrackingList<string>();
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
             SubjectLocality = new ChangeTrackingList<string>();
             SubjectState = new ChangeTrackingList<string>();
             SubjectCountry = new ChangeTrackingList<string>();
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="sigAlgOid"></param>
         /// <param name="recent"></param>
         /// <param name="validationType"></param>
-        internal SslCertAsset(string sha1, IReadOnlyList<string> subjectCommonNames, IReadOnlyList<string> organizations, IReadOnlyList<string> organizationalUnits, IReadOnlyList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IReadOnlyList<string> subjectAlternativeNames, IReadOnlyList<string> issuerAlternativeNames, IReadOnlyList<Source> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IReadOnlyList<string> subjectLocality, IReadOnlyList<string> subjectState, IReadOnlyList<string> subjectCountry, IReadOnlyList<string> issuerLocality, IReadOnlyList<string> issuerState, IReadOnlyList<string> issuerCountry, IReadOnlyList<string> subjectOrganizations, IReadOnlyList<string> subjectOrganizationalUnits, IReadOnlyList<string> issuerOrganizations, IReadOnlyList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType)
+        internal SslCertAsset(string sha1, IReadOnlyList<string> subjectCommonNames, IReadOnlyList<string> organizations, IReadOnlyList<string> organizationalUnits, IReadOnlyList<string> issuerCommonNames, string sigAlgName, DateTimeOffset? invalidAfter, string serialNumber, IReadOnlyList<string> subjectAlternativeNames, IReadOnlyList<string> issuerAlternativeNames, IReadOnlyList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, DateTimeOffset? invalidBefore, int? keySize, string keyAlgorithm, IReadOnlyList<string> subjectLocality, IReadOnlyList<string> subjectState, IReadOnlyList<string> subjectCountry, IReadOnlyList<string> issuerLocality, IReadOnlyList<string> issuerState, IReadOnlyList<string> issuerCountry, IReadOnlyList<string> subjectOrganizations, IReadOnlyList<string> subjectOrganizationalUnits, IReadOnlyList<string> issuerOrganizations, IReadOnlyList<string> issuerOrganizationalUnits, int? version, bool? certificateAuthority, bool? selfSigned, string sigAlgOid, bool? recent, SslCertAssetValidationType? validationType)
         {
             Sha1 = sha1;
             SubjectCommonNames = subjectCommonNames;
@@ -128,7 +128,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the issuer alternative names. </summary>
         public IReadOnlyList<string> IssuerAlternativeNames { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
         /// <summary> Gets the first seen. </summary>
         public DateTimeOffset? FirstSeen { get; }
         /// <summary> Gets the last seen. </summary>

@@ -17,7 +17,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="AssetSecurityPolicy"/>. </summary>
         internal AssetSecurityPolicy()
         {
-            Sources = new ChangeTrackingList<Source>();
+            Sources = new ChangeTrackingList<SourceDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetSecurityPolicy"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="count"></param>
         /// <param name="recent"></param>
         /// <param name="sources"></param>
-        internal AssetSecurityPolicy(string policyName, bool? isAffected, string description, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IReadOnlyList<Source> sources)
+        internal AssetSecurityPolicy(string policyName, bool? isAffected, string description, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, bool? recent, IReadOnlyList<SourceDetails> sources)
         {
             PolicyName = policyName;
             IsAffected = isAffected;
@@ -56,6 +56,6 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the recent. </summary>
         public bool? Recent { get; }
         /// <summary> Gets the sources. </summary>
-        public IReadOnlyList<Source> Sources { get; }
+        public IReadOnlyList<SourceDetails> Sources { get; }
     }
 }

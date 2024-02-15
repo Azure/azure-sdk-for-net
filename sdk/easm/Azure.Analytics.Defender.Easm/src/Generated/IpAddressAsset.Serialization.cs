@@ -23,20 +23,20 @@ namespace Azure.Analytics.Defender.Easm
             }
             Optional<string> ipAddress = default;
             Optional<IReadOnlyList<ObservedLong>> asns = default;
-            Optional<IReadOnlyList<Reputation>> reputations = default;
+            Optional<IReadOnlyList<ReputationDetails>> reputations = default;
             Optional<IReadOnlyList<WebComponent>> webComponents = default;
             Optional<IReadOnlyList<ObservedString>> netRanges = default;
             Optional<IReadOnlyList<ObservedHeader>> headers = default;
-            Optional<IReadOnlyList<Attribute>> attributes = default;
-            Optional<IReadOnlyList<Cookie>> cookies = default;
+            Optional<IReadOnlyList<AttributeDetails>> attributes = default;
+            Optional<IReadOnlyList<CookieDetails>> cookies = default;
             Optional<IReadOnlyList<SslCertAsset>> sslCerts = default;
-            Optional<IReadOnlyList<Service>> services = default;
+            Optional<IReadOnlyList<AssetService>> services = default;
             Optional<IReadOnlyList<IpBlock>> ipBlocks = default;
-            Optional<IReadOnlyList<Source>> sources = default;
+            Optional<IReadOnlyList<SourceDetails>> sources = default;
             Optional<DateTimeOffset> firstSeen = default;
             Optional<DateTimeOffset> lastSeen = default;
             Optional<long> count = default;
-            Optional<IReadOnlyList<Banner>> banners = default;
+            Optional<IReadOnlyList<BannerDetails>> banners = default;
             Optional<IReadOnlyList<ScanMetadata>> scanMetadata = default;
             Optional<IReadOnlyList<ObservedBoolean>> nsRecord = default;
             Optional<IReadOnlyList<ObservedBoolean>> mxRecord = default;
@@ -73,10 +73,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Reputation> array = new List<Reputation>();
+                    List<ReputationDetails> array = new List<ReputationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Reputation.DeserializeReputation(item));
+                        array.Add(ReputationDetails.DeserializeReputationDetails(item));
                     }
                     reputations = array;
                     continue;
@@ -129,10 +129,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Attribute> array = new List<Attribute>();
+                    List<AttributeDetails> array = new List<AttributeDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Attribute.DeserializeAttribute(item));
+                        array.Add(AttributeDetails.DeserializeAttributeDetails(item));
                     }
                     attributes = array;
                     continue;
@@ -143,10 +143,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Cookie> array = new List<Cookie>();
+                    List<CookieDetails> array = new List<CookieDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Cookie.DeserializeCookie(item));
+                        array.Add(CookieDetails.DeserializeCookieDetails(item));
                     }
                     cookies = array;
                     continue;
@@ -171,10 +171,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Service> array = new List<Service>();
+                    List<AssetService> array = new List<AssetService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Service.DeserializeService(item));
+                        array.Add(AssetService.DeserializeAssetService(item));
                     }
                     services = array;
                     continue;
@@ -199,10 +199,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Source> array = new List<Source>();
+                    List<SourceDetails> array = new List<SourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Source.DeserializeSource(item));
+                        array.Add(SourceDetails.DeserializeSourceDetails(item));
                     }
                     sources = array;
                     continue;
@@ -240,10 +240,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<Banner> array = new List<Banner>();
+                    List<BannerDetails> array = new List<BannerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Banner.DeserializeBanner(item));
+                        array.Add(BannerDetails.DeserializeBannerDetails(item));
                     }
                     banners = array;
                     continue;

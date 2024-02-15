@@ -17,11 +17,8 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         [AsyncOnly]
         public async System.Threading.Tasks.Task AssetResourcesScenarioAsync()
         {
-            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName,
-                TestEnvironment.WorkspaceName,
                 TestEnvironment.Credential);
 
             var response = client.GetAssetResourcesAsync();

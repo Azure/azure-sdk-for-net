@@ -19,18 +19,12 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
         {
             #region Snippet:Sample3_DiscoTemplates_Create_Client
             #if SNIPPET
-            string endpoint = "https://<region>.easm.defender.microsoft.com";
+            string endpoint = "https://<region>.easm.defender.microsoft.com/subscriptions/<Your_Subscription_Id>/resourceGroups/<Your_Resource_Group_Name>/workspaces/<Your_Workspace_Name>";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                            "<Your_Subscription_Id>",
-                            "<Your_Resource_Group_Name>",
-                            "<Your_Workspace_Name>",
                             new DefaultAzureCredential());
             #else
-            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com";
+            string endpoint = $"https://{TestEnvironment.Region}.easm.defender.microsoft.com/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroupName}/workspaces/{TestEnvironment.WorkspaceName}";
             EasmClient client = new EasmClient(new System.Uri(endpoint),
-                TestEnvironment.SubscriptionId,
-                TestEnvironment.ResourceGroupName,
-                TestEnvironment.WorkspaceName,
                 TestEnvironment.Credential);
             #endif
             #endregion
@@ -40,8 +34,8 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #else
             string partialName = TestEnvironment.PartialName;
             #endif
-            var response = client.GetDiscoTemplates(partialName);
-            foreach (DiscoTemplate template in response)
+            var response = client.GetDiscoveryTemplates(partialName);
+            foreach (DiscoveryTemplate template in response)
             {
                 Console.WriteLine($"{template.Id}: {template.DisplayName}");
             }
@@ -52,21 +46,21 @@ namespace Azure.Analytics.Defender.Easm.Tests.Samples
             #else
             string templateId = TestEnvironment.TemplateId;
             #endif
-            var discoTemplateResponse = client.GetDiscoTemplate(templateId);
-            DiscoTemplate discoTemplate = discoTemplateResponse.Value;
+            var discoTemplateResponse = client.GetDiscoveryTemplate(templateId);
+            DiscoveryTemplate discoTemplate = discoTemplateResponse.Value;
             Console.WriteLine($"Chosen template id: {discoTemplate.Id}");
             Console.WriteLine("The following names will be used:");
-            foreach (DiscoSource seed in discoTemplate.Seeds)
+            foreach (DiscoverySource seed in discoTemplate.Seeds)
             {
                 Console.WriteLine($"{seed.Kind}: {seed.Name}");
             }
             #endregion
             #region Snippet:Sample3_DiscoTemplates_Run_Disco_Group
             string groupName = "Discovery Group from Template";
-            DiscoGroupData discoGroupRequest = new DiscoGroupData();
+            DiscoveryGroupData discoGroupRequest = new DiscoveryGroupData();
             discoGroupRequest.TemplateId = templateId;
-            client.CreateOrReplaceDiscoGroup(groupName, discoGroupRequest);
-            client.RunDiscoGroup(groupName);
+            client.CreateOrReplaceDiscoveryGroup(groupName, discoGroupRequest);
+            client.RunDiscoveryGroup(groupName);
             #endregion
         }
     }
