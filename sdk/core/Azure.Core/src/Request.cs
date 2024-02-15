@@ -81,49 +81,49 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override string GetMethodCore()
+        protected override /*TODO: sealed*/ string GetMethodCore()
             => _method.Method;
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="method"></param>
-        protected override void SetMethodCore(string method)
+        protected override /*TODO: sealed*/ void SetMethodCore(string method)
             => _method = RequestMethod.Parse(method);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override Uri GetUriCore()
+        protected override /*TODO: sealed*/ Uri GetUriCore()
             => Uri.ToUri();
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="uri"></param>
-        protected override void SetUriCore(Uri uri)
+        protected override /*TODO: sealed*/ void SetUriCore(Uri uri)
             => Uri.Reset(uri);
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override BinaryContent? GetContentCore()
+        protected override /*TODO: sealed*/ BinaryContent? GetContentCore()
             => _content;
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <param name="content"></param>
-        protected override void SetContentCore(BinaryContent? content)
+        protected override /*TODO: sealed*/ void SetContentCore(BinaryContent? content)
             => _content = (RequestContent?)content;
 
         /// <summary>
         /// TBD.
         /// </summary>
         /// <returns></returns>
-        protected override PipelineRequestHeaders GetHeadersCore()
+        protected override /*TODO: sealed*/ PipelineRequestHeaders GetHeadersCore()
             => new AzureCoreMessageHeaders(Headers);
 
         #endregion

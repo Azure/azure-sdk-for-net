@@ -40,6 +40,30 @@ namespace Azure.Core.Pipeline
 
             #region Adapt PipelineResponse to inherit functional implementation from ClientModel
 
+            protected override string MethodCore
+            {
+                get => throw new NotImplementedException();
+                set
+                {
+                    base.MethodCore = value;
+                    _pipelineRequest.Method = method;
+                }
+            }
+            protected override Uri UriCore
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
+
+            protected override PipelineRequestHeaders HeadersCore
+                => throw new NotImplementedException();
+
+            protected override BinaryContent? ContentCore
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
+
             protected override string GetMethodCore()
                 => _pipelineRequest.Method;
 
