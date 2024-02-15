@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class EventGridSubscriptionPatch : IUtf8JsonSerializable
+    public partial class EventGridSubscriptionPatch : IUtf8JsonSerializable, IJsonModel<EventGridSubscriptionPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridSubscriptionPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridSubscriptionPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridSubscriptionPatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Destination))
             {
@@ -65,7 +76,181 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
                 writer.WriteObjectValue(DeadLetterWithResourceIdentity);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        EventGridSubscriptionPatch IJsonModel<EventGridSubscriptionPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridSubscriptionPatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridSubscriptionPatch(document.RootElement, options);
+        }
+
+        internal static EventGridSubscriptionPatch DeserializeEventGridSubscriptionPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<EventSubscriptionDestination> destination = default;
+            Optional<DeliveryWithResourceIdentity> deliveryWithResourceIdentity = default;
+            Optional<EventSubscriptionFilter> filter = default;
+            Optional<IList<string>> labels = default;
+            Optional<DateTimeOffset> expirationTimeUtc = default;
+            Optional<EventDeliverySchema> eventDeliverySchema = default;
+            Optional<EventSubscriptionRetryPolicy> retryPolicy = default;
+            Optional<DeadLetterDestination> deadLetterDestination = default;
+            Optional<DeadLetterWithResourceIdentity> deadLetterWithResourceIdentity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("destination"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    destination = EventSubscriptionDestination.DeserializeEventSubscriptionDestination(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deliveryWithResourceIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deliveryWithResourceIdentity = DeliveryWithResourceIdentity.DeserializeDeliveryWithResourceIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("filter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    filter = EventSubscriptionFilter.DeserializeEventSubscriptionFilter(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("labels"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    labels = array;
+                    continue;
+                }
+                if (property.NameEquals("expirationTimeUtc"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expirationTimeUtc = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("eventDeliverySchema"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventDeliverySchema = new EventDeliverySchema(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("retryPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retryPolicy = EventSubscriptionRetryPolicy.DeserializeEventSubscriptionRetryPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deadLetterDestination"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deadLetterDestination = DeadLetterDestination.DeserializeDeadLetterDestination(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("deadLetterWithResourceIdentity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deadLetterWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridSubscriptionPatch(destination.Value, deliveryWithResourceIdentity.Value, filter.Value, Optional.ToList(labels), Optional.ToNullable(expirationTimeUtc), Optional.ToNullable(eventDeliverySchema), retryPolicy.Value, deadLetterDestination.Value, deadLetterWithResourceIdentity.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<EventGridSubscriptionPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridSubscriptionPatch IPersistableModel<EventGridSubscriptionPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridSubscriptionPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionPatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridSubscriptionPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

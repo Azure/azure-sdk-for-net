@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Provider specific input for InMageRcmFailback failover. </summary>
@@ -20,11 +23,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPlannedFailoverProviderContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryPointType"> The recovery point type. </param>
-        internal InMageRcmFailbackPlannedFailoverProviderContent(string instanceType, InMageRcmFailbackRecoveryPointType recoveryPointType) : base(instanceType)
+        internal InMageRcmFailbackPlannedFailoverProviderContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, InMageRcmFailbackRecoveryPointType recoveryPointType) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPointType = recoveryPointType;
             InstanceType = instanceType ?? "InMageRcmFailback";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackPlannedFailoverProviderContent"/> for deserialization. </summary>
+        internal InMageRcmFailbackPlannedFailoverProviderContent()
+        {
         }
 
         /// <summary> The recovery point type. </summary>

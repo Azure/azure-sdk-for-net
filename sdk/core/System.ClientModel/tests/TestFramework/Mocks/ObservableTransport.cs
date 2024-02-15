@@ -6,12 +6,11 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-// TODO: Can I collapse this with RetriableTransport into a single
-// MockTransport?
 public class ObservableTransport : PipelineTransport
 {
     public string Id { get; }
@@ -96,7 +95,7 @@ public class ObservableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
@@ -139,12 +138,24 @@ public class ObservableTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        public override BinaryData Content => throw new NotImplementedException();
+
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
 
         public override void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

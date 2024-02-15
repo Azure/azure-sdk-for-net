@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> This property indicates secondary consent for the support ticket. </summary>
     public partial class SecondaryConsent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SecondaryConsent"/>. </summary>
         public SecondaryConsent()
         {
@@ -18,10 +53,12 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of <see cref="SecondaryConsent"/>. </summary>
         /// <param name="userConsent"> User consent value provided. </param>
         /// <param name="secondaryConsentType"> The service name for which the secondary consent is being provided. The value needs to be retrieved from the Problem Classification API response. </param>
-        internal SecondaryConsent(UserConsent? userConsent, string secondaryConsentType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SecondaryConsent(UserConsent? userConsent, string secondaryConsentType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserConsent = userConsent;
             SecondaryConsentType = secondaryConsentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User consent value provided. </summary>

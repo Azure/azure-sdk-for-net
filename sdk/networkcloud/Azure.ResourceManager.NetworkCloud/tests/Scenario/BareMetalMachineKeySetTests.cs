@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public BareMetalMachineKeySetTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task BareMetalMachineKeySet()
         {
             // get the collection of this BareMetalMachineKeySetResource

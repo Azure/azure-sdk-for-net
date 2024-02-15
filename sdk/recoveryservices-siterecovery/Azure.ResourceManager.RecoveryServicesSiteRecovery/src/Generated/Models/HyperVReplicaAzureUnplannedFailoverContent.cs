@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,10 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureUnplannedFailoverContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryKekCertificatePfx"> Primary kek certificate pfx. </param>
         /// <param name="secondaryKekCertificatePfx"> Secondary kek certificate pfx. </param>
         /// <param name="recoveryPointId"> The recovery point id to be passed to failover to a particular recovery point. In case of latest recovery point, null should be passed. </param>
-        internal HyperVReplicaAzureUnplannedFailoverContent(string instanceType, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId) : base(instanceType)
+        internal HyperVReplicaAzureUnplannedFailoverContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryKekCertificatePfx, string secondaryKekCertificatePfx, ResourceIdentifier recoveryPointId) : base(instanceType, serializedAdditionalRawData)
         {
             PrimaryKekCertificatePfx = primaryKekCertificatePfx;
             SecondaryKekCertificatePfx = secondaryKekCertificatePfx;

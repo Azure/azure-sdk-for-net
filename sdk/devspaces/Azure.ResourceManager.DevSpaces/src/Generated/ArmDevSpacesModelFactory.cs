@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <returns> A new <see cref="Models.ContainerHostMapping"/> instance for mocking. </returns>
         public static ContainerHostMapping ContainerHostMapping(string containerHostResourceId = null, string mappedControllerResourceId = null)
         {
-            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId);
+            return new ContainerHostMapping(containerHostResourceId, mappedControllerResourceId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DevSpaces.ControllerData"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64);
+            return new ControllerData(id, name, resourceType, systemData, tags, location, sku, provisioningState, hostSuffix, dataPlaneFqdn, targetContainerHostApiServerFqdn, targetContainerHostResourceId, targetContainerHostCredentialsBase64, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetailsList"/>. </summary>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         {
             connectionDetailsList ??= new List<ControllerConnectionDetails>();
 
-            return new ControllerConnectionDetailsList(connectionDetailsList?.ToList());
+            return new ControllerConnectionDetailsList(connectionDetailsList?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ControllerConnectionDetails"/>. </summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <returns> A new <see cref="Models.ControllerConnectionDetails"/> instance for mocking. </returns>
         public static ControllerConnectionDetails ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = null)
         {
-            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails);
+            return new ControllerConnectionDetails(orchestratorSpecificConnectionDetails, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesConnectionDetails"/>. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
         /// <returns> A new <see cref="Models.KubernetesConnectionDetails"/> instance for mocking. </returns>
         public static KubernetesConnectionDetails KubernetesConnectionDetails(string kubeConfig = null)
         {
-            return new KubernetesConnectionDetails("Kubernetes", kubeConfig);
+            return new KubernetesConnectionDetails("Kubernetes", serializedAdditionalRawData: null, kubeConfig);
         }
     }
 }

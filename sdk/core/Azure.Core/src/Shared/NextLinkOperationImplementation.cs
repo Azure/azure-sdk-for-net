@@ -20,7 +20,6 @@ namespace Azure.Core
         private static readonly string[] SuccessStates = { "succeeded" };
 
         private readonly HeaderSource _headerSource;
-        private readonly bool _originalResponseHasLocation;
         private readonly Uri _startRequestUri;
         private readonly OperationFinalStateVia _finalStateVia;
         private readonly RequestMethod _requestMethod;
@@ -53,9 +52,8 @@ namespace Azure.Core
             {
                 return new CompletedOperation(failureState ?? GetOperationStateFromFinalResponse(requestMethod, response));
             }
-
-            var originalResponseHasLocation = response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, originalResponseHasLocation, lastKnownLocation, finalStateVia, apiVersionStr);
+            response.Headers.TryGetValue("Location", out var lastKnownLocation);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
         }
 
         public static IOperation<T> Create<T>(
@@ -78,7 +76,6 @@ namespace Azure.Core
             Uri startRequestUri,
             string nextRequestUri,
             HeaderSource headerSource,
-            bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
@@ -87,7 +84,6 @@ namespace Azure.Core
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
             _nextRequestUri = nextRequestUri;
-            _originalResponseHasLocation = originalResponseHasLocation;
             _lastKnownLocation = lastKnownLocation;
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
@@ -238,7 +234,7 @@ namespace Azure.Core
             // Handle final-state-via options: https://github.com/Azure/autorest/blob/main/docs/extensions/readme.md#x-ms-long-running-operation-options
             switch (_finalStateVia)
             {
-                case OperationFinalStateVia.LocationOverride when _originalResponseHasLocation:
+                case OperationFinalStateVia.LocationOverride when !string.IsNullOrEmpty(_lastKnownLocation):
                     return _lastKnownLocation;
                 case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when _requestMethod == RequestMethod.Post:
                     return null;
@@ -259,7 +255,7 @@ namespace Azure.Core
             }
 
             // If response for initial request contains header "Location", return last known location
-            if (_originalResponseHasLocation)
+            if (!string.IsNullOrEmpty(_lastKnownLocation))
             {
                 return _lastKnownLocation;
             }

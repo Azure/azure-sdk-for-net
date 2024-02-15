@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CustomerInsights
 {
-    public partial class InteractionResourceFormatData : IUtf8JsonSerializable
+    public partial class InteractionResourceFormatData : IUtf8JsonSerializable, IJsonModel<InteractionResourceFormatData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InteractionResourceFormatData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InteractionResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InteractionResourceFormatData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Attributes))
@@ -126,10 +155,25 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("instancesCount"u8);
                 writer.WriteNumberValue(InstancesCount.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(LastChangedUtc))
+            {
+                writer.WritePropertyName("lastChangedUtc"u8);
+                writer.WriteStringValue(LastChangedUtc.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(SchemaItemTypeLink))
             {
                 writer.WritePropertyName("schemaItemTypeLink"u8);
                 writer.WriteStringValue(SchemaItemTypeLink);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
             }
             if (Optional.IsDefined(TimestampFieldName))
             {
@@ -166,6 +210,16 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WritePropertyName("primaryParticipantProfilePropertyName"u8);
                 writer.WriteStringValue(PrimaryParticipantProfilePropertyName);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
+            {
+                writer.WritePropertyName("dataSourcePrecedenceRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataSourcePrecedenceRules)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(IsActivity))
             {
                 writer.WritePropertyName("isActivity"u8);
@@ -173,13 +227,67 @@ namespace Azure.ResourceManager.CustomerInsights
             }
             writer.WritePropertyName("defaultDataSource"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesDefaultDataSourceName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(NamePropertiesDefaultDataSourceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataSourceType))
+            {
+                writer.WritePropertyName("dataSourceType"u8);
+                writer.WriteStringValue(DataSourceType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IdPropertiesDefaultDataSourceId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteNumberValue(IdPropertiesDefaultDataSourceId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataSourceReferenceId))
+            {
+                writer.WritePropertyName("dataSourceReferenceId"u8);
+                writer.WriteStringValue(DataSourceReferenceId);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InteractionResourceFormatData DeserializeInteractionResourceFormatData(JsonElement element)
+        InteractionResourceFormatData IJsonModel<InteractionResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InteractionResourceFormatData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInteractionResourceFormatData(document.RootElement, options);
+        }
+
+        internal static InteractionResourceFormatData DeserializeInteractionResourceFormatData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -215,6 +323,8 @@ namespace Azure.ResourceManager.CustomerInsights
             Optional<Status> status = default;
             Optional<int> id0 = default;
             Optional<string> dataSourceReferenceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -532,8 +642,44 @@ namespace Azure.ResourceManager.CustomerInsights
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InteractionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(idPropertyNames), Optional.ToList(participantProfiles), primaryParticipantProfilePropertyName.Value, Optional.ToList(dataSourcePrecedenceRules), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InteractionResourceFormatData(id, name, type, systemData.Value, Optional.ToDictionary(attributes), Optional.ToDictionary(description), Optional.ToDictionary(displayName), Optional.ToDictionary(localizedAttributes), smallImage.Value, mediumImage.Value, largeImage.Value, apiEntitySetName.Value, Optional.ToNullable(entityType), Optional.ToList(fields), Optional.ToNullable(instancesCount), Optional.ToNullable(lastChangedUtc), Optional.ToNullable(provisioningState), schemaItemTypeLink.Value, Optional.ToNullable(tenantId), timestampFieldName.Value, typeName.Value, Optional.ToList(idPropertyNames), Optional.ToList(participantProfiles), primaryParticipantProfilePropertyName.Value, Optional.ToList(dataSourcePrecedenceRules), Optional.ToNullable(isActivity), name0.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id0), dataSourceReferenceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InteractionResourceFormatData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InteractionResourceFormatData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InteractionResourceFormatData IPersistableModel<InteractionResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionResourceFormatData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInteractionResourceFormatData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InteractionResourceFormatData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InteractionResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

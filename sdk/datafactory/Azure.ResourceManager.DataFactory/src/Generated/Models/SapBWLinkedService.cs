@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "SapBW";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SapBWLinkedService"/> for deserialization. </summary>
+        internal SapBWLinkedService()
+        {
+        }
+
         /// <summary> Host name of the SAP BW instance. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> System number of the BW system. (Usually a two-digit decimal number represented as a string.) Type: string (or Expression with resultType string). </summary>

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 InputSchema = EventGridInputSchema.CloudEventSchemaV1_0,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
                 AutoDeleteTopicWithLastSubscription = false,
                 InputSchemaMapping = new EventGridJsonInputSchemaMapping()
                 {
-                    Topic = new JsonField("myTopicField")
+                    Topic = new JsonField("myTopicField", null)
                 }
             };
 

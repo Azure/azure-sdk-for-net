@@ -13,9 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
-
-    <!-- Update this dependency to its latest, which has all the annotations -->
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" VersionOverride="8.0.0-rc.1.23419.4" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">

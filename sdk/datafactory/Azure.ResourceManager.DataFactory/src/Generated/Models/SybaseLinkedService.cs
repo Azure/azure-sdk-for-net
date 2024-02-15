@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Sybase";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SybaseLinkedService"/> for deserialization. </summary>
+        internal SybaseLinkedService()
+        {
+        }
+
         /// <summary> Server name for connection. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> Database name for connection. Type: string (or Expression with resultType string). </summary>

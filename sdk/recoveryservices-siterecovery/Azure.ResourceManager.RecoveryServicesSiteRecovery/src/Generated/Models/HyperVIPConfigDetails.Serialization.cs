@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -12,10 +14,138 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVIPConfigDetails
+    public partial class HyperVIPConfigDetails : IUtf8JsonSerializable, IJsonModel<HyperVIPConfigDetails>
     {
-        internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVIPConfigDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVIPConfigDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(IsPrimary))
+            {
+                writer.WritePropertyName("isPrimary"u8);
+                writer.WriteBooleanValue(IsPrimary.Value);
+            }
+            if (Optional.IsDefined(SubnetName))
+            {
+                writer.WritePropertyName("subnetName"u8);
+                writer.WriteStringValue(SubnetName);
+            }
+            if (Optional.IsDefined(StaticIPAddress))
+            {
+                writer.WritePropertyName("staticIPAddress"u8);
+                writer.WriteStringValue(StaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(IPAddressType))
+            {
+                writer.WritePropertyName("ipAddressType"u8);
+                writer.WriteStringValue(IPAddressType);
+            }
+            if (Optional.IsDefined(IsSeletedForFailover))
+            {
+                writer.WritePropertyName("isSeletedForFailover"u8);
+                writer.WriteBooleanValue(IsSeletedForFailover.Value);
+            }
+            if (Optional.IsDefined(RecoverySubnetName))
+            {
+                writer.WritePropertyName("recoverySubnetName"u8);
+                writer.WriteStringValue(RecoverySubnetName);
+            }
+            if (Optional.IsDefined(RecoveryStaticIPAddress))
+            {
+                writer.WritePropertyName("recoveryStaticIPAddress"u8);
+                writer.WriteStringValue(RecoveryStaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(RecoveryIPAddressType))
+            {
+                writer.WritePropertyName("recoveryIPAddressType"u8);
+                writer.WriteStringValue(RecoveryIPAddressType);
+            }
+            if (Optional.IsDefined(RecoveryPublicIPAddressId))
+            {
+                writer.WritePropertyName("recoveryPublicIPAddressId"u8);
+                writer.WriteStringValue(RecoveryPublicIPAddressId);
+            }
+            if (Optional.IsCollectionDefined(RecoveryLBBackendAddressPoolIds))
+            {
+                writer.WritePropertyName("recoveryLBBackendAddressPoolIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecoveryLBBackendAddressPoolIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(TfoSubnetName))
+            {
+                writer.WritePropertyName("tfoSubnetName"u8);
+                writer.WriteStringValue(TfoSubnetName);
+            }
+            if (Optional.IsDefined(TfoStaticIPAddress))
+            {
+                writer.WritePropertyName("tfoStaticIPAddress"u8);
+                writer.WriteStringValue(TfoStaticIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TfoPublicIPAddressId))
+            {
+                writer.WritePropertyName("tfoPublicIPAddressId"u8);
+                writer.WriteStringValue(TfoPublicIPAddressId);
+            }
+            if (Optional.IsCollectionDefined(TfoLBBackendAddressPoolIds))
+            {
+                writer.WritePropertyName("tfoLBBackendAddressPoolIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in TfoLBBackendAddressPoolIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVIPConfigDetails IJsonModel<HyperVIPConfigDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVIPConfigDetails(document.RootElement, options);
+        }
+
+        internal static HyperVIPConfigDetails DeserializeHyperVIPConfigDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +165,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IPAddress> tfoStaticIPAddress = default;
             Optional<ResourceIdentifier> tfoPublicIPAddressId = default;
             Optional<IReadOnlyList<string>> tfoLBBackendAddressPoolIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -158,8 +290,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     tfoLBBackendAddressPoolIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVIPConfigDetails(name.Value, Optional.ToNullable(isPrimary), subnetName.Value, staticIPAddress.Value, ipAddressType.Value, Optional.ToNullable(isSeletedForFailover), recoverySubnetName.Value, recoveryStaticIPAddress.Value, recoveryIPAddressType.Value, recoveryPublicIPAddressId.Value, Optional.ToList(recoveryLBBackendAddressPoolIds), tfoSubnetName.Value, tfoStaticIPAddress.Value, tfoPublicIPAddressId.Value, Optional.ToList(tfoLBBackendAddressPoolIds), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HyperVIPConfigDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HyperVIPConfigDetails IPersistableModel<HyperVIPConfigDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVIPConfigDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVIPConfigDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVIPConfigDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVIPConfigDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

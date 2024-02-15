@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The FileSystemSource. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="FileSystemSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> Path on data import FileSystem source. </param>
-        internal FileSystemSource(string connection, DataImportSourceType sourceType, string path) : base(connection, sourceType)
+        internal FileSystemSource(string connection, DataImportSourceType sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string path) : base(connection, sourceType, serializedAdditionalRawData)
         {
             Path = path;
             SourceType = sourceType;

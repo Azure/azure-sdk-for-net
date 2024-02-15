@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorSmsReceiver : IUtf8JsonSerializable
+    public partial class MonitorSmsReceiver : IUtf8JsonSerializable, IJsonModel<MonitorSmsReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorSmsReceiver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitorSmsReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -21,11 +32,45 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStringValue(CountryCode);
             writer.WritePropertyName("phoneNumber"u8);
             writer.WriteStringValue(PhoneNumber);
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorSmsReceiver DeserializeMonitorSmsReceiver(JsonElement element)
+        MonitorSmsReceiver IJsonModel<MonitorSmsReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorSmsReceiver(document.RootElement, options);
+        }
+
+        internal static MonitorSmsReceiver DeserializeMonitorSmsReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +79,8 @@ namespace Azure.ResourceManager.Monitor.Models
             string countryCode = default;
             string phoneNumber = default;
             Optional<MonitorReceiverStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,8 +107,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     status = property.Value.GetString().ToMonitorReceiverStatus();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonitorSmsReceiver(name, countryCode, phoneNumber, Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorSmsReceiver>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MonitorSmsReceiver IPersistableModel<MonitorSmsReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSmsReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorSmsReceiver(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorSmsReceiver)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorSmsReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

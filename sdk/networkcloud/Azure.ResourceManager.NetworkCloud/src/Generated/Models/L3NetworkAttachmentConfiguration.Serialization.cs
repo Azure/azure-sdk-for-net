@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class L3NetworkAttachmentConfiguration : IUtf8JsonSerializable
+    public partial class L3NetworkAttachmentConfiguration : IUtf8JsonSerializable, IJsonModel<L3NetworkAttachmentConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L3NetworkAttachmentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<L3NetworkAttachmentConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<L3NetworkAttachmentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(L3NetworkAttachmentConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IpamEnabled))
             {
@@ -27,11 +38,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("pluginType"u8);
                 writer.WriteStringValue(PluginType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static L3NetworkAttachmentConfiguration DeserializeL3NetworkAttachmentConfiguration(JsonElement element)
+        L3NetworkAttachmentConfiguration IJsonModel<L3NetworkAttachmentConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<L3NetworkAttachmentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(L3NetworkAttachmentConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeL3NetworkAttachmentConfiguration(document.RootElement, options);
+        }
+
+        internal static L3NetworkAttachmentConfiguration DeserializeL3NetworkAttachmentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<L3NetworkConfigurationIpamEnabled> ipamEnabled = default;
             ResourceIdentifier networkId = default;
             Optional<KubernetesPluginType> pluginType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ipamEnabled"u8))
@@ -64,8 +106,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     pluginType = new KubernetesPluginType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new L3NetworkAttachmentConfiguration(Optional.ToNullable(ipamEnabled), networkId, Optional.ToNullable(pluginType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new L3NetworkAttachmentConfiguration(Optional.ToNullable(ipamEnabled), networkId, Optional.ToNullable(pluginType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<L3NetworkAttachmentConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<L3NetworkAttachmentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(L3NetworkAttachmentConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        L3NetworkAttachmentConfiguration IPersistableModel<L3NetworkAttachmentConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<L3NetworkAttachmentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeL3NetworkAttachmentConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(L3NetworkAttachmentConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<L3NetworkAttachmentConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

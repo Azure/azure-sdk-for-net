@@ -11,20 +11,18 @@ namespace System.ClientModel.Primitives;
 
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
+    private static readonly HttpClient SharedDefaultClient = CreateDefaultClient();
+    private static readonly HttpClientPipelineTransport _shared = new();
+
     /// <summary>
     /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
-    public static readonly HttpClientPipelineTransport Shared = new();
+    public static HttpClientPipelineTransport Shared => _shared;
 
-    private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
-    private bool _disposed;
-
-    public HttpClientPipelineTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(SharedDefaultClient)
     {
-        // We will dispose the httpClient.
-        _ownsClient = true;
     }
 
     public HttpClientPipelineTransport(HttpClient client)
@@ -32,26 +30,22 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         Argument.AssertNotNull(client, nameof(client));
 
         _httpClient = client;
-
-        // The caller will dispose the httpClient.
-        _ownsClient = false;
     }
 
     private static HttpClient CreateDefaultClient()
     {
         // The following settings are added in Azure.Core and are not included
-        // in System.ClientModel.  If needed, we will migrate them to ClientModel
-        // over time.
+        // in System.ClientModel. If needed, we will migrate them into ClientModel.
         //   - SSL settings
         //   - Proxy settings
         //   - Cookies
-        //   - MaxConnectionsPerServer
-        //   - PooledConnectionLifetime
 
         HttpClientHandler handler = new HttpClientHandler()
         {
             AllowAutoRedirect = false
         };
+
+        ServicePointHelpers.SetLimits(handler);
 
         return new HttpClient(handler)
         {
@@ -153,7 +147,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
             throw new ClientResultException(e.Message, response: default, e);
         }
 
-        message.Response = new HttpPipelineResponse(responseMessage);
+        message.Response = new HttpClientTransportResponse(responseMessage);
 
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
@@ -193,16 +187,11 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing && !_disposed)
-        {
-            if (this != Shared && _ownsClient)
-            {
-                HttpClient httpClient = _httpClient;
-                httpClient?.Dispose();
-            }
-
-            _disposed = true;
-        }
+        // We don't dispose the Shared static transport instance, and if the
+        // custom HttpClient constructor was called, then it is the caller's
+        // responsibility to dispose the passed-in HttpClient.  As such, Dispose
+        // for this implementation is a no-op.  We retain the protected method
+        // to allow subtypes to provide an implementation.
     }
 
     #endregion

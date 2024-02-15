@@ -85,7 +85,7 @@ function Get-DevOpsBuilds {
   param (
     $Organization="azure-sdk",
     $Project="internal",
-    $BranchName, #Should start with 'refs/heads/'
+    $BranchName, # Should start with 'refs/heads/'
     $Definitions, # Comma seperated string of definition IDs
     $StatusFilter, # Comma seperated string 'cancelling, completed, inProgress, notStarted'
     [ValidateNotNullOrEmpty()]

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Labeling MLAssist configuration definition when MLAssist is disabled. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MLAssistConfigurationDisabled"/>. </summary>
         /// <param name="mlAssist"> [Required] Indicates whether MLAssist feature is enabled. </param>
-        internal MLAssistConfigurationDisabled(MLAssistConfigurationType mlAssist) : base(mlAssist)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MLAssistConfigurationDisabled(MLAssistConfigurationType mlAssist, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mlAssist, serializedAdditionalRawData)
         {
             MlAssist = mlAssist;
         }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class ConnectorMappingStructure : IUtf8JsonSerializable
+    public partial class ConnectorMappingStructure : IUtf8JsonSerializable, IJsonModel<ConnectorMappingStructure>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectorMappingStructure>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectorMappingStructure>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingStructure>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingStructure)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("propertyName"u8);
             writer.WriteStringValue(PropertyName);
@@ -29,11 +40,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("isEncrypted"u8);
                 writer.WriteBooleanValue(IsEncrypted.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element)
+        ConnectorMappingStructure IJsonModel<ConnectorMappingStructure>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingStructure>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectorMappingStructure)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectorMappingStructure(document.RootElement, options);
+        }
+
+        internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string columnName = default;
             Optional<string> customFormatSpecifier = default;
             Optional<bool> isEncrypted = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -68,8 +110,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     isEncrypted = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectorMappingStructure(propertyName, columnName, customFormatSpecifier.Value, Optional.ToNullable(isEncrypted), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectorMappingStructure>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingStructure>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorMappingStructure)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConnectorMappingStructure IPersistableModel<ConnectorMappingStructure>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingStructure>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectorMappingStructure(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectorMappingStructure)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectorMappingStructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

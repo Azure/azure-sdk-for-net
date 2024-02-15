@@ -24,18 +24,42 @@ namespace Microsoft.Azure.Batch
     {
         private class PropertyContainer : PropertyCollection
         {
+            public readonly PropertyAccessor<Common.CachingType?> CachingProperty;
+            public readonly PropertyAccessor<int?> DiskSizeGBProperty;
             public readonly PropertyAccessor<DiffDiskSettings> EphemeralOSDiskSettingsProperty;
+            public readonly PropertyAccessor<ManagedDisk> ManagedDiskProperty;
+            public readonly PropertyAccessor<bool?> WriteAcceleratorEnabledProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
+                this.CachingProperty = this.CreatePropertyAccessor<Common.CachingType?>(nameof(Caching), BindingAccess.Read | BindingAccess.Write);
+                this.DiskSizeGBProperty = this.CreatePropertyAccessor<int?>(nameof(DiskSizeGB), BindingAccess.Read | BindingAccess.Write);
                 this.EphemeralOSDiskSettingsProperty = this.CreatePropertyAccessor<DiffDiskSettings>(nameof(EphemeralOSDiskSettings), BindingAccess.Read | BindingAccess.Write);
+                this.ManagedDiskProperty = this.CreatePropertyAccessor<ManagedDisk>(nameof(ManagedDisk), BindingAccess.Read | BindingAccess.Write);
+                this.WriteAcceleratorEnabledProperty = this.CreatePropertyAccessor<bool?>(nameof(WriteAcceleratorEnabled), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.OSDisk protocolObject) : base(BindingState.Bound)
             {
+                this.CachingProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.MapNullableEnum<Models.CachingType, Common.CachingType>(protocolObject.Caching),
+                    nameof(Caching),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.DiskSizeGBProperty = this.CreatePropertyAccessor(
+                    protocolObject.DiskSizeGB,
+                    nameof(DiskSizeGB),
+                    BindingAccess.Read | BindingAccess.Write);
                 this.EphemeralOSDiskSettingsProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EphemeralOSDiskSettings, o => new DiffDiskSettings(o)),
                     nameof(EphemeralOSDiskSettings),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.ManagedDiskProperty = this.CreatePropertyAccessor(
+                    UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ManagedDisk, o => new ManagedDisk(o)),
+                    nameof(ManagedDisk),
+                    BindingAccess.Read | BindingAccess.Write);
+                this.WriteAcceleratorEnabledProperty = this.CreatePropertyAccessor(
+                    protocolObject.WriteAcceleratorEnabled,
+                    nameof(WriteAcceleratorEnabled),
                     BindingAccess.Read | BindingAccess.Write);
             }
         }
@@ -62,12 +86,49 @@ namespace Microsoft.Azure.Batch
         #region OSDisk
 
         /// <summary>
+        /// Gets or sets specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default 
+        /// values are: None for Standard storage. ReadOnly for Premium storage.
+        /// </summary>
+        public Common.CachingType? Caching
+        {
+            get { return this.propertyContainer.CachingProperty.Value; }
+            set { this.propertyContainer.CachingProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the initial disk size in GB when creating new OS disk.
+        /// </summary>
+        public int? DiskSizeGB
+        {
+            get { return this.propertyContainer.DiskSizeGBProperty.Value; }
+            set { this.propertyContainer.DiskSizeGBProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets specifies the ephemeral Disk Settings for the operating system disk used by the compute node (VM).
         /// </summary>
         public DiffDiskSettings EphemeralOSDiskSettings
         {
             get { return this.propertyContainer.EphemeralOSDiskSettingsProperty.Value; }
             set { this.propertyContainer.EphemeralOSDiskSettingsProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the managed disk parameters.
+        /// </summary>
+        public ManagedDisk ManagedDisk
+        {
+            get { return this.propertyContainer.ManagedDiskProperty.Value; }
+            set { this.propertyContainer.ManagedDiskProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets specifies whether writeAccelerator should be enabled or disabled on the disk.
+        /// </summary>
+        public bool? WriteAcceleratorEnabled
+        {
+            get { return this.propertyContainer.WriteAcceleratorEnabledProperty.Value; }
+            set { this.propertyContainer.WriteAcceleratorEnabledProperty.Value = value; }
         }
 
         #endregion // OSDisk
@@ -96,7 +157,11 @@ namespace Microsoft.Azure.Batch
         {
             Models.OSDisk result = new Models.OSDisk()
             {
+                Caching = UtilitiesInternal.MapNullableEnum<Common.CachingType, Models.CachingType>(this.Caching),
+                DiskSizeGB = this.DiskSizeGB,
                 EphemeralOSDiskSettings = UtilitiesInternal.CreateObjectWithNullCheck(this.EphemeralOSDiskSettings, (o) => o.GetTransportObject()),
+                ManagedDisk = UtilitiesInternal.CreateObjectWithNullCheck(this.ManagedDisk, (o) => o.GetTransportObject()),
+                WriteAcceleratorEnabled = this.WriteAcceleratorEnabled,
             };
 
             return result;

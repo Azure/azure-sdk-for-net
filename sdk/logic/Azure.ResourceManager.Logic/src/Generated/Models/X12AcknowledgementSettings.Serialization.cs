@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12AcknowledgementSettings : IUtf8JsonSerializable
+    public partial class X12AcknowledgementSettings : IUtf8JsonSerializable, IJsonModel<X12AcknowledgementSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12AcknowledgementSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<X12AcknowledgementSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X12AcknowledgementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12AcknowledgementSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("needTechnicalAcknowledgement"u8);
             writer.WriteBooleanValue(NeedTechnicalAcknowledgement);
@@ -57,11 +68,40 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteNumberValue(AcknowledgementControlNumberUpperBound);
             writer.WritePropertyName("rolloverAcknowledgementControlNumber"u8);
             writer.WriteBooleanValue(RolloverAcknowledgementControlNumber);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12AcknowledgementSettings DeserializeX12AcknowledgementSettings(JsonElement element)
+        X12AcknowledgementSettings IJsonModel<X12AcknowledgementSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X12AcknowledgementSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12AcknowledgementSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12AcknowledgementSettings(document.RootElement, options);
+        }
+
+        internal static X12AcknowledgementSettings DeserializeX12AcknowledgementSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -81,6 +121,8 @@ namespace Azure.ResourceManager.Logic.Models
             int acknowledgementControlNumberLowerBound = default;
             int acknowledgementControlNumberUpperBound = default;
             bool rolloverAcknowledgementControlNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("needTechnicalAcknowledgement"u8))
@@ -158,8 +200,44 @@ namespace Azure.ResourceManager.Logic.Models
                     rolloverAcknowledgementControlNumber = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new X12AcknowledgementSettings(needTechnicalAcknowledgement, batchTechnicalAcknowledgements, needFunctionalAcknowledgement, functionalAcknowledgementVersion.Value, batchFunctionalAcknowledgements, needImplementationAcknowledgement, implementationAcknowledgementVersion.Value, batchImplementationAcknowledgements, needLoopForValidMessages, sendSynchronousAcknowledgement, acknowledgementControlNumberPrefix.Value, acknowledgementControlNumberSuffix.Value, acknowledgementControlNumberLowerBound, acknowledgementControlNumberUpperBound, rolloverAcknowledgementControlNumber, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<X12AcknowledgementSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12AcknowledgementSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(X12AcknowledgementSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        X12AcknowledgementSettings IPersistableModel<X12AcknowledgementSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12AcknowledgementSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeX12AcknowledgementSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(X12AcknowledgementSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<X12AcknowledgementSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

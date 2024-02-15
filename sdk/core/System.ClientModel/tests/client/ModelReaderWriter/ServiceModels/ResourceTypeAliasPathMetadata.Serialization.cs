@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 

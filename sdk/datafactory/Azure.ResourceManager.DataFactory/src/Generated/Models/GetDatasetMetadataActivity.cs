@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "GetMetadata";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GetDatasetMetadataActivity"/> for deserialization. </summary>
+        internal GetDatasetMetadataActivity()
+        {
+        }
+
         /// <summary> GetMetadata activity dataset reference. </summary>
         public DatasetReference Dataset { get; set; }
         /// <summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> The resource quota limit value. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/>. </summary>
         /// <param name="limitObjectType"> The limit object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The quota/limit value. </param>
         /// <param name="limitType"> The quota or usages limit types. </param>
-        internal QuotaLimitObject(LimitType limitObjectType, int value, QuotaLimitType? limitType) : base(limitObjectType)
+        internal QuotaLimitObject(LimitType limitObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, int value, QuotaLimitType? limitType) : base(limitObjectType, serializedAdditionalRawData)
         {
             Value = value;
             LimitType = limitType;
             LimitObjectType = limitObjectType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QuotaLimitObject"/> for deserialization. </summary>
+        internal QuotaLimitObject()
+        {
         }
 
         /// <summary> The quota/limit value. </summary>

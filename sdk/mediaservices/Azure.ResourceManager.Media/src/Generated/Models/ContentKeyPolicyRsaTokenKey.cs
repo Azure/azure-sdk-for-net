@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -24,13 +25,19 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRsaTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="exponent"> The RSA Parameter exponent. </param>
         /// <param name="modulus"> The RSA Parameter modulus. </param>
-        internal ContentKeyPolicyRsaTokenKey(string odataType, byte[] exponent, byte[] modulus) : base(odataType)
+        internal ContentKeyPolicyRsaTokenKey(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, byte[] exponent, byte[] modulus) : base(odataType, serializedAdditionalRawData)
         {
             Exponent = exponent;
             Modulus = modulus;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicyRsaTokenKey";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicyRsaTokenKey"/> for deserialization. </summary>
+        internal ContentKeyPolicyRsaTokenKey()
+        {
         }
 
         /// <summary> The RSA Parameter exponent. </summary>

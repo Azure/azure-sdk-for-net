@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class FrontDoorCustomDomainHttpsContent : IUtf8JsonSerializable
+    public partial class FrontDoorCustomDomainHttpsContent : IUtf8JsonSerializable, IJsonModel<FrontDoorCustomDomainHttpsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorCustomDomainHttpsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontDoorCustomDomainHttpsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
@@ -34,11 +45,40 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("secret");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorCustomDomainHttpsContent DeserializeFrontDoorCustomDomainHttpsContent(JsonElement element)
+        FrontDoorCustomDomainHttpsContent IJsonModel<FrontDoorCustomDomainHttpsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorCustomDomainHttpsContent(document.RootElement, options);
+        }
+
+        internal static FrontDoorCustomDomainHttpsContent DeserializeFrontDoorCustomDomainHttpsContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,6 +86,8 @@ namespace Azure.ResourceManager.Cdn.Models
             FrontDoorCertificateType certificateType = default;
             Optional<FrontDoorMinimumTlsVersion> minimumTlsVersion = default;
             Optional<FrontDoorCustomDomainHttpsContentSecret> secret = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("certificateType"u8))
@@ -72,8 +114,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorCustomDomainHttpsContent(certificateType, Optional.ToNullable(minimumTlsVersion), secret.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontDoorCustomDomainHttpsContent(certificateType, Optional.ToNullable(minimumTlsVersion), secret.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorCustomDomainHttpsContent IPersistableModel<FrontDoorCustomDomainHttpsContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorCustomDomainHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontDoorCustomDomainHttpsContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorCustomDomainHttpsContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

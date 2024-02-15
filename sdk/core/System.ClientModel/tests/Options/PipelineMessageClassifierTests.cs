@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
-using System.ClientModel.Primitives;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -23,7 +25,8 @@ public class PipelineMessageClassifierTests
                 MockPipelineMessage message = new MockPipelineMessage();
                 message.SetResponse(new MockPipelineResponse(code));
 
-                bool isNonError = !classifier.IsErrorResponse(message);
+                classifier.TryClassify(message, out bool isError);
+                bool isNonError = !isError;
 
                 if (nonError == code)
                 {
@@ -50,6 +53,253 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
 
-        Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        Assert.IsTrue(classifier.TryClassify(message, out bool error));
+        Assert.AreEqual(isError, error);
     }
+
+    [Test]
+    public void CanComposeErrorClassifiers()
+    {
+        var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
+
+        ChainingClassifier classifier = new ChainingClassifier(last);
+        classifier.AddClassifier(new ErrorStatusCodeClassifier(403, isError: false));
+        classifier.AddClassifier(new ErrorStatusCodeClassifier(404, isError: false));
+        classifier.AddClassifier(new ErrorStatusCodeClassifier(201, isError: true));
+
+        MockPipelineMessage message = new();
+
+        message.SetResponse(new MockPipelineResponse(200));
+        Assert.IsTrue(classifier.TryClassify(message, out bool isError));
+        Assert.IsFalse(isError);
+
+        message.SetResponse(new MockPipelineResponse(201));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(isError);
+
+        message.SetResponse(new MockPipelineResponse(204));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsFalse(isError);
+
+        message.SetResponse(new MockPipelineResponse(304));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(isError);
+
+        message.SetResponse(new MockPipelineResponse(403));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsFalse(isError);
+
+        message.SetResponse(new MockPipelineResponse(404));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsFalse(isError);
+
+        message.SetResponse(new MockPipelineResponse(500));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(isError);
+    }
+
+    [Test]
+    public void CanComposeRetryClassifiers()
+    {
+        var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
+
+        ChainingClassifier classifier = new ChainingClassifier(last);
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(403, isRetriable: false));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(404, isRetriable: false));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(201, isRetriable: true));
+
+        MockPipelineMessage message = new();
+
+        message.SetResponse(new MockPipelineResponse(200));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out bool isRetriable));
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(201));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(204));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(304));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(403));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(404));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(500));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isRetriable);
+    }
+
+    [Test]
+    public void CanComposeErrorAndRetryClassifiers()
+    {
+        var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
+
+        ChainingClassifier classifier = new ChainingClassifier(last);
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(429, isRetriable: false));
+        classifier.AddClassifier(new ErrorStatusCodeClassifier(404, isError: false));
+        classifier.AddClassifier(new ErrorStatusCodeClassifier(201, isError: true));
+
+        MockPipelineMessage message = new();
+
+        message.SetResponse(new MockPipelineResponse(200));
+        Assert.IsTrue(classifier.TryClassify(message, out bool isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out bool isRetriable));
+        Assert.IsFalse(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(201));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(204));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(304));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(404));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsFalse(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(429));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isError);
+        Assert.IsFalse(isRetriable);
+
+        message.SetResponse(new MockPipelineResponse(500));
+        Assert.IsTrue(classifier.TryClassify(message, out isError));
+        Assert.IsTrue(classifier.TryClassify(message, exception: default, out isRetriable));
+        Assert.IsTrue(isError);
+        Assert.IsTrue(isRetriable);
+    }
+
+    #region Helpers
+
+    internal class ErrorStatusCodeClassifier : PipelineMessageClassifier
+    {
+        private readonly (int, bool) _code;
+
+        public ErrorStatusCodeClassifier(int code, bool isError)
+        {
+            _code = (code, isError);
+        }
+
+        public override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            if (message.Response!.Status == _code.Item1)
+            {
+                isError = _code.Item2;
+                return true;
+            }
+
+            isError = false;
+            return false;
+        }
+
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            isRetriable = false;
+            return false;
+        }
+    }
+
+    internal class RetriableStatusCodeClassifier : PipelineMessageClassifier
+    {
+        private readonly (int, bool) _code;
+
+        public RetriableStatusCodeClassifier(int code, bool isRetriable)
+        {
+            _code = (code, isRetriable);
+        }
+
+        public override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            isError = false;
+            return false;
+        }
+
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            if (message.Response!.Status == _code.Item1)
+            {
+                isRetriable = _code.Item2;
+                return true;
+            }
+
+            isRetriable = false;
+            return false;
+        }
+    }
+
+    internal class ChainingClassifier : PipelineMessageClassifier
+    {
+        private readonly List<PipelineMessageClassifier> _classifiers;
+        private readonly PipelineMessageClassifier _endOfChain;
+
+        public ChainingClassifier(PipelineMessageClassifier endOfChain)
+        {
+            _classifiers = new();
+            _endOfChain = endOfChain;
+        }
+
+        public void AddClassifier(PipelineMessageClassifier classifier)
+        {
+            _classifiers.Add(classifier);
+        }
+
+        public override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            foreach (var classifier in _classifiers)
+            {
+                if (classifier.TryClassify(message, out isError))
+                {
+                    return true;
+                }
+            }
+
+            return _endOfChain.TryClassify(message, out isError);
+        }
+
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            foreach (var classifier in _classifiers)
+            {
+                if (classifier.TryClassify(message, exception, out isRetriable))
+                {
+                    return true;
+                }
+            }
+
+            if (!_endOfChain.TryClassify(message, exception, out isRetriable))
+            {
+                bool classified = Default.TryClassify(message, exception, out isRetriable);
+                Debug.Assert(classified);
+            }
+
+            return true;
+        }
+    }
+
+    #endregion
 }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Support.Models
         {
             resourceTypes ??= new List<string>();
 
-            return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList());
+            return new SupportAzureServiceData(id, name, resourceType, systemData, displayName, resourceTypes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.ProblemClassificationData"/>. </summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Support.Models
         {
             secondaryConsentEnabled ??= new List<SecondaryConsentEnabled>();
 
-            return new ProblemClassificationData(id, name, resourceType, systemData, displayName, secondaryConsentEnabled?.ToList());
+            return new ProblemClassificationData(id, name, resourceType, systemData, displayName, secondaryConsentEnabled?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SecondaryConsentEnabled"/>. </summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.SecondaryConsentEnabled"/> instance for mocking. </returns>
         public static SecondaryConsentEnabled SecondaryConsentEnabled(string description = null, string secondaryConsentEnabledType = null)
         {
-            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType);
+            return new SecondaryConsentEnabled(description, secondaryConsentEnabledType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportNameAvailabilityResult"/>. </summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.SupportNameAvailabilityResult"/> instance for mocking. </returns>
         public static SupportNameAvailabilityResult SupportNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SupportNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SupportNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportTicketData"/>. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Support.Models
         {
             secondaryConsent ??= new List<SecondaryConsent>();
 
-            return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress) : null, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId) : null, quotaTicketDetails, secondaryConsent?.ToList());
+            return new SupportTicketData(id, name, resourceType, systemData, supportTicketId, description, problemClassificationId, problemClassificationDisplayName, severity, enrollmentId, require24X7Response, advancedDiagnosticConsent, problemScopingQuestions, supportPlanId, contactDetails, serviceLevelAgreement, supportEngineerEmailAddress != null ? new SupportEngineer(supportEngineerEmailAddress, serializedAdditionalRawData: null) : null, supportPlanType, supportPlanDisplayName, title, problemStartOn, serviceId, serviceDisplayName, status, createdOn, modifiedOn, fileWorkspaceName, technicalTicketDetailsResourceId != null ? new TechnicalTicketDetails(technicalTicketDetailsResourceId, serializedAdditionalRawData: null) : null, quotaTicketDetails, secondaryConsent?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SupportServiceLevelAgreement"/>. </summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.SupportServiceLevelAgreement"/> instance for mocking. </returns>
         public static SupportServiceLevelAgreement SupportServiceLevelAgreement(DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, int? slaInMinutes = null)
         {
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes);
+            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportTicketCommunicationData"/>. </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.SupportTicketCommunicationData"/> instance for mocking. </returns>
         public static SupportTicketCommunicationData SupportTicketCommunicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SupportTicketCommunicationType? communicationType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string subject = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn);
+            return new SupportTicketCommunicationData(id, name, resourceType, systemData, communicationType, communicationDirection, sender, subject, body, createdOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.ChatTranscriptDetailData"/>. </summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Support.Models
         {
             messages ??= new List<ChatTranscriptMessageProperties>();
 
-            return new ChatTranscriptDetailData(id, name, resourceType, systemData, messages?.ToList(), startOn);
+            return new ChatTranscriptDetailData(id, name, resourceType, systemData, messages?.ToList(), startOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChatTranscriptMessageProperties"/>. </summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.ChatTranscriptMessageProperties"/> instance for mocking. </returns>
         public static ChatTranscriptMessageProperties ChatTranscriptMessageProperties(TranscriptContentType? contentType = null, SupportTicketCommunicationDirection? communicationDirection = null, string sender = null, string body = null, DateTimeOffset? createdOn = null)
         {
-            return new ChatTranscriptMessageProperties(contentType, communicationDirection, sender, body, createdOn);
+            return new ChatTranscriptMessageProperties(contentType, communicationDirection, sender, body, createdOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.FileWorkspaceDetailData"/>. </summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.FileWorkspaceDetailData"/> instance for mocking. </returns>
         public static FileWorkspaceDetailData FileWorkspaceDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, DateTimeOffset? expireOn = null)
         {
-            return new FileWorkspaceDetailData(id, name, resourceType, systemData, createdOn, expireOn);
+            return new FileWorkspaceDetailData(id, name, resourceType, systemData, createdOn, expireOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Support.SupportFileDetailData"/>. </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Support.SupportFileDetailData"/> instance for mocking. </returns>
         public static SupportFileDetailData SupportFileDetailData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? createdOn = null, float? chunkSize = null, float? fileSize = null, float? numberOfChunks = null)
         {
-            return new SupportFileDetailData(id, name, resourceType, systemData, createdOn, chunkSize, fileSize, numberOfChunks);
+            return new SupportFileDetailData(id, name, resourceType, systemData, createdOn, chunkSize, fileSize, numberOfChunks, serializedAdditionalRawData: null);
         }
     }
 }

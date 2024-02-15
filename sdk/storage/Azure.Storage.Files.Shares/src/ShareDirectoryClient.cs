@@ -2835,7 +2835,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2900,7 +2900,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -2963,7 +2963,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.
@@ -3028,7 +3028,7 @@ namespace Azure.Storage.Files.Shares
         /// </remarks>
         /// <param name="fileName">The name of the file.</param>
         /// <param name="maxSize">
-        /// Required. Specifies the maximum size for the file.
+        /// Required. Specifies the maximum size for the file in bytes.  The max supported file size is 4 TiB.
         /// </param>
         /// <param name="httpHeaders">
         /// Optional standard HTTP header properties that can be set for the file.

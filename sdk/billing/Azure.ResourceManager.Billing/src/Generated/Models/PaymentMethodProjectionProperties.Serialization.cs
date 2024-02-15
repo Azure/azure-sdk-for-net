@@ -5,21 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable
+    public partial class PaymentMethodProjectionProperties : IUtf8JsonSerializable, IJsonModel<PaymentMethodProjectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentMethodProjectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PaymentMethodProjectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(PaymentMethodId);
+            }
             if (Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PaymentMethodProjectionPropertiesType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(PaymentMethodProjectionPropertiesType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AccountHolderName))
+            {
+                writer.WritePropertyName("accountHolderName"u8);
+                writer.WriteStringValue(AccountHolderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Expiration))
+            {
+                writer.WritePropertyName("expiration"u8);
+                writer.WriteStringValue(Expiration);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastFourDigits))
+            {
+                writer.WritePropertyName("lastFourDigits"u8);
+                writer.WriteStringValue(LastFourDigits);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
             }
             if (Optional.IsCollectionDefined(Logos))
             {
@@ -36,11 +76,40 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element)
+        PaymentMethodProjectionProperties IJsonModel<PaymentMethodProjectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
+        }
+
+        internal static PaymentMethodProjectionProperties DeserializePaymentMethodProjectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -54,6 +123,8 @@ namespace Azure.ResourceManager.Billing.Models
             Optional<string> displayName = default;
             Optional<IList<PaymentMethodLogo>> logos = default;
             Optional<PaymentMethodStatus> status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,8 +193,44 @@ namespace Azure.ResourceManager.Billing.Models
                     status = new PaymentMethodStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PaymentMethodProjectionProperties(id.Value, Optional.ToNullable(family), type.Value, accountHolderName.Value, expiration.Value, lastFourDigits.Value, displayName.Value, Optional.ToList(logos), Optional.ToNullable(status), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PaymentMethodProjectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PaymentMethodProjectionProperties IPersistableModel<PaymentMethodProjectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentMethodProjectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePaymentMethodProjectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PaymentMethodProjectionProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PaymentMethodProjectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

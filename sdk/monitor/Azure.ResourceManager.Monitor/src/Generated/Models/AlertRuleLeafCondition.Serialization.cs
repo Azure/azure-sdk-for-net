@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AlertRuleLeafCondition : IUtf8JsonSerializable
+    public partial class AlertRuleLeafCondition : IUtf8JsonSerializable, IJsonModel<AlertRuleLeafCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleLeafCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AlertRuleLeafCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Field))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element)
+        AlertRuleLeafCondition IJsonModel<AlertRuleLeafCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertRuleLeafCondition(document.RootElement, options);
+        }
+
+        internal static AlertRuleLeafCondition DeserializeAlertRuleLeafCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<string> field = default;
             Optional<string> @equals = default;
             Optional<IList<string>> containsAny = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -74,8 +115,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     containsAny = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AlertRuleLeafCondition(field.Value, @equals.Value, Optional.ToList(containsAny), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AlertRuleLeafCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AlertRuleLeafCondition IPersistableModel<AlertRuleLeafCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertRuleLeafCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAlertRuleLeafCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AlertRuleLeafCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AlertRuleLeafCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

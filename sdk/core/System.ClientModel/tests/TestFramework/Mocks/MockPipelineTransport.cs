@@ -6,6 +6,7 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
@@ -118,22 +119,24 @@ public class MockPipelineTransport : PipelineTransport
 
     private class TransportRequest : PipelineRequest
     {
-        public TransportRequest() { }
+        private Uri _uri;
+        private readonly PipelineRequestHeaders _headers;
 
-        public override void Dispose()
+        public TransportRequest()
         {
-            throw new NotImplementedException();
+            _headers = new MockRequestHeaders();
+            _uri = new Uri("https://www.example.com");
         }
+
+        public override void Dispose() { }
 
         protected override BinaryContent? GetContentCore()
         {
             throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
-        {
-            throw new NotImplementedException();
-        }
+        protected override PipelineRequestHeaders GetHeadersCore()
+            => _headers;
 
         protected override string GetMethodCore()
         {
@@ -141,9 +144,7 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         protected override Uri GetUriCore()
-        {
-            throw new NotImplementedException();
-        }
+            => _uri;
 
         protected override void SetContentCore(BinaryContent? content)
         {
@@ -156,9 +157,7 @@ public class MockPipelineTransport : PipelineTransport
         }
 
         protected override void SetUriCore(Uri uri)
-        {
-            throw new NotImplementedException();
-        }
+            => _uri = uri;
     }
 
     private class RetriableTransportResponse : PipelineResponse
@@ -178,12 +177,21 @@ public class MockPipelineTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        public override BinaryData Content => throw new NotImplementedException();
+
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
 
-        public override void Dispose()
+        public override void Dispose() { }
+
+        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

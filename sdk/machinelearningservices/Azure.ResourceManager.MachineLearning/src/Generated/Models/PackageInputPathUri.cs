@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -20,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="PackageInputPathUri"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="uri"> Input path url. </param>
-        internal PackageInputPathUri(InputPathType inputPathType, Uri uri) : base(inputPathType)
+        internal PackageInputPathUri(InputPathType inputPathType, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri uri) : base(inputPathType, serializedAdditionalRawData)
         {
             Uri = uri;
             InputPathType = inputPathType;

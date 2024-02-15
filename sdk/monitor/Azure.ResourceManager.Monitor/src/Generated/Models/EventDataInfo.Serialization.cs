@@ -6,16 +6,192 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class EventDataInfo
+    public partial class EventDataInfo : IUtf8JsonSerializable, IJsonModel<EventDataInfo>
     {
-        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventDataInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventDataInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Authorization))
+            {
+                writer.WritePropertyName("authorization"u8);
+                writer.WriteObjectValue(Authorization);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Claims))
+            {
+                writer.WritePropertyName("claims"u8);
+                writer.WriteStartObject();
+                foreach (var item in Claims)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Caller))
+            {
+                writer.WritePropertyName("caller"u8);
+                writer.WriteStringValue(Caller);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventDataId))
+            {
+                writer.WritePropertyName("eventDataId"u8);
+                writer.WriteStringValue(EventDataId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CorrelationId))
+            {
+                writer.WritePropertyName("correlationId"u8);
+                writer.WriteStringValue(CorrelationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventName))
+            {
+                writer.WritePropertyName("eventName"u8);
+                writer.WriteObjectValue(EventName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteObjectValue(Category);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HttpRequest))
+            {
+                writer.WritePropertyName("httpRequest"u8);
+                writer.WriteObjectValue(HttpRequest);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Level))
+            {
+                writer.WritePropertyName("level"u8);
+                writer.WriteStringValue(Level.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroupName))
+            {
+                writer.WritePropertyName("resourceGroupName"u8);
+                writer.WriteStringValue(ResourceGroupName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceProviderName))
+            {
+                writer.WritePropertyName("resourceProviderName"u8);
+                writer.WriteObjectValue(ResourceProviderName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteObjectValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationId))
+            {
+                writer.WritePropertyName("operationId"u8);
+                writer.WriteStringValue(OperationId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationName))
+            {
+                writer.WritePropertyName("operationName"u8);
+                writer.WriteObjectValue(OperationName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubStatus))
+            {
+                writer.WritePropertyName("subStatus"u8);
+                writer.WriteObjectValue(SubStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
+            {
+                writer.WritePropertyName("eventTimestamp"u8);
+                writer.WriteStringValue(EventTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubmissionTimestamp))
+            {
+                writer.WritePropertyName("submissionTimestamp"u8);
+                writer.WriteStringValue(SubmissionTimestamp.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EventDataInfo IJsonModel<EventDataInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventDataInfo(document.RootElement, options);
+        }
+
+        internal static EventDataInfo DeserializeEventDataInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -44,6 +220,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<DateTimeOffset> submissionTimestamp = default;
             Optional<string> subscriptionId = default;
             Optional<Guid> tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorization"u8))
@@ -240,8 +418,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventDataInfo(authorization.Value, Optional.ToDictionary(claims), caller.Value, description.Value, id.Value, eventDataId.Value, correlationId.Value, eventName.Value, category.Value, httpRequest.Value, Optional.ToNullable(level), resourceGroupName.Value, resourceProviderName.Value, resourceId.Value, resourceType.Value, operationId.Value, operationName.Value, Optional.ToDictionary(properties), status.Value, subStatus.Value, Optional.ToNullable(eventTimestamp), Optional.ToNullable(submissionTimestamp), subscriptionId.Value, Optional.ToNullable(tenantId), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventDataInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventDataInfo IPersistableModel<EventDataInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventDataInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventDataInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventDataInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventDataInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

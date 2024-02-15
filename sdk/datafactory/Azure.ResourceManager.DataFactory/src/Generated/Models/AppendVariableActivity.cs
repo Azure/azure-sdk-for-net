@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "AppendVariable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AppendVariableActivity"/> for deserialization. </summary>
+        internal AppendVariableActivity()
+        {
+        }
+
         /// <summary> Name of the variable whose value needs to be appended to. </summary>
         public string VariableName { get; set; }
         /// <summary> Value to be appended. Type: could be a static value matching type of the variable item or Expression with resultType matching type of the variable item. </summary>
