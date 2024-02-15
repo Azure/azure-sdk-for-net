@@ -130,34 +130,26 @@ public class MockPipelineTransport : PipelineTransport
 
         public override void Dispose() { }
 
-        protected override BinaryContent? GetContentCore()
+        protected override BinaryContent? ContentCore
         {
-            throw new NotImplementedException();
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        protected override PipelineRequestHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders HeadersCore
             => _headers;
 
-        protected override string GetMethodCore()
+        protected override string MethodCore
         {
-            throw new NotImplementedException();
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        protected override Uri GetUriCore()
-            => _uri;
-
-        protected override void SetContentCore(BinaryContent? content)
+        protected override Uri UriCore
         {
-            throw new NotImplementedException();
+            get => _uri;
+            set => _uri = value;
         }
-
-        protected override void SetMethodCore(string method)
-        {
-            throw new NotImplementedException();
-        }
-
-        protected override void SetUriCore(Uri uri)
-            => _uri = uri;
     }
 
     private class RetriableTransportResponse : PipelineResponse

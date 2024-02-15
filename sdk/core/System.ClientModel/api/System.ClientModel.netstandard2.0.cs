@@ -179,17 +179,14 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineRequest() { }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
+        protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
+        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders HeadersCore { get; }
         public string Method { get { throw null; } set { } }
+        protected abstract string MethodCore { get; set; }
         public System.Uri Uri { get { throw null; } set { } }
+        protected abstract System.Uri UriCore { get; set; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.BinaryContent? GetContentCore();
-        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore();
-        protected abstract string GetMethodCore();
-        protected abstract System.Uri GetUriCore();
-        protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
-        protected abstract void SetMethodCore(string method);
-        protected abstract void SetUriCore(System.Uri uri);
     }
     public abstract partial class PipelineRequestHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {

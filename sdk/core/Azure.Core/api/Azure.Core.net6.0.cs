@@ -527,21 +527,18 @@ namespace Azure.Core
         protected Request() { }
         public virtual string ClientRequestId { get { throw null; } set { } }
         public virtual new Azure.Core.RequestContent? Content { get { throw null; } set { } }
+        protected override System.ClientModel.BinaryContent? ContentCore { get { throw null; } set { } }
         public new Azure.Core.RequestHeaders Headers { get { throw null; } }
+        protected override System.ClientModel.Primitives.PipelineRequestHeaders HeadersCore { get { throw null; } }
         public virtual new Azure.Core.RequestMethod Method { get { throw null; } set { } }
+        protected override string MethodCore { get { throw null; } set { } }
         public virtual new Azure.Core.RequestUriBuilder Uri { get { throw null; } set { } }
+        protected override System.Uri UriCore { get { throw null; } set { } }
         protected internal abstract void AddHeader(string name, string value);
         protected internal abstract bool ContainsHeader(string name);
         protected internal abstract System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader> EnumerateHeaders();
-        protected override System.ClientModel.BinaryContent? GetContentCore() { throw null; }
-        protected override System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore() { throw null; }
-        protected override string GetMethodCore() { throw null; }
-        protected override System.Uri GetUriCore() { throw null; }
         protected internal abstract bool RemoveHeader(string name);
-        protected override void SetContentCore(System.ClientModel.BinaryContent? content) { }
         protected internal virtual void SetHeader(string name, string value) { }
-        protected override void SetMethodCore(string method) { }
-        protected override void SetUriCore(System.Uri uri) { }
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
