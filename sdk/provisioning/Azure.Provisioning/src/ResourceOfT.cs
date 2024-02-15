@@ -31,11 +31,11 @@ namespace Azure.Provisioning
         /// <param name="resourceName">The resouce name.</param>
         /// <param name="resourceType">The resourceType.</param>
         /// <param name="version">The version.</param>
-        /// <param name="properties">The properites.</param>
-        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, T properties)
-            : base(scope, parent, resourceName, resourceType, version, properties)
+        /// <param name="createProperties">Lambda to create the ARM properties.</param>
+        protected Resource(IConstruct scope, Resource? parent, string resourceName, ResourceType resourceType, string version, Func<string, T> createProperties)
+            : base(scope, parent, resourceName, resourceType, version, (name) => createProperties(name))
         {
-            Properties = properties;
+            Properties = (T)ResourceData;
         }
 
         /// <summary>

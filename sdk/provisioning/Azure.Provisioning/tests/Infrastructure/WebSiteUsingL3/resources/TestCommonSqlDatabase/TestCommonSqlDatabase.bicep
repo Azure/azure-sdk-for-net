@@ -11,17 +11,17 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' existing = {
   name: 'keyVault_CRoMbemLF'
 }
 
-resource keyVaultSecret_nMDmVNMVq 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_NmXfhaHvM 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'sqlAdminPassword'
+  name: 'sqlAdminPassword-TEST'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_QRsiyFBMe 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'appUserPassword'
+  name: 'appUserPassword-TEST'
   properties: {
     value: appUserPassword
   }
@@ -47,9 +47,9 @@ resource sqlDatabase_U7NzorRJT 'Microsoft.Sql/servers/databases@2022-08-01-previ
   }
 }
 
-resource keyVaultSecret_NP8ELZpgb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_7eiFxkj0r 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'connectionString'
+  name: 'connectionString-TEST'
   properties: {
     value: 'Server=${sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_U7NzorRJT.name}; User=appUser; Password=${appUserPassword}'
   }

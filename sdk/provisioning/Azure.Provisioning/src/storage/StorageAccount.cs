@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text;
 using Azure.Core;
 using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.Storage;
@@ -16,12 +17,6 @@ namespace Azure.Provisioning.Storage
     {
         private const string ResourceTypeName = "Microsoft.Storage/storageAccounts";
 
-        private static string GetName(IConstruct scope, string name)
-        {
-            var result = $"{name}-{Guid.NewGuid().ToString().Replace("-", "")}";
-            return result.Substring(0, Math.Min(result.Length, 24));
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageAccount"/>.
         /// </summary>
@@ -31,8 +26,8 @@ namespace Azure.Provisioning.Storage
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         public StorageAccount(IConstruct scope, StorageKind kind, StorageSkuName sku, ResourceGroup? parent = null, string name = "sa")
-            : base(scope, parent, GetName(scope, name), ResourceTypeName, "2022-09-01", ArmStorageModelFactory.StorageAccountData(
-                name: GetName(scope, name),
+            : base(scope, parent, name, ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.StorageAccountData(
+                name: name,
                 resourceType: ResourceTypeName,
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new StorageSku(sku),
@@ -49,6 +44,33 @@ namespace Azure.Provisioning.Storage
                 result = scope.GetOrAddResourceGroup();
             }
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName)
+        {
+            var span = resourceName.AsSpan();
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < span.Length; i++)
+            {
+                char c = span[i];
+                if (!char.IsLetterOrDigit(c))
+                {
+                    continue;
+                }
+                if (char.IsDigit(c) && !char.IsLower(c))
+                {
+                    stringBuilder.Append(char.ToLower(c));
+                }
+                else
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+            stringBuilder.Append('-');
+            stringBuilder.Append(Guid.NewGuid().ToString("N"));
+
+            return stringBuilder.ToString(0, Math.Min(stringBuilder.Length, 24));
         }
     }
 }

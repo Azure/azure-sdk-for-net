@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Storage
         /// </summary>
         /// <param name="scope">The scope.</param>
         public BlobService(IConstruct scope)
-            : base(scope, null, "default", ResourceTypeName, "2022-09-01", ArmStorageModelFactory.BlobServiceData(
+            : base(scope, null, "default", ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.BlobServiceData(
                 name: "default",
                 resourceType: ResourceTypeName))
         {

@@ -24,9 +24,9 @@ namespace Azure.Provisioning.KeyVaults
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public KeyVault(IConstruct scope, string? name = null, string version = "2023-02-01", AzureLocation? location = default)
-            : base(scope, null, GetName(scope, name), ResourceTypeName, version, ArmKeyVaultModelFactory.KeyVaultData(
-                name: GetName(scope, name),
+        public KeyVault(IConstruct scope, string name = "kv", string version = "2023-02-01", AzureLocation? location = default)
+            : base(scope, null, name, ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultData(
+                name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 properties: ArmKeyVaultModelFactory.KeyVaultProperties(
@@ -44,11 +44,6 @@ namespace Azure.Provisioning.KeyVaults
                         })
                     } : default)))
         {
-        }
-
-        private static string GetName(IConstruct scope, string? name)
-        {
-            return name is null ? $"kv-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
         }
 
         /// <summary>

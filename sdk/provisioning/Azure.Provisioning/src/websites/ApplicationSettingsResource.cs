@@ -11,7 +11,7 @@ namespace Azure.Provisioning.AppService
         private const string ResourceTypeName = "Microsoft.Web/sites/config";
 
         public ApplicationSettingsResource(IConstruct scope, IDictionary<string, string> appSettings, WebSite? parent = null, string version = "2021-02-01")
-            : base(scope, parent, "appsettings", ResourceTypeName, version, ArmAppServiceModelFactory.AppServiceConfigurationDictionary(
+            : base(scope, parent, "appsettings", ResourceTypeName, version, (name) => ArmAppServiceModelFactory.AppServiceConfigurationDictionary(
                 name: "appsettings",
                 properties: appSettings))
         {

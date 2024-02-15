@@ -17,8 +17,6 @@ namespace Azure.Provisioning.ResourceManager
     {
         internal static readonly ResourceType ResourceType = "Microsoft.Resources/subscriptions";
 
-        private static string GetName(Guid? guid) => guid.HasValue ? guid.Value.ToString() : Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_SUBSCRIPTION_ID' found");
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Subscription"/>.
         /// </summary>
@@ -28,14 +26,20 @@ namespace Azure.Provisioning.ResourceManager
             : base(
                   scope,
                   scope.Root,
-                  GetName(guid),
+                  guid?.ToString()!,
                   ResourceType,
                   "2022-12-01",
-                  ResourceManagerModelFactory.SubscriptionData(
-                      id: SubscriptionResource.CreateResourceIdentifier(GetName(guid)),
-                      subscriptionId: GetName(guid),
+                  (name) => ResourceManagerModelFactory.SubscriptionData(
+                      id: SubscriptionResource.CreateResourceIdentifier(name),
+                      subscriptionId: name,
                       tenantId: scope.Root.Properties.TenantId))
         {
+        }
+
+        /// <inheritdoc/>
+        protected override string GetAzureName(IConstruct scope, string resourceName)
+        {
+            return resourceName is not null ? resourceName : Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? throw new InvalidOperationException("No environment variable named 'AZURE_SUBSCRIPTION_ID' found");
         }
     }
 }
