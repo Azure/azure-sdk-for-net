@@ -134,6 +134,7 @@
     <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0-alpha.20240213.1" />
     <PackageReference Update="Azure.ResourceManager.AppService" Version="1.1.0-alpha.20240213.1" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.3.0-alpha.20240213.1" />
+    <PackageReference Update="Azure.ResourceManager.AppConfiguration" Version="1.3.0-alpha.20240215.2" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.4" />

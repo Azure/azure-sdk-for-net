@@ -11,6 +11,7 @@ using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
+using Azure.Provisioning.AppConfiguration;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.Provisioning.Tests
@@ -117,6 +118,14 @@ namespace Azure.Provisioning.Tests
             {
                 IsEnabled = true
             };
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void AppConfiguration()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddAppConfigurationStore();
             infra.Build(GetOutputPath());
         }
 
