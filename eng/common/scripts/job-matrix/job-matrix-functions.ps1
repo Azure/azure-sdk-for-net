@@ -388,7 +388,7 @@ function ProcessEnvironmentVariableReferences([array]$matrix, $displayNamesLooku
                     if (!$value) {
                         Write-Warning "Environment variable `"$envKey`" was not found or is empty."
                     }
-                    $flattened.Set($value, $flattened.Name)
+                    $perm.Set($value, $flattened.Name)
                 }
             }
 
