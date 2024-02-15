@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="id"> The id of the gallery artifact version source. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="communityGalleryImageId"> The resource Id of the source Community Gallery Image.  Only required when using Community Gallery Image as a source. </param>
-        /// /// <param name="virtualMachineId"> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </param>
+        /// <param name="virtualMachineId"> The resource Id of the source virtual machine.  Only required when capturing a virtual machine to source this Gallery Image Version. </param>
         internal GalleryArtifactVersionFullSource(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string communityGalleryImageId, string virtualMachineId) : base(id, serializedAdditionalRawData)
         {
             CommunityGalleryImageId = communityGalleryImageId;
