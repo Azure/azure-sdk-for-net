@@ -1,6 +1,6 @@
 # Release History
 
-## 1.38.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
 
 - Additional Azure data centers are now included in `AzureLocation`.  The following were added:
   - China East 3
