@@ -85,7 +85,6 @@ public partial class HttpClientPipelineTransport
                 "PATCH" => _patchMethod,
                 _ => new HttpMethod(method),
             };
-            ;
         }
 
         internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)

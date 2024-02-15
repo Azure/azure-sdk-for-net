@@ -127,11 +127,11 @@ public abstract class PipelineTransport : PipelinePolicy
 
             if (async)
             {
-                await message.Response.ReadContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
+                await message.Response.BufferContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
             }
             else
             {
-                message.Response.ReadContent(timeoutTokenSource.Token);
+                message.Response.BufferContent(timeoutTokenSource.Token);
             }
         }
         // We dispose stream on timeout or user cancellation so catch and check if

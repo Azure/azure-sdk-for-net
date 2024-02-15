@@ -171,11 +171,11 @@ namespace Azure
         {
             if (async)
             {
-                await response.ReadContentAsync().ConfigureAwait(false);
+                await response.BufferContentAsync().ConfigureAwait(false);
             }
             else
             {
-                response.ReadContent();
+                response.BufferContent();
             }
 
             parser ??= response.RequestFailedDetailsParser;

@@ -103,7 +103,7 @@ public class MockPipelineResponse : PipelineResponse
         }
     }
 
-    public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+    public override BinaryData BufferContent(CancellationToken cancellationToken = default)
     {
         if (_bufferedContent is not null)
         {
@@ -127,7 +127,7 @@ public class MockPipelineResponse : PipelineResponse
         return _bufferedContent;
     }
 
-    public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+    public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
     {
         if (_bufferedContent is not null)
         {

@@ -53,11 +53,11 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
-                => _pipelineResponse.ReadContent(cancellationToken);
+            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
+                => _pipelineResponse.BufferContent(cancellationToken);
 
-            public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
-                => await base.ReadContentAsync(cancellationToken).ConfigureAwait(false);
+            public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
+                => await base.BufferContentAsync(cancellationToken).ConfigureAwait(false);
 
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);

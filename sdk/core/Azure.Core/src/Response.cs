@@ -51,7 +51,7 @@ namespace Azure
             {
                 if (ContentStream is null || ContentStream is MemoryStream)
                 {
-                    return ReadContent();
+                    return BufferContent();
                 }
 
                 throw new InvalidOperationException($"The response is not buffered.");
@@ -140,7 +140,7 @@ namespace Azure
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+        public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
             // Derived types should provide an implementation that allows caching
             // to improve performance.
@@ -177,7 +177,7 @@ namespace Azure
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public override async ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+        public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
         {
             // Derived types should provide an implementation that allows caching
             // to improve performance.
@@ -265,12 +265,12 @@ namespace Azure
                 throw new NotSupportedException(DefaultMessage);
             }
 
-            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
+            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
             {
                 throw new NotSupportedException(DefaultMessage);
             }
 
-            public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+            public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
             {
                 throw new NotSupportedException(DefaultMessage);
             }
