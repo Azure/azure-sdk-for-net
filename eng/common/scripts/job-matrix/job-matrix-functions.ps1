@@ -372,6 +372,7 @@ function ProcessReplace {
 
 function ProcessEnvironmentVariableReferences([array]$matrix, $displayNamesLookup) {
     $updatedMatrix = @()
+    $missingEnvVars = @{}
 
     foreach ($element in $matrix) {
         $updated = [MatrixParameter[]]@()
@@ -384,9 +385,9 @@ function ProcessEnvironmentVariableReferences([array]$matrix, $displayNamesLooku
             foreach ($flattened in $perm.Flatten()) {
                 if ($flattened.Value -is [string] -and $flattened.Value.StartsWith("env:")) {
                     $envKey = $flattened.Value.Replace("env:", "")
-                    $value = [System.Environment]::GetEnvironmentVariable($envKey) ?? ""
+                    $value = [System.Environment]::GetEnvironmentVariable($envKey)
                     if (!$value) {
-                        Write-Warning "Environment variable `"$envKey`" was not found or is empty."
+                        $missingEnvVars[$envKey] = $true
                     }
                     $perm.Set($value, $flattened.Name)
                 }
@@ -398,6 +399,9 @@ function ProcessEnvironmentVariableReferences([array]$matrix, $displayNamesLooku
         $updatedMatrix += CreateMatrixCombinationScalar $updated $displayNamesLookup
     }
 
+    if ($missingEnvVars.Count -gt 0) {
+        throw "Environment variables '$($missingEnvVars.Keys -join ", ")' were empty or not found."
+    }
     return $updatedMatrix
 }
 
