@@ -105,7 +105,7 @@ public class ObservableTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override Uri UriCore
+        protected override Uri? UriCore
         {
             get => throw new NotImplementedException();
             set => throw new NotImplementedException();

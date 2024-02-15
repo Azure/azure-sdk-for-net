@@ -43,17 +43,9 @@ public partial class HttpClientPipelineTransport
             }
         }
 
-        protected override Uri UriCore
+        protected override Uri? UriCore
         {
-            get
-            {
-                if (_uri is null)
-                {
-                    throw new InvalidOperationException("Uri has not been set on this instance.");
-                }
-
-                return _uri;
-            }
+            get => _uri;
             set
             {
                 Argument.AssertNotNull(value, nameof(value));
@@ -89,6 +81,11 @@ public partial class HttpClientPipelineTransport
 
         internal static HttpRequestMessage BuildHttpRequestMessage(PipelineRequest request, CancellationToken cancellationToken)
         {
+            if (request.Uri is null)
+            {
+                throw new InvalidOperationException("Uri must be set on message request prior to sending message.");
+            }
+
             HttpMethod method = ToHttpMethod(request.Method);
             Uri uri = request.Uri;
             HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);

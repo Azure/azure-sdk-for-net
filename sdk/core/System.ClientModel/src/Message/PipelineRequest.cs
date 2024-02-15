@@ -16,13 +16,13 @@ public abstract class PipelineRequest : IDisposable
 
     protected abstract string MethodCore { get; set; }
 
-    public Uri Uri
+    public Uri? Uri
     {
         get => UriCore;
         set => UriCore = value;
     }
 
-    protected abstract Uri UriCore { get; set; }
+    protected abstract Uri? UriCore { get; set; }
 
     public PipelineRequestHeaders Headers => HeadersCore;
 
