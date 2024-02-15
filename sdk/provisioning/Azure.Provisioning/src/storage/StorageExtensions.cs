@@ -29,11 +29,10 @@ namespace Azure.Provisioning.Storage
         /// Adds a <see cref="BlobService"/> to the construct.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static BlobService AddBlobService(this IConstruct scope, string name = "blob")
+        public static BlobService AddBlobService(this IConstruct scope)
         {
-            return new BlobService(scope, name);
+            return new BlobService(scope);
         }
     }
 }
