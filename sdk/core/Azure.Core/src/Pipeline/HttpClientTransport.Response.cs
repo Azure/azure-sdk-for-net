@@ -83,9 +83,10 @@ namespace Azure.Core.Pipeline
                 response?.Dispose();
             }
 
-            private void ResetContentStreamPosition(PipelineResponse response)
+            private static void ResetContentStreamPosition(PipelineResponse response)
             {
-                if (response.ContentStream is MemoryStream stream && stream.Position != 0)
+                if (response.ContentStream is MemoryStream stream && response.ContentStream.CanSeek &&
+                    stream.Position != 0)
                 {
                     // Azure.Core Response has a contract that ContentStream can be read
                     // without setting position back to 0.  This means if ReadContent is
