@@ -171,10 +171,8 @@ public class MockPipelineTransport : PipelineTransport
 
         public override BinaryData Content => throw new NotImplementedException();
 
-        protected override PipelineResponseHeaders GetHeadersCore()
-        {
-            throw new NotImplementedException();
-        }
+        protected override PipelineResponseHeaders HeadersCore
+            => throw new NotImplementedException();
 
         public override void Dispose() { }
 

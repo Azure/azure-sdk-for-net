@@ -388,10 +388,8 @@ public class MapsClientTests
                 _stream?.Dispose();
             }
 
-            protected override PipelineResponseHeaders GetHeadersCore()
-            {
-                throw new NotImplementedException();
-            }
+            protected override PipelineResponseHeaders HeadersCore
+                => throw new NotImplementedException();
 
             public override BinaryData ReadContent(CancellationToken cancellationToken = default)
             {

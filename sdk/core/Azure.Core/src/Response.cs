@@ -38,10 +38,7 @@ namespace Azure
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected override PipelineResponseHeaders GetHeadersCore()
+        protected override PipelineResponseHeaders HeadersCore
             => throw new NotImplementedException("Subtypes must implement this method.");
 
         /// <summary>
@@ -67,16 +64,16 @@ namespace Azure
 
         internal RequestFailedDetailsParser? RequestFailedDetailsParser { get; set; }
 
-        internal void SetIsError(bool value) => SetIsErrorCore(value);
+        internal void SetIsError(bool value) => IsErrorCore = value;
 
         /// <summary>
         /// TBD.
         /// </summary>
-        /// <param name="isError"></param>
-        // Azure.Core overrides this only so it can seal it.
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        protected sealed override void SetIsErrorCore(bool isError)
-            => base.SetIsErrorCore(isError);
+        protected override bool IsErrorCore
+        {
+            get => base.IsErrorCore;
+            set => base.IsErrorCore = value;
+        }
 
         /// <summary>
         /// Returns header value if the header is stored in the collection. If header has multiple values they are going to be joined with a comma.
@@ -242,10 +239,8 @@ namespace Azure
                 set => throw new NotSupportedException(DefaultMessage);
             }
 
-            protected override PipelineResponseHeaders GetHeadersCore()
-            {
-                throw new NotSupportedException(DefaultMessage);
-            }
+            protected override PipelineResponseHeaders HeadersCore
+                => throw new NotSupportedException(DefaultMessage);
 
             public override void Dispose()
             {

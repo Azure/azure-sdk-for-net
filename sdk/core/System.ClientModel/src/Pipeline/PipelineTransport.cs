@@ -90,7 +90,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
 
         message.AssertResponse();
-        message.Response!.SetIsError(ClassifyResponse(message));
+        message.Response!.IsErrorCore = ClassifyResponse(message);
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.

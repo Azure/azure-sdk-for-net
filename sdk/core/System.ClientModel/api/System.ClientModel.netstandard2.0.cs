@@ -205,14 +205,14 @@ namespace System.ClientModel.Primitives
         public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders HeadersCore { get; }
         public virtual bool IsError { get { throw null; } }
+        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
         public abstract System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
