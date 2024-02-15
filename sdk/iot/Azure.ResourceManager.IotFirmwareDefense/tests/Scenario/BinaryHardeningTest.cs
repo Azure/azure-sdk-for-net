@@ -14,11 +14,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
 {
     public class BinaryHardeningTest : IotFirmwareDefenseManagementTestBase
     {
-        private static readonly string rgName = "testRg";
-        private static ResourceGroupResource testRg;
-        private static FirmwareWorkspaceResource testWorkspace;
-        private static FirmwareResource testFirmware;
-        private static BinaryHardeningResult testBinaryHardeningResult;
+        private static readonly string subscriptionId = "07aed47b-60ad-4d6e-a07a-89b602418441";
+        private static readonly string rgName = "sdk-tests-rg";
+        private static readonly string workspaceName = "default";
+        private static readonly string firmwareId = "cf833be1-3e8e-a00a-a037-ad27a0fc0497";
+        private static SubscriptionResource testSubscription;
 
         public BinaryHardeningTest(bool isAsync)
             : base(isAsync)
@@ -26,45 +26,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
         }
 
         [SetUp]
-        public async void setup()
+        public void setup()
         {
-            FirmwareData testFirmwareData = new FirmwareData
-            {
-                FileName = "testFileName",
-                FileSize = 1,
-                Vendor = "testVendor",
-                Model = "testModel",
-                Version = "testVersion",
-                Description = "testDescription"
-            };
-
-            testBinaryHardeningResult = new BinaryHardeningResult
-            {
-                BinaryHardeningId = Recording.GenerateId(),
-                Architecture = "testArch",
-                FilePath = "/test/file/path",
-                Class = "testCpuClass",
-                Runpath = "testRunpath",
-                Rpath = "testRpath",
-                Nx = true,
-                Pie = false,
-                Relro = true,
-                Canary = false,
-                Stripped = true
-            };
-
-            SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            testRg = await CreateResourceGroup(subscription, rgName, AzureLocation.EastUS);
-            testWorkspace = await CreateWorkspace(testRg);
-            testFirmware = await CreateFirmware(testWorkspace, testFirmwareData);
+            var _ = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            testSubscription = Client.GetSubscriptionResource(_);
         }
 
         [TestCase]
         [RecordedTest]
         public async Task TestGetBinaryHardeningResults()
         {
-            BinaryHardeningListResult response = await testFirmware.GetBinaryHardeningResultsAsync();
-            // response.value[0].id.Should().Equals(testBinaryHardeningResult.BinaryHardeningId);
+            ResourceGroupResource testRg = await testSubscription.GetResourceGroupAsync(rgName);
+            FirmwareWorkspaceResource testWorkspace = await testRg.GetFirmwareWorkspaceAsync(workspaceName);
+            FirmwareResource testFirmware = await testWorkspace.GetFirmwareAsync(firmwareId);
+
+            var results = testFirmware.GetBinaryHardeningResultsAsync();
+            await foreach ( BinaryHardeningResult result in results ) {
+                Console.WriteLine($"Fetched: {result}");
+            }
+            Assert.NotNull(results);
         }
     }
 }

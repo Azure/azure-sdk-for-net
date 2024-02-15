@@ -1,16 +1,15 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2024-02-14)
 
 ### Features Added
 
+- Updated to Swagger API version 2024-01-10, with new operations and models for firmware analysis results.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Deprecated several unused properties in firmware results models
 
 ## 1.0.0-beta.2 (2023-11-29)
 
