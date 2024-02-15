@@ -41,19 +41,66 @@ namespace Azure.Provisioning
         /// <summary>
         ///
         /// </summary>
-        /// <param name="selector"></param>
+        /// <param name="propertySelector"></param>
         /// <param name="parameter"></param>
         /// <exception cref="NotSupportedException"></exception>
-        public void AssignParameter(Expression<Func<T, string>> selector, Parameter parameter)
+        public void AssignParameter(Expression<Func<T, object?>> propertySelector, Parameter parameter)
         {
-            if (selector is not LambdaExpression lambda ||
-                lambda.Body is not MemberExpression member)
+            (object instance, string name) = EvaluateLambda(propertySelector);
+            AssignParameter(instance, name, parameter);
+        }
+
+        /// <summary>
+        /// Adds an output to the resource.
+        /// </summary>
+        /// <param name="propertySelector"></param>
+        /// <param name="outputName">The name of the output.</param>
+        /// <param name="isLiteral">Is the output literal.</param>
+        /// <param name="isSecure">Is the output secure.</param>
+        /// <returns>The <see cref="Output"/>.</returns>
+        public Output AddOutput(Expression<Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false)
+        {
+            (object instance, string name) = EvaluateLambda(propertySelector);
+            return AddOutput(outputName, instance, name, isLiteral, isSecure);
+        }
+
+        private (object Instance, string PropertyName) EvaluateLambda(Expression<Func<T, object?>> propertySelector)
+        {
+            ParameterExpression? root = null;
+            Expression? body = null;
+            string? name = null;
+            if (propertySelector is LambdaExpression lambda)
+            {
+                root = lambda.Parameters[0];
+                if (lambda.Body is MemberExpression member)
+                {
+                    body = member.Expression;
+                    name = member.Member.Name;
+                }
+                else if (lambda.Body is UnaryExpression { NodeType: ExpressionType.Convert, Operand: MemberExpression member2 })
+                {
+                    body = member2.Expression;
+                    name = member2.Member.Name;
+                }
+                else if (lambda.Body is IndexExpression { Arguments.Count: 1 } indexer)
+                {
+                    body = indexer.Object;
+                    name = Expression.Lambda(indexer.Arguments[0], root).Compile().DynamicInvoke(Properties) as string;
+                }
+                else if (lambda.Body is MethodCallExpression { Method.Name: "get_Item", Arguments.Count: 1 } call)
+                {
+                    body = call.Object;
+                    name = Expression.Lambda(call.Arguments[0], root).Compile().DynamicInvoke(Properties) as string;
+                }
+            }
+
+            if (body is null || name is null || root is null)
             {
                 throw new NotSupportedException();
             }
 
-            object instance = Expression.Lambda(member.Expression!, lambda.Parameters[0]).Compile().DynamicInvoke(Properties)!;
-            AssignParameter(instance, member.Member.Name, parameter);
+            object instance = Expression.Lambda(body, root).Compile().DynamicInvoke(Properties)!;
+            return (instance, name);
         }
     }
 }

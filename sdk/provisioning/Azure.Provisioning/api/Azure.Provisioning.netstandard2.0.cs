@@ -86,8 +86,6 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Resource? Parent { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
-        public Azure.Provisioning.Output AddOutput(string name, string propertyName, bool isLiteral = false, bool isSecure = false) { throw null; }
-        public void AssignParameter(object instance, string propertyName, Azure.Provisioning.Parameter parameter) { }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         Azure.Provisioning.Resource System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -97,7 +95,8 @@ namespace Azure.Provisioning
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, T properties) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(object)) { }
         public T Properties { get { throw null; } }
-        public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, string>> selector, Azure.Provisioning.Parameter parameter) { }
+        public Azure.Provisioning.Output AddOutput(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false) { throw null; }
+        public void AssignParameter(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
     }
 }
 namespace Azure.Provisioning.AppService
