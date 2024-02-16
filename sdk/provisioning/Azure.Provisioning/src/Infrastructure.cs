@@ -144,12 +144,6 @@ namespace Azure.Provisioning
                         parameterOverride.Value.Value = GetParameterValue(parameterOverride.Value, parentScope);
                     }
                 }
-
-                // foreach (var output in resource.Scope.GetOutputs(false))
-                // {
-                //     var moduleOutput = new Output(output.Name, output.Value, parentScope, resource, output.IsLiteral, output.IsSecure);
-                //     parentScope.AddOutput(moduleOutput);
-                // }
             }
 
             foreach (var child in resourceTree[resource])
