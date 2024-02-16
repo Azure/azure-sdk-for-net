@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
@@ -17,9 +18,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     {
         internal readonly DoubleBuffer _documentBuffer = new();
         internal static bool? s_isAzureWebApp = null;
+        private IPerformanceCounterCollector? _performanceCounterCollector;
 
-        //private readonly PerformanceCounter _performanceCounter_ProcessorTime = new(categoryName: "Processor", counterName: "% Processor Time", instanceName: "_Total");
-        //private readonly PerformanceCounter _performanceCounter_CommittedBytes = new(categoryName: "Memory", counterName: "Committed Bytes");
+        public void InitializeMetrics(IPlatform platform)
+        {
+            // TODO: ENABLE THIS AFTER IMPLEMENTING OTHER CLASSES
+            // PerformanceCounterCollectorFactory.TryGetInstance(platform, out _performanceCounterCollector);
+        }
 
         public MonitoringDataPoint GetDataPoint()
         {
@@ -33,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = IsWebAppRunningInAzure(),
+                IsWebApp = IsWebAppRunningInAzure(), // TODO: THIS LOOKS LIKE A BUG. THIS METHOD RETURNS BOOL INDICATING IF IT SHOULD COLLECT PERF COUNTERS. AI SDK IS DOING THE SAME THING.
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
                 // Follow up with service team to get this removed for OTEL based live metrics.
@@ -91,32 +96,16 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 dataPoint.Metrics.Add(metricPoint);
             }
 
-            // TODO: Reenable Perf Counters
-            //foreach (var metricPoint in CollectPerfCounters())
-            //{
-            //    dataPoint.Metrics.Add(metricPoint);
-            //}
+            if (_performanceCounterCollector != null)
+            {
+                foreach (var metricPoint in _performanceCounterCollector.Collect())
+                {
+                    dataPoint.Metrics.Add(metricPoint);
+                }
+            }
 
             return dataPoint;
         }
-
-        //public IEnumerable<Models.MetricPoint> CollectPerfCounters()
-        //{
-        //    // PERFORMANCE COUNTERS
-        //    yield return new Models.MetricPoint
-        //    {
-        //        Name = LiveMetricConstants.MetricId.MemoryCommittedBytesMetricIdValue,
-        //        Value = _performanceCounter_CommittedBytes.NextValue(),
-        //        Weight = 1
-        //    };
-
-        //    yield return new Models.MetricPoint
-        //    {
-        //        Name = LiveMetricConstants.MetricId.ProcessorTimeMetricIdValue,
-        //        Value = _performanceCounter_ProcessorTime.NextValue(),
-        //        Weight = 1
-        //    };
-        //}
 
         /// <summary>
         /// Searches for the environment variable specific to Azure Web App.

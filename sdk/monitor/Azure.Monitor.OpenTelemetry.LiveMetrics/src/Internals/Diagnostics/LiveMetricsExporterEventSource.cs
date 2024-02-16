@@ -195,5 +195,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(12, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
         public void DroppedDocument(string documentType) => WriteEvent(12, documentType);
+
+        [Event(13, Message = "PerformanceCounterCollectorFactory initialized a PerformanceCounterCollector. IsWindows: {0}. IsAzureAppService: {1}. Collector Type: {2}.", Level = EventLevel.Informational)]
+        public void PerformanceCounterCollectorFactoryDecision(bool isWindows, bool isAzureAppService, string collectorTypeName) => WriteEvent(13, isWindows, isAzureAppService, collectorTypeName);
+
+        [NonEvent]
+        public void PerformanceCounterCollectorFactoryFailed(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                PerformanceCounterCollectorFactoryFailed(ex.ToInvariantString());
+            }
+        }
+
+        [Event(14, Message = "erformanceCounterCollectorFactory failed to initialize a PerformanceCounterCollector due to an exception: {0}", Level = EventLevel.Error)]
+        public void PerformanceCounterCollectorFactoryFailed(string exceptionMessage) => WriteEvent(14, exceptionMessage);
     }
 }

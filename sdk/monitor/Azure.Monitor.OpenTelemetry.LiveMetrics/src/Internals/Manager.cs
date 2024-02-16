@@ -26,6 +26,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             if (options.EnableLiveMetrics)
             {
+                InitializeMetrics(platform);
                 InitializeState();
             }
         }
