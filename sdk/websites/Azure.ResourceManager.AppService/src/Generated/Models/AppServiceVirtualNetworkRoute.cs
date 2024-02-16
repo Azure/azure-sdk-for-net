@@ -79,8 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </summary>
+        [WirePath("properties.startAddress")]
         public string StartAddress { get; set; }
         /// <summary> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </summary>
+        [WirePath("properties.endAddress")]
         public string EndAddress { get; set; }
         /// <summary>
         /// The type of route this is:
@@ -90,8 +92,10 @@ namespace Azure.ResourceManager.AppService.Models
         ///
         /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </summary>
+        [WirePath("properties.routeType")]
         public AppServiceVirtualNetworkRouteType? RouteType { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Search Query. </summary>
+        [WirePath("query")]
         public string Query { get; set; }
         /// <summary> Array of utterance results for search query. </summary>
+        [WirePath("results")]
         public IList<QueryUtterancesResult> Results { get; }
     }
 }
