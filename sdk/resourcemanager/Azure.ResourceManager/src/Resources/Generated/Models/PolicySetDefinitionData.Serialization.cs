@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Resources
                         builder.AppendLine(" {");
                         foreach (var item in Parameters)
                         {
-                            builder.Append($"        {item.Key}:");
+                            builder.Append($"        '{item.Key}':");
                             AppendChildObject(builder, item.Value, options, 6, false);
                         }
                         builder.AppendLine("    }");
