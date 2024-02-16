@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ClientModel.Tests;
@@ -401,7 +402,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task ResponseReadContentReturnsEmptyWhenNoContent()
+    public async Task ResponseReadContentReturnsEmptyWhenNoResponseContent()
     {
         MockHttpClientHandler mockHandler = new(
             httpRequestMessage =>
@@ -421,7 +422,30 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
     }
 
     [Test]
-    public async Task ResponseReadContentThrowWhenPositionNonZero()
+    public async Task ResponseReadContentReturnsEmptyWhenContentStreamNull()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+                Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        // Explicitly assign ContentStream via property setter
+        message.Response!.ContentStream = null;
+
+        BinaryData content = await message.Response!.ReadContentSyncOrAsync(default, IsAsync);
+
+        Assert.AreEqual(0, content.ToMemory().Length);
+    }
+
+    [Test]
+    public async Task ResponseReadContentThrowsWhenPositionNonZero()
     {
         MockHttpClientHandler mockHandler = new(
             httpRequestMessage =>
@@ -444,6 +468,33 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         message.Response!.ContentStream!.ReadByte();
 
         Assert.ThrowsAsync<InvalidOperationException>(async() => { await message.Response!.ReadContentSyncOrAsync(default, IsAsync); });
+    }
+
+    [Test]
+    public async Task CachedResponseContentReplacedWhenContentStreamReplaced()
+    {
+        MockHttpClientHandler mockHandler = new(
+            httpRequestMessage =>
+            {
+                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StringContent("Mock content - 1")
+                });
+            });
+
+        HttpClientPipelineTransport transport = new(new HttpClient(mockHandler));
+
+        using PipelineMessage message = transport.CreateMessage();
+        message.Request.Method = "GET";
+        message.Request.Uri = new Uri("http://example.com");
+
+        await transport.ProcessSyncOrAsync(message, IsAsync);
+
+        // Explicitly assign ContentStream via property setter
+        message.Response!.ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("Mock content - 2"));
+
+        Assert.AreEqual("Mock content - 2", message.Response!.Content.ToString());
+        Assert.AreEqual("Mock content - 2", BinaryData.FromStream(message.Response!.ContentStream!).ToString());
     }
 
     #region Helpers
