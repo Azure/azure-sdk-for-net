@@ -299,7 +299,6 @@ public class ClientRetryPolicy : PipelinePolicy
     /// request again.</param>
     /// <param name="cancellationToken">The <see cref="CancellationToken"/> used
     /// to cancel the wait if needed.</param>
-    /// <returns></returns>
     protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
     {
         if (cancellationToken.WaitHandle.WaitOne(time))
