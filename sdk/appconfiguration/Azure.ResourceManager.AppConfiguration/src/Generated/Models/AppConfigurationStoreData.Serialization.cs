@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.AppConfiguration
                         builder.AppendLine(" {");
                         foreach (var item in Tags)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");
