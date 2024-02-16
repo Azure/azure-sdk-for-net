@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> List of table services returned. </summary>
+        [WirePath("value")]
         public IReadOnlyList<TableServiceData> Value { get; }
     }
 }
