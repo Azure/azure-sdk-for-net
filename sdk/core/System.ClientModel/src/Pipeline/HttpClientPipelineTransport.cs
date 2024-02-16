@@ -15,13 +15,13 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public partial class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
+    private static readonly HttpClient _sharedDefaultClient = CreateDefaultClient();
+
     /// <summary>
     /// A default instance of <see cref="HttpClientPipelineTransport"/> that can
     /// be shared across pipelines and clients.
     /// </summary>
     public static HttpClientPipelineTransport Shared { get; } = new();
-
-    private static readonly HttpClient _sharedDefaultClient = CreateDefaultClient();
 
     private readonly HttpClient _httpClient;
 
