@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs
         public bool AutoCompleteMessages { get { throw null; } set { } }
         public string Connection { get { throw null; } set { } }
         public bool IsSessionsEnabled { get { throw null; } set { } }
+        public int MaxMessageBatchSize { get { throw null; } set { } }
         public string QueueName { get { throw null; } }
         public string SubscriptionName { get { throw null; } }
         public string TopicName { get { throw null; } }

@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Cassandra";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/> for deserialization. </summary>
+        internal CassandraLinkedService()
+        {
+        }
+
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> AuthenticationType to be used for connection. Type: string (or Expression with resultType string). </summary>

@@ -18,6 +18,7 @@ namespace Azure.AI.OpenAI;
 //   conditionally serialize based on which instantiation was used.
 
 [CodeGenSuppress("ChatRequestUserMessage", typeof(BinaryData))]
+[CodeGenSerialization(nameof(Content), SerializationValueHook = nameof(SerializeContent))]
 public partial class ChatRequestUserMessage : ChatRequestMessage
 {
     /// <summary>
@@ -28,7 +29,6 @@ public partial class ChatRequestUserMessage : ChatRequestMessage
     /// <see cref="ChatRequestUserMessage"/> may use either plain text content, which is represented by this property,
     /// or a collection of content items instead represented by <see cref="MultimodalContentItems"/>.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeContent))]
     public string Content { get; protected set; }
 
     /// <summary>

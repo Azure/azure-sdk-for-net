@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="LogStorageSettings"/> for deserialization. </summary>
+        internal LogStorageSettings()
+        {
+        }
+
         /// <summary> Log storage linked service reference. </summary>
         public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </summary>

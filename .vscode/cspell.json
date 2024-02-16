@@ -962,6 +962,7 @@
     {
       "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
       "words": [
+        "dscp",
         "reimage",
         "ssdlrs"
       ]

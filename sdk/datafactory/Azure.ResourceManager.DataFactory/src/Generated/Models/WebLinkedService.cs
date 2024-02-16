@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Web";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WebLinkedService"/> for deserialization. </summary>
+        internal WebLinkedService()
+        {
+        }
+
         /// <summary>
         /// Web linked service properties.
         /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
