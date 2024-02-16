@@ -38,7 +38,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
             catch (Exception ex)
             {
                 // Since these are platform specific classes, exceptions could be thrown during constructor call.
-                // This shouldn't happen, but here we catch the exception.
                 LiveMetricsExporterEventSource.Log.PerformanceCounterCollectorFactoryFailed(ex);
                 performanceCounterCollector = null;
                 return false;

@@ -38,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = IsWebAppRunningInAzure(), // TODO: THIS LOOKS LIKE A BUG. THIS METHOD RETURNS BOOL INDICATING IF IT SHOULD COLLECT PERF COUNTERS. AI SDK IS DOING THE SAME THING.
+                IsWebApp = IsWebAppRunningInAzure(), // TODO: THIS LOOKS LIKE A BUG. THIS METHOD RETURNS BOOL INDICATING IF IT SHOULD COLLECT PERF COUNTERS. AI SDK IS DOING THE SAME THING. NEED TO REVIEW THIS WITH SERVICE TEAM.
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
                 // Follow up with service team to get this removed for OTEL based live metrics.
