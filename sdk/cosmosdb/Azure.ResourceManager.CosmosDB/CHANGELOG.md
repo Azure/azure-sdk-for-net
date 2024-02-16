@@ -5,6 +5,7 @@
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Add support for 'restoreWithTtlDisabled' in RestoreParameter to disable ttl on restored account
 
 ### Breaking Changes
 
