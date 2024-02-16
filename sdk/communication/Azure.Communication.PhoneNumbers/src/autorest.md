@@ -41,6 +41,14 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: >
+    $["format"] = "";
+```
+
 # Removed Models
 ``` yaml
 directive:
