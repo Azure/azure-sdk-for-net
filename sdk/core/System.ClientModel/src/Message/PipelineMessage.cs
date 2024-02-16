@@ -130,7 +130,7 @@ public class PipelineMessage : IDisposable
     /// <param name="key">The key for the property in the message's property
     /// bag.</param>
     /// <param name="value">The value of the property.</param>
-    /// <returns><c>true</c> if property exists, and <c>false</c> otherwise.</returns>
+    /// <returns><c>true</c> if property exists; otherwise <c>false</c>.</returns>
     public bool TryGetProperty(Type key, out object? value) =>
         _propertyBag.TryGetValue((ulong)key.TypeHandle.Value, out value);
 
