@@ -89,16 +89,6 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
         }
     }
 
-    private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues()
-    {
-        for (int i = 0; i < _headers.Count; i++)
-        {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            IEnumerable<string> values = GetHeaderValueEnumerable(name, value);
-            yield return new KeyValuePair<string, IEnumerable<string>>(name, values);
-        }
-    }
-
     private static string GetHeaderValueString(string name, object value)
         => value switch
         {

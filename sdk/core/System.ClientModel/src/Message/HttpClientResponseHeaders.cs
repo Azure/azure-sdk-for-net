@@ -146,35 +146,4 @@ internal class HttpClientResponseHeaders : PipelineResponseHeaders
     }
 #endif
     #endregion
-
-    private static IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues(HttpHeaders headers, HttpContent? content)
-    {
-#if NET6_0_OR_GREATER
-        foreach (var (key, value) in headers.NonValidated)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-        }
-
-        if (content is not null)
-        {
-            foreach (var (key, value) in content.Headers.NonValidated)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(key, value);
-            }
-        }
-#else
-        foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
-        {
-            yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-        }
-
-        if (content != null)
-        {
-            foreach (KeyValuePair<string, IEnumerable<string>> header in content.Headers)
-            {
-                yield return new KeyValuePair<string, IEnumerable<string>>(header.Key, header.Value);
-            }
-        }
-#endif
-    }
 }
