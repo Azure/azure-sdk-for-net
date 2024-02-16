@@ -612,6 +612,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
+            uri.AppendRaw(_endpoint.AbsoluteUri, false);
             uri.AppendPath("/operatorInformation/:search", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;

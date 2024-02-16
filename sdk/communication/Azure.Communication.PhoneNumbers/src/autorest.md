@@ -55,4 +55,19 @@ directive:
   - remove-model: Error
   - remove-model: AvailablePhoneNumber
   - remove-model: AvailablePhoneNumberCost
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.definitions.PhoneNumberSearchResult.properties.error.x-ms-enum
+  transform: >
+    $["name"] = "PhoneNumberSearchResultError";
+```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.Endpoint
+  transform: >
+    $["format"] = "";
 ```
