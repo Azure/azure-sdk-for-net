@@ -151,8 +151,8 @@ namespace System.ClientModel.Primitives
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }
-        public void SetProperty(System.Type type, object value) { }
-        public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+        public void SetProperty(System.Type key, object value) { }
+        public bool TryGetProperty(System.Type key, out object? value) { throw null; }
     }
     public abstract partial class PipelineMessageClassifier
     {

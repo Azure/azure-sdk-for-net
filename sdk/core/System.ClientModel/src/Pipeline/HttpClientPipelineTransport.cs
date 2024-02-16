@@ -206,8 +206,8 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     /// <param name="message">The <see cref="PipelineMessage"/> containing the
     /// <see cref="PipelineResponse"/> created by the transport.</param>
     /// <param name="httpResponse">The <see cref="HttpResponseMessage"/>
-    /// returned by the call to <see cref="HttpClient.Send(HttpRequestMessage)"/>
-    /// that the transport used to create <see cref="PipelineMessage.Response"/>.
+    /// returned by from the call to Send on <see cref="HttpClient"/> that the
+    /// transport used to create <see cref="PipelineMessage.Response"/>.
     /// </param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
 
