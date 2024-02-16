@@ -69,6 +69,29 @@ namespace Azure.Provisioning
             return resourceTree;
         }
 
+        private void VisitResource(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, HashSet<Resource> visited)
+        {
+            if (!visited.Add(resource))
+            {
+                return;
+            }
+
+            if (!resourceTree.ContainsKey(resource))
+            {
+                resourceTree[resource] = new List<Resource>();
+            }
+
+            if (resource.Parent != null)
+            {
+                if (!resourceTree.ContainsKey(resource.Parent))
+                {
+                    resourceTree[resource.Parent] = new List<Resource>();
+                }
+                resourceTree[resource.Parent].Add(resource);
+                VisitResource(resource.Parent, resourceTree, visited);
+            }
+        }
+
         private void BuildModuleConstructs(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, ModuleConstruct? parentScope, ref ModuleConstruct? root)
         {
             ModuleConstruct? construct = null;
@@ -102,12 +125,12 @@ namespace Azure.Provisioning
                     parentScope.AddParameter(parameter);
                 }
 
-                foreach (var parameterOverride in resource.ParameterOverrides)
+                foreach (var parameterOverrideDictionary in resource.ParameterOverrides)
                 {
-                    foreach (var kvp in parameterOverride.Value)
+                    foreach (var parameterOverride in parameterOverrideDictionary.Value)
                     {
-                        kvp.Value.Source = parentScope;
-                        kvp.Value.Value = GetParameterValue(kvp.Value, parentScope);
+                        parameterOverride.Value.Source = parentScope;
+                        parameterOverride.Value.Value = GetParameterValue(parameterOverride.Value, parentScope);
                     }
                 }
 
@@ -138,21 +161,6 @@ namespace Azure.Provisioning
             }
 
             return $"{parameter.Source.Name}.outputs.{parameter.Name}";
-        }
-
-        private class ModuleConstruct : Construct
-        {
-            public ModuleConstruct(Resource resource)
-                : base(
-                    resource.Scope,
-                    resource is Subscription ? resource.Name : resource.Id.Name.Replace('-', '_'),
-                    ResourceToConstructScope(resource),
-                    subscriptionId: resource is not Tenant ? Guid.Parse(resource.Id.SubscriptionId!) : null,
-                    resourceGroup: resource as ResourceGroup)
-            {
-            }
-
-            public bool IsRoot { get; set; }
         }
 
         private static ConstructScope ResourceToConstructScope(Resource resource)
@@ -187,29 +195,6 @@ namespace Azure.Provisioning
             return false;
         }
 
-        private void VisitResource(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, HashSet<Resource> visited)
-        {
-            if (!visited.Add(resource))
-            {
-                return;
-            }
-
-            if (!resourceTree.ContainsKey(resource))
-            {
-                resourceTree[resource] = new List<Resource>();
-            }
-
-            if (resource.Parent != null)
-            {
-                if (!resourceTree.ContainsKey(resource.Parent))
-                {
-                    resourceTree[resource.Parent] = new List<Resource>();
-                }
-                resourceTree[resource.Parent].Add(resource);
-                VisitResource(resource.Parent, resourceTree, visited);
-            }
-        }
-
         private void WriteConstructsByLevel(Queue<ModuleConstruct> constructs, string outputPath)
         {
             while (constructs.Count > 0)
@@ -240,6 +225,21 @@ namespace Azure.Provisioning
             var buffer = data.ToArray();
             stream.Write(buffer, 0, buffer.Length);
 #endif
+        }
+
+        private class ModuleConstruct : Construct
+        {
+            public ModuleConstruct(Resource resource)
+                : base(
+                    resource.Scope,
+                    resource is Subscription ? resource.Name : resource.Id.Name.Replace('-', '_'),
+                    ResourceToConstructScope(resource),
+                    subscriptionId: resource is not Tenant ? Guid.Parse(resource.Id.SubscriptionId!) : null,
+                    resourceGroup: resource as ResourceGroup)
+            {
+            }
+
+            public bool IsRoot { get; set; }
         }
     }
 }
