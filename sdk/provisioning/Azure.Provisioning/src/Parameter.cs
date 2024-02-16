@@ -31,10 +31,6 @@ namespace Azure.Provisioning
         internal string? Value { get; set; }
         internal IConstruct? Source { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="output"></param>
         internal Parameter(Output output)
         {
             Name = output.Name;
