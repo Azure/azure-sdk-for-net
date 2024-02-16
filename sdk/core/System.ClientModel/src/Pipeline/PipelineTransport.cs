@@ -11,7 +11,8 @@ using System.Threading.Tasks;
 namespace System.ClientModel.Primitives;
 
 /// <summary>
-/// Represents an HTTP pipeline transport used to send HTTP requests and receive responses.
+/// Represents an HTTP pipeline transport used to send and receive HTTP requests
+/// and responses.
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
