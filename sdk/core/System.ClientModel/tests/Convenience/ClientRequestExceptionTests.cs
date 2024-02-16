@@ -5,6 +5,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Exceptions;
 
@@ -16,6 +17,20 @@ public class ClientResultExceptionTests
         PipelineResponse response = new MockPipelineResponse(200, "MockReason");
 
         ClientResultException exception = new ClientResultException(response);
+
+        Assert.AreEqual(response.Status, exception.Status);
+        Assert.AreEqual(response, exception.GetRawResponse());
+        Assert.AreEqual(
+            $"Service request failed.{Environment.NewLine}Status: 200 (MockReason){Environment.NewLine}",
+            exception.Message);
+    }
+
+    [Test]
+    public async Task CanCreateFromAsyncFactory()
+    {
+        PipelineResponse response = new MockPipelineResponse(200, "MockReason");
+
+        ClientResultException exception = await ClientResultException.CreateAsync(response);
 
         Assert.AreEqual(response.Status, exception.Status);
         Assert.AreEqual(response, exception.GetRawResponse());
