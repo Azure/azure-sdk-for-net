@@ -49,7 +49,7 @@ public abstract class PipelineRequest : IDisposable
 
     /// <summary>
     /// Gets or sets the derived-type's value of the request's
-    /// <see cref="Headers"/>.
+    /// <see cref="Headers"/> collection.
     /// </summary>
     protected abstract PipelineRequestHeaders HeadersCore { get; }
 
