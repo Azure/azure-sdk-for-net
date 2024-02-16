@@ -85,15 +85,15 @@ public static class MockSyncAsyncExtensions
         }
     }
 
-    public static async Task<BinaryData> ReadContentSyncOrAsync(this PipelineResponse response, CancellationToken cancellationToken, bool isAsync)
+    public static async Task<BinaryData> BufferContentSyncOrAsync(this PipelineResponse response, CancellationToken cancellationToken, bool isAsync)
     {
         if (isAsync)
         {
-            return await response.ReadContentAsync(cancellationToken).ConfigureAwait(false);
+            return await response.BufferContentAsync(cancellationToken).ConfigureAwait(false);
         }
         else
         {
-            return response.ReadContent(cancellationToken);
+            return response.BufferContent(cancellationToken);
         }
     }
 }
