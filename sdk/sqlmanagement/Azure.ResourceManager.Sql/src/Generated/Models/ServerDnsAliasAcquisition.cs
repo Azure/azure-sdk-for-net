@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The id of the server alias that will be acquired to point to this server instead. </summary>
+        [WirePath("oldServerDnsAliasId")]
         public ResourceIdentifier OldServerDnsAliasId { get; }
     }
 }

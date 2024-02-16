@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Type of action being executed by the job step. </summary>
+        [WirePath("type")]
         public JobStepActionType? ActionType { get; set; }
         /// <summary> The source of the action to execute. </summary>
+        [WirePath("source")]
         public JobStepActionSource? Source { get; set; }
         /// <summary> The action value, for example the text of the T-SQL script to execute. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

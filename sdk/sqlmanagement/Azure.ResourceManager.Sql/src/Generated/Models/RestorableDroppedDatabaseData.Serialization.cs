@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql
                         builder.AppendLine(" {");
                         foreach (var item in Tags)
                         {
-                            builder.Append($"    {item.Key}:");
+                            builder.Append($"    '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Sql
                         builder.AppendLine(" {");
                         foreach (var item in Keys)
                         {
-                            builder.Append($"        {item.Key}:");
+                            builder.Append($"        '{item.Key}':");
                             AppendChildObject(builder, item.Value, options, 6, false);
                         }
                         builder.AppendLine("    }");

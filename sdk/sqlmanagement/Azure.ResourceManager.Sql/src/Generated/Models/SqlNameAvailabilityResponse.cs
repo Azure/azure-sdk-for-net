@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The name whose availability was checked. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> True if the name is available, otherwise false. </summary>
+        [WirePath("available")]
         public bool? IsAvailable { get; }
         /// <summary> The reason code explaining why the name is unavailable. Will be undefined if the name is available. </summary>
+        [WirePath("reason")]
         public SqlNameUnavailableReason? Reason { get; }
         /// <summary> A message explaining why the name is unavailable. Will be undefined if the name is available. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }
