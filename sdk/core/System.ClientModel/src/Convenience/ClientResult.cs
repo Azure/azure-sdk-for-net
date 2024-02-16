@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 namespace System.ClientModel;
 
 /// <summary>
-/// Represents the result of an operation on a cloud service.
+/// Represents the result of a cloud service operation.
 /// </summary>
 public class ClientResult
 {
