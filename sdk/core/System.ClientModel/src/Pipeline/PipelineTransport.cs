@@ -109,7 +109,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
 
         message.AssertResponse();
-        message.Response!.SetIsError(ClassifyResponse(message));
+        message.Response!.IsErrorCore = ClassifyResponse(message);
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.
@@ -146,11 +146,11 @@ public abstract class PipelineTransport : PipelinePolicy
 
             if (async)
             {
-                await message.Response.ReadContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
+                await message.Response.BufferContentAsync(timeoutTokenSource.Token).ConfigureAwait(false);
             }
             else
             {
-                message.Response.ReadContent(timeoutTokenSource.Token);
+                message.Response.BufferContent(timeoutTokenSource.Token);
             }
         }
         // We dispose stream on timeout or user cancellation so catch and check if
