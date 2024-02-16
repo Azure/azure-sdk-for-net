@@ -53,7 +53,7 @@ public partial class HttpClientPipelineTransport
                     return _contentStream;
                 }
 
-                return ReadContent().ToStream();
+                return BufferContent().ToStream();
             }
             set
             {
