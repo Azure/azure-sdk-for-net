@@ -180,17 +180,14 @@ namespace System.ClientModel.Primitives
     {
         protected PipelineRequest() { }
         public System.ClientModel.BinaryContent? Content { get { throw null; } set { } }
+        protected abstract System.ClientModel.BinaryContent? ContentCore { get; set; }
         public System.ClientModel.Primitives.PipelineRequestHeaders Headers { get { throw null; } }
+        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders HeadersCore { get; }
         public string Method { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
+        protected abstract string MethodCore { get; set; }
+        public System.Uri? Uri { get { throw null; } set { } }
+        protected abstract System.Uri? UriCore { get; set; }
         public abstract void Dispose();
-        protected abstract System.ClientModel.BinaryContent? GetContentCore();
-        protected abstract System.ClientModel.Primitives.PipelineRequestHeaders GetHeadersCore();
-        protected abstract string GetMethodCore();
-        protected abstract System.Uri GetUriCore();
-        protected abstract void SetContentCore(System.ClientModel.BinaryContent? content);
-        protected abstract void SetMethodCore(string method);
-        protected abstract void SetUriCore(System.Uri uri);
     }
     public abstract partial class PipelineRequestHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
@@ -209,14 +206,14 @@ namespace System.ClientModel.Primitives
         public abstract System.BinaryData Content { get; }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders HeadersCore { get; }
         public virtual bool IsError { get { throw null; } }
+        protected internal virtual bool IsErrorCore { get { throw null; } set { } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
+        public abstract System.BinaryData BufferContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public abstract System.Threading.Tasks.ValueTask<System.BinaryData> BufferContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         public abstract void Dispose();
-        protected abstract System.ClientModel.Primitives.PipelineResponseHeaders GetHeadersCore();
-        public abstract System.BinaryData ReadContent(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public abstract System.Threading.Tasks.ValueTask<System.BinaryData> ReadContentAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        protected virtual void SetIsErrorCore(bool isError) { }
     }
     public abstract partial class PipelineResponseHeaders : System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>>, System.Collections.IEnumerable
     {
