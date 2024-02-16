@@ -61,8 +61,6 @@ namespace Azure.Provisioning
         /// </summary>
         public IList<Parameter> Parameters { get; }
 
-        internal IList<Output> Outputs { get; }
-
         internal IConstruct? ModuleScope { get; set; }
 
         /// <summary>
@@ -82,7 +80,6 @@ namespace Azure.Provisioning
             var azureName = GetAzureName(scope, resourceName);
             Scope = scope;
             Parameters = new List<Parameter>();
-            Outputs = new List<Output>();
             Parent = parent ?? FindParentInScope(scope);
             Scope.AddResource(this);
             ResourceData = createProperties(azureName);
@@ -177,9 +174,8 @@ namespace Azure.Provisioning
 
             if (reference is null)
                 throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {ResourceData.GetType().Name}");
-            var result = new Output(name, reference, Scope, isLiteral, isSecure);
+            var result = new Output(name, reference, Scope, this, isLiteral, isSecure);
             Scope.AddOutput(result);
-            Outputs.Add(result);
             return result;
         }
 

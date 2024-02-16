@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="version">The version of the resourceGroup.</param>
         /// <param name="location">The location of the resourceGroup.</param>
         /// <param name="parent">The parent of the resourceGroup.</param>
-        public ResourceGroup(IConstruct scope, string name = "rg", string version = "2023-07-01", AzureLocation? location = default, Resource? parent = default)
+        public ResourceGroup(IConstruct scope, string name = "rg", string version = "2023-07-01", AzureLocation? location = default, Subscription? parent = default)
             : base(scope, parent, name, ResourceType, version, (name) => ResourceManagerModelFactory.ResourceGroupData(
                 name: name,
                 resourceType: ResourceType,

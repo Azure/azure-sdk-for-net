@@ -110,7 +110,7 @@ namespace Azure.Provisioning
             IEnumerable<Resource> result = _resources;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetResources(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetResources(recursive)));
             }
             return result;
         }

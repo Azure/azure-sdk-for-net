@@ -43,6 +43,8 @@ namespace Azure.Provisioning
             ModuleConstruct? root = null;
             BuildModuleConstructs(Root, resourceTree, null, ref root);
 
+            AddOutputsToModules();
+
             WriteBicepFile(root!, outputPath);
 
             var queue = new Queue<ModuleConstruct>();
@@ -50,9 +52,20 @@ namespace Azure.Provisioning
             WriteConstructsByLevel(queue, outputPath);
         }
 
+        private void AddOutputsToModules()
+        {
+            foreach (var construct in Root.Scope.GetConstructs(true))
+            {
+                foreach (var output in construct.GetOutputs(false).ToList())
+                {
+                    output.Resource.ModuleScope!.AddOutput(output);
+                }
+            }
+        }
+
         private Dictionary<Resource, List<Resource>> BuildResourceTree()
         {
-            var resources = GetResources(true).ToArray();
+            var resources = GetResources(true);
             Dictionary<Resource, List<Resource>> resourceTree = new();
             HashSet<Resource> visited = new();
             foreach (var resource in resources)
@@ -128,11 +141,11 @@ namespace Azure.Provisioning
                     }
                 }
 
-                foreach (var output in resource.Outputs)
-                {
-                    var moduleOutput = new Output(output.Name, output.Value, parentScope, output.IsLiteral, output.IsSecure);
-                    parentScope.AddOutput(moduleOutput);
-                }
+                // foreach (var output in resource.Scope.GetOutputs(false))
+                // {
+                //     var moduleOutput = new Output(output.Name, output.Value, parentScope, resource, output.IsLiteral, output.IsSecure);
+                //     parentScope.AddOutput(moduleOutput);
+                // }
             }
 
             foreach (var child in resourceTree[resource])
@@ -165,7 +178,7 @@ namespace Azure.Provisioning
                 ResourceManager.Subscription => ConstructScope.Subscription,
                 //TODO managementgroup support
                 ResourceManager.ResourceGroup => ConstructScope.ResourceGroup,
-                _ => throw new NotImplementedException(),
+                _ => throw new InvalidOperationException(),
             };
         }
 

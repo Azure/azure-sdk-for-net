@@ -27,4 +27,4 @@ module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
   }
 }
 
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = rg_TEST.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
