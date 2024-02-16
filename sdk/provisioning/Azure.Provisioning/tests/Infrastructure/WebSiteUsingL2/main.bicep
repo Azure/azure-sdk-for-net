@@ -1,4 +1,4 @@
-targetScope = subscription
+targetScope = 'subscription'
 
 @secure()
 @description('SQL Server administrator password')
@@ -18,57 +18,8 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource appServicePlan_kjMZSF1FP 'Microsoft.Web/serverfarms@2021-02-01' = {
-  scope: resourceGroup_I6QNkoPsb
-  name: 'appServicePlan-TEST'
-  location: 'westus'
-  sku: {
-    name: 'B1'
-  }
-  properties: {
-    reserved: true
-  }
-}
-
-resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
-  scope: resourceGroup_I6QNkoPsb
-  name: 'kv-TEST'
-  location: 'westus'
-  properties: {
-    tenantId: '00000000-0000-0000-0000-000000000000'
-    sku: {
-      name: 'standard'
-      family: 'A'
-    }
-  }
-}
-
-resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
-  parent: keyVault_CRoMbemLF
-  name: 'add'
-  properties: {
-    accessPolicies: [
-      {
-        tenantId: '00000000-0000-0000-0000-000000000000'
-        objectId: TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
-        permissions: {
-          secrets: [
-            'get'
-            'list'
-          ]
-        }
-      }
-    ]
-  }
-}
-
-module TestFrontEndWebSite './resources/TestFrontEndWebSite/TestFrontEndWebSite.bicep' = {
-  name: 'TestFrontEndWebSite'
-  scope: resourceGroup_I6QNkoPsb
-}
-
-module TestCommonSqlDatabase './resources/TestCommonSqlDatabase/TestCommonSqlDatabase.bicep' = {
-  name: 'TestCommonSqlDatabase'
+module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
+  name: 'rg_TEST'
   scope: resourceGroup_I6QNkoPsb
   params: {
     sqlAdminPassword: sqlAdminPassword
@@ -76,9 +27,4 @@ module TestCommonSqlDatabase './resources/TestCommonSqlDatabase/TestCommonSqlDat
   }
 }
 
-module TestBackEndWebSite './resources/TestBackEndWebSite/TestBackEndWebSite.bicep' = {
-  name: 'TestBackEndWebSite'
-  scope: resourceGroup_I6QNkoPsb
-}
-
-output SERVICE_API_IDENTITY_PRINCIPAL_ID string = TestFrontEndWebSite.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = rg_TEST.outputs.SERVICE_API_IDENTITY_PRINCIPAL_ID

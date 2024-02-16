@@ -7,7 +7,7 @@ namespace Azure.Provisioning
     /// Represents a parameter of an <see cref="IConstruct"/>.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public readonly struct Parameter
+    public class Parameter
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
@@ -28,9 +28,13 @@ namespace Azure.Provisioning
         public bool IsSecure { get; }
         internal bool IsFromOutput { get; }
         internal bool IsLiteral { get; }
-        internal string? Value { get; }
-        internal IConstruct? Source { get; }
+        internal string? Value { get; set; }
+        internal IConstruct? Source { get; set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="output"></param>
         internal Parameter(Output output)
         {
             Name = output.Name;

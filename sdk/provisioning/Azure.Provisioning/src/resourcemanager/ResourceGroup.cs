@@ -23,8 +23,9 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="name">The name of the resourceGroup.</param>
         /// <param name="version">The version of the resourceGroup.</param>
         /// <param name="location">The location of the resourceGroup.</param>
-        public ResourceGroup(IConstruct scope, string? name = default, string version = "2023-07-01", AzureLocation? location = default)
-            : base(scope, null, GetName(scope, name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
+        /// <param name="parent"></param>
+        public ResourceGroup(IConstruct scope, string? name = default, string version = "2023-07-01", AzureLocation? location = default, Resource? parent = default)
+            : base(scope, parent, GetName(scope, name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
                 name: GetName(scope, name),
                 resourceType: ResourceType,
                 tags: new Dictionary<string, string> { { "azd-env-name", scope.EnvironmentName } },

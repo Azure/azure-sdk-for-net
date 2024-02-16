@@ -25,8 +25,9 @@ namespace Azure.Provisioning.AppService
         /// <param name="resourceName">The resource name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public AppServicePlan(IConstruct scope, string resourceName, string version = "2021-02-01", AzureLocation? location = default)
-            : base(scope, null, GetName(scope, resourceName), ResourceTypeName, version, ArmAppServiceModelFactory.AppServicePlanData(
+        /// <param name="parent"></param>
+        public AppServicePlan(IConstruct scope, string resourceName, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = default)
+            : base(scope, parent, GetName(scope, resourceName), ResourceTypeName, version, ArmAppServiceModelFactory.AppServicePlanData(
                 name: GetName(scope, resourceName),
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new AppServiceSkuDescription() { Name = "B1" },

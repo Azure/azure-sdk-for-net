@@ -19,7 +19,7 @@ namespace Azure.Provisioning.AppService
         /// <returns></returns>
         public static AppServicePlan AddAppServicePlan(this IConstruct construct, ResourceGroup? parent = null, string name = "appServicePlan")
         {
-            return new AppServicePlan(construct, name); ;
+            return new AppServicePlan(construct, name, parent: parent);
         }
     }
 }

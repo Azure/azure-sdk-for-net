@@ -5,6 +5,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Azure.Provisioning.ResourceManager;
 
 namespace Azure.Provisioning
 {
@@ -36,34 +38,199 @@ namespace Azure.Provisioning
             outputPath ??= $".\\{GetType().Name}";
             outputPath = Path.GetFullPath(outputPath);
 
-            WriteBicepFile(this, outputPath);
+            Dictionary<Resource, List<Resource>> resourceTree = BuildResourceTree();
 
-            var queue = new Queue<IConstruct>();
-            queue.Enqueue(this);
+            var constructs = GetConstructs(true).ToArray();
+            foreach (var construct in constructs)
+            {
+                construct.GetResources(true);
+            }
+
+            ModuleConstruct? root = null;
+            BuildModuleConstructs(Root, resourceTree, null, ref root);
+
+            WriteBicepFile(root!, outputPath);
+
+            var queue = new Queue<ModuleConstruct>();
+            queue.Enqueue(root!);
             WriteConstructsByLevel(queue, outputPath);
         }
 
-        private void WriteConstructsByLevel(Queue<IConstruct> constructs, string outputPath)
+        private Dictionary<Resource, List<Resource>> BuildResourceTree()
+        {
+            var resources = GetResources(true).ToArray();
+            Dictionary<Resource, List<Resource>> resourceTree = new();
+            HashSet<Resource> visited = new();
+            foreach (var resource in resources)
+            {
+                VisitResource(resource, resourceTree, visited);
+            }
+
+            return resourceTree;
+        }
+
+        private void BuildModuleConstructs(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, ModuleConstruct? parentScope, ref ModuleConstruct? root)
+        {
+            ModuleConstruct? construct = null;
+            if (NeedsModuleConstruct(resource, resourceTree))
+            {
+                construct = new ModuleConstruct(resource);
+
+                if (parentScope == null)
+                {
+                    root = construct;
+                    construct.IsRoot = true;
+                }
+            }
+
+            if (construct != null)
+            {
+                parentScope?.AddConstruct(construct);
+            }
+
+            if (parentScope != null)
+            {
+                parentScope.AddResource(resource);
+                resource.ModuleScope = parentScope;
+            }
+
+            parentScope = parentScope ?? construct;
+            if (parentScope != null)
+            {
+                foreach (var parameter in resource.Parameters)
+                {
+                    parentScope.AddParameter(parameter);
+                }
+
+                foreach (var parameterOverride in resource.ParameterOverrides)
+                {
+                    foreach (var kvp in parameterOverride.Value)
+                    {
+                        kvp.Value.Source = parentScope;
+                        kvp.Value.Value = GetParameterValue(kvp.Value, parentScope);
+                    }
+                }
+
+                foreach (var output in resource.Outputs)
+                {
+                    var moduleOutput = new Output(output.Name, output.Value, parentScope, output.IsLiteral, output.IsSecure);
+                    parentScope.AddOutput(moduleOutput);
+                }
+            }
+
+            foreach (var child in resourceTree[resource])
+            {
+                BuildModuleConstructs(child, resourceTree, construct ?? parentScope, ref root);
+            }
+        }
+
+        private static string GetParameterValue(Parameter parameter, IConstruct scope)
+        {
+            // If the parameter is a parameter of the module scope, use the parameter name.
+            if (scope.GetParameters(false).Contains(parameter))
+            {
+                return parameter.Name;
+            }
+            // Otherwise we assume it is an output from the current module.
+            if ( parameter.Source is null || ReferenceEquals(parameter.Source, scope))
+            {
+                return parameter.Value!;
+            }
+
+            return $"{parameter.Source.Name}.outputs.{parameter.Name}";
+        }
+
+        private class ModuleConstruct : Construct
+        {
+            public ModuleConstruct(Resource resource)
+                : base(
+                    resource.Scope,
+                    resource is Subscription ? resource.Name : resource.Id.Name.Replace('-', '_'),
+                    ResourceToConstructScope(resource),
+                    subscriptionId: resource is not Tenant ? Guid.Parse(resource.Id.SubscriptionId!) : null,
+                    resourceGroup: resource as ResourceGroup)
+            {
+            }
+
+            public bool IsRoot { get; set; }
+        }
+
+        private static ConstructScope ResourceToConstructScope(Resource resource)
+        {
+            return resource switch
+            {
+                Tenant => ConstructScope.Tenant,
+                ResourceManager.Subscription => ConstructScope.Subscription,
+                //TODO managementgroup support
+                ResourceManager.ResourceGroup => ConstructScope.ResourceGroup,
+                _ => throw new NotImplementedException(),
+            };
+        }
+
+        private bool NeedsModuleConstruct(Resource resource, Dictionary<Resource, List<Resource>> resourceTree)
+        {
+            if (!(resource is Tenant || resource is Subscription || resource is ResourceGroup))
+            {
+                return false;
+            }
+            if (resource is Tenant)
+            {
+                // TODO add management group check
+                return resourceTree[resource].Count > 1;
+            }
+            if (resource is Subscription || resource is ResourceGroup)
+            {
+                // TODO add policy support
+                return resourceTree[resource].Count > 0;
+            }
+
+            return false;
+        }
+
+        private void VisitResource(Resource resource, Dictionary<Resource, List<Resource>> resourceTree, HashSet<Resource> visited)
+        {
+            if (!visited.Add(resource))
+            {
+                return;
+            }
+
+            if (!resourceTree.ContainsKey(resource))
+            {
+                resourceTree[resource] = new List<Resource>();
+            }
+
+            if (resource.Parent != null)
+            {
+                if (!resourceTree.ContainsKey(resource.Parent))
+                {
+                    resourceTree[resource.Parent] = new List<Resource>();
+                }
+                resourceTree[resource.Parent].Add(resource);
+                VisitResource(resource.Parent, resourceTree, visited);
+            }
+        }
+
+        private void WriteConstructsByLevel(Queue<ModuleConstruct> constructs, string outputPath)
         {
             while (constructs.Count > 0)
             {
                 var construct = constructs.Dequeue();
                 foreach (var child in construct.GetConstructs(false))
                 {
-                    constructs.Enqueue(child);
+                    constructs.Enqueue((ModuleConstruct)child);
                 }
                 WriteBicepFile(construct, outputPath);
             }
         }
 
-        private string GetFilePath(IConstruct construct, string outputPath)
+        private string GetFilePath(ModuleConstruct construct, string outputPath)
         {
-            string fileName = object.ReferenceEquals(construct, this) ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
+            string fileName = construct.IsRoot ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
             Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
             return fileName;
         }
 
-        private void WriteBicepFile(IConstruct construct, string outputPath)
+        private void WriteBicepFile(ModuleConstruct construct, string outputPath)
         {
             using var stream = new FileStream(GetFilePath(construct, outputPath), FileMode.Create);
 #if NET6_0_OR_GREATER

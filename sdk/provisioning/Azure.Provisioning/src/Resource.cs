@@ -4,7 +4,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
@@ -21,7 +23,7 @@ namespace Azure.Provisioning
     public abstract class Resource : IPersistableModel<Resource>
 #pragma warning restore AZC0012 // Avoid single word type names
     {
-        internal Dictionary<object, Dictionary<string, string>> ParameterOverrides { get; }
+        internal Dictionary<object, Dictionary<string, Parameter>> ParameterOverrides { get; }
 
         private IList<Resource> Dependencies { get; }
 
@@ -59,6 +61,10 @@ namespace Azure.Provisioning
         /// </summary>
         public IList<Parameter> Parameters { get; }
 
+        internal IList<Output> Outputs { get; }
+
+        internal IConstruct? ModuleScope { get; set; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Resource"/>.
         /// </summary>
@@ -75,11 +81,12 @@ namespace Azure.Provisioning
 
             Scope = scope;
             Parameters = new List<Parameter>();
-            Parent =  parent ?? FindParentInScope(scope);
+            Outputs = new List<Output>();
+            Parent = parent ?? FindParentInScope(scope);
             Scope.AddResource(this);
             Properties = properties;
             Version = version;
-            ParameterOverrides = new Dictionary<object, Dictionary<string, string>>();
+            ParameterOverrides = new Dictionary<object, Dictionary<string, Parameter>>();
             Dependencies = new List<Resource>();
             ResourceType = resourceType;
             Id = Parent is null ? ResourceIdentifier.Root : Parent is ResourceGroup ? Parent.Id.AppendProviderResource(ResourceType.Namespace, ResourceType.GetLastType(), resourceName) : Parent.Id.AppendChildResource(ResourceType.GetLastType(), resourceName);
@@ -106,11 +113,11 @@ namespace Azure.Provisioning
         {
             if (ParameterOverrides.TryGetValue(instance, out var overrides))
             {
-                overrides[propertyName] = parameter.Name;
+                overrides[propertyName] = parameter;
             }
             else
             {
-                ParameterOverrides.Add(instance, new Dictionary<string, string> {  { propertyName, parameter.Name } });
+                ParameterOverrides.Add(instance, new Dictionary<string, Parameter> {  { propertyName, parameter } });
             }
             Parameters.Add(parameter);
         }
@@ -133,6 +140,7 @@ namespace Azure.Provisioning
                 throw new ArgumentException(nameof(propertyName), $"{propertyName} was not found in the property tree for {Properties.GetType().Name}");
             var result = new Output(name, reference, Scope, isLiteral, isSecure);
             Scope.AddOutput(result);
+            Outputs.Add(result);
             return result;
         }
 
@@ -195,7 +203,12 @@ namespace Azure.Provisioning
             var bicepOptions = new BicepModelReaderWriterOptions();
             foreach (var parameter in ParameterOverrides)
             {
-                bicepOptions.ParameterOverrides.Add(parameter.Key, parameter.Value);
+                var dict = new Dictionary<string, string>();
+                foreach (var kvp in parameter.Value)
+                {
+                    dict.Add(kvp.Key, kvp.Value.Value!);
+                }
+                bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
             }
             var data = ModelReaderWriter.Write(Properties, bicepOptions).ToMemory();
 
@@ -210,16 +223,18 @@ namespace Azure.Provisioning
 
         private bool NeedsScope()
         {
+            Debug.Assert(ModuleScope != null, "ModuleScope should not be null");
+
             switch (Parent)
             {
                 case ResourceGroup _:
-                    return Scope.ConstructScope != ConstructScope.ResourceGroup;
+                    return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
                 case Subscription _:
-                    return Scope.ConstructScope != ConstructScope.Subscription;
+                    return ModuleScope!.ConstructScope != ConstructScope.Subscription;
                 case Tenant _:
-                    return Scope.ConstructScope != ConstructScope.Tenant;
+                    return ModuleScope!.ConstructScope != ConstructScope.Tenant;
                 default:
-                    return Scope.ConstructScope != ConstructScope.ResourceGroup;
+                    return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
             }
         }
 

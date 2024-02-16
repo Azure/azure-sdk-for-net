@@ -65,6 +65,17 @@ namespace Azure.Provisioning.Tests
             WebSiteConfigLogs logs = new WebSiteConfigLogs(infra, "logs", frontEnd);
 
             infra.Build(GetOutputPath());
+            // var client = new ArmClient(new DefaultAzureCredential());
+            // var sub = client.GetSubscriptions()
+            //     .Where(s => s.Data.SubscriptionId == "faa080af-c1d8-40ad-9cce-e1a450ca5b57").Single();
+            // var identifier = ArmDeploymentResource.CreateResourceIdentifier(sub.Id, "test");
+            // var resource = client.GetArmDeploymentResource(identifier);
+            // resource.Validate(WaitUntil.Completed,
+            //     new ArmDeploymentContent(
+            //         new ArmDeploymentProperties(ArmDeploymentMode.Complete)
+            //         {
+            //             Template = new BinaryData((object)File.ReadAllText(Path.Combine(GetOutputPath(), "main.bicep"))),
+            //         }));
         }
 
         [Test]
@@ -117,6 +128,36 @@ namespace Azure.Provisioning.Tests
             {
                 IsEnabled = true
             };
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void MultipleSubscriptions()
+        {
+            var infra = new TestSubscriptionInfrastructure();
+            var sub1 = new Subscription(infra, Guid.NewGuid());
+            var sub2 = new Subscription(infra, Guid.NewGuid());
+            _ = new ResourceGroup(infra, parent: sub1);
+            _ = new ResourceGroup(infra, parent: sub2);
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void OutputsSpanningModules()
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+            var rg2 = new ResourceGroup(infra, "rg2");
+            var appServicePlan = infra.AddAppServicePlan(parent: rg1);
+            WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
+
+            var output1 = frontEnd1.AddOutput(data => data.Identity.PrincipalId, "STORAGE_PRINCIPAL_ID");
+            var output2 = frontEnd1.AddOutput(data => data.Location, "LOCATION");
+
+            WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
+
+            frontEnd2.AssignParameter(data => data.Identity.PrincipalId, new Parameter(output1.Name));
+            frontEnd2.AssignParameter(data => data.Location, new Parameter(output2.Name));
             infra.Build(GetOutputPath());
         }
 
