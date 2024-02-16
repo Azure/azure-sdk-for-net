@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
                     performanceCounterCollector = new NonWindowsPerformanceCounterCollector();
                 }
 
-                LiveMetricsExporterEventSource.Log.PerformanceCounterCollectorFactoryDecision(isWindows, isAzureAppService, performanceCounterCollector.GetType().Name);
+                LiveMetricsExporterEventSource.Log.ResolvedPerformanceCounterCollector(isWindows, isAzureAppService, performanceCounterCollector.GetType().Name);
                 return true;
             }
             catch (Exception ex)

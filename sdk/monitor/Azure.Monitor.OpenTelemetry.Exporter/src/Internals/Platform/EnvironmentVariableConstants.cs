@@ -71,6 +71,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// <summary>
         /// INTERNAL ONLY. Used by LiveMetrics to detect premium containers in Azure App Service.
         /// </summary>
+        // TODO: THIS ENVIRONMENT VARIABLE IS NOT DOCUMENTED. NEED TO FOLLOW UP WITH APP SERVICE IF WE CAN CONTINUE TO RELY ON THIS.
+        // https://learn.microsoft.com/azure/app-service/reference-app-settings
         public const string WEBSITE_ISOLATION = "WEBSITE_ISOLATION";
     }
 }

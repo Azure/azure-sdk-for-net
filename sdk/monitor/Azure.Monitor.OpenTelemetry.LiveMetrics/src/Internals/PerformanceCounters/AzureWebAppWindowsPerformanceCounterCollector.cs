@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
 {
     /// <summary>
-    /// Read fake environment variables from a Wisdows-based Azure App Service.
+    /// Read fake environment variables from a Windows-based Azure App Service.
     /// </summary>
     /// <remarks>
     /// Azure App Service doc:
