@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
@@ -13,10 +15,23 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a search request for operator information for the given phone numbers. </summary>
     internal partial class OperatorInformationRequest
     {
-        /// <summary> Initializes a new instance of OperatorInformationRequest. </summary>
-        public OperatorInformationRequest()
+        /// <summary> Initializes a new instance of <see cref="OperatorInformationRequest"/>. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumbers"/> is null. </exception>
+        public OperatorInformationRequest(IEnumerable<string> phoneNumbers)
         {
-            PhoneNumbers = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(phoneNumbers, nameof(phoneNumbers));
+
+            PhoneNumbers = phoneNumbers.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OperatorInformationRequest"/>. </summary>
+        /// <param name="phoneNumbers"> Phone number(s) whose operator information is being requested. </param>
+        /// <param name="options"> Represents options to modify a search request for operator information. </param>
+        internal OperatorInformationRequest(IList<string> phoneNumbers, OperatorInformationOptions options)
+        {
+            PhoneNumbers = phoneNumbers;
+            Options = options;
         }
 
         /// <summary> Phone number(s) whose operator information is being requested. </summary>

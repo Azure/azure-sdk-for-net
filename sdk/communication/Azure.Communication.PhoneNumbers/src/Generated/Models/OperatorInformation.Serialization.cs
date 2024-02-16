@@ -21,8 +21,8 @@ namespace Azure.Communication.PhoneNumbers
             string phoneNumber = default;
             Optional<string> nationalFormat = default;
             Optional<string> internationalFormat = default;
-            Optional<OperatorNumberType> numberType = default;
             Optional<string> isoCountryCode = default;
+            Optional<OperatorNumberType> numberType = default;
             Optional<OperatorDetails> operatorDetails = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -41,6 +41,11 @@ namespace Azure.Communication.PhoneNumbers
                     internationalFormat = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("isoCountryCode"u8))
+                {
+                    isoCountryCode = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("numberType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -48,11 +53,6 @@ namespace Azure.Communication.PhoneNumbers
                         continue;
                     }
                     numberType = new OperatorNumberType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isoCountryCode"u8))
-                {
-                    isoCountryCode = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operatorDetails"u8))
@@ -65,7 +65,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorInformation(phoneNumber, nationalFormat.Value, internationalFormat.Value, Optional.ToNullable(numberType), isoCountryCode.Value, operatorDetails.Value);
+            return new OperatorInformation(phoneNumber, nationalFormat.Value, internationalFormat.Value, isoCountryCode.Value, Optional.ToNullable(numberType), operatorDetails.Value);
         }
     }
 }

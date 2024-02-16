@@ -18,7 +18,7 @@ namespace Azure.Communication.PhoneNumbers
             {
                 return null;
             }
-            Optional<string> name = default;
+            string name = default;
             Optional<string> mobileNetworkCode = default;
             Optional<string> mobileCountryCode = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new OperatorDetails(name.Value, mobileNetworkCode.Value, mobileCountryCode.Value);
+            return new OperatorDetails(name, mobileNetworkCode.Value, mobileCountryCode.Value);
         }
     }
 }

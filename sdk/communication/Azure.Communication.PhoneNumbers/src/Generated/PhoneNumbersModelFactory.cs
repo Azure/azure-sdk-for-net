@@ -114,7 +114,7 @@ namespace Azure.Communication.PhoneNumbers
             return new PhoneNumberSearchResult(searchId, phoneNumbers?.ToList(), phoneNumberType, assignmentType, capabilities, cost, searchExpiresOn, errorCode, error);
         }
 
-        /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>
         /// <param name="values">
         /// Results of a search.
         /// This array will have one entry per requested phone number which will contain the relevant operator information.
@@ -127,20 +127,20 @@ namespace Azure.Communication.PhoneNumbers
             return new OperatorInformationResult(values?.ToList());
         }
 
-        /// <summary> Initializes a new instance of OperatorInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformation"/>. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
         /// <param name="nationalFormat"> National format of the phone number. </param>
         /// <param name="internationalFormat"> International format of the phone number. </param>
-        /// <param name="numberType"> Type of service associated with the phone number. </param>
         /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
+        /// <param name="numberType"> Type of service associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
         /// <returns> A new <see cref="PhoneNumbers.OperatorInformation"/> instance for mocking. </returns>
-        public static OperatorInformation OperatorInformation(string phoneNumber = null, string nationalFormat = null, string internationalFormat = null, OperatorNumberType? numberType = null, string isoCountryCode = null, OperatorDetails operatorDetails = null)
+        public static OperatorInformation OperatorInformation(string phoneNumber = null, string nationalFormat = null, string internationalFormat = null, string isoCountryCode = null, OperatorNumberType? numberType = null, OperatorDetails operatorDetails = null)
         {
-            return new OperatorInformation(phoneNumber, nationalFormat, internationalFormat, numberType, isoCountryCode, operatorDetails);
+            return new OperatorInformation(phoneNumber, nationalFormat, internationalFormat, isoCountryCode, numberType, operatorDetails);
         }
 
-        /// <summary> Initializes a new instance of OperatorDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorDetails"/>. </summary>
         /// <param name="name"> Name of the phone operator. </param>
         /// <param name="mobileNetworkCode"> Mobile Network Code. </param>
         /// <param name="mobileCountryCode"> Mobile Country Code. </param>

@@ -13,13 +13,13 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a search result containing format and operator information associated with the requested phone numbers. </summary>
     public partial class OperatorInformationResult
     {
-        /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatorInformationResult"/>. </summary>
         internal OperatorInformationResult()
         {
             Values = new ChangeTrackingList<OperatorInformation>();
         }
 
-        /// <summary> Initializes a new instance of OperatorInformationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperatorInformationResult"/>. </summary>
         /// <param name="values">
         /// Results of a search.
         /// This array will have one entry per requested phone number which will contain the relevant operator information.
