@@ -20,10 +20,11 @@ public class PipelineMessageClassifierTests
     [TestCase(504)]
     public void RetriesStatusCodes(int code)
     {
+        PipelineMessageClassifier classifier = PipelineMessageClassifier.Default;
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
 
-        Assert.True(message.ResponseClassifier.TryClassify(message, exception: default, out bool isRetriable));
+        Assert.True(classifier.TryClassify(message, exception: default, out bool isRetriable));
         Assert.True(isRetriable);
     }
 
