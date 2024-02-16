@@ -98,9 +98,11 @@ public class RequestOptions
     }
 
     /// <summary>
-    /// Adds a <see cref="PipelinePolicy"/> into the pipeline for the duration of this request.
+    /// Adds a <see cref="PipelinePolicy"/> into the pipeline for the duration
+    /// of this request.
     /// </summary>
-    /// <param name="policy">The <see cref="PipelinePolicy"/> to add to the pipeline.</param>
+    /// <param name="policy">The <see cref="PipelinePolicy"/> to add to the
+    /// pipeline.</param>
     /// <param name="position">The position of the policy in the pipeline.</param>
     /// <exception cref="ArgumentException">The policy cannot be null.</exception>
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
@@ -170,10 +172,11 @@ public class RequestOptions
     public virtual void Freeze() => _frozen = true;
 
     /// <summary>
-    /// Assert that the <see cref="RequestOptions"/> instance has not had
-    /// <see cref="Freeze"/> called on it.
+    /// Assert that <see cref="Freeze"/> has not been called on this
+    /// <see cref="RequestOptions"/> instance.
     /// </summary>
-    /// <exception cref="InvalidOperationException"></exception>
+    /// <exception cref="InvalidOperationException">Cannot change the state of
+    /// this instance after <see cref="Freeze"/> has been called.</exception>
     protected void AssertNotFrozen()
     {
         if (_frozen)
