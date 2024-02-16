@@ -163,18 +163,8 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         }
     }
 
-    /// <summary>
-    /// TBD. Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpRequest"></param>
     protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
 
-    /// <summary>
-    /// TBD.  Needed for inheritdoc.
-    /// </summary>
-    /// <param name="message"></param>
-    /// <param name="httpResponse"></param>
     protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse) { }
 
     #region IDisposable
