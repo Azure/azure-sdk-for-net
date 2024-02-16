@@ -13,7 +13,7 @@ namespace Azure.Provisioning.KeyVaults
         private const string ResourceTypeName = "Microsoft.KeyVault/vaults/accessPolicies";
 
         public KeyVaultAddAccessPolicy(IConstruct scope, Parameter principalIdParameter, KeyVault? parent = default, string version = "2023-02-01", AzureLocation? location = default)
-            : base(scope, parent, "add", ResourceTypeName, version, ArmKeyVaultModelFactory.KeyVaultAccessPolicyParameters(
+            : base(scope, parent, "add", ResourceTypeName, version, (name) => ArmKeyVaultModelFactory.KeyVaultAccessPolicyParameters(
                 name: "add",
                 resourceType: ResourceTypeName,
                 accessPolicies: new List<KeyVaultAccessPolicy>

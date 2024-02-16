@@ -32,7 +32,6 @@ namespace Azure.Provisioning.AppService
     public class WebSite : Resource<WebSiteData>
     {
         private const string ResourceTypeName = "Microsoft.Web/sites";
-        private static string GetName(IConstruct scope, string? name) => name is null ? $"webSite-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         private ApplicationSettingsResource AppSettings { get; }
 
@@ -46,10 +45,10 @@ namespace Azure.Provisioning.AppService
         /// <param name="runtimeVersion">The runtime version</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        /// <param name="parent"></param>
+        /// <param name="parent">The resource group. </param>
         public WebSite(IConstruct scope, string resourceName, AppServicePlan appServicePlan, WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = null)
-            : base(scope, parent, GetName(scope, resourceName), ResourceTypeName, version, ArmAppServiceModelFactory.WebSiteData(
-                name: GetName(scope, resourceName),
+            : base(scope, parent, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.WebSiteData(
+                name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
                 kind: "app,linux",

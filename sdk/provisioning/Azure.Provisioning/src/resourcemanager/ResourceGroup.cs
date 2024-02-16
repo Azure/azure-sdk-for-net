@@ -23,17 +23,15 @@ namespace Azure.Provisioning.ResourceManager
         /// <param name="name">The name of the resourceGroup.</param>
         /// <param name="version">The version of the resourceGroup.</param>
         /// <param name="location">The location of the resourceGroup.</param>
-        /// <param name="parent"></param>
-        public ResourceGroup(IConstruct scope, string? name = default, string version = "2023-07-01", AzureLocation? location = default, Resource? parent = default)
-            : base(scope, parent, GetName(scope, name), ResourceType, version, ResourceManagerModelFactory.ResourceGroupData(
-                name: GetName(scope, name),
+        /// <param name="parent">The parent of the resourceGroup.</param>
+        public ResourceGroup(IConstruct scope, string name = "rg", string version = "2023-07-01", AzureLocation? location = default, Resource? parent = default)
+            : base(scope, parent, name, ResourceType, version, (name) => ResourceManagerModelFactory.ResourceGroupData(
+                name: name,
                 resourceType: ResourceType,
                 tags: new Dictionary<string, string> { { "azd-env-name", scope.EnvironmentName } },
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
         }
-
-        private static string GetName(IConstruct scope, string? name) => name is null ? $"rg-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
 
         /// <inheritdoc/>
         protected override Resource? FindParentInScope(IConstruct scope)

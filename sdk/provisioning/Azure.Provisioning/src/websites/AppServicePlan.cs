@@ -16,8 +16,6 @@ namespace Azure.Provisioning.AppService
     {
         private const string ResourceTypeName = "Microsoft.Web/serverfarms";
 
-        private static string GetName(IConstruct scope, string? name) => name is null ? $"appServicePlan-{scope.EnvironmentName}" : $"{name}-{scope.EnvironmentName}";
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AppServicePlan"/>.
         /// </summary>
@@ -25,10 +23,10 @@ namespace Azure.Provisioning.AppService
         /// <param name="resourceName">The resource name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        /// <param name="parent"></param>
+        /// <param name="parent">The resource group.</param>
         public AppServicePlan(IConstruct scope, string resourceName, string version = "2021-02-01", AzureLocation? location = default, ResourceGroup? parent = default)
-            : base(scope, parent, GetName(scope, resourceName), ResourceTypeName, version, ArmAppServiceModelFactory.AppServicePlanData(
-                name: GetName(scope, resourceName),
+            : base(scope, parent, resourceName, ResourceTypeName, version, (name) => ArmAppServiceModelFactory.AppServicePlanData(
+                name: name,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new AppServiceSkuDescription() { Name = "B1" },
                 isReserved: true))

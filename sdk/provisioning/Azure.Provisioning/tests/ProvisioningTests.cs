@@ -11,6 +11,7 @@ using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
+using Azure.Provisioning.AppConfiguration;
 using Azure.ResourceManager.Storage.Models;
 
 namespace Azure.Provisioning.Tests
@@ -114,7 +115,7 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            infra.AddBlobService(name: "photos");
+            infra.AddBlobService();
             infra.Build(GetOutputPath());
         }
 
@@ -123,11 +124,19 @@ namespace Azure.Provisioning.Tests
         {
             var infra = new TestInfrastructure();
             infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
-            var blob = infra.AddBlobService(name: "photos");
+            var blob = infra.AddBlobService();
             blob.Properties.DeleteRetentionPolicy = new DeleteRetentionPolicy()
             {
                 IsEnabled = true
             };
+            infra.Build(GetOutputPath());
+        }
+
+        [Test]
+        public void AppConfiguration()
+        {
+            var infra = new TestInfrastructure();
+            infra.AddAppConfigurationStore();
             infra.Build(GetOutputPath());
         }
 

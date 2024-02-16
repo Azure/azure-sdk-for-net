@@ -13,19 +13,13 @@ namespace Azure.Provisioning.Storage
     {
         private const string ResourceTypeName = "Microsoft.Storage/storageAccounts/blobServices";
 
-        private static string GetName(IConstruct scope, string? name)
-        {
-            return $"{name}-{scope.EnvironmentName}";
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BlobService"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
-        /// <param name="name">The name.</param>
-        public BlobService(IConstruct scope, string name = "blob")
-            : base(scope, null, GetName(scope, name), ResourceTypeName, "2022-09-01", ArmStorageModelFactory.BlobServiceData(
-                name: GetName(scope, name),
+        public BlobService(IConstruct scope)
+            : base(scope, null, "default", ResourceTypeName, "2022-09-01", (name) => ArmStorageModelFactory.BlobServiceData(
+                name: "default",
                 resourceType: ResourceTypeName))
         {
         }
