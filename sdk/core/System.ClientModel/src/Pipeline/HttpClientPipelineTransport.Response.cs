@@ -53,12 +53,7 @@ public partial class HttpClientPipelineTransport
                     return _contentStream;
                 }
 
-                if (_bufferedContent is not null)
-                {
-                    return _bufferedContent.ToStream();
-                }
-
-                return null;
+                return ReadContent().ToStream();
             }
             set
             {
