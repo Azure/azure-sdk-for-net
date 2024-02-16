@@ -12,8 +12,6 @@ public abstract class PipelineResponse : IDisposable
     // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
     internal static readonly BinaryData s_EmptyBinaryData = new(Array.Empty<byte>());
 
-    private bool _isError = false;
-
     /// <summary>
     /// Gets the HTTP status code.
     /// </summary>
@@ -24,9 +22,9 @@ public abstract class PipelineResponse : IDisposable
     /// </summary>
     public abstract string ReasonPhrase { get; }
 
-    public PipelineResponseHeaders Headers => GetHeadersCore();
+    public PipelineResponseHeaders Headers => HeadersCore;
 
-    protected abstract PipelineResponseHeaders GetHeadersCore();
+    protected abstract PipelineResponseHeaders HeadersCore { get; }
 
     /// <summary>
     /// Gets the contents of HTTP response. Returns <c>null</c> for responses without content.
@@ -35,22 +33,18 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract BinaryData Content { get; }
 
-    public abstract BinaryData ReadContent(CancellationToken cancellationToken = default);
+    public abstract BinaryData BufferContent(CancellationToken cancellationToken = default);
 
-    public abstract ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default);
+    public abstract ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Indicates whether the status code of the returned response is considered
     /// an error code.
     /// </summary>
     // IsError must be virtual in order to maintain Azure.Core back-compatibility.
-    public virtual bool IsError => _isError;
+    public virtual bool IsError => IsErrorCore;
 
-    // We have to have a separate method for setting IsError so that the IsError
-    // setter doesn't become virtual when we make the getter virtual.
-    internal void SetIsError(bool isError) => SetIsErrorCore(isError);
-
-    protected virtual void SetIsErrorCore(bool isError) => _isError = isError;
+    protected internal virtual bool IsErrorCore { get; set; }
 
     public abstract void Dispose();
 }
