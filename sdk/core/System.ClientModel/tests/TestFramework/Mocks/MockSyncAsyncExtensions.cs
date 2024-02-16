@@ -84,6 +84,7 @@ public static class MockSyncAsyncExtensions
             policy.DoWait(delay, cancellationToken);
         }
     }
+
     public static async Task<BinaryData> ReadContentSyncOrAsync(this PipelineResponse response, CancellationToken cancellationToken, bool isAsync)
     {
         if (isAsync)
