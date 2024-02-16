@@ -54,11 +54,15 @@ namespace Azure.Provisioning
 
         private void AddOutputsToModules()
         {
-            foreach (var construct in Root.Scope.GetConstructs(true))
+            // Get all of the user-defined constructs in addition to the Infrastructure construct
+            foreach (var construct in GetConstructs(true).Where(c => c is not ModuleConstruct).Concat(new[] { this }))
             {
+                // ToList to avoid modifying the collection while iterating
                 foreach (var output in construct.GetOutputs(false).ToList())
                 {
-                    output.Resource.ModuleScope!.AddOutput(output);
+                    var moduleOutput = new Output(output.Name, output.Value, output.Resource.ModuleScope!,
+                        output.Resource, output.IsLiteral, output.IsSecure);
+                    output.Resource.ModuleScope!.AddOutput(moduleOutput);
                 }
             }
         }

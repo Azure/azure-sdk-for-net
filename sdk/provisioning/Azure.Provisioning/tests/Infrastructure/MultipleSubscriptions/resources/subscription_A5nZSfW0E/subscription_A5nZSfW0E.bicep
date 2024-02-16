@@ -1,7 +1,7 @@
 targetScope = 'subscription'
 
 
-resource resourceGroup_KzJWnDxbG 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+resource resourceGroup_VChnO7L2o 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: 'rg-TEST'
   location: 'westus'
   tags: {

@@ -41,3 +41,6 @@ resource applicationSettingsResource_MAMFSSuFs 'Microsoft.Web/sites/config@2021-
   parent: webSite_dOTaZfna6
   name: 'appsettings'
 }
+
+output STORAGE_PRINCIPAL_ID string = webSite_dOTaZfna6.identity.principalId
+output LOCATION string = webSite_dOTaZfna6.location

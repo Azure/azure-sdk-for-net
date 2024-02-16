@@ -244,3 +244,5 @@ resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-
     ENABLE_ORYX_BUILD: 'True'
   }
 }
+
+output SERVICE_API_IDENTITY_PRINCIPAL_ID string = webSite_W5EweSXEq.identity.principalId

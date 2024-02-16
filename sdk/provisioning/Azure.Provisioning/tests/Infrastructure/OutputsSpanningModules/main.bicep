@@ -36,3 +36,6 @@ module rg2_TEST './resources/rg2_TEST/rg2_TEST.bicep' = {
     LOCATION: LOCATION
   }
 }
+
+output STORAGE_PRINCIPAL_ID string = rg1_TEST.outputs.STORAGE_PRINCIPAL_ID
+output LOCATION string = rg1_TEST.outputs.LOCATION
