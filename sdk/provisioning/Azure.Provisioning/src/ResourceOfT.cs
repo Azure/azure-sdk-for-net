@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Azure.Core;
 
@@ -46,7 +48,7 @@ namespace Azure.Provisioning
         /// <exception cref="NotSupportedException"></exception>
         public void AssignParameter(Expression<Func<T, object?>> propertySelector, Parameter parameter)
         {
-            (object instance, string name) = EvaluateLambda(propertySelector);
+            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
             AssignParameter(instance, name, parameter);
         }
 
@@ -60,20 +62,23 @@ namespace Azure.Provisioning
         /// <returns>The <see cref="Output"/>.</returns>
         public Output AddOutput(Expression<Func<T, object?>> propertySelector, string outputName, bool isLiteral = false, bool isSecure = false)
         {
-            (object instance, string name) = EvaluateLambda(propertySelector);
-            return AddOutput(outputName, instance, name, isLiteral, isSecure);
+            (object instance, string name, string expression) = EvaluateLambda(propertySelector);
+
+            return AddOutput(outputName, instance, name, expression, isLiteral, isSecure);
         }
 
-        private (object Instance, string PropertyName) EvaluateLambda(Expression<Func<T, object?>> propertySelector)
+        private (object Instance, string PropertyName, string Expression) EvaluateLambda(Expression<Func<T, object?>> propertySelector)
         {
             ParameterExpression? root = null;
             Expression? body = null;
             string? name = null;
+            string expression = string.Empty;
             if (propertySelector is LambdaExpression lambda)
             {
                 root = lambda.Parameters[0];
                 if (lambda.Body is MemberExpression member)
                 {
+                    GetBicepExpression(member, ref expression);
                     body = member.Expression;
                     name = member.Member.Name;
                 }
@@ -84,8 +89,7 @@ namespace Azure.Provisioning
                 }
                 else if (lambda.Body is IndexExpression { Arguments.Count: 1 } indexer)
                 {
-                    body = indexer.Object;
-                    name = Expression.Lambda(indexer.Arguments[0], root).Compile().DynamicInvoke(Properties) as string;
+                    throw new InvalidOperationException("Indexer expressions are not supported");
                 }
                 else if (lambda.Body is MethodCallExpression { Method.Name: "get_Item", Arguments.Count: 1 } call)
                 {
@@ -94,13 +98,61 @@ namespace Azure.Provisioning
                 }
             }
 
-            if (body is null || name is null || root is null)
+            if (body is null || name is null || root is null || expression == null)
             {
                 throw new NotSupportedException();
             }
 
             object instance = Expression.Lambda(body, root).Compile().DynamicInvoke(Properties)!;
-            return (instance, name);
+            return (instance, name, expression);
+        }
+
+        private void GetBicepExpression(Expression expression, ref string result)
+        {
+            switch (expression)
+            {
+                case MemberExpression memberExpression:
+                    var attrib = memberExpression.Member.GetCustomAttributes(false).First(a => a.GetType().Name == "WirePathAttribute");
+                    result = result == string.Empty ? attrib!.ToString()! : $"{memberExpression.Member.GetCustomAttributes(false).First(a => a.GetType().Name == "WirePathAttribute")}.{result}";
+                    if (memberExpression.Expression is not null)
+                    {
+                        GetBicepExpression(memberExpression.Expression, ref result);
+                    }
+                    break;
+                case ParameterExpression parameterExpression:
+                    return; // we have reached the root
+                default:
+                    throw new InvalidOperationException($"Unsupported expression type {expression.GetType().Name}");
+            }
+        }
+
+        private Stack<string> GetBicepExpression(Expression body)
+        {
+            //We get two different results from body.ToString()
+            // - "Convert(website.Identity.PrincipalId, Object)"
+            // - "store.Endpoint"
+            var span = body.ToString().AsSpan();
+            var start = span.IndexOf('.');
+            span = span.Slice(start + 1);
+            var end = span.IndexOf(',');
+            span = span.Slice(0, end == -1 ? span.Length : end);
+
+            Stack<string> stack = new Stack<string>();
+            while (true)
+            {
+                int index = span.LastIndexOf('.');
+                if (index == -1)
+                {
+                    stack.Push(span.ToString());
+                    break;
+                }
+                else
+                {
+                    stack.Push(span.Slice(index + 1).ToString());
+                    span = span.Slice(0, index);
+                }
+            }
+            return stack;
         }
     }
 }

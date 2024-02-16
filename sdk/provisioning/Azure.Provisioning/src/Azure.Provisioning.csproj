@@ -9,14 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
     <PackageReference Include="Azure.ResourceManager.KeyVault" />
     <PackageReference Include="Azure.ResourceManager.Sql" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
     <PackageReference Include="Azure.ResourceManager.Storage" />
-    <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
+    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="System.ClientModel" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="C:\git\Azure2\azure-sdk-for-net\sdk\appconfiguration\Azure.ResourceManager.AppConfiguration\src\Azure.ResourceManager.AppConfiguration.csproj" />
   </ItemGroup>
 
 </Project>
