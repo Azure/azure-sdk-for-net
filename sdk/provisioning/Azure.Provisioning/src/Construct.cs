@@ -132,7 +132,7 @@ namespace Azure.Provisioning
             IEnumerable<Parameter> result = _parameters;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(true).SelectMany(c => c.GetParameters(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetParameters(false)));
             }
             return result;
         }
@@ -143,7 +143,7 @@ namespace Azure.Provisioning
             IEnumerable<Output> result = _outputs;
             if (recursive)
             {
-                result = result.Concat(GetConstructs(true).SelectMany(c => c.GetOutputs(false)));
+                result = result.Concat(GetConstructs(false).SelectMany(c => c.GetOutputs(false)));
             }
             return result;
         }
