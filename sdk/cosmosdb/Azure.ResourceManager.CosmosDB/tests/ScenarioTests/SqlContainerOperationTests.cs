@@ -144,14 +144,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var container3 = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             Assert.AreEqual(_containerName, container.Data.Resource.ContainerName);
             var container4 = await SqlContainerCollection.GetAsync(_containerName);
-            VerifySqlContainers(container, container3, ttlDisabled: true);
-            VerifySqlContainers(container, container4, ttlDisabled: true);
+            VerifySqlContainers(container, container3, restoreWithTtlDisabled: true);
+            VerifySqlContainers(container, container4, restoreWithTtlDisabled: true);
 
             containers = await SqlContainerCollection.GetAllAsync().ToEnumerableAsync();
             Assert.That(containers, Has.Count.EqualTo(1));
             Assert.AreEqual(container.Data.Name, containers[0].Data.Name);
 
-            VerifySqlContainers(containers[0], container3, ttlDisabled: true);
+            VerifySqlContainers(containers[0], container3, restoreWithTtlDisabled: true);
 
             await container.DeleteAsync(WaitUntil.Completed);
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return sqlContainerLro.Value;
         }
 
-        private void VerifySqlContainers(CosmosDBSqlContainerResource expectedValue, CosmosDBSqlContainerResource actualValue, bool ttlDisabled = false)
+        private void VerifySqlContainers(CosmosDBSqlContainerResource expectedValue, CosmosDBSqlContainerResource actualValue, bool restoreWithTtlDisabled = false)
         {
             Assert.AreEqual(expectedValue.Data.Id, actualValue.Data.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedValue.Data.Resource.IndexingPolicy.IndexingMode, actualValue.Data.Resource.IndexingPolicy.IndexingMode);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Kind, actualValue.Data.Resource.PartitionKey.Kind);
             Assert.AreEqual(expectedValue.Data.Resource.PartitionKey.Paths, actualValue.Data.Resource.PartitionKey.Paths);
-            Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, ttlDisabled ? 0 : actualValue.Data.Resource.DefaultTtl);
+            Assert.AreEqual(expectedValue.Data.Resource.DefaultTtl, restoreWithTtlDisabled ? 0 : actualValue.Data.Resource.DefaultTtl);
         }
         protected async Task<CosmosDBAccountResource> CreateDatabaseAccount(string name)
         {
