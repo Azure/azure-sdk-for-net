@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
@@ -17,13 +16,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         internal readonly DoubleBuffer _documentBuffer = new();
-        internal static bool? s_isAzureWebApp = null;
+        internal bool? _isAzureWebApp = null;
         private IPerformanceCounterCollector? _performanceCounterCollector;
 
         public void InitializeMetrics(IPlatform platform)
         {
+            _isAzureWebApp = !string.IsNullOrEmpty(platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME));
+
             // TODO: ENABLE THIS AFTER IMPLEMENTING OTHER CLASSES
-            // PerformanceCounterCollectorFactory.TryGetInstance(platform, out _performanceCounterCollector);
+            // PerformanceCounterCollectorFactory.TryGetInstance(platform, _isAzureWebApp, out _performanceCounterCollector);
             _performanceCounterCollector = null;
         }
 
@@ -39,7 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 StreamId = _streamId,
                 Timestamp = DateTime.UtcNow, // Represents timestamp sample was created
                 TransmissionTime = DateTime.UtcNow, // represents timestamp transmission was sent
-                IsWebApp = IsWebAppRunningInAzure(), // TODO: THIS LOOKS LIKE A BUG. THIS METHOD RETURNS BOOL INDICATING IF IT SHOULD COLLECT PERF COUNTERS. AI SDK IS DOING THE SAME THING. NEED TO REVIEW THIS WITH SERVICE TEAM.
+                IsWebApp = _isAzureWebApp,
                 PerformanceCollectionSupported = true,
                 // AI SDK relies on PerformanceCounter to collect CPU and Memory metrics.
                 // Follow up with service team to get this removed for OTEL based live metrics.
@@ -106,38 +107,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             }
 
             return dataPoint;
-        }
-
-        /// <summary>
-        /// Searches for the environment variable specific to Azure Web App.
-        /// </summary>
-        /// <returns>Boolean, which is true if the current application is an Azure Web App.</returns>
-        internal static bool? IsWebAppRunningInAzure()
-        {
-            const string WebSiteEnvironmentVariable = "WEBSITE_SITE_NAME";
-            const string WebSiteIsolationEnvironmentVariable = "WEBSITE_ISOLATION";
-            const string WebSiteIsolationHyperV = "hyperv";
-
-            if (!s_isAzureWebApp.HasValue)
-            {
-                try
-                {
-                    // Presence of "WEBSITE_SITE_NAME" indicate web apps.
-                    // "WEBSITE_ISOLATION"!="hyperv" indicate premium containers. In this case, perf counters
-                    // can be read using regular mechanism and hence this method returns false for
-                    // premium containers.
-                    // TODO: switch to platform. Not necessary for POC.
-                    s_isAzureWebApp = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(WebSiteEnvironmentVariable)) &&
-                                    Environment.GetEnvironmentVariable(WebSiteIsolationEnvironmentVariable) != WebSiteIsolationHyperV;
-                }
-                catch (System.Exception ex)
-                {
-                    LiveMetricsExporterEventSource.Log.AccessingEnvironmentVariableFailedWarning(WebSiteEnvironmentVariable, ex);
-                    return false;
-                }
-            }
-
-            return s_isAzureWebApp;
         }
     }
 }

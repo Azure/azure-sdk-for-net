@@ -67,12 +67,5 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
         /// When set to true, exporter will emit resources as metric telemetry.
         /// </summary>
         public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";
-
-        /// <summary>
-        /// INTERNAL ONLY. Used by LiveMetrics to detect premium containers in Azure App Service.
-        /// </summary>
-        // TODO: THIS ENVIRONMENT VARIABLE IS NOT DOCUMENTED. NEED TO FOLLOW UP WITH APP SERVICE IF WE CAN CONTINUE TO RELY ON THIS.
-        // https://learn.microsoft.com/azure/app-service/reference-app-settings
-        public const string WEBSITE_ISOLATION = "WEBSITE_ISOLATION";
     }
 }

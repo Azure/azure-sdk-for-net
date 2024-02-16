@@ -10,14 +10,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
 {
     internal static class PerformanceCounterCollectorFactory
     {
-        private const string WEBSITE_ISOLATION_HYPERV = "hyperv";
-
-        public static bool TryGetInstance(IPlatform platform, out IPerformanceCounterCollector? performanceCounterCollector)
+        public static bool TryGetInstance(IPlatform platform, bool isAzureAppService, out IPerformanceCounterCollector? performanceCounterCollector)
         {
             try
             {
                 var isWindows = platform.IsOSPlatform(OSPlatform.Windows);
-                var isAzureAppService = IsAzureAppService(platform);
 
                 if (isAzureAppService && isWindows)
                 {
@@ -42,20 +39,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
                 performanceCounterCollector = null;
                 return false;
             }
-        }
-
-        /// <summary>
-        /// Evaluates environment variables specific to Azure Web App.
-        /// </summary>
-        /// <remarks>
-        /// Presence of "WEBSITE_SITE_NAME" indicate web apps.
-        /// "WEBSITE_ISOLATION"=="hyperv" indicate premium containers.
-        /// In the case of premium containers, perf counters can be read using regular mechanism and hence this method returns false.
-        /// </remarks>
-        private static bool IsAzureAppService(IPlatform platform)
-        {
-            return !string.IsNullOrEmpty(platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME))
-                && platform.GetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_ISOLATION) != WEBSITE_ISOLATION_HYPERV;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters;
 using Xunit;
@@ -17,16 +16,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.PerformanceCounters
         [InlineData(false, false, nameof(NonWindowsPerformanceCounterCollector))]
         public void VerifyFactoryDecision(bool isWindows, bool isAzureAppService, string expectedTypeName)
         {
-            var platform = new MockPlatform();
-
-            platform.IsOsPlatformFunc = (os) => os.ToString() == (isWindows ? "WINDOWS" : "LINUX");
-
-            if (isAzureAppService)
+            var platform = new MockPlatform
             {
-                platform.SetEnvironmentVariable(EnvironmentVariableConstants.WEBSITE_SITE_NAME, "UnitTest");
-            }
+                IsOsPlatformFunc = (os) => os.ToString() == (isWindows ? "WINDOWS" : "LINUX")
+            };
 
-            PerformanceCounterCollectorFactory.TryGetInstance(platform, out var perfCounterCollector);
+            PerformanceCounterCollectorFactory.TryGetInstance(platform, isAzureAppService, out var perfCounterCollector);
 
             Assert.Equal(expectedTypeName, perfCounterCollector!.GetType().Name);
         }
