@@ -32,7 +32,7 @@ resource webSite_80I4ejz5T 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_kPTV48HdO 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_eTrLWYWog 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_80I4ejz5T
   name: 'appsettings'
 }

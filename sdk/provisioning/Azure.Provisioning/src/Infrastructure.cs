@@ -40,12 +40,6 @@ namespace Azure.Provisioning
 
             Dictionary<Resource, List<Resource>> resourceTree = BuildResourceTree();
 
-            var constructs = GetConstructs(true).ToArray();
-            foreach (var construct in constructs)
-            {
-                construct.GetResources(true);
-            }
-
             ModuleConstruct? root = null;
             BuildModuleConstructs(Root, resourceTree, null, ref root);
 

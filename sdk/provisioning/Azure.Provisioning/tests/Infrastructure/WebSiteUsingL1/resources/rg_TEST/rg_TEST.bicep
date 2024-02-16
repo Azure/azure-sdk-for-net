@@ -45,7 +45,7 @@ resource webSite_W5EweSXEq 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_NslbdUwEt 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_9BG7vUQd2 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_W5EweSXEq
   name: 'appsettings'
 }
@@ -87,7 +87,7 @@ resource keyVault_CRoMbemLF 'Microsoft.KeyVault/vaults@2023-02-01' = {
   }
 }
 
-resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+resource keyVaultAddAccessPolicy_NWCGclP20 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
   parent: keyVault_CRoMbemLF
   name: 'add'
   properties: {
@@ -106,25 +106,25 @@ resource keyVaultAddAccessPolicy_OttgS6uaT 'Microsoft.KeyVault/vaults/accessPoli
   }
 }
 
-resource keyVaultSecret_nMDmVNMVq 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_NmXfhaHvM 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'sqlAdminPassword'
+  name: 'sqlAdminPassword-TEST'
   properties: {
     value: sqlAdminPassword
   }
 }
 
-resource keyVaultSecret_PrlUnEuAz 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_QRsiyFBMe 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'appUserPassword'
+  name: 'appUserPassword-TEST'
   properties: {
     value: appUserPassword
   }
 }
 
-resource keyVaultSecret_NP8ELZpgb 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
+resource keyVaultSecret_7eiFxkj0r 'Microsoft.KeyVault/vaults/secrets@2023-02-01' = {
   parent: keyVault_CRoMbemLF
-  name: 'connectionString'
+  name: 'connectionString-TEST'
   properties: {
     value: 'Server=${sqlServer_zjdvvB2wl.properties.fullyQualifiedDomainName}; Database=${sqlDatabase_U7NzorRJT.name}; User=appUser; Password=${appUserPassword}'
   }
@@ -236,7 +236,7 @@ resource webSite_4pzZqR2OO 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_Pfdqa0OdT 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_vEe46o8Zn 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_4pzZqR2OO
   name: 'appsettings'
   properties: {

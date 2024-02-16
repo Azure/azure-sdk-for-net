@@ -1,4 +1,4 @@
-targetScope = subscription
+targetScope = 'subscription'
 
 
 resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01' = {
@@ -9,13 +9,7 @@ resource resourceGroup_I6QNkoPsb 'Microsoft.Resources/resourceGroups@2023-07-01'
   }
 }
 
-resource appConfigurationStore_sgecYnln3 'Microsoft.AppConfiguration/configurationStores@2023-03-01' = {
+module rg_TEST './resources/rg_TEST/rg_TEST.bicep' = {
+  name: 'rg_TEST'
   scope: resourceGroup_I6QNkoPsb
-  name: 'store-TEST'
-  location: 'westus'
-  sku: {
-    name: 'free'
-  }
-  properties: {
-  }
 }

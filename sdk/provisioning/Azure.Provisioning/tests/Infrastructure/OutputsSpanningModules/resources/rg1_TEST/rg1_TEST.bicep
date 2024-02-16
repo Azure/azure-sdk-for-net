@@ -37,7 +37,7 @@ resource webSite_dOTaZfna6 'Microsoft.Web/sites@2021-02-01' = {
   }
 }
 
-resource applicationSettingsResource_lzuRUWkeF 'Microsoft.Web/sites/config@2021-02-01' = {
+resource applicationSettingsResource_MAMFSSuFs 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_dOTaZfna6
   name: 'appsettings'
 }
