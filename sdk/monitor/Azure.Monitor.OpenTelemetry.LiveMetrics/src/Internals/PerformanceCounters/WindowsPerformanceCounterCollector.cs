@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.PerformanceCounters
 {
     /// <summary>
-    /// Use <see cref="System.Diagnostics.PerformanceCounter"/> to read performance counters in Windows.
+    /// Use System.Diagnostics.PerformanceCounter to read performance counters in Windows.
     /// </summary>
     internal class WindowsPerformanceCounterCollector : IPerformanceCounterCollector
     {

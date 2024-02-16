@@ -24,6 +24,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             // TODO: ENABLE THIS AFTER IMPLEMENTING OTHER CLASSES
             // PerformanceCounterCollectorFactory.TryGetInstance(platform, out _performanceCounterCollector);
+            _performanceCounterCollector = null;
         }
 
         public MonitoringDataPoint GetDataPoint()
