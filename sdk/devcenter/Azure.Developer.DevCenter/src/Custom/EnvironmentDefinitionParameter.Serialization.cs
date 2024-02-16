@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </list>
         /// </para>
         /// </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeDefaultValue))]
+        //[CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeDefaultValue))]
         public BinaryData DefaultValue { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,6 +57,11 @@ namespace Azure.Developer.DevCenter.Models
             {
                 return;
             }
+
+            var temp = property.Value.GetString();
+            var temp2 = property.Value.GetRawText();
+            var temp3 = property.Value.GetObject();
+            var temp4 = property.Value.GetType();
             defaultValue = BinaryData.FromString(property.Value.GetRawText());
         }
     }

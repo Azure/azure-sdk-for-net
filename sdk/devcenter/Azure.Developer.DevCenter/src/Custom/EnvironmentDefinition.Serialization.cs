@@ -40,7 +40,7 @@ namespace Azure.Developer.DevCenter.Models
         /// </list>
         /// </para>
         /// </summary>
-        [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeParametersSchema))]
+        //[CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializeParametersSchema))]
         public BinaryData ParametersSchema { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

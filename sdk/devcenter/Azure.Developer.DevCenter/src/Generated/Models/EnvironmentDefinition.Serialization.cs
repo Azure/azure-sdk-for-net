@@ -146,7 +146,11 @@ namespace Azure.Developer.DevCenter.Models
                 }
                 if (property.NameEquals("parametersSchema"u8))
                 {
-                    DeserializeParametersSchema(property, ref parametersSchema);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parametersSchema = BinaryData.FromBytes(property.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (property.NameEquals("templatePath"u8))
