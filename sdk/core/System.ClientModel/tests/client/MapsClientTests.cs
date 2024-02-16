@@ -329,29 +329,25 @@ public class MapsClientTests
 
             public override void Dispose() { }
 
-            protected override string GetMethodCore()
-                => _method!;
-
-            protected override Uri GetUriCore()
-                => _uri!;
-
-            protected override PipelineRequestHeaders GetHeadersCore()
-                => _headers;
-
-            protected override BinaryContent GetContentCore()
+            protected override string MethodCore
             {
-                throw new NotImplementedException();
+                get => _method!;
+                set => _method = value;
             }
 
-            protected override void SetMethodCore(string method)
-                => _method = method;
-
-            protected override void SetUriCore(Uri uri)
-                => _uri = uri;
-
-            protected override void SetContentCore(BinaryContent? content)
+            protected override Uri? UriCore
             {
-                throw new NotImplementedException();
+                get => _uri;
+                set => _uri = value;
+            }
+
+            protected override PipelineRequestHeaders HeadersCore
+                => _headers;
+
+            protected override BinaryContent? ContentCore
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
             }
         }
 
@@ -392,17 +388,15 @@ public class MapsClientTests
                 _stream?.Dispose();
             }
 
-            protected override PipelineResponseHeaders GetHeadersCore()
+            protected override PipelineResponseHeaders HeadersCore
+                => throw new NotImplementedException();
+
+            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }
 
-            public override BinaryData ReadContent(CancellationToken cancellationToken = default)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override ValueTask<BinaryData> ReadContentAsync(CancellationToken cancellationToken = default)
+            public override ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
             {
                 throw new NotImplementedException();
             }

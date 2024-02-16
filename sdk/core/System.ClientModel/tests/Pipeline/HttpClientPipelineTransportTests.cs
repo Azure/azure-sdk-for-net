@@ -396,7 +396,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        BinaryData content = await message.Response!.ReadContentSyncOrAsync(default, IsAsync);
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
         Assert.AreEqual(message.Response!.Content, content);
     }
@@ -416,7 +416,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         await transport.ProcessSyncOrAsync(message, IsAsync);
 
-        BinaryData content = await message.Response!.ReadContentSyncOrAsync(default, IsAsync);
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
         Assert.AreEqual(0, content.ToMemory().Length);
     }
@@ -439,7 +439,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
         // Explicitly assign ContentStream via property setter
         message.Response!.ContentStream = null;
 
-        BinaryData content = await message.Response!.ReadContentSyncOrAsync(default, IsAsync);
+        BinaryData content = await message.Response!.BufferContentSyncOrAsync(default, IsAsync);
 
         Assert.AreEqual(0, content.ToMemory().Length);
     }
@@ -467,7 +467,7 @@ public class HttpClientPipelineTransportTests : SyncAsyncTestBase
 
         message.Response!.ContentStream!.ReadByte();
 
-        Assert.ThrowsAsync<InvalidOperationException>(async() => { await message.Response!.ReadContentSyncOrAsync(default, IsAsync); });
+        Assert.ThrowsAsync<InvalidOperationException>(async() => { await message.Response!.BufferContentSyncOrAsync(default, IsAsync); });
     }
 
     [Test]
