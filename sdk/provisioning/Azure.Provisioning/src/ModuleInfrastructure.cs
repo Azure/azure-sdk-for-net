@@ -126,12 +126,18 @@ namespace Azure.Provisioning
                     parentScope.AddParameter(parameter);
                 }
 
-                foreach (var parameterOverrideDictionary in resource.ParameterOverrides)
+                foreach (var typeDictPair in resource.ParameterOverrides)
                 {
-                    foreach (var parameterOverride in parameterOverrideDictionary.Value)
+                    foreach (var propertyParameterPair in typeDictPair.Value)
                     {
-                        parameterOverride.Value.Source = parentScope;
-                        parameterOverride.Value.Value = GetParameterValue(parameterOverride.Value, parentScope);
+                        var parameterToCopy = propertyParameterPair.Value;
+                        resource.ParameterOverrides[typeDictPair.Key][propertyParameterPair.Key] = new Parameter(
+                            parameterToCopy.Name,
+                            parameterToCopy.Description,
+                            parameterToCopy.DefaultValue,
+                            parameterToCopy.IsSecure,
+                            parentScope,
+                            parameterToCopy.Value);
                     }
                 }
             }
@@ -145,12 +151,12 @@ namespace Azure.Provisioning
         private static string GetParameterValue(Parameter parameter, IConstruct scope)
         {
             // If the parameter is a parameter of the module scope, use the parameter name.
-            if (scope.GetParameters(false).Contains(parameter))
+            if (scope.GetParameters(false).Any(p => p.Name == parameter.Name))
             {
                 return parameter.Name;
             }
             // Otherwise we assume it is an output from the current module.
-            if ( parameter.Source is null || ReferenceEquals(parameter.Source, scope))
+            if (parameter.Source is null || ReferenceEquals(parameter.Source, scope))
             {
                 return parameter.Value!;
             }

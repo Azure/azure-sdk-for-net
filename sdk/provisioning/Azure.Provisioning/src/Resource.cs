@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Azure.Core;
@@ -240,7 +241,7 @@ namespace Azure.Provisioning
                 var dict = new Dictionary<string, string>();
                 foreach (var kvp in parameter.Value)
                 {
-                    dict.Add(kvp.Key, kvp.Value.Value!);
+                    dict.Add(kvp.Key, GetParameterString(kvp.Value, ModuleScope!));
                 }
                 bicepOptions.ParameterOverrides.Add(parameter.Key, dict);
             }
@@ -270,6 +271,22 @@ namespace Azure.Provisioning
                 default:
                     return ModuleScope!.ConstructScope != ConstructScope.ResourceGroup;
             }
+        }
+
+        private static string GetParameterString(Parameter parameter, IConstruct scope)
+        {
+            // If the parameter is a parameter of the module scope, use the parameter name.
+            if (scope.GetParameters(false).Any(p => p.Name == parameter.Name))
+            {
+                return parameter.Name;
+            }
+            // Otherwise we assume it is an output from the current module.
+            if (parameter.Source is null || ReferenceEquals(parameter.Source, scope))
+            {
+                return parameter.Value!;
+            }
+
+            return $"{parameter.Source.Name}.outputs.{parameter.Name}";
         }
 
         private static void WriteLines(int depth, BinaryData data, MemoryStream stream, Resource resource)
