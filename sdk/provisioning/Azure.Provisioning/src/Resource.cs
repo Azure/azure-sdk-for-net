@@ -280,12 +280,13 @@ namespace Azure.Provisioning
             {
                 return parameter.Name;
             }
-            // Otherwise we assume it is an output from the current module.
+            // If the parameter is an output from the current scope, use its Value.
             if (parameter.Source is null || ReferenceEquals(parameter.Source, scope))
             {
                 return parameter.Value!;
             }
 
+            // Otherwise it is an output from a different scope, use the full reference.
             return $"{parameter.Source.Name}.outputs.{parameter.Name}";
         }
 

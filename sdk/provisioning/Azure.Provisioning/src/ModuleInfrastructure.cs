@@ -148,22 +148,6 @@ namespace Azure.Provisioning
             }
         }
 
-        private static string GetParameterValue(Parameter parameter, IConstruct scope)
-        {
-            // If the parameter is a parameter of the module scope, use the parameter name.
-            if (scope.GetParameters(false).Any(p => p.Name == parameter.Name))
-            {
-                return parameter.Name;
-            }
-            // Otherwise we assume it is an output from the current module.
-            if (parameter.Source is null || ReferenceEquals(parameter.Source, scope))
-            {
-                return parameter.Value!;
-            }
-
-            return $"{parameter.Source.Name}.outputs.{parameter.Name}";
-        }
-
         private bool NeedsModuleConstruct(Resource resource, Dictionary<Resource, List<Resource>> resourceTree)
         {
             if (!(resource is Tenant || resource is Subscription || resource is ResourceGroup))
