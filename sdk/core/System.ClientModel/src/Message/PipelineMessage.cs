@@ -192,7 +192,14 @@ public class PipelineMessage : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Releases the unmanaged resources used by the
+    /// <see cref="PipelineMessage"/> and optionally disposes of the managed
+    /// resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and
+    /// unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         if (disposing && !_disposed)

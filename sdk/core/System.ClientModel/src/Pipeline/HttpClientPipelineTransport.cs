@@ -220,7 +220,14 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
         GC.SuppressFinalize(this);
     }
 
-    /// <inheritdoc/>
+    /// <summary>
+    /// Releases the unmanaged resources used by the
+    /// <see cref="HttpClientPipelineTransport"/> and optionally disposes of
+    /// the managed resources.
+    /// </summary>
+    /// <param name="disposing"><c>true</c> to release both managed and
+    /// unmanaged resources; <c>false</c> to release only unmanaged resources.
+    /// </param>
     protected virtual void Dispose(bool disposing)
     {
         // We don't dispose the Shared static transport instance, and if the
