@@ -68,17 +68,6 @@ namespace Azure.Provisioning.Tests
             WebSiteConfigLogs logs = new WebSiteConfigLogs(infra, "logs", frontEnd);
 
             infra.Build(GetOutputPath());
-            // var client = new ArmClient(new DefaultAzureCredential());
-            // var sub = client.GetSubscriptions()
-            //     .Where(s => s.Data.SubscriptionId == "faa080af-c1d8-40ad-9cce-e1a450ca5b57").Single();
-            // var identifier = ArmDeploymentResource.CreateResourceIdentifier(sub.Id, "test");
-            // var resource = client.GetArmDeploymentResource(identifier);
-            // resource.Validate(WaitUntil.Completed,
-            //     new ArmDeploymentContent(
-            //         new ArmDeploymentProperties(ArmDeploymentMode.Complete)
-            //         {
-            //             Template = new BinaryData((object)File.ReadAllText(Path.Combine(GetOutputPath(), "main.bicep"))),
-            //         }));
         }
 
         [Test]
