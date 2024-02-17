@@ -128,7 +128,8 @@ namespace Azure.Provisioning
 
                 foreach (var typeDictPair in resource.ParameterOverrides)
                 {
-                    foreach (var propertyParameterPair in typeDictPair.Value)
+                    // ToList to avoid modifying the collection while iterating
+                    foreach (var propertyParameterPair in typeDictPair.Value.ToList())
                     {
                         var parameterToCopy = propertyParameterPair.Value;
                         resource.ParameterOverrides[typeDictPair.Key][propertyParameterPair.Key] = new Parameter(
