@@ -50,13 +50,20 @@ namespace Azure.Provisioning
         /// <param name="envName">The environment name to use.  If not passed in will try to load from AZURE_ENV_NAME environment variable.</param>
         /// <exception cref="ArgumentException"><paramref name="constructScope"/> is <see cref="ConstructScope.ResourceGroup"/> and <paramref name="scope"/> is null.</exception>
         protected Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup, Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null)
-            : this(scope, name, constructScope, tenantId, subscriptionId, envName, null)
+            : this(scope, name, constructScope, tenantId, subscriptionId, envName, null, null, null)
         {
         }
 
-        internal Construct(IConstruct? scope, string name, ConstructScope constructScope = ConstructScope.ResourceGroup,
-            Guid? tenantId = null, Guid? subscriptionId = null, string? envName = null,
-            ResourceGroup? resourceGroup = null)
+        internal Construct(
+            IConstruct? scope,
+            string name,
+            ConstructScope constructScope,
+            Guid? tenantId = default,
+            Guid? subscriptionId = default,
+            string? envName = default,
+            Tenant? tenant = default,
+            Subscription? subscription = default,
+            ResourceGroup? resourceGroup = default)
         {
             if (scope is null && constructScope == ConstructScope.ResourceGroup)
             {
@@ -71,7 +78,7 @@ namespace Azure.Provisioning
             _constructs = new List<IConstruct>();
             _existingResources = new List<Resource>();
             Name = name;
-            Root = scope?.Root ?? new Tenant(this, tenantId);
+            Root = tenant ?? scope?.Root ?? new Tenant(this, tenantId);
             ConstructScope = constructScope;
             if (constructScope == ConstructScope.ResourceGroup)
             {
@@ -79,7 +86,7 @@ namespace Azure.Provisioning
             }
             if (constructScope == ConstructScope.Subscription)
             {
-                Subscription = scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId);
+                Subscription = subscription ?? (scope is null ? this.GetOrCreateSubscription(subscriptionId) : scope.Subscription ?? scope.GetOrCreateSubscription(subscriptionId));
             }
 
             _environmentName = envName;

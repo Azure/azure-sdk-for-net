@@ -1,12 +1,12 @@
 targetScope = 'tenant'
 
 
-module subscription_s6X0EZsY9 './resources/subscription_s6X0EZsY9/subscription_s6X0EZsY9.bicep' = {
-  name: 'subscription_s6X0EZsY9'
-  scope: subscription('subscription_s6X0EZsY9')
+module subscription_O0vZNnri3 './resources/subscription_O0vZNnri3/subscription_O0vZNnri3.bicep' = {
+  name: 'subscription_O0vZNnri3'
+  scope: subscription('subscription_O0vZNnri3')
 }
 
-module subscription_WreO15EM7 './resources/subscription_WreO15EM7/subscription_WreO15EM7.bicep' = {
-  name: 'subscription_WreO15EM7'
-  scope: subscription('subscription_WreO15EM7')
+module subscription_i7MQMw1U7 './resources/subscription_i7MQMw1U7/subscription_i7MQMw1U7.bicep' = {
+  name: 'subscription_i7MQMw1U7'
+  scope: subscription('subscription_i7MQMw1U7')
 }

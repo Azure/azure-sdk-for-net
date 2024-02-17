@@ -6,6 +6,8 @@ using Azure.Provisioning.ResourceManager;
 using System;
 using System.IO;
 using System.Diagnostics;
+using Azure.Core.TestFramework;
+using Azure.Core.Tests.TestFramework;
 using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
@@ -143,9 +145,11 @@ namespace Azure.Provisioning.Tests
         [Test]
         public void MultipleSubscriptions()
         {
+            // ensure deterministic subscription names and directories
+            var random = new TestRandom(RecordedTestMode.Playback, 1);
             var infra = new TestSubscriptionInfrastructure();
-            var sub1 = new Subscription(infra, Guid.NewGuid());
-            var sub2 = new Subscription(infra, Guid.NewGuid());
+            var sub1 = new Subscription(infra, random.NewGuid());
+            var sub2 = new Subscription(infra, random.NewGuid());
             _ = new ResourceGroup(infra, parent: sub1);
             _ = new ResourceGroup(infra, parent: sub2);
             infra.Build(GetOutputPath());
