@@ -67,10 +67,10 @@ namespace Azure.Provisioning
         public string Value { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct Parameter
+    public readonly partial struct Parameter
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public Parameter(string name, string? description = null, object? defaultValue = null, bool isSecure = false) { throw null; }
         public object? DefaultValue { get { throw null; } }
         public string? Description { get { throw null; } }

@@ -7,7 +7,7 @@ namespace Azure.Provisioning
     /// Represents a parameter of an <see cref="IConstruct"/>.
     /// </summary>
 #pragma warning disable AZC0012 // Avoid single word type names
-    public struct Parameter
+    public readonly struct Parameter
 #pragma warning restore AZC0012 // Avoid single word type names
     {
         /// <summary>
