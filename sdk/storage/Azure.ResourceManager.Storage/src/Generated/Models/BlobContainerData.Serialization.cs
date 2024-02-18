@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.Storage
                         builder.AppendLine(" {");
                         foreach (var item in Metadata)
                         {
-                            builder.Append($"        {item.Key}:");
+                            builder.Append($"        '{item.Key}':");
                             if (item.Value == null)
                             {
                                 builder.Append("null");

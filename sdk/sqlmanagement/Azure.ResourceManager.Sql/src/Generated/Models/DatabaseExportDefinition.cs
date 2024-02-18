@@ -94,18 +94,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Storage key type. </summary>
+        [WirePath("storageKeyType")]
         public StorageKeyType StorageKeyType { get; }
         /// <summary> Storage key. </summary>
+        [WirePath("storageKey")]
         public string StorageKey { get; }
         /// <summary> Storage Uri. </summary>
+        [WirePath("storageUri")]
         public Uri StorageUri { get; }
         /// <summary> Administrator login name. </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> Administrator login password. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
         /// <summary> Authentication type. </summary>
+        [WirePath("authenticationType")]
         public string AuthenticationType { get; set; }
         /// <summary> Optional resource information to enable network isolation for request. </summary>
+        [WirePath("networkIsolation")]
         public NetworkIsolationSettings NetworkIsolation { get; set; }
     }
 }

@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The fully qualified ID for the parent management group.  For example, /providers/Microsoft.Management/managementGroups/0000000-0000-0000-0000-000000000000. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; }
     }
 }

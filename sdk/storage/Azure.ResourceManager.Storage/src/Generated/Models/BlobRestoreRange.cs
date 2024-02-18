@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Blob start range. This is inclusive. Empty means account start. </summary>
+        [WirePath("startRange")]
         public string StartRange { get; set; }
         /// <summary> Blob end range. This is exclusive. Empty means account end. </summary>
+        [WirePath("endRange")]
         public string EndRange { get; set; }
     }
 }

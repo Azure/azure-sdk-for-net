@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Type of storage. </summary>
+        [WirePath("type")]
         public AppServiceStorageType? StorageType { get; set; }
         /// <summary> Name of the storage account. </summary>
+        [WirePath("accountName")]
         public string AccountName { get; set; }
         /// <summary> Name of the file share (container name, for Blob storage). </summary>
+        [WirePath("shareName")]
         public string ShareName { get; set; }
         /// <summary> Access key for the storage account. </summary>
+        [WirePath("accessKey")]
         public string AccessKey { get; set; }
         /// <summary> Path to mount the storage within the site's runtime environment. </summary>
+        [WirePath("mountPath")]
         public string MountPath { get; set; }
         /// <summary> State of the storage account. </summary>
+        [WirePath("state")]
         public AppServiceStorageAccountState? State { get; }
     }
 }

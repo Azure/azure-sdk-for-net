@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The long term retention backup storage access tier. </summary>
+        [WirePath("backupStorageAccessTier")]
         public string BackupStorageAccessTier { get; }
         /// <summary> The operation mode when updating ltr backup storage access tier. </summary>
+        [WirePath("operationMode")]
         public string OperationMode { get; }
     }
 }

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of all synapselink workspaces. </summary>
+        [WirePath("properties.workspaces")]
         public IList<SqlSynapseLinkWorkspaceInfo> Workspaces { get; }
     }
 }

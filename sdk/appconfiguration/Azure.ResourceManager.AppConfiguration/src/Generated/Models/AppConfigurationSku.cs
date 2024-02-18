@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
     }
 }
