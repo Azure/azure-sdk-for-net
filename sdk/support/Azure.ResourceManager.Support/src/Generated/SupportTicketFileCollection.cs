@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = await _supportTicketFileFilesRestClient.CreateAsync(Id.SubscriptionId, Id.Name, fileName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<SupportTicketFileResource>(Response.FromValue(new SupportTicketFileResource(Client, response), response.GetRawResponse()));
+                var uri = _supportTicketFileFilesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Name, fileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SupportArmOperation<SupportTicketFileResource>(Response.FromValue(new SupportTicketFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = _supportTicketFileFilesRestClient.Create(Id.SubscriptionId, Id.Name, fileName, data, cancellationToken);
-                var operation = new SupportArmOperation<SupportTicketFileResource>(Response.FromValue(new SupportTicketFileResource(Client, response), response.GetRawResponse()));
+                var uri = _supportTicketFileFilesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Name, fileName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SupportArmOperation<SupportTicketFileResource>(Response.FromValue(new SupportTicketFileResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
