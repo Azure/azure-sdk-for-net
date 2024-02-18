@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataDriftMetricThresholdBase(document.RootElement, options);
+            return DeserializeDataDriftMetricThresholdBase(document.RootElement, options);
         }
 
         internal static UnknownDataDriftMetricThresholdBase DeserializeUnknownDataDriftMetricThresholdBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataDriftMetricThresholdBase(document.RootElement, options);
+                        return DeserializeDataDriftMetricThresholdBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataDriftMetricThresholdBase)} does not support '{options.Format}' format.");
