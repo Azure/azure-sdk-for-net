@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.FrontDoor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePurgeContentRequestUri(string subscriptionId, string resourceGroupName, string frontDoorName, FrontDoorEndpointPurgeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/frontDoors/", false);
+            uri.AppendPath(frontDoorName, true);
+            uri.AppendPath("/purge", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePurgeContentRequest(string subscriptionId, string resourceGroupName, string frontDoorName, FrontDoorEndpointPurgeContent content)
         {
             var message = _pipeline.CreateMessage();
