@@ -287,7 +287,9 @@ namespace Azure.ResourceManager.RecoveryServices
             try
             {
                 var response = await _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -333,7 +335,9 @@ namespace Azure.ResourceManager.RecoveryServices
             try
             {
                 var response = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
-                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()));
+                var uri = _recoveryServicesVaultExtendedInfoVaultExtendedInfoRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new RecoveryServicesArmOperation<RecoveryServicesVaultExtendedInfoResource>(Response.FromValue(new RecoveryServicesVaultExtendedInfoResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
