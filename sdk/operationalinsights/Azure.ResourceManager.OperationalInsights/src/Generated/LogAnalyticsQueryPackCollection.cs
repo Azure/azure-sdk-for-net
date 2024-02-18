@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _logAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, queryPackName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackResource>(Response.FromValue(new LogAnalyticsQueryPackResource(Client, response), response.GetRawResponse()));
+                var uri = _logAnalyticsQueryPackQueryPacksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, queryPackName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackResource>(Response.FromValue(new LogAnalyticsQueryPackResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _logAnalyticsQueryPackQueryPacksRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, queryPackName, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackResource>(Response.FromValue(new LogAnalyticsQueryPackResource(Client, response), response.GetRawResponse()));
+                var uri = _logAnalyticsQueryPackQueryPacksRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, queryPackName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<LogAnalyticsQueryPackResource>(Response.FromValue(new LogAnalyticsQueryPackResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

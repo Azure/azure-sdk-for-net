@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.NetApp
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName)
         {
             var message = _pipeline.CreateMessage();
@@ -120,6 +137,24 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
@@ -216,6 +251,24 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeData data)
         {
             var message = _pipeline.CreateMessage();
@@ -308,6 +361,24 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -398,6 +469,28 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            if (forceDelete != null)
+            {
+                uri.AppendQuery("forceDelete", forceDelete.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, bool? forceDelete)
         {
             var message = _pipeline.CreateMessage();
@@ -485,6 +578,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreatePopulateAvailabilityZoneRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/populateAvailabilityZone", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePopulateAvailabilityZoneRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -566,6 +678,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRevertRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeRevertContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/revert", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRevertRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeRevertContent content)
@@ -658,6 +789,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateResetCifsPasswordRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/resetCifsPassword", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResetCifsPasswordRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -738,6 +888,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBreakFileLocksRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/breakFileLocks", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBreakFileLocksRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakFileLocksContent content)
@@ -831,6 +1000,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateListGetGroupIdListForLdapUserRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, GetGroupIdListForLdapUserContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/getGroupIdListForLdapUser", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListGetGroupIdListForLdapUserRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, GetGroupIdListForLdapUserContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -920,6 +1108,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateBreakReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakReplicationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/breakReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateBreakReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeBreakReplicationContent content)
@@ -1013,6 +1220,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateReestablishReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeReestablishReplicationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/reestablishReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReestablishReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeReestablishReplicationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1099,6 +1325,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateReplicationStatusRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/replicationStatus", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateReplicationStatusRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
@@ -1192,6 +1437,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateListReplicationsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/listReplications", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListReplicationsRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1283,6 +1547,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateResyncReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/resyncReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResyncReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1365,6 +1648,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateDeleteReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/deleteReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1445,6 +1747,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAuthorizeReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeAuthorizeReplicationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/authorizeReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAuthorizeReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumeAuthorizeReplicationContent content)
@@ -1537,6 +1858,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateReInitializeReplicationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/reinitializeReplication", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateReInitializeReplicationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1617,6 +1957,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePoolChangeRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePoolChangeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/poolChange", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePoolChangeRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, NetAppVolumePoolChangeContent content)
@@ -1707,6 +2066,25 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRelocateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/relocate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRelocateRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, RelocateVolumeContent content)
@@ -1800,6 +2178,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateFinalizeRelocationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/finalizeRelocation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateFinalizeRelocationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1882,6 +2279,25 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
+        internal RequestUriBuilder CreateRevertRelocationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.NetApp/netAppAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/capacityPools/", false);
+            uri.AppendPath(poolName, true);
+            uri.AppendPath("/volumes/", false);
+            uri.AppendPath(volumeName, true);
+            uri.AppendPath("/revertRelocation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRevertRelocationRequest(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName)
         {
             var message = _pipeline.CreateMessage();
@@ -1962,6 +2378,14 @@ namespace Azure.ResourceManager.NetApp
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string poolName)
