@@ -3,6 +3,7 @@
 
 using System.Linq;
 using Azure.Provisioning.ResourceManager;
+using Azure.Provisioning.Storage;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests
@@ -79,6 +80,74 @@ namespace Azure.Provisioning.Tests
             var resources = infra.GetResources(recursive);
 
             Assert.AreEqual(expected, resources.Count());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetParametersNoChildConstructs(bool recursive)
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+
+            rg1.AssignParameter(r => r.Location, new Parameter("location"));
+
+            var parameters = infra.GetParameters(recursive);
+            var expected = recursive ? 1 : 0;
+            Assert.AreEqual(expected, parameters.Count());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetParametersChildConstructs(bool recursive)
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+            rg1.AssignParameter(r => r.Location, new Parameter("location"));
+
+            var childScope = infra.AddFrontEndWebSite();
+            var rg2 = new ResourceGroup(childScope, "rg2");
+            rg2.AssignParameter(r => r.Location, new Parameter("location"));
+
+            var expected = recursive ? 2 : 0;
+            var parameters = infra.GetParameters(recursive);
+
+            Assert.AreEqual(expected, parameters.Count());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetOutputsNoChildConstructs(bool recursive)
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+
+            rg1.AddOutput(r => r.Location, "location");
+
+            var outputs = infra.GetOutputs(recursive);
+            Assert.AreEqual(1, outputs.Count());
+        }
+
+        [Test]
+        [TestCase(true)]
+        [TestCase(false)]
+        public void GetOutputsChildConstructs(bool recursive)
+        {
+            var infra = new TestInfrastructure();
+            var rg1 = new ResourceGroup(infra, "rg1");
+            rg1.AddOutput(r => r.Location, "location");
+
+            var childScope = infra.AddFrontEndWebSite();
+            var rg2 = new ResourceGroup(childScope, "rg2");
+            rg2.AddOutput(r => r.Location, "location");
+
+            // front end website has an output
+            var expected = recursive ? 3 : 1;
+            var outputs = infra.GetOutputs(recursive);
+
+            Assert.AreEqual(expected, outputs.Count());
         }
     }
 }
