@@ -80,7 +80,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = await _scopeAssignmentRestClient.CreateOrUpdateAsync(Id, scopeAssignmentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _scopeAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, scopeAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -129,7 +131,9 @@ namespace Azure.ResourceManager.ManagedNetwork
             try
             {
                 var response = _scopeAssignmentRestClient.CreateOrUpdate(Id, scopeAssignmentName, data, cancellationToken);
-                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()));
+                var uri = _scopeAssignmentRestClient.CreateCreateOrUpdateRequestUri(Id, scopeAssignmentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ManagedNetworkArmOperation<ScopeAssignmentResource>(Response.FromValue(new ScopeAssignmentResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
