@@ -5,16 +5,111 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
-    public partial class DenyAssignmentPermission
+    public partial class DenyAssignmentPermission : IUtf8JsonSerializable, IJsonModel<DenyAssignmentPermission>
     {
-        internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DenyAssignmentPermission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DenyAssignmentPermission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DenyAssignmentPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenyAssignmentPermission)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Actions))
+            {
+                writer.WritePropertyName("actions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Actions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NotActions))
+            {
+                writer.WritePropertyName("notActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in NotActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DataActions))
+            {
+                writer.WritePropertyName("dataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(NotDataActions))
+            {
+                writer.WritePropertyName("notDataActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in NotDataActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Condition))
+            {
+                writer.WritePropertyName("condition"u8);
+                writer.WriteStringValue(Condition);
+            }
+            if (Optional.IsDefined(ConditionVersion))
+            {
+                writer.WritePropertyName("conditionVersion"u8);
+                writer.WriteStringValue(ConditionVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DenyAssignmentPermission IJsonModel<DenyAssignmentPermission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenyAssignmentPermission>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenyAssignmentPermission)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDenyAssignmentPermission(document.RootElement, options);
+        }
+
+        internal static DenyAssignmentPermission DeserializeDenyAssignmentPermission(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +120,8 @@ namespace Azure.ResourceManager.Authorization.Models
             Optional<IReadOnlyList<string>> notDataActions = default;
             Optional<string> condition = default;
             Optional<string> conditionVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actions"u8))
@@ -93,8 +190,44 @@ namespace Azure.ResourceManager.Authorization.Models
                     conditionVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DenyAssignmentPermission(Optional.ToList(actions), Optional.ToList(notActions), Optional.ToList(dataActions), Optional.ToList(notDataActions), condition.Value, conditionVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DenyAssignmentPermission>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenyAssignmentPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DenyAssignmentPermission)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DenyAssignmentPermission IPersistableModel<DenyAssignmentPermission>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenyAssignmentPermission>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDenyAssignmentPermission(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DenyAssignmentPermission)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DenyAssignmentPermission>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

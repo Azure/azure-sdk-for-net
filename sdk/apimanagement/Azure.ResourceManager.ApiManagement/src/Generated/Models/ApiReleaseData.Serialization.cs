@@ -6,17 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    public partial class ApiReleaseData : IUtf8JsonSerializable
+    public partial class ApiReleaseData : IUtf8JsonSerializable, IJsonModel<ApiReleaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiReleaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApiReleaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiReleaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiReleaseData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ApiId))
@@ -24,17 +54,56 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("apiId"u8);
                 writer.WriteStringValue(ApiId);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDateTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updatedDateTime"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "O");
+            }
             if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApiReleaseData DeserializeApiReleaseData(JsonElement element)
+        ApiReleaseData IJsonModel<ApiReleaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiReleaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApiReleaseData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApiReleaseData(document.RootElement, options);
+        }
+
+        internal static ApiReleaseData DeserializeApiReleaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +116,8 @@ namespace Azure.ResourceManager.ApiManagement
             Optional<DateTimeOffset> createdDateTime = default;
             Optional<DateTimeOffset> updatedDateTime = default;
             Optional<string> notes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -117,8 +188,44 @@ namespace Azure.ResourceManager.ApiManagement
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), notes.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApiReleaseData(id, name, type, systemData.Value, apiId.Value, Optional.ToNullable(createdDateTime), Optional.ToNullable(updatedDateTime), notes.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApiReleaseData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiReleaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApiReleaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApiReleaseData IPersistableModel<ApiReleaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApiReleaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApiReleaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApiReleaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApiReleaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

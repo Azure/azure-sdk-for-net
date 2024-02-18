@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -19,8 +20,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningResourcePatchWithIdentity"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
-        internal MachineLearningResourcePatchWithIdentity(IDictionary<string, string> tags, MachineLearningPartialManagedServiceIdentity identity) : base(tags)
+        internal MachineLearningResourcePatchWithIdentity(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningPartialManagedServiceIdentity identity) : base(tags, serializedAdditionalRawData)
         {
             Identity = identity;
         }

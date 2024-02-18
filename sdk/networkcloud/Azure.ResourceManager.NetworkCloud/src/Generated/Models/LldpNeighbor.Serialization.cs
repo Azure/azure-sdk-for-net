@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class LldpNeighbor
+    public partial class LldpNeighbor : IUtf8JsonSerializable, IJsonModel<LldpNeighbor>
     {
-        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LldpNeighbor>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LldpNeighbor>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PortDescription))
+            {
+                writer.WritePropertyName("portDescription"u8);
+                writer.WriteStringValue(PortDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PortName))
+            {
+                writer.WritePropertyName("portName"u8);
+                writer.WriteStringValue(PortName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemDescription))
+            {
+                writer.WritePropertyName("systemDescription"u8);
+                writer.WriteStringValue(SystemDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemName))
+            {
+                writer.WritePropertyName("systemName"u8);
+                writer.WriteStringValue(SystemName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LldpNeighbor IJsonModel<LldpNeighbor>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLldpNeighbor(document.RootElement, options);
+        }
+
+        internal static LldpNeighbor DeserializeLldpNeighbor(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> portName = default;
             Optional<string> systemDescription = default;
             Optional<string> systemName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("portDescription"u8))
@@ -44,8 +112,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     systemName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LldpNeighbor(portDescription.Value, portName.Value, systemDescription.Value, systemName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LldpNeighbor(portDescription.Value, portName.Value, systemDescription.Value, systemName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LldpNeighbor>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LldpNeighbor IPersistableModel<LldpNeighbor>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LldpNeighbor>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLldpNeighbor(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LldpNeighbor)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LldpNeighbor>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

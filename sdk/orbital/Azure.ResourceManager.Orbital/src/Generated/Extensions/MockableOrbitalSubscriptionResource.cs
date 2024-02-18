@@ -66,6 +66,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groundStationName"> Ground Station name. </param>
@@ -88,6 +96,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailableGroundStations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailableGroundStationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +128,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -134,6 +158,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Spacecrafts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalSpacecraftResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +190,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalContactProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> An opaque string that the resource provider uses to skip over previously-returned results. This is used when a previous list operation call returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -180,6 +220,14 @@ namespace Azure.ResourceManager.Orbital.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContactProfiles_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OrbitalContactProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

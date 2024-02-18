@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class CSharpFunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable
+    public partial class CSharpFunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable, IJsonModel<CSharpFunctionRetrieveDefaultDefinitionContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("bindingType"u8);
             writer.WriteStringValue(BindingType);
@@ -30,7 +41,120 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(UdfType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CSharpFunctionRetrieveDefaultDefinitionContent IJsonModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+        }
+
+        internal static CSharpFunctionRetrieveDefaultDefinitionContent DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string bindingType = default;
+            Optional<string> script = default;
+            Optional<StreamingJobFunctionUdfType> udfType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("bindingType"u8))
+                {
+                    bindingType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("bindingRetrievalProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("script"u8))
+                        {
+                            script = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("udfType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            udfType = new StreamingJobFunctionUdfType(property0.Value.GetString());
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CSharpFunctionRetrieveDefaultDefinitionContent(bindingType, serializedAdditionalRawData, script.Value, Optional.ToNullable(udfType));
+        }
+
+        BinaryData IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CSharpFunctionRetrieveDefaultDefinitionContent IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CSharpFunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CSharpFunctionRetrieveDefaultDefinitionContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

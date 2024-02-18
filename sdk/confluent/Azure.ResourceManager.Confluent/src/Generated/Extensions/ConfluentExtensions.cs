@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +158,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -171,6 +191,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -202,6 +226,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -229,6 +257,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -258,6 +290,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -285,6 +321,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -314,6 +354,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +389,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

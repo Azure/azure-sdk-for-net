@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    public partial class TrafficManagerHeatMapData : IUtf8JsonSerializable
+    public partial class TrafficManagerHeatMapData : IUtf8JsonSerializable, IJsonModel<TrafficManagerHeatMapData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficManagerHeatMapData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TrafficManagerHeatMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -66,11 +75,40 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TrafficManagerHeatMapData DeserializeTrafficManagerHeatMapData(JsonElement element)
+        TrafficManagerHeatMapData IJsonModel<TrafficManagerHeatMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrafficManagerHeatMapData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrafficManagerHeatMapData(document.RootElement, options);
+        }
+
+        internal static TrafficManagerHeatMapData DeserializeTrafficManagerHeatMapData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -82,6 +120,8 @@ namespace Azure.ResourceManager.TrafficManager
             Optional<DateTimeOffset> endTime = default;
             Optional<IList<TrafficManagerHeatMapEndpoint>> endpoints = default;
             Optional<IList<TrafficManagerHeatMapTrafficFlow>> trafficFlows = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -165,8 +205,44 @@ namespace Azure.ResourceManager.TrafficManager
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(endpoints), Optional.ToList(trafficFlows));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TrafficManagerHeatMapData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(endpoints), Optional.ToList(trafficFlows));
         }
+
+        BinaryData IPersistableModel<TrafficManagerHeatMapData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TrafficManagerHeatMapData IPersistableModel<TrafficManagerHeatMapData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerHeatMapData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTrafficManagerHeatMapData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrafficManagerHeatMapData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TrafficManagerHeatMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

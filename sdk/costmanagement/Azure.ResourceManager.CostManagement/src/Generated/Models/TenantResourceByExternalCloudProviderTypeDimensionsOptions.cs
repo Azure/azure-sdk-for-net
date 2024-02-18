@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExternalCloudProviderId = externalCloudProviderId;
         }
 
+        /// <summary> Initializes a new instance of <see cref="TenantResourceByExternalCloudProviderTypeDimensionsOptions"/> for deserialization. </summary>
+        internal TenantResourceByExternalCloudProviderTypeDimensionsOptions()
+        {
+        }
+
         /// <summary> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </summary>
         public ExternalCloudProviderType ExternalCloudProviderType { get; }
         /// <summary> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </summary>

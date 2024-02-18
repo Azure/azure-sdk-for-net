@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -160,6 +176,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -216,6 +248,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -243,6 +283,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_ListDefault</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -272,6 +320,14 @@ namespace Azure.ResourceManager.Attestation
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Attestation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttestationProviders_GetDefaultByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AttestationProviderResource"/></description>
         /// </item>
         /// </list>
         /// <item>

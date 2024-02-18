@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,21 +15,78 @@ using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota
 {
-    public partial class CurrentQuotaLimitBaseData : IUtf8JsonSerializable
+    public partial class CurrentQuotaLimitBaseData : IUtf8JsonSerializable, IJsonModel<CurrentQuotaLimitBaseData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CurrentQuotaLimitBaseData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CurrentQuotaLimitBaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties);
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CurrentQuotaLimitBaseData DeserializeCurrentQuotaLimitBaseData(JsonElement element)
+        CurrentQuotaLimitBaseData IJsonModel<CurrentQuotaLimitBaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCurrentQuotaLimitBaseData(document.RootElement, options);
+        }
+
+        internal static CurrentQuotaLimitBaseData DeserializeCurrentQuotaLimitBaseData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +96,8 @@ namespace Azure.ResourceManager.Quota
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -71,8 +133,44 @@ namespace Azure.ResourceManager.Quota
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CurrentQuotaLimitBaseData(id, name, type, systemData.Value, properties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CurrentQuotaLimitBaseData(id, name, type, systemData.Value, properties.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CurrentQuotaLimitBaseData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CurrentQuotaLimitBaseData IPersistableModel<CurrentQuotaLimitBaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CurrentQuotaLimitBaseData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCurrentQuotaLimitBaseData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CurrentQuotaLimitBaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CurrentQuotaLimitBaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

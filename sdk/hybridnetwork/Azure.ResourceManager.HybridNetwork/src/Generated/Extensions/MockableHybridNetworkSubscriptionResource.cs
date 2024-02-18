@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,6 +98,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +129,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +158,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -157,6 +189,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -178,6 +218,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +249,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,6 +278,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +309,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -266,6 +338,14 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

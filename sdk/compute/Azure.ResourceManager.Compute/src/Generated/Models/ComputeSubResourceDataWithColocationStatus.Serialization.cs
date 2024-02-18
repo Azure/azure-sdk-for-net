@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeSubResourceDataWithColocationStatus : IUtf8JsonSerializable
+    public partial class ComputeSubResourceDataWithColocationStatus : IUtf8JsonSerializable, IJsonModel<ComputeSubResourceDataWithColocationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSubResourceDataWithColocationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComputeSubResourceDataWithColocationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeSubResourceDataWithColocationStatus)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ColocationStatus))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ComputeSubResourceDataWithColocationStatus DeserializeComputeSubResourceDataWithColocationStatus(JsonElement element)
+        ComputeSubResourceDataWithColocationStatus IJsonModel<ComputeSubResourceDataWithColocationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeSubResourceDataWithColocationStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeSubResourceDataWithColocationStatus(document.RootElement, options);
+        }
+
+        internal static ComputeSubResourceDataWithColocationStatus DeserializeComputeSubResourceDataWithColocationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<InstanceViewStatus> colocationStatus = default;
             Optional<ResourceIdentifier> id = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("colocationStatus"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.Compute.Models
                     id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeSubResourceDataWithColocationStatus(id.Value, colocationStatus.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ComputeSubResourceDataWithColocationStatus(id.Value, serializedAdditionalRawData, colocationStatus.Value);
         }
+
+        BinaryData IPersistableModel<ComputeSubResourceDataWithColocationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeSubResourceDataWithColocationStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ComputeSubResourceDataWithColocationStatus IPersistableModel<ComputeSubResourceDataWithColocationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeSubResourceDataWithColocationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComputeSubResourceDataWithColocationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeSubResourceDataWithColocationStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeSubResourceDataWithColocationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

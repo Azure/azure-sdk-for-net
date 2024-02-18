@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>MachineLearningCompute_ListAvailableOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         public virtual AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ResourceOperation.DeserializeResourceOperation(e), MachineLearningComputeClientDiagnostics, Pipeline, "MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -75,6 +79,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>MachineLearningCompute_ListAvailableOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         public virtual Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ResourceOperation.DeserializeResourceOperation(e), MachineLearningComputeClientDiagnostics, Pipeline, "MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
     }
 }

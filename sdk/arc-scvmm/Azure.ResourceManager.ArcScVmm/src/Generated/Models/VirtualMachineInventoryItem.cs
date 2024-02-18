@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,12 +27,13 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="osType"> Gets or sets the type of the os. </param>
         /// <param name="osName"> Gets or sets os name. </param>
         /// <param name="powerState"> Gets the power state of the virtual machine. </param>
         /// <param name="ipAddresses"> Gets or sets the nic ip addresses. </param>
         /// <param name="cloud"> Cloud inventory resource details where the VM is present. </param>
-        internal VirtualMachineInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, OSType? osType, string osName, string powerState, IList<string> ipAddresses, InventoryItemDetails cloud) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState)
+        internal VirtualMachineInventoryItem(InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, OSType? osType, string osName, string powerState, IList<string> ipAddresses, InventoryItemDetails cloud) : base(inventoryType, managedResourceId, uuid, inventoryItemName, provisioningState, serializedAdditionalRawData)
         {
             OSType = osType;
             OSName = osName;

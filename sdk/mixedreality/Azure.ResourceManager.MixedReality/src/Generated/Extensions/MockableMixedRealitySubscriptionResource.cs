@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -98,6 +102,10 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -155,6 +171,14 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,6 +202,14 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,6 +231,14 @@ namespace Azure.ResourceManager.MixedReality.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

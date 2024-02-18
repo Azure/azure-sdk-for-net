@@ -5,33 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class RecommendationUsageDetails : IUtf8JsonSerializable
+    public partial class RecommendationUsageDetails : IUtf8JsonSerializable, IJsonModel<RecommendationUsageDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecommendationUsageDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecommendationUsageDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UsageGrain))
             {
                 writer.WritePropertyName("usageGrain"u8);
                 writer.WriteStringValue(UsageGrain.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Charges))
+            {
+                writer.WritePropertyName("charges"u8);
+                writer.WriteStartArray();
+                foreach (var item in Charges)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecommendationUsageDetails DeserializeRecommendationUsageDetails(JsonElement element)
+        RecommendationUsageDetails IJsonModel<RecommendationUsageDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecommendationUsageDetails(document.RootElement, options);
+        }
+
+        internal static RecommendationUsageDetails DeserializeRecommendationUsageDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<BenefitRecommendationUsageGrain> usageGrain = default;
             Optional<IReadOnlyList<decimal>> charges = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageGrain"u8))
@@ -57,8 +108,44 @@ namespace Azure.ResourceManager.CostManagement.Models
                     charges = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecommendationUsageDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RecommendationUsageDetails IPersistableModel<RecommendationUsageDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecommendationUsageDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecommendationUsageDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

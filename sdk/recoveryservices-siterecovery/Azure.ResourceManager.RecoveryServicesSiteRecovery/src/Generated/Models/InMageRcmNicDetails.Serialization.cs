@@ -5,16 +5,127 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmNicDetails
+    public partial class InMageRcmNicDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmNicDetails>
     {
-        internal static InMageRcmNicDetails DeserializeInMageRcmNicDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmNicDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageRcmNicDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NicId))
+            {
+                writer.WritePropertyName("nicId"u8);
+                writer.WriteStringValue(NicId);
+            }
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                writer.WritePropertyName("isPrimaryNic"u8);
+                writer.WriteStringValue(IsPrimaryNic);
+            }
+            if (Optional.IsDefined(IsSelectedForFailover))
+            {
+                writer.WritePropertyName("isSelectedForFailover"u8);
+                writer.WriteStringValue(IsSelectedForFailover);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
+            {
+                writer.WritePropertyName("sourceIPAddress"u8);
+                writer.WriteStringValue(SourceIPAddress.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddressType))
+            {
+                writer.WritePropertyName("sourceIPAddressType"u8);
+                writer.WriteStringValue(SourceIPAddressType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceNetworkId))
+            {
+                writer.WritePropertyName("sourceNetworkId"u8);
+                writer.WriteStringValue(SourceNetworkId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceSubnetName))
+            {
+                writer.WritePropertyName("sourceSubnetName"u8);
+                writer.WriteStringValue(SourceSubnetName);
+            }
+            if (Optional.IsDefined(TargetIPAddress))
+            {
+                writer.WritePropertyName("targetIPAddress"u8);
+                writer.WriteStringValue(TargetIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TargetIPAddressType))
+            {
+                writer.WritePropertyName("targetIPAddressType"u8);
+                writer.WriteStringValue(TargetIPAddressType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetSubnetName))
+            {
+                writer.WritePropertyName("targetSubnetName"u8);
+                writer.WriteStringValue(TargetSubnetName);
+            }
+            if (Optional.IsDefined(TestSubnetName))
+            {
+                writer.WritePropertyName("testSubnetName"u8);
+                writer.WriteStringValue(TestSubnetName);
+            }
+            if (Optional.IsDefined(TestIPAddress))
+            {
+                writer.WritePropertyName("testIPAddress"u8);
+                writer.WriteStringValue(TestIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TestIPAddressType))
+            {
+                writer.WritePropertyName("testIPAddressType"u8);
+                writer.WriteStringValue(TestIPAddressType.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmNicDetails IJsonModel<InMageRcmNicDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmNicDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmNicDetails DeserializeInMageRcmNicDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +143,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> testSubnetName = default;
             Optional<IPAddress> testIPAddress = default;
             Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -127,8 +240,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageRcmNicDetails(nicId.Value, isPrimaryNic.Value, isSelectedForFailover.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, sourceSubnetName.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageRcmNicDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmNicDetails IPersistableModel<InMageRcmNicDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmNicDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmNicDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

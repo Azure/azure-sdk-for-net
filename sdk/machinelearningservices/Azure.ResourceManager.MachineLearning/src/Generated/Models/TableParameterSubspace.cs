@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The TableParameterSubspace. </summary>
     public partial class TableParameterSubspace
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TableParameterSubspace"/>. </summary>
         public TableParameterSubspace()
         {
@@ -36,7 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="treeMethod"> Specify the tree method. </param>
         /// <param name="withMean"> If true, center before scaling the data with StandardScalar. </param>
         /// <param name="withStd"> If true, scaling the data with Unit Variance with StandardScalar. </param>
-        internal TableParameterSubspace(string booster, string boostingType, string growPolicy, string learningRate, string maxBin, string maxDepth, string maxLeaves, string minDataInLeaf, string minSplitGain, string modelName, string nEstimators, string numLeaves, string preprocessorName, string regAlpha, string regLambda, string subsample, string subsampleFreq, string treeMethod, string withMean, string withStd)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableParameterSubspace(string booster, string boostingType, string growPolicy, string learningRate, string maxBin, string maxDepth, string maxLeaves, string minDataInLeaf, string minSplitGain, string modelName, string nEstimators, string numLeaves, string preprocessorName, string regAlpha, string regLambda, string subsample, string subsampleFreq, string treeMethod, string withMean, string withStd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Booster = booster;
             BoostingType = boostingType;
@@ -58,6 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             TreeMethod = treeMethod;
             WithMean = withMean;
             WithStd = withStd;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Specify the boosting type, e.g gbdt for XGBoost. </summary>

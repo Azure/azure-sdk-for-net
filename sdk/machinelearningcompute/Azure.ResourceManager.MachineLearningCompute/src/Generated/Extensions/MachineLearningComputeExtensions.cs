@@ -87,6 +87,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -116,6 +124,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -175,6 +199,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -205,6 +237,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <term>Operation Id</term>
         /// <description>MachineLearningCompute_ListAvailableOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -232,6 +268,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MachineLearningCompute_ListAvailableOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

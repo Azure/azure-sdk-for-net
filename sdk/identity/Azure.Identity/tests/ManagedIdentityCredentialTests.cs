@@ -279,11 +279,14 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void VerifyImdsRequestFailureForDockerDesktopThrowsCUE()
+        [TestCase("host")]
+        [TestCase("network")]
+        [TestCase("foo")]
+        public void VerifyImdsRequestFailureForDockerDesktopThrowsCUE(string errorEnding)
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var expectedMessage = "connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable network.";
+            var expectedMessage = $"connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable {errorEnding}.";
             var response = CreateInvalidJsonResponse(403, expectedMessage);
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };

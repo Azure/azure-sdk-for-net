@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownSeasonality. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSeasonality"/>. </summary>
         /// <param name="mode"> [Required] Seasonality mode. </param>
-        internal UnknownSeasonality(SeasonalityMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownSeasonality(SeasonalityMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSeasonality"/> for deserialization. </summary>
+        internal UnknownSeasonality()
+        {
         }
     }
 }

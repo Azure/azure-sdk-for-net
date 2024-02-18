@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class DestinationsSpec : IUtf8JsonSerializable
+    public partial class DestinationsSpec : IUtf8JsonSerializable, IJsonModel<DestinationsSpec>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DestinationsSpec>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DestinationsSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(LogAnalytics))
             {
@@ -91,11 +101,40 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element)
+        DestinationsSpec IJsonModel<DestinationsSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDestinationsSpec(document.RootElement, options);
+        }
+
+        internal static DestinationsSpec DeserializeDestinationsSpec(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -108,6 +147,8 @@ namespace Azure.ResourceManager.Monitor.Models
             Optional<IList<DataCollectionRuleStorageBlobDestination>> storageBlobsDirect = default;
             Optional<IList<DataCollectionRuleStorageTableDestination>> storageTablesDirect = default;
             Optional<IList<DataCollectionRuleStorageBlobDestination>> storageAccounts = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -217,8 +258,44 @@ namespace Azure.ResourceManager.Monitor.Models
                     storageAccounts = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DestinationsSpec(Optional.ToList(logAnalytics), Optional.ToList(monitoringAccounts), azureMonitorMetrics.Value, Optional.ToList(eventHubs), Optional.ToList(eventHubsDirect), Optional.ToList(storageBlobsDirect), Optional.ToList(storageTablesDirect), Optional.ToList(storageAccounts), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DestinationsSpec>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DestinationsSpec IPersistableModel<DestinationsSpec>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DestinationsSpec>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDestinationsSpec(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DestinationsSpec)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DestinationsSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

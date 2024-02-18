@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> Custom container user source info. </summary>
@@ -19,8 +22,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of <see cref="AppPlatformCustomContainerUserSourceInfo"/>. </summary>
         /// <param name="userSourceInfoType"> Type of the source uploaded. </param>
         /// <param name="version"> Version of the source. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="customContainer"> Custom container payload. </param>
-        internal AppPlatformCustomContainerUserSourceInfo(string userSourceInfoType, string version, AppPlatformCustomContainer customContainer) : base(userSourceInfoType, version)
+        internal AppPlatformCustomContainerUserSourceInfo(string userSourceInfoType, string version, IDictionary<string, BinaryData> serializedAdditionalRawData, AppPlatformCustomContainer customContainer) : base(userSourceInfoType, version, serializedAdditionalRawData)
         {
             CustomContainer = customContainer;
             UserSourceInfoType = userSourceInfoType ?? "Container";

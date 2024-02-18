@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountName"> The Media Services account name. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.Media.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Mediaservices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaServicesAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

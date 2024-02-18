@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightHive";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightHiveActivity"/> for deserialization. </summary>
+        internal HDInsightHiveActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>

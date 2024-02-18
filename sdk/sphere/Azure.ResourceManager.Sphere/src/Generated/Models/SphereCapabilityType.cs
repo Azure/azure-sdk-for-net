@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// Capability image type
-    /// Serialized Name: CapabilityType
-    /// </summary>
+    /// <summary> Capability image type. </summary>
     public readonly partial struct SphereCapabilityType : IEquatable<SphereCapabilityType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string ApplicationDevelopmentValue = "ApplicationDevelopment";
         private const string FieldServicingValue = "FieldServicing";
 
-        /// <summary>
-        /// Application development capability
-        /// Serialized Name: CapabilityType.ApplicationDevelopment
-        /// </summary>
+        /// <summary> Application development capability. </summary>
         public static SphereCapabilityType ApplicationDevelopment { get; } = new SphereCapabilityType(ApplicationDevelopmentValue);
-        /// <summary>
-        /// Field servicing capability
-        /// Serialized Name: CapabilityType.FieldServicing
-        /// </summary>
+        /// <summary> Field servicing capability. </summary>
         public static SphereCapabilityType FieldServicing { get; } = new SphereCapabilityType(FieldServicingValue);
         /// <summary> Determines if two <see cref="SphereCapabilityType"/> values are the same. </summary>
         public static bool operator ==(SphereCapabilityType left, SphereCapabilityType right) => left.Equals(right);

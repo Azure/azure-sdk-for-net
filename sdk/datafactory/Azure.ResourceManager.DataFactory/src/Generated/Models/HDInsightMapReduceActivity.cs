@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightMapReduce";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightMapReduceActivity"/> for deserialization. </summary>
+        internal HDInsightMapReduceActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
         /// <summary>

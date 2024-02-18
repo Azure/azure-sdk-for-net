@@ -78,7 +78,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// each node in the pool.</param>
         /// <param name="targetNodeCommunicationMode">The desired node
         /// communication mode for the pool.</param>
-        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?))
+        /// <param name="resourceTags">The user-specified tags associated with
+        /// the pool.</param>
+        public PoolSpecification(string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), int? taskSlotsPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicatedNodes = default(int?), int? targetLowPriorityNodes = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), IList<string> applicationLicenses = default(IList<string>), IList<UserAccount> userAccounts = default(IList<UserAccount>), IList<MetadataItem> metadata = default(IList<MetadataItem>), IList<MountConfiguration> mountConfiguration = default(IList<MountConfiguration>), NodeCommunicationMode? targetNodeCommunicationMode = default(NodeCommunicationMode?), IDictionary<string, string> resourceTags = default(IDictionary<string, string>))
         {
             DisplayName = displayName;
             VmSize = vmSize;
@@ -102,6 +104,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Metadata = metadata;
             MountConfiguration = mountConfiguration;
             TargetNodeCommunicationMode = targetNodeCommunicationMode;
+            ResourceTags = resourceTags;
             CustomInit();
         }
 
@@ -382,6 +385,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "targetNodeCommunicationMode")]
         public NodeCommunicationMode? TargetNodeCommunicationMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the user-specified tags associated with the pool.
+        /// </summary>
+        /// <remarks>
+        /// The user-defined tags to be associated with the Azure Batch Pool.
+        /// When specified, these tags are propagated to the backing Azure
+        /// resources associated with the pool. This property can only be
+        /// specified when the Batch account was created with the
+        /// poolAllocationMode property set to 'UserSubscription'.
+        /// </remarks>
+        [JsonProperty(PropertyName = "resourceTags")]
+        public IDictionary<string, string> ResourceTags { get; set; }
 
     }
 }

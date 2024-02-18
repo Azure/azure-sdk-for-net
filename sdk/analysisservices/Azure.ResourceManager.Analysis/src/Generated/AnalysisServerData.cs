@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Analysis
     /// </summary>
     public partial class AnalysisServerData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnalysisServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.Analysis
         /// <param name="serverFullName"> The full name of the Analysis Services resource. </param>
         /// <param name="analysisServerSku"> The SKU of the Analysis Services resource. </param>
         /// <param name="analysisSku"> The SKU of the Analysis Services resource. </param>
-        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings iPv4FirewallSettings, AnalysisConnectionMode? queryPoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, AnalysisState? state, AnalysisProvisioningState? provisioningState, string serverFullName, AnalysisResourceSku analysisServerSku, AnalysisResourceSku analysisSku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             AsAdministrators = asAdministrators;
             BackupBlobContainerUri = backupBlobContainerUri;
@@ -63,6 +96,12 @@ namespace Azure.ResourceManager.Analysis
             ServerFullName = serverFullName;
             AnalysisServerSku = analysisServerSku;
             AnalysisSku = analysisSku;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisServerData"/> for deserialization. </summary>
+        internal AnalysisServerData()
+        {
         }
 
         /// <summary> A collection of AS server administrators. </summary>

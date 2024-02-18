@@ -28,5 +28,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DatasetType = datasetType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataset"/> for deserialization. </summary>
+        internal UnknownDataset()
+        {
+        }
     }
 }

@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userEmail"> User Email. </param>
@@ -80,7 +84,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData(e), AccountsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -93,6 +97,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,7 +115,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AccountsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData, AccountsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicAccountResourceData.DeserializeNewRelicAccountResourceData(e), AccountsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,6 +128,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Monitors_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NewRelicMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +189,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Organizations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="userEmail"> User Email. </param>
@@ -178,7 +206,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(e), OrganizationsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,6 +219,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organizations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -205,7 +237,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => OrganizationsRestClient.CreateListRequest(Id.SubscriptionId, userEmail, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => OrganizationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, userEmail, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData, OrganizationsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicOrganizationResourceData.DeserializeNewRelicOrganizationResourceData(e), OrganizationsClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicOrganizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -218,6 +250,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Plans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,7 +265,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NewRelicPlanData.DeserializeNewRelicPlanData(e), PlansClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,6 +279,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         /// <term>Operation Id</term>
         /// <description>Plans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accountId"> Account Id. </param>
@@ -253,7 +293,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PlansRestClient.CreateListRequest(Id.SubscriptionId, accountId, organizationId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlansRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, accountId, organizationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, NewRelicPlanData.DeserializeNewRelicPlanData, PlansClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NewRelicPlanData.DeserializeNewRelicPlanData(e), PlansClientDiagnostics, Pipeline, "MockableNewRelicObservabilitySubscriptionResource.GetNewRelicPlans", "value", "nextLink", cancellationToken);
         }
     }
 }

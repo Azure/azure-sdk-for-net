@@ -24,5 +24,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             ServiceType = serviceType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownServiceResourceProperties"/> for deserialization. </summary>
+        internal UnknownServiceResourceProperties()
+        {
+        }
     }
 }

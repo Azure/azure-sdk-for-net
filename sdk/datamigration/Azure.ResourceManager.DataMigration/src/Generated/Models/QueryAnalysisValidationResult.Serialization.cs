@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class QueryAnalysisValidationResult
+    public partial class QueryAnalysisValidationResult : IUtf8JsonSerializable, IJsonModel<QueryAnalysisValidationResult>
     {
-        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryAnalysisValidationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryAnalysisValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(QueryResults))
+            {
+                writer.WritePropertyName("queryResults"u8);
+                writer.WriteObjectValue(QueryResults);
+            }
+            if (Optional.IsDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                writer.WriteObjectValue(ValidationErrors);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QueryAnalysisValidationResult IJsonModel<QueryAnalysisValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryAnalysisValidationResult(document.RootElement, options);
+        }
+
+        internal static QueryAnalysisValidationResult DeserializeQueryAnalysisValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<QueryExecutionResult> queryResults = default;
             Optional<ValidationError> validationErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryResults"u8))
@@ -40,8 +98,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     validationErrors = ValidationError.DeserializeValidationError(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryAnalysisValidationResult(queryResults.Value, validationErrors.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new QueryAnalysisValidationResult(queryResults.Value, validationErrors.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QueryAnalysisValidationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        QueryAnalysisValidationResult IPersistableModel<QueryAnalysisValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryAnalysisValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryAnalysisValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryAnalysisValidationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryAnalysisValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

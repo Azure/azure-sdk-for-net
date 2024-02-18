@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create or update schedule operation. </summary>
     public partial class AutomationScheduleCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutomationScheduleCreateOrUpdateContent"/>. </summary>
         /// <param name="name"> Gets or sets the name of the Schedule. </param>
         /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
         /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
         /// <param name="advancedSchedule"> Gets or sets the AdvancedSchedule. </param>
-        internal AutomationScheduleCreateOrUpdateContent(string name, string description, DateTimeOffset startOn, DateTimeOffset? expireOn, BinaryData interval, AutomationScheduleFrequency frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationScheduleCreateOrUpdateContent(string name, string description, DateTimeOffset startOn, DateTimeOffset? expireOn, BinaryData interval, AutomationScheduleFrequency frequency, string timeZone, AutomationAdvancedSchedule advancedSchedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Description = description;
@@ -46,6 +80,12 @@ namespace Azure.ResourceManager.Automation.Models
             Frequency = frequency;
             TimeZone = timeZone;
             AdvancedSchedule = advancedSchedule;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationScheduleCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationScheduleCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the name of the Schedule. </summary>

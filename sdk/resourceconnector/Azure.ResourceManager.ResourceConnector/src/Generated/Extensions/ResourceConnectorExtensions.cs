@@ -82,6 +82,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,6 +193,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +230,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -224,6 +264,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_GetTelemetryConfig</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

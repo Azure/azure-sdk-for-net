@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="objectType"> Type of Datasource object, used to initialize the right inherited type. </param>
         /// <param name="recoverySetting"> Recovery Option. </param>
         /// <param name="restoreLocation"> Target Restore region. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="restoreCriteria">
         /// Restore Criteria
         /// Please note <see cref="ItemLevelRestoreCriteria"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -50,13 +51,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Please note <see cref="DataProtectionBackupAuthCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SecretStoreBasedAuthCredentials"/>.
         /// </param>
-        internal ItemLevelRestoreTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IList<ItemLevelRestoreCriteria> restoreCriteria, DataSourceInfo datasourceInfo, DataSourceSetInfo datasourceSetInfo, DataProtectionBackupAuthCredentials datasourceAuthCredentials) : base(objectType, recoverySetting, restoreLocation)
+        internal ItemLevelRestoreTargetInfo(string objectType, RecoverySetting recoverySetting, AzureLocation? restoreLocation, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ItemLevelRestoreCriteria> restoreCriteria, DataSourceInfo datasourceInfo, DataSourceSetInfo datasourceSetInfo, DataProtectionBackupAuthCredentials datasourceAuthCredentials) : base(objectType, recoverySetting, restoreLocation, serializedAdditionalRawData)
         {
             RestoreCriteria = restoreCriteria;
             DatasourceInfo = datasourceInfo;
             DatasourceSetInfo = datasourceSetInfo;
             DatasourceAuthCredentials = datasourceAuthCredentials;
             ObjectType = objectType ?? "ItemLevelRestoreTargetInfo";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ItemLevelRestoreTargetInfo"/> for deserialization. </summary>
+        internal ItemLevelRestoreTargetInfo()
+        {
         }
 
         /// <summary>

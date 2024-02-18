@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "RelationalTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="RelationalTableDataset"/> for deserialization. </summary>
+        internal RelationalTableDataset()
+        {
+        }
+
         /// <summary> The relational table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
     }

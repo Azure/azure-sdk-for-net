@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
@@ -12,18 +15,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// Please note <see cref="AzureCoreNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCoreNetworkFunctionArmTemplateApplication"/> and <see cref="AzureCoreNetworkFunctionVhdApplication"/>.
     /// </summary>
-    public partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication
+    public abstract partial class AzureCoreNetworkFunctionApplication : NetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionApplication"/>. </summary>
-        public AzureCoreNetworkFunctionApplication()
+        protected AzureCoreNetworkFunctionApplication()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreNetworkFunctionApplication"/>. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="artifactType"> The artifact type. </param>
-        internal AzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile)
+        internal AzureCoreNetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureCoreArtifactType artifactType) : base(name, dependsOnProfile, serializedAdditionalRawData)
         {
             ArtifactType = artifactType;
         }

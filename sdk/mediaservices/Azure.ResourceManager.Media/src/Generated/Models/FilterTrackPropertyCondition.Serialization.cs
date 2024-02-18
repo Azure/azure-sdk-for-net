@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class FilterTrackPropertyCondition : IUtf8JsonSerializable
+    public partial class FilterTrackPropertyCondition : IUtf8JsonSerializable, IJsonModel<FilterTrackPropertyCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilterTrackPropertyCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FilterTrackPropertyCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterTrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilterTrackPropertyCondition)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("property"u8);
             writer.WriteStringValue(Property.ToString());
@@ -21,11 +32,40 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Value);
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FilterTrackPropertyCondition DeserializeFilterTrackPropertyCondition(JsonElement element)
+        FilterTrackPropertyCondition IJsonModel<FilterTrackPropertyCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterTrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilterTrackPropertyCondition)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFilterTrackPropertyCondition(document.RootElement, options);
+        }
+
+        internal static FilterTrackPropertyCondition DeserializeFilterTrackPropertyCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +73,8 @@ namespace Azure.ResourceManager.Media.Models
             FilterTrackPropertyType property = default;
             string value = default;
             FilterTrackPropertyCompareOperation operation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property0 in element.EnumerateObject())
             {
                 if (property0.NameEquals("property"u8))
@@ -50,8 +92,44 @@ namespace Azure.ResourceManager.Media.Models
                     operation = new FilterTrackPropertyCompareOperation(property0.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                }
             }
-            return new FilterTrackPropertyCondition(property, value, operation);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FilterTrackPropertyCondition(property, value, operation, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FilterTrackPropertyCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterTrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FilterTrackPropertyCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FilterTrackPropertyCondition IPersistableModel<FilterTrackPropertyCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilterTrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFilterTrackPropertyCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilterTrackPropertyCondition)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilterTrackPropertyCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

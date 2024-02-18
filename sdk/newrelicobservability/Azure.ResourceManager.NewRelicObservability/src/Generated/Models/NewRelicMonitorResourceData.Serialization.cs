@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.NewRelicObservability.Models;
 
 namespace Azure.ResourceManager.NewRelicObservability
 {
-    public partial class NewRelicMonitorResourceData : IUtf8JsonSerializable
+    public partial class NewRelicMonitorResourceData : IUtf8JsonSerializable, IJsonModel<NewRelicMonitorResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicMonitorResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NewRelicMonitorResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -36,8 +46,48 @@ namespace Azure.ResourceManager.NewRelicObservability
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
+            {
+                writer.WritePropertyName("monitoringStatus"u8);
+                writer.WriteStringValue(MonitoringStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
+            {
+                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
+                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId))
+            {
+                writer.WritePropertyName("marketplaceSubscriptionId"u8);
+                writer.WriteStringValue(MarketplaceSubscriptionId);
+            }
             if (Optional.IsDefined(NewRelicAccountProperties))
             {
                 writer.WritePropertyName("newRelicAccountProperties"u8);
@@ -53,6 +103,16 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WritePropertyName("planData"u8);
                 writer.WriteObjectValue(PlanData);
             }
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
+            {
+                writer.WritePropertyName("liftrResourceCategory"u8);
+                writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
+            {
+                writer.WritePropertyName("liftrResourcePreference"u8);
+                writer.WriteNumberValue(LiftrResourcePreference.Value);
+            }
             if (Optional.IsDefined(OrgCreationSource))
             {
                 writer.WritePropertyName("orgCreationSource"u8);
@@ -64,11 +124,40 @@ namespace Azure.ResourceManager.NewRelicObservability
                 writer.WriteStringValue(AccountCreationSource.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicMonitorResourceData DeserializeNewRelicMonitorResourceData(JsonElement element)
+        NewRelicMonitorResourceData IJsonModel<NewRelicMonitorResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicMonitorResourceData(document.RootElement, options);
+        }
+
+        internal static NewRelicMonitorResourceData DeserializeNewRelicMonitorResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -91,6 +180,8 @@ namespace Azure.ResourceManager.NewRelicObservability
             Optional<int> liftrResourcePreference = default;
             Optional<NewRelicObservabilityOrgCreationSource> orgCreationSource = default;
             Optional<NewRelicObservabilityAccountCreationSource> accountCreationSource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -252,8 +343,44 @@ namespace Azure.ResourceManager.NewRelicObservability
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NewRelicMonitorResourceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(monitoringStatus), Optional.ToNullable(marketplaceSubscriptionStatus), marketplaceSubscriptionId.Value, newRelicAccountProperties.Value, userInfo.Value, planData.Value, Optional.ToNullable(liftrResourceCategory), Optional.ToNullable(liftrResourcePreference), Optional.ToNullable(orgCreationSource), Optional.ToNullable(accountCreationSource), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NewRelicMonitorResourceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NewRelicMonitorResourceData IPersistableModel<NewRelicMonitorResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicMonitorResourceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNewRelicMonitorResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicMonitorResourceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicMonitorResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

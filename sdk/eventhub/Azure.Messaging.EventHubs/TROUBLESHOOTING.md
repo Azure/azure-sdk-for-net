@@ -421,6 +421,7 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 123 (EventProcessorProcessingHandlerStart)
   - 124 (EventProcessorProcessingHandlerComplete)
   - 125 (EventProcessorProcessingHandlerError)
+  - 129 (EventProcessorPartitionProcessingCycleComplete)
 
 ### Consuming issues
 

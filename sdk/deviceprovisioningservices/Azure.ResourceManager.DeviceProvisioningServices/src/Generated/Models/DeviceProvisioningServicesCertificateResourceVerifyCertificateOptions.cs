@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Content = content;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions"/> for deserialization. </summary>
+        internal DeviceProvisioningServicesCertificateResourceVerifyCertificateOptions()
+        {
+        }
+
         /// <summary> ETag of the certificate. </summary>
         public string IfMatch { get; }
         /// <summary> The name of the certificate. </summary>

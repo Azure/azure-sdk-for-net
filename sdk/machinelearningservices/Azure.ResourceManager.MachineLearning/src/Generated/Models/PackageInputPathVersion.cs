@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Package input path specified with name and version. </summary>
@@ -18,9 +21,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="PackageInputPathVersion"/>. </summary>
         /// <param name="inputPathType"> [Required] Input path type for package inputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceName"> Input resource name. </param>
         /// <param name="resourceVersion"> Input resource version. </param>
-        internal PackageInputPathVersion(InputPathType inputPathType, string resourceName, string resourceVersion) : base(inputPathType)
+        internal PackageInputPathVersion(InputPathType inputPathType, IDictionary<string, BinaryData> serializedAdditionalRawData, string resourceName, string resourceVersion) : base(inputPathType, serializedAdditionalRawData)
         {
             ResourceName = resourceName;
             ResourceVersion = resourceVersion;

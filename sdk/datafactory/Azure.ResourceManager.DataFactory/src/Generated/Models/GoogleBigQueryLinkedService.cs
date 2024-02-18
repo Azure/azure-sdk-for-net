@@ -64,6 +64,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "GoogleBigQuery";
         }
 
+        /// <summary> Initializes a new instance of <see cref="GoogleBigQueryLinkedService"/> for deserialization. </summary>
+        internal GoogleBigQueryLinkedService()
+        {
+        }
+
         /// <summary> The default BigQuery project to query against. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Project { get; set; }
         /// <summary> A comma-separated list of public BigQuery projects to access. Type: string (or Expression with resultType string). </summary>

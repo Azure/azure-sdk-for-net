@@ -76,9 +76,9 @@ OpenAIClient client = useAzureOpenAI
     : new OpenAIClient("your-api-key-from-platform.openai.com");
 ```
 
-#### Create OpenAIClient with an Azure Active Directory Credential
+#### Create OpenAIClient with a Microsoft Entra ID Credential
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Azure Active Directory using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
+Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below,
 or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
 
 ```dotnetcli
@@ -323,7 +323,7 @@ and that all streamed responses should map to a single, common choice index in t
 ```C# Snippet:ChatTools:StreamingChatTools
 Dictionary<int, string> toolCallIdsByIndex = new();
 Dictionary<int, string> functionNamesByIndex = new();
-Dictionary<int, StringBuilder> functionArgmentBuildersByIndex = new();
+Dictionary<int, StringBuilder> functionArgumentBuildersByIndex = new();
 StringBuilder contentBuilder = new();
 
 await foreach (StreamingChatCompletionsUpdate chatUpdate
@@ -342,10 +342,11 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate
         if (functionToolCallUpdate.ArgumentsUpdate != null)
         {
             StringBuilder argumentsBuilder
-                = functionArgmentBuildersByIndex.TryGetValue(
+                = functionArgumentBuildersByIndex.TryGetValue(
                     functionToolCallUpdate.ToolCallIndex,
                     out StringBuilder existingBuilder) ? existingBuilder : new StringBuilder();
             argumentsBuilder.Append(functionToolCallUpdate.ArgumentsUpdate);
+            functionArgumentBuildersByIndex[functionToolCallUpdate.ToolCallIndex] = argumentsBuilder;
         }
     }
     if (chatUpdate.ContentUpdate != null)
@@ -360,7 +361,7 @@ foreach (KeyValuePair<int, string> indexIdPair in toolCallIdsByIndex)
     assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
         id: indexIdPair.Value,
         functionNamesByIndex[indexIdPair.Key],
-        functionArgmentBuildersByIndex[indexIdPair.Key].ToString()));
+        functionArgumentBuildersByIndex[indexIdPair.Key].ToString()));
 }
 chatCompletionsOptions.Messages.Add(assistantHistoryMessage);
 
@@ -379,7 +380,7 @@ Additionally: if you would like to control the behavior of tool calls, you can u
 - Providing a reference to a named function definition or function tool definition, as below, will instruct the model
   to restrict its response to calling the corresponding tool. When calling tools in this configuration, response
   `ChatChoice` instances will report a `FinishReason` of `CompletionsFinishReason.Stopped` and the corresponding
-  `ToolCalls` property will be populated Note that, because the model was constrained to a specific tool, it does
+  `ToolCalls` property will be populated. Note that, because the model was constrained to a specific tool, it does
   **NOT** report the same `CompletionsFinishReason` value of `ToolCalls` expected when using
   `ChatCompletionsToolChoice.Auto`.
 
@@ -633,15 +634,21 @@ ReadOnlyMemory<float> embedding = item.Embedding;
 ### Generate images with DALL-E image generation models
 
 ```C# Snippet:GenerateImages
-Response<ImageGenerations> imageGenerations = await client.GetImageGenerationsAsync(
+Response<ImageGenerations> response = await client.GetImageGenerationsAsync(
     new ImageGenerationOptions()
     {
+        DeploymentName = usingAzure ? "my-azure-openai-dall-e-3-deployment" : "dall-e-3",
         Prompt = "a happy monkey eating a banana, in watercolor",
-        Size = ImageSize.Size256x256,
+        Size = ImageSize.Size1024x1024,
+        Quality = ImageGenerationQuality.Standard
     });
 
-// Image Generations responses provide URLs you can use to retrieve requested images
-Uri imageUri = imageGenerations.Value.Data[0].Url;
+ImageGenerationData generatedImage = response.Value.Data[0];
+if (!string.IsNullOrEmpty(generatedImage.RevisedPrompt))
+{
+    Console.WriteLine($"Input prompt automatically revised to: {generatedImage.RevisedPrompt}");
+}
+Console.WriteLine($"Generated image available at: {generatedImage.Url.AbsoluteUri}");
 ```
 
 ### Transcribe audio data with Whisper speech models
@@ -714,7 +721,7 @@ in the interim:
 ```C# Snippet:GetResponseFromImages
 Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatChoice choice = chatResponse.Value.Choices[0];
-if (choice.FinishDetails is StopFinishDetails stopDetails)
+if (choice.FinishDetails is StopFinishDetails stopDetails || choice.FinishReason == CompletionsFinishReason.Stopped)
 {
     Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
 }

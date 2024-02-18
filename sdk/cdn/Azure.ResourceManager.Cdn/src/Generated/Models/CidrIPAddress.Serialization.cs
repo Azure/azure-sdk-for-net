@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CidrIPAddress : IUtf8JsonSerializable
+    public partial class CidrIPAddress : IUtf8JsonSerializable, IJsonModel<CidrIPAddress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CidrIPAddress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CidrIPAddress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseIPAddress))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("prefixLength"u8);
                 writer.WriteNumberValue(PrefixLength.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element)
+        CidrIPAddress IJsonModel<CidrIPAddress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCidrIPAddress(document.RootElement, options);
+        }
+
+        internal static CidrIPAddress DeserializeCidrIPAddress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> baseIPAddress = default;
             Optional<int> prefixLength = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("baseIpAddress"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     prefixLength = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CidrIPAddress(baseIPAddress.Value, Optional.ToNullable(prefixLength), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CidrIPAddress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CidrIPAddress IPersistableModel<CidrIPAddress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CidrIPAddress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCidrIPAddress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CidrIPAddress)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CidrIPAddress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

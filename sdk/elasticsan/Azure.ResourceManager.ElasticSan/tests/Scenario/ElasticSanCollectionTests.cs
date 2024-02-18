@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
             ElasticSanData data = GetDefaultElasticSanParameters(TestLocation);
             data.Tags.Add("tag1", "value1");
-            data.PublicNetworkAccess = Models.PublicNetworkAccess.Enabled;
+            data.PublicNetworkAccess = Models.ElasticSanPublicNetworkAccess.Enabled;
 
             string elasticSanName = Recording.GenerateAssetName("testsan-");
             ElasticSanResource elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data)).Value;

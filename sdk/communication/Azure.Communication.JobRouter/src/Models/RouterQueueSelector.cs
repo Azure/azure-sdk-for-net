@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterQueueSelector : IUtf8JsonSerializable
+    public partial class RouterQueueSelector
     {
         [CodeGenMember("Value")]
         private BinaryData _value
@@ -35,21 +33,6 @@ namespace Azure.Communication.JobRouter
             Key = key;
             LabelOperator = labelOperator;
             Value = value;
-        }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("key"u8);
-            writer.WriteStringValue(Key);
-            writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToString());
-            if (Optional.IsDefined(_value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(_value.ToObjectFromJson());
-            }
-            writer.WriteEndObject();
         }
     }
 }

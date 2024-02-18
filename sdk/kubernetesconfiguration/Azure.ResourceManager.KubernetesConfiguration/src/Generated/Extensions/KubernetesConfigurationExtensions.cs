@@ -118,6 +118,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -150,6 +158,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Extensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesClusterExtensionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -205,6 +221,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -237,6 +261,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FluxConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesFluxConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -292,6 +324,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -324,6 +364,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubernetesSourceControlConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

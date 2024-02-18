@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -76,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(e), ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -90,6 +94,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,7 +106,7 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedRuleSetsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedRuleSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition, ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ManagedRuleSetDefinition.DeserializeManagedRuleSetDefinition(e), ManagedRuleSetsClientDiagnostics, Pipeline, "MockableFrontDoorSubscriptionResource.GetManagedRuleSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -111,6 +119,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -146,6 +158,10 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
@@ -180,6 +196,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -201,6 +225,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,6 +256,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -245,6 +285,14 @@ namespace Azure.ResourceManager.FrontDoor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

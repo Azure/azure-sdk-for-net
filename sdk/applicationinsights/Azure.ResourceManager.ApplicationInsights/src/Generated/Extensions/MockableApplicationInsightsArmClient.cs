@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>LiveToken_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -92,6 +96,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveToken_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
         /// </item>
         /// </list>
         /// </summary>

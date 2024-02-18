@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,6 +89,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,6 +122,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -149,6 +161,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Subscription Name. </param>
@@ -183,6 +199,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,6 +232,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

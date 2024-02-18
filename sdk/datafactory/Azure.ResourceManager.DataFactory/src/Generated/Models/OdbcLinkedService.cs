@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Odbc";
         }
 
+        /// <summary> Initializes a new instance of <see cref="OdbcLinkedService"/> for deserialization. </summary>
+        internal OdbcLinkedService()
+        {
+        }
+
         /// <summary> The non-access credential portion of the connection string as well as an optional encrypted credential. Type: string, or SecureString, or AzureKeyVaultSecretReference, or Expression with resultType string. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> Type of authentication used to connect to the ODBC data store. Possible values are: Anonymous and Basic. Type: string (or Expression with resultType string). </summary>

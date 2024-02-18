@@ -49,6 +49,7 @@ namespace Microsoft.Azure.Batch
             public readonly PropertyAccessor<NetworkConfiguration> NetworkConfigurationProperty;
             public readonly PropertyAccessor<IReadOnlyList<ResizeError>> ResizeErrorsProperty;
             public readonly PropertyAccessor<TimeSpan?> ResizeTimeoutProperty;
+            public readonly PropertyAccessor<IDictionary<string, string>> ResourceTagsProperty;
             public readonly PropertyAccessor<StartTask> StartTaskProperty;
             public readonly PropertyAccessor<Common.PoolState?> StateProperty;
             public readonly PropertyAccessor<DateTime?> StateTransitionTimeProperty;
@@ -90,6 +91,7 @@ namespace Microsoft.Azure.Batch
                 this.NetworkConfigurationProperty = this.CreatePropertyAccessor<NetworkConfiguration>(nameof(NetworkConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.ResizeErrorsProperty = this.CreatePropertyAccessor<IReadOnlyList<ResizeError>>(nameof(ResizeErrors), BindingAccess.None);
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor<TimeSpan?>(nameof(ResizeTimeout), BindingAccess.Read | BindingAccess.Write);
+                this.ResourceTagsProperty = this.CreatePropertyAccessor<IDictionary<string, string>>(nameof(ResourceTags), BindingAccess.Read | BindingAccess.Write);
                 this.StartTaskProperty = this.CreatePropertyAccessor<StartTask>(nameof(StartTask), BindingAccess.Read | BindingAccess.Write);
                 this.StateProperty = this.CreatePropertyAccessor<Common.PoolState?>(nameof(State), BindingAccess.None);
                 this.StateTransitionTimeProperty = this.CreatePropertyAccessor<DateTime?>(nameof(StateTransitionTime), BindingAccess.None);
@@ -206,6 +208,10 @@ namespace Microsoft.Azure.Batch
                 this.ResizeTimeoutProperty = this.CreatePropertyAccessor(
                     protocolObject.ResizeTimeout,
                     nameof(ResizeTimeout),
+                    BindingAccess.Read);
+                this.ResourceTagsProperty = this.CreatePropertyAccessor(
+                    protocolObject.ResourceTags,
+                    nameof(ResourceTags),
                     BindingAccess.Read);
                 this.StartTaskProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.StartTask, o => new StartTask(o)),
@@ -592,6 +598,20 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
+        /// Gets or sets the user-specified tags associated with the pool.
+        /// </summary>
+        /// <remarks>
+        /// The user-defined tags to be associated with the Azure Batch Pool. When specified, these tags are propagated to 
+        /// the backing Azure resources associated with the pool. This property can only be specified when the Batch account 
+        /// was created with the poolAllocationMode property set to 'UserSubscription'.
+        /// </remarks>
+        public IDictionary<string, string> ResourceTags
+        {
+            get { return this.propertyContainer.ResourceTagsProperty.Value; }
+            set { this.propertyContainer.ResourceTagsProperty.Value = value; }
+        }
+
+        /// <summary>
         /// Gets or sets a task to run on each compute node as it joins the pool. The task runs when the node is added to 
         /// the pool or when the node is restarted.
         /// </summary>
@@ -775,6 +795,7 @@ namespace Microsoft.Azure.Batch
                 MountConfiguration = UtilitiesInternal.ConvertToProtocolCollection(this.MountConfiguration),
                 NetworkConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.NetworkConfiguration, (o) => o.GetTransportObject()),
                 ResizeTimeout = this.ResizeTimeout,
+                ResourceTags = this.ResourceTags,
                 StartTask = UtilitiesInternal.CreateObjectWithNullCheck(this.StartTask, (o) => o.GetTransportObject()),
                 TargetDedicatedNodes = this.TargetDedicatedComputeNodes,
                 TargetLowPriorityNodes = this.TargetLowPriorityComputeNodes,

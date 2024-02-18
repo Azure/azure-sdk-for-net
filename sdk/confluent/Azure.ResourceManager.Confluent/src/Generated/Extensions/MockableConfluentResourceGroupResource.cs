@@ -61,6 +61,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
@@ -84,6 +92,14 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="organizationName"> Organization resource name. </param>
@@ -106,6 +122,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +163,10 @@ namespace Azure.ResourceManager.Confluent.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>

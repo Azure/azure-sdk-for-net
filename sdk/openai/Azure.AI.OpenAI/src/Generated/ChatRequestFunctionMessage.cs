@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -28,12 +29,18 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="ChatRequestFunctionMessage"/>. </summary>
         /// <param name="role"> The chat role associated with this message. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the function that was called to produce output. </param>
         /// <param name="content"> The output of the function as requested by the function call. </param>
-        internal ChatRequestFunctionMessage(ChatRole role, string name, string content) : base(role)
+        internal ChatRequestFunctionMessage(ChatRole role, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string content) : base(role, serializedAdditionalRawData)
         {
             Name = name;
             Content = content;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatRequestFunctionMessage"/> for deserialization. </summary>
+        internal ChatRequestFunctionMessage()
+        {
         }
 
         /// <summary> The name of the function that was called to produce output. </summary>

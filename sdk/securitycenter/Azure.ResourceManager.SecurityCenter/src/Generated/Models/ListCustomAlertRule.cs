@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary>
@@ -26,11 +29,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> The description of the custom alert. </param>
         /// <param name="isEnabled"> Status of the custom alert. </param>
         /// <param name="ruleType"> The type of the custom alert rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="valueType"> The value type of the items in the list. </param>
-        internal ListCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, SecurityValueType? valueType) : base(displayName, description, isEnabled, ruleType)
+        internal ListCustomAlertRule(string displayName, string description, bool isEnabled, string ruleType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecurityValueType? valueType) : base(displayName, description, isEnabled, ruleType, serializedAdditionalRawData)
         {
             ValueType = valueType;
             RuleType = ruleType ?? "ListCustomAlertRule";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ListCustomAlertRule"/> for deserialization. </summary>
+        internal ListCustomAlertRule()
+        {
         }
 
         /// <summary> The value type of the items in the list. </summary>

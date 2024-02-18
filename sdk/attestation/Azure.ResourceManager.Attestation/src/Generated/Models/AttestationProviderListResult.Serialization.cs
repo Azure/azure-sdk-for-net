@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,16 +15,76 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    internal partial class AttestationProviderListResult
+    internal partial class AttestationProviderListResult : IUtf8JsonSerializable, IJsonModel<AttestationProviderListResult>
     {
-        internal static AttestationProviderListResult DeserializeAttestationProviderListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationProviderListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AttestationProviderListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AttestationProviderListResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AttestationProviderListResult IJsonModel<AttestationProviderListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AttestationProviderListResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAttestationProviderListResult(document.RootElement, options);
+        }
+
+        internal static AttestationProviderListResult DeserializeAttestationProviderListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SystemData> systemData = default;
             Optional<IReadOnlyList<AttestationProviderData>> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemData"u8))
@@ -48,8 +110,44 @@ namespace Azure.ResourceManager.Attestation.Models
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AttestationProviderListResult(systemData, Optional.ToList(value));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AttestationProviderListResult(systemData, Optional.ToList(value), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AttestationProviderListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AttestationProviderListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AttestationProviderListResult IPersistableModel<AttestationProviderListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAttestationProviderListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AttestationProviderListResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AttestationProviderListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

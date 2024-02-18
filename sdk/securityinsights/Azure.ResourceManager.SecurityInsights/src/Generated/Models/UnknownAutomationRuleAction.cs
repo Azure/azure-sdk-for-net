@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The UnknownAutomationRuleAction. </summary>
@@ -13,9 +16,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleAction"/>. </summary>
         /// <param name="order"></param>
         /// <param name="actionType"> The type of the automation rule action. </param>
-        internal UnknownAutomationRuleAction(int order, ActionType actionType) : base(order, actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAutomationRuleAction(int order, ActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(order, actionType, serializedAdditionalRawData)
         {
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleAction"/> for deserialization. </summary>
+        internal UnknownAutomationRuleAction()
+        {
         }
     }
 }

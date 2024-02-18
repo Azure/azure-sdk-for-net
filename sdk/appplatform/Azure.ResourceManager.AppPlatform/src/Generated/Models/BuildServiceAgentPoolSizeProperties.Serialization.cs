@@ -5,26 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class BuildServiceAgentPoolSizeProperties : IUtf8JsonSerializable
+    public partial class BuildServiceAgentPoolSizeProperties : IUtf8JsonSerializable, IJsonModel<BuildServiceAgentPoolSizeProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildServiceAgentPoolSizeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BuildServiceAgentPoolSizeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildServiceAgentPoolSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuildServiceAgentPoolSizeProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(Cpu))
+            {
+                writer.WritePropertyName("cpu"u8);
+                writer.WriteStringValue(Cpu);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Memory))
+            {
+                writer.WritePropertyName("memory"u8);
+                writer.WriteStringValue(Memory);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BuildServiceAgentPoolSizeProperties DeserializeBuildServiceAgentPoolSizeProperties(JsonElement element)
+        BuildServiceAgentPoolSizeProperties IJsonModel<BuildServiceAgentPoolSizeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildServiceAgentPoolSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuildServiceAgentPoolSizeProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBuildServiceAgentPoolSizeProperties(document.RootElement, options);
+        }
+
+        internal static BuildServiceAgentPoolSizeProperties DeserializeBuildServiceAgentPoolSizeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -32,6 +82,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             Optional<string> name = default;
             Optional<string> cpu = default;
             Optional<string> memory = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -49,8 +101,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     memory = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BuildServiceAgentPoolSizeProperties(name.Value, cpu.Value, memory.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BuildServiceAgentPoolSizeProperties(name.Value, cpu.Value, memory.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BuildServiceAgentPoolSizeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildServiceAgentPoolSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BuildServiceAgentPoolSizeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BuildServiceAgentPoolSizeProperties IPersistableModel<BuildServiceAgentPoolSizeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildServiceAgentPoolSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBuildServiceAgentPoolSizeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BuildServiceAgentPoolSizeProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BuildServiceAgentPoolSizeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

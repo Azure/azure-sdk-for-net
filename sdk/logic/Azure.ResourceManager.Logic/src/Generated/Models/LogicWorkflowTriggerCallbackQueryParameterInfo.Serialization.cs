@@ -5,15 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicWorkflowTriggerCallbackQueryParameterInfo
+    public partial class LogicWorkflowTriggerCallbackQueryParameterInfo : IUtf8JsonSerializable, IJsonModel<LogicWorkflowTriggerCallbackQueryParameterInfo>
     {
-        internal static LogicWorkflowTriggerCallbackQueryParameterInfo DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("api-version"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(Sp))
+            {
+                writer.WritePropertyName("sp"u8);
+                writer.WriteStringValue(Sp);
+            }
+            if (Optional.IsDefined(Sv))
+            {
+                writer.WritePropertyName("sv"u8);
+                writer.WriteStringValue(Sv);
+            }
+            if (Optional.IsDefined(Sig))
+            {
+                writer.WritePropertyName("sig"u8);
+                writer.WriteStringValue(Sig);
+            }
+            if (Optional.IsDefined(Se))
+            {
+                writer.WritePropertyName("se"u8);
+                writer.WriteStringValue(Se);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LogicWorkflowTriggerCallbackQueryParameterInfo IJsonModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(document.RootElement, options);
+        }
+
+        internal static LogicWorkflowTriggerCallbackQueryParameterInfo DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +94,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<string> sv = default;
             Optional<string> sig = default;
             Optional<string> se = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("api-version"u8))
@@ -50,8 +123,44 @@ namespace Azure.ResourceManager.Logic.Models
                     se = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion.Value, sp.Value, sv.Value, sig.Value, se.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion.Value, sp.Value, sv.Value, sig.Value, se.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LogicWorkflowTriggerCallbackQueryParameterInfo IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicWorkflowTriggerCallbackQueryParameterInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerCallbackQueryParameterInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicWorkflowTriggerCallbackQueryParameterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

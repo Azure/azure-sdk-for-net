@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlowRequestsBasedTrigger : IUtf8JsonSerializable
+    public partial class SlowRequestsBasedTrigger : IUtf8JsonSerializable, IJsonModel<SlowRequestsBasedTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlowRequestsBasedTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SlowRequestsBasedTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeTaken))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("timeInterval"u8);
                 writer.WriteStringValue(TimeInterval);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SlowRequestsBasedTrigger DeserializeSlowRequestsBasedTrigger(JsonElement element)
+        SlowRequestsBasedTrigger IJsonModel<SlowRequestsBasedTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlowRequestsBasedTrigger(document.RootElement, options);
+        }
+
+        internal static SlowRequestsBasedTrigger DeserializeSlowRequestsBasedTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> path = default;
             Optional<int> count = default;
             Optional<string> timeInterval = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeTaken"u8))
@@ -74,8 +116,44 @@ namespace Azure.ResourceManager.AppService.Models
                     timeInterval = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Optional.ToNullable(count), timeInterval.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SlowRequestsBasedTrigger(timeTaken.Value, path.Value, Optional.ToNullable(count), timeInterval.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SlowRequestsBasedTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SlowRequestsBasedTrigger IPersistableModel<SlowRequestsBasedTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlowRequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSlowRequestsBasedTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SlowRequestsBasedTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SlowRequestsBasedTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

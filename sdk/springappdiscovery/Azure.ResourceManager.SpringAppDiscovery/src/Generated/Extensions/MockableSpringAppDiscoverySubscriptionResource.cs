@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,6 +92,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootsites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -105,6 +121,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -133,6 +157,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootservers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The springbootsites name. </param>
@@ -160,6 +192,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="siteName"> The springbootsites name. </param>
@@ -186,6 +226,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

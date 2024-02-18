@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageMovers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageMoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

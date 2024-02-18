@@ -21,6 +21,7 @@ namespace Azure.Search.Documents.Tests
             [Values(null, "AnalyzerName")] string analyzerName,
             [Values(null, "SearchAnalyzerName")] string searchAnalyzerName,
             [Values(null, "IndexAnalyzerName")] string indexAnalyzerName,
+            [Values(null, "NormalizerName")] string normalizerName,
             [Values(null, new[] { "synonynMapName" })] string[] synonymMapNames)
         {
             SearchableFieldAttribute sut = new SearchableFieldAttribute
@@ -47,6 +48,11 @@ namespace Azure.Search.Documents.Tests
                 sut.IndexAnalyzerName = indexAnalyzerName;
             }
 
+            if (normalizerName != null)
+            {
+                sut.NormalizerName = normalizerName;
+            }
+
             if (synonymMapNames != null)
             {
                 sut.SynonymMapNames = synonymMapNames;
@@ -66,6 +72,7 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(analyzerName, field.AnalyzerName?.ToString());
             Assert.AreEqual(searchAnalyzerName, field.SearchAnalyzerName?.ToString());
             Assert.AreEqual(indexAnalyzerName, field.IndexAnalyzerName?.ToString());
+            Assert.AreEqual(normalizerName, field.NormalizerName?.ToString());
             Assert.AreEqual(synonymMapNames ?? Array.Empty<string>(), field.SynonymMapNames);
         }
     }

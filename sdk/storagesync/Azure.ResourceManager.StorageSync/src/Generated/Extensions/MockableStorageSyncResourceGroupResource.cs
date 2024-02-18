@@ -54,6 +54,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageSyncServiceName"> Name of Storage Sync Service resource. </param>
@@ -76,6 +84,14 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageSyncServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
