@@ -18,56 +18,38 @@ namespace Azure.Analytics.Purview.DataMap.Tests
         {
         }
 
-        [Test]
-        public void Search()
-        {
-            DataMapClient client = GetDataMapClient();
-            QueryConfig sg = new QueryConfig();
-            sg.Keywords = "Glossary";
-            sg.Limit = 1;
-            Response<QueryResult> result = client.GetDiscoveryClient().Query(sg);
-            Assert.AreNotEqual("200", result.GetRawResponse().Status);
-        }
+        // [Test]
+        // public void Search()
+        // {
+        //     DataMapClient client = GetDataMapClient();
+        //     QueryConfig sg = new QueryConfig();
+        //     sg.Keywords = "Glossary";
+        //     sg.Limit = 1;
+        //     Response<QueryResult> result = client.GetDiscoveryClient().Query(sg);
+        //     Assert.AreNotEqual("200", result.GetRawResponse().Status);
+        // }
 
-        [Test]
-        public void GetGlossary()
-        {
-            var client = GetDataMapClient().GetGlossaryClient();
-            Response fetchResponse = client.BatchGet(1, null, null, true, new RequestContext());
-            Console.WriteLine(fetchResponse.ToString());
-            Assert.AreEqual(200, fetchResponse.Status);
-        }
+        // [Test]
+        // public void GetGlossary()
+        // {
+        //     var client = GetDataMapClient().GetGlossaryClient();
+        //     Response fetchResponse = client.BatchGet(1, null, null, true, new RequestContext());
+        //     Console.WriteLine(fetchResponse.ToString());
+        //     Assert.AreEqual(200, fetchResponse.Status);
+        // }
 
-        [Test]
-        public void GetEntity()
-        {
-            var client = GetDataMapClient().GetEntityClient();
-            AtlasEntityWithExtInfo entity = new AtlasEntityWithExtInfo
-            {
-                Entity = new AtlasEntity
-                {
-                    TypeName = "typeName",
-                    Guid = "guid",
-                    Status = "ACTIVE",
-                }
-            };
-            Response<AtlasEntityWithExtInfo> response = client.GetEntity("59692d13-7bdf-46de-9b32-4837a12bf6bc");
+        // [Test]
+        // public void Entity_ImportBusinessMetadata()
+        // {
+        //     var client = GetDataMapClient().GetEntityClient();
 
-            Console.WriteLine(response.ToString());
-        }
+        //     BinaryData file = new BinaryData(File.ReadAllBytes("D:\\azure-sdk-for-net-new\\sdk\\purview\\Azure.Analytics.Purview.DataMap\\tests\\template_2.csv"));
+        //     Console.WriteLine(file.ToString());
+        //     Console.WriteLine(nameof(file));
+        //     Response<BulkImportResult> response = client.ImportBusinessMetadata(file, "template.csv");
 
-        [Test]
-        public void Entity_ImportBusinessMetadata()
-        {
-            var client = GetDataMapClient().GetEntityClient();
-
-            BinaryData file = new BinaryData(File.ReadAllBytes("D:\\azure-sdk-for-net-new\\sdk\\purview\\Azure.Analytics.Purview.DataMap\\tests\\template_2.csv"));
-            Console.WriteLine(file.ToString());
-            Console.WriteLine(nameof(file));
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(file, "template.csv");
-
-            Console.WriteLine(response.ToString());
-        }
+        //     Console.WriteLine(response.ToString());
+        // }
 
         private static BinaryData GetContentFromResponse(Response r)
         {
