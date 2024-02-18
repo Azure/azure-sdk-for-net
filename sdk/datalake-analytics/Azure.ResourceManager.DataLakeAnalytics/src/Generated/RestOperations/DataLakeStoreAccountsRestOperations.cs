@@ -37,6 +37,45 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByAccountRequestUri(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (count != null)
+            {
+                uri.AppendQuery("$count", count.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByAccountRequest(string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
         {
             var message = _pipeline.CreateMessage();
@@ -152,6 +191,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateAddRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName, DataLakeStoreAccountInformationCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -232,6 +287,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
@@ -322,6 +393,22 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataLakeAnalytics/accounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/dataLakeStoreAccounts/", false);
+            uri.AppendPath(dataLakeStoreAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string dataLakeStoreAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -396,6 +483,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string filter, int? top, int? skip, string select, string orderby, bool? count)

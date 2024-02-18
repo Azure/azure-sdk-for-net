@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Confluent
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateValidateOrganizationRequestUri(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Confluent/validations/", false);
+            uri.AppendPath(organizationName, true);
+            uri.AppendPath("/orgvalidate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateValidateOrganizationRequest(string subscriptionId, string resourceGroupName, string organizationName, ConfluentOrganizationData data)
         {
             var message = _pipeline.CreateMessage();
