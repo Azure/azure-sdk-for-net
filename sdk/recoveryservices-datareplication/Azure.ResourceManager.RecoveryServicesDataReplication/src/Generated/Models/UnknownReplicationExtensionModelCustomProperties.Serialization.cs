@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReplicationExtensionModelCustomProperties(document.RootElement, options);
+            return DeserializeReplicationExtensionModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownReplicationExtensionModelCustomProperties DeserializeUnknownReplicationExtensionModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownReplicationExtensionModelCustomProperties(document.RootElement, options);
+                        return DeserializeReplicationExtensionModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ReplicationExtensionModelCustomProperties)} does not support '{options.Format}' format.");

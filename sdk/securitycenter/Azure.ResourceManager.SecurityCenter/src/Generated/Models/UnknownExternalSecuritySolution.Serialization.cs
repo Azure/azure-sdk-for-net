@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownExternalSecuritySolution(document.RootElement, options);
+            return DeserializeExternalSecuritySolution(document.RootElement, options);
         }
 
         internal static UnknownExternalSecuritySolution DeserializeUnknownExternalSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownExternalSecuritySolution(document.RootElement, options);
+                        return DeserializeExternalSecuritySolution(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ExternalSecuritySolution)} does not support '{options.Format}' format.");

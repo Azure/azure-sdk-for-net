@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAlertResourceIdentifier(document.RootElement, options);
+            return DeserializeSecurityAlertResourceIdentifier(document.RootElement, options);
         }
 
         internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAlertResourceIdentifier(document.RootElement, options);
+                        return DeserializeSecurityAlertResourceIdentifier(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityAlertResourceIdentifier)} does not support '{options.Format}' format.");

@@ -65,7 +65,7 @@ namespace Azure.Communication.Messages
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownNotificationContent(document.RootElement, options);
+            return DeserializeNotificationContent(document.RootElement, options);
         }
 
         internal static UnknownNotificationContent DeserializeUnknownNotificationContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -134,7 +134,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownNotificationContent(document.RootElement, options);
+                        return DeserializeNotificationContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(NotificationContent)} does not support '{options.Format}' format.");

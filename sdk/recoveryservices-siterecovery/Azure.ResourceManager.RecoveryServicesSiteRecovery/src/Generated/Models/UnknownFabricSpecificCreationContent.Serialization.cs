@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFabricSpecificCreationContent(document.RootElement, options);
+            return DeserializeFabricSpecificCreationContent(document.RootElement, options);
         }
 
         internal static UnknownFabricSpecificCreationContent DeserializeUnknownFabricSpecificCreationContent(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFabricSpecificCreationContent(document.RootElement, options);
+                        return DeserializeFabricSpecificCreationContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FabricSpecificCreationContent)} does not support '{options.Format}' format.");

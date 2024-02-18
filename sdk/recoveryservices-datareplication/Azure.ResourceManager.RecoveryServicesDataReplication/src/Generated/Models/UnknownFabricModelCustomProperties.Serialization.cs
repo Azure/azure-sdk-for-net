@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownFabricModelCustomProperties(document.RootElement, options);
+            return DeserializeFabricModelCustomProperties(document.RootElement, options);
         }
 
         internal static UnknownFabricModelCustomProperties DeserializeUnknownFabricModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownFabricModelCustomProperties(document.RootElement, options);
+                        return DeserializeFabricModelCustomProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FabricModelCustomProperties)} does not support '{options.Format}' format.");

@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+            return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
         }
 
         internal static UnknownConfigurationGroupValuePropertiesFormat DeserializeUnknownConfigurationGroupValuePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConfigurationGroupValuePropertiesFormat(document.RootElement, options);
+                        return DeserializeConfigurationGroupValuePropertiesFormat(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConfigurationGroupValuePropertiesFormat)} does not support '{options.Format}' format.");

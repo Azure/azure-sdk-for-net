@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProjectTaskProperties(document.RootElement, options);
+            return DeserializeProjectTaskProperties(document.RootElement, options);
         }
 
         internal static UnknownProjectTaskProperties DeserializeUnknownProjectTaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProjectTaskProperties(document.RootElement, options);
+                        return DeserializeProjectTaskProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ProjectTaskProperties)} does not support '{options.Format}' format.");

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceElementTemplate(document.RootElement, options);
+            return DeserializeResourceElementTemplate(document.RootElement, options);
         }
 
         internal static UnknownResourceElementTemplate DeserializeUnknownResourceElementTemplate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownResourceElementTemplate(document.RootElement, options);
+                        return DeserializeResourceElementTemplate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ResourceElementTemplate)} does not support '{options.Format}' format.");

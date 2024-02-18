@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+            return DeserializeCustomDomainHttpsContent(document.RootElement, options);
         }
 
         internal static UnknownCustomDomainHttpsParameters DeserializeUnknownCustomDomainHttpsParameters(JsonElement element, ModelReaderWriterOptions options = null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomDomainHttpsParameters(document.RootElement, options);
+                        return DeserializeCustomDomainHttpsContent(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CustomDomainHttpsContent)} does not support '{options.Format}' format.");

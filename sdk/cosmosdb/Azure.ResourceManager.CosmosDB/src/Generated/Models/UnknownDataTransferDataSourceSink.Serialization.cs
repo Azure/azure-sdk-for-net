@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataTransferDataSourceSink(document.RootElement, options);
+            return DeserializeDataTransferDataSourceSink(document.RootElement, options);
         }
 
         internal static UnknownDataTransferDataSourceSink DeserializeUnknownDataTransferDataSourceSink(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataTransferDataSourceSink(document.RootElement, options);
+                        return DeserializeDataTransferDataSourceSink(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support '{options.Format}' format.");

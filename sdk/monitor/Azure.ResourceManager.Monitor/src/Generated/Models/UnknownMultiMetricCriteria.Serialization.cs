@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMultiMetricCriteria(document.RootElement, options);
+            return DeserializeMultiMetricCriteria(document.RootElement, options);
         }
 
         internal static UnknownMultiMetricCriteria DeserializeUnknownMultiMetricCriteria(JsonElement element, ModelReaderWriterOptions options = null)
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMultiMetricCriteria(document.RootElement, options);
+                        return DeserializeMultiMetricCriteria(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MultiMetricCriteria)} does not support '{options.Format}' format.");

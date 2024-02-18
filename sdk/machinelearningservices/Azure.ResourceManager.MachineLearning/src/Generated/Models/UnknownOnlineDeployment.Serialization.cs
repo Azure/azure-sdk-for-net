@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOnlineDeployment(document.RootElement, options);
+            return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
         }
 
         internal static UnknownOnlineDeployment DeserializeUnknownOnlineDeployment(JsonElement element, ModelReaderWriterOptions options = null)
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOnlineDeployment(document.RootElement, options);
+                        return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");

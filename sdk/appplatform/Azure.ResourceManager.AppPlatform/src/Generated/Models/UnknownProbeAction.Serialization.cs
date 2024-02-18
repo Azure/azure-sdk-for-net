@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProbeAction(document.RootElement, options);
+            return DeserializeAppInstanceProbeAction(document.RootElement, options);
         }
 
         internal static UnknownProbeAction DeserializeUnknownProbeAction(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProbeAction(document.RootElement, options);
+                        return DeserializeAppInstanceProbeAction(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppInstanceProbeAction)} does not support '{options.Format}' format.");

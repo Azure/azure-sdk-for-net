@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChargeSummary(document.RootElement, options);
+            return DeserializeConsumptionChargeSummary(document.RootElement, options);
         }
 
         internal static UnknownChargeSummary DeserializeUnknownChargeSummary(JsonElement element, ModelReaderWriterOptions options = null)
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChargeSummary(document.RootElement, options);
+                        return DeserializeConsumptionChargeSummary(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionChargeSummary)} does not support '{options.Format}' format.");

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMongoDBProgress(document.RootElement, options);
+            return DeserializeMongoDBProgress(document.RootElement, options);
         }
 
         internal static UnknownMongoDBProgress DeserializeUnknownMongoDBProgress(JsonElement element, ModelReaderWriterOptions options = null)
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMongoDBProgress(document.RootElement, options);
+                        return DeserializeMongoDBProgress(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MongoDBProgress)} does not support '{options.Format}' format.");

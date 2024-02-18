@@ -92,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownOperationDetails(document.RootElement, options);
+            return DeserializeOperationDetails(document.RootElement, options);
         }
 
         internal static UnknownOperationDetails DeserializeUnknownOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -215,7 +215,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownOperationDetails(document.RootElement, options);
+                        return DeserializeOperationDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(OperationDetails)} does not support '{options.Format}' format.");

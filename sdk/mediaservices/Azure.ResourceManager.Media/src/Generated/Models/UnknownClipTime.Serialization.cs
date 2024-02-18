@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Media.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownClipTime(document.RootElement, options);
+            return DeserializeClipTime(document.RootElement, options);
         }
 
         internal static UnknownClipTime DeserializeUnknownClipTime(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownClipTime(document.RootElement, options);
+                        return DeserializeClipTime(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ClipTime)} does not support '{options.Format}' format.");

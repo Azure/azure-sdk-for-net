@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTargetServiceBase(document.RootElement, options);
+            return DeserializeTargetServiceBaseInfo(document.RootElement, options);
         }
 
         internal static UnknownTargetServiceBase DeserializeUnknownTargetServiceBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTargetServiceBase(document.RootElement, options);
+                        return DeserializeTargetServiceBaseInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support '{options.Format}' format.");

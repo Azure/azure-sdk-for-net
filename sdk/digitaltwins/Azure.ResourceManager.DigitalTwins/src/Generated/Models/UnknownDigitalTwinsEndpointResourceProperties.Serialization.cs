@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+            return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
         }
 
         internal static UnknownDigitalTwinsEndpointResourceProperties DeserializeUnknownDigitalTwinsEndpointResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDigitalTwinsEndpointResourceProperties(document.RootElement, options);
+                        return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");

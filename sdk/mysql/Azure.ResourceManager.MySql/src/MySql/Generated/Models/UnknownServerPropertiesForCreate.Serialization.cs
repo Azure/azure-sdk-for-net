@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
+            return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
         }
 
         internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
+                        return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{options.Format}' format.");

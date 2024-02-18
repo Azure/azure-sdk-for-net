@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownImportSettings(document.RootElement, options);
+            return DeserializeImportSettings(document.RootElement, options);
         }
 
         internal static UnknownImportSettings DeserializeUnknownImportSettings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownImportSettings(document.RootElement, options);
+                        return DeserializeImportSettings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ImportSettings)} does not support '{options.Format}' format.");

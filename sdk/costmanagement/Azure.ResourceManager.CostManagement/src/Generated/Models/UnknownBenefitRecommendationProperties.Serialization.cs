@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitRecommendationProperties(document.RootElement, options);
+            return DeserializeBenefitRecommendationProperties(document.RootElement, options);
         }
 
         internal static UnknownBenefitRecommendationProperties DeserializeUnknownBenefitRecommendationProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBenefitRecommendationProperties(document.RootElement, options);
+                        return DeserializeBenefitRecommendationProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BenefitRecommendationProperties)} does not support '{options.Format}' format.");

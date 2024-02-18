@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSecretInfoBase(document.RootElement, options);
+            return DeserializeSecretBaseInfo(document.RootElement, options);
         }
 
         internal static UnknownSecretInfoBase DeserializeUnknownSecretInfoBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSecretInfoBase(document.RootElement, options);
+                        return DeserializeSecretBaseInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support '{options.Format}' format.");

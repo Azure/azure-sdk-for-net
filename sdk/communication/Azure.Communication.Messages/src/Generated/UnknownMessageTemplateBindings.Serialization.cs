@@ -56,7 +56,7 @@ namespace Azure.Communication.Messages
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownMessageTemplateBindings(document.RootElement, options);
+            return DeserializeMessageTemplateBindings(document.RootElement, options);
         }
 
         internal static UnknownMessageTemplateBindings DeserializeUnknownMessageTemplateBindings(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownMessageTemplateBindings(document.RootElement, options);
+                        return DeserializeMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+            return DeserializeManagedServiceProperties(document.RootElement, options);
         }
 
         internal static UnknownServiceResourceProperties DeserializeUnknownServiceResourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownServiceResourceProperties(document.RootElement, options);
+                        return DeserializeManagedServiceProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceProperties)} does not support '{options.Format}' format.");

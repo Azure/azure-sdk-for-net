@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Workloads.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownProviderSpecificProperties(document.RootElement, options);
+            return DeserializeProviderSpecificProperties(document.RootElement, options);
         }
 
         internal static UnknownProviderSpecificProperties DeserializeUnknownProviderSpecificProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownProviderSpecificProperties(document.RootElement, options);
+                        return DeserializeProviderSpecificProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ProviderSpecificProperties)} does not support '{options.Format}' format.");

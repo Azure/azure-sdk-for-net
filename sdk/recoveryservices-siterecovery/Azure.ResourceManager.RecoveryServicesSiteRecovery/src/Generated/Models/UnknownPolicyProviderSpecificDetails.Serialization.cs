@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPolicyProviderSpecificDetails(document.RootElement, options);
+            return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
         }
 
         internal static UnknownPolicyProviderSpecificDetails DeserializeUnknownPolicyProviderSpecificDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPolicyProviderSpecificDetails(document.RootElement, options);
+                        return DeserializePolicyProviderSpecificDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PolicyProviderSpecificDetails)} does not support '{options.Format}' format.");

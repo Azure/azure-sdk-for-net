@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCopySource(document.RootElement, options);
+            return DeserializeCopyActivitySource(document.RootElement, options);
         }
 
         internal static UnknownCopySource DeserializeUnknownCopySource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCopySource(document.RootElement, options);
+                        return DeserializeCopyActivitySource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");

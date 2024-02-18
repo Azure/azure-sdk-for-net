@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTrigger(document.RootElement, options);
+            return DeserializeDataBoxEdgeTriggerData(document.RootElement, options);
         }
 
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTrigger(document.RootElement, options);
+                        return DeserializeDataBoxEdgeTriggerData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeTriggerData)} does not support '{options.Format}' format.");

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAlertsMetaDataProperties(document.RootElement, options);
+            return DeserializeServiceAlertMetadataProperties(document.RootElement, options);
         }
 
         internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAlertsMetaDataProperties(document.RootElement, options);
+                        return DeserializeServiceAlertMetadataProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ServiceAlertMetadataProperties)} does not support '{options.Format}' format.");

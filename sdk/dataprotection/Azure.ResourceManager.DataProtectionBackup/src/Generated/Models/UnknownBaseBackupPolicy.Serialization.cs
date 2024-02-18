@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseBackupPolicy(document.RootElement, options);
+            return DeserializeDataProtectionBackupPolicyPropertiesBase(document.RootElement, options);
         }
 
         internal static UnknownBaseBackupPolicy DeserializeUnknownBaseBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBaseBackupPolicy(document.RootElement, options);
+                        return DeserializeDataProtectionBackupPolicyPropertiesBase(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataProtectionBackupPolicyPropertiesBase)} does not support '{options.Format}' format.");

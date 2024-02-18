@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Monitor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRuleDataSource(document.RootElement, options);
+            return DeserializeRuleDataSource(document.RootElement, options);
         }
 
         internal static UnknownRuleDataSource DeserializeUnknownRuleDataSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRuleDataSource(document.RootElement, options);
+                        return DeserializeRuleDataSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RuleDataSource)} does not support '{options.Format}' format.");

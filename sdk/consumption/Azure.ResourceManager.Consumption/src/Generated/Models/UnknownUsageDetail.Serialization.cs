@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownUsageDetail(document.RootElement, options);
+            return DeserializeConsumptionUsageDetail(document.RootElement, options);
         }
 
         internal static UnknownUsageDetail DeserializeUnknownUsageDetail(JsonElement element, ModelReaderWriterOptions options = null)
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownUsageDetail(document.RootElement, options);
+                        return DeserializeConsumptionUsageDetail(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionUsageDetail)} does not support '{options.Format}' format.");

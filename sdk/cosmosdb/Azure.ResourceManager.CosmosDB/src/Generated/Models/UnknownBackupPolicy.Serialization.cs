@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBackupPolicy(document.RootElement, options);
+            return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
         }
 
         internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element, ModelReaderWriterOptions options = null)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBackupPolicy(document.RootElement, options);
+                        return DeserializeCosmosDBAccountBackupPolicy(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBAccountBackupPolicy)} does not support '{options.Format}' format.");

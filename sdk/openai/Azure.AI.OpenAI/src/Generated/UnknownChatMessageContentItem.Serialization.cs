@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownChatMessageContentItem(document.RootElement, options);
+            return DeserializeChatMessageContentItem(document.RootElement, options);
         }
 
         internal static UnknownChatMessageContentItem DeserializeUnknownChatMessageContentItem(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownChatMessageContentItem(document.RootElement, options);
+                        return DeserializeChatMessageContentItem(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ChatMessageContentItem)} does not support '{options.Format}' format.");

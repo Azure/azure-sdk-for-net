@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+            return DeserializeBenefitUtilizationSummary(document.RootElement, options);
         }
 
         internal static UnknownBenefitUtilizationSummary DeserializeUnknownBenefitUtilizationSummary(JsonElement element, ModelReaderWriterOptions options = null)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBenefitUtilizationSummary(document.RootElement, options);
+                        return DeserializeBenefitUtilizationSummary(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BenefitUtilizationSummary)} does not support '{options.Format}' format.");

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownResourceDetails(document.RootElement, options);
+            return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
         }
 
         internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownResourceDetails(document.RootElement, options);
+                        return DeserializeSecurityCenterResourceDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityCenterResourceDetails)} does not support '{options.Format}' format.");

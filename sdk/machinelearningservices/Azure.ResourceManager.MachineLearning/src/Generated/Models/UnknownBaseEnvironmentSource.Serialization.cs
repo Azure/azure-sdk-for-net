@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownBaseEnvironmentSource(document.RootElement, options);
+            return DeserializeBaseEnvironmentSource(document.RootElement, options);
         }
 
         internal static UnknownBaseEnvironmentSource DeserializeUnknownBaseEnvironmentSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownBaseEnvironmentSource(document.RootElement, options);
+                        return DeserializeBaseEnvironmentSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(BaseEnvironmentSource)} does not support '{options.Format}' format.");

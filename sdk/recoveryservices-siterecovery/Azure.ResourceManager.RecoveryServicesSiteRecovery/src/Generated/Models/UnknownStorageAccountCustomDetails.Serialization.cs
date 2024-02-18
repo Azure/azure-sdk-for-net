@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownStorageAccountCustomDetails(document.RootElement, options);
+            return DeserializeStorageAccountCustomDetails(document.RootElement, options);
         }
 
         internal static UnknownStorageAccountCustomDetails DeserializeUnknownStorageAccountCustomDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownStorageAccountCustomDetails(document.RootElement, options);
+                        return DeserializeStorageAccountCustomDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(StorageAccountCustomDetails)} does not support '{options.Format}' format.");

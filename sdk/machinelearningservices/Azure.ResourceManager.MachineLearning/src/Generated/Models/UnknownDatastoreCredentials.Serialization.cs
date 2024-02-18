@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDatastoreCredentials(document.RootElement, options);
+            return DeserializeMachineLearningDatastoreCredentials(document.RootElement, options);
         }
 
         internal static UnknownDatastoreCredentials DeserializeUnknownDatastoreCredentials(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDatastoreCredentials(document.RootElement, options);
+                        return DeserializeMachineLearningDatastoreCredentials(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDatastoreCredentials)} does not support '{options.Format}' format.");

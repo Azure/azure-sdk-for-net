@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownEnvironmentData(document.RootElement, options);
+            return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
         }
 
         internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownEnvironmentData(document.RootElement, options);
+                        return DeserializeSecurityConnectorEnvironment(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecurityConnectorEnvironment)} does not support '{options.Format}' format.");

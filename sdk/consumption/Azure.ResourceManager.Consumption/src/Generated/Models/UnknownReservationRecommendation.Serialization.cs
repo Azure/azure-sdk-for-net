@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Consumption.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReservationRecommendation(document.RootElement, options);
+            return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
         }
 
         internal static UnknownReservationRecommendation DeserializeUnknownReservationRecommendation(JsonElement element, ModelReaderWriterOptions options = null)
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownReservationRecommendation(document.RootElement, options);
+                        return DeserializeConsumptionReservationRecommendation(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationRecommendation)} does not support '{options.Format}' format.");

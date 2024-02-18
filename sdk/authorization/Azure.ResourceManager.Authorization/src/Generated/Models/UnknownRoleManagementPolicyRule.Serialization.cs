@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Authorization.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRoleManagementPolicyRule(document.RootElement, options);
+            return DeserializeRoleManagementPolicyRule(document.RootElement, options);
         }
 
         internal static UnknownRoleManagementPolicyRule DeserializeUnknownRoleManagementPolicyRule(JsonElement element, ModelReaderWriterOptions options = null)
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRoleManagementPolicyRule(document.RootElement, options);
+                        return DeserializeRoleManagementPolicyRule(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RoleManagementPolicyRule)} does not support '{options.Format}' format.");

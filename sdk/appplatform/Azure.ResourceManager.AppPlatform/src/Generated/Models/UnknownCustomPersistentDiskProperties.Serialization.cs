@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCustomPersistentDiskProperties(document.RootElement, options);
+            return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
         }
 
         internal static UnknownCustomPersistentDiskProperties DeserializeUnknownCustomPersistentDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCustomPersistentDiskProperties(document.RootElement, options);
+                        return DeserializeAppCustomPersistentDiskProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AppCustomPersistentDiskProperties)} does not support '{options.Format}' format.");

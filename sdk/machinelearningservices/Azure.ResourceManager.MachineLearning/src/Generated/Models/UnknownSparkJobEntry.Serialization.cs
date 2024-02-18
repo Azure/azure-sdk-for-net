@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownSparkJobEntry(document.RootElement, options);
+            return DeserializeSparkJobEntry(document.RootElement, options);
         }
 
         internal static UnknownSparkJobEntry DeserializeUnknownSparkJobEntry(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownSparkJobEntry(document.RootElement, options);
+                        return DeserializeSparkJobEntry(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SparkJobEntry)} does not support '{options.Format}' format.");

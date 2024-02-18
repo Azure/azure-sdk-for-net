@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownReferenceInputDataSource(document.RootElement, options);
+            return DeserializeReferenceInputDataSource(document.RootElement, options);
         }
 
         internal static UnknownReferenceInputDataSource DeserializeUnknownReferenceInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownReferenceInputDataSource(document.RootElement, options);
+                        return DeserializeReferenceInputDataSource(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ReferenceInputDataSource)} does not support '{options.Format}' format.");

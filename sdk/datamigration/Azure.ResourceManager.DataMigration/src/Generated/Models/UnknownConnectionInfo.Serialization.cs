@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownConnectionInfo(document.RootElement, options);
+            return DeserializeConnectionInfo(document.RootElement, options);
         }
 
         internal static UnknownConnectionInfo DeserializeUnknownConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownConnectionInfo(document.RootElement, options);
+                        return DeserializeConnectionInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ConnectionInfo)} does not support '{options.Format}' format.");

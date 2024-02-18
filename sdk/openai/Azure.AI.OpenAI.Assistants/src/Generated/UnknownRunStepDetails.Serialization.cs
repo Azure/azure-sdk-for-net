@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Assistants
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRunStepDetails(document.RootElement, options);
+            return DeserializeRunStepDetails(document.RootElement, options);
         }
 
         internal static UnknownRunStepDetails DeserializeUnknownRunStepDetails(JsonElement element, ModelReaderWriterOptions options = null)
@@ -108,7 +108,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRunStepDetails(document.RootElement, options);
+                        return DeserializeRunStepDetails(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RunStepDetails)} does not support '{options.Format}' format.");

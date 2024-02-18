@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownRouteConfiguration(document.RootElement, options);
+            return DeserializeRouteConfiguration(document.RootElement, options);
         }
 
         internal static UnknownRouteConfiguration DeserializeUnknownRouteConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownRouteConfiguration(document.RootElement, options);
+                        return DeserializeRouteConfiguration(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(RouteConfiguration)} does not support '{options.Format}' format.");

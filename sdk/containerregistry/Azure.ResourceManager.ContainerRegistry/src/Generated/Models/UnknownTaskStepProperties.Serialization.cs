@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
         }
 
         internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownTaskStepProperties(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support '{options.Format}' format.");

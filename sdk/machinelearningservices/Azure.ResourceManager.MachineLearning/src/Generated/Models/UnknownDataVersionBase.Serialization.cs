@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownDataVersionBase(document.RootElement, options);
+            return DeserializeMachineLearningDataVersionProperties(document.RootElement, options);
         }
 
         internal static UnknownDataVersionBase DeserializeUnknownDataVersionBase(JsonElement element, ModelReaderWriterOptions options = null)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownDataVersionBase(document.RootElement, options);
+                        return DeserializeMachineLearningDataVersionProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningDataVersionProperties)} does not support '{options.Format}' format.");

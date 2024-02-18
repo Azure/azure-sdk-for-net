@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAdditionalData(document.RootElement, options);
+            return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
         }
 
         internal static UnknownAdditionalData DeserializeUnknownAdditionalData(JsonElement element, ModelReaderWriterOptions options = null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAdditionalData(document.RootElement, options);
+                        return DeserializeSecuritySubAssessmentAdditionalInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(SecuritySubAssessmentAdditionalInfo)} does not support '{options.Format}' format.");

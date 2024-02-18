@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownCommandProperties(document.RootElement, options);
+            return DeserializeCommandProperties(document.RootElement, options);
         }
 
         internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownCommandProperties(document.RootElement, options);
+                        return DeserializeCommandProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(CommandProperties)} does not support '{options.Format}' format.");

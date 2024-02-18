@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownAddon(document.RootElement, options);
+            return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
         }
 
         internal static UnknownAddon DeserializeUnknownAddon(JsonElement element, ModelReaderWriterOptions options = null)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownAddon(document.RootElement, options);
+                        return DeserializeDataBoxEdgeRoleAddonData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(DataBoxEdgeRoleAddonData)} does not support '{options.Format}' format.");

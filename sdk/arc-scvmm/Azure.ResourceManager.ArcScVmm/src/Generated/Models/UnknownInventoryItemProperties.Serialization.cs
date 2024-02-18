@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownInventoryItemProperties(document.RootElement, options);
+            return DeserializeInventoryItemProperties(document.RootElement, options);
         }
 
         internal static UnknownInventoryItemProperties DeserializeUnknownInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownInventoryItemProperties(document.RootElement, options);
+                        return DeserializeInventoryItemProperties(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(InventoryItemProperties)} does not support '{options.Format}' format.");
