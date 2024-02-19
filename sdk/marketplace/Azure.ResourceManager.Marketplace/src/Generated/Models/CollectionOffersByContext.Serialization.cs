@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStoreOfferResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<PrivateStoreOfferResult> array = new List<PrivateStoreOfferResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateStoreOfferResult.DeserializePrivateStoreOfferResult(item));
+                                }
                             }
                             value = array;
                             continue;

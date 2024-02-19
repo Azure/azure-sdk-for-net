@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -95,17 +102,17 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                ((IJsonModel<Correlation>)Correlation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                ((IJsonModel<LogicContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                ((IJsonModel<LogicContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFired))
             {
@@ -115,7 +122,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Run))
             {
                 writer.WritePropertyName("run"u8);
-                writer.WriteObjectValue(Run);
+                ((IJsonModel<LogicResourceReference>)Run).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

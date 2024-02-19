@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<DataCollectionConfiguration>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(RequestLogging))
@@ -39,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestLogging != null)
                 {
                     writer.WritePropertyName("requestLogging"u8);
-                    writer.WriteObjectValue(RequestLogging);
+                    ((IJsonModel<RequestLogging>)RequestLogging).Write(writer, options);
                 }
                 else
                 {
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, DataCollectionConfiguration> dictionary = new Dictionary<string, DataCollectionConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DataCollectionConfiguration.DeserializeDataCollectionConfiguration(property0.Value));
+                        }
                     }
                     collections = dictionary;
                     continue;

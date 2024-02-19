@@ -31,7 +31,14 @@ namespace Azure.Maps.Routing.Models
                     List<EffectiveSetting> array = new List<EffectiveSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveSetting.DeserializeEffectiveSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EffectiveSetting.DeserializeEffectiveSetting(item));
+                        }
                     }
                     effectiveSettings = array;
                     continue;

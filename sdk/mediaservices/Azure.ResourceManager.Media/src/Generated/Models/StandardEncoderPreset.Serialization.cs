@@ -40,20 +40,34 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                ((IJsonModel<FilteringOperations>)Filters).Write(writer, options);
             }
             writer.WritePropertyName("codecs"u8);
             writer.WriteStartArray();
             foreach (var item in Codecs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MediaCodecBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("formats"u8);
             writer.WriteStartArray();
             foreach (var item in Formats)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MediaFormatBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("@odata.type"u8);
@@ -133,7 +147,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaCodecBase> array = new List<MediaCodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaCodecBase.DeserializeMediaCodecBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaCodecBase.DeserializeMediaCodecBase(item));
+                        }
                     }
                     codecs = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaFormatBase> array = new List<MediaFormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaFormatBase.DeserializeMediaFormatBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaFormatBase.DeserializeMediaFormatBase(item));
+                        }
                     }
                     formats = array;
                     continue;

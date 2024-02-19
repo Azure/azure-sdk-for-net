@@ -37,7 +37,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<EnrichmentStatus> array = new List<EnrichmentStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnrichmentStatus.DeserializeEnrichmentStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EnrichmentStatus.DeserializeEnrichmentStatus(item));
+                        }
                     }
                     value = array;
                     continue;

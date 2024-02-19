@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogicWorkflowTriggerHistoryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicWorkflowTriggerHistoryData> array = new List<LogicWorkflowTriggerHistoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LogicWorkflowTriggerHistoryData.DeserializeLogicWorkflowTriggerHistoryData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -26,14 +26,28 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
-            writer.WriteObjectValue(WholeSeriesDetectionConditions);
+            if (WholeSeriesDetectionConditions != null)
+            {
+                writer.WriteObjectValue(WholeSeriesDetectionConditions);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesGroupDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +57,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in SeriesDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +120,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<MetricSeriesGroupDetectionCondition> array = new List<MetricSeriesGroupDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSeriesGroupDetectionCondition.DeserializeMetricSeriesGroupDetectionCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricSeriesGroupDetectionCondition.DeserializeMetricSeriesGroupDetectionCondition(item));
+                        }
                     }
                     dimensionGroupOverrideConfigurations = array;
                     continue;
@@ -113,7 +141,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<MetricSingleSeriesDetectionCondition> array = new List<MetricSingleSeriesDetectionCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSingleSeriesDetectionCondition.DeserializeMetricSingleSeriesDetectionCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricSingleSeriesDetectionCondition.DeserializeMetricSingleSeriesDetectionCondition(item));
+                        }
                     }
                     seriesOverrideConfigurations = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Media
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingLocatorContentKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -260,7 +274,14 @@ namespace Azure.ResourceManager.Media
                             List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                                }
                             }
                             contentKeys = array;
                             continue;

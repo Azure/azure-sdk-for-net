@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -96,22 +103,22 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                ((IJsonModel<FlowEndpointsConfiguration>)EndpointsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl);
+                ((IJsonModel<FlowAccessControlConfiguration>)AccessControl).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<LogicSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue(IntegrationAccount);
+                ((IJsonModel<LogicResourceReference>)IntegrationAccount).Write(writer, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<LogicWorkflowParameterInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -349,7 +363,14 @@ namespace Azure.ResourceManager.Logic
                             Dictionary<string, LogicWorkflowParameterInfo> dictionary = new Dictionary<string, LogicWorkflowParameterInfo>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, LogicWorkflowParameterInfo.DeserializeLogicWorkflowParameterInfo(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;

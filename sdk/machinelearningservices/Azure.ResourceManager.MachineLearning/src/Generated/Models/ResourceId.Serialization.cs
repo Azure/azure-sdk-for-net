@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

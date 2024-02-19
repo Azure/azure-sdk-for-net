@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in PlansDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<PrivateStorePlanDetails>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -113,7 +120,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
+                        }
                     }
                     plansDetails = dictionary;
                     continue;

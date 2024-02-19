@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningPasswordDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningPasswordDetail> array = new List<MachineLearningPasswordDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningPasswordDetail.DeserializeMachineLearningPasswordDetail(item));
+                        }
                     }
                     passwords = array;
                     continue;

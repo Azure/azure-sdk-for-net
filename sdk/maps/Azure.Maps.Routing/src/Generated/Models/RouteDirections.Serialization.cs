@@ -39,7 +39,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteData> array = new List<RouteData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteData.DeserializeRouteData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteData.DeserializeRouteData(item));
+                        }
                     }
                     routes = array;
                     continue;
@@ -53,7 +60,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteOptimizedWaypoint> array = new List<RouteOptimizedWaypoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteOptimizedWaypoint.DeserializeRouteOptimizedWaypoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteOptimizedWaypoint.DeserializeRouteOptimizedWaypoint(item));
+                        }
                     }
                     optimizedWaypoints = array;
                     continue;

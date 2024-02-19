@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProxyArtifactListOverview>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ProxyArtifactListOverview> array = new List<ProxyArtifactListOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProxyArtifactListOverview.DeserializeProxyArtifactListOverview(item));
+                        }
                     }
                     value = array;
                     continue;

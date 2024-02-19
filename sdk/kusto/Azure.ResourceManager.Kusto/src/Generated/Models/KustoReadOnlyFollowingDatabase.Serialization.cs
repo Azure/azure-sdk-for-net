@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                ((IJsonModel<DatabaseStatistics>)Statistics).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OriginalDatabaseName))
             {
@@ -109,7 +116,7 @@ namespace Azure.ResourceManager.Kusto.Models
             if (options.Format != "W" && Optional.IsDefined(SuspensionDetails))
             {
                 writer.WritePropertyName("suspensionDetails"u8);
-                writer.WriteObjectValue(SuspensionDetails);
+                ((IJsonModel<SuspensionDetails>)SuspensionDetails).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

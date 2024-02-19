@@ -138,7 +138,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CveLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -314,7 +321,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<CveLink> array = new List<CveLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CveLink.DeserializeCveLink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CveLink.DeserializeCveLink(item));
+                        }
                     }
                     links = array;
                     continue;

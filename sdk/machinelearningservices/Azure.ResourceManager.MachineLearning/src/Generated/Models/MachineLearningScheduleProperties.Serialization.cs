@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            if (Action != null)
+            {
+                ((IJsonModel<MachineLearningScheduleAction>)Action).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            if (Trigger != null)
+            {
+                ((IJsonModel<MachineLearningTriggerBase>)Trigger).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)

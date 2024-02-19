@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Correlation))
             {
                 writer.WritePropertyName("correlation"u8);
-                writer.WriteObjectValue(Correlation);
+                ((IJsonModel<LogicWorkflowRunActionCorrelation>)Correlation).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -120,7 +127,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(InputsLink))
             {
                 writer.WritePropertyName("inputsLink"u8);
-                writer.WriteObjectValue(InputsLink);
+                ((IJsonModel<LogicContentLink>)InputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -137,7 +144,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(OutputsLink))
             {
                 writer.WritePropertyName("outputsLink"u8);
-                writer.WriteObjectValue(OutputsLink);
+                ((IJsonModel<LogicContentLink>)OutputsLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TrackedProperties))
             {
@@ -157,7 +164,14 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RetryHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogicWorkRetryHistory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +186,14 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RepetitionIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogicWorkflowRepetitionIndex>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -405,7 +426,14 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkRetryHistory> array = new List<LogicWorkRetryHistory>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LogicWorkRetryHistory.DeserializeLogicWorkRetryHistory(item));
+                                }
                             }
                             retryHistory = array;
                             continue;
@@ -428,7 +456,14 @@ namespace Azure.ResourceManager.Logic
                             List<LogicWorkflowRepetitionIndex> array = new List<LogicWorkflowRepetitionIndex>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogicWorkflowRepetitionIndex.DeserializeLogicWorkflowRepetitionIndex(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LogicWorkflowRepetitionIndex.DeserializeLogicWorkflowRepetitionIndex(item));
+                                }
                             }
                             repetitionIndexes = array;
                             continue;

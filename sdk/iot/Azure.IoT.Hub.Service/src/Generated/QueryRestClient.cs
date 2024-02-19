@@ -91,7 +91,14 @@ namespace Azure.IoT.Hub.Service
                         List<TwinData> array = new List<TwinData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(TwinData.DeserializeTwinData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(TwinData.DeserializeTwinData(item));
+                            }
                         }
                         value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
@@ -126,7 +133,14 @@ namespace Azure.IoT.Hub.Service
                         List<TwinData> array = new List<TwinData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(TwinData.DeserializeTwinData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(TwinData.DeserializeTwinData(item));
+                            }
                         }
                         value = array;
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);

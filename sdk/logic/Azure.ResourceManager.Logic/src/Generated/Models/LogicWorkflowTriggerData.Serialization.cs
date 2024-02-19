@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -88,12 +95,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                ((IJsonModel<LogicWorkflowTriggerRecurrence>)Recurrence).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Workflow))
             {
                 writer.WritePropertyName("workflow"u8);
-                writer.WriteObjectValue(Workflow);
+                ((IJsonModel<LogicResourceReference>)Workflow).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash);
+                ((IJsonModel<LogicContentHash>)ContentHash).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {

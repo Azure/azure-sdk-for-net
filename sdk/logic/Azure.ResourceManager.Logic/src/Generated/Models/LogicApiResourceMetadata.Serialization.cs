@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(WsdlService))
             {
                 writer.WritePropertyName("wsdlService"u8);
-                writer.WriteObjectValue(WsdlService);
+                ((IJsonModel<LogicWsdlService>)WsdlService).Write(writer, options);
             }
             if (Optional.IsDefined(WsdlImportMethod))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters);
+                ((IJsonModel<LogicApiDeploymentParameterMetadataSet>)DeploymentParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

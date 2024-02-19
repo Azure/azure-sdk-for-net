@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataCollector != null)
                 {
                     writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector);
+                    ((IJsonModel<DataCollector>)DataCollector).Write(writer, options);
                 }
                 else
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe);
+                    ((IJsonModel<MachineLearningProbeSettings>)LivenessProbe).Write(writer, options);
                 }
                 else
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe);
+                    ((IJsonModel<MachineLearningProbeSettings>)ReadinessProbe).Write(writer, options);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings);
+                    ((IJsonModel<MachineLearningOnlineRequestSettings>)RequestSettings).Write(writer, options);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings);
+                    ((IJsonModel<MachineLearningOnlineScaleSettings>)ScaleSettings).Write(writer, options);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    ((IJsonModel<MachineLearningCodeConfiguration>)CodeConfiguration).Write(writer, options);
                 }
                 else
                 {

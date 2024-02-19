@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<HybridContainerServiceNetworkOperationError>)Error).Write(writer, options);
             }
             if (Optional.IsDefined(OperationId))
             {

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in AccessPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<OpenAuthenticationAccessPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, OpenAuthenticationAccessPolicy> dictionary = new Dictionary<string, OpenAuthenticationAccessPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, OpenAuthenticationAccessPolicy.DeserializeOpenAuthenticationAccessPolicy(property0.Value));
+                        }
                     }
                     policies = dictionary;
                     continue;

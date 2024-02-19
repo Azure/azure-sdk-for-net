@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in TrackSelections)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<FilterTrackPropertyCondition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<FilterTrackPropertyCondition> array = new List<FilterTrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FilterTrackPropertyCondition.DeserializeFilterTrackPropertyCondition(item));
+                        }
                     }
                     trackSelections = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubQuotaMetricInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubQuotaMetricInfo> array = new List<IotHubQuotaMetricInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubQuotaMetricInfo.DeserializeIotHubQuotaMetricInfo(item));
+                        }
                     }
                     value = array;
                     continue;

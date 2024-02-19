@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            if (Secrets != null)
+            {
+                ((IJsonModel<KerberosKeytabSecrets>)Secrets).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("kerberosKdcAddress"u8);
             writer.WriteStringValue(KerberosKdcAddress);
             writer.WritePropertyName("kerberosPrincipal"u8);

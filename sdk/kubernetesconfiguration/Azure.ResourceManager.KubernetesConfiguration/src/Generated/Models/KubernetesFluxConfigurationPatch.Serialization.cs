@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository);
+                    ((IJsonModel<KubernetesGitRepositoryUpdateContent>)GitRepository).Write(writer, options);
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket);
+                    ((IJsonModel<KubernetesBucketUpdateContent>)Bucket).Write(writer, options);
                 }
                 else
                 {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob);
+                    ((IJsonModel<KubernetesAzureBlobUpdateContent>)AzureBlob).Write(writer, options);
                 }
                 else
                 {
@@ -97,7 +97,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<KustomizationUpdateContent>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -243,7 +250,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                             Dictionary<string, KustomizationUpdateContent> dictionary = new Dictionary<string, KustomizationUpdateContent>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, KustomizationUpdateContent.DeserializeKustomizationUpdateContent(property1.Value));
+                                }
                             }
                             kustomizations = dictionary;
                             continue;

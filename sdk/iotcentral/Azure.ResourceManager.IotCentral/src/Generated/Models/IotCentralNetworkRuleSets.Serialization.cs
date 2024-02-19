@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotCentralNetworkRuleSetIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralNetworkRuleSetIPRule> array = new List<IotCentralNetworkRuleSetIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotCentralNetworkRuleSetIPRule.DeserializeIotCentralNetworkRuleSetIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in MatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AccessControlListMatchConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in DynamicMatchConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CommonDynamicMatchConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<AccessControlListMatchConfiguration> array = new List<AccessControlListMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AccessControlListMatchConfiguration.DeserializeAccessControlListMatchConfiguration(item));
+                                }
                             }
                             matchConfigurations = array;
                             continue;
@@ -289,7 +317,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<CommonDynamicMatchConfiguration> array = new List<CommonDynamicMatchConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CommonDynamicMatchConfiguration.DeserializeCommonDynamicMatchConfiguration(item));
+                                }
                             }
                             dynamicMatchConfigurations = array;
                             continue;

@@ -40,11 +40,18 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties != null)
+            {
+                ((IJsonModel<MachineLearningBatchDeploymentProperties>)Properties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.MachineLearning
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(NetworkFunctionTemplate))
             {
                 writer.WritePropertyName("networkFunctionTemplate"u8);
-                writer.WriteObjectValue(NetworkFunctionTemplate);
+                ((IJsonModel<VirtualNetworkFunctionTemplate>)NetworkFunctionTemplate).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

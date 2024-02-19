@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,7 +81,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -84,24 +98,31 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in WorkloadExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InfrastructureServices))
             {
                 writer.WritePropertyName("infrastructureServices"u8);
-                writer.WriteObjectValue(InfrastructureServices);
+                ((IJsonModel<NetworkFabricControllerServices>)InfrastructureServices).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkloadServices))
             {
                 writer.WritePropertyName("workloadServices"u8);
-                writer.WriteObjectValue(WorkloadServices);
+                ((IJsonModel<NetworkFabricControllerServices>)WorkloadServices).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkFabricIds))
             {
@@ -109,12 +130,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in NetworkFabricIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -134,12 +157,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in TenantInternetGatewayIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -292,7 +317,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                }
                             }
                             infrastructureExpressRouteConnections = array;
                             continue;
@@ -306,7 +338,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                }
                             }
                             workloadExpressRouteConnections = array;
                             continue;

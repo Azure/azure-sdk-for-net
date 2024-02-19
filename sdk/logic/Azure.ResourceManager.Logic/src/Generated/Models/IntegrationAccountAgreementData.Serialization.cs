@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -92,11 +99,32 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("guestPartner"u8);
             writer.WriteStringValue(GuestPartner);
             writer.WritePropertyName("hostIdentity"u8);
-            writer.WriteObjectValue(HostIdentity);
+            if (HostIdentity != null)
+            {
+                ((IJsonModel<IntegrationAccountBusinessIdentity>)HostIdentity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("guestIdentity"u8);
-            writer.WriteObjectValue(GuestIdentity);
+            if (GuestIdentity != null)
+            {
+                ((IJsonModel<IntegrationAccountBusinessIdentity>)GuestIdentity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content != null)
+            {
+                ((IJsonModel<IntegrationAccountAgreementContent>)Content).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

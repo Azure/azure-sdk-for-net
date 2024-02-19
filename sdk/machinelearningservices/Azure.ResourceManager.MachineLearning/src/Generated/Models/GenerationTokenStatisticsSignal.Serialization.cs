@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<GenerationTokenStatisticsMetricThreshold>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
@@ -38,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ProductionData != null)
                 {
                     writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue(ProductionData);
+                    ((IJsonModel<MonitoringInputDataBase>)ProductionData).Write(writer, options);
                 }
                 else
                 {
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        }
                     }
                     metricThresholds = array;
                     continue;

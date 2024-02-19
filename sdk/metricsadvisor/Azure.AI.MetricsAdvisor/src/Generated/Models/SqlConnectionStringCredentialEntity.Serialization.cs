@@ -17,7 +17,14 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            if (Parameters != null)
+            {
+                writer.WriteObjectValue(Parameters);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);

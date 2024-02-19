@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                ((IJsonModel<ImportRoutePolicy>)ImportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                ((IJsonModel<ExportRoutePolicy>)ExportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(PeeringOption))
             {
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(OptionBProperties))
             {
                 writer.WritePropertyName("optionBProperties"u8);
-                writer.WriteObjectValue(OptionBProperties);
+                ((IJsonModel<L3OptionBProperties>)OptionBProperties).Write(writer, options);
             }
             if (Optional.IsDefined(OptionAProperties))
             {
                 writer.WritePropertyName("optionAProperties"u8);
-                writer.WriteObjectValue(OptionAProperties);
+                ((IJsonModel<ExternalNetworkPatchOptionAProperties>)OptionAProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

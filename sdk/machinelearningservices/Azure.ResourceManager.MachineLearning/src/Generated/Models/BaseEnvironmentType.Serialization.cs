@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("baseEnvironmentSourceType"u8);
             writer.WriteStringValue(BaseEnvironmentSourceType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

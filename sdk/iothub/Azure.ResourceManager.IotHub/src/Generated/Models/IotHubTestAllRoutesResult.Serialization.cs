@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubMatchedRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubMatchedRoute> array = new List<IotHubMatchedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item));
+                        }
                     }
                     routes = array;
                     continue;

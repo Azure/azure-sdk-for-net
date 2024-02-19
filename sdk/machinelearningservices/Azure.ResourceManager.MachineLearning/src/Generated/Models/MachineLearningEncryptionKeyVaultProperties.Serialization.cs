@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("keyIdentifier"u8);
             writer.WriteStringValue(KeyIdentifier);
             writer.WritePropertyName("keyVaultArmId"u8);
-            writer.WriteStringValue(KeyVaultArmId);
+            if (KeyVaultArmId != null)
+            {
+                writer.WriteStringValue(KeyVaultArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

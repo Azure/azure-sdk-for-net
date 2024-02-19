@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SupportedVersionProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +97,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkDeviceInterfaceProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +218,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<SupportedVersionProperties> array = new List<SupportedVersionProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SupportedVersionProperties.DeserializeSupportedVersionProperties(item));
+                                }
                             }
                             supportedVersions = array;
                             continue;
@@ -225,7 +253,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<NetworkDeviceInterfaceProperties> array = new List<NetworkDeviceInterfaceProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkDeviceInterfaceProperties.DeserializeNetworkDeviceInterfaceProperties(item));
+                                }
                             }
                             interfaces = array;
                             continue;

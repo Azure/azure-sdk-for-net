@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningEnvironmentContainerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningEnvironmentContainerData> array = new List<MachineLearningEnvironmentContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningEnvironmentContainerData.DeserializeMachineLearningEnvironmentContainerData(item));
+                        }
                     }
                     value = array;
                     continue;

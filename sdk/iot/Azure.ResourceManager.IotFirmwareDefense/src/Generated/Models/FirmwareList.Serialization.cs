@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirmwareData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareData> array = new List<FirmwareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareData.DeserializeFirmwareData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FirmwareData.DeserializeFirmwareData(item));
+                        }
                     }
                     value = array;
                     continue;

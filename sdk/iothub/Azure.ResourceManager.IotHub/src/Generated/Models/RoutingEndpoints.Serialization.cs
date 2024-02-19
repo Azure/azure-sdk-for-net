@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingServiceBusQueueEndpointProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingServiceBusTopicEndpointProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingEventHubProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +83,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingStorageContainerProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +100,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in CosmosDBSqlContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingCosmosDBSqlApiProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +167,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusQueueEndpointProperties> array = new List<RoutingServiceBusQueueEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingServiceBusQueueEndpointProperties.DeserializeRoutingServiceBusQueueEndpointProperties(item));
+                        }
                     }
                     serviceBusQueues = array;
                     continue;
@@ -146,7 +188,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingServiceBusTopicEndpointProperties> array = new List<RoutingServiceBusTopicEndpointProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingServiceBusTopicEndpointProperties.DeserializeRoutingServiceBusTopicEndpointProperties(item));
+                        }
                     }
                     serviceBusTopics = array;
                     continue;
@@ -160,7 +209,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingEventHubProperties> array = new List<RoutingEventHubProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingEventHubProperties.DeserializeRoutingEventHubProperties(item));
+                        }
                     }
                     eventHubs = array;
                     continue;
@@ -174,7 +230,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingStorageContainerProperties> array = new List<RoutingStorageContainerProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingStorageContainerProperties.DeserializeRoutingStorageContainerProperties(item));
+                        }
                     }
                     storageContainers = array;
                     continue;
@@ -188,7 +251,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<RoutingCosmosDBSqlApiProperties> array = new List<RoutingCosmosDBSqlApiProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingCosmosDBSqlApiProperties.DeserializeRoutingCosmosDBSqlApiProperties(item));
+                        }
                     }
                     cosmosDBSqlContainers = array;
                     continue;

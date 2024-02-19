@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PodEvent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -170,7 +177,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<PodEvent> array = new List<PodEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PodEvent.DeserializePodEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PodEvent.DeserializePodEvent(item));
+                        }
                     }
                     events = array;
                     continue;

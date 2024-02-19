@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProvisionedClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterData> array = new List<ProvisionedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterData.DeserializeProvisionedClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProvisionedClusterData.DeserializeProvisionedClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

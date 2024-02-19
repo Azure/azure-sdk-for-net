@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                ((IJsonModel<StorageAccountCredentials>)StorageAccount).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue(ContainerRegistry);
+                ((IJsonModel<ContainerRegistryCredentials>)ContainerRegistry).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue(ContainerService);
+                ((IJsonModel<ContainerServiceCredentials>)ContainerService).Write(writer, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue(AppInsights);
+                ((IJsonModel<AppInsightsCredentials>)AppInsights).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceAuthConfiguration))
             {
                 writer.WritePropertyName("serviceAuthConfiguration"u8);
-                writer.WriteObjectValue(ServiceAuthConfiguration);
+                ((IJsonModel<ServiceAuthConfiguration>)ServiceAuthConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SslConfiguration))
             {
                 writer.WritePropertyName("sslConfiguration"u8);
-                writer.WriteObjectValue(SslConfiguration);
+                ((IJsonModel<SslConfiguration>)SslConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

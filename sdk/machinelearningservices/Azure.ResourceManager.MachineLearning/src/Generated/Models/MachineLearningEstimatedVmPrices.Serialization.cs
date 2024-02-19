@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MachineLearningEstimatedVmPrice>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningEstimatedVmPrice> array = new List<MachineLearningEstimatedVmPrice>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningEstimatedVmPrice.DeserializeMachineLearningEstimatedVmPrice(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningEstimatedVmPrice.DeserializeMachineLearningEstimatedVmPrice(item));
+                        }
                     }
                     values = array;
                     continue;

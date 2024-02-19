@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue(IP);
+                ((IJsonModel<IPAccessControl>)IP).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

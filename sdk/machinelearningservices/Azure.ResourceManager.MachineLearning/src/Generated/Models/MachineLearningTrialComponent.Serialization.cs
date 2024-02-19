@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Distribution != null)
                 {
                     writer.WritePropertyName("distribution"u8);
-                    writer.WriteObjectValue(Distribution);
+                    ((IJsonModel<MachineLearningDistributionConfiguration>)Distribution).Write(writer, options);
                 }
                 else
                 {
@@ -53,7 +53,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("environmentId"u8);
-            writer.WriteStringValue(EnvironmentId);
+            if (EnvironmentId != null)
+            {
+                writer.WriteStringValue(EnvironmentId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 if (EnvironmentVariables != null)
@@ -75,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                ((IJsonModel<MachineLearningJobResourceConfiguration>)Resources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

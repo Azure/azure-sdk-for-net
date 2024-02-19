@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(TerminalServerConfiguration))
             {
                 writer.WritePropertyName("terminalServerConfiguration"u8);
-                writer.WriteObjectValue(TerminalServerConfiguration);
+                ((IJsonModel<NetworkFabricPatchablePropertiesTerminalServerConfiguration>)TerminalServerConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementNetworkConfiguration))
             {
                 writer.WritePropertyName("managementNetworkConfiguration"u8);
-                writer.WriteObjectValue(ManagementNetworkConfiguration);
+                ((IJsonModel<ManagementNetworkConfigurationPatchableProperties>)ManagementNetworkConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteObjectValue(ParametersSchema);
+                ((IJsonModel<IntegrationAccountMapPropertiesParametersSchema>)ParametersSchema).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -100,7 +107,7 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                ((IJsonModel<LogicContentLink>)ContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {

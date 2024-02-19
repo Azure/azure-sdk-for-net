@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStringValue(ApplicationId.Value);
             }
             writer.WritePropertyName("permissions"u8);
-            writer.WriteObjectValue(Permissions);
+            if (Permissions != null)
+            {
+                ((IJsonModel<IdentityAccessPermissions>)Permissions).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -27,14 +27,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("endpointInvocationDefinition"u8);
+            if (EndpointInvocationDefinition != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EndpointInvocationDefinition);
 #else
-            using (JsonDocument document = JsonDocument.Parse(EndpointInvocationDefinition))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(EndpointInvocationDefinition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

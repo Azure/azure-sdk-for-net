@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {

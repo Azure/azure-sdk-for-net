@@ -53,7 +53,14 @@ namespace Azure.Maps.Search.Models
                     List<PointOfInterestCategorySet> array = new List<PointOfInterestCategorySet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PointOfInterestCategorySet.DeserializePointOfInterestCategorySet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PointOfInterestCategorySet.DeserializePointOfInterestCategorySet(item));
+                        }
                     }
                     categorySet = array;
                     continue;
@@ -81,7 +88,14 @@ namespace Azure.Maps.Search.Models
                     List<PointOfInterestClassification> array = new List<PointOfInterestClassification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PointOfInterestClassification.DeserializePointOfInterestClassification(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PointOfInterestClassification.DeserializePointOfInterestClassification(item));
+                        }
                     }
                     classifications = array;
                     continue;
@@ -95,7 +109,14 @@ namespace Azure.Maps.Search.Models
                     List<BrandName> array = new List<BrandName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BrandName.DeserializeBrandName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BrandName.DeserializeBrandName(item));
+                        }
                     }
                     brands = array;
                     continue;

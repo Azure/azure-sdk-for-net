@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("ruleProperties"u8);
-            writer.WriteObjectValue(RuleProperties);
+            if (RuleProperties != null)
+            {
+                ((IJsonModel<InternetGatewayRules>)RuleProperties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -81,12 +95,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in InternetGatewayIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

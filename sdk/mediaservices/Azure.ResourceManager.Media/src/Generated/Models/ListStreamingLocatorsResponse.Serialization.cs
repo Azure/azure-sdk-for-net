@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StreamingLocators)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaAssetStreamingLocator>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetStreamingLocator> array = new List<MediaAssetStreamingLocator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaAssetStreamingLocator.DeserializeMediaAssetStreamingLocator(item));
+                        }
                     }
                     streamingLocators = array;
                     continue;

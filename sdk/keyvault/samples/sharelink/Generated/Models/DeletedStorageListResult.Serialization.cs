@@ -32,7 +32,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     List<DeletedStorageAccountItem> array = new List<DeletedStorageAccountItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedStorageAccountItem.DeserializeDeletedStorageAccountItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeletedStorageAccountItem.DeserializeDeletedStorageAccountItem(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IntegrationAccountCertificateData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountCertificateData> array = new List<IntegrationAccountCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationAccountCertificateData.DeserializeIntegrationAccountCertificateData(item));
+                        }
                     }
                     value = array;
                     continue;

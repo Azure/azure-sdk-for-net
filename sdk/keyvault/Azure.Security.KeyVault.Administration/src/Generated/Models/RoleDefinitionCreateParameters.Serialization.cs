@@ -16,7 +16,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties != null)
+            {
+                writer.WriteObjectValue(Properties);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

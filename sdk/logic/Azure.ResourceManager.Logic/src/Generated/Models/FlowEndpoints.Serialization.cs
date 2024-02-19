@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FlowEndpointIPAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FlowEndpointIPAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        }
                     }
                     outgoingIPAddresses = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowEndpointIPAddress> array = new List<FlowEndpointIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FlowEndpointIPAddress.DeserializeFlowEndpointIPAddress(item));
+                        }
                     }
                     accessEndpointIPAddresses = array;
                     continue;

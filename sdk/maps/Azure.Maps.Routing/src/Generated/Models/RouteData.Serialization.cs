@@ -43,7 +43,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteLeg> array = new List<RouteLeg>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteLeg.DeserializeRouteLeg(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteLeg.DeserializeRouteLeg(item));
+                        }
                     }
                     legs = array;
                     continue;
@@ -57,7 +64,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteSection> array = new List<RouteSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteSection.DeserializeRouteSection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteSection.DeserializeRouteSection(item));
+                        }
                     }
                     sections = array;
                     continue;

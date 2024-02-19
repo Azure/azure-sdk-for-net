@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LinuxSshPublicKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<LinuxSshPublicKey> array = new List<LinuxSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinuxSshPublicKey.DeserializeLinuxSshPublicKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinuxSshPublicKey.DeserializeLinuxSshPublicKey(item));
+                        }
                     }
                     publicKeys = array;
                     continue;

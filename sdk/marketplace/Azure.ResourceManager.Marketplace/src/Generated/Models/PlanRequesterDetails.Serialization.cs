@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Requesters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PlanRequesterInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanRequesterInfo> array = new List<PlanRequesterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PlanRequesterInfo.DeserializePlanRequesterInfo(item));
+                        }
                     }
                     requesters = array;
                     continue;

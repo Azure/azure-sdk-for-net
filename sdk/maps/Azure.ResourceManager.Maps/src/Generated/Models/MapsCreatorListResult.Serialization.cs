@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapsCreatorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCreatorData> array = new List<MapsCreatorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCreatorData.DeserializeMapsCreatorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapsCreatorData.DeserializeMapsCreatorData(item));
+                        }
                     }
                     value = array;
                     continue;

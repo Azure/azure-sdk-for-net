@@ -32,7 +32,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteDirectionsBatchItem> array = new List<RouteDirectionsBatchItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteDirectionsBatchItem.DeserializeRouteDirectionsBatchItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteDirectionsBatchItem.DeserializeRouteDirectionsBatchItem(item));
+                        }
                     }
                     batchItems = array;
                     continue;

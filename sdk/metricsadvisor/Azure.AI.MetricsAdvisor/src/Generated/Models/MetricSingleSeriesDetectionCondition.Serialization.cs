@@ -16,7 +16,14 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("series"u8);
-            writer.WriteObjectValue(Series);
+            if (Series != null)
+            {
+                writer.WriteObjectValue(Series);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ConditionOperator))
             {
                 writer.WritePropertyName("conditionOperator"u8);

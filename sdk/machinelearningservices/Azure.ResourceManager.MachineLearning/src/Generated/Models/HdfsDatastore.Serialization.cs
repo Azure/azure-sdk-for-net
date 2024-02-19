@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(Protocol);
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            if (Credentials != null)
+            {
+                ((IJsonModel<MachineLearningDatastoreCredentials>)Credentials).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {

@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(AggregateRouteConfiguration))
             {
                 writer.WritePropertyName("aggregateRouteConfiguration"u8);
-                writer.WriteObjectValue(AggregateRouteConfiguration);
+                ((IJsonModel<AggregateRouteConfiguration>)AggregateRouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectedSubnetRoutePolicy))
             {
                 writer.WritePropertyName("connectedSubnetRoutePolicy"u8);
-                writer.WriteObjectValue(ConnectedSubnetRoutePolicy);
+                ((IJsonModel<ConnectedSubnetRoutePolicy>)ConnectedSubnetRoutePolicy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

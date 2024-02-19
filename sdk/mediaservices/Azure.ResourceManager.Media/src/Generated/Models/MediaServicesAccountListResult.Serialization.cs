@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaServicesAccountData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaServicesAccountData> array = new List<MediaServicesAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaServicesAccountData.DeserializeMediaServicesAccountData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaServicesAccountData.DeserializeMediaServicesAccountData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataSegment != null)
                 {
                     writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment);
+                    ((IJsonModel<MonitoringDataSegment>)DataSegment).Write(writer, options);
                 }
                 else
                 {
@@ -39,16 +39,37 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold);
+            if (MetricThreshold != null)
+            {
+                ((IJsonModel<ModelPerformanceMetricThresholdBase>)MetricThreshold).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MonitoringInputDataBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            if (ReferenceData != null)
+            {
+                ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        }
                     }
                     productionData = array;
                     continue;

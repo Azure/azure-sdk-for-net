@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ErrorResponseWrapper>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,27 +115,27 @@ namespace Azure.ResourceManager.MachineLearningCompute
             if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
-                writer.WriteObjectValue(StorageAccount);
+                ((IJsonModel<StorageAccountProperties>)StorageAccount).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerRegistry))
             {
                 writer.WritePropertyName("containerRegistry"u8);
-                writer.WriteObjectValue(ContainerRegistry);
+                ((IJsonModel<ContainerRegistryProperties>)ContainerRegistry).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerService))
             {
                 writer.WritePropertyName("containerService"u8);
-                writer.WriteObjectValue(ContainerService);
+                ((IJsonModel<AcsClusterProperties>)ContainerService).Write(writer, options);
             }
             if (Optional.IsDefined(AppInsights))
             {
                 writer.WritePropertyName("appInsights"u8);
-                writer.WriteObjectValue(AppInsights);
+                ((IJsonModel<AppInsightsProperties>)AppInsights).Write(writer, options);
             }
             if (Optional.IsDefined(GlobalServiceConfiguration))
             {
                 writer.WritePropertyName("globalServiceConfiguration"u8);
-                writer.WriteObjectValue(GlobalServiceConfiguration);
+                ((IJsonModel<GlobalServiceConfiguration>)GlobalServiceConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -276,7 +290,14 @@ namespace Azure.ResourceManager.MachineLearningCompute
                             List<ErrorResponseWrapper> array = new List<ErrorResponseWrapper>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ErrorResponseWrapper.DeserializeErrorResponseWrapper(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ErrorResponseWrapper.DeserializeErrorResponseWrapper(item));
+                                }
                             }
                             provisioningErrors = array;
                             continue;

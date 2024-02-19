@@ -69,7 +69,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Webhooks)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MachineLearningWebhook>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -163,7 +170,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningWebhook> dictionary = new Dictionary<string, MachineLearningWebhook>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningWebhook.DeserializeMachineLearningWebhook(property0.Value));
+                        }
                     }
                     webhooks = dictionary;
                     continue;

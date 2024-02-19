@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedHsmIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedHsmVirtualNetworkRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmIPRule> array = new List<ManagedHsmIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedHsmIPRule.DeserializeManagedHsmIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmVirtualNetworkRule> array = new List<ManagedHsmVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedHsmVirtualNetworkRule.DeserializeManagedHsmVirtualNetworkRule(item));
+                        }
                     }
                     virtualNetworkRules = array;
                     continue;

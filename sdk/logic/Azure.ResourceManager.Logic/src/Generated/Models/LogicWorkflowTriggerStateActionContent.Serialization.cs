@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source != null)
+            {
+                ((IJsonModel<LogicWorkflowTriggerReference>)Source).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkTapRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleData> array = new List<NetworkTapRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleData.DeserializeNetworkTapRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkTapRuleData.DeserializeNetworkTapRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

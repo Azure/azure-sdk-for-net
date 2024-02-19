@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<H264Layer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +149,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<H264Layer> array = new List<H264Layer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(H264Layer.DeserializeH264Layer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(H264Layer.DeserializeH264Layer(item));
+                        }
                     }
                     layers = array;
                     continue;

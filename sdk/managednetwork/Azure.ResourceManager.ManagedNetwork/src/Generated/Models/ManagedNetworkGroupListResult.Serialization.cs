@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedNetworkGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

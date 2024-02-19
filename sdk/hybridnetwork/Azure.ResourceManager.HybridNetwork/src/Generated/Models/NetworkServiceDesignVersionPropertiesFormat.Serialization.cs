@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in ConfigurationGroupSchemaReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    if (item.Value != null)
+                    {
+                        JsonSerializer.Serialize(writer, item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -60,7 +67,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in NfvisFromSite)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<NfviDetails>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -70,7 +84,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceElementTemplates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceElementTemplate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +175,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        }
                     }
                     configurationGroupSchemaReferences = dictionary;
                     continue;
@@ -168,7 +196,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, NfviDetails> dictionary = new Dictionary<string, NfviDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, NfviDetails.DeserializeNfviDetails(property0.Value));
+                        }
                     }
                     nfvisFromSite = dictionary;
                     continue;
@@ -182,7 +217,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<ResourceElementTemplate> array = new List<ResourceElementTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceElementTemplate.DeserializeResourceElementTemplate(item));
+                        }
                     }
                     resourceElementTemplates = array;
                     continue;

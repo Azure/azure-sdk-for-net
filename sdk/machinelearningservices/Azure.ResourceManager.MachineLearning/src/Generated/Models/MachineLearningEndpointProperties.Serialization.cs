@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    ((IJsonModel<MachineLearningEndpointAuthKeys>)Keys).Write(writer, options);
                 }
                 else
                 {

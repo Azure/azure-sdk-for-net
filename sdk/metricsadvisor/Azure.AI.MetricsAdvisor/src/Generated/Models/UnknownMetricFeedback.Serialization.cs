@@ -22,7 +22,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            if (DimensionFilter != null)
+            {
+                writer.WriteObjectValue(DimensionFilter);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

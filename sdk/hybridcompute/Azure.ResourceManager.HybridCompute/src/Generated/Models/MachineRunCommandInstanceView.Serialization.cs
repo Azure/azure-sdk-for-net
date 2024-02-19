@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExtensionsResourceStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +188,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<ExtensionsResourceStatus> array = new List<ExtensionsResourceStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExtensionsResourceStatus.DeserializeExtensionsResourceStatus(item));
+                        }
                     }
                     statuses = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in AssetFileEncryptionMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaAssetFileEncryptionMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
+                        }
                     }
                     assetFileEncryptionMetadata = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoDataConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoDataConnectionData> array = new List<KustoDataConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KustoDataConnectionData.DeserializeKustoDataConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

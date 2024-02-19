@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Media
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Options)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentKeyPolicyOption>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +220,14 @@ namespace Azure.ResourceManager.Media
                             List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                                }
                             }
                             options0 = array;
                             continue;

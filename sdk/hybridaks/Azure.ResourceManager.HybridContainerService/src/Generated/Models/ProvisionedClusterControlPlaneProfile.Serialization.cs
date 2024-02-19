@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(ControlPlaneEndpoint))
             {
                 writer.WritePropertyName("controlPlaneEndpoint"u8);
-                writer.WriteObjectValue(ControlPlaneEndpoint);
+                ((IJsonModel<ControlPlaneProfileControlPlaneEndpoint>)ControlPlaneEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

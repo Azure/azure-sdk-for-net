@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            if (Secrets != null)
+            {
+                ((IJsonModel<MachineLearningSasDatastoreSecrets>)Secrets).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("credentialsType"u8);
             writer.WriteStringValue(CredentialsType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

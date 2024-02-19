@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KeyVaultIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KeyVaultVirtualNetworkRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultIPRule> array = new List<KeyVaultIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KeyVaultIPRule.DeserializeKeyVaultIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<KeyVaultVirtualNetworkRule> array = new List<KeyVaultVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KeyVaultVirtualNetworkRule.DeserializeKeyVaultVirtualNetworkRule(item));
+                        }
                     }
                     virtualNetworkRules = array;
                     continue;

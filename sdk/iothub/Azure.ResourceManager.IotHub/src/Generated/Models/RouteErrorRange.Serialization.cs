@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start);
+                ((IJsonModel<RouteErrorPosition>)Start).Write(writer, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End);
+                ((IJsonModel<RouteErrorPosition>)End).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

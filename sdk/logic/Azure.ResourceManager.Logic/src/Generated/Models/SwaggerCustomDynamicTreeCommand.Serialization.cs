@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SwaggerCustomDynamicTreeParameterInfo>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -166,7 +173,14 @@ namespace Azure.ResourceManager.Logic.Models
                     Dictionary<string, SwaggerCustomDynamicTreeParameterInfo> dictionary = new Dictionary<string, SwaggerCustomDynamicTreeParameterInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameterInfo.DeserializeSwaggerCustomDynamicTreeParameterInfo(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, SwaggerCustomDynamicTreeParameterInfo.DeserializeSwaggerCustomDynamicTreeParameterInfo(property0.Value));
+                        }
                     }
                     parameters = dictionary;
                     continue;

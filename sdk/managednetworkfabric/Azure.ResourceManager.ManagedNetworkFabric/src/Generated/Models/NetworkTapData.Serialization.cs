@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStringValue(Annotation);
             }
             writer.WritePropertyName("networkPacketBrokerId"u8);
-            writer.WriteStringValue(NetworkPacketBrokerId);
+            if (NetworkPacketBrokerId != null)
+            {
+                writer.WriteStringValue(NetworkPacketBrokerId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(SourceTapRuleId))
             {
                 writer.WritePropertyName("sourceTapRuleId"u8);
@@ -79,7 +93,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WriteStartArray();
             foreach (var item in Destinations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NetworkTapPropertiesDestinationsItem>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(PollingType))
@@ -235,7 +256,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<NetworkTapPropertiesDestinationsItem> array = new List<NetworkTapPropertiesDestinationsItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkTapPropertiesDestinationsItem.DeserializeNetworkTapPropertiesDestinationsItem(item));
+                                }
                             }
                             destinations = array;
                             continue;

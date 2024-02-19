@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in AcrDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<RegistryAcrDetails>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -63,7 +70,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StorageAccountDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<StorageAccountDetails>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -127,7 +141,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<RegistryAcrDetails> array = new List<RegistryAcrDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RegistryAcrDetails.DeserializeRegistryAcrDetails(item));
+                        }
                     }
                     acrDetails = array;
                     continue;
@@ -152,7 +173,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<StorageAccountDetails> array = new List<StorageAccountDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.StorageAccountDetails.DeserializeStorageAccountDetails(item));
+                        }
                     }
                     storageAccountDetails = array;
                     continue;

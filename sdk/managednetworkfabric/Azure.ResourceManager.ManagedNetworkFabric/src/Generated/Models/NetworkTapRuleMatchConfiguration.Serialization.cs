@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkTapRuleMatchCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkTapRuleAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +154,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleMatchCondition> array = new List<NetworkTapRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +175,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleAction> array = new List<NetworkTapRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item));
+                        }
                     }
                     actions = array;
                     continue;

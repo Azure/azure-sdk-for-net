@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
-                writer.WriteObjectValue(Scripts);
+                ((IJsonModel<MachineLearningScriptsToExecute>)Scripts).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

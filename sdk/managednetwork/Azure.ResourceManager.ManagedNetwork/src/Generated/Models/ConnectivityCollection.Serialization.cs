@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedNetworkGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Peerings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedNetworkPeeringPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +114,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedNetworkGroupData.DeserializeManagedNetworkGroupData(item));
+                        }
                     }
                     groups = array;
                     continue;
@@ -114,7 +135,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<ManagedNetworkPeeringPolicyData> array = new List<ManagedNetworkPeeringPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedNetworkPeeringPolicyData.DeserializeManagedNetworkPeeringPolicyData(item));
+                        }
                     }
                     peerings = array;
                     continue;

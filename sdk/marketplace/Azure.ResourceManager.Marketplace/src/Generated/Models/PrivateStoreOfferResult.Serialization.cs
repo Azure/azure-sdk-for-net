@@ -84,12 +84,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 foreach (var item in IconFileUris)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStringValue(item.Value.AbsoluteUri);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.Value.AbsoluteUri);
                 }
                 writer.WriteEndObject();
             }
@@ -99,7 +101,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStorePlan>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -260,7 +269,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
+                        }
                     }
                     plans = array;
                     continue;

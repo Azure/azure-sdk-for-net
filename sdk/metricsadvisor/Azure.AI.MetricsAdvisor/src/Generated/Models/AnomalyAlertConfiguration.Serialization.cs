@@ -49,7 +49,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in MetricAlertConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -123,7 +130,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<MetricAlertConfiguration> array = new List<MetricAlertConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertConfiguration.DeserializeMetricAlertConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricAlertConfiguration.DeserializeMetricAlertConfiguration(item));
+                        }
                     }
                     metricAlertingConfigurations = array;
                     continue;

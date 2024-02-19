@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenantApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedServicesEligibleApprover>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleApprover> array = new List<ManagedServicesEligibleApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedServicesEligibleApprover.DeserializeManagedServicesEligibleApprover(item));
+                        }
                     }
                     managedByTenantApprovers = array;
                     continue;

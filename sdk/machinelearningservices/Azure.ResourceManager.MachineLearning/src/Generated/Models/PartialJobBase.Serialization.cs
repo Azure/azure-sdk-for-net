@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting);
+                    ((IJsonModel<PartialNotificationSetting>)NotificationSetting).Write(writer, options);
                 }
                 else
                 {

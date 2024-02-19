@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LoadTestingEndpointDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.LoadTesting.Models
                     List<LoadTestingEndpointDependency> array = new List<LoadTestingEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LoadTestingEndpointDependency.DeserializeLoadTestingEndpointDependency(item));
+                        }
                     }
                     endpoints = array;
                     continue;

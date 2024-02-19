@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataImportDefinition"u8);
-            writer.WriteObjectValue(DataImportDefinition);
+            if (DataImportDefinition != null)
+            {
+                ((IJsonModel<DataImport>)DataImportDefinition).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

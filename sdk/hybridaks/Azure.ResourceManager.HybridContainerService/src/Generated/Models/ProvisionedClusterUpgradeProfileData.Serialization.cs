@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.HybridContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile);
+            if (ControlPlaneProfile != null)
+            {
+                ((IJsonModel<ProvisionedClusterPoolUpgradeProfile>)ControlPlaneProfile).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

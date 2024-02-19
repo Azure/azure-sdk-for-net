@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Defaults != null)
                 {
                     writer.WritePropertyName("defaults"u8);
-                    writer.WriteObjectValue(Defaults);
+                    ((IJsonModel<BatchEndpointDefaults>)Defaults).Write(writer, options);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    ((IJsonModel<MachineLearningEndpointAuthKeys>)Keys).Write(writer, options);
                 }
                 else
                 {

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("assetId"u8);
-            writer.WriteStringValue(AssetId);
+            if (AssetId != null)
+            {
+                writer.WriteStringValue(AssetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("referenceType"u8);
             writer.WriteStringValue(ReferenceType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

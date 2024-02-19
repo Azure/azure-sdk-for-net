@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.KeyVault.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

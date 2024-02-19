@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkFabricIPExtendedCommunityData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricIPExtendedCommunityData> array = new List<NetworkFabricIPExtendedCommunityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkFabricIPExtendedCommunityData.DeserializeNetworkFabricIPExtendedCommunityData(item));
+                        }
                     }
                     value = array;
                     continue;

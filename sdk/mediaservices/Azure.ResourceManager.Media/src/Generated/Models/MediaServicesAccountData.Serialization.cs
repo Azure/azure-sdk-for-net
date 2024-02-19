@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Media
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -79,7 +86,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaServicesStorageAccount>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -98,12 +112,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<AccountEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
-                writer.WriteObjectValue(KeyDelivery);
+                ((IJsonModel<MediaKeyDelivery>)KeyDelivery).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -128,7 +142,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaServicesPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -275,7 +296,14 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MediaServicesStorageAccount.DeserializeMediaServicesStorageAccount(item));
+                                }
                             }
                             storageAccounts = array;
                             continue;
@@ -336,7 +364,14 @@ namespace Azure.ResourceManager.Media
                             List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MediaServicesPrivateEndpointConnectionData.DeserializeMediaServicesPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

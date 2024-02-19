@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,7 +81,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in IPPrefixRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPPrefixRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -213,7 +227,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<IPPrefixRule> array = new List<IPPrefixRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPrefixRule.DeserializeIPPrefixRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPPrefixRule.DeserializeIPPrefixRule(item));
+                                }
                             }
                             ipPrefixRules = array;
                             continue;

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features);
+                    ((IJsonModel<MonitoringFeatureFilterBase>)Features).Write(writer, options);
                 }
                 else
                 {
@@ -60,13 +60,34 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataQualityMetricThresholdBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            if (ProductionData != null)
+            {
+                ((IJsonModel<MonitoringInputDataBase>)ProductionData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            if (ReferenceData != null)
+            {
+                ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -172,7 +193,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<DataQualityMetricThresholdBase> array = new List<DataQualityMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataQualityMetricThresholdBase.DeserializeDataQualityMetricThresholdBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataQualityMetricThresholdBase.DeserializeDataQualityMetricThresholdBase(item));
+                        }
                     }
                     metricThresholds = array;
                     continue;

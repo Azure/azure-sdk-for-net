@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeConnectionDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConnectionDetail> array = new List<HybridComputeConnectionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeConnectionDetail.DeserializeHybridComputeConnectionDetail(item));
+                        }
                     }
                     connectionDetails = array;
                     continue;

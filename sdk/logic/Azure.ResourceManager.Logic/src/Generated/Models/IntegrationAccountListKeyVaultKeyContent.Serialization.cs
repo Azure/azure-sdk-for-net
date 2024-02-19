@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyVault"u8);
-            writer.WriteObjectValue(KeyVault);
+            if (KeyVault != null)
+            {
+                ((IJsonModel<IntegrationAccountKeyVaultNameReference>)KeyVault).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);

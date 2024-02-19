@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KustoResourceSkuCapabilities>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +120,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<KustoResourceSkuCapabilities> array = new List<KustoResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KustoResourceSkuCapabilities.DeserializeKustoResourceSkuCapabilities(item));
+                        }
                     }
                     capabilities = array;
                     continue;

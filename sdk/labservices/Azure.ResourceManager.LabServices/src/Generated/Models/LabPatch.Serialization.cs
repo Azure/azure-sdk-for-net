@@ -41,27 +41,27 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                ((IJsonModel<LabAutoShutdownProfile>)AutoShutdownProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                ((IJsonModel<LabConnectionProfile>)ConnectionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                ((IJsonModel<LabVirtualMachineProfile>)VirtualMachineProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<LabSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                ((IJsonModel<LabRosterProfile>)RosterProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {

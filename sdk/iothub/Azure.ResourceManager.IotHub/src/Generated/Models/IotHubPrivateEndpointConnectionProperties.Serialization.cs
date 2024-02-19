@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            if (ConnectionState != null)
+            {
+                ((IJsonModel<IotHubPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

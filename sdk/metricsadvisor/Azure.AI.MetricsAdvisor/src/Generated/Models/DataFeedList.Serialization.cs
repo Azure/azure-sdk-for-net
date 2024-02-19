@@ -37,7 +37,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<DataFeedDetail> array = new List<DataFeedDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFeedDetail.DeserializeDataFeedDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFeedDetail.DeserializeDataFeedDetail(item));
+                        }
                     }
                     value = array;
                     continue;

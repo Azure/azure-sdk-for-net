@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Claims)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OpenAuthenticationPolicyClaim>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<OpenAuthenticationPolicyClaim> array = new List<OpenAuthenticationPolicyClaim>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OpenAuthenticationPolicyClaim.DeserializeOpenAuthenticationPolicyClaim(item));
+                        }
                     }
                     claims = array;
                     continue;

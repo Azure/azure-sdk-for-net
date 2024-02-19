@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(VhdImageMappingRuleProfile))
             {
                 writer.WritePropertyName("vhdImageMappingRuleProfile"u8);
-                writer.WriteObjectValue(VhdImageMappingRuleProfile);
+                ((IJsonModel<VhdImageMappingRuleProfile>)VhdImageMappingRuleProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {
