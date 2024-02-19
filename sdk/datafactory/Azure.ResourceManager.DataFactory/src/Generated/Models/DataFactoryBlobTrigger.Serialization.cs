@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryBlobTrigger : IUtf8JsonSerializable
+    public partial class DataFactoryBlobTrigger : IUtf8JsonSerializable, IJsonModel<DataFactoryBlobTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryBlobTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryBlobTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryBlobTrigger)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
@@ -34,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            {
+                writer.WritePropertyName("runtimeState"u8);
+                writer.WriteStringValue(RuntimeState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -81,8 +95,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryBlobTrigger DeserializeDataFactoryBlobTrigger(JsonElement element)
+        DataFactoryBlobTrigger IJsonModel<DataFactoryBlobTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryBlobTrigger)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryBlobTrigger(document.RootElement, options);
+        }
+
+        internal static DataFactoryBlobTrigger DeserializeDataFactoryBlobTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -185,5 +213,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DataFactoryBlobTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), folderPath, maxConcurrency, linkedService);
         }
+
+        BinaryData IPersistableModel<DataFactoryBlobTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryBlobTrigger IPersistableModel<DataFactoryBlobTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryBlobTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobTrigger)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryBlobTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

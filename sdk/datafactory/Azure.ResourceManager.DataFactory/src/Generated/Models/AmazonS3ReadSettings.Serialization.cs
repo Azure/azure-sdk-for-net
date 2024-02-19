@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonS3ReadSettings : IUtf8JsonSerializable
+    public partial class AmazonS3ReadSettings : IUtf8JsonSerializable, IJsonModel<AmazonS3ReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3ReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmazonS3ReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Recursive))
             {
@@ -95,8 +104,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonS3ReadSettings DeserializeAmazonS3ReadSettings(JsonElement element)
+        AmazonS3ReadSettings IJsonModel<AmazonS3ReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonS3ReadSettings(document.RootElement, options);
+        }
+
+        internal static AmazonS3ReadSettings DeserializeAmazonS3ReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -236,5 +259,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new AmazonS3ReadSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, prefix.Value, fileListPath.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
+
+        BinaryData IPersistableModel<AmazonS3ReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AmazonS3ReadSettings IPersistableModel<AmazonS3ReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3ReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmazonS3ReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3ReadSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmazonS3ReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

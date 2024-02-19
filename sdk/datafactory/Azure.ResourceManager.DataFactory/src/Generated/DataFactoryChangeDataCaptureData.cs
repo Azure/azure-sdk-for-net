@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryChangeDataCaptureData"/> for deserialization. </summary>
+        internal DataFactoryChangeDataCaptureData()
+        {
+        }
+
         /// <summary> The folder that this CDC is in. If not specified, CDC will appear at the root level. </summary>
         internal ChangeDataCaptureFolder Folder { get; set; }
         /// <summary> The name of the folder that this CDC is in. </summary>

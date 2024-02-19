@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SalesforceServiceCloudV2ObjectDataset : IUtf8JsonSerializable
+    public partial class SalesforceServiceCloudV2ObjectDataset : IUtf8JsonSerializable, IJsonModel<SalesforceServiceCloudV2ObjectDataset>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SalesforceServiceCloudV2ObjectDataset>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SalesforceServiceCloudV2ObjectDataset>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudV2ObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudV2ObjectDataset)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetType);
@@ -103,8 +112,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static SalesforceServiceCloudV2ObjectDataset DeserializeSalesforceServiceCloudV2ObjectDataset(JsonElement element)
+        SalesforceServiceCloudV2ObjectDataset IJsonModel<SalesforceServiceCloudV2ObjectDataset>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudV2ObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SalesforceServiceCloudV2ObjectDataset)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSalesforceServiceCloudV2ObjectDataset(document.RootElement, options);
+        }
+
+        internal static SalesforceServiceCloudV2ObjectDataset DeserializeSalesforceServiceCloudV2ObjectDataset(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -235,5 +258,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             additionalProperties = additionalPropertiesDictionary;
             return new SalesforceServiceCloudV2ObjectDataset(type, description.Value, structure.Value, schema.Value, linkedServiceName, Optional.ToDictionary(parameters), Optional.ToList(annotations), folder.Value, additionalProperties, objectApiName.Value, reportId.Value);
         }
+
+        BinaryData IPersistableModel<SalesforceServiceCloudV2ObjectDataset>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudV2ObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SalesforceServiceCloudV2ObjectDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SalesforceServiceCloudV2ObjectDataset IPersistableModel<SalesforceServiceCloudV2ObjectDataset>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SalesforceServiceCloudV2ObjectDataset>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSalesforceServiceCloudV2ObjectDataset(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SalesforceServiceCloudV2ObjectDataset)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SalesforceServiceCloudV2ObjectDataset>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -56,6 +56,34 @@ namespace Azure.Communication.CallAutomation
             return new ResultInformation(code, subCode, message);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TeamsComplianceRecordingStateChanged"/>. </summary>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        /// <param name="recordingType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.TeamsComplianceRecordingStateChanged"/> instance for mocking. </returns>
+        public static TeamsComplianceRecordingStateChanged TeamsComplianceRecordingStateChanged(string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingType? recordingType = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new TeamsComplianceRecordingStateChanged(recordingId, state, startDateTime, recordingType, callConnectionId, serverCallId, correlationId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TeamsRecordingStateChanged"/>. </summary>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <param name="state"></param>
+        /// <param name="startDateTime"> The time of the recording started. </param>
+        /// <param name="recordingType"></param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.TeamsRecordingStateChanged"/> instance for mocking. </returns>
+        public static TeamsRecordingStateChanged TeamsRecordingStateChanged(string recordingId = null, RecordingState state = default, DateTimeOffset? startDateTime = null, RecordingType? recordingType = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new TeamsRecordingStateChanged(recordingId, state, startDateTime, recordingType, callConnectionId, serverCallId, correlationId);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.CollectTonesResult"/>. </summary>
         /// <param name="tones"></param>
         /// <returns> A new <see cref="CallAutomation.CollectTonesResult"/> instance for mocking. </returns>
@@ -137,19 +165,6 @@ namespace Azure.Communication.CallAutomation
         public static TranscriptionStopped TranscriptionStopped(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
         {
             return new TranscriptionStopped(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionResumed"/>. </summary>
-        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
-        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <returns> A new <see cref="CallAutomation.TranscriptionResumed"/> instance for mocking. </returns>
-        public static TranscriptionResumed TranscriptionResumed(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
-        {
-            return new TranscriptionResumed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionFailed"/>. </summary>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -49,6 +50,16 @@ namespace Azure.ResourceManager.Sql
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(MakeBackupsImmutable))
+            {
+                writer.WritePropertyName("makeBackupsImmutable"u8);
+                writer.WriteBooleanValue(MakeBackupsImmutable.Value);
+            }
+            if (Optional.IsDefined(BackupStorageAccessTier))
+            {
+                writer.WritePropertyName("backupStorageAccessTier"u8);
+                writer.WriteStringValue(BackupStorageAccessTier.Value.ToString());
+            }
             if (Optional.IsDefined(WeeklyRetention))
             {
                 writer.WritePropertyName("weeklyRetention"u8);
@@ -112,6 +123,8 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
+            Optional<bool> makeBackupsImmutable = default;
+            Optional<SqlBackupStorageAccessTier> backupStorageAccessTier = default;
             Optional<string> weeklyRetention = default;
             Optional<string> monthlyRetention = default;
             Optional<string> yearlyRetention = default;
@@ -153,6 +166,24 @@ namespace Azure.ResourceManager.Sql
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("makeBackupsImmutable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            makeBackupsImmutable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("backupStorageAccessTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupStorageAccessTier = new SqlBackupStorageAccessTier(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("weeklyRetention"u8))
                         {
                             weeklyRetention = property0.Value.GetString();
@@ -186,7 +217,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
+            return new LongTermRetentionPolicyData(id, name, type, systemData.Value, Optional.ToNullable(makeBackupsImmutable), Optional.ToNullable(backupStorageAccessTier), weeklyRetention.Value, monthlyRetention.Value, yearlyRetention.Value, Optional.ToNullable(weekOfYear), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LongTermRetentionPolicyData>.Write(ModelReaderWriterOptions options)

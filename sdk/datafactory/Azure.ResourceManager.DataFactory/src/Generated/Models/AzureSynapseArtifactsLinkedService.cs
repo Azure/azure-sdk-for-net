@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureSynapseArtifacts";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSynapseArtifactsLinkedService"/> for deserialization. </summary>
+        internal AzureSynapseArtifactsLinkedService()
+        {
+        }
+
         /// <summary> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Endpoint { get; set; }
         /// <summary> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </summary>

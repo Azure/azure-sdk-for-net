@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "WarehouseTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="WarehouseTableDataset"/> for deserialization. </summary>
+        internal WarehouseTableDataset()
+        {
+        }
+
         /// <summary> The schema name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Microsoft Fabric Warehouse. Type: string (or Expression with resultType string). </summary>

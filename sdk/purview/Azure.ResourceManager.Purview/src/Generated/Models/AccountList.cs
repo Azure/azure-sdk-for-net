@@ -13,7 +13,7 @@ using Azure.ResourceManager.Purview;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> Paged list of account resources. </summary>
+    /// <summary> Paged list of Account resources. </summary>
     internal partial class AccountList
     {
         /// <summary>
@@ -59,13 +59,11 @@ namespace Azure.ResourceManager.Purview.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AccountList"/>. </summary>
-        /// <param name="count"> Total item count. </param>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccountList(long? count, string nextLink, IReadOnlyList<PurviewAccountData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AccountList(string nextLink, IReadOnlyList<PurviewAccountData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Count = count;
             NextLink = nextLink;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,8 +74,6 @@ namespace Azure.ResourceManager.Purview.Models
         {
         }
 
-        /// <summary> Total item count. </summary>
-        public long? Count { get; }
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type results. </summary>

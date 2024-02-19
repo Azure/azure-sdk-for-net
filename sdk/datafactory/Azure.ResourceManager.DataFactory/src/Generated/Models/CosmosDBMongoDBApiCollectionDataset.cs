@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "CosmosDbMongoDbApiCollection";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiCollectionDataset"/> for deserialization. </summary>
+        internal CosmosDBMongoDBApiCollectionDataset()
+        {
+        }
+
         /// <summary> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection { get; set; }
     }

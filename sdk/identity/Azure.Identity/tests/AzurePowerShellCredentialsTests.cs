@@ -119,6 +119,7 @@ namespace Azure.Identity.Tests
             yield return new object[] { "'pwsh' is not recognized", AzurePowerShellCredential.PowerShellNotInstalledError };
             yield return new object[] { "pwsh: command not found", AzurePowerShellCredential.PowerShellNotInstalledError };
             yield return new object[] { "pwsh: not found", AzurePowerShellCredential.PowerShellNotInstalledError };
+            yield return new object[] { "foo bar", AzurePowerShellCredential.PowerShellNotInstalledError };
         }
 
         [Test]
@@ -127,7 +128,9 @@ namespace Azure.Identity.Tests
         {
             // This will require two processes on Windows and one on other platforms
             // Purposefully stripping out the second process to ensure any attempt to fallback is caught on non-Windows
-            TestProcess[] testProcesses = new TestProcess[] { new TestProcess { Error = errorMessage }, new TestProcess { Error = errorMessage } };
+            int exitCode = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 9009 : 127;
+
+            TestProcess[] testProcesses = new TestProcess[] { new TestProcess { Error = errorMessage, CodeOnExit = exitCode }, new TestProcess { Error = errorMessage, CodeOnExit = exitCode } };
             if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 testProcesses = new TestProcess[] { testProcesses[0] };
 

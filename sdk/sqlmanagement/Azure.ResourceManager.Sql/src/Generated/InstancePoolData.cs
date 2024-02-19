@@ -68,13 +68,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
         /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
+        /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal InstancePoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, ResourceIdentifier subnetId, int? vCores, InstancePoolLicenseType? licenseType, string dnsZone, ResourceIdentifier maintenanceConfigurationId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             SubnetId = subnetId;
             VCores = vCores;
             LicenseType = licenseType;
+            DnsZone = dnsZone;
+            MaintenanceConfigurationId = maintenanceConfigurationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -91,5 +95,9 @@ namespace Azure.ResourceManager.Sql
         public int? VCores { get; set; }
         /// <summary> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </summary>
         public InstancePoolLicenseType? LicenseType { get; set; }
+        /// <summary> The Dns Zone that the managed instance pool is in. </summary>
+        public string DnsZone { get; }
+        /// <summary> Specifies maintenance configuration id to apply to this managed instance. </summary>
+        public ResourceIdentifier MaintenanceConfigurationId { get; set; }
     }
 }

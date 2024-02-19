@@ -65,6 +65,11 @@ namespace Azure.ResourceManager.DataFactory
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryData"/> for deserialization. </summary>
+        internal DataFactoryData()
+        {
+        }
+
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Factory provisioning state, example Succeeded. </summary>

@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "PostgreSqlTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlTableDataset"/> for deserialization. </summary>
+        internal PostgreSqlTableDataset()
+        {
+        }
+
         /// <summary> This property will be retired. Please consider using schema + table properties instead. </summary>
         public DataFactoryElement<string> TableName { get; set; }
         /// <summary> The PostgreSQL table name. Type: string (or Expression with resultType string). </summary>

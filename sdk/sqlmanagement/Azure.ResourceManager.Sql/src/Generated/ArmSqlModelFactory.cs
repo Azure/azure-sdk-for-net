@@ -615,25 +615,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new ResourceWithWritableName(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Sql.InstancePoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> The name and tier of the SKU. </param>
-        /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
-        /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
-        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
-        /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
-        public static InstancePoolData InstancePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new InstancePoolData(id, name, resourceType, systemData, tags, location, sku, subnetId, vCores, licenseType, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Sql.SqlServerJobAgentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1110,21 +1091,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static InstancePoolVcoresCapability InstancePoolVcoresCapability(string name = null, int? value = null, MaxSizeCapability storageLimit = null, SqlCapabilityStatus? status = null, string reason = null)
         {
             return new InstancePoolVcoresCapability(name, value, storageLimit, status, reason, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
-        /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
-        /// <returns> A new <see cref="Sql.LongTermRetentionPolicyData"/> instance for mocking. </returns>
-        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
-        {
-            return new LongTermRetentionPolicyData(id, name, resourceType, systemData, weeklyRetention, monthlyRetention, yearlyRetention, weekOfYear, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.MaintenanceWindowOptionData"/>. </summary>
@@ -2218,43 +2184,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static InstancePoolUsageName InstancePoolUsageName(string value = null, string localizedValue = null)
         {
             return new InstancePoolUsageName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.LongTermRetentionBackupOperationResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="requestId"> Request Id. </param>
-        /// <param name="operationType"> Operation type. </param>
-        /// <param name="fromBackupResourceId"> Source backup resource id. </param>
-        /// <param name="toBackupResourceId"> Target backup resource id. </param>
-        /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="message"> Progress message. </param>
-        /// <returns> A new <see cref="Models.LongTermRetentionBackupOperationResult"/> instance for mocking. </returns>
-        public static LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string operationType = null, ResourceIdentifier fromBackupResourceId = null, ResourceIdentifier toBackupResourceId = null, SqlBackupStorageRedundancy? targetBackupStorageRedundancy = null, string status = null, string message = null)
-        {
-            return new LongTermRetentionBackupOperationResult(id, name, resourceType, systemData, requestId, operationType, fromBackupResourceId, toBackupResourceId, targetBackupStorageRedundancy, status, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="serverName"> The server name that the backup database belong to. </param>
-        /// <param name="serverCreateOn"> The create time of the server. </param>
-        /// <param name="databaseName"> The name of the database the backup belong to. </param>
-        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
-        /// <param name="backupOn"> The time the backup was taken. </param>
-        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
-        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
-        /// <returns> A new <see cref="Sql.LongTermRetentionBackupData"/> instance for mocking. </returns>
-        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null)
-        {
-            return new LongTermRetentionBackupData(id, name, resourceType, systemData, serverName, serverCreateOn, databaseName, databaseDeletedOn, backupOn, backupExpireOn, backupStorageRedundancy, requestedBackupStorageRedundancy, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Sql.ManagedInstanceLongTermRetentionBackupData"/>. </summary>
@@ -4053,6 +3982,132 @@ namespace Azure.ResourceManager.Sql.Models
             return new SqlVulnerabilityAssessmentData(id, name, resourceType, systemData, state, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Sql.FailoverGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
+        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
+        /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
+        /// <param name="replicationState"> Replication state of the failover group instance. </param>
+        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
+        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
+        /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
+        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            partnerServers ??= new List<PartnerServerInfo>();
+            failoverDatabases ??= new List<ResourceIdentifier>();
+
+            return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpoint, replicationRole, replicationState, partnerServers?.ToList(), failoverDatabases?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PartnerServerInfo"/>. </summary>
+        /// <param name="id"> Resource identifier of the partner server. </param>
+        /// <param name="location"> Geo location of the partner server. </param>
+        /// <param name="replicationRole"> Replication role of the partner server. </param>
+        /// <returns> A new <see cref="Models.PartnerServerInfo"/> instance for mocking. </returns>
+        public static PartnerServerInfo PartnerServerInfo(ResourceIdentifier id = null, AzureLocation? location = null, FailoverGroupReplicationRole? replicationRole = null)
+        {
+            return new PartnerServerInfo(id, location, replicationRole, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.InstancePoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The name and tier of the SKU. </param>
+        /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
+        /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
+        /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
+        /// <returns> A new <see cref="Sql.InstancePoolData"/> instance for mocking. </returns>
+        public static InstancePoolData InstancePoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SqlSku sku = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null, string dnsZone = null, ResourceIdentifier maintenanceConfigurationId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new InstancePoolData(id, name, resourceType, systemData, tags, location, sku, subnetId, vCores, licenseType, dnsZone, maintenanceConfigurationId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InstancePoolPatch"/>. </summary>
+        /// <param name="sku"> The name and tier of the SKU. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="subnetId"> Resource ID of the subnet to place this instance pool in. </param>
+        /// <param name="vCores"> Count of vCores belonging to this instance pool. </param>
+        /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (price for SQL license is included) and 'BasePrice' (without SQL license price). </param>
+        /// <param name="dnsZone"> The Dns Zone that the managed instance pool is in. </param>
+        /// <param name="maintenanceConfigurationId"> Specifies maintenance configuration id to apply to this managed instance. </param>
+        /// <returns> A new <see cref="Models.InstancePoolPatch"/> instance for mocking. </returns>
+        public static InstancePoolPatch InstancePoolPatch(SqlSku sku = null, IDictionary<string, string> tags = null, ResourceIdentifier subnetId = null, int? vCores = null, InstancePoolLicenseType? licenseType = null, string dnsZone = null, ResourceIdentifier maintenanceConfigurationId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new InstancePoolPatch(sku, tags, subnetId, vCores, licenseType, dnsZone, maintenanceConfigurationId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionBackupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="serverName"> The server name that the backup database belong to. </param>
+        /// <param name="serverCreateOn"> The create time of the server. </param>
+        /// <param name="databaseName"> The name of the database the backup belong to. </param>
+        /// <param name="databaseDeletedOn"> The delete time of the database. </param>
+        /// <param name="backupOn"> The time the backup was taken. </param>
+        /// <param name="backupExpireOn"> The time the long term retention backup will expire. </param>
+        /// <param name="backupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="requestedBackupStorageRedundancy"> The storage redundancy type of the backup. </param>
+        /// <param name="isBackupImmutable"> The setting whether the LTR backup is immutable. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backup. </param>
+        /// <returns> A new <see cref="Sql.LongTermRetentionBackupData"/> instance for mocking. </returns>
+        public static LongTermRetentionBackupData LongTermRetentionBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, DateTimeOffset? serverCreateOn = null, string databaseName = null, DateTimeOffset? databaseDeletedOn = null, DateTimeOffset? backupOn = null, DateTimeOffset? backupExpireOn = null, SqlBackupStorageRedundancy? backupStorageRedundancy = null, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy = null, bool? isBackupImmutable = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null)
+        {
+            return new LongTermRetentionBackupData(id, name, resourceType, systemData, serverName, serverCreateOn, databaseName, databaseDeletedOn, backupOn, backupExpireOn, backupStorageRedundancy, requestedBackupStorageRedundancy, isBackupImmutable, backupStorageAccessTier, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.LongTermRetentionBackupOperationResult"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="requestId"> Request Id. </param>
+        /// <param name="operationType"> Operation type. </param>
+        /// <param name="fromBackupResourceId"> Source backup resource id. </param>
+        /// <param name="toBackupResourceId"> Target backup resource id. </param>
+        /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="message"> Progress message. </param>
+        /// <returns> A new <see cref="Models.LongTermRetentionBackupOperationResult"/> instance for mocking. </returns>
+        public static LongTermRetentionBackupOperationResult LongTermRetentionBackupOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string operationType = null, ResourceIdentifier fromBackupResourceId = null, ResourceIdentifier toBackupResourceId = null, SqlBackupStorageRedundancy? targetBackupStorageRedundancy = null, string status = null, string message = null)
+        {
+            return new LongTermRetentionBackupOperationResult(id, name, resourceType, systemData, requestId, operationType, fromBackupResourceId, toBackupResourceId, targetBackupStorageRedundancy, status, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Sql.LongTermRetentionPolicyData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="makeBackupsImmutable"> The setting whether to make LTR backups immutable. </param>
+        /// <param name="backupStorageAccessTier"> The BackupStorageAccessTier for the LTR backups. </param>
+        /// <param name="weeklyRetention"> The weekly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="monthlyRetention"> The monthly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="yearlyRetention"> The yearly retention policy for an LTR backup in an ISO 8601 format. </param>
+        /// <param name="weekOfYear"> The week of year to take the yearly backup in an ISO 8601 format. </param>
+        /// <returns> A new <see cref="Sql.LongTermRetentionPolicyData"/> instance for mocking. </returns>
+        public static LongTermRetentionPolicyData LongTermRetentionPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? makeBackupsImmutable = null, SqlBackupStorageAccessTier? backupStorageAccessTier = null, string weeklyRetention = null, string monthlyRetention = null, string yearlyRetention = null, int? weekOfYear = null)
+        {
+            return new LongTermRetentionPolicyData(id, name, resourceType, systemData, makeBackupsImmutable, backupStorageAccessTier, weeklyRetention, monthlyRetention, yearlyRetention, weekOfYear, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.SqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
@@ -4088,7 +4143,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
+        /// <param name="minTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
@@ -4099,12 +4154,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
         /// <returns> A new <see cref="Sql.SqlServerData"/> instance for mocking. </returns>
-        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
+        public static SqlServerData SqlServerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string kind = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
 
-            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus, serializedAdditionalRawData: null);
+            return new SqlServerData(id, name, resourceType, systemData, tags, location, identity, kind, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlServerPrivateEndpointConnection"/>. </summary>
@@ -4125,7 +4180,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="state"> The state of the server. </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the server. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        /// <param name="minimalTlsVersion"> Minimal TLS version. Allowed values: 'None', '1.0', '1.1', '1.2'. </param>
+        /// <param name="minTlsVersion"> Minimal TLS version. Allowed values: 'None', 1.0', '1.1', '1.2', '1.3'. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled' or 'SecuredByPerimeter'. </param>
         /// <param name="workspaceFeature"> Whether or not existing server has a workspace created and if it allows connection from workspace. </param>
         /// <param name="primaryUserAssignedIdentityId"> The resource id of a user assigned identity to be used by default. </param>
@@ -4136,12 +4191,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isIPv6Enabled"> Whether or not to enable IPv6 support for this server.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="externalGovernanceStatus"> Status of external governance. </param>
         /// <returns> A new <see cref="Models.SqlServerPatch"/> instance for mocking. </returns>
-        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, string minimalTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
+        public static SqlServerPatch SqlServerPatch(ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, string administratorLogin = null, string administratorLoginPassword = null, string version = null, string state = null, string fullyQualifiedDomainName = null, IEnumerable<SqlServerPrivateEndpointConnection> privateEndpointConnections = null, SqlMinimalTlsVersion? minTlsVersion = null, ServerNetworkAccessFlag? publicNetworkAccess = null, ServerWorkspaceFeature? workspaceFeature = null, ResourceIdentifier primaryUserAssignedIdentityId = null, Guid? federatedClientId = null, Uri keyId = null, ServerExternalAdministrator administrators = null, ServerNetworkAccessFlag? restrictOutboundNetworkAccess = null, ServerNetworkAccessFlag? isIPv6Enabled = null, ExternalGovernanceStatus? externalGovernanceStatus = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<SqlServerPrivateEndpointConnection>();
 
-            return new SqlServerPatch(identity, tags, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minimalTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus, serializedAdditionalRawData: null);
+            return new SqlServerPatch(identity, tags, administratorLogin, administratorLoginPassword, version, state, fullyQualifiedDomainName, privateEndpointConnections?.ToList(), minTlsVersion, publicNetworkAccess, workspaceFeature, primaryUserAssignedIdentityId, federatedClientId, keyId, administrators, restrictOutboundNetworkAccess, isIPv6Enabled, externalGovernanceStatus, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DatabaseImportDefinition"/>. </summary>
@@ -4177,39 +4232,6 @@ namespace Azure.ResourceManager.Sql.Models
         public static RefreshExternalGovernanceStatusOperationResult RefreshExternalGovernanceStatusOperationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? requestId = null, string requestType = null, string queuedTime = null, string serverName = null, string status = null, string errorMessage = null)
         {
             return new RefreshExternalGovernanceStatusOperationResult(id, name, resourceType, systemData, requestId, requestType, queuedTime, serverName, status, errorMessage, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Sql.FailoverGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
-        /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
-        /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
-        /// <param name="replicationState"> Replication state of the failover group instance. </param>
-        /// <param name="partnerServers"> List of partner server information for the failover group. </param>
-        /// <param name="failoverDatabases"> List of databases in the failover group. </param>
-        /// <returns> A new <see cref="Sql.FailoverGroupData"/> instance for mocking. </returns>
-        public static FailoverGroupData FailoverGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, IDictionary<string, string> tags = null, FailoverGroupReadWriteEndpoint readWriteEndpoint = null, FailoverGroupReadOnlyEndpoint readOnlyEndpoint = null, FailoverGroupReplicationRole? replicationRole = null, string replicationState = null, IEnumerable<PartnerServerInfo> partnerServers = null, IEnumerable<ResourceIdentifier> failoverDatabases = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            partnerServers ??= new List<PartnerServerInfo>();
-            failoverDatabases ??= new List<ResourceIdentifier>();
-
-            return new FailoverGroupData(id, name, resourceType, systemData, location, tags, readWriteEndpoint, readOnlyEndpoint, replicationRole, replicationState, partnerServers?.ToList(), failoverDatabases?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PartnerServerInfo"/>. </summary>
-        /// <param name="id"> Resource identifier of the partner server. </param>
-        /// <param name="location"> Geo location of the partner server. </param>
-        /// <param name="replicationRole"> Replication role of the partner server. </param>
-        /// <returns> A new <see cref="Models.PartnerServerInfo"/> instance for mocking. </returns>
-        public static PartnerServerInfo PartnerServerInfo(ResourceIdentifier id = null, AzureLocation? location = null, FailoverGroupReplicationRole? replicationRole = null)
-        {
-            return new PartnerServerInfo(id, location, replicationRole, serializedAdditionalRawData: null);
         }
     }
 }

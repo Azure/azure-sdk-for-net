@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "Custom";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/> for deserialization. </summary>
+        internal CustomActivity()
+        {
+        }
+
         /// <summary> Command for custom activity Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Command { get; set; }
         /// <summary> Resource linked service reference. </summary>

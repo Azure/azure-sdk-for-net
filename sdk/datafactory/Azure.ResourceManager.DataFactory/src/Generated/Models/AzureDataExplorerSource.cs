@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CopySourceType = copySourceType ?? "AzureDataExplorerSource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerSource"/> for deserialization. </summary>
+        internal AzureDataExplorerSource()
+        {
+        }
+
         /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Query { get; set; }
         /// <summary>

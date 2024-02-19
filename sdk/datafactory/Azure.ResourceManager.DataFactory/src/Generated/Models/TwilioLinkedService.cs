@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Twilio";
         }
 
+        /// <summary> Initializes a new instance of <see cref="TwilioLinkedService"/> for deserialization. </summary>
+        internal TwilioLinkedService()
+        {
+        }
+
         /// <summary> The Account SID of Twilio service. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The auth token of Twilio service. </summary>

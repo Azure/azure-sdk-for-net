@@ -11,6 +11,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal string? RoleInstance { get; set; }
 
-        internal TelemetryItem? MetricTelemetry { get; set; }
+        internal MonitorBase? MonitorBaseData { get; set; }
     }
 }
