@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in FormParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ParameterContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 foreach (var item in Examples)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ParameterExampleContract>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -130,7 +144,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ParameterContract> array = new List<ParameterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParameterContract.DeserializeParameterContract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParameterContract.DeserializeParameterContract(item));
+                        }
                     }
                     formParameters = array;
                     continue;
@@ -144,7 +165,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     Dictionary<string, ParameterExampleContract> dictionary = new Dictionary<string, ParameterExampleContract>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ParameterExampleContract.DeserializeParameterExampleContract(property0.Value));
+                        }
                     }
                     examples = dictionary;
                     continue;

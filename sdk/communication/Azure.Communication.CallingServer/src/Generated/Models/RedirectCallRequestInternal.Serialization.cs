@@ -18,7 +18,14 @@ namespace Azure.Communication.CallingServer
             writer.WritePropertyName("incomingCallContext"u8);
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            if (Target != null)
+            {
+                writer.WriteObjectValue(Target);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

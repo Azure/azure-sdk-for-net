@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.Cdn
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<CdnSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -51,7 +58,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

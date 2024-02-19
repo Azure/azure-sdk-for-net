@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Advisor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -82,19 +89,21 @@ namespace Azure.ResourceManager.Advisor
                 foreach (var item in Metadata)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -111,7 +120,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
-                writer.WriteObjectValue(ShortDescription);
+                ((IJsonModel<ShortDescription>)ShortDescription).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SuppressionIds))
             {
@@ -137,7 +146,7 @@ namespace Azure.ResourceManager.Advisor
             if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
-                writer.WriteObjectValue(ResourceMetadata);
+                ((IJsonModel<ResourceMetadata>)ResourceMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -165,30 +174,34 @@ namespace Azure.ResourceManager.Advisor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        writer.WriteStartObject();
+                        foreach (var item0 in item)
                         {
-                            writer.WriteNullValue();
-                            continue;
-                        }
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
+                                using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                                {
+                                    JsonSerializer.Serialize(writer, document.RootElement);
+                                }
 #endif
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
                     }
-                    writer.WriteEndObject();
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -199,19 +212,21 @@ namespace Azure.ResourceManager.Advisor
                 foreach (var item in Remediation)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -222,19 +237,21 @@ namespace Azure.ResourceManager.Advisor
                 foreach (var item in ExposedMetadataProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }

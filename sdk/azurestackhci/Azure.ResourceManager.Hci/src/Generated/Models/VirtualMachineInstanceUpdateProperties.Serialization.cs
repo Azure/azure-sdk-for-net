@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                ((IJsonModel<HardwareProfileUpdate>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<StorageProfileUpdate>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<NetworkProfileUpdate>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<OSProfileUpdate>)OSProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

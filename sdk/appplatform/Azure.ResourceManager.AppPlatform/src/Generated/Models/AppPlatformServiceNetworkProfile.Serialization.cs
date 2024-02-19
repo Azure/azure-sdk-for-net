@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(OutboundIPs))
             {
                 writer.WritePropertyName("outboundIPs"u8);
-                writer.WriteObjectValue(OutboundIPs);
+                ((IJsonModel<NetworkProfileOutboundIPs>)OutboundIPs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RequiredTraffics))
             {
@@ -62,14 +62,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredTraffics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformServiceRequiredTraffic>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IngressConfig))
             {
                 writer.WritePropertyName("ingressConfig"u8);
-                writer.WriteObjectValue(IngressConfig);
+                ((IJsonModel<IngressConfig>)IngressConfig).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundType))
             {
@@ -178,7 +185,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRequiredTraffic> array = new List<AppPlatformServiceRequiredTraffic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformServiceRequiredTraffic.DeserializeAppPlatformServiceRequiredTraffic(item));
+                        }
                     }
                     requiredTraffics = array;
                     continue;

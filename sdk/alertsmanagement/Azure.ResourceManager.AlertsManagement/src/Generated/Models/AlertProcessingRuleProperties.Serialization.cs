@@ -39,20 +39,34 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AlertProcessingRuleCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                ((IJsonModel<AlertProcessingRuleSchedule>)Schedule).Write(writer, options);
             }
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AlertProcessingRuleAction>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Description))
@@ -132,7 +146,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleCondition> array = new List<AlertProcessingRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AlertProcessingRuleCondition.DeserializeAlertProcessingRuleCondition(item));
+                        }
                     }
                     conditions = array;
                     continue;
@@ -151,7 +172,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleAction> array = new List<AlertProcessingRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AlertProcessingRuleAction.DeserializeAlertProcessingRuleAction(item));
+                        }
                     }
                     actions = array;
                     continue;

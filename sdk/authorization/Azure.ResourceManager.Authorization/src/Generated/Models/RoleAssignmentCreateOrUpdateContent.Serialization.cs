@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStringValue(Scope);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
-            writer.WriteStringValue(RoleDefinitionId);
+            if (RoleDefinitionId != null)
+            {
+                writer.WriteStringValue(RoleDefinitionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
             if (Optional.IsDefined(PrincipalType))

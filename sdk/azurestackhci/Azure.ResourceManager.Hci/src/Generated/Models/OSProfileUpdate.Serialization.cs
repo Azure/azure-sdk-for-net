@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                ((IJsonModel<OSProfileUpdateLinuxConfiguration>)LinuxConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                ((IJsonModel<OSProfileUpdateWindowsConfiguration>)WindowsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

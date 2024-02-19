@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Analysis.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AnalysisIPv4FirewallRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Analysis.Models
                     List<AnalysisIPv4FirewallRule> array = new List<AnalysisIPv4FirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalysisIPv4FirewallRule.DeserializeAnalysisIPv4FirewallRule(item));
+                        }
                     }
                     firewallRules = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(OSDisk))
             {
                 writer.WritePropertyName("osDisk"u8);
-                writer.WriteObjectValue(OSDisk);
+                ((IJsonModel<VirtualMachineInstancePropertiesStorageProfileOSDisk>)OSDisk).Write(writer, options);
             }
             if (Optional.IsDefined(VmConfigStoragePathId))
             {
@@ -107,7 +114,14 @@ namespace Azure.ResourceManager.Hci.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     dataDisks = array;
                     continue;

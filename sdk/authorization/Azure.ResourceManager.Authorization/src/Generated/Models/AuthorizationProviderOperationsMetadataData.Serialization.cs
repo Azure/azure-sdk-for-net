@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AuthorizationProviderResourceType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -49,14 +56,28 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AuthorizationProviderOperationInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -136,7 +157,14 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderResourceType> array = new List<AuthorizationProviderResourceType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AuthorizationProviderResourceType.DeserializeAuthorizationProviderResourceType(item));
+                        }
                     }
                     resourceTypes = array;
                     continue;
@@ -150,7 +178,14 @@ namespace Azure.ResourceManager.Authorization
                     List<AuthorizationProviderOperationInfo> array = new List<AuthorizationProviderOperationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AuthorizationProviderOperationInfo.DeserializeAuthorizationProviderOperationInfo(item));
+                        }
                     }
                     operations = array;
                     continue;

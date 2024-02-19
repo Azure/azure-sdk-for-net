@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AuthorizationClassicAdministrator>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<AuthorizationClassicAdministrator> array = new List<AuthorizationClassicAdministrator>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AuthorizationClassicAdministrator.DeserializeAuthorizationClassicAdministrator(item));
+                        }
                     }
                     value = array;
                     continue;

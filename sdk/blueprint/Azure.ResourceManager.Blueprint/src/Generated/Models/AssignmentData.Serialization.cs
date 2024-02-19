@@ -29,13 +29,27 @@ namespace Azure.ResourceManager.Blueprint
 
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            if (Identity != null)
+            {
+                ((IJsonModel<Models.ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -79,7 +93,14 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<ParameterValue>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             writer.WritePropertyName("resourceGroups"u8);
@@ -87,18 +108,25 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in ResourceGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<ResourceGroupValue>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<AssignmentStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
-                writer.WriteObjectValue(Locks);
+                ((IJsonModel<AssignmentLockSettings>)Locks).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -231,7 +259,14 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;
@@ -241,7 +276,14 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupValue> dictionary = new Dictionary<string, ResourceGroupValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ResourceGroupValue.DeserializeResourceGroupValue(property1.Value));
+                                }
                             }
                             resourceGroups = dictionary;
                             continue;

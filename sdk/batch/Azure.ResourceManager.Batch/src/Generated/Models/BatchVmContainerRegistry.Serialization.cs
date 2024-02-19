@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identityReference"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ComputeNodeIdentityReference>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

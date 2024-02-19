@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppConfigurationReplicaData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     List<AppConfigurationReplicaData> array = new List<AppConfigurationReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item));
+                        }
                     }
                     value = array;
                     continue;

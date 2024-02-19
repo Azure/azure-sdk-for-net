@@ -58,7 +58,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        }
                     }
                     errors = array;
                     continue;

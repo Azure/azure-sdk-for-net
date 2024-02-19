@@ -30,12 +30,14 @@ namespace Azure.Communication.CallAutomation
             foreach (var item in Context)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if (item.Value != null)
+                {
+                    writer.WriteObjectValue(item.Value);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteObjectValue(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

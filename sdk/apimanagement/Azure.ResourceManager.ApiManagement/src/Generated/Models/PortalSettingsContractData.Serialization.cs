@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -62,12 +69,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(IsSubscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(IsSubscriptions);
+                ((IJsonModel<SubscriptionDelegationSettingProperties>)IsSubscriptions).Write(writer, options);
             }
             if (Optional.IsDefined(IsUserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(IsUserRegistration);
+                ((IJsonModel<RegistrationDelegationSettingProperties>)IsUserRegistration).Write(writer, options);
             }
             if (Optional.IsDefined(IsRedirectEnabled))
             {
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                ((IJsonModel<TermsOfServiceProperties>)TermsOfService).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

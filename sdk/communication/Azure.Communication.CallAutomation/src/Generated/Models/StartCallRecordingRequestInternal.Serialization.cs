@@ -16,7 +16,14 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            if (CallLocator != null)
+            {
+                writer.WriteObjectValue(CallLocator);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -43,7 +50,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in AudioChannelParticipantOrdering)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +67,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

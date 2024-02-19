@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChaosCapabilityTypeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosCapabilityTypeData> array = new List<ChaosCapabilityTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(item));
+                        }
                     }
                     value = array;
                     continue;

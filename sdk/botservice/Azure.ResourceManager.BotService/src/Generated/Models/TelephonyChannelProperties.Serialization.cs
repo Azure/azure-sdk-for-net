@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in PhoneNumbers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TelephonyPhoneNumbers>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in ApiConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TelephonyChannelResourceApiConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +171,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyPhoneNumbers> array = new List<TelephonyPhoneNumbers>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item));
+                        }
                     }
                     phoneNumbers = array;
                     continue;
@@ -171,7 +192,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyChannelResourceApiConfiguration> array = new List<TelephonyChannelResourceApiConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item));
+                        }
                     }
                     apiConfigurations = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiIssueCommentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiIssueCommentData> array = new List<ApiIssueCommentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiIssueCommentData.DeserializeApiIssueCommentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiIssueCommentData.DeserializeApiIssueCommentData(item));
+                        }
                     }
                     value = array;
                     continue;

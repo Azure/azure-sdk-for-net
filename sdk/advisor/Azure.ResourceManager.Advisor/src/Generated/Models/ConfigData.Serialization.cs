@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Advisor.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -65,7 +72,14 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Digests)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DigestConfig>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +193,14 @@ namespace Azure.ResourceManager.Advisor.Models
                             List<DigestConfig> array = new List<DigestConfig>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DigestConfig.DeserializeDigestConfig(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DigestConfig.DeserializeDigestConfig(item));
+                                }
                             }
                             digests = array;
                             continue;

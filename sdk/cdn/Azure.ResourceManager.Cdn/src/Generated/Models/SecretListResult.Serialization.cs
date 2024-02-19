@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorSecretData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<FrontDoorSecretData> array = new List<FrontDoorSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorSecretData.DeserializeFrontDoorSecretData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FrontDoorSecretData.DeserializeFrontDoorSecretData(item));
+                        }
                     }
                     value = array;
                     continue;

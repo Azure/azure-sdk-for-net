@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GeoFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +149,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    ((IJsonModel<EndpointPropertiesUpdateParametersDefaultOriginGroup>)DefaultOriginGroup).Write(writer, options);
                 }
                 else
                 {
@@ -150,7 +164,14 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<UriSigningKey>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +185,7 @@ namespace Azure.ResourceManager.Cdn
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    ((IJsonModel<EndpointDeliveryPolicy>)DeliveryPolicy).Write(writer, options);
                 }
                 else
                 {
@@ -176,7 +197,7 @@ namespace Azure.ResourceManager.Cdn
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    ((IJsonModel<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>)WebApplicationFirewallPolicyLink).Write(writer, options);
                 }
                 else
                 {
@@ -194,7 +215,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Origins)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeepCreatedOrigin>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +232,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in OriginGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeepCreatedOriginGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -214,7 +249,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CdnCustomDomainData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -433,7 +475,14 @@ namespace Azure.ResourceManager.Cdn
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                }
                             }
                             geoFilters = array;
                             continue;
@@ -458,7 +507,14 @@ namespace Azure.ResourceManager.Cdn
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                }
                             }
                             uriSigningKeys = array;
                             continue;
@@ -497,7 +553,14 @@ namespace Azure.ResourceManager.Cdn
                             List<DeepCreatedOrigin> array = new List<DeepCreatedOrigin>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeepCreatedOrigin.DeserializeDeepCreatedOrigin(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeepCreatedOrigin.DeserializeDeepCreatedOrigin(item));
+                                }
                             }
                             origins = array;
                             continue;
@@ -511,7 +574,14 @@ namespace Azure.ResourceManager.Cdn
                             List<DeepCreatedOriginGroup> array = new List<DeepCreatedOriginGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeepCreatedOriginGroup.DeserializeDeepCreatedOriginGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeepCreatedOriginGroup.DeserializeDeepCreatedOriginGroup(item));
+                                }
                             }
                             originGroups = array;
                             continue;
@@ -525,7 +595,14 @@ namespace Azure.ResourceManager.Cdn
                             List<CdnCustomDomainData> array = new List<CdnCustomDomainData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CdnCustomDomainData.DeserializeCdnCustomDomainData(item));
+                                }
                             }
                             customDomains = array;
                             continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<OutboundEnvironmentEndpoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<OutboundEnvironmentEndpoint> array = new List<OutboundEnvironmentEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(item));
+                        }
                     }
                     value = array;
                     continue;

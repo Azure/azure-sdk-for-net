@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DirectLineSite>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<DirectLineSite> array = new List<DirectLineSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectLineSite.DeserializeDirectLineSite(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DirectLineSite.DeserializeDirectLineSite(item));
+                        }
                     }
                     sites = array;
                     continue;

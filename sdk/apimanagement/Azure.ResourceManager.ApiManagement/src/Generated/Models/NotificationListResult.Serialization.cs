@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementNotificationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementNotificationData> array = new List<ApiManagementNotificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementNotificationData.DeserializeApiManagementNotificationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementNotificationData.DeserializeApiManagementNotificationData(item));
+                        }
                     }
                     value = array;
                     continue;

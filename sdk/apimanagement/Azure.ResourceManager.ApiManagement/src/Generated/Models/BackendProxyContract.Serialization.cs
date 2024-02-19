@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);

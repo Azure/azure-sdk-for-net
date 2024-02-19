@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformStorageData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformStorageData> array = new List<AppPlatformStorageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformStorageData.DeserializeAppPlatformStorageData(item));
+                        }
                     }
                     value = array;
                     continue;

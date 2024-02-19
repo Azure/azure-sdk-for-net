@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Avs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +190,14 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptParameter> array = new List<ScriptParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptParameter.DeserializeScriptParameter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScriptParameter.DeserializeScriptParameter(item));
+                                }
                             }
                             parameters = array;
                             continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ApiManagement
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,12 +70,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(Subscriptions);
+                ((IJsonModel<SubscriptionDelegationSettingProperties>)Subscriptions).Write(writer, options);
             }
             if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(UserRegistration);
+                ((IJsonModel<RegistrationDelegationSettingProperties>)UserRegistration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<ArcVmExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -41,7 +41,14 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,32 +70,32 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                ((IJsonModel<VirtualMachineInstancePropertiesHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<VirtualMachineInstancePropertiesNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<VirtualMachineInstancePropertiesOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<VirtualMachineInstancePropertiesSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<VirtualMachineInstancePropertiesStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HttpProxyConfig))
             {
                 writer.WritePropertyName("httpProxyConfig"u8);
-                writer.WriteObjectValue(HttpProxyConfig);
+                ((IJsonModel<HttpProxyConfiguration>)HttpProxyConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -98,17 +105,17 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                ((IJsonModel<VirtualMachineInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<VirtualMachineInstanceStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(GuestAgentInstallStatus))
             {
                 writer.WritePropertyName("guestAgentInstallStatus"u8);
-                writer.WriteObjectValue(GuestAgentInstallStatus);
+                ((IJsonModel<GuestAgentInstallStatus>)GuestAgentInstallStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmId))
             {

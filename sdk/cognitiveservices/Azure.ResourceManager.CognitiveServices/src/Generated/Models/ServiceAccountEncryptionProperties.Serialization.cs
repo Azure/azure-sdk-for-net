@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<CognitiveServicesKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(KeySource))
             {

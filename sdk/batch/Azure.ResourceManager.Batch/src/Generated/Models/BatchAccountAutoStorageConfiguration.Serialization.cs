@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WritePropertyName("lastKeySync"u8);
             writer.WriteStringValue(LastKeySyncedOn, "O");
             writer.WritePropertyName("storageAccountId"u8);
-            writer.WriteStringValue(StorageAccountId);
+            if (StorageAccountId != null)
+            {
+                writer.WriteStringValue(StorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(AuthenticationMode))
             {
                 writer.WritePropertyName("authenticationMode"u8);
@@ -38,7 +45,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue(NodeIdentity);
+                ((IJsonModel<ComputeNodeIdentityReference>)NodeIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in PerNodeDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PerNodeArcState>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -264,7 +278,14 @@ namespace Azure.ResourceManager.Hci
                             List<PerNodeArcState> array = new List<PerNodeArcState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PerNodeArcState.DeserializePerNodeArcState(item));
+                                }
                             }
                             perNodeDetails = array;
                             continue;

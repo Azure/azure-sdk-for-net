@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.Batch.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

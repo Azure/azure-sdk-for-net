@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -114,14 +121,21 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebTestGeolocation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("Configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<WebTestPropertiesConfiguration>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,12 +145,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("Request"u8);
-                writer.WriteObjectValue(Request);
+                ((IJsonModel<WebTestPropertiesRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationRules))
             {
                 writer.WritePropertyName("ValidationRules"u8);
-                writer.WriteObjectValue(ValidationRules);
+                ((IJsonModel<WebTestPropertiesValidationRules>)ValidationRules).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -331,7 +345,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                             List<WebTestGeolocation> array = new List<WebTestGeolocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WebTestGeolocation.DeserializeWebTestGeolocation(item));
+                                }
                             }
                             locations = array;
                             continue;

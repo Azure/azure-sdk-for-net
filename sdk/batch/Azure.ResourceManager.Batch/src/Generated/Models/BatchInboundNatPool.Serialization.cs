@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityGroupRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchNetworkSecurityGroupRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        }
                     }
                     networkSecurityGroupRules = array;
                     continue;

@@ -21,7 +21,14 @@ namespace Azure.AI.Language.QuestionAnswering
             writer.WriteStartArray();
             foreach (var item in TextDocuments)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Language))

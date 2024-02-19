@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAccountThrottlingRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountThrottlingRule> array = new List<ServiceAccountThrottlingRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAccountThrottlingRule.DeserializeServiceAccountThrottlingRule(item));
+                        }
                     }
                     rules = array;
                     continue;

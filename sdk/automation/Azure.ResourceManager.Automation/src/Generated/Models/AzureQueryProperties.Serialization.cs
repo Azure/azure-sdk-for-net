@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(TagSettings))
             {
                 writer.WritePropertyName("tagSettings"u8);
-                writer.WriteObjectValue(TagSettings);
+                ((IJsonModel<QueryTagSettingsProperties>)TagSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

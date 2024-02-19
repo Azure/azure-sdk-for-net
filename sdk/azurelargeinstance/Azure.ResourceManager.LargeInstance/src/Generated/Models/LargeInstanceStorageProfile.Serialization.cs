@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in OSDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LargeInstanceDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceDisk> array = new List<LargeInstanceDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LargeInstanceDisk.DeserializeLargeInstanceDisk(item));
+                        }
                     }
                     osDisks = array;
                     continue;

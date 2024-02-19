@@ -26,7 +26,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteNumberValue(InitialSilenceTimeoutInSeconds.Value);
             }
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            if (TargetParticipant != null)
+            {
+                writer.WriteObjectValue(TargetParticipant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SpeechLanguage))
             {
                 writer.WritePropertyName("speechLanguage"u8);
@@ -48,7 +55,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in Choices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,14 +81,21 @@ namespace Azure.ResourceManager.Blueprint.Models
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
             writer.WritePropertyName("principalIds"u8);
+            if (PrincipalIds != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PrincipalIds);
 #else
-            using (JsonDocument document = JsonDocument.Parse(PrincipalIds))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(PrincipalIds))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);

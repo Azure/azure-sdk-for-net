@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HciClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HciClusterData> array = new List<HciClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HciClusterData.DeserializeHciClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HciClusterData.DeserializeHciClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAlertModificationItemInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertModificationItemInfo> array = new List<ServiceAlertModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
+                        }
                     }
                     modifications = array;
                     continue;

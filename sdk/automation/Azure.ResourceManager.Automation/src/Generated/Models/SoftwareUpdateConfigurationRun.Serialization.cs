@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(SoftwareUpdateConfiguration))
             {
                 writer.WritePropertyName("softwareUpdateConfiguration"u8);
-                writer.WriteObjectValue(SoftwareUpdateConfiguration);
+                ((IJsonModel<SoftwareUpdateConfigurationNavigation>)SoftwareUpdateConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                ((IJsonModel<SoftwareUpdateConfigurationRunTasks>)Tasks).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

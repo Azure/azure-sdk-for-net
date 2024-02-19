@@ -60,14 +60,21 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurationReferences)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                ((IJsonModel<RouteTable>)RouteTable).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPPools))
             {
@@ -75,7 +82,14 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in IPPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPPool>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +200,14 @@ namespace Azure.ResourceManager.Hci.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             ipConfigurationReferences = array;
                             continue;
@@ -209,7 +230,14 @@ namespace Azure.ResourceManager.Hci.Models
                             List<IPPool> array = new List<IPPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPool.DeserializeIPPool(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPPool.DeserializeIPPool(item));
+                                }
                             }
                             ipPools = array;
                             continue;

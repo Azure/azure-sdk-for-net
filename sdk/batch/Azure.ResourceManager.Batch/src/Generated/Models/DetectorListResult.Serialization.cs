@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchAccountDetectorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchAccountDetectorData> array = new List<BatchAccountDetectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchAccountDetectorData.DeserializeBatchAccountDetectorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchAccountDetectorData.DeserializeBatchAccountDetectorData(item));
+                        }
                     }
                     value = array;
                     continue;

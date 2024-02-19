@@ -46,7 +46,14 @@ namespace Azure.Communication.Chat
                     List<ChatParticipantInternal> array = new List<ChatParticipantInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatParticipantInternal.DeserializeChatParticipantInternal(item));
+                        }
                     }
                     participants = array;
                     continue;
@@ -60,7 +67,14 @@ namespace Azure.Communication.Chat
                     List<ChatAttachmentInternal> array = new List<ChatAttachmentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatAttachmentInternal.DeserializeChatAttachmentInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatAttachmentInternal.DeserializeChatAttachmentInternal(item));
+                        }
                     }
                     attachments = array;
                     continue;

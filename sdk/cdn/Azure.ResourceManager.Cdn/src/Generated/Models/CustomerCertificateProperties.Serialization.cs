@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource);
+            if (SecretSource != null)
+            {
+                JsonSerializer.Serialize(writer, SecretSource);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);

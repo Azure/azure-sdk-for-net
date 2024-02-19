@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                ((IJsonModel<AppPlatformConfigurationServiceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -42,14 +42,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformConfigurationServiceInstance>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                ((IJsonModel<AppPlatformConfigurationServiceSettings>)Settings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformConfigurationServiceInstance> array = new List<AppPlatformConfigurationServiceInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformConfigurationServiceInstance.DeserializeAppPlatformConfigurationServiceInstance(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformConfigurationServiceInstance.DeserializeAppPlatformConfigurationServiceInstance(item));
+                        }
                     }
                     instances = array;
                     continue;

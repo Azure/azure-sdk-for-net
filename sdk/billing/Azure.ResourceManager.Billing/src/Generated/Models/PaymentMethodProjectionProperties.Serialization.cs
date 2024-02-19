@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Logos)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PaymentMethodLogo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +186,14 @@ namespace Azure.ResourceManager.Billing.Models
                     List<PaymentMethodLogo> array = new List<PaymentMethodLogo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PaymentMethodLogo.DeserializePaymentMethodLogo(item));
+                        }
                     }
                     logos = array;
                     continue;

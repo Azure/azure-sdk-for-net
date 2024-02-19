@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vaultUri"u8);
-            writer.WriteStringValue(VaultUri.AbsoluteUri);
+            if (VaultUri != null)
+            {
+                writer.WriteStringValue(VaultUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("keyVaultCertName"u8);
             writer.WriteStringValue(KeyVaultCertName);
             if (Optional.IsDefined(CertVersion))

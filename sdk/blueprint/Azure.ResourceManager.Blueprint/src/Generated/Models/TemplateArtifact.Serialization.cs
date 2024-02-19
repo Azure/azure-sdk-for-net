@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Blueprint.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -72,14 +79,21 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("template"u8);
+            if (Template != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Template);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Template))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Template))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ResourceGroup))
             {
                 writer.WritePropertyName("resourceGroup"u8);
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<ParameterValue>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -224,7 +245,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;

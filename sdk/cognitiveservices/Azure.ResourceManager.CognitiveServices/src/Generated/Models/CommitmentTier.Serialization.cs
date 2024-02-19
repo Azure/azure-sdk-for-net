@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Quota))
             {
                 writer.WritePropertyName("quota"u8);
-                writer.WriteObjectValue(Quota);
+                ((IJsonModel<CommitmentQuota>)Quota).Write(writer, options);
             }
             if (Optional.IsDefined(Cost))
             {
                 writer.WritePropertyName("cost"u8);
-                writer.WriteObjectValue(Cost);
+                ((IJsonModel<CommitmentCost>)Cost).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

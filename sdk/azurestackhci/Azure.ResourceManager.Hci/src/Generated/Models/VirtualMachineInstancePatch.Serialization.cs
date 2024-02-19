@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<VirtualMachineInstanceUpdateProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {

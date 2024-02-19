@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ServiceFabricCluster))
             {
                 writer.WritePropertyName("serviceFabricCluster"u8);
-                writer.WriteObjectValue(ServiceFabricCluster);
+                ((IJsonModel<BackendServiceFabricClusterProperties>)ServiceFabricCluster).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BillingBenefitsSavingsPlanUtilizationAggregate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<BillingBenefitsSavingsPlanUtilizationAggregate> array = new List<BillingBenefitsSavingsPlanUtilizationAggregate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingBenefitsSavingsPlanUtilizationAggregate.DeserializeBillingBenefitsSavingsPlanUtilizationAggregate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BillingBenefitsSavingsPlanUtilizationAggregate.DeserializeBillingBenefitsSavingsPlanUtilizationAggregate(item));
+                        }
                     }
                     aggregates = array;
                     continue;

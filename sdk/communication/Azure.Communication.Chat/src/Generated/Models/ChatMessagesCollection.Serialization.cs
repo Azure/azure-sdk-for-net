@@ -28,7 +28,14 @@ namespace Azure.Communication.Chat
                     List<ChatMessageInternal> array = new List<ChatMessageInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatMessageInternal.DeserializeChatMessageInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatMessageInternal.DeserializeChatMessageInternal(item));
+                        }
                     }
                     value = array;
                     continue;

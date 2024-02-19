@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             if (Optional.IsDefined(PurchaseProperties))
             {
                 writer.WritePropertyName("purchaseProperties"u8);
-                writer.WriteObjectValue(PurchaseProperties);
+                ((IJsonModel<BillingBenefitsPurchaseContent>)PurchaseProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

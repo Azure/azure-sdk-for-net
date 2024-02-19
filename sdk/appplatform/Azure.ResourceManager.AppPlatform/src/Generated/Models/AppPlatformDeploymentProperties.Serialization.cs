@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<AppPlatformUserSourceInfo>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
-                writer.WriteObjectValue(DeploymentSettings);
+                ((IJsonModel<AppPlatformDeploymentSettings>)DeploymentSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformDeploymentInstance>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +170,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformDeploymentInstance> array = new List<AppPlatformDeploymentInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformDeploymentInstance.DeserializeAppPlatformDeploymentInstance(item));
+                        }
                     }
                     instances = array;
                     continue;

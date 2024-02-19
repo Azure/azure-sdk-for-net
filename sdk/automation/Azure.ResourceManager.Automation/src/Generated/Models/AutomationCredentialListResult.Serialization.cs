@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationCredentialData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationCredentialData> array = new List<AutomationCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationCredentialData.DeserializeAutomationCredentialData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationCredentialData.DeserializeAutomationCredentialData(item));
+                        }
                     }
                     value = array;
                     continue;

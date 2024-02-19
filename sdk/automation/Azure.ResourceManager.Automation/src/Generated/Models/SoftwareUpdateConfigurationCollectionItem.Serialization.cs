@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
-                writer.WriteObjectValue(UpdateConfiguration);
+                ((IJsonModel<SoftwareUpdateConfigurationSpecificProperties>)UpdateConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                ((IJsonModel<SoftwareUpdateConfigurationTasks>)Tasks).Write(writer, options);
             }
             if (Optional.IsDefined(Frequency))
             {

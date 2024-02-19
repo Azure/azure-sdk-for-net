@@ -64,7 +64,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerX509Names)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<X509CertificateName>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +175,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<X509CertificateName> array = new List<X509CertificateName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X509CertificateName.DeserializeX509CertificateName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(X509CertificateName.DeserializeX509CertificateName(item));
+                        }
                     }
                     serverX509Names = array;
                     continue;

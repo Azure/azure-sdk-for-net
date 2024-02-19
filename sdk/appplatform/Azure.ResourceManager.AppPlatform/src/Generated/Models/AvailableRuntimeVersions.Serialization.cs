@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppPlatformSupportedRuntimeVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSupportedRuntimeVersion> array = new List<AppPlatformSupportedRuntimeVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppPlatformSupportedRuntimeVersion.DeserializeAppPlatformSupportedRuntimeVersion(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -28,7 +28,14 @@ namespace Azure.AI.AnomalyDetector
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource.AbsoluteUri);
+            if (DataSource != null)
+            {
+                writer.WriteStringValue(DataSource.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DataSchema))
             {
                 writer.WritePropertyName("dataSchema"u8);
@@ -51,7 +58,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(AlignPolicy))
             {
                 writer.WritePropertyName("alignPolicy"u8);
-                writer.WriteObjectValue(AlignPolicy);
+                ((IJsonModel<AlignPolicy>)AlignPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -64,14 +71,21 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ErrorResponse>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DiagnosticsInfo))
             {
                 writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo);
+                ((IJsonModel<DiagnosticsInfo>)DiagnosticsInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -190,7 +204,14 @@ namespace Azure.AI.AnomalyDetector
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ErrorResponse.DeserializeErrorResponse(item));
+                        }
                     }
                     errors = array;
                     continue;

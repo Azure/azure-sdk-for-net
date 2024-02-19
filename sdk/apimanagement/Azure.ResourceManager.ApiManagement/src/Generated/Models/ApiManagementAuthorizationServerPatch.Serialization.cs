@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -80,7 +87,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in TokenBodyParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TokenBodyParameterContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -292,7 +306,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<TokenBodyParameterContract> array = new List<TokenBodyParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TokenBodyParameterContract.DeserializeTokenBodyParameterContract(item));
+                                }
                             }
                             tokenBodyParameters = array;
                             continue;

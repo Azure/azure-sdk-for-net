@@ -40,7 +40,14 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("contentLink"u8);
-            writer.WriteObjectValue(ContentLink);
+            if (ContentLink != null)
+            {
+                ((IJsonModel<AutomationContentLink>)ContentLink).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

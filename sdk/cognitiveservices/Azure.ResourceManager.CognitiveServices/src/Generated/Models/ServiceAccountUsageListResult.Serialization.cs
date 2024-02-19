@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAccountUsage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUsage> array = new List<ServiceAccountUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUsage.DeserializeServiceAccountUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAccountUsage.DeserializeServiceAccountUsage(item));
+                        }
                     }
                     value = array;
                     continue;

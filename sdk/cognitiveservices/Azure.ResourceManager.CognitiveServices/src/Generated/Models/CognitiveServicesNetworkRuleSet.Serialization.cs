@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesVirtualNetworkRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesIPRule> array = new List<CognitiveServicesIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesIPRule.DeserializeCognitiveServicesIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;
@@ -128,7 +149,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesVirtualNetworkRule> array = new List<CognitiveServicesVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesVirtualNetworkRule.DeserializeCognitiveServicesVirtualNetworkRule(item));
+                        }
                     }
                     virtualNetworkRules = array;
                     continue;

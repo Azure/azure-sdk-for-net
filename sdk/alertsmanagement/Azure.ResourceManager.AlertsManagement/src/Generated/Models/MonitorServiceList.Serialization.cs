@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MonitorServiceDetails>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadataIdentifier"u8);
@@ -84,7 +91,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<MonitorServiceDetails> array = new List<MonitorServiceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorServiceDetails.DeserializeMonitorServiceDetails(item));
+                        }
                     }
                     data = array;
                     continue;

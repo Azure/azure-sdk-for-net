@@ -16,7 +16,14 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dialog"u8);
-            writer.WriteObjectValue(Dialog);
+            if (Dialog != null)
+            {
+                writer.WriteObjectValue(Dialog);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);

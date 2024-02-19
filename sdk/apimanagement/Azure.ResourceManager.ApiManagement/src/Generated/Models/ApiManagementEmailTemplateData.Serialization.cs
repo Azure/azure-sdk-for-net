@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ApiManagement
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmailTemplateParametersContractProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +223,14 @@ namespace Azure.ResourceManager.ApiManagement
                             List<EmailTemplateParametersContractProperties> array = new List<EmailTemplateParametersContractProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EmailTemplateParametersContractProperties.DeserializeEmailTemplateParametersContractProperties(item));
+                                }
                             }
                             parameters = array;
                             continue;

@@ -28,7 +28,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
             }
             writer.WritePropertyName("recognizeOptions"u8);
-            writer.WriteObjectValue(RecognizeOptions);
+            if (RecognizeOptions != null)
+            {
+                writer.WriteObjectValue(RecognizeOptions);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);

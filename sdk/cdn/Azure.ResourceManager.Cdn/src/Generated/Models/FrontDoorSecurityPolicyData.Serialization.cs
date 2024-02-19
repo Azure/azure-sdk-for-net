@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SecurityPolicyProperties>)Properties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

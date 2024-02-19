@@ -16,7 +16,14 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            if (TargetParticipant != null)
+            {
+                writer.WriteObjectValue(TargetParticipant);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);

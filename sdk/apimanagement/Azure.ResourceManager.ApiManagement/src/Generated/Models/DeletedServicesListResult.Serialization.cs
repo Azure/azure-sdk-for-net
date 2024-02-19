@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementDeletedServiceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementDeletedServiceData> array = new List<ApiManagementDeletedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementDeletedServiceData.DeserializeApiManagementDeletedServiceData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProductGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ProductGroupData> array = new List<ProductGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductGroupData.DeserializeProductGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProductGroupData.DeserializeProductGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

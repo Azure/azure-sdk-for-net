@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<AvsEncryptionKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

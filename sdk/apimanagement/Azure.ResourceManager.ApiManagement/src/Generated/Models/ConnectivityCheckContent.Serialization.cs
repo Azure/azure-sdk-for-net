@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source != null)
+            {
+                ((IJsonModel<ConnectivityCheckRequestSource>)Source).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            if (Destination != null)
+            {
+                ((IJsonModel<ConnectivityCheckRequestDestination>)Destination).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
@@ -43,7 +57,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                ((IJsonModel<ConnectivityCheckRequestProtocolConfiguration>)ProtocolConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

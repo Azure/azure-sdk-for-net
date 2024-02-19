@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Series)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WafMetricsResponseSeriesItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesItem> array = new List<WafMetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WafMetricsResponseSeriesItem.DeserializeWafMetricsResponseSeriesItem(item));
+                        }
                     }
                     series = array;
                     continue;

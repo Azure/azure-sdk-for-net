@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -103,7 +110,7 @@ namespace Azure.ResourceManager.Authorization
             if (Optional.IsDefined(TicketInfo))
             {
                 writer.WritePropertyName("ticketInfo"u8);
-                writer.WriteObjectValue(TicketInfo);
+                ((IJsonModel<RoleEligibilityScheduleRequestPropertiesTicketInfo>)TicketInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Condition))
             {
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.Authorization
             if (options.Format != "W" && Optional.IsDefined(ExpandedProperties))
             {
                 writer.WritePropertyName("expandedProperties"u8);
-                writer.WriteObjectValue(ExpandedProperties);
+                ((IJsonModel<RoleManagementExpandedProperties>)ExpandedProperties).Write(writer, options);
             }
             writer.WritePropertyName("scheduleInfo"u8);
             writer.WriteStartObject();

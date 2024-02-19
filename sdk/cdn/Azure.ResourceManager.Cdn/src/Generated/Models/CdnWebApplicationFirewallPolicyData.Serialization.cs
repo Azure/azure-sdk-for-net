@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<CdnSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -53,7 +60,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -75,22 +89,22 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings);
+                ((IJsonModel<WafPolicySettings>)PolicySettings).Write(writer, options);
             }
             if (Optional.IsDefined(RateLimitSettings))
             {
                 writer.WritePropertyName("rateLimitRules"u8);
-                writer.WriteObjectValue(RateLimitSettings);
+                ((IJsonModel<RateLimitRuleList>)RateLimitSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CustomSettings))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomSettings);
+                ((IJsonModel<CustomRuleList>)CustomSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules);
+                ((IJsonModel<ManagedRuleSetList>)ManagedRules).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EndpointLinks))
             {
@@ -98,7 +112,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in EndpointLinks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -281,7 +302,14 @@ namespace Azure.ResourceManager.Cdn
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                }
                             }
                             endpointLinks = array;
                             continue;

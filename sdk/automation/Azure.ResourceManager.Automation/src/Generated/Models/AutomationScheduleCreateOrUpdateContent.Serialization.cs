@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule);
+                ((IJsonModel<AutomationAdvancedSchedule>)AdvancedSchedule).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

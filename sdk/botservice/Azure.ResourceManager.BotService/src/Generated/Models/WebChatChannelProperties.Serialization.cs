@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebChatSite>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<WebChatSite> array = new List<WebChatSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebChatSite.DeserializeWebChatSite(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebChatSite.DeserializeWebChatSite(item));
+                        }
                     }
                     sites = array;
                     continue;

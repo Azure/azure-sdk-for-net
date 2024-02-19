@@ -29,11 +29,25 @@ namespace Azure.ResourceManager.BillingBenefits
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -110,12 +124,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                ((IJsonModel<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                ((IJsonModel<BillingBenefitsCommitment>)Commitment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EffectOn))
             {
@@ -140,7 +154,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                ((IJsonModel<BillingBenefitsExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsRenewed))
             {
@@ -150,7 +164,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W" && Optional.IsDefined(Utilization))
             {
                 writer.WritePropertyName("utilization"u8);
-                writer.WriteObjectValue(Utilization);
+                ((IJsonModel<BillingBenefitsSavingsPlanUtilization>)Utilization).Write(writer, options);
             }
             if (Optional.IsDefined(RenewSource))
             {
@@ -165,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                ((IJsonModel<RenewProperties>)RenewProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

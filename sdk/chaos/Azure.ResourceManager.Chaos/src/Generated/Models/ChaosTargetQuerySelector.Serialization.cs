@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<ChaosTargetFilter>)Filter).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {

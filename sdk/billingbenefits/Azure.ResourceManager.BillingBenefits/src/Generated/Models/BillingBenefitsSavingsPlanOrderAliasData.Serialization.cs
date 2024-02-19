@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.BillingBenefits
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<BillingBenefitsSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -38,7 +45,14 @@ namespace Azure.ResourceManager.BillingBenefits
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -95,12 +109,12 @@ namespace Azure.ResourceManager.BillingBenefits
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                ((IJsonModel<BillingBenefitsAppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                ((IJsonModel<BillingBenefitsCommitment>)Commitment).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

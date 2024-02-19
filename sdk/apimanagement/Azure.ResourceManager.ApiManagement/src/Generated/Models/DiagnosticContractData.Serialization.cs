@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ApiManagement
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,17 +70,17 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Sampling))
             {
                 writer.WritePropertyName("sampling"u8);
-                writer.WriteObjectValue(Sampling);
+                ((IJsonModel<SamplingSettings>)Sampling).Write(writer, options);
             }
             if (Optional.IsDefined(Frontend))
             {
                 writer.WritePropertyName("frontend"u8);
-                writer.WriteObjectValue(Frontend);
+                ((IJsonModel<PipelineDiagnosticSettings>)Frontend).Write(writer, options);
             }
             if (Optional.IsDefined(Backend))
             {
                 writer.WritePropertyName("backend"u8);
-                writer.WriteObjectValue(Backend);
+                ((IJsonModel<PipelineDiagnosticSettings>)Backend).Write(writer, options);
             }
             if (Optional.IsDefined(IsLogClientIPEnabled))
             {

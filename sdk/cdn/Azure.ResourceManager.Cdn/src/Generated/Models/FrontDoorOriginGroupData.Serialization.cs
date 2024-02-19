@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Cdn
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,12 +65,12 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings);
+                ((IJsonModel<LoadBalancingSettings>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings);
+                ((IJsonModel<HealthProbeSettings>)HealthProbeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {

@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<InventoryItemData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<InventoryItemData> array = new List<InventoryItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InventoryItemData.DeserializeInventoryItemData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InventoryItemData.DeserializeInventoryItemData(item));
+                        }
                     }
                     value = array;
                     continue;

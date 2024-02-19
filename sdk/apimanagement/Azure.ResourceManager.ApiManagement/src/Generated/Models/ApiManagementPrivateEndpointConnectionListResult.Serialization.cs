@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementPrivateEndpointConnectionData> array = new List<ApiManagementPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementPrivateEndpointConnectionData.DeserializeApiManagementPrivateEndpointConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

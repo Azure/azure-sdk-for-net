@@ -19,7 +19,14 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
@@ -28,7 +35,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

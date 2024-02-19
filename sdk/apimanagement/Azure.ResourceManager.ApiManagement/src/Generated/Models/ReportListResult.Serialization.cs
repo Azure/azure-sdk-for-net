@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportRecordContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ReportRecordContract> array = new List<ReportRecordContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportRecordContract.DeserializeReportRecordContract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReportRecordContract.DeserializeReportRecordContract(item));
+                        }
                     }
                     value = array;
                     continue;

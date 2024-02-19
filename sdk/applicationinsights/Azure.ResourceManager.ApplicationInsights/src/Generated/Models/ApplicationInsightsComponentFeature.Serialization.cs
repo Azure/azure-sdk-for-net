@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationInsightsComponentFeatureCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +172,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<ApplicationInsightsComponentFeatureCapability> array = new List<ApplicationInsightsComponentFeatureCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplicationInsightsComponentFeatureCapability.DeserializeApplicationInsightsComponentFeatureCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

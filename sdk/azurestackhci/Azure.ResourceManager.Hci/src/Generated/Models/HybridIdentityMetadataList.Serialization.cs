@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.Hci.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HybridIdentityMetadataData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.Hci.Models
                     List<HybridIdentityMetadataData> array = new List<HybridIdentityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridIdentityMetadataData.DeserializeHybridIdentityMetadataData(item));
+                        }
                     }
                     value = array;
                     continue;

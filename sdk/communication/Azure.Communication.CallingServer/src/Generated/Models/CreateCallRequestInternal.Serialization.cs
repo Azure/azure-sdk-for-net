@@ -19,11 +19,25 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source != null)
+            {
+                writer.WriteObjectValue(Source);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);

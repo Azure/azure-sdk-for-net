@@ -16,7 +16,14 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("participantToRemove"u8);
-            writer.WriteObjectValue(ParticipantToRemove);
+            if (ParticipantToRemove != null)
+            {
+                writer.WriteObjectValue(ParticipantToRemove);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
