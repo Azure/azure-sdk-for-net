@@ -11,18 +11,18 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     /// <summary> The SAP instance specific performance data for native discovery. </summary>
-    public partial class NativePerformanceData : PerformanceData
+    public partial class NativePerformanceDetail : PerformanceDetail
     {
-        /// <summary> Initializes a new instance of <see cref="NativePerformanceData"/>. </summary>
-        internal NativePerformanceData()
+        /// <summary> Initializes a new instance of <see cref="NativePerformanceDetail"/>. </summary>
+        internal NativePerformanceDetail()
         {
             DataSource = DataSource.Native;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NativePerformanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NativePerformanceDetail"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NativePerformanceData(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSource, serializedAdditionalRawData)
+        internal NativePerformanceDetail(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(dataSource, serializedAdditionalRawData)
         {
             DataSource = dataSource;
         }

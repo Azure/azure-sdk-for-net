@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class NativePerformanceData : IUtf8JsonSerializable, IJsonModel<NativePerformanceData>
+    public partial class NativePerformanceDetail : IUtf8JsonSerializable, IJsonModel<NativePerformanceDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NativePerformanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NativePerformanceDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NativePerformanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NativePerformanceDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativePerformanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,19 +46,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteEndObject();
         }
 
-        NativePerformanceData IJsonModel<NativePerformanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NativePerformanceDetail IJsonModel<NativePerformanceDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NativePerformanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNativePerformanceData(document.RootElement, options);
+            return DeserializeNativePerformanceDetail(document.RootElement, options);
         }
 
-        internal static NativePerformanceData DeserializeNativePerformanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NativePerformanceDetail DeserializeNativePerformanceDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -82,38 +82,38 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NativePerformanceData(dataSource, serializedAdditionalRawData);
+            return new NativePerformanceDetail(dataSource, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NativePerformanceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NativePerformanceDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NativePerformanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        NativePerformanceData IPersistableModel<NativePerformanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NativePerformanceDetail IPersistableModel<NativePerformanceDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NativePerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNativePerformanceData(document.RootElement, options);
+                        return DeserializeNativePerformanceDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NativePerformanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NativePerformanceDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NativePerformanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NativePerformanceDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

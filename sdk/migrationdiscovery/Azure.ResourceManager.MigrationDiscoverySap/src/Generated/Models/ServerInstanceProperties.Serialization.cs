@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             Optional<string> sapProduct = default;
             Optional<string> sapProductVersion = default;
             Optional<OperatingSystem> operatingSystem = default;
-            Optional<ConfigurationData> configurationData = default;
-            Optional<PerformanceData> performanceData = default;
+            Optional<ConfigurationDetail> configurationData = default;
+            Optional<PerformanceDetail> performanceData = default;
             Optional<ProvisioningState> provisioningState = default;
             Optional<SAPMigrateError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    configurationData = ConfigurationData.DeserializeConfigurationData(property.Value);
+                    configurationData = ConfigurationDetail.DeserializeConfigurationDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("performanceData"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    performanceData = PerformanceData.DeserializePerformanceData(property.Value);
+                    performanceData = PerformanceDetail.DeserializePerformanceDetail(property.Value);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))

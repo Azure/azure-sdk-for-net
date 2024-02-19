@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     /// <summary> The UnknownPerformanceData. </summary>
-    internal partial class UnknownPerformanceData : PerformanceData
+    internal partial class UnknownPerformanceData : PerformanceDetail
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPerformanceData"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>

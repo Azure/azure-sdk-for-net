@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     /// <summary> The SAP instance specific performance data for Excel import. </summary>
-    public partial class ExcelPerformanceData : PerformanceData
+    public partial class ExcelPerformanceDetail : PerformanceDetail
     {
-        /// <summary> Initializes a new instance of <see cref="ExcelPerformanceData"/>. </summary>
-        internal ExcelPerformanceData()
+        /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
+        internal ExcelPerformanceDetail()
         {
             DataSource = DataSource.Excel;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExcelPerformanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExcelPerformanceDetail"/>. </summary>
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
         /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
-        internal ExcelPerformanceData(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, serializedAdditionalRawData)
+        internal ExcelPerformanceDetail(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, serializedAdditionalRawData)
         {
             MaxCpuLoad = maxCpuLoad;
             TotalSourceDbSizeGB = totalSourceDbSizeGB;

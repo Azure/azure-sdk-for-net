@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> recommendation = default;
-            Optional<IReadOnlyList<ErrorDefinition>> details = default;
+            Optional<IReadOnlyList<SapDiscoveryErrorDetail>> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -130,10 +130,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                             {
                                 continue;
                             }
-                            List<ErrorDefinition> array = new List<ErrorDefinition>();
+                            List<SapDiscoveryErrorDetail> array = new List<SapDiscoveryErrorDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ErrorDefinition.DeserializeErrorDefinition(item));
+                                array.Add(SapDiscoveryErrorDetail.DeserializeSapDiscoveryErrorDetail(item));
                             }
                             details = array;
                             continue;

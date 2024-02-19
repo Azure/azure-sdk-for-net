@@ -21,7 +21,12 @@ use-model-reader-writer: true
 #mgmt-debug:
 #  show-serialized-names: true
 
-
+rename-mapping:
+  ErrorDefinition: SapDiscoveryErrorDetail
+  ConfigurationData: ConfigurationDetail
+  ExcelPerformanceData: ExcelPerformanceDetail
+  NativePerformanceData: NativePerformanceDetail
+  PerformanceData: PerformanceDetail
 
 format-by-name-rules:
   'tenantId': 'uuid'

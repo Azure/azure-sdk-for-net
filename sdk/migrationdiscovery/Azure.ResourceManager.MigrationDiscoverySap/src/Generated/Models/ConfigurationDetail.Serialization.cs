@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class ConfigurationData : IUtf8JsonSerializable, IJsonModel<ConfigurationData>
+    public partial class ConfigurationDetail : IUtf8JsonSerializable, IJsonModel<ConfigurationDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfigurationDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteEndObject();
         }
 
-        ConfigurationData IJsonModel<ConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConfigurationDetail IJsonModel<ConfigurationDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationData(document.RootElement, options);
+            return DeserializeConfigurationDetail(document.RootElement, options);
         }
 
-        internal static ConfigurationData DeserializeConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConfigurationDetail DeserializeConfigurationDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -227,38 +227,38 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationData(Optional.ToNullable(saps), Optional.ToNullable(cpu), cpuType.Value, Optional.ToNullable(cpuInMhz), Optional.ToNullable(ram), hardwareManufacturer.Value, model.Value, Optional.ToNullable(totalDiskSizeGB), Optional.ToNullable(totalDiskIops), Optional.ToNullable(databaseType), Optional.ToNullable(targetHanaRamSizeGB), serializedAdditionalRawData);
+            return new ConfigurationDetail(Optional.ToNullable(saps), Optional.ToNullable(cpu), cpuType.Value, Optional.ToNullable(cpuInMhz), Optional.ToNullable(ram), hardwareManufacturer.Value, model.Value, Optional.ToNullable(totalDiskSizeGB), Optional.ToNullable(totalDiskIops), Optional.ToNullable(databaseType), Optional.ToNullable(targetHanaRamSizeGB), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConfigurationData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConfigurationDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        ConfigurationData IPersistableModel<ConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConfigurationDetail IPersistableModel<ConfigurationDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeConfigurationData(document.RootElement, options);
+                        return DeserializeConfigurationDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfigurationDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

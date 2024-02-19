@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class ErrorDefinition : IUtf8JsonSerializable, IJsonModel<ErrorDefinition>
+    public partial class SapDiscoveryErrorDetail : IUtf8JsonSerializable, IJsonModel<SapDiscoveryErrorDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ErrorDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapDiscoveryErrorDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ErrorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SapDiscoveryErrorDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,19 +69,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteEndObject();
         }
 
-        ErrorDefinition IJsonModel<ErrorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SapDiscoveryErrorDetail IJsonModel<SapDiscoveryErrorDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ErrorDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeErrorDefinition(document.RootElement, options);
+            return DeserializeSapDiscoveryErrorDetail(document.RootElement, options);
         }
 
-        internal static ErrorDefinition DeserializeErrorDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SapDiscoveryErrorDetail DeserializeSapDiscoveryErrorDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<string> recommendation = default;
-            Optional<IReadOnlyList<ErrorDefinition>> details = default;
+            Optional<IReadOnlyList<SapDiscoveryErrorDetail>> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    List<ErrorDefinition> array = new List<ErrorDefinition>();
+                    List<SapDiscoveryErrorDetail> array = new List<SapDiscoveryErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorDefinition(item));
+                        array.Add(DeserializeSapDiscoveryErrorDetail(item));
                     }
                     details = array;
                     continue;
@@ -132,38 +132,38 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ErrorDefinition(code.Value, message.Value, recommendation.Value, Optional.ToList(details), serializedAdditionalRawData);
+            return new SapDiscoveryErrorDetail(code.Value, message.Value, recommendation.Value, Optional.ToList(details), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ErrorDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SapDiscoveryErrorDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        ErrorDefinition IPersistableModel<ErrorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SapDiscoveryErrorDetail IPersistableModel<SapDiscoveryErrorDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ErrorDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SapDiscoveryErrorDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeErrorDefinition(document.RootElement, options);
+                        return DeserializeSapDiscoveryErrorDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ErrorDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ErrorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SapDiscoveryErrorDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

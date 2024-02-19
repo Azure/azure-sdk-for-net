@@ -7,12 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    /// <summary> Error definition. </summary>
-    public partial class ErrorDefinition
+    /// <summary>
+    /// The SAP instance specific performance data.
+    /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
+    /// </summary>
+    public abstract partial class PerformanceDetail
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,36 +47,23 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDefinition"/>. </summary>
-        internal ErrorDefinition()
+        /// <summary> Initializes a new instance of <see cref="PerformanceDetail"/>. </summary>
+        protected PerformanceDetail()
         {
-            Details = new ChangeTrackingList<ErrorDefinition>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ErrorDefinition"/>. </summary>
-        /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
-        /// <param name="message"> Description of the error. </param>
-        /// <param name="recommendation"> Description of the recommendation. </param>
-        /// <param name="details"> Internal error details. </param>
+        /// <summary> Initializes a new instance of <see cref="PerformanceDetail"/>. </summary>
+        /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ErrorDefinition(string code, string message, string recommendation, IReadOnlyList<ErrorDefinition> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PerformanceDetail(DataSource dataSource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Code = code;
-            Message = message;
-            Recommendation = recommendation;
-            Details = details;
+            DataSource = dataSource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Service specific error code which serves as the substatus for the HTTP error code. </summary>
-        public string Code { get; }
-        /// <summary> Description of the error. </summary>
-        public string Message { get; }
-        /// <summary> Description of the recommendation. </summary>
-        public string Recommendation { get; }
-        /// <summary> Internal error details. </summary>
-        public IReadOnlyList<ErrorDefinition> Details { get; }
+        /// <summary> The data source of the performance data. </summary>
+        internal DataSource DataSource { get; set; }
     }
 }

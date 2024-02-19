@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     /// <summary> The SAP instance specific configuration data. </summary>
-    public partial class ConfigurationData
+    public partial class ConfigurationDetail
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationData"/>. </summary>
-        internal ConfigurationData()
+        /// <summary> Initializes a new instance of <see cref="ConfigurationDetail"/>. </summary>
+        internal ConfigurationDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationDetail"/>. </summary>
         /// <param name="saps"> Provide the SAPS for each server of the SAP system. This should be a non-zero value. For example, 1000. </param>
         /// <param name="cpu"> Provide the CPU value of the server. For example, 16, 32 etc. </param>
         /// <param name="cpuType"> Provide the CPU architecture type of the server. For example, Xeon Platinum 8171M, Xeon E5-2673 v3. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="databaseType"> The database of this is a server instance. Applicable only if SAP instance type for this server instance is 'DB'. </param>
         /// <param name="targetHanaRamSizeGB"> Provide the target HANA database size you need. Applicable only if SAP instance type for this server instance is 'DB' and you are migrating an AnyDb database to SAP S/4HANA. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationData(int? saps, int? cpu, string cpuType, int? cpuInMhz, int? ram, string hardwareManufacturer, string model, int? totalDiskSizeGB, int? totalDiskIops, DatabaseType? databaseType, int? targetHanaRamSizeGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfigurationDetail(int? saps, int? cpu, string cpuType, int? cpuInMhz, int? ram, string hardwareManufacturer, string model, int? totalDiskSizeGB, int? totalDiskIops, DatabaseType? databaseType, int? targetHanaRamSizeGB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Saps = saps;
             Cpu = cpu;

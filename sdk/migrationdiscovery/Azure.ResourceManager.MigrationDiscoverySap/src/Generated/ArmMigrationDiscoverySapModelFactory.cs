@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="recommendation"> Description of the recommendation. </param>
         /// <param name="details"> Internal error details. </param>
         /// <returns> A new <see cref="Models.SAPMigrateError"/> instance for mocking. </returns>
-        public static SAPMigrateError SAPMigrateError(string code = null, string message = null, string recommendation = null, IEnumerable<ErrorDefinition> details = null)
+        public static SAPMigrateError SAPMigrateError(string code = null, string message = null, string recommendation = null, IEnumerable<SapDiscoveryErrorDetail> details = null)
         {
-            details ??= new List<ErrorDefinition>();
+            details ??= new List<SapDiscoveryErrorDetail>();
 
             return new SAPMigrateError(code, message, recommendation, details?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapDiscoveryErrorDetail"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="recommendation"> Description of the recommendation. </param>
         /// <param name="details"> Internal error details. </param>
-        /// <returns> A new <see cref="Models.ErrorDefinition"/> instance for mocking. </returns>
-        public static ErrorDefinition ErrorDefinition(string code = null, string message = null, string recommendation = null, IEnumerable<ErrorDefinition> details = null)
+        /// <returns> A new <see cref="Models.SapDiscoveryErrorDetail"/> instance for mocking. </returns>
+        public static SapDiscoveryErrorDetail SapDiscoveryErrorDetail(string code = null, string message = null, string recommendation = null, IEnumerable<SapDiscoveryErrorDetail> details = null)
         {
-            details ??= new List<ErrorDefinition>();
+            details ??= new List<SapDiscoveryErrorDetail>();
 
-            return new ErrorDefinition(code, message, recommendation, details?.ToList(), serializedAdditionalRawData: null);
+            return new SapDiscoveryErrorDetail(code, message, recommendation, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationDiscoverySap.SAPInstanceData"/>. </summary>
@@ -98,13 +98,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="configurationData"> Configuration data for this server instance. </param>
         /// <param name="performanceData">
         /// Configuration data for this server instance.
-        /// Please note <see cref="PerformanceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ExcelPerformanceData"/> and <see cref="NativePerformanceData"/>.
+        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
         /// </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
         /// <returns> A new <see cref="MigrationDiscoverySap.ServerInstanceData"/> instance for mocking. </returns>
-        public static ServerInstanceData ServerInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationData configurationData = null, PerformanceData performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
+        public static ServerInstanceData ServerInstanceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationDetail configurationData = null, PerformanceDetail performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
         {
             return new ServerInstanceData(id, name, resourceType, systemData, serverName, sapInstanceType, instanceSid, sapProduct, sapProductVersion, operatingSystem, configurationData, performanceData, provisioningState, errors, serializedAdditionalRawData: null);
         }
@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="configurationData"> Configuration data for this server instance. </param>
         /// <param name="performanceData">
         /// Configuration data for this server instance.
-        /// Please note <see cref="PerformanceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Models.ExcelPerformanceData"/> and <see cref="NativePerformanceData"/>.
+        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
         /// </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
         /// <returns> A new <see cref="Models.ServerInstanceProperties"/> instance for mocking. </returns>
-        public static ServerInstanceProperties ServerInstanceProperties(string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationData configurationData = null, PerformanceData performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
+        public static ServerInstanceProperties ServerInstanceProperties(string serverName = null, SapInstanceType? sapInstanceType = null, string instanceSid = null, string sapProduct = null, string sapProductVersion = null, OperatingSystem? operatingSystem = null, ConfigurationDetail configurationData = null, PerformanceDetail performanceData = null, ProvisioningState? provisioningState = null, SAPMigrateError errors = null)
         {
             return new ServerInstanceProperties(serverName, sapInstanceType, instanceSid, sapProduct, sapProductVersion, operatingSystem, configurationData, performanceData, provisioningState, errors, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationDetail"/>. </summary>
         /// <param name="saps"> Provide the SAPS for each server of the SAP system. This should be a non-zero value. For example, 1000. </param>
         /// <param name="cpu"> Provide the CPU value of the server. For example, 16, 32 etc. </param>
         /// <param name="cpuType"> Provide the CPU architecture type of the server. For example, Xeon Platinum 8171M, Xeon E5-2673 v3. </param>
@@ -142,19 +142,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="totalDiskIops"> Provide the total disk IOPS capacity. Add the disk volume for each individual disk and provide the sum total in this field. </param>
         /// <param name="databaseType"> The database of this is a server instance. Applicable only if SAP instance type for this server instance is 'DB'. </param>
         /// <param name="targetHanaRamSizeGB"> Provide the target HANA database size you need. Applicable only if SAP instance type for this server instance is 'DB' and you are migrating an AnyDb database to SAP S/4HANA. </param>
-        /// <returns> A new <see cref="Models.ConfigurationData"/> instance for mocking. </returns>
-        public static ConfigurationData ConfigurationData(int? saps = null, int? cpu = null, string cpuType = null, int? cpuInMhz = null, int? ram = null, string hardwareManufacturer = null, string model = null, int? totalDiskSizeGB = null, int? totalDiskIops = null, DatabaseType? databaseType = null, int? targetHanaRamSizeGB = null)
+        /// <returns> A new <see cref="Models.ConfigurationDetail"/> instance for mocking. </returns>
+        public static ConfigurationDetail ConfigurationDetail(int? saps = null, int? cpu = null, string cpuType = null, int? cpuInMhz = null, int? ram = null, string hardwareManufacturer = null, string model = null, int? totalDiskSizeGB = null, int? totalDiskIops = null, DatabaseType? databaseType = null, int? targetHanaRamSizeGB = null)
         {
-            return new ConfigurationData(saps, cpu, cpuType, cpuInMhz, ram, hardwareManufacturer, model, totalDiskSizeGB, totalDiskIops, databaseType, targetHanaRamSizeGB, serializedAdditionalRawData: null);
+            return new ConfigurationDetail(saps, cpu, cpuType, cpuInMhz, ram, hardwareManufacturer, model, totalDiskSizeGB, totalDiskIops, databaseType, targetHanaRamSizeGB, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExcelPerformanceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExcelPerformanceDetail"/>. </summary>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
         /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
-        /// <returns> A new <see cref="Models.ExcelPerformanceData"/> instance for mocking. </returns>
-        public static ExcelPerformanceData ExcelPerformanceData(int? maxCpuLoad = null, int? totalSourceDbSizeGB = null)
+        /// <returns> A new <see cref="Models.ExcelPerformanceDetail"/> instance for mocking. </returns>
+        public static ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = null, int? totalSourceDbSizeGB = null)
         {
-            return new ExcelPerformanceData(DataSource.Excel, serializedAdditionalRawData: null, maxCpuLoad, totalSourceDbSizeGB);
+            return new ExcelPerformanceDetail(DataSource.Excel, serializedAdditionalRawData: null, maxCpuLoad, totalSourceDbSizeGB);
         }
     }
 }

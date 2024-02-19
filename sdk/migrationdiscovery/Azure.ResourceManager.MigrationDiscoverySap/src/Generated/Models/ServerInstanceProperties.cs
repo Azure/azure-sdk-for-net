@@ -60,13 +60,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="configurationData"> Configuration data for this server instance. </param>
         /// <param name="performanceData">
         /// Configuration data for this server instance.
-        /// Please note <see cref="Models.PerformanceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExcelPerformanceData"/> and <see cref="NativePerformanceData"/>.
+        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
         /// </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerInstanceProperties(string serverName, SapInstanceType? sapInstanceType, string instanceSid, string sapProduct, string sapProductVersion, OperatingSystem? operatingSystem, ConfigurationData configurationData, PerformanceData performanceData, ProvisioningState? provisioningState, SAPMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServerInstanceProperties(string serverName, SapInstanceType? sapInstanceType, string instanceSid, string sapProduct, string sapProductVersion, OperatingSystem? operatingSystem, ConfigurationDetail configurationData, PerformanceDetail performanceData, ProvisioningState? provisioningState, SAPMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ServerName = serverName;
             SapInstanceType = sapInstanceType;
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> This is Operating System on which the host server is running. </summary>
         public OperatingSystem? OperatingSystem { get; }
         /// <summary> Configuration data for this server instance. </summary>
-        public ConfigurationData ConfigurationData { get; }
+        public ConfigurationDetail ConfigurationData { get; }
         /// <summary>
         /// Configuration data for this server instance.
-        /// Please note <see cref="Models.PerformanceData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExcelPerformanceData"/> and <see cref="NativePerformanceData"/>.
+        /// Please note <see cref="PerformanceDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExcelPerformanceDetail"/> and <see cref="NativePerformanceDetail"/>.
         /// </summary>
-        public PerformanceData PerformanceData { get; }
+        public PerformanceDetail PerformanceData { get; }
         /// <summary> Defines the provisioning states. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Defines the errors related to SAP Instance resource. </summary>

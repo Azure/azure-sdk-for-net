@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    internal partial class UnknownPerformanceData : IUtf8JsonSerializable, IJsonModel<PerformanceDetail>
+    [PersistableModelProxy(typeof(UnknownPerformanceData))]
+    public partial class PerformanceDetail : IUtf8JsonSerializable, IJsonModel<PerformanceDetail>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerformanceDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUnknownPerformanceData(document.RootElement, options);
+            return DeserializePerformanceDetail(document.RootElement, options);
         }
 
-        internal static UnknownPerformanceData DeserializeUnknownPerformanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PerformanceDetail DeserializePerformanceDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -66,23 +66,15 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 return null;
             }
-            DataSource dataSource = "Unknown";
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("dataSource", out JsonElement discriminator))
             {
-                if (property.NameEquals("dataSource"u8))
+                switch (discriminator.GetString())
                 {
-                    dataSource = new DataSource(property.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    case "Excel": return ExcelPerformanceDetail.DeserializeExcelPerformanceDetail(element);
+                    case "Native": return NativePerformanceDetail.DeserializeNativePerformanceDetail(element);
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownPerformanceData(dataSource, serializedAdditionalRawData);
+            return UnknownPerformanceData.DeserializeUnknownPerformanceData(element);
         }
 
         BinaryData IPersistableModel<PerformanceDetail>.Write(ModelReaderWriterOptions options)
@@ -107,7 +99,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeUnknownPerformanceData(document.RootElement, options);
+                        return DeserializePerformanceDetail(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PerformanceDetail)} does not support '{options.Format}' format.");

@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class ExcelPerformanceData : IUtf8JsonSerializable, IJsonModel<ExcelPerformanceData>
+    public partial class ExcelPerformanceDetail : IUtf8JsonSerializable, IJsonModel<ExcelPerformanceDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExcelPerformanceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExcelPerformanceDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ExcelPerformanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ExcelPerformanceDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelPerformanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             writer.WriteEndObject();
         }
 
-        ExcelPerformanceData IJsonModel<ExcelPerformanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ExcelPerformanceDetail IJsonModel<ExcelPerformanceDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelPerformanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExcelPerformanceData(document.RootElement, options);
+            return DeserializeExcelPerformanceDetail(document.RootElement, options);
         }
 
-        internal static ExcelPerformanceData DeserializeExcelPerformanceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ExcelPerformanceDetail DeserializeExcelPerformanceDetail(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,38 +112,38 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExcelPerformanceData(dataSource, serializedAdditionalRawData, Optional.ToNullable(maxCpuLoad), Optional.ToNullable(totalSourceDbSizeGB));
+            return new ExcelPerformanceDetail(dataSource, serializedAdditionalRawData, Optional.ToNullable(maxCpuLoad), Optional.ToNullable(totalSourceDbSizeGB));
         }
 
-        BinaryData IPersistableModel<ExcelPerformanceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ExcelPerformanceDetail>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExcelPerformanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        ExcelPerformanceData IPersistableModel<ExcelPerformanceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ExcelPerformanceDetail IPersistableModel<ExcelPerformanceDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ExcelPerformanceDetail>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExcelPerformanceData(document.RootElement, options);
+                        return DeserializeExcelPerformanceDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExcelPerformanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelPerformanceDetail)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExcelPerformanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ExcelPerformanceDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

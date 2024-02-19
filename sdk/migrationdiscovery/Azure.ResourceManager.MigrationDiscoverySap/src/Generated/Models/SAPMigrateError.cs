@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Initializes a new instance of <see cref="SAPMigrateError"/>. </summary>
         internal SAPMigrateError()
         {
-            Details = new ChangeTrackingList<ErrorDefinition>();
+            Details = new ChangeTrackingList<SapDiscoveryErrorDetail>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SAPMigrateError"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="recommendation"> Description of the recommendation. </param>
         /// <param name="details"> Internal error details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SAPMigrateError(string code, string message, string recommendation, IReadOnlyList<ErrorDefinition> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SAPMigrateError(string code, string message, string recommendation, IReadOnlyList<SapDiscoveryErrorDetail> details, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Code = code;
             Message = message;
@@ -74,6 +74,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <summary> Description of the recommendation. </summary>
         public string Recommendation { get; }
         /// <summary> Internal error details. </summary>
-        public IReadOnlyList<ErrorDefinition> Details { get; }
+        public IReadOnlyList<SapDiscoveryErrorDetail> Details { get; }
     }
 }
