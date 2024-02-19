@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = await _extensionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId, cancellationToken).ConfigureAwait(false);
-                var operation = new AgFoodPlatformArmOperation<ExtensionResource>(Response.FromValue(new ExtensionResource(Client, response), response.GetRawResponse()));
+                var uri = _extensionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<ExtensionResource>(Response.FromValue(new ExtensionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -135,7 +137,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
             try
             {
                 var response = _extensionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId, cancellationToken);
-                var operation = new AgFoodPlatformArmOperation<ExtensionResource>(Response.FromValue(new ExtensionResource(Client, response), response.GetRawResponse()));
+                var uri = _extensionRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, extensionId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AgFoodPlatformArmOperation<ExtensionResource>(Response.FromValue(new ExtensionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

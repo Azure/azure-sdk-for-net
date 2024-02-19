@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementLoggerLoggerRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementLoggerLoggerRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementLoggerLoggerRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, loggerId, data, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementLoggerResource>(Response.FromValue(new ApiManagementLoggerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

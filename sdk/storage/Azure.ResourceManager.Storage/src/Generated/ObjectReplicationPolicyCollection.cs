@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = await _objectReplicationPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _objectReplicationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.Storage
             try
             {
                 var response = _objectReplicationPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data, cancellationToken);
-                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()));
+                var uri = _objectReplicationPolicyRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, objectReplicationPolicyId, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new StorageArmOperation<ObjectReplicationPolicyResource>(Response.FromValue(new ObjectReplicationPolicyResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

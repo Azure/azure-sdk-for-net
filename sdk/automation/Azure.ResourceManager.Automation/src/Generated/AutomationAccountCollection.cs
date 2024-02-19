@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationAccountRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationAccountResource>(Response.FromValue(new AutomationAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountResource>(Response.FromValue(new AutomationAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -141,7 +143,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationAccountRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, content, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationAccountResource>(Response.FromValue(new AutomationAccountResource(Client, response), response.GetRawResponse()));
+                var uri = _automationAccountRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationAccountResource>(Response.FromValue(new AutomationAccountResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

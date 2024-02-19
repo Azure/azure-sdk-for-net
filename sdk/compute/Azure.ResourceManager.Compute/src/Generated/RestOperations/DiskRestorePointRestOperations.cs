@@ -37,6 +37,24 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints/", false);
+            uri.AppendPath(diskRestorePointName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +149,23 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListByRestorePointRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByRestorePointRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
         {
             var message = _pipeline.CreateMessage();
@@ -214,6 +249,25 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGrantAccessRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints/", false);
+            uri.AppendPath(diskRestorePointName, true);
+            uri.AppendPath("/beginGetAccess", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGrantAccessRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data)
@@ -307,6 +361,25 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateRevokeAccessRequestUri(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Compute/restorePointCollections/", false);
+            uri.AppendPath(restorePointGroupName, true);
+            uri.AppendPath("/restorePoints/", false);
+            uri.AppendPath(vmRestorePointName, true);
+            uri.AppendPath("/diskRestorePoints/", false);
+            uri.AppendPath(diskRestorePointName, true);
+            uri.AppendPath("/endGetAccess", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRevokeAccessRequest(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName)
         {
             var message = _pipeline.CreateMessage();
@@ -388,6 +461,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByRestorePointNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByRestorePointNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName)

@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Dns
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByTargetResourcesRequestUri(string subscriptionId, DnsResourceReferenceContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/getDnsResourceReference", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByTargetResourcesRequest(string subscriptionId, DnsResourceReferenceContent content)
         {
             var message = _pipeline.CreateMessage();

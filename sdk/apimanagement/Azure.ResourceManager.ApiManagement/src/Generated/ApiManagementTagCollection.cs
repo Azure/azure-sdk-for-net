@@ -92,7 +92,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = await _apiManagementTagTagRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, content, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementTagResource>(Response.FromValue(new ApiManagementTagResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementTagTagRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementTagResource>(Response.FromValue(new ApiManagementTagResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -142,7 +144,9 @@ namespace Azure.ResourceManager.ApiManagement
             try
             {
                 var response = _apiManagementTagTagRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, content, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementTagResource>(Response.FromValue(new ApiManagementTagResource(Client, response), response.GetRawResponse()));
+                var uri = _apiManagementTagTagRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, content, ifMatch);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiManagementArmOperation<ApiManagementTagResource>(Response.FromValue(new ApiManagementTagResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

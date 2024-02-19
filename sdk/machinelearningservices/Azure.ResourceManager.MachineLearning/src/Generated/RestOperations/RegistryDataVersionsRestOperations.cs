@@ -37,6 +37,43 @@ namespace Azure.ResourceManager.MachineLearning
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/data/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderBy", orderBy, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (tags != null)
+            {
+                uri.AppendQuery("$tags", tags, true);
+            }
+            if (listViewType != null)
+            {
+                uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType)
         {
             var message = _pipeline.CreateMessage();
@@ -158,6 +195,24 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/data/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
         {
             var message = _pipeline.CreateMessage();
@@ -240,6 +295,24 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/data/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string registryName, string name, string version)
@@ -336,6 +409,24 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string registryName, string name, string version, MachineLearningDataVersionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/data/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string registryName, string name, string version, MachineLearningDataVersionData data)
         {
             var message = _pipeline.CreateMessage();
@@ -424,6 +515,25 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrGetStartPendingUploadRequestUri(string subscriptionId, string resourceGroupName, string registryName, string name, string version, PendingUploadRequestDto body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.MachineLearningServices/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/data/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(version, true);
+            uri.AppendPath("/startPendingUpload", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrGetStartPendingUploadRequest(string subscriptionId, string resourceGroupName, string registryName, string name, string version, PendingUploadRequestDto body)
@@ -523,6 +633,14 @@ namespace Azure.ResourceManager.MachineLearning
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string registryName, string name, string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType)

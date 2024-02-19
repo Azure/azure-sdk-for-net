@@ -37,6 +37,24 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +147,24 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
         {
             var message = _pipeline.CreateMessage();
@@ -206,6 +242,31 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByDatabaseRequestUri(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByDatabaseRequest(string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -303,6 +364,29 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByInstanceRequestUri(string subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByInstanceRequest(string subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -392,6 +476,27 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -473,6 +578,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
@@ -573,6 +698,26 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateDeleteByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups/", false);
+            uri.AppendPath(backupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByResourceGroupRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, string backupName)
         {
             var message = _pipeline.CreateMessage();
@@ -656,6 +801,33 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupDatabaseRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupDatabaseRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -759,6 +931,31 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupInstanceRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupInstanceRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -854,6 +1051,29 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupLocationRequestUri(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/longTermRetentionManagedInstanceBackups", false);
+            if (onlyLatestPerDatabase != null)
+            {
+                uri.AppendQuery("onlyLatestPerDatabase", onlyLatestPerDatabase.Value, true);
+            }
+            if (databaseState != null)
+            {
+                uri.AppendQuery("databaseState", databaseState.Value.ToString(), true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupLocationRequest(string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -943,6 +1163,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByDatabaseNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByDatabaseNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -1025,6 +1253,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByInstanceNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByInstanceNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -1103,6 +1339,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -1175,6 +1419,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupDatabaseNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupDatabaseNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, string databaseName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
@@ -1263,6 +1515,14 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupInstanceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
         {
             var message = _pipeline.CreateMessage();
@@ -1343,6 +1603,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupLocationNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupLocationNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, AzureLocation locationName, bool? onlyLatestPerDatabase, SqlDatabaseState? databaseState)

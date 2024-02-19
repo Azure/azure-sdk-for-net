@@ -20,21 +20,24 @@ namespace Azure.ResourceManager.StoragePool
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal<T> _operation;
+        private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of StoragePoolArmOperation for mocking. </summary>
         protected StoragePoolArmOperation()
         {
         }
 
-        internal StoragePoolArmOperation(Response<T> response)
+        internal StoragePoolArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value, rehydrationToken);
+            _rehydrationToken = rehydrationToken;
         }
 
         internal StoragePoolArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response, "StoragePoolArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
         }
 
         /// <inheritdoc />
@@ -42,6 +45,9 @@ namespace Azure.ResourceManager.StoragePool
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => throw new NotImplementedException();
 #pragma warning restore CA1822
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
 
         /// <inheritdoc />
         public override T Value => _operation.Value;

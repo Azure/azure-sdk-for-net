@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/recommendations", false);
+            if (featured != null)
+            {
+                uri.AppendQuery("featured", featured.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, bool? featured, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +135,17 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateResetAllFiltersRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/recommendations/reset", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResetAllFiltersRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -171,6 +201,19 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDisableRecommendationForSubscriptionRequestUri(string subscriptionId, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Web/recommendations/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDisableRecommendationForSubscriptionRequest(string subscriptionId, string name)
@@ -234,6 +277,29 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHistoryForHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendationHistory", false);
+            if (expiredOnly != null)
+            {
+                uri.AppendQuery("expiredOnly", expiredOnly.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListHistoryForHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly, string filter)
@@ -327,6 +393,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListRecommendedRulesForHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendations", false);
+            if (featured != null)
+            {
+                uri.AppendQuery("featured", featured.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRecommendedRulesForHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -418,6 +507,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDisableAllForHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendations/disable", false);
+            uri.AppendQuery("environmentName", environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDisableAllForHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -492,6 +597,22 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateResetAllFiltersForHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendations/reset", false);
+            uri.AppendQuery("environmentName", environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResetAllFiltersForHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -564,6 +685,30 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRuleDetailsByHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen, string recommendationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendations/", false);
+            uri.AppendPath(name, true);
+            if (updateSeen != null)
+            {
+                uri.AppendQuery("updateSeen", updateSeen.Value, true);
+            }
+            if (recommendationId != null)
+            {
+                uri.AppendQuery("recommendationId", recommendationId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRuleDetailsByHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen, string recommendationId)
@@ -666,6 +811,24 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDisableRecommendationForHostingEnvironmentRequestUri(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/hostingEnvironments/", false);
+            uri.AppendPath(hostingEnvironmentName, true);
+            uri.AppendPath("/recommendations/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("environmentName", environmentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDisableRecommendationForHostingEnvironmentRequest(string subscriptionId, string resourceGroupName, string hostingEnvironmentName, string name, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -744,6 +907,29 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHistoryForWebAppRequestUri(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendationHistory", false);
+            if (expiredOnly != null)
+            {
+                uri.AppendQuery("expiredOnly", expiredOnly.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListHistoryForWebAppRequest(string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly, string filter)
@@ -837,6 +1023,29 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListRecommendedRulesForWebAppRequestUri(string subscriptionId, string resourceGroupName, string siteName, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendations", false);
+            if (featured != null)
+            {
+                uri.AppendQuery("featured", featured.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRecommendedRulesForWebAppRequest(string subscriptionId, string resourceGroupName, string siteName, bool? featured, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -928,6 +1137,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDisableAllForWebAppRequestUri(string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendations/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDisableAllForWebAppRequest(string subscriptionId, string resourceGroupName, string siteName)
         {
             var message = _pipeline.CreateMessage();
@@ -997,6 +1221,21 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateResetAllFiltersForWebAppRequestUri(string subscriptionId, string resourceGroupName, string siteName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendations/reset", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResetAllFiltersForWebAppRequest(string subscriptionId, string resourceGroupName, string siteName)
         {
             var message = _pipeline.CreateMessage();
@@ -1064,6 +1303,30 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRuleDetailsByWebAppRequestUri(string subscriptionId, string resourceGroupName, string siteName, string name, bool? updateSeen, string recommendationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendations/", false);
+            uri.AppendPath(name, true);
+            if (updateSeen != null)
+            {
+                uri.AppendQuery("updateSeen", updateSeen.Value, true);
+            }
+            if (recommendationId != null)
+            {
+                uri.AppendQuery("recommendationId", recommendationId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRuleDetailsByWebAppRequest(string subscriptionId, string resourceGroupName, string siteName, string name, bool? updateSeen, string recommendationId)
@@ -1166,6 +1429,23 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateDisableRecommendationForSiteRequestUri(string subscriptionId, string resourceGroupName, string siteName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Web/sites/", false);
+            uri.AppendPath(siteName, true);
+            uri.AppendPath("/recommendations/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/disable", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDisableRecommendationForSiteRequest(string subscriptionId, string resourceGroupName, string siteName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -1241,6 +1521,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, bool? featured, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -1311,6 +1599,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListHistoryForHostingEnvironmentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListHistoryForHostingEnvironmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly, string filter)
@@ -1393,6 +1689,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListRecommendedRulesForHostingEnvironmentNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListRecommendedRulesForHostingEnvironmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostingEnvironmentName, bool? featured, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -1473,6 +1777,14 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
+        internal RequestUriBuilder CreateListHistoryForWebAppNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListHistoryForWebAppNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? expiredOnly, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -1551,6 +1863,14 @@ namespace Azure.ResourceManager.AppService
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRecommendedRulesForWebAppNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListRecommendedRulesForWebAppNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string siteName, bool? featured, string filter)

@@ -37,6 +37,20 @@ namespace Azure.ResourceManager.Advisor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri, string recommendationId, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri, string recommendationId, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +131,20 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string resourceUri, string recommendationId, string name, SuppressionContractData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string resourceUri, string recommendationId, string name, SuppressionContractData data)
@@ -205,6 +233,20 @@ namespace Azure.ResourceManager.Advisor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, string recommendationId, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.Advisor/recommendations/", false);
+            uri.AppendPath(recommendationId, true);
+            uri.AppendPath("/suppressions/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string resourceUri, string recommendationId, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -271,6 +313,25 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Advisor/suppressions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, int? top, string skipToken)
@@ -350,6 +411,14 @@ namespace Azure.ResourceManager.Advisor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, int? top, string skipToken)

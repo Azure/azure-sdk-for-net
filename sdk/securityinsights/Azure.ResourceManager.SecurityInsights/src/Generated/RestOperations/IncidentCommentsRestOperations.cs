@@ -37,6 +37,39 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
+            uri.AppendPath(incidentId, true);
+            uri.AppendPath("/comments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderBy != null)
+            {
+                uri.AppendQuery("$orderby", orderBy, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -146,6 +179,24 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
+            uri.AppendPath(incidentId, true);
+            uri.AppendPath("/comments/", false);
+            uri.AppendPath(incidentCommentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
         {
             var message = _pipeline.CreateMessage();
@@ -238,6 +289,24 @@ namespace Azure.ResourceManager.SecurityInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, SecurityInsightsIncidentCommentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
+            uri.AppendPath(incidentId, true);
+            uri.AppendPath("/comments/", false);
+            uri.AppendPath(incidentCommentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId, SecurityInsightsIncidentCommentData data)
@@ -340,6 +409,24 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/incidents/", false);
+            uri.AppendPath(incidentId, true);
+            uri.AppendPath("/comments/", false);
+            uri.AppendPath(incidentCommentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string incidentCommentId)
         {
             var message = _pipeline.CreateMessage();
@@ -420,6 +507,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string filter, string orderBy, int? top, string skipToken)

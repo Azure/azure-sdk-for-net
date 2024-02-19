@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = await _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BotServiceArmOperation<BotServicePrivateEndpointConnectionResource>(Response.FromValue(new BotServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BotServiceArmOperation<BotServicePrivateEndpointConnectionResource>(Response.FromValue(new BotServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.BotService
             try
             {
                 var response = _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
-                var operation = new BotServiceArmOperation<BotServicePrivateEndpointConnectionResource>(Response.FromValue(new BotServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()));
+                var uri = _botServicePrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BotServiceArmOperation<BotServicePrivateEndpointConnectionResource>(Response.FromValue(new BotServicePrivateEndpointConnectionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
