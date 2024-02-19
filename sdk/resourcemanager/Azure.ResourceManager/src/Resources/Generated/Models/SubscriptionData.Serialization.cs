@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(SubscriptionPolicies))
             {
                 writer.WritePropertyName("subscriptionPolicies"u8);
-                writer.WriteObjectValue(SubscriptionPolicies);
+                ((IJsonModel<SubscriptionPolicies>)SubscriptionPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(AuthorizationSource))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in ManagedByTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedByTenant>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +201,14 @@ namespace Azure.ResourceManager.Resources
                     List<ManagedByTenant> array = new List<ManagedByTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedByTenant.DeserializeManagedByTenant(item));
+                        }
                     }
                     managedByTenants = array;
                     continue;

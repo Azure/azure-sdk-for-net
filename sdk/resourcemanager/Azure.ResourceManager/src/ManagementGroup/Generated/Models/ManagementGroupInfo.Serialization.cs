@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                writer.WriteObjectValue(Parent);
+                ((IJsonModel<ParentManagementGroupInfo>)Parent).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Path))
             {
@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in Path)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ManagementGroupPathElement>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     writer.WriteStartArray();
                     foreach (var item in ManagementGroupAncestorChain)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<ManagementGroupPathElement>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -188,7 +202,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        }
                     }
                     path = array;
                     continue;
@@ -218,7 +239,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupPathElement> array = new List<ManagementGroupPathElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagementGroupPathElement.DeserializeManagementGroupPathElement(item));
+                        }
                     }
                     managementGroupAncestorsChain = array;
                     continue;

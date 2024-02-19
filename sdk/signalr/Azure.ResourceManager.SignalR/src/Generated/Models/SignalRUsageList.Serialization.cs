@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRUsage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUsage> array = new List<SignalRUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUsage.DeserializeSignalRUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SignalRUsage.DeserializeSignalRUsage(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryAlertData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAlertData> array = new List<SiteRecoveryAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryAlertData.DeserializeSiteRecoveryAlertData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<DatabaseIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentSku))
             {
                 writer.WritePropertyName("currentSku"u8);
-                writer.WriteObjectValue(CurrentSku);
+                ((IJsonModel<SqlSku>)CurrentSku).Write(writer, options);
             }
             if (Optional.IsDefined(AutoPauseDelay))
             {
@@ -246,7 +246,14 @@ namespace Azure.ResourceManager.Sql.Models
                 foreach (var item in Keys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SqlDatabaseKey>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -757,7 +764,14 @@ namespace Azure.ResourceManager.Sql.Models
                             Dictionary<string, SqlDatabaseKey> dictionary = new Dictionary<string, SqlDatabaseKey>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SqlDatabaseKey.DeserializeSqlDatabaseKey(property1.Value));
+                                }
                             }
                             keys = dictionary;
                             continue;

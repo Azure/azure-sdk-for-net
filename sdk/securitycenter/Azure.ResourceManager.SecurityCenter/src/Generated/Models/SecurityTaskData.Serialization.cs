@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SecurityTaskParameters))
             {
                 writer.WritePropertyName("securityTaskParameters"u8);
-                writer.WriteObjectValue(SecurityTaskParameters);
+                ((IJsonModel<SecurityTaskProperties>)SecurityTaskParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastStateChangedOn))
             {

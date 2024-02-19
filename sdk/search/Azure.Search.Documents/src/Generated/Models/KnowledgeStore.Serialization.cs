@@ -22,7 +22,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Identity))
@@ -67,7 +74,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<KnowledgeStoreProjection> array = new List<KnowledgeStoreProjection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeStoreProjection.DeserializeKnowledgeStoreProjection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KnowledgeStoreProjection.DeserializeKnowledgeStoreProjection(item));
+                        }
                     }
                     projections = array;
                     continue;

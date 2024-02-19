@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<Tag>)Properties).Write(writer, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue(ReadWriteEndpoint);
+                ((IJsonModel<InstanceFailoverGroupReadWriteEndpoint>)ReadWriteEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue(ReadOnlyEndpoint);
+                ((IJsonModel<InstanceFailoverGroupReadOnlyEndpoint>)ReadOnlyEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationRole))
             {
@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in PartnerRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PartnerRegionInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ManagedInstancePairs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstancePairInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Sql
                             List<PartnerRegionInfo> array = new List<PartnerRegionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PartnerRegionInfo.DeserializePartnerRegionInfo(item));
+                                }
                             }
                             partnerRegions = array;
                             continue;
@@ -246,7 +267,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedInstancePairInfo> array = new List<ManagedInstancePairInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedInstancePairInfo.DeserializeManagedInstancePairInfo(item));
+                                }
                             }
                             managedInstancePairs = array;
                             continue;

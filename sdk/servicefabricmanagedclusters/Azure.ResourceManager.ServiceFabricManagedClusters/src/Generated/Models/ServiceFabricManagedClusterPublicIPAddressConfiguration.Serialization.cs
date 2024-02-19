@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceFabricManagedClusterIPTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedClusterIPTag> array = new List<ServiceFabricManagedClusterIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceFabricManagedClusterIPTag.DeserializeServiceFabricManagedClusterIPTag(item));
+                        }
                     }
                     ipTags = array;
                     continue;

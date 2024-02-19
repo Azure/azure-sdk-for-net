@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JitRequestData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitRequestData> array = new List<JitRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitRequestData.DeserializeJitRequestData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitRequestData.DeserializeJitRequestData(item));
+                        }
                     }
                     value = array;
                     continue;

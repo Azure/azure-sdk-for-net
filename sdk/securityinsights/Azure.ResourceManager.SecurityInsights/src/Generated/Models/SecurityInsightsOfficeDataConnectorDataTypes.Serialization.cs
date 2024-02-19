@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange);
+                ((IJsonModel<OfficeDataConnectorDataTypesExchange>)Exchange).Write(writer, options);
             }
             if (Optional.IsDefined(SharePoint))
             {
                 writer.WritePropertyName("sharePoint"u8);
-                writer.WriteObjectValue(SharePoint);
+                ((IJsonModel<OfficeDataConnectorDataTypesSharePoint>)SharePoint).Write(writer, options);
             }
             if (Optional.IsDefined(Teams))
             {
                 writer.WritePropertyName("teams"u8);
-                writer.WriteObjectValue(Teams);
+                ((IJsonModel<OfficeDataConnectorDataTypesTeams>)Teams).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

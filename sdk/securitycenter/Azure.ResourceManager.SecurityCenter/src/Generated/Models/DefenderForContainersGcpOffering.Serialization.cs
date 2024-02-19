@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
-                writer.WriteObjectValue(NativeCloudConnection);
+                ((IJsonModel<DefenderForContainersGcpOfferingNativeCloudConnection>)NativeCloudConnection).Write(writer, options);
             }
             if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
-                writer.WriteObjectValue(DataPipelineNativeCloudConnection);
+                ((IJsonModel<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection>)DataPipelineNativeCloudConnection).Write(writer, options);
             }
             if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                ((IJsonModel<DefenderForContainersGcpOfferingMdcContainersImageAssessment>)MdcContainersImageAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                ((IJsonModel<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S>)MdcContainersAgentlessDiscoveryK8S).Write(writer, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

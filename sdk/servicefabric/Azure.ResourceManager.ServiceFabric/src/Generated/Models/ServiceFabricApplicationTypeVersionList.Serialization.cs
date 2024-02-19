@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceFabricApplicationTypeVersionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ServiceFabricApplicationTypeVersionData> array = new List<ServiceFabricApplicationTypeVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceFabricApplicationTypeVersionData.DeserializeServiceFabricApplicationTypeVersionData(item));
+                        }
                     }
                     value = array;
                     continue;

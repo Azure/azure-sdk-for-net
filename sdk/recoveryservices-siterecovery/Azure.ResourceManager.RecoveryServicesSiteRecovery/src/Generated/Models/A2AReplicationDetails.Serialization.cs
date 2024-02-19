@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialPrimaryExtendedLocation))
             {
                 writer.WritePropertyName("initialPrimaryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialPrimaryExtendedLocation);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialPrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(InitialRecoveryExtendedLocation))
             {
                 writer.WritePropertyName("initialRecoveryExtendedLocation"u8);
-                writer.WriteObjectValue(InitialRecoveryExtendedLocation);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)InitialRecoveryExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(InitialRecoveryFabricLocation))
             {
@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AProtectedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in UnprotectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AUnprotectedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +121,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AProtectedManagedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -172,14 +193,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmSyncedConfigDetails))
             {
                 writer.WritePropertyName("vmSyncedConfigDetails"u8);
-                writer.WriteObjectValue(VmSyncedConfigDetails);
+                ((IJsonModel<A2AVmSyncedConfigDetails>)VmSyncedConfigDetails).Write(writer, options);
             }
             if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
@@ -269,12 +297,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryExtendedLocation))
             {
                 writer.WritePropertyName("primaryExtendedLocation"u8);
-                writer.WriteObjectValue(PrimaryExtendedLocation);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)PrimaryExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryExtendedLocation))
             {
                 writer.WritePropertyName("recoveryExtendedLocation"u8);
-                writer.WriteObjectValue(RecoveryExtendedLocation);
+                ((IJsonModel<SiteRecoveryExtendedLocation>)RecoveryExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VmEncryptionType))
             {
@@ -503,7 +531,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectedDiskDetails> array = new List<A2AProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectedDiskDetails.DeserializeA2AProtectedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AProtectedDiskDetails.DeserializeA2AProtectedDiskDetails(item));
+                        }
                     }
                     protectedDisks = array;
                     continue;
@@ -517,7 +552,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AUnprotectedDiskDetails> array = new List<A2AUnprotectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AUnprotectedDiskDetails.DeserializeA2AUnprotectedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AUnprotectedDiskDetails.DeserializeA2AUnprotectedDiskDetails(item));
+                        }
                     }
                     unprotectedDisks = array;
                     continue;
@@ -531,7 +573,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AProtectedManagedDiskDetails> array = new List<A2AProtectedManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AProtectedManagedDiskDetails.DeserializeA2AProtectedManagedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AProtectedManagedDiskDetails.DeserializeA2AProtectedManagedDiskDetails(item));
+                        }
                     }
                     protectedManagedDisks = array;
                     continue;
@@ -624,7 +673,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;

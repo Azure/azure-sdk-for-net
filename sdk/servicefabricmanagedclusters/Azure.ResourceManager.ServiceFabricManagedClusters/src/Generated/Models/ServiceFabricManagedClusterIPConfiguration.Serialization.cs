@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationGatewayBackendAddressPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerInboundNatPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIPAddressConfiguration);
+                ((IJsonModel<ServiceFabricManagedClusterPublicIPAddressConfiguration>)PublicIPAddressConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -137,7 +158,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     applicationGatewayBackendAddressPools = array;
                     continue;
@@ -151,7 +179,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -165,7 +200,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     loadBalancerInboundNatPools = array;
                     continue;

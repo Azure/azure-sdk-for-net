@@ -45,7 +45,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<IndexerExecutionResult> array = new List<IndexerExecutionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IndexerExecutionResult.DeserializeIndexerExecutionResult(item));
+                        }
                     }
                     executionHistory = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupProtectedItemData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupProtectedItemData> array = new List<BackupProtectedItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupProtectedItemData.DeserializeBackupProtectedItemData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupProtectedItemData.DeserializeBackupProtectedItemData(item));
+                        }
                     }
                     value = array;
                     continue;

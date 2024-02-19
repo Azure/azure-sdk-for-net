@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpringBootAppApplicationConfigurationsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Miscs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpringBootAppMiscsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +161,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpringBootAppInstancesItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -172,12 +193,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MachineArmIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +255,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpringBootSiteError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -339,7 +369,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppApplicationConfigurationsItem> array = new List<SpringBootAppApplicationConfigurationsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item));
+                        }
                     }
                     applicationConfigurations = array;
                     continue;
@@ -456,7 +493,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppMiscsItem> array = new List<SpringBootAppMiscsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item));
+                        }
                     }
                     miscs = array;
                     continue;
@@ -470,7 +514,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppInstancesItem> array = new List<SpringBootAppInstancesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item));
+                        }
                     }
                     instances = array;
                     continue;
@@ -589,7 +640,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        }
                     }
                     errors = array;
                     continue;

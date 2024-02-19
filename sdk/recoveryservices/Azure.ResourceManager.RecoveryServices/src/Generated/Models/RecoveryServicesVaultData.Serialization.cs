@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.RecoveryServices
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<RecoveryServicesVaultProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<RecoveryServicesSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {

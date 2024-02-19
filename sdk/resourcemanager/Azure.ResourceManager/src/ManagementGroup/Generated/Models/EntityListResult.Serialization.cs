@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EntityData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<EntityData> array = new List<EntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityData.DeserializeEntityData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EntityData.DeserializeEntityData(item));
+                        }
                     }
                     value = array;
                     continue;

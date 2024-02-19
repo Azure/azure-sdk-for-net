@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(Aad))
             {
                 writer.WritePropertyName("aad"u8);
-                writer.WriteObjectValue(Aad);
+                ((IJsonModel<ProviderPropertiesAad>)Aad).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedApplication))
             {
                 writer.WritePropertyName("managedApplication"u8);
-                writer.WriteObjectValue(ManagedApplication);
+                ((IJsonModel<ProviderPropertiesManagedApplication>)ManagedApplication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Targets))
             {
@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TargetDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +79,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SkuDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +96,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QuotaDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +113,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PricingDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +223,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<TargetDescription> array = new List<TargetDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetDescription.DeserializeTargetDescription(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TargetDescription.DeserializeTargetDescription(item));
+                        }
                     }
                     targets = array;
                     continue;
@@ -209,7 +244,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<SkuDescription> array = new List<SkuDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SkuDescription.DeserializeSkuDescription(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SkuDescription.DeserializeSkuDescription(item));
+                        }
                     }
                     skus = array;
                     continue;
@@ -223,7 +265,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        }
                     }
                     quotaDimensions = array;
                     continue;
@@ -237,7 +286,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDimension> array = new List<PricingDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDimension.DeserializePricingDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PricingDimension.DeserializePricingDimension(item));
+                        }
                     }
                     pricingDimensions = array;
                     continue;

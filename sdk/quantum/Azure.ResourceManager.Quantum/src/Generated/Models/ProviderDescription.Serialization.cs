@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Quantum.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ProviderProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

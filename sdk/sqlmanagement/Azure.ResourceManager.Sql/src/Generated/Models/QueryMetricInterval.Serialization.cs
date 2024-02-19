@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QueryMetricProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryMetricProperties> array = new List<QueryMetricProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryMetricProperties.DeserializeQueryMetricProperties(item));
+                        }
                     }
                     metrics = array;
                     continue;

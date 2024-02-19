@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Selectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceSelectorExpression>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceSelectorExpression> array = new List<ResourceSelectorExpression>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceSelectorExpression.DeserializeResourceSelectorExpression(item));
+                        }
                     }
                     selectors = array;
                     continue;

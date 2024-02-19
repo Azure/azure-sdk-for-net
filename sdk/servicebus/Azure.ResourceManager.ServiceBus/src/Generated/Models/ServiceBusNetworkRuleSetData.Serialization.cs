@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceBusNetworkRuleSetIPRules>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +226,14 @@ namespace Azure.ResourceManager.ServiceBus
                             List<ServiceBusNetworkRuleSetVirtualNetworkRules> array = new List<ServiceBusNetworkRuleSetVirtualNetworkRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusNetworkRuleSetVirtualNetworkRules.DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceBusNetworkRuleSetVirtualNetworkRules.DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(item));
+                                }
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -226,7 +247,14 @@ namespace Azure.ResourceManager.ServiceBus
                             List<ServiceBusNetworkRuleSetIPRules> array = new List<ServiceBusNetworkRuleSetIPRules>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusNetworkRuleSetIPRules.DeserializeServiceBusNetworkRuleSetIPRules(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceBusNetworkRuleSetIPRules.DeserializeServiceBusNetworkRuleSetIPRules(item));
+                                }
                             }
                             ipRules = array;
                             continue;

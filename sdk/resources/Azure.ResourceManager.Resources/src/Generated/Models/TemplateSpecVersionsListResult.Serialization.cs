@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TemplateSpecVersionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TemplateSpecVersionData> array = new List<TemplateSpecVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TemplateSpecVersionData.DeserializeTemplateSpecVersionData(item));
+                        }
                     }
                     value = array;
                     continue;

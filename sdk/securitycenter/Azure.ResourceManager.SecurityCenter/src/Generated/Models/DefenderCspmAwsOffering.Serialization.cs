@@ -29,32 +29,32 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners);
+                ((IJsonModel<DefenderCspmAwsOfferingVmScanners>)VmScanners).Write(writer, options);
             }
             if (Optional.IsDefined(DataSensitivityDiscovery))
             {
                 writer.WritePropertyName("dataSensitivityDiscovery"u8);
-                writer.WriteObjectValue(DataSensitivityDiscovery);
+                ((IJsonModel<DefenderCspmAwsOfferingDataSensitivityDiscovery>)DataSensitivityDiscovery).Write(writer, options);
             }
             if (Optional.IsDefined(DatabasesDspm))
             {
                 writer.WritePropertyName("databasesDspm"u8);
-                writer.WriteObjectValue(DatabasesDspm);
+                ((IJsonModel<DefenderCspmAwsOfferingDatabasesDspm>)DatabasesDspm).Write(writer, options);
             }
             if (Optional.IsDefined(Ciem))
             {
                 writer.WritePropertyName("ciem"u8);
-                writer.WriteObjectValue(Ciem);
+                ((IJsonModel<DefenderCspmAwsOfferingCiem>)Ciem).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                ((IJsonModel<DefenderCspmAwsOfferingMdcContainersImageAssessment>)MdcContainersImageAssessment).Write(writer, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                ((IJsonModel<DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S>)MdcContainersAgentlessDiscoveryK8S).Write(writer, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

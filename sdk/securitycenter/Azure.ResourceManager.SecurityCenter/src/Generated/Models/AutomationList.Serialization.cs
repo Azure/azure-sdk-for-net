@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SecurityAutomationData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationData> array = new List<SecurityAutomationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationData.DeserializeSecurityAutomationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityAutomationData.DeserializeSecurityAutomationData(item));
+                        }
                     }
                     value = array;
                     continue;

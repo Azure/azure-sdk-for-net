@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SecurityInsightsWatchlistData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsWatchlistData> array = new List<SecurityInsightsWatchlistData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityInsightsWatchlistData.DeserializeSecurityInsightsWatchlistData(item));
+                        }
                     }
                     value = array;
                     continue;

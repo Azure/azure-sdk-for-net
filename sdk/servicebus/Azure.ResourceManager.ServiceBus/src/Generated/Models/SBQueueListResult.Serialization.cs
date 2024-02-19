@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceBusQueueData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusQueueData> array = new List<ServiceBusQueueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusQueueData.DeserializeServiceBusQueueData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceBusQueueData.DeserializeServiceBusQueueData(item));
+                        }
                     }
                     value = array;
                     continue;

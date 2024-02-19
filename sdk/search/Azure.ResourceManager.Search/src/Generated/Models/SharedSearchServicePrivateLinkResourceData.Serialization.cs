@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SharedSearchServicePrivateLinkResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

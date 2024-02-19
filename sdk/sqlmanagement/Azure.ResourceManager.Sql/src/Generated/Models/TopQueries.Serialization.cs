@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QueryStatisticsProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -162,7 +169,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<QueryStatisticsProperties> array = new List<QueryStatisticsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryStatisticsProperties.DeserializeQueryStatisticsProperties(item));
+                        }
                     }
                     queries = array;
                     continue;

@@ -36,7 +36,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<ScoringFunction> array = new List<ScoringFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScoringFunction.DeserializeScoringFunction(item));
+                        }
                     }
                     functions = array;
                     continue;

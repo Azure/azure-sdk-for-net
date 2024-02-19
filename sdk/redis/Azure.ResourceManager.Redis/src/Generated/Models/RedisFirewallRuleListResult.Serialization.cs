@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisFirewallRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisFirewallRuleData> array = new List<RedisFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RedisFirewallRuleData.DeserializeRedisFirewallRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

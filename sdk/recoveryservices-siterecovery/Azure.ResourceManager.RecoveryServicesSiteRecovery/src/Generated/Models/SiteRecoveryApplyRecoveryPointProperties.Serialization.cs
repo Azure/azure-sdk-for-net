@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(RecoveryPointId);
             }
             writer.WritePropertyName("providerSpecificDetails"u8);
-            writer.WriteObjectValue(ProviderSpecificDetails);
+            ((IJsonModel<SiteRecoveryApplyRecoveryPointProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

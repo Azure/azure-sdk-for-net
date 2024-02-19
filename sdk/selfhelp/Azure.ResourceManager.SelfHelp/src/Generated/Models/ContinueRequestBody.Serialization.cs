@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TroubleshooterResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TroubleshooterResult> array = new List<TroubleshooterResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TroubleshooterResult.DeserializeTroubleshooterResult(item));
+                        }
                     }
                     responses = array;
                     continue;

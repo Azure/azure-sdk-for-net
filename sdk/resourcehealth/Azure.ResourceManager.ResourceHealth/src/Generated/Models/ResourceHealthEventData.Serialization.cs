@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(Article))
             {
                 writer.WritePropertyName("article"u8);
-                writer.WriteObjectValue(Article);
+                ((IJsonModel<ResourceHealthEventArticle>)Article).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -116,7 +116,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthEventLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,14 +143,21 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Impact)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthEventImpact>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
-                writer.WriteObjectValue(RecommendedActions);
+                ((IJsonModel<ResourceHealthEventRecommendedActions>)RecommendedActions).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Faqs))
             {
@@ -151,7 +165,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Faqs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthEventFaq>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +219,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(AdditionalInformation))
             {
                 writer.WritePropertyName("additionalInformation"u8);
-                writer.WriteObjectValue(AdditionalInformation);
+                ((IJsonModel<ResourceHealthEventAdditionalInformation>)AdditionalInformation).Write(writer, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -434,7 +455,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventLink> array = new List<ResourceHealthEventLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventLink.DeserializeResourceHealthEventLink(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceHealthEventLink.DeserializeResourceHealthEventLink(item));
+                                }
                             }
                             links = array;
                             continue;
@@ -466,7 +494,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventImpact> array = new List<ResourceHealthEventImpact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventImpact.DeserializeResourceHealthEventImpact(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceHealthEventImpact.DeserializeResourceHealthEventImpact(item));
+                                }
                             }
                             impact = array;
                             continue;
@@ -489,7 +524,14 @@ namespace Azure.ResourceManager.ResourceHealth
                             List<ResourceHealthEventFaq> array = new List<ResourceHealthEventFaq>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceHealthEventFaq.DeserializeResourceHealthEventFaq(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceHealthEventFaq.DeserializeResourceHealthEventFaq(item));
+                                }
                             }
                             faqs = array;
                             continue;

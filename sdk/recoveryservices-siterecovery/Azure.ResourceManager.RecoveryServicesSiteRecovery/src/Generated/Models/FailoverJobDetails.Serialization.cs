@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FailoverReplicationProtectedItemDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<FailoverReplicationProtectedItemDetails> array = new List<FailoverReplicationProtectedItemDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverReplicationProtectedItemDetails.DeserializeFailoverReplicationProtectedItemDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FailoverReplicationProtectedItemDetails.DeserializeFailoverReplicationProtectedItemDetails(item));
+                        }
                     }
                     protectedItemDetails = array;
                     continue;

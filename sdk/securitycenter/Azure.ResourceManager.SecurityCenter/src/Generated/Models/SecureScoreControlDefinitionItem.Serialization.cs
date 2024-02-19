@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<SecureScoreControlDefinitionSource>)Source).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in AssessmentDefinitions)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +209,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                }
                             }
                             assessmentDefinitions = array;
                             continue;

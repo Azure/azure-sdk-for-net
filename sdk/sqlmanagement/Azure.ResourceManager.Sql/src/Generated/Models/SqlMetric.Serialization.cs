@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<SqlMetricName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlMetricValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +166,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricValue> array = new List<SqlMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlMetricValue.DeserializeSqlMetricValue(item));
+                        }
                     }
                     metricValues = array;
                     continue;

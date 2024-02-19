@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceCorrelationDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceLoadMetricDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServicePlacementPolicyDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -244,7 +265,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServiceCorrelationDescription> array = new List<ServiceCorrelationDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceCorrelationDescription.DeserializeServiceCorrelationDescription(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceCorrelationDescription.DeserializeServiceCorrelationDescription(item));
+                                }
                             }
                             correlationScheme = array;
                             continue;
@@ -258,7 +286,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServiceLoadMetricDescription> array = new List<ServiceLoadMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceLoadMetricDescription.DeserializeServiceLoadMetricDescription(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceLoadMetricDescription.DeserializeServiceLoadMetricDescription(item));
+                                }
                             }
                             serviceLoadMetrics = array;
                             continue;
@@ -272,7 +307,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                             List<ServicePlacementPolicyDescription> array = new List<ServicePlacementPolicyDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServicePlacementPolicyDescription.DeserializeServicePlacementPolicyDescription(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServicePlacementPolicyDescription.DeserializeServicePlacementPolicyDescription(item));
+                                }
                             }
                             servicePlacementPolicies = array;
                             continue;

@@ -59,7 +59,14 @@ namespace Azure.ResourceManager.Redis
             writer.WriteStartArray();
             foreach (var item in ScheduleEntries)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RedisPatchScheduleSetting>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -158,7 +165,14 @@ namespace Azure.ResourceManager.Redis
                             List<RedisPatchScheduleSetting> array = new List<RedisPatchScheduleSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RedisPatchScheduleSetting.DeserializeRedisPatchScheduleSetting(item));
+                                }
                             }
                             scheduleEntries = array;
                             continue;

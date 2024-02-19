@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerVersionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedManagedInstanceVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstanceVersionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +136,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerVersionCapability> array = new List<SqlServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item));
+                        }
                     }
                     supportedServerVersions = array;
                     continue;
@@ -136,7 +157,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVersionCapability> array = new List<ManagedInstanceVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item));
+                        }
                     }
                     supportedManagedInstanceVersions = array;
                     continue;

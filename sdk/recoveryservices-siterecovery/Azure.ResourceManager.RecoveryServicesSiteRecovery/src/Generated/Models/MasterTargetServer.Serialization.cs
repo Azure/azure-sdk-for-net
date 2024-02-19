@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RetentionVolumes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryRetentionVolume>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +85,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStores)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryDataStore>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +119,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -130,12 +158,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails);
+                ((IJsonModel<SiteRecoveryVersionDetails>)AgentVersionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(MarsAgentVersionDetails))
             {
                 writer.WritePropertyName("marsAgentVersionDetails"u8);
-                writer.WriteObjectValue(MarsAgentVersionDetails);
+                ((IJsonModel<SiteRecoveryVersionDetails>)MarsAgentVersionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -249,7 +277,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryRetentionVolume> array = new List<SiteRecoveryRetentionVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryRetentionVolume.DeserializeSiteRecoveryRetentionVolume(item));
+                        }
                     }
                     retentionVolumes = array;
                     continue;
@@ -263,7 +298,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDataStore> array = new List<SiteRecoveryDataStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryDataStore.DeserializeSiteRecoveryDataStore(item));
+                        }
                     }
                     dataStores = array;
                     continue;
@@ -277,7 +319,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     validationErrors = array;
                     continue;
@@ -291,7 +340,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     healthErrors = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceFabricManagedServiceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ServiceFabricManagedServiceData> array = new List<ServiceFabricManagedServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceFabricManagedServiceData.DeserializeServiceFabricManagedServiceData(item));
+                        }
                     }
                     value = array;
                     continue;

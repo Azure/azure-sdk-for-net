@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Changes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatIfChange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<WhatIfChange> array = new List<WhatIfChange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WhatIfChange.DeserializeWhatIfChange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WhatIfChange.DeserializeWhatIfChange(item));
+                                }
                             }
                             changes = array;
                             continue;

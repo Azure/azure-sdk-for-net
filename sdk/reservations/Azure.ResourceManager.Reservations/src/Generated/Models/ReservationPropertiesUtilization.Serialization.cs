@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Aggregates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationUtilizationAggregates>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationUtilizationAggregates> array = new List<ReservationUtilizationAggregates>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationUtilizationAggregates.DeserializeReservationUtilizationAggregates(item));
+                        }
                     }
                     aggregates = array;
                     continue;

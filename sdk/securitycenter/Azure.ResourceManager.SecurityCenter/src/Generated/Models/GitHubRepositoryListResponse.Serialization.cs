@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityConnectorGitHubRepositoryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityConnectorGitHubRepositoryData> array = new List<SecurityConnectorGitHubRepositoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityConnectorGitHubRepositoryData.DeserializeSecurityConnectorGitHubRepositoryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityConnectorGitHubRepositoryData.DeserializeSecurityConnectorGitHubRepositoryData(item));
+                        }
                     }
                     value = array;
                     continue;

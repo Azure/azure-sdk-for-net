@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstanceAdministratorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceAdministratorData> array = new List<ManagedInstanceAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedInstanceAdministratorData.DeserializeManagedInstanceAdministratorData(item));
+                        }
                     }
                     value = array;
                     continue;

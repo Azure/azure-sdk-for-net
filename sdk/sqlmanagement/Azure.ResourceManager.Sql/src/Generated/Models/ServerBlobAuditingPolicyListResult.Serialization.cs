@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerBlobAuditingPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerBlobAuditingPolicyData> array = new List<SqlServerBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<CefSolutionProperties>)Properties).Write(writer, options);
             }
             if (Kind != null)
             {

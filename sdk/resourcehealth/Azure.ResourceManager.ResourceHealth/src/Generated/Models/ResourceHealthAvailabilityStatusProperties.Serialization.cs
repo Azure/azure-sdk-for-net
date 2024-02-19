@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             if (Optional.IsDefined(RecentlyResolved))
             {
                 writer.WritePropertyName("recentlyResolved"u8);
-                writer.WriteObjectValue(RecentlyResolved);
+                ((IJsonModel<ResourceHealthAvailabilityStateRecentlyResolved>)RecentlyResolved).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RecommendedActions))
             {
@@ -122,7 +122,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthRecommendedAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceImpactingEvents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceImpactingEvent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -325,7 +339,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthRecommendedAction> array = new List<ResourceHealthRecommendedAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthRecommendedAction.DeserializeResourceHealthRecommendedAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceHealthRecommendedAction.DeserializeResourceHealthRecommendedAction(item));
+                        }
                     }
                     recommendedActions = array;
                     continue;
@@ -339,7 +360,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ServiceImpactingEvent> array = new List<ServiceImpactingEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceImpactingEvent.DeserializeServiceImpactingEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceImpactingEvent.DeserializeServiceImpactingEvent(item));
+                        }
                     }
                     serviceImpactingEvents = array;
                     continue;

@@ -107,7 +107,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Tasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationTask>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,12 +124,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            ((IJsonModel<WorkflowModelCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -286,7 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationTask> array = new List<DataReplicationTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationTask.DeserializeDataReplicationTask(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationTask.DeserializeDataReplicationTask(item));
+                        }
                     }
                     tasks = array;
                     continue;
@@ -300,7 +321,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationErrorInfo> array = new List<DataReplicationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationErrorInfo.DeserializeDataReplicationErrorInfo(item));
+                        }
                     }
                     errors = array;
                     continue;

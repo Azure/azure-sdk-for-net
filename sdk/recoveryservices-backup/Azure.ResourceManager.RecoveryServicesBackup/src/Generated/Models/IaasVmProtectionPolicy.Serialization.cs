@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
-                writer.WriteObjectValue(InstantRPDetails);
+                ((IJsonModel<InstantRPAdditionalDetails>)InstantRPDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                ((IJsonModel<BackupSchedulePolicy>)SchedulePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                ((IJsonModel<BackupRetentionPolicy>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<BackupTieringPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -172,7 +179,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, BackupTieringPolicy> dictionary = new Dictionary<string, BackupTieringPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value));
+                        }
                     }
                     tieringPolicy = dictionary;
                     continue;

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ProtectionMode))
             {
                 writer.WritePropertyName("protectionMode"u8);
-                writer.WriteObjectValue(ProtectionMode);
+                ((IJsonModel<SecurityCenterFileProtectionMode>)ProtectionMode).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationStatus))
             {
@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AdaptiveApplicationControlIssueSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in VmRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmRecommendation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +120,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in PathRecommendations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PathRecommendation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -253,7 +274,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AdaptiveApplicationControlIssueSummary> array = new List<AdaptiveApplicationControlIssueSummary>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AdaptiveApplicationControlIssueSummary.DeserializeAdaptiveApplicationControlIssueSummary(item));
+                                }
                             }
                             issues = array;
                             continue;
@@ -276,7 +304,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<VmRecommendation> array = new List<VmRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmRecommendation.DeserializeVmRecommendation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VmRecommendation.DeserializeVmRecommendation(item));
+                                }
                             }
                             vmRecommendations = array;
                             continue;
@@ -290,7 +325,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PathRecommendation> array = new List<PathRecommendation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PathRecommendation.DeserializePathRecommendation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PathRecommendation.DeserializePathRecommendation(item));
+                                }
                             }
                             pathRecommendations = array;
                             continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerVirtualNetworkRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerVirtualNetworkRuleData> array = new List<SqlServerVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerVirtualNetworkRuleData.DeserializeSqlServerVirtualNetworkRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

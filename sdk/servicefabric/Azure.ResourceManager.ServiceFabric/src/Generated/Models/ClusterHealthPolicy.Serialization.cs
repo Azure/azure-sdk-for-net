@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ApplicationHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ApplicationHealthPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -119,7 +126,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ApplicationHealthPolicy> dictionary = new Dictionary<string, ApplicationHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ApplicationHealthPolicy.DeserializeApplicationHealthPolicy(property0.Value));
+                        }
                     }
                     applicationHealthPolicies = dictionary;
                     continue;

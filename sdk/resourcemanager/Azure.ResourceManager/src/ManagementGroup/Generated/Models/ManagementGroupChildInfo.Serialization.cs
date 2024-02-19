@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagementGroupChildInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<ManagementGroupChildInfo> array = new List<ManagementGroupChildInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeManagementGroupChildInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeManagementGroupChildInfo(item));
+                        }
                     }
                     children = array;
                     continue;

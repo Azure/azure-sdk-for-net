@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<KeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             writer.WriteEndObject();
         }

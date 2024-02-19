@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                ((IJsonModel<QuotaOperationDisplay>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MdeOnboarding>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MdeOnboarding> array = new List<MdeOnboarding>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MdeOnboarding.DeserializeMdeOnboarding(item));
+                        }
                     }
                     value = array;
                     continue;

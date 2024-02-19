@@ -74,7 +74,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in LinkedTemplates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LinkedTemplateArtifact>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -234,7 +241,14 @@ namespace Azure.ResourceManager.Resources
                             List<LinkedTemplateArtifact> array = new List<LinkedTemplateArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LinkedTemplateArtifact.DeserializeLinkedTemplateArtifact(item));
+                                }
                             }
                             linkedTemplates = array;
                             continue;

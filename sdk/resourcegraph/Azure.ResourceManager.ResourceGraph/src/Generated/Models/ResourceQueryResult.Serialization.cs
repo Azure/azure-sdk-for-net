@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Facet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +145,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<Facet> array = new List<Facet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Facet.DeserializeFacet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Facet.DeserializeFacet(item));
+                        }
                     }
                     facets = array;
                     continue;

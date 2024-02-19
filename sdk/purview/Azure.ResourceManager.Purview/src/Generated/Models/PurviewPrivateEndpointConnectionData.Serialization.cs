@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<PurviewPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

@@ -63,7 +63,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Owners)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagementLockOwner>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +176,14 @@ namespace Azure.ResourceManager.Resources
                             List<ManagementLockOwner> array = new List<ManagementLockOwner>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagementLockOwner.DeserializeManagementLockOwner(item));
+                                }
                             }
                             owners = array;
                             continue;

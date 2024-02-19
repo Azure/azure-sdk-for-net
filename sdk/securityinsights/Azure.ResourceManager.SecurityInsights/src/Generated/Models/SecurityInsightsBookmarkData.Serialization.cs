@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                ((IJsonModel<SecurityInsightsUserInfo>)CreatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                ((IJsonModel<SecurityInsightsUserInfo>)UpdatedBy).Write(writer, options);
             }
             if (Optional.IsDefined(EventOn))
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(IncidentInfo))
             {
                 writer.WritePropertyName("incidentInfo"u8);
-                writer.WriteObjectValue(IncidentInfo);
+                ((IJsonModel<SecurityInsightsBookmarkIncidentInfo>)IncidentInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

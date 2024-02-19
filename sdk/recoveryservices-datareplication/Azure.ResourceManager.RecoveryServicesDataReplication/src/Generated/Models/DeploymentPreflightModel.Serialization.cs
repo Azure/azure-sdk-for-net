@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeploymentPreflightResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DeploymentPreflightResourceInfo> array = new List<DeploymentPreflightResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item));
+                        }
                     }
                     resources = array;
                     continue;

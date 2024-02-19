@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in Steps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpStep>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +209,14 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpStep> array = new List<SelfHelpStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpStep.DeserializeSelfHelpStep(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SelfHelpStep.DeserializeSelfHelpStep(item));
+                                }
                             }
                             steps = array;
                             continue;

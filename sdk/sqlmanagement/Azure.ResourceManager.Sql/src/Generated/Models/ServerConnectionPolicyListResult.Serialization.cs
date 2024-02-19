@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerConnectionPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerConnectionPolicyData> array = new List<SqlServerConnectionPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerConnectionPolicyData.DeserializeSqlServerConnectionPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerConnectionPolicyData.DeserializeSqlServerConnectionPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

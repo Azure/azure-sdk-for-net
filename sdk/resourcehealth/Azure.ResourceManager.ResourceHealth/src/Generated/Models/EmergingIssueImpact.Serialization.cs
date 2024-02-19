@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmergingIssueImpactedRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<EmergingIssueImpactedRegion> array = new List<EmergingIssueImpactedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EmergingIssueImpactedRegion.DeserializeEmergingIssueImpactedRegion(item));
+                        }
                     }
                     regions = array;
                     continue;

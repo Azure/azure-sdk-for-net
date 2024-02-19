@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<SqlPrivateLinkServiceConnectionStateProperty>)ConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

@@ -64,7 +64,14 @@ namespace Azure.ResourceManager.SecurityCenter
             writer.WriteStartArray();
             foreach (var item in VirtualMachines)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<JitNetworkAccessPolicyVirtualMachine>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Requests))
@@ -73,7 +80,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Requests)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JitNetworkAccessRequestInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +200,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessPolicyVirtualMachine> array = new List<JitNetworkAccessPolicyVirtualMachine>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JitNetworkAccessPolicyVirtualMachine.DeserializeJitNetworkAccessPolicyVirtualMachine(item));
+                                }
                             }
                             virtualMachines = array;
                             continue;
@@ -200,7 +221,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<JitNetworkAccessRequestInfo> array = new List<JitNetworkAccessRequestInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JitNetworkAccessRequestInfo.DeserializeJitNetworkAccessRequestInfo(item));
+                                }
                             }
                             requests = array;
                             continue;

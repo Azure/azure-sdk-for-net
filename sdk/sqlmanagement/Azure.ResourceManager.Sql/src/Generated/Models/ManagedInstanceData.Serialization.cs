@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SqlSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -180,7 +180,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstancePecProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -217,12 +224,12 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                ((IJsonModel<ManagedInstanceExternalAdministrator>)Administrators).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                ((IJsonModel<SqlServicePrincipal>)ServicePrincipal).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -536,7 +543,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedInstancePecProperty> array = new List<ManagedInstancePecProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedInstancePecProperty.DeserializeManagedInstancePecProperty(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

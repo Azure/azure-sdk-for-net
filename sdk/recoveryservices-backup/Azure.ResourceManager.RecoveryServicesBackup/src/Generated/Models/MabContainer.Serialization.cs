@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<MabContainerExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(MabContainerHealthDetails))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in MabContainerHealthDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MabContainerHealthDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +205,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabContainerHealthDetails> array = new List<MabContainerHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item));
+                        }
                     }
                     mabContainerHealthDetails = array;
                     continue;

@@ -22,7 +22,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +39,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Algorithms)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +56,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +90,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchProfile> array = new List<VectorSearchProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VectorSearchProfile.DeserializeVectorSearchProfile(item));
+                        }
                     }
                     profiles = array;
                     continue;
@@ -83,7 +111,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchAlgorithmConfiguration> array = new List<VectorSearchAlgorithmConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VectorSearchAlgorithmConfiguration.DeserializeVectorSearchAlgorithmConfiguration(item));
+                        }
                     }
                     algorithms = array;
                     continue;
@@ -97,7 +132,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<VectorSearchVectorizer> array = new List<VectorSearchVectorizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VectorSearchVectorizer.DeserializeVectorSearchVectorizer(item));
+                        }
                     }
                     vectorizers = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<JitNetworkAccessPortRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(PublicIPAddress))
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPortRule> array = new List<JitNetworkAccessPortRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitNetworkAccessPortRule.DeserializeJitNetworkAccessPortRule(item));
+                        }
                     }
                     ports = array;
                     continue;

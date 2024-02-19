@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstancePrivateLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstancePrivateLinkData> array = new List<ManagedInstancePrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstancePrivateLinkData.DeserializeManagedInstancePrivateLinkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedInstancePrivateLinkData.DeserializeManagedInstancePrivateLinkData(item));
+                        }
                     }
                     value = array;
                     continue;

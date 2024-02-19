@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails);
+            ((IJsonModel<MarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails);
+            ((IJsonModel<QumuloUserDetails>)UserDetails).Write(writer, options);
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
             if (Optional.IsDefined(ClusterLoginUri))
@@ -93,12 +93,14 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPs)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

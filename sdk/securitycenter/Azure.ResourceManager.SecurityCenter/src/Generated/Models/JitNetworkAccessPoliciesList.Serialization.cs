@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JitNetworkAccessPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessPolicyData> array = new List<JitNetworkAccessPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitNetworkAccessPolicyData.DeserializeJitNetworkAccessPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -72,12 +72,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationHealthErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            ((IJsonModel<EventModelCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -187,7 +194,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationHealthErrorInfo> array = new List<DataReplicationHealthErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationHealthErrorInfo.DeserializeDataReplicationHealthErrorInfo(item));
+                        }
                     }
                     healthErrors = array;
                     continue;

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (options.Format != "W" && Optional.IsDefined(AdditionalInfo))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalInfo);
+                ((IJsonModel<SecurityInsightsIncidentAdditionalInfo>)AdditionalInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Classification))
             {
@@ -107,7 +107,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityInsightsIncidentLabel>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.SecurityInsights
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                ((IJsonModel<SecurityInsightsIncidentOwnerInfo>)Owner).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RelatedAnalyticRuleIds))
             {
@@ -132,12 +139,14 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WriteStartArray();
                 foreach (var item in RelatedAnalyticRuleIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -345,7 +354,14 @@ namespace Azure.ResourceManager.SecurityInsights
                             List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                                }
                             }
                             labels = array;
                             continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthErrorSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HealthErrorSummary> array = new List<HealthErrorSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthErrorSummary.DeserializeHealthErrorSummary(item));
+                        }
                     }
                     issues = array;
                     continue;

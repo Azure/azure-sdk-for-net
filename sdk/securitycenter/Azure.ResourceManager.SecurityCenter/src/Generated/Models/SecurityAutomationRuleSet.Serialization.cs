@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAutomationTriggeringRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationTriggeringRule> array = new List<SecurityAutomationTriggeringRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item));
+                        }
                     }
                     rules = array;
                     continue;

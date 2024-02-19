@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ArmApplicationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

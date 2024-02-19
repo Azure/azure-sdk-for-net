@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceTypeAlias>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceTypeAlias.DeserializeResourceTypeAlias(item));
+                        }
                     }
                     aliases = array;
                     continue;

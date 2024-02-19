@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<DataReplicationFabricProperties>)Properties).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

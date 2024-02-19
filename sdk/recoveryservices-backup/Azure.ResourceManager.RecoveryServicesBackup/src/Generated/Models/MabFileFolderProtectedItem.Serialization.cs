@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<MabFileFolderProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);

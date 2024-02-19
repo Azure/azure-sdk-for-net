@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Parents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TopologySingleResourceParent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +79,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TopologySingleResourceChild>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +195,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceParent> array = new List<TopologySingleResourceParent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TopologySingleResourceParent.DeserializeTopologySingleResourceParent(item));
+                        }
                     }
                     parents = array;
                     continue;
@@ -195,7 +216,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<TopologySingleResourceChild> array = new List<TopologySingleResourceChild>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TopologySingleResourceChild.DeserializeTopologySingleResourceChild(item));
+                        }
                     }
                     children = array;
                     continue;

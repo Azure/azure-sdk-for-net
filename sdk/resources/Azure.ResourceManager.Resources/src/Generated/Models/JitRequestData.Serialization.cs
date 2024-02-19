@@ -79,14 +79,21 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in JitAuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JitAuthorizationPolicies>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(JitSchedulingPolicy))
             {
                 writer.WritePropertyName("jitSchedulingPolicy"u8);
-                writer.WriteObjectValue(JitSchedulingPolicy);
+                ((IJsonModel<JitSchedulingPolicy>)JitSchedulingPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -101,12 +108,12 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                ((IJsonModel<ArmApplicationDetails>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                ((IJsonModel<ArmApplicationDetails>)UpdatedBy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -240,7 +247,14 @@ namespace Azure.ResourceManager.Resources
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.JitAuthorizationPolicies.DeserializeJitAuthorizationPolicies(item));
+                                }
                             }
                             jitAuthorizationPolicies = array;
                             continue;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
+                ((IJsonModel<ServiceTypeHealthPolicy>)DefaultServiceTypeHealthPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicyMap))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 foreach (var item in ServiceTypeHealthPolicyMap)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ServiceTypeHealthPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +127,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     Dictionary<string, ServiceTypeHealthPolicy> dictionary = new Dictionary<string, ServiceTypeHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value));
+                        }
                     }
                     serviceTypeHealthPolicyMap = dictionary;
                     continue;

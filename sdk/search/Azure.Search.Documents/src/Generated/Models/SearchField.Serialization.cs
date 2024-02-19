@@ -138,7 +138,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -316,7 +323,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSearchField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSearchField(item));
+                        }
                     }
                     fields = array;
                     continue;

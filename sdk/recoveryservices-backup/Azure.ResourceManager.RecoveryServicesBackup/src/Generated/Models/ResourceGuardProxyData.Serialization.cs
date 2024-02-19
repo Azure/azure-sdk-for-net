@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ResourceGuardProxyProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {

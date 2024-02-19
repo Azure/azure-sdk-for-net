@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SecurityInsightsHuntingBookmark>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsHuntingBookmark> array = new List<SecurityInsightsHuntingBookmark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(item));
+                        }
                     }
                     value = array;
                     continue;

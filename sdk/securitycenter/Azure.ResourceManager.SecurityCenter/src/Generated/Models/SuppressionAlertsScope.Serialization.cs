@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in AllOf)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SuppressionAlertsScopeElement>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SuppressionAlertsScopeElement> array = new List<SuppressionAlertsScopeElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SuppressionAlertsScopeElement.DeserializeSuppressionAlertsScopeElement(item));
+                        }
                     }
                     allOf = array;
                     continue;

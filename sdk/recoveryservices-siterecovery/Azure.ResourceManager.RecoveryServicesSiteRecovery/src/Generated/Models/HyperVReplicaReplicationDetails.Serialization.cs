@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails);
+                ((IJsonModel<InitialReplicationDetails>)InitialReplicationDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VmDiskDetails))
             {
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +155,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;
@@ -179,7 +200,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDiskDetails> array = new List<SiteRecoveryDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryDiskDetails.DeserializeSiteRecoveryDiskDetails(item));
+                        }
                     }
                     vmDiskDetails = array;
                     continue;

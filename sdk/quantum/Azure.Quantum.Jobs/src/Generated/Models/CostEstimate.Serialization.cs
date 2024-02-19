@@ -38,7 +38,14 @@ namespace Azure.Quantum.Jobs.Models
                     List<UsageEvent> array = new List<UsageEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UsageEvent.DeserializeUsageEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UsageEvent.DeserializeUsageEvent(item));
+                        }
                     }
                     events = array;
                     continue;

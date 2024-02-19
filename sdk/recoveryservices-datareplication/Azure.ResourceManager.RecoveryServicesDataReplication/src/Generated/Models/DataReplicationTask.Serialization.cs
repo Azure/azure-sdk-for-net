@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue(CustomProperties);
+                ((IJsonModel<TaskModelCustomProperties>)CustomProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ChildrenWorkflows))
             {
@@ -58,7 +58,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildrenWorkflows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationWorkflowData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +167,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item));
+                        }
                     }
                     childrenWorkflows = array;
                     continue;

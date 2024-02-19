@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ArmApplicationData> array = new List<ArmApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmApplicationData.DeserializeArmApplicationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ArmApplicationData.DeserializeArmApplicationData(item));
+                        }
                     }
                     value = array;
                     continue;

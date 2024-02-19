@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterCodeVersionsResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterCodeVersionsResult> array = new List<ClusterCodeVersionsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -91,7 +91,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PlanExtension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -246,7 +253,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<PlanExtension> array = new List<PlanExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlanExtension.DeserializePlanExtension(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PlanExtension.DeserializePlanExtension(item));
+                                }
                             }
                             extensions = array;
                             continue;

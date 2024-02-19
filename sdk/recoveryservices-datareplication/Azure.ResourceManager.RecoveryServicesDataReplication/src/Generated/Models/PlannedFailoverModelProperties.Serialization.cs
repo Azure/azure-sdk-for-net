@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            ((IJsonModel<PlannedFailoverModelCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

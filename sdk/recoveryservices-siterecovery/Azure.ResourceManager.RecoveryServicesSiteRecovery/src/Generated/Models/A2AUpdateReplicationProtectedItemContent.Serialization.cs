@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagedDiskUpdateDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AVmManagedDiskUpdateDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                ((IJsonModel<SiteRecoveryDiskEncryptionInfo>)DiskEncryptionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TfoAzureVmName))
             {
@@ -153,7 +160,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AVmManagedDiskUpdateDetails> array = new List<A2AVmManagedDiskUpdateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AVmManagedDiskUpdateDetails.DeserializeA2AVmManagedDiskUpdateDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AVmManagedDiskUpdateDetails.DeserializeA2AVmManagedDiskUpdateDetails(item));
+                        }
                     }
                     managedDiskUpdateDetails = array;
                     continue;

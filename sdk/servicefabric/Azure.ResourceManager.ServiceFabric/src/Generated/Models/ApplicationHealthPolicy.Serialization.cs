@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(DefaultServiceTypeHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeHealthPolicy);
+                ((IJsonModel<ServiceTypeHealthPolicy>)DefaultServiceTypeHealthPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeHealthPolicies))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ServiceTypeHealthPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ServiceTypeHealthPolicy> dictionary = new Dictionary<string, ServiceTypeHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property0.Value));
+                        }
                     }
                     serviceTypeHealthPolicies = dictionary;
                     continue;

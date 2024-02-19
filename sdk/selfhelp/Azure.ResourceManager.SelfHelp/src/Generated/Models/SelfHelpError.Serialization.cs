@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +128,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpError> array = new List<SelfHelpError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSelfHelpError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSelfHelpError(item));
+                        }
                     }
                     details = array;
                     continue;

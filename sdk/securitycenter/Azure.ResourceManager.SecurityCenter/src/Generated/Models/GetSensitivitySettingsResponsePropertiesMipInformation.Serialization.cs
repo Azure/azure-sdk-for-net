@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MipSensitivityLabel>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomInfoTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserDefinedInformationType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in BuiltInInfoTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BuiltInInfoType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +146,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<MipSensitivityLabel> array = new List<MipSensitivityLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MipSensitivityLabel.DeserializeMipSensitivityLabel(item));
+                        }
                     }
                     labels = array;
                     continue;
@@ -139,7 +167,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserDefinedInformationType> array = new List<UserDefinedInformationType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserDefinedInformationType.DeserializeUserDefinedInformationType(item));
+                        }
                     }
                     customInfoTypes = array;
                     continue;
@@ -153,7 +188,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<BuiltInInfoType> array = new List<BuiltInInfoType>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BuiltInInfoType.DeserializeBuiltInInfoType(item));
+                        }
                     }
                     builtInInfoTypes = array;
                     continue;

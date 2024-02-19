@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                ((IJsonModel<SiteRecoveryTaskTypeDetails>)CustomDetails).Write(writer, options);
             }
             if (Optional.IsDefined(GroupTaskCustomDetails))
             {
                 writer.WritePropertyName("groupTaskCustomDetails"u8);
-                writer.WriteObjectValue(GroupTaskCustomDetails);
+                ((IJsonModel<SiteRecoveryGroupTaskDetails>)GroupTaskCustomDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -92,7 +92,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryJobErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -239,7 +246,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryJobErrorDetails> array = new List<SiteRecoveryJobErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryJobErrorDetails.DeserializeSiteRecoveryJobErrorDetails(item));
+                        }
                     }
                     errors = array;
                     continue;

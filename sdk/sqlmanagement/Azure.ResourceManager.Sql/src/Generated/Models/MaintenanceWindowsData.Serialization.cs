@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in TimeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MaintenanceWindowTimeRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +157,14 @@ namespace Azure.ResourceManager.Sql
                             List<MaintenanceWindowTimeRange> array = new List<MaintenanceWindowTimeRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MaintenanceWindowTimeRange.DeserializeMaintenanceWindowTimeRange(item));
+                                }
                             }
                             timeRanges = array;
                             continue;

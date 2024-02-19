@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisCacheAccessPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisCacheAccessPolicyData> array = new List<RedisCacheAccessPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RedisCacheAccessPolicyData.DeserializeRedisCacheAccessPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

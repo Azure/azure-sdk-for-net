@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryComputeSizeErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +209,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryComputeSizeErrorDetails> array = new List<SiteRecoveryComputeSizeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryComputeSizeErrorDetails.DeserializeSiteRecoveryComputeSizeErrorDetails(item));
+                        }
                     }
                     errors = array;
                     continue;

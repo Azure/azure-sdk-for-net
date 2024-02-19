@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedOS)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoverySupportedOSDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySupportedOSDetails> array = new List<SiteRecoverySupportedOSDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySupportedOSDetails.DeserializeSiteRecoverySupportedOSDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoverySupportedOSDetails.DeserializeSiteRecoverySupportedOSDetails(item));
+                        }
                     }
                     supportedOS = array;
                     continue;

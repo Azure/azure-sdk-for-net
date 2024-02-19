@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ShareablePrivateLinkResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

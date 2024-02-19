@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAssessmentMetadataData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAssessmentMetadataData> array = new List<SecurityAssessmentMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item));
+                        }
                     }
                     value = array;
                     continue;

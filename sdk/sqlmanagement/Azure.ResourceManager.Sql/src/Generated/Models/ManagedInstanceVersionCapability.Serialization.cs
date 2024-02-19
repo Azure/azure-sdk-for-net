@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstanceEditionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedInstancePoolEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InstancePoolEditionCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +136,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEditionCapability> array = new List<ManagedInstanceEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedInstanceEditionCapability.DeserializeManagedInstanceEditionCapability(item));
+                        }
                     }
                     supportedEditions = array;
                     continue;
@@ -136,7 +157,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstancePoolEditionCapability> array = new List<InstancePoolEditionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InstancePoolEditionCapability.DeserializeInstancePoolEditionCapability(item));
+                        }
                     }
                     supportedInstancePoolEditions = array;
                     continue;

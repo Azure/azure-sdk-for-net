@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources);
+                ((IJsonModel<UserDefinedResourcesProperties>)UserDefinedResources).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendationConfigurationProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +148,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<RecommendationConfigurationProperties> array = new List<RecommendationConfigurationProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendationConfigurationProperties.DeserializeRecommendationConfigurationProperties(item));
+                                }
                             }
                             recommendationsConfiguration = array;
                             continue;

@@ -28,7 +28,14 @@ namespace Azure.MixedReality.RemoteRendering
                     List<AssetConversion> array = new List<AssetConversion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssetConversion.DeserializeAssetConversion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AssetConversion.DeserializeAssetConversion(item));
+                        }
                     }
                     conversions = array;
                     continue;

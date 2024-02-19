@@ -64,19 +64,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 foreach (var item in AdditionalData)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -146,7 +148,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in KillChainPhases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceKillChainPhase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +165,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedPattern)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceParsedPattern>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +202,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceExternalReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +219,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GranularMarkings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceGranularMarkingEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -272,19 +302,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 foreach (var item in Extensions)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -516,7 +548,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceKillChainPhase> array = new List<ThreatIntelligenceKillChainPhase>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ThreatIntelligenceKillChainPhase.DeserializeThreatIntelligenceKillChainPhase(item));
+                                }
                             }
                             killChainPhases = array;
                             continue;
@@ -530,7 +569,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceParsedPattern> array = new List<ThreatIntelligenceParsedPattern>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ThreatIntelligenceParsedPattern.DeserializeThreatIntelligenceParsedPattern(item));
+                                }
                             }
                             parsedPattern = array;
                             continue;
@@ -572,7 +618,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceExternalReference> array = new List<ThreatIntelligenceExternalReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ThreatIntelligenceExternalReference.DeserializeThreatIntelligenceExternalReference(item));
+                                }
                             }
                             externalReferences = array;
                             continue;
@@ -586,7 +639,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<ThreatIntelligenceGranularMarkingEntity> array = new List<ThreatIntelligenceGranularMarkingEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ThreatIntelligenceGranularMarkingEntity.DeserializeThreatIntelligenceGranularMarkingEntity(item));
+                                }
                             }
                             granularMarkings = array;
                             continue;

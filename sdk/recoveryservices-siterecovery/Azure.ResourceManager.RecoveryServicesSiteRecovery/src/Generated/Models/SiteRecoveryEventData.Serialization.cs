@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SiteRecoveryEventProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {

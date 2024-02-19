@@ -106,7 +106,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ResourceIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAlertResourceIdentifier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,18 +143,20 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLinks)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            writer.WriteStringValue(item0.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteStringValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndArray();
             }
@@ -177,7 +186,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Entities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAlertEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +246,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SupportingEvidence))
             {
                 writer.WritePropertyName("supportingEvidence"u8);
-                writer.WriteObjectValue(SupportingEvidence);
+                ((IJsonModel<SecurityAlertSupportingEvidence>)SupportingEvidence).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -414,7 +430,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityAlertResourceIdentifier.DeserializeSecurityAlertResourceIdentifier(item));
+                                }
                             }
                             resourceIdentifiers = array;
                             continue;
@@ -514,7 +537,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityAlertEntity.DeserializeSecurityAlertEntity(item));
+                                }
                             }
                             entities = array;
                             continue;

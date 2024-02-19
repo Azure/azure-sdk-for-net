@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeTypeAvailableSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeAvailableSku> array = new List<NodeTypeAvailableSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(item));
+                        }
                     }
                     value = array;
                     continue;

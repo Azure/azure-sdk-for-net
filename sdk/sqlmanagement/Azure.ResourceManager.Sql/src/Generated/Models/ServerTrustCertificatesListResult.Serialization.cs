@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServerTrustCertificateData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServerTrustCertificateData> array = new List<ServerTrustCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServerTrustCertificateData.DeserializeServerTrustCertificateData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(AzureMonitorAlertSettings))
             {
                 writer.WritePropertyName("azureMonitorAlertSettings"u8);
-                writer.WriteObjectValue(AzureMonitorAlertSettings);
+                ((IJsonModel<AzureMonitorAlertSettings>)AzureMonitorAlertSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ClassicAlertSettings))
             {
                 writer.WritePropertyName("classicAlertSettings"u8);
-                writer.WriteObjectValue(ClassicAlertSettings);
+                ((IJsonModel<ClassicAlertSettings>)ClassicAlertSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

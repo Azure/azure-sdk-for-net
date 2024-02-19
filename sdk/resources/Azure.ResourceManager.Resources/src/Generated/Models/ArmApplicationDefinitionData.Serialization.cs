@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ArmApplicationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -91,7 +91,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationAuthorization>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationDefinitionArtifact>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,22 +156,22 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(NotificationPolicy))
             {
                 writer.WritePropertyName("notificationPolicy"u8);
-                writer.WriteObjectValue(NotificationPolicy);
+                ((IJsonModel<ArmApplicationNotificationPolicy>)NotificationPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(LockingPolicy))
             {
                 writer.WritePropertyName("lockingPolicy"u8);
-                writer.WriteObjectValue(LockingPolicy);
+                ((IJsonModel<ArmApplicationPackageLockingPolicy>)LockingPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(DeploymentPolicy))
             {
                 writer.WritePropertyName("deploymentPolicy"u8);
-                writer.WriteObjectValue(DeploymentPolicy);
+                ((IJsonModel<ArmApplicationDeploymentPolicy>)DeploymentPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementPolicy))
             {
                 writer.WritePropertyName("managementPolicy"u8);
-                writer.WriteObjectValue(ManagementPolicy);
+                ((IJsonModel<ArmApplicationManagementPolicy>)ManagementPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Policies))
             {
@@ -165,7 +179,14 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationPolicy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -328,7 +349,14 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                }
                             }
                             authorizations = array;
                             continue;
@@ -342,7 +370,14 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationDefinitionArtifact> array = new List<ArmApplicationDefinitionArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationDefinitionArtifact.DeserializeArmApplicationDefinitionArtifact(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ArmApplicationDefinitionArtifact.DeserializeArmApplicationDefinitionArtifact(item));
+                                }
                             }
                             artifacts = array;
                             continue;
@@ -424,7 +459,14 @@ namespace Azure.ResourceManager.Resources
                             List<ArmApplicationPolicy> array = new List<ArmApplicationPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationPolicy.DeserializeArmApplicationPolicy(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ArmApplicationPolicy.DeserializeArmApplicationPolicy(item));
+                                }
                             }
                             policies = array;
                             continue;

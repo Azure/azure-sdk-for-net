@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ThreatIntelligenceMetrics>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceMetrics> array = new List<ThreatIntelligenceMetrics>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreatIntelligenceMetrics.DeserializeThreatIntelligenceMetrics(item));
+                        }
                     }
                     value = array;
                     continue;

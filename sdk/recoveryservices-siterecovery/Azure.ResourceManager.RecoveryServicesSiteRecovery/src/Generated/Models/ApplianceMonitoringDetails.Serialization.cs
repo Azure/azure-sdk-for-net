@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(CpuDetails))
             {
                 writer.WritePropertyName("cpuDetails"u8);
-                writer.WriteObjectValue(CpuDetails);
+                ((IJsonModel<ApplianceResourceDetails>)CpuDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RamDetails))
             {
                 writer.WritePropertyName("ramDetails"u8);
-                writer.WriteObjectValue(RamDetails);
+                ((IJsonModel<ApplianceResourceDetails>)RamDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreSnapshot))
             {
@@ -42,24 +42,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DatastoreSnapshot)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataStoreUtilizationDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DisksReplicationDetails))
             {
                 writer.WritePropertyName("disksReplicationDetails"u8);
-                writer.WriteObjectValue(DisksReplicationDetails);
+                ((IJsonModel<ApplianceResourceDetails>)DisksReplicationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EsxiNfcBuffer))
             {
                 writer.WritePropertyName("esxiNfcBuffer"u8);
-                writer.WriteObjectValue(EsxiNfcBuffer);
+                ((IJsonModel<ApplianceResourceDetails>)EsxiNfcBuffer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkBandwidth))
             {
                 writer.WritePropertyName("networkBandwidth"u8);
-                writer.WriteObjectValue(NetworkBandwidth);
+                ((IJsonModel<ApplianceResourceDetails>)NetworkBandwidth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<DataStoreUtilizationDetails> array = new List<DataStoreUtilizationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataStoreUtilizationDetails.DeserializeDataStoreUtilizationDetails(item));
+                        }
                     }
                     datastoreSnapshot = array;
                     continue;

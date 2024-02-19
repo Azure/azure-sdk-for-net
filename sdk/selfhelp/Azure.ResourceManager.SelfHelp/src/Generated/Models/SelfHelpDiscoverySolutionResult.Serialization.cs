@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpSolutionMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSolutionMetadata> array = new List<SelfHelpSolutionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelfHelpSolutionMetadata.DeserializeSelfHelpSolutionMetadata(item));
+                        }
                     }
                     value = array;
                     continue;

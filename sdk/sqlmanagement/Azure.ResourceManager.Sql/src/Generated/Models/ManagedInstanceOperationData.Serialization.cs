@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(OperationParameters))
             {
                 writer.WritePropertyName("operationParameters"u8);
-                writer.WriteObjectValue(OperationParameters);
+                ((IJsonModel<ManagedInstanceOperationParametersPair>)OperationParameters).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OperationSteps))
             {
                 writer.WritePropertyName("operationSteps"u8);
-                writer.WriteObjectValue(OperationSteps);
+                ((IJsonModel<ManagedInstanceOperationSteps>)OperationSteps).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

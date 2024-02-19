@@ -37,12 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +54,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AZoneDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +71,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AExtendedLocationDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +88,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<A2AFabricSpecificLocationDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +188,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AZoneDetails> array = new List<A2AZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AZoneDetails.DeserializeA2AZoneDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AZoneDetails.DeserializeA2AZoneDetails(item));
+                        }
                     }
                     zones = array;
                     continue;
@@ -179,7 +209,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AExtendedLocationDetails> array = new List<A2AExtendedLocationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AExtendedLocationDetails.DeserializeA2AExtendedLocationDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AExtendedLocationDetails.DeserializeA2AExtendedLocationDetails(item));
+                        }
                     }
                     extendedLocations = array;
                     continue;
@@ -193,7 +230,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<A2AFabricSpecificLocationDetails> array = new List<A2AFabricSpecificLocationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(A2AFabricSpecificLocationDetails.DeserializeA2AFabricSpecificLocationDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(A2AFabricSpecificLocationDetails.DeserializeA2AFabricSpecificLocationDetails(item));
+                        }
                     }
                     locationDetails = array;
                     continue;

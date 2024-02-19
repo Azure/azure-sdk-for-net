@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DescendantData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     List<DescendantData> array = new List<DescendantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DescendantData.DeserializeDescendantData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DescendantData.DeserializeDescendantData(item));
+                        }
                     }
                     value = array;
                     continue;

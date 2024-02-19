@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SyncGroupSchemaTableColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SyncGroupSchemaTableColumn> array = new List<SyncGroupSchemaTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SyncGroupSchemaTableColumn.DeserializeSyncGroupSchemaTableColumn(item));
+                        }
                     }
                     columns = array;
                     continue;

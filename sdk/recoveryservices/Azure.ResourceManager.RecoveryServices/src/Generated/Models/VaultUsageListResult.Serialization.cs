@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VaultUsage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<VaultUsage> array = new List<VaultUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultUsage.DeserializeVaultUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VaultUsage.DeserializeVaultUsage(item));
+                        }
                     }
                     value = array;
                     continue;

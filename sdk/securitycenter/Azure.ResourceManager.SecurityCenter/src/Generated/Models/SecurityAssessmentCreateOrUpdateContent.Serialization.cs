@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                ((IJsonModel<SecurityCenterResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links);
+                ((IJsonModel<AssessmentLinks>)Links).Write(writer, options);
             }
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<SecurityAssessmentMetadataProperties>)Metadata).Write(writer, options);
             }
             if (Optional.IsDefined(PartnersData))
             {
                 writer.WritePropertyName("partnersData"u8);
-                writer.WriteObjectValue(PartnersData);
+                ((IJsonModel<SecurityAssessmentPartner>)PartnersData).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<SecurityAssessmentStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

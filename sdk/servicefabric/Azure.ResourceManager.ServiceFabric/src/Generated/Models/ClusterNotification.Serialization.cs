@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartArray();
             foreach (var item in NotificationTargets)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ClusterNotificationTarget>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -105,7 +112,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterNotificationTarget> array = new List<ClusterNotificationTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterNotificationTarget.DeserializeClusterNotificationTarget(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterNotificationTarget.DeserializeClusterNotificationTarget(item));
+                        }
                     }
                     notificationTargets = array;
                     continue;

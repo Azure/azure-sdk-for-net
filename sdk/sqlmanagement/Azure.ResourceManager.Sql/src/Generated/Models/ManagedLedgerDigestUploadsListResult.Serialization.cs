@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedLedgerDigestUploadData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedLedgerDigestUploadData> array = new List<ManagedLedgerDigestUploadData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedLedgerDigestUploadData.DeserializeManagedLedgerDigestUploadData(item));
+                        }
                     }
                     value = array;
                     continue;

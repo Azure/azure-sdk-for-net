@@ -87,7 +87,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerError> array = new List<SearchIndexerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerError.DeserializeSearchIndexerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerError.DeserializeSearchIndexerError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -97,7 +104,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerWarning> array = new List<SearchIndexerWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerWarning.DeserializeSearchIndexerWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerWarning.DeserializeSearchIndexerWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WritePropertyName("recoveryPointType"u8);
             writer.WriteStringValue(RecoveryPointType.ToString());
             writer.WritePropertyName("customProperties"u8);
-            writer.WriteObjectValue(CustomProperties);
+            ((IJsonModel<RecoveryPointModelCustomProperties>)CustomProperties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

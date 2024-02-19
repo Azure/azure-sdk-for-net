@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IaasVmErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<IaasVmBackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerName))
             {
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<IaasVmErrorInfo> array = new List<IaasVmErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IaasVmErrorInfo.DeserializeIaasVmErrorInfo(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

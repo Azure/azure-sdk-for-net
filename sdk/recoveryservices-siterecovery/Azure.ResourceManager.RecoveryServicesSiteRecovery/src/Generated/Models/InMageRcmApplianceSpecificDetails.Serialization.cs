@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Appliances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmApplianceDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmApplianceDetails> array = new List<InMageRcmApplianceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmApplianceDetails.DeserializeInMageRcmApplianceDetails(item));
+                        }
                     }
                     appliances = array;
                     continue;

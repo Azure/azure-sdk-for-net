@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CurrentScenario))
             {
                 writer.WritePropertyName("currentScenario"u8);
-                writer.WriteObjectValue(CurrentScenario);
+                ((IJsonModel<CurrentScenarioDetails>)CurrentScenario).Write(writer, options);
             }
             if (Optional.IsDefined(FailoverRecoveryPointId))
             {
@@ -174,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                ((IJsonModel<ReplicationProviderSpecificSettings>)ProviderSpecificDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RecoveryContainerId))
             {
@@ -384,7 +391,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     healthErrors = array;
                     continue;

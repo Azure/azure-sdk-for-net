@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationQuotaData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationQuotaData> array = new List<ReservationQuotaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationQuotaData.DeserializeReservationQuotaData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationQuotaData.DeserializeReservationQuotaData(item));
+                        }
                     }
                     value = array;
                     continue;

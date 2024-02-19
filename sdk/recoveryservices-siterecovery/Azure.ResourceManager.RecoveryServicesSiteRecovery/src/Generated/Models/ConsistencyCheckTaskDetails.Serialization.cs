@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InconsistentVmDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InconsistentVmDetails> array = new List<InconsistentVmDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InconsistentVmDetails.DeserializeInconsistentVmDetails(item));
+                        }
                     }
                     vmDetails = array;
                     continue;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue(CountDetails);
+                ((IJsonModel<MessageCountDetails>)CountDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in SearchResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SearchResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchResult.DeserializeSearchResult(item));
+                        }
                     }
                     searchResults = array;
                     continue;

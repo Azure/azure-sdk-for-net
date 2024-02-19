@@ -53,12 +53,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

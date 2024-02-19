@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in ArtifactProfiles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ApplianceArtifactProfile>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -43,7 +50,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplianceCredentialKubeconfig>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +68,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 foreach (var item in SshKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ApplianceSshKey>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +133,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceArtifactProfile> dictionary = new Dictionary<string, ApplianceArtifactProfile>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ApplianceArtifactProfile.DeserializeApplianceArtifactProfile(property0.Value));
+                        }
                     }
                     artifactProfiles = dictionary;
                     continue;
@@ -126,7 +154,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceCredentialKubeconfig> array = new List<ApplianceCredentialKubeconfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplianceCredentialKubeconfig.DeserializeApplianceCredentialKubeconfig(item));
+                        }
                     }
                     kubeconfigs = array;
                     continue;
@@ -140,7 +175,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     Dictionary<string, ApplianceSshKey> dictionary = new Dictionary<string, ApplianceSshKey>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ApplianceSshKey.DeserializeApplianceSshKey(property0.Value));
+                        }
                     }
                     sshKeys = dictionary;
                     continue;

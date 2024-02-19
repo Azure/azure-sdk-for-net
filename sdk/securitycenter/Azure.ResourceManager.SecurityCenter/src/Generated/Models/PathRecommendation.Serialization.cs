@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
-                writer.WriteObjectValue(PublisherInfo);
+                ((IJsonModel<SecurityCenterPublisherInfo>)PublisherInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsCommon))
             {
@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserRecommendation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +203,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<UserRecommendation> array = new List<UserRecommendation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserRecommendation.DeserializeUserRecommendation(item));
+                        }
                     }
                     usernames = array;
                     continue;

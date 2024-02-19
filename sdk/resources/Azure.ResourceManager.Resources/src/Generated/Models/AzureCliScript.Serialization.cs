@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ArmDeploymentScriptManagedIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                ((IJsonModel<ContainerConfiguration>)ContainerSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageAccountSettings))
             {
                 writer.WritePropertyName("storageAccountSettings"u8);
-                writer.WriteObjectValue(StorageAccountSettings);
+                ((IJsonModel<ScriptStorageConfiguration>)StorageAccountSettings).Write(writer, options);
             }
             if (Optional.IsDefined(CleanupPreference))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ScriptStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Outputs))
             {
@@ -117,12 +117,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.AbsoluteUri);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +144,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptEnvironmentVariable>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -395,7 +404,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScriptEnvironmentVariable.DeserializeScriptEnvironmentVariable(item));
+                                }
                             }
                             environmentVariables = array;
                             continue;

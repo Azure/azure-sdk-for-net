@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ErrorDetail))
             {
                 writer.WritePropertyName("errorDetail"u8);
-                writer.WriteObjectValue(ErrorDetail);
+                ((IJsonModel<BackupErrorDetail>)ErrorDetail).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InquiryDetails))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in InquiryDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkloadInquiryDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadInquiryDetails> array = new List<WorkloadInquiryDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkloadInquiryDetails.DeserializeWorkloadInquiryDetails(item));
+                        }
                     }
                     inquiryDetails = array;
                     continue;

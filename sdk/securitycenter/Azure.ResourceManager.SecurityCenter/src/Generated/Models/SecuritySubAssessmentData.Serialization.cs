@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<SubAssessmentStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Remediation))
             {
@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue(ResourceDetails);
+                ((IJsonModel<SecurityCenterResourceDetails>)ResourceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData);
+                ((IJsonModel<SecuritySubAssessmentAdditionalInfo>)AdditionalData).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

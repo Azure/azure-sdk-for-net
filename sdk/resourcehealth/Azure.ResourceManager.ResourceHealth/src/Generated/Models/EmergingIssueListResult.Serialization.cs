@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceEmergingIssueData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ServiceEmergingIssueData> array = new List<ServiceEmergingIssueData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceEmergingIssueData.DeserializeServiceEmergingIssueData(item));
+                        }
                     }
                     value = array;
                     continue;

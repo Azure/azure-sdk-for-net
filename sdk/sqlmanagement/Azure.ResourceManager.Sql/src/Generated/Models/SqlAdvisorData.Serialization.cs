@@ -91,7 +91,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedActionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -247,7 +254,14 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionData> array = new List<RecommendedActionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                                }
                             }
                             recommendedActions = array;
                             continue;

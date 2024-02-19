@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SummaryCollection != null)
                 {
                     writer.WritePropertyName("summaryCollection"u8);
-                    writer.WriteObjectValue(SummaryCollection);
+                    ((IJsonModel<MoverSummaryList>)SummaryCollection).Write(writer, options);
                 }
                 else
                 {
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceData> array = new List<MoverResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceData.DeserializeMoverResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverResourceData.DeserializeMoverResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SiteRecoveryAddVCenterProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

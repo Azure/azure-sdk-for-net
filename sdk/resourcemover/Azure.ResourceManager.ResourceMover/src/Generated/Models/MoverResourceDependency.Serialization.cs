@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(ManualResolution))
             {
                 writer.WritePropertyName("manualResolution"u8);
-                writer.WriteObjectValue(ManualResolution);
+                ((IJsonModel<ManualResolutionProperties>)ManualResolution).Write(writer, options);
             }
             if (Optional.IsDefined(AutomaticResolution))
             {
                 writer.WritePropertyName("automaticResolution"u8);
-                writer.WriteObjectValue(AutomaticResolution);
+                ((IJsonModel<AutomaticResolutionProperties>)AutomaticResolution).Write(writer, options);
             }
             if (Optional.IsDefined(IsOptional))
             {

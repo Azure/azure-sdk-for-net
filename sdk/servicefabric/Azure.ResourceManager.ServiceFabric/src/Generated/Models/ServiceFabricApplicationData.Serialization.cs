@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabric
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                ((IJsonModel<ApplicationUpgradePolicy>)UpgradePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(MinimumNodes))
             {
@@ -116,7 +116,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationMetricDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.ServiceFabric
                 writer.WriteStartArray();
                 foreach (var item in ManagedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationUserAssignedIdentity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -335,7 +349,14 @@ namespace Azure.ResourceManager.ServiceFabric
                             List<ApplicationMetricDescription> array = new List<ApplicationMetricDescription>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ApplicationMetricDescription.DeserializeApplicationMetricDescription(item));
+                                }
                             }
                             metrics = array;
                             continue;
@@ -349,7 +370,14 @@ namespace Azure.ResourceManager.ServiceFabric
                             List<ApplicationUserAssignedIdentity> array = new List<ApplicationUserAssignedIdentity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ApplicationUserAssignedIdentity.DeserializeApplicationUserAssignedIdentity(item));
+                                }
                             }
                             managedIdentities = array;
                             continue;

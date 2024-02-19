@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<JitNetworkAccessRequestPort>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<JitNetworkAccessRequestPort> array = new List<JitNetworkAccessRequestPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitNetworkAccessRequestPort.DeserializeJitNetworkAccessRequestPort(item));
+                        }
                     }
                     ports = array;
                     continue;
