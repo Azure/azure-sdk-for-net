@@ -83,6 +83,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
+                //writer.WriteStringValue(Content.ToString());
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
