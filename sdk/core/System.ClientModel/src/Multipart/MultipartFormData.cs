@@ -144,10 +144,7 @@ namespace System.ClientModel.Primitives
         {
             return ContentType;
         }
-        public RequestBody ToRequestBody()
-        {
-            return RequestBody.CreateFromStream(ToBinaryData().ToStream());//TODO: need to combine all the parts to a stream
-        }
+
         private void AddInternal(BinaryData content, Dictionary<string, string> headers, string name, string fileName)
         {
             if (headers == null)
@@ -179,58 +176,6 @@ namespace System.ClientModel.Primitives
                 }
             }
             base.Add(content, headers);
-        }
-        public override bool TryComputeLength(out long length)
-        {
-            int boundaryLength = GetEncodedLength(_boundary);
-
-            long currentLength = 0;
-            long internalBoundaryLength = s_crlfLength + s_dashDashLength + boundaryLength + s_crlfLength;
-
-            // Start Boundary.
-            currentLength += s_dashDashLength + boundaryLength + s_crlfLength;
-
-            bool first = true;
-            foreach (MultipartBodyPart content in _nestedContent)
-            {
-                if (first)
-                {
-                    first = false; // First boundary already written.
-                }
-                else
-                {
-                    // Internal Boundary.
-                    currentLength += internalBoundaryLength;
-                }
-
-                // Headers.
-                foreach (KeyValuePair<string, string> headerPair in content.Headers)
-                {
-                    currentLength += GetEncodedLength(headerPair.Key) + s_colonSpaceLength;
-                    currentLength += GetEncodedLength(headerPair.Value);
-                    currentLength += s_crlfLength;
-                }
-
-                currentLength += s_crlfLength;
-
-                // Content.
-                currentLength += content.Content.Length;
-            }
-
-            // Terminating boundary.
-            currentLength += s_crlfLength + s_dashDashLength + boundaryLength + s_dashDashLength + s_crlfLength;
-
-            length = currentLength;
-            return true;
-        }
-        /// <summary>
-        /// Creates an instance of <see cref="MultipartFormData"/> that wraps a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="data">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="MultipartFormData"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MultipartFormData Create(BinaryData data)
-        {
-            return ModelReaderWriter.Read<MultipartFormData>(data, new ModelReaderWriterOptions("MPTD"));
         }
         string IPersistableModel<MultipartFormData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "MPFD";
     }

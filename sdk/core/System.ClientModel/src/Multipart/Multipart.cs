@@ -325,7 +325,6 @@ namespace System.ClientModel.Primitives
                 }
             }
             // Read the content into a stream.
-            //Multipart multipartContent = new Multipart(subType, boundary);
             List<MultipartBodyPart> parts = new List<MultipartBodyPart>();
             Stream content = data.ToStream();
             CancellationToken cancellationToken = new CancellationToken();
@@ -421,49 +420,6 @@ namespace System.ClientModel.Primitives
                 return false;
             }
             boundary = contentType.Substring(prefix.Length);
-            return true;
-        }
-        public virtual bool TryComputeLength(out long length)
-        {
-            int boundaryLength = GetEncodedLength(_boundary);
-
-            long currentLength = 0;
-            long internalBoundaryLength = s_crlfLength + s_dashDashLength + boundaryLength + s_crlfLength;
-
-            // Start Boundary.
-            currentLength += s_dashDashLength + boundaryLength + s_crlfLength;
-
-            bool first = true;
-            foreach (MultipartBodyPart content in _nestedContent)
-            {
-                if (first)
-                {
-                    first = false; // First boundary already written.
-                }
-                else
-                {
-                    // Internal Boundary.
-                    currentLength += internalBoundaryLength;
-                }
-
-                // Headers.
-                foreach (KeyValuePair<string, string> headerPair in content.Headers)
-                {
-                    currentLength += GetEncodedLength(headerPair.Key) + s_colonSpaceLength;
-                    currentLength += GetEncodedLength(headerPair.Value);
-                    currentLength += s_crlfLength;
-                }
-
-                currentLength += s_crlfLength;
-
-                // Content.
-                currentLength += content.Content.Length;
-            }
-
-            // Terminating boundary.
-            currentLength += s_crlfLength + s_dashDashLength + boundaryLength + s_dashDashLength + s_crlfLength;
-
-            length = currentLength;
             return true;
         }
         /// <summary>
