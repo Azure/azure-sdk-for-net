@@ -37,6 +37,24 @@ namespace Azure.ResourceManager.AppContainers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetReplicaRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/replicas/", false);
+            uri.AppendPath(replicaName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetReplicaRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +147,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListReplicasRequestUri(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/containerApps/", false);
+            uri.AppendPath(containerAppName, true);
+            uri.AppendPath("/revisions/", false);
+            uri.AppendPath(revisionName, true);
+            uri.AppendPath("/replicas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListReplicasRequest(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName)

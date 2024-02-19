@@ -38,6 +38,66 @@ namespace Azure.ResourceManager.Cdn
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (continents != null && Optional.IsCollectionDefined(continents))
+            {
+                foreach (var param in continents)
+                {
+                    uri.AppendQuery("continents", param, true);
+                }
+            }
+            if (countryOrRegions != null && Optional.IsCollectionDefined(countryOrRegions))
+            {
+                foreach (var param in countryOrRegions)
+                {
+                    uri.AppendQuery("countryOrRegions", param, true);
+                }
+            }
+            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            if (protocols != null && Optional.IsCollectionDefined(protocols))
+            {
+                foreach (var param in protocols)
+                {
+                    uri.AppendQuery("protocols", param, true);
+                }
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, LogMetricsGranularity granularity, IEnumerable<string> customDomains, IEnumerable<string> protocols, IEnumerable<LogMetricsGroupBy> groupBy, IEnumerable<string> continents, IEnumerable<string> countryOrRegions)
         {
             var message = _pipeline.CreateMessage();
@@ -186,6 +246,45 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateGetLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (rankings != null && Optional.IsCollectionDefined(rankings))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
+            {
+                foreach (var param in customDomains)
+                {
+                    uri.AppendQuery("customDomains", param, true);
+                }
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<LogRanking> rankings, IEnumerable<LogRankingMetric> metrics, int maxRanking, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, IEnumerable<string> customDomains)
         {
             var message = _pipeline.CreateMessage();
@@ -305,6 +404,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateGetLogAnalyticsLocationsRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsLocations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogAnalyticsLocationsRequest(string subscriptionId, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
@@ -384,6 +498,21 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
+        internal RequestUriBuilder CreateGetLogAnalyticsResourcesRequestUri(string subscriptionId, string resourceGroupName, string profileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getLogAnalyticsResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogAnalyticsResourcesRequest(string subscriptionId, string resourceGroupName, string profileName)
         {
             var message = _pipeline.CreateMessage();
@@ -461,6 +590,52 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsMetricsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsMetrics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("granularity", granularity.ToString(), true);
+            if (actions != null && Optional.IsCollectionDefined(actions))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
+            {
+                foreach (var param in groupBy)
+                {
+                    uri.AppendQuery("groupBy", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsMetricsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity, IEnumerable<WafAction> actions, IEnumerable<WafRankingGroupBy> groupBy, IEnumerable<WafRuleType> ruleTypes)
@@ -587,6 +762,52 @@ namespace Azure.ResourceManager.Cdn
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetWafLogAnalyticsRankingsRequestUri(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Cdn/profiles/", false);
+            uri.AppendPath(profileName, true);
+            uri.AppendPath("/getWafLogAnalyticsRankings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            {
+                foreach (var param in metrics)
+                {
+                    uri.AppendQuery("metrics", param.ToString(), true);
+                }
+            }
+            uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
+            uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
+            uri.AppendQuery("maxRanking", maxRanking, true);
+            if (rankings != null && Optional.IsCollectionDefined(rankings))
+            {
+                foreach (var param in rankings)
+                {
+                    uri.AppendQuery("rankings", param.ToString(), true);
+                }
+            }
+            if (actions != null && Optional.IsCollectionDefined(actions))
+            {
+                foreach (var param in actions)
+                {
+                    uri.AppendQuery("actions", param.ToString(), true);
+                }
+            }
+            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
+            {
+                foreach (var param in ruleTypes)
+                {
+                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                }
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetWafLogAnalyticsRankingsRequest(string subscriptionId, string resourceGroupName, string profileName, IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings, IEnumerable<WafAction> actions, IEnumerable<WafRuleType> ruleTypes)

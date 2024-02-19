@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +147,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
         {
             var message = _pipeline.CreateMessage();
@@ -217,6 +249,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch)
@@ -311,6 +359,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/migrations/", false);
+            uri.AppendPath(migrationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName)
         {
             var message = _pipeline.CreateMessage();
@@ -385,6 +449,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTargetServerRequestUri(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(targetDbServerName, true);
+            uri.AppendPath("/migrations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (migrationListFilter != null)
+            {
+                uri.AppendQuery("migrationListFilter", migrationListFilter.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByTargetServerRequest(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
@@ -470,6 +553,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTargetServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByTargetServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter)

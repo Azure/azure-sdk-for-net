@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = await _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.HybridCompute
             try
             {
                 var response = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()));
+                var uri = _hybridComputePrivateLinkScopePrivateLinkScopesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, scopeName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new HybridComputeArmOperation<HybridComputePrivateLinkScopeResource>(Response.FromValue(new HybridComputePrivateLinkScopeResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

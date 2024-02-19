@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = await _firmwareRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -139,7 +141,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             try
             {
                 var response = _firmwareRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data, cancellationToken);
-                var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()));
+                var uri = _firmwareRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new IotFirmwareDefenseArmOperation<FirmwareResource>(Response.FromValue(new FirmwareResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

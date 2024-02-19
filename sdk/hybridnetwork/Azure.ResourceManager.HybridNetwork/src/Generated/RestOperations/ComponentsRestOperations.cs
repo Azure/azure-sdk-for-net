@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.HybridNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string networkFunctionName, string componentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/networkFunctions/", false);
+            uri.AppendPath(networkFunctionName, true);
+            uri.AppendPath("/components/", false);
+            uri.AppendPath(componentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string networkFunctionName, string componentName)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,21 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        internal RequestUriBuilder CreateListByNetworkFunctionRequestUri(string subscriptionId, string resourceGroupName, string networkFunctionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HybridNetwork/networkFunctions/", false);
+            uri.AppendPath(networkFunctionName, true);
+            uri.AppendPath("/components", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByNetworkFunctionRequest(string subscriptionId, string resourceGroupName, string networkFunctionName)
         {
             var message = _pipeline.CreateMessage();
@@ -202,6 +233,14 @@ namespace Azure.ResourceManager.HybridNetwork
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByNetworkFunctionNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string networkFunctionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByNetworkFunctionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string networkFunctionName)

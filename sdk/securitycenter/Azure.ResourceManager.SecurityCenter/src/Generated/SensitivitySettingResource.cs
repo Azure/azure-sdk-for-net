@@ -202,7 +202,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = await _sensitivitySettingRestClient.UpdateSensitivitySettingsAsync(content, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()));
+                var uri = _sensitivitySettingRestClient.CreateUpdateSensitivitySettingsRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -248,7 +250,9 @@ namespace Azure.ResourceManager.SecurityCenter
             try
             {
                 var response = _sensitivitySettingRestClient.UpdateSensitivitySettings(content, cancellationToken);
-                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()));
+                var uri = _sensitivitySettingRestClient.CreateUpdateSensitivitySettingsRequestUri(content);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityCenterArmOperation<SensitivitySettingResource>(Response.FromValue(new SensitivitySettingResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

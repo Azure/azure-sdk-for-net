@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _siteVirtualNetworkConnectionGatewayWebAppsRestClient.CreateOrUpdateVnetConnectionGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteVirtualNetworkConnectionGatewayResource>(Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteVirtualNetworkConnectionGatewayWebAppsRestClient.CreateCreateOrUpdateVnetConnectionGatewayRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteVirtualNetworkConnectionGatewayResource>(Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -136,7 +138,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _siteVirtualNetworkConnectionGatewayWebAppsRestClient.CreateOrUpdateVnetConnectionGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteVirtualNetworkConnectionGatewayResource>(Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()));
+                var uri = _siteVirtualNetworkConnectionGatewayWebAppsRestClient.CreateCreateOrUpdateVnetConnectionGatewayRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gatewayName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<SiteVirtualNetworkConnectionGatewayResource>(Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
