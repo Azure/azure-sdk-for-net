@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("primaryNetworkId"u8);
-            writer.WriteStringValue(PrimaryNetworkId);
+            if (PrimaryNetworkId != null)
+            {
+                writer.WriteStringValue(PrimaryNetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

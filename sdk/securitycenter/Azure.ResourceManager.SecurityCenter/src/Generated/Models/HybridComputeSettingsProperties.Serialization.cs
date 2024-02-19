@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(ProxyServer))
             {
                 writer.WritePropertyName("proxyServer"u8);
-                writer.WriteObjectValue(ProxyServer);
+                ((IJsonModel<ProxyServerProperties>)ProxyServer).Write(writer, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipal).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

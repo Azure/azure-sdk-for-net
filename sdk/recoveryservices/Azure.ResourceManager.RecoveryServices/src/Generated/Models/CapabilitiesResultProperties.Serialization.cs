@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsZones)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DnsZoneResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<DnsZoneResult> array = new List<DnsZoneResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DnsZoneResult.DeserializeDnsZoneResult(item));
+                        }
                     }
                     dnsZones = array;
                     continue;

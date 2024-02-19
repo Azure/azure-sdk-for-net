@@ -41,7 +41,14 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteObjectValue(State);
+                ((IJsonModel<RecommendedActionStateInfo>)State).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsExecutableAction))
             {
@@ -143,12 +150,12 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W" && Optional.IsDefined(ImplementationDetails))
             {
                 writer.WritePropertyName("implementationDetails"u8);
-                writer.WriteObjectValue(ImplementationDetails);
+                ((IJsonModel<RecommendedActionImplementationInfo>)ImplementationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails);
+                ((IJsonModel<RecommendedActionErrorInfo>)ErrorDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(EstimatedImpact))
             {
@@ -156,7 +163,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in EstimatedImpact)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedActionImpactRecord>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +180,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ObservedImpact)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedActionImpactRecord>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +197,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in TimeSeries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedActionMetricInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -197,19 +225,21 @@ namespace Azure.ResourceManager.Sql
                 foreach (var item in Details)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -499,7 +529,14 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                }
                             }
                             estimatedImpact = array;
                             continue;
@@ -513,7 +550,14 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionImpactRecord> array = new List<RecommendedActionImpactRecord>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendedActionImpactRecord.DeserializeRecommendedActionImpactRecord(item));
+                                }
                             }
                             observedImpact = array;
                             continue;
@@ -527,7 +571,14 @@ namespace Azure.ResourceManager.Sql
                             List<RecommendedActionMetricInfo> array = new List<RecommendedActionMetricInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RecommendedActionMetricInfo.DeserializeRecommendedActionMetricInfo(item));
+                                }
                             }
                             timeSeries = array;
                             continue;

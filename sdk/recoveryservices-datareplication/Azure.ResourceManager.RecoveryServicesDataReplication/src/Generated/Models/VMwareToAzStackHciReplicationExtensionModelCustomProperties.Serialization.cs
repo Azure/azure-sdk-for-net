@@ -27,14 +27,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareFabricArmId"u8);
-            writer.WriteStringValue(VmwareFabricArmId);
+            if (VmwareFabricArmId != null)
+            {
+                writer.WriteStringValue(VmwareFabricArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(VmwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VmwareSiteId);
             }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
-            writer.WriteStringValue(AzStackHciFabricArmId);
+            if (AzStackHciFabricArmId != null)
+            {
+                writer.WriteStringValue(AzStackHciFabricArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(AzStackHciSiteId))
             {
                 writer.WritePropertyName("azStackHciSiteId"u8);

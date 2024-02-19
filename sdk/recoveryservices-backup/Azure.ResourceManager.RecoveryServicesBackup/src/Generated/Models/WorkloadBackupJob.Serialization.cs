@@ -52,14 +52,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkloadErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<WorkloadBackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(EntityFriendlyName))
             {
@@ -190,7 +197,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadErrorInfo> array = new List<WorkloadErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkloadErrorInfo.DeserializeWorkloadErrorInfo(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in ImpactedRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceHealthEventImpactedServiceRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventImpactedServiceRegion> array = new List<ResourceHealthEventImpactedServiceRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceHealthEventImpactedServiceRegion.DeserializeResourceHealthEventImpactedServiceRegion(item));
+                        }
                     }
                     impactedRegions = array;
                     continue;

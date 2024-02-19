@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in PairedRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PairedRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +186,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PairedRegion.DeserializePairedRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PairedRegion.DeserializePairedRegion(item));
+                        }
                     }
                     pairedRegion = array;
                     continue;

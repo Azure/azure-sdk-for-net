@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sasUri"u8);
-            writer.WriteStringValue(SasUri.AbsoluteUri);
+            if (SasUri != null)
+            {
+                writer.WriteStringValue(SasUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

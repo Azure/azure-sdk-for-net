@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
-                writer.WriteObjectValue(InformationProtection);
+                ((IJsonModel<AwsInformationProtection>)InformationProtection).Write(writer, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());

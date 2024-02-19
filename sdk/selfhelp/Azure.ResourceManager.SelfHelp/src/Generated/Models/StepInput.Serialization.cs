@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ResponseValidationProperties))
             {
                 writer.WritePropertyName("responseValidationProperties"u8);
-                writer.WriteObjectValue(ResponseValidationProperties);
+                ((IJsonModel<ResponseValidationProperties>)ResponseValidationProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResponseOptions))
             {
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in ResponseOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResponseConfig>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +191,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<ResponseConfig> array = new List<ResponseConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResponseConfig.DeserializeResponseConfig(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResponseConfig.DeserializeResponseConfig(item));
+                        }
                     }
                     responseOptions = array;
                     continue;

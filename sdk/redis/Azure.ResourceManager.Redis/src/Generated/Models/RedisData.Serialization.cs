@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Redis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.Redis
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration);
+                ((IJsonModel<RedisCommonConfiguration>)RedisConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStringValue(UpdateChannel.Value.ToString());
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<RedisSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
@@ -173,7 +187,7 @@ namespace Azure.ResourceManager.Redis
                 if (AccessKeys != null)
                 {
                     writer.WritePropertyName("accessKeys"u8);
-                    writer.WriteObjectValue(AccessKeys);
+                    ((IJsonModel<RedisAccessKeys>)AccessKeys).Write(writer, options);
                 }
                 else
                 {
@@ -186,7 +200,14 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in LinkedServers)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -196,7 +217,14 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisInstanceDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +234,14 @@ namespace Azure.ResourceManager.Redis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -522,7 +557,14 @@ namespace Azure.ResourceManager.Redis
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                }
                             }
                             linkedServers = array;
                             continue;
@@ -536,7 +578,14 @@ namespace Azure.ResourceManager.Redis
                             List<RedisInstanceDetails> array = new List<RedisInstanceDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RedisInstanceDetails.DeserializeRedisInstanceDetails(item));
+                                }
                             }
                             instances = array;
                             continue;
@@ -550,7 +599,14 @@ namespace Azure.ResourceManager.Redis
                             List<RedisPrivateEndpointConnectionData> array = new List<RedisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RedisPrivateEndpointConnectionData.DeserializeRedisPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

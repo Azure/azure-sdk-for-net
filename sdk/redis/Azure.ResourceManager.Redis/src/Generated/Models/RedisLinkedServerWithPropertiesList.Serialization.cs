@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisLinkedServerWithPropertyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Redis.Models
                     List<RedisLinkedServerWithPropertyData> array = new List<RedisLinkedServerWithPropertyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(item));
+                        }
                     }
                     value = array;
                     continue;

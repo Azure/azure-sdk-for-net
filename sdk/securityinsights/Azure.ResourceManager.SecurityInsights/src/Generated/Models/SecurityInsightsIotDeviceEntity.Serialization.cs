@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,19 +65,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 foreach (var item in AdditionalData)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -160,7 +169,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligence)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityInsightsThreatIntelligence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -393,7 +409,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsThreatIntelligence> array = new List<SecurityInsightsThreatIntelligence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityInsightsThreatIntelligence.DeserializeSecurityInsightsThreatIntelligence(item));
+                                }
                             }
                             threatIntelligence = array;
                             continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RecommendedSecurityRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("networkSecurityGroups"u8);
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<RecommendedSecurityRule> array = new List<RecommendedSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecommendedSecurityRule.DeserializeRecommendedSecurityRule(item));
+                        }
                     }
                     rules = array;
                     continue;

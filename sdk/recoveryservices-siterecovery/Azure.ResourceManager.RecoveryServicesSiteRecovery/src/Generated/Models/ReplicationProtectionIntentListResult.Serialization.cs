@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReplicationProtectionIntentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationProtectionIntentData> array = new List<ReplicationProtectionIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReplicationProtectionIntentData.DeserializeReplicationProtectionIntentData(item));
+                        }
                     }
                     value = array;
                     continue;

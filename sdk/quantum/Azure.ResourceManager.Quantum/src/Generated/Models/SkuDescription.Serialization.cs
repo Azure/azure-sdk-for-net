@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QuotaDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.Quantum.Models
                 writer.WriteStartArray();
                 foreach (var item in PricingDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PricingDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +212,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<QuotaDimension> array = new List<QuotaDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QuotaDimension.DeserializeQuotaDimension(item));
+                        }
                     }
                     quotaDimensions = array;
                     continue;
@@ -212,7 +233,14 @@ namespace Azure.ResourceManager.Quantum.Models
                     List<PricingDetail> array = new List<PricingDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PricingDetail.DeserializePricingDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PricingDetail.DeserializePricingDetail(item));
+                        }
                     }
                     pricingDetails = array;
                     continue;

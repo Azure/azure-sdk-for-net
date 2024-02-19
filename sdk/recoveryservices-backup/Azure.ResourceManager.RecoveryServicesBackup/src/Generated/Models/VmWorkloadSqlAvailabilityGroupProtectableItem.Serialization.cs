@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DistributedNodesInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
+                ((IJsonModel<PreBackupValidation>)PreBackupValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -169,7 +176,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        }
                     }
                     nodesList = array;
                     continue;

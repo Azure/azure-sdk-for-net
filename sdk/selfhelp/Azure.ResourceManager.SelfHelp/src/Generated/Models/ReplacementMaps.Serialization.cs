@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in WebResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SolutionsDiagnostic>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Troubleshooters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SolutionsTroubleshooters>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +83,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricsBasedCharts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetricsBasedChart>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +100,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpVideo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +117,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in VideoGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VideoGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -143,7 +185,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<WebResult> array = new List<WebResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebResult.DeserializeWebResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebResult.DeserializeWebResult(item));
+                        }
                     }
                     webResults = array;
                     continue;
@@ -157,7 +206,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsDiagnostic> array = new List<SolutionsDiagnostic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SolutionsDiagnostic.DeserializeSolutionsDiagnostic(item));
+                        }
                     }
                     diagnostics = array;
                     continue;
@@ -171,7 +227,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SolutionsTroubleshooters> array = new List<SolutionsTroubleshooters>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SolutionsTroubleshooters.DeserializeSolutionsTroubleshooters(item));
+                        }
                     }
                     troubleshooters = array;
                     continue;
@@ -185,7 +248,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<MetricsBasedChart> array = new List<MetricsBasedChart>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricsBasedChart.DeserializeMetricsBasedChart(item));
+                        }
                     }
                     metricsBasedCharts = array;
                     continue;
@@ -199,7 +269,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpVideo> array = new List<SelfHelpVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item));
+                        }
                     }
                     videos = array;
                     continue;
@@ -213,7 +290,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroup> array = new List<VideoGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroup.DeserializeVideoGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VideoGroup.DeserializeVideoGroup(item));
+                        }
                     }
                     videoGroups = array;
                     continue;

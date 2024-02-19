@@ -144,7 +144,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteStartArray();
                     foreach (var item in ValidationDetail)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<LinkerValidationResultItemInfo>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -315,7 +322,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                             List<LinkerValidationResultItemInfo> array = new List<LinkerValidationResultItemInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LinkerValidationResultItemInfo.DeserializeLinkerValidationResultItemInfo(item));
+                                }
                             }
                             validationDetail = array;
                             continue;

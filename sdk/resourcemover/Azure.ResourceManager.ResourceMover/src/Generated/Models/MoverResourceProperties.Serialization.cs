@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sourceId"u8);
-            writer.WriteStringValue(SourceId);
+            if (SourceId != null)
+            {
+                writer.WriteStringValue(SourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(TargetId))
             {
                 if (TargetId != null)
@@ -62,7 +69,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (ResourceSettings != null)
                 {
                     writer.WritePropertyName("resourceSettings"u8);
-                    writer.WriteObjectValue(ResourceSettings);
+                    ((IJsonModel<MoverResourceSettings>)ResourceSettings).Write(writer, options);
                 }
                 else
                 {
@@ -74,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SourceResourceSettings != null)
                 {
                     writer.WritePropertyName("sourceResourceSettings"u8);
-                    writer.WriteObjectValue(SourceResourceSettings);
+                    ((IJsonModel<MoverResourceSettings>)SourceResourceSettings).Write(writer, options);
                 }
                 else
                 {
@@ -84,7 +91,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(MoveStatus))
             {
                 writer.WritePropertyName("moveStatus"u8);
-                writer.WriteObjectValue(MoveStatus);
+                ((IJsonModel<MoverResourcePropertiesMoveStatus>)MoveStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
             {
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverResourceDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +116,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOnOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverResourceDependencyOverride>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +137,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors);
+                    ((IJsonModel<MoveResourcePropertiesErrors>)Errors).Write(writer, options);
                 }
                 else
                 {
@@ -248,7 +269,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependency> array = new List<MoverResourceDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverResourceDependency.DeserializeMoverResourceDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -262,7 +290,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverResourceDependencyOverride> array = new List<MoverResourceDependencyOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverResourceDependencyOverride.DeserializeMoverResourceDependencyOverride(item));
+                        }
                     }
                     dependsOnOverrides = array;
                     continue;

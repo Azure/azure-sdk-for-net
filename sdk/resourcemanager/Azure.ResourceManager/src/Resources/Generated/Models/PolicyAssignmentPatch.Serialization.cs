@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceSelector>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Overrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyOverride>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +156,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ResourceSelector> array = new List<ResourceSelector>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceSelector.DeserializeResourceSelector(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceSelector.DeserializeResourceSelector(item));
+                                }
                             }
                             resourceSelectors = array;
                             continue;
@@ -156,7 +177,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<PolicyOverride> array = new List<PolicyOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PolicyOverride.DeserializePolicyOverride(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PolicyOverride.DeserializePolicyOverride(item));
+                                }
                             }
                             overrides = array;
                             continue;

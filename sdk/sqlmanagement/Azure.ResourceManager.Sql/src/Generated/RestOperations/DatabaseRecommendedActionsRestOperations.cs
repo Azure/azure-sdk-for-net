@@ -90,7 +90,14 @@ namespace Azure.ResourceManager.Sql
                         List<RecommendedActionData> array = new List<RecommendedActionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.Sql
                         List<RecommendedActionData> array = new List<RecommendedActionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(RecommendedActionData.DeserializeRecommendedActionData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Resources.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);

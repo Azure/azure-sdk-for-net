@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryVmDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails);
+                ((IJsonModel<InitialReplicationDetails>)InitialReplicationDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                ((IJsonModel<SiteRecoveryOSDetails>)OSDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
@@ -226,7 +240,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HyperVReplicaAzureManagedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +257,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OSUpgradeSupportedVersions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -328,7 +356,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryVmDiskDetails> array = new List<SiteRecoveryVmDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryVmDiskDetails.DeserializeSiteRecoveryVmDiskDetails(item));
+                        }
                     }
                     azureVmDiskDetails = array;
                     continue;
@@ -417,7 +452,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VmNicDetails> array = new List<VmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VmNicDetails.DeserializeVmNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;
@@ -594,7 +636,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVReplicaAzureManagedDiskDetails> array = new List<HyperVReplicaAzureManagedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVReplicaAzureManagedDiskDetails.DeserializeHyperVReplicaAzureManagedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HyperVReplicaAzureManagedDiskDetails.DeserializeHyperVReplicaAzureManagedDiskDetails(item));
+                        }
                     }
                     protectedManagedDisks = array;
                     continue;
@@ -608,7 +657,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<OSUpgradeSupportedVersions> array = new List<OSUpgradeSupportedVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OSUpgradeSupportedVersions.DeserializeOSUpgradeSupportedVersions(item));
+                        }
                     }
                     allAvailableOSUpgradeConfigurations = array;
                     continue;

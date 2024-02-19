@@ -47,7 +47,14 @@ namespace Azure.Quantum.Jobs.Models
                     List<TargetStatus> array = new List<TargetStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetStatus.DeserializeTargetStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TargetStatus.DeserializeTargetStatus(item));
+                        }
                     }
                     targets = array;
                     continue;

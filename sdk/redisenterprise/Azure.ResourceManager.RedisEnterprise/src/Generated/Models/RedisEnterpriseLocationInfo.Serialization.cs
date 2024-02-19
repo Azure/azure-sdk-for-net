@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisEnterpriseCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     List<RedisEnterpriseCapability> array = new List<RedisEnterpriseCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RedisEnterpriseCapability.DeserializeRedisEnterpriseCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RedisEnterpriseCapability.DeserializeRedisEnterpriseCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

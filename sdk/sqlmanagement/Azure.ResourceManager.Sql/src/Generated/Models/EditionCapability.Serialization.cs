@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceObjectiveCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +56,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(ReadScale))
             {
                 writer.WritePropertyName("readScale"u8);
-                writer.WriteObjectValue(ReadScale);
+                ((IJsonModel<ReadScaleCapability>)ReadScale).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +148,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ServiceObjectiveCapability> array = new List<ServiceObjectiveCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceObjectiveCapability.DeserializeServiceObjectiveCapability(item));
+                        }
                     }
                     supportedServiceLevelObjectives = array;
                     continue;
@@ -166,7 +187,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        }
                     }
                     supportedStorageCapabilities = array;
                     continue;

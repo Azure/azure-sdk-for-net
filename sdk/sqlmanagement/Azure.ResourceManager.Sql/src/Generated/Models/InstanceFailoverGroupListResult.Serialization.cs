@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InstanceFailoverGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<InstanceFailoverGroupData> array = new List<InstanceFailoverGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InstanceFailoverGroupData.DeserializeInstanceFailoverGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

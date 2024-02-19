@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QuotaRequestDetailData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Quota.Models
                     List<QuotaRequestDetailData> array = new List<QuotaRequestDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QuotaRequestDetailData.DeserializeQuotaRequestDetailData(item));
+                        }
                     }
                     value = array;
                     continue;

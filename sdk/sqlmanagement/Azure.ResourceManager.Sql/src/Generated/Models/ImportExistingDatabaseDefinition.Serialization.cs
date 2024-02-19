@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WritePropertyName("storageKey"u8);
             writer.WriteStringValue(StorageKey);
             writer.WritePropertyName("storageUri"u8);
-            writer.WriteStringValue(StorageUri.AbsoluteUri);
+            if (StorageUri != null)
+            {
+                writer.WriteStringValue(StorageUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("administratorLogin"u8);
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
@@ -44,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation);
+                ((IJsonModel<NetworkIsolationSettings>)NetworkIsolation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

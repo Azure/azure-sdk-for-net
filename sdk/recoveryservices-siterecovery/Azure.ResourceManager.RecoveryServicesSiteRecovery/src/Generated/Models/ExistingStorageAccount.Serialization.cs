@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("azureStorageAccountId"u8);
-            writer.WriteStringValue(AzureStorageAccountId);
+            if (AzureStorageAccountId != null)
+            {
+                writer.WriteStringValue(AzureStorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

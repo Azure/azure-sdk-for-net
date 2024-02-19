@@ -22,7 +22,14 @@ namespace Azure.ResourceManager.Reservations
             List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    array.Add(null);
+                }
+                else
+                {
+                    array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                }
             }
             return array;
         }
@@ -33,7 +40,14 @@ namespace Azure.ResourceManager.Reservations
             List<ReservationDetailData> array = new List<ReservationDetailData>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    array.Add(null);
+                }
+                else
+                {
+                    array.Add(ReservationDetailData.DeserializeReservationDetailData(item));
+                }
             }
             return array;
         }

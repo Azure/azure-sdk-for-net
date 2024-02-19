@@ -98,7 +98,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in Subnets)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<SubnetResourceSettings>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -234,7 +241,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<SubnetResourceSettings> array = new List<SubnetResourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SubnetResourceSettings.DeserializeSubnetResourceSettings(item));
+                        }
                     }
                     subnets = array;
                     continue;

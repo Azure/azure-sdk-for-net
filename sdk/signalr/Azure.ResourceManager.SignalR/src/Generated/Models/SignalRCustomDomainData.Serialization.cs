@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SignalR
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.SignalR
             writer.WritePropertyName("domainName"u8);
             writer.WriteStringValue(DomainName);
             writer.WritePropertyName("customCertificate"u8);
-            JsonSerializer.Serialize(writer, CustomCertificate);
+            if (CustomCertificate != null)
+            {
+                JsonSerializer.Serialize(writer, CustomCertificate);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Quantum
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,7 +81,14 @@ namespace Azure.ResourceManager.Quantum
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Provider>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -223,7 +237,14 @@ namespace Azure.ResourceManager.Quantum
                             List<Provider> array = new List<Provider>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Provider.DeserializeProvider(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Provider.DeserializeProvider(item));
+                                }
                             }
                             providers = array;
                             continue;

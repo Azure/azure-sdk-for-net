@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Sql.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("serverId"u8);
-            writer.WriteStringValue(ServerId);
+            if (ServerId != null)
+            {
+                writer.WriteStringValue(ServerId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SettingsParameterDescription>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<SettingsParameterDescription> array = new List<SettingsParameterDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SettingsParameterDescription.DeserializeSettingsParameterDescription(item));
+                        }
                     }
                     parameters = array;
                     continue;

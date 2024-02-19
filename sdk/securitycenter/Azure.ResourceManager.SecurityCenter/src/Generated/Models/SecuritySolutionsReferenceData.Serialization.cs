@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("alertVendorName"u8);
             writer.WriteStringValue(AlertVendorName);
             writer.WritePropertyName("packageInfoUrl"u8);
-            writer.WriteStringValue(PackageInfoUri.AbsoluteUri);
+            if (PackageInfoUri != null)
+            {
+                writer.WriteStringValue(PackageInfoUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("productName"u8);
             writer.WriteStringValue(ProductName);
             writer.WritePropertyName("publisher"u8);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
+                ((IJsonModel<ServiceTypeDeltaHealthPolicy>)DefaultServiceTypeDeltaHealthPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ServiceTypeDeltaHealthPolicy>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     Dictionary<string, ServiceTypeDeltaHealthPolicy> dictionary = new Dictionary<string, ServiceTypeDeltaHealthPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property0.Value));
+                        }
                     }
                     serviceTypeDeltaHealthPolicies = dictionary;
                     continue;

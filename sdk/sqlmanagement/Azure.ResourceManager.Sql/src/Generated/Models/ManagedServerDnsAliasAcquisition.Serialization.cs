@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Sql.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("oldManagedServerDnsAliasResourceId"u8);
-            writer.WriteStringValue(OldManagedServerDnsAliasResourceId);
+            if (OldManagedServerDnsAliasResourceId != null)
+            {
+                writer.WriteStringValue(OldManagedServerDnsAliasResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

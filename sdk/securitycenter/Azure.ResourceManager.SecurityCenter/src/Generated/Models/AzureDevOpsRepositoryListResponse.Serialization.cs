@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevOpsRepositoryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<DevOpsRepositoryData> array = new List<DevOpsRepositoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevOpsRepositoryData.DeserializeDevOpsRepositoryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevOpsRepositoryData.DeserializeDevOpsRepositoryData(item));
+                        }
                     }
                     value = array;
                     continue;

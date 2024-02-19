@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDirectoryPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlDataDirectory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<SqlDataDirectory> array = new List<SqlDataDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlDataDirectory.DeserializeSqlDataDirectory(item));
+                        }
                     }
                     dataDirectoryPaths = array;
                     continue;

@@ -45,7 +45,14 @@ namespace Azure.MixedReality.RemoteRendering
                     List<RemoteRenderingServiceError> array = new List<RemoteRenderingServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeRemoteRenderingServiceError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeRemoteRenderingServiceError(item));
+                        }
                     }
                     details = array;
                     continue;

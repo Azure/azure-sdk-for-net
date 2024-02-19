@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 if (Parent != null)
                 {
                     writer.WritePropertyName("parent"u8);
-                    writer.WriteObjectValue(Parent);
+                    ((IJsonModel<DescendantParentGroupInfo>)Parent).Write(writer, options);
                 }
                 else
                 {

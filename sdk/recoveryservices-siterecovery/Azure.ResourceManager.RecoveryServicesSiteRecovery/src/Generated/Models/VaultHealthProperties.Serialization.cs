@@ -32,24 +32,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedItemsHealth))
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
-                writer.WriteObjectValue(ProtectedItemsHealth);
+                ((IJsonModel<ResourceHealthSummary>)ProtectedItemsHealth).Write(writer, options);
             }
             if (Optional.IsDefined(FabricsHealth))
             {
                 writer.WritePropertyName("fabricsHealth"u8);
-                writer.WriteObjectValue(FabricsHealth);
+                ((IJsonModel<ResourceHealthSummary>)FabricsHealth).Write(writer, options);
             }
             if (Optional.IsDefined(ContainersHealth))
             {
                 writer.WritePropertyName("containersHealth"u8);
-                writer.WriteObjectValue(ContainersHealth);
+                ((IJsonModel<ResourceHealthSummary>)ContainersHealth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     vaultErrors = array;
                     continue;

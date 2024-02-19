@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -65,7 +72,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
-                writer.WriteObjectValue(DataTypes);
+                ((IJsonModel<AwsCloudTrailDataConnectorDataTypes>)DataTypes).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

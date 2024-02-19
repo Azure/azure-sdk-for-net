@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue(LastBackupErrorDetail);
+                ((IJsonModel<BackupErrorDetail>)LastBackupErrorDetail).Write(writer, options);
             }
             if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<VmWorkloadProtectedItemExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
@@ -93,7 +93,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<KpiResourceHealthDetails>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DistributedNodesInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -372,7 +386,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        }
                     }
                     kpisHealths = dictionary;
                     continue;
@@ -386,7 +407,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        }
                     }
                     nodesList = array;
                     continue;

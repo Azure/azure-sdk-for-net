@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CurrentUsagesBaseData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Quota.Models
                     List<CurrentUsagesBaseData> array = new List<CurrentUsagesBaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CurrentUsagesBaseData.DeserializeCurrentUsagesBaseData(item));
+                        }
                     }
                     value = array;
                     continue;

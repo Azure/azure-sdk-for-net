@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(GatewayOperationDetails))
             {
                 writer.WritePropertyName("gatewayOperationDetails"u8);
-                writer.WriteObjectValue(GatewayOperationDetails);
+                ((IJsonModel<GatewayOperationDetails>)GatewayOperationDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

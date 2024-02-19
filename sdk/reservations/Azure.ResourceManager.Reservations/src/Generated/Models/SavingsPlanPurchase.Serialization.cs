@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ReservationsSkuName>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Commitment))
             {
                 writer.WritePropertyName("commitment"u8);
-                writer.WriteObjectValue(Commitment);
+                ((IJsonModel<BenefitsCommitment>)Commitment).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

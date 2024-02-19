@@ -28,12 +28,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault);
+            if (SourceVault != null)
+            {
+                JsonSerializer.Serialize(writer, SourceVault);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("vaultCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NodeTypeVaultCertificate>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<NodeTypeVaultCertificate> array = new List<NodeTypeVaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NodeTypeVaultCertificate.DeserializeNodeTypeVaultCertificate(item));
+                        }
                     }
                     vaultCertificates = array;
                     continue;

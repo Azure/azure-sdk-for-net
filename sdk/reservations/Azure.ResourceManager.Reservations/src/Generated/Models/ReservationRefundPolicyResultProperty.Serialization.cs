@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ConsumedRefundsTotal))
             {
                 writer.WritePropertyName("consumedRefundsTotal"u8);
-                writer.WriteObjectValue(ConsumedRefundsTotal);
+                ((IJsonModel<PurchasePrice>)ConsumedRefundsTotal).Write(writer, options);
             }
             if (Optional.IsDefined(MaxRefundLimit))
             {
                 writer.WritePropertyName("maxRefundLimit"u8);
-                writer.WriteObjectValue(MaxRefundLimit);
+                ((IJsonModel<PurchasePrice>)MaxRefundLimit).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PolicyErrors))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationRefundPolicyError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationRefundPolicyError> array = new List<ReservationRefundPolicyError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationRefundPolicyError.DeserializeReservationRefundPolicyError(item));
+                        }
                     }
                     policyErrors = array;
                     continue;

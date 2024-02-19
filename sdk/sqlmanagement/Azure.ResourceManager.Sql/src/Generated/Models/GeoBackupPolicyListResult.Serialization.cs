@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GeoBackupPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<GeoBackupPolicyData> array = new List<GeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GeoBackupPolicyData.DeserializeGeoBackupPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

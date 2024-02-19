@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.Qumulo
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -70,7 +77,14 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("marketplaceDetails"u8);
-            writer.WriteObjectValue(MarketplaceDetails);
+            if (MarketplaceDetails != null)
+            {
+                ((IJsonModel<MarketplaceDetails>)MarketplaceDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -79,7 +93,14 @@ namespace Azure.ResourceManager.Qumulo
             writer.WritePropertyName("storageSku"u8);
             writer.WriteStringValue(StorageSku.ToSerialString());
             writer.WritePropertyName("userDetails"u8);
-            writer.WriteObjectValue(UserDetails);
+            if (UserDetails != null)
+            {
+                ((IJsonModel<QumuloUserDetails>)UserDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("delegatedSubnetId"u8);
             writer.WriteStringValue(DelegatedSubnetId);
             if (Optional.IsDefined(ClusterLoginUri))
@@ -93,12 +114,14 @@ namespace Azure.ResourceManager.Qumulo
                 writer.WriteStartArray();
                 foreach (var item in PrivateIPs)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }

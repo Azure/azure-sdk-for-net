@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                ((IJsonModel<AppliedScopeProperties>)AppliedScopeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(InstanceFlexibility))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                ((IJsonModel<PatchPropertiesRenewProperties>)RenewProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {

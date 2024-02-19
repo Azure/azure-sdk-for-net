@@ -27,14 +27,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVFabricArmId"u8);
-            writer.WriteStringValue(HyperVFabricArmId);
+            if (HyperVFabricArmId != null)
+            {
+                writer.WriteStringValue(HyperVFabricArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(HyperVSiteId))
             {
                 writer.WritePropertyName("hyperVSiteId"u8);
                 writer.WriteStringValue(HyperVSiteId);
             }
             writer.WritePropertyName("azStackHciFabricArmId"u8);
-            writer.WriteStringValue(AzStackHciFabricArmId);
+            if (AzStackHciFabricArmId != null)
+            {
+                writer.WriteStringValue(AzStackHciFabricArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(AzStackHciSiteId))
             {
                 writer.WritePropertyName("azStackHciSiteId"u8);

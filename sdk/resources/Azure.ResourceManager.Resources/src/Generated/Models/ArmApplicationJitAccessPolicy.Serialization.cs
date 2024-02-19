@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JitApprover>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApprover.DeserializeJitApprover(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JitApprover.DeserializeJitApprover(item));
+                        }
                     }
                     jitApprovers = array;
                     continue;

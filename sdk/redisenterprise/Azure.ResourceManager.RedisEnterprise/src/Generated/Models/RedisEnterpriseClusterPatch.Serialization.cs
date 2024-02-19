@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<RedisEnterpriseSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<ClusterPropertiesEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisEnterprisePrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -240,7 +247,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             List<RedisEnterprisePrivateEndpointConnectionData> array = new List<RedisEnterprisePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RedisEnterprisePrivateEndpointConnectionData.DeserializeRedisEnterprisePrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

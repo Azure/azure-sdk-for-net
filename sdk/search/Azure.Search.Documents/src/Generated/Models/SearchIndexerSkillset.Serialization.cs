@@ -27,7 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
@@ -96,7 +103,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerSkill> array = new List<SearchIndexerSkill>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerSkill.DeserializeSearchIndexerSkill(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerSkill.DeserializeSearchIndexerSkill(item));
+                        }
                     }
                     skills = array;
                     continue;

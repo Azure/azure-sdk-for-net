@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Quota
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Quota
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ServiceErrorDetail>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RequestSubmitOn))
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Quota
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QuotaSubRequestDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +220,14 @@ namespace Azure.ResourceManager.Quota
                             List<QuotaSubRequestDetail> array = new List<QuotaSubRequestDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(QuotaSubRequestDetail.DeserializeQuotaSubRequestDetail(item));
+                                }
                             }
                             value = array;
                             continue;

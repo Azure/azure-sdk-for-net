@@ -29,14 +29,21 @@ namespace Azure.ResourceManager.Resources.Models
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("template"u8);
+            if (Template != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Template);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Template))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Template))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LocationExpanded>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<LocationExpanded> array = new List<LocationExpanded>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LocationExpanded.DeserializeLocationExpanded(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LocationExpanded.DeserializeLocationExpanded(item));
+                        }
                     }
                     value = array;
                     continue;

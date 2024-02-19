@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JobTarget>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +164,14 @@ namespace Azure.ResourceManager.Sql
                             List<JobTarget> array = new List<JobTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JobTarget.DeserializeJobTarget(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JobTarget.DeserializeJobTarget(item));
+                                }
                             }
                             members = array;
                             continue;

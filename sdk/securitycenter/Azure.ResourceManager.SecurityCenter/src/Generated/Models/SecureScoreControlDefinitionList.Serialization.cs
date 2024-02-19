@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecureScoreControlDefinitionItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecureScoreControlDefinitionItem> array = new List<SecureScoreControlDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecureScoreControlDefinitionItem.DeserializeSecureScoreControlDefinitionItem(item));
+                        }
                     }
                     value = array;
                     continue;

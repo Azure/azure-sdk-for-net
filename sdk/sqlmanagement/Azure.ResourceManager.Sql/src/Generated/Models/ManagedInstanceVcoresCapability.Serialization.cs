@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize);
+                ((IJsonModel<MaxSizeCapability>)IncludedMaxSize).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageSizes))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageSizes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MaxSizeRangeCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedInstanceMaintenanceConfigurationCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +178,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<MaxSizeRangeCapability> array = new List<MaxSizeRangeCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MaxSizeRangeCapability.DeserializeMaxSizeRangeCapability(item));
+                        }
                     }
                     supportedStorageSizes = array;
                     continue;
@@ -196,7 +217,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceMaintenanceConfigurationCapability> array = new List<ManagedInstanceMaintenanceConfigurationCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedInstanceMaintenanceConfigurationCapability.DeserializeManagedInstanceMaintenanceConfigurationCapability(item));
+                        }
                     }
                     supportedMaintenanceConfigurations = array;
                     continue;

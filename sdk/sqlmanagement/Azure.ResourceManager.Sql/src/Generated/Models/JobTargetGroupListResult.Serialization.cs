@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlServerJobTargetGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerJobTargetGroupData> array = new List<SqlServerJobTargetGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerJobTargetGroupData.DeserializeSqlServerJobTargetGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

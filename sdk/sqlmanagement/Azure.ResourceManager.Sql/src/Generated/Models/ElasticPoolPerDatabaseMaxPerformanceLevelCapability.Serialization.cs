@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticPoolPerDatabaseMinPerformanceLevelCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +137,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMinPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item));
+                        }
                     }
                     supportedPerDatabaseMinPerformanceLevels = array;
                     continue;

@@ -52,14 +52,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpecs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestoreFileSpecs>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TargetDetails))
             {
                 writer.WritePropertyName("targetDetails"u8);
-                writer.WriteObjectValue(TargetDetails);
+                ((IJsonModel<TargetAfsRestoreInfo>)TargetDetails).Write(writer, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
@@ -157,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<RestoreFileSpecs> array = new List<RestoreFileSpecs>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.RestoreFileSpecs.DeserializeRestoreFileSpecs(item));
+                        }
                     }
                     restoreFileSpecs = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HyperVHosts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HyperVHostDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVHostDetails> array = new List<HyperVHostDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HyperVHostDetails.DeserializeHyperVHostDetails(item));
+                        }
                     }
                     hyperVHosts = array;
                     continue;

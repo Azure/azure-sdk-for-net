@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(NetPayable))
             {
                 writer.WritePropertyName("netPayable"u8);
-                writer.WriteObjectValue(NetPayable);
+                ((IJsonModel<PurchasePrice>)NetPayable).Write(writer, options);
             }
             if (Optional.IsDefined(RefundsTotal))
             {
                 writer.WritePropertyName("refundsTotal"u8);
-                writer.WriteObjectValue(RefundsTotal);
+                ((IJsonModel<PurchasePrice>)RefundsTotal).Write(writer, options);
             }
             if (Optional.IsDefined(PurchasesTotal))
             {
                 writer.WritePropertyName("purchasesTotal"u8);
-                writer.WriteObjectValue(PurchasesTotal);
+                ((IJsonModel<PurchasePrice>)PurchasesTotal).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ReservationsToPurchase))
             {
@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationToPurchaseExchange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SavingsPlansToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SavingsPlanToPurchaseExchange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +86,21 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationToReturnForExchange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
-                writer.WriteObjectValue(PolicyResult);
+                ((IJsonModel<ExchangePolicyErrors>)PolicyResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -176,7 +197,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToPurchaseExchange> array = new List<ReservationToPurchaseExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToPurchaseExchange.DeserializeReservationToPurchaseExchange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationToPurchaseExchange.DeserializeReservationToPurchaseExchange(item));
+                        }
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -190,7 +218,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanToPurchaseExchange> array = new List<SavingsPlanToPurchaseExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanToPurchaseExchange.DeserializeSavingsPlanToPurchaseExchange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SavingsPlanToPurchaseExchange.DeserializeSavingsPlanToPurchaseExchange(item));
+                        }
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -204,7 +239,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToReturnForExchange> array = new List<ReservationToReturnForExchange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToReturnForExchange.DeserializeReservationToReturnForExchange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationToReturnForExchange.DeserializeReservationToReturnForExchange(item));
+                        }
                     }
                     reservationsToExchange = array;
                     continue;

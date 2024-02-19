@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecommendedSensitivityLabelUpdate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecommendedSensitivityLabelUpdate> array = new List<RecommendedSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecommendedSensitivityLabelUpdate.DeserializeRecommendedSensitivityLabelUpdate(item));
+                        }
                     }
                     operations = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WriteStartArray();
                 foreach (var item in BaseResourceStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceAzStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     List<ResourceAzStatus> array = new List<ResourceAzStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceAzStatus.DeserializeResourceAzStatus(item));
+                        }
                     }
                     baseResourceStatus = array;
                     continue;

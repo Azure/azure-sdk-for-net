@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -65,7 +72,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectableResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectableResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -179,7 +193,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             List<ConnectableResourceInfo> array = new List<ConnectableResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectableResourceInfo.DeserializeConnectableResourceInfo(item));
+                                }
                             }
                             connectableResources = array;
                             continue;

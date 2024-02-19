@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AlertRuleTemplateDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(EventGroupingSettings))
             {
                 writer.WritePropertyName("eventGroupingSettings"u8);
-                writer.WriteObjectValue(EventGroupingSettings);
+                ((IJsonModel<EventGroupingSettings>)EventGroupingSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomDetails))
             {
@@ -168,14 +182,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EntityMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityInsightsAlertRuleEntityMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AlertDetailsOverride))
             {
                 writer.WritePropertyName("alertDetailsOverride"u8);
-                writer.WriteObjectValue(AlertDetailsOverride);
+                ((IJsonModel<SecurityInsightsAlertDetailsOverride>)AlertDetailsOverride).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -329,7 +350,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<AlertRuleTemplateDataSource> array = new List<AlertRuleTemplateDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AlertRuleTemplateDataSource.DeserializeAlertRuleTemplateDataSource(item));
+                                }
                             }
                             requiredDataConnectors = array;
                             continue;
@@ -458,7 +486,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityInsightsAlertRuleEntityMapping> array = new List<SecurityInsightsAlertRuleEntityMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityInsightsAlertRuleEntityMapping.DeserializeSecurityInsightsAlertRuleEntityMapping(item));
+                                }
                             }
                             entityMappings = array;
                             continue;

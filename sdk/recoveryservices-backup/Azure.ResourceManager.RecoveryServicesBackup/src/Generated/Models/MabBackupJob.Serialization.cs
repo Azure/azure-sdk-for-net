@@ -62,14 +62,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MabErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                ((IJsonModel<MabBackupJobExtendedInfo>)ExtendedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(EntityFriendlyName))
             {
@@ -220,7 +227,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<MabErrorInfo> array = new List<MabErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MabErrorInfo.DeserializeMabErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MabErrorInfo.DeserializeMabErrorInfo(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

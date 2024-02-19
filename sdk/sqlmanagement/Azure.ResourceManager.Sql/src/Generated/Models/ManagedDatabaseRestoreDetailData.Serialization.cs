@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Sql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -146,7 +153,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in FullBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +170,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in DiffBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +187,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in LogBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedDatabaseRestoreDetailBackupSetProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +204,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in UnrestorableFileList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedDatabaseRestoreDetailUnrestorableFileProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -425,7 +460,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                }
                             }
                             fullBackupSets = array;
                             continue;
@@ -439,7 +481,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                }
                             }
                             diffBackupSets = array;
                             continue;
@@ -453,7 +502,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailBackupSetProperties> array = new List<ManagedDatabaseRestoreDetailBackupSetProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedDatabaseRestoreDetailBackupSetProperties.DeserializeManagedDatabaseRestoreDetailBackupSetProperties(item));
+                                }
                             }
                             logBackupSets = array;
                             continue;
@@ -467,7 +523,14 @@ namespace Azure.ResourceManager.Sql
                             List<ManagedDatabaseRestoreDetailUnrestorableFileProperties> array = new List<ManagedDatabaseRestoreDetailUnrestorableFileProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedDatabaseRestoreDetailUnrestorableFileProperties.DeserializeManagedDatabaseRestoreDetailUnrestorableFileProperties(item));
+                                }
                             }
                             unrestorableFiles = array;
                             continue;

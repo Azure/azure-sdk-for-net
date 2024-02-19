@@ -43,7 +43,14 @@ namespace Azure.Search.Documents.Models
                     List<SearchError> array = new List<SearchError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSearchError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSearchError(item));
+                        }
                     }
                     details = array;
                     continue;

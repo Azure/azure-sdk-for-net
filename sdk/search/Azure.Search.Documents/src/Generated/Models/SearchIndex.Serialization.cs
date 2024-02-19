@@ -22,7 +22,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in _fields)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ScoringProfiles))
@@ -31,7 +38,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +72,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +89,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +106,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +123,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +140,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +157,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Normalizers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +251,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchField> array = new List<SearchField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchField.DeserializeSearchField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchField.DeserializeSearchField(item));
+                        }
                     }
                     fields = array;
                     continue;
@@ -209,7 +272,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<ScoringProfile> array = new List<ScoringProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScoringProfile.DeserializeScoringProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScoringProfile.DeserializeScoringProfile(item));
+                        }
                     }
                     scoringProfiles = array;
                     continue;
@@ -238,7 +308,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchSuggester> array = new List<SearchSuggester>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchSuggester.DeserializeSearchSuggester(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchSuggester.DeserializeSearchSuggester(item));
+                        }
                     }
                     suggesters = array;
                     continue;
@@ -252,7 +329,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<LexicalAnalyzer> array = new List<LexicalAnalyzer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LexicalAnalyzer.DeserializeLexicalAnalyzer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LexicalAnalyzer.DeserializeLexicalAnalyzer(item));
+                        }
                     }
                     analyzers = array;
                     continue;
@@ -266,7 +350,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<LexicalTokenizer> array = new List<LexicalTokenizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LexicalTokenizer.DeserializeLexicalTokenizer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LexicalTokenizer.DeserializeLexicalTokenizer(item));
+                        }
                     }
                     tokenizers = array;
                     continue;
@@ -280,7 +371,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<TokenFilter> array = new List<TokenFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TokenFilter.DeserializeTokenFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TokenFilter.DeserializeTokenFilter(item));
+                        }
                     }
                     tokenFilters = array;
                     continue;
@@ -294,7 +392,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<CharFilter> array = new List<CharFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CharFilter.DeserializeCharFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CharFilter.DeserializeCharFilter(item));
+                        }
                     }
                     charFilters = array;
                     continue;
@@ -308,7 +413,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<LexicalNormalizer> array = new List<LexicalNormalizer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LexicalNormalizer.DeserializeLexicalNormalizer(item));
+                        }
                     }
                     normalizers = array;
                     continue;

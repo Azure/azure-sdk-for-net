@@ -67,7 +67,14 @@ namespace Azure.Search.Documents.Models
                             List<FacetResult> array = new List<FacetResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FacetResult.DeserializeFacetResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FacetResult.DeserializeFacetResult(item));
+                                }
                             }
                             dictionary.Add(property0.Name, array);
                         }
@@ -85,7 +92,14 @@ namespace Azure.Search.Documents.Models
                     List<QueryAnswerResult> array = new List<QueryAnswerResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
+                        }
                     }
                     searchAnswers = array;
                     continue;
@@ -122,7 +136,14 @@ namespace Azure.Search.Documents.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchResult.DeserializeSearchResult(item));
+                        }
                     }
                     value = array;
                     continue;

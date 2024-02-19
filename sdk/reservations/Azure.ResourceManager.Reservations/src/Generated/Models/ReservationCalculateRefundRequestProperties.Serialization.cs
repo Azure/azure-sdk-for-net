@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationToReturn))
             {
                 writer.WritePropertyName("reservationToReturn"u8);
-                writer.WriteObjectValue(ReservationToReturn);
+                ((IJsonModel<ReservationToReturn>)ReservationToReturn).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

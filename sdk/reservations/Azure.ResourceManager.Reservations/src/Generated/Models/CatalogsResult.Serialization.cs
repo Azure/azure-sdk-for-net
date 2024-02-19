@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationCatalog>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationCatalog> array = new List<ReservationCatalog>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
+                        }
                     }
                     value = array;
                     continue;

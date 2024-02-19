@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SearchSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.Search
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -111,12 +118,12 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                ((IJsonModel<NetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionWithCmk))
             {
                 writer.WritePropertyName("encryptionWithCmk"u8);
-                writer.WriteObjectValue(EncryptionWithCmk);
+                ((IJsonModel<SearchEncryptionWithCmk>)EncryptionWithCmk).Write(writer, options);
             }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
@@ -133,7 +140,7 @@ namespace Azure.ResourceManager.Search
             if (Optional.IsDefined(AuthOptions))
             {
                 writer.WritePropertyName("authOptions"u8);
-                writer.WriteObjectValue(AuthOptions);
+                ((IJsonModel<SearchAadAuthDataPlaneAuthOptions>)AuthOptions).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -141,7 +148,14 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SearchPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +177,14 @@ namespace Azure.ResourceManager.Search
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -407,7 +428,14 @@ namespace Azure.ResourceManager.Search
                             List<SearchPrivateEndpointConnectionData> array = new List<SearchPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SearchPrivateEndpointConnectionData.DeserializeSearchPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -431,7 +459,14 @@ namespace Azure.ResourceManager.Search
                             List<SharedSearchServicePrivateLinkResourceData> array = new List<SharedSearchServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
+                                }
                             }
                             sharedPrivateLinkResources = array;
                             continue;

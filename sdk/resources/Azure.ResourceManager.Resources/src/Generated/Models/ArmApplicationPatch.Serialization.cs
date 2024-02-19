@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ArmApplicationManagedIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedBy))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ArmApplicationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -129,12 +136,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(BillingDetails))
             {
                 writer.WritePropertyName("billingDetails"u8);
-                writer.WriteObjectValue(BillingDetails);
+                ((IJsonModel<ArmApplicationBillingDetails>)BillingDetails).Write(writer, options);
             }
             if (Optional.IsDefined(JitAccessPolicy))
             {
                 writer.WritePropertyName("jitAccessPolicy"u8);
-                writer.WriteObjectValue(JitAccessPolicy);
+                ((IJsonModel<ArmApplicationJitAccessPolicy>)JitAccessPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherTenantId))
             {
@@ -147,7 +154,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationAuthorization>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -159,12 +173,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(CustomerSupport))
             {
                 writer.WritePropertyName("customerSupport"u8);
-                writer.WriteObjectValue(CustomerSupport);
+                ((IJsonModel<ArmApplicationPackageContact>)CustomerSupport).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportUris))
             {
                 writer.WritePropertyName("supportUrls"u8);
-                writer.WriteObjectValue(SupportUris);
+                ((IJsonModel<ArmApplicationPackageSupportUris>)SupportUris).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Artifacts))
             {
@@ -172,19 +186,26 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ArmApplicationArtifact>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                ((IJsonModel<ArmApplicationDetails>)CreatedBy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                ((IJsonModel<ArmApplicationDetails>)UpdatedBy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -425,7 +446,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationAuthorization> array = new List<ArmApplicationAuthorization>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ArmApplicationAuthorization.DeserializeArmApplicationAuthorization(item));
+                                }
                             }
                             authorizations = array;
                             continue;
@@ -466,7 +494,14 @@ namespace Azure.ResourceManager.Resources.Models
                             List<ArmApplicationArtifact> array = new List<ArmApplicationArtifact>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ArmApplicationArtifact.DeserializeArmApplicationArtifact(item));
+                                }
                             }
                             artifacts = array;
                             continue;

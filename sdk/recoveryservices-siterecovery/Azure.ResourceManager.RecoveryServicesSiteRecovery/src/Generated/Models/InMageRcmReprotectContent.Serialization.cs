@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WritePropertyName("datastoreName"u8);
             writer.WriteStringValue(DatastoreName);
             writer.WritePropertyName("logStorageAccountId"u8);
-            writer.WriteStringValue(LogStorageAccountId);
+            if (LogStorageAccountId != null)
+            {
+                writer.WriteStringValue(LogStorageAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);

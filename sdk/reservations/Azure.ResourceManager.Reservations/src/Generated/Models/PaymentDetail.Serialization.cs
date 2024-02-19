@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(PricingCurrencyTotal))
             {
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
-                writer.WriteObjectValue(PricingCurrencyTotal);
+                ((IJsonModel<PurchasePrice>)PricingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingCurrencyTotal))
             {
                 writer.WritePropertyName("billingCurrencyTotal"u8);
-                writer.WriteObjectValue(BillingCurrencyTotal);
+                ((IJsonModel<PurchasePrice>)BillingCurrencyTotal).Write(writer, options);
             }
             if (Optional.IsDefined(BillingAccount))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ExtendedStatusInfo))
             {
                 writer.WritePropertyName("extendedStatusInfo"u8);
-                writer.WriteObjectValue(ExtendedStatusInfo);
+                ((IJsonModel<ExtendedStatusInfo>)ExtendedStatusInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

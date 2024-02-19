@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SqlServerUsage>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerUsage> array = new List<SqlServerUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerUsage.DeserializeSqlServerUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlServerUsage.DeserializeSqlServerUsage(item));
+                        }
                     }
                     value = array;
                     continue;

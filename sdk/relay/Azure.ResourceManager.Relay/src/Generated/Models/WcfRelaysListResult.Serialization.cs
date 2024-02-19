@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WcfRelayData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Relay.Models
                     List<WcfRelayData> array = new List<WcfRelayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WcfRelayData.DeserializeWcfRelayData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WcfRelayData.DeserializeWcfRelayData(item));
+                        }
                     }
                     value = array;
                     continue;

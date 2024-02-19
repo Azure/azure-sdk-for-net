@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<ArmDeploymentScriptManagedIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Resources
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

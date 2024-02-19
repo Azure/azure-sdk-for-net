@@ -25,9 +25,23 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(CredentialsInternal);
+            if (CredentialsInternal != null)
+            {
+                writer.WriteObjectValue(CredentialsInternal);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue(Container);
+            if (Container != null)
+            {
+                writer.WriteObjectValue(Container);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)

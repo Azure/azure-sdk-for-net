@@ -27,11 +27,32 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareSiteId"u8);
-            writer.WriteStringValue(VMwareSiteId);
+            if (VMwareSiteId != null)
+            {
+                writer.WriteStringValue(VMwareSiteId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("physicalSiteId"u8);
-            writer.WriteStringValue(PhysicalSiteId);
+            if (PhysicalSiteId != null)
+            {
+                writer.WriteStringValue(PhysicalSiteId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sourceAgentIdentity"u8);
-            writer.WriteObjectValue(SourceAgentIdentity);
+            if (SourceAgentIdentity != null)
+            {
+                ((IJsonModel<IdentityProviderContent>)SourceAgentIdentity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

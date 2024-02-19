@@ -253,7 +253,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmProtectedDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(MobilityAgentDetails))
             {
                 writer.WritePropertyName("mobilityAgentDetails"u8);
-                writer.WriteObjectValue(MobilityAgentDetails);
+                ((IJsonModel<InMageRcmMobilityAgentDetails>)MobilityAgentDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(LastAgentUpgradeErrorDetails))
             {
@@ -278,7 +285,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in LastAgentUpgradeErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmLastAgentUpgradeErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -288,7 +302,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentUpgradeBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmAgentUpgradeBlockingErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -298,14 +319,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmNicDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiscoveredVmDetails))
             {
                 writer.WritePropertyName("discoveredVmDetails"u8);
-                writer.WriteObjectValue(DiscoveredVmDetails);
+                ((IJsonModel<InMageRcmDiscoveredProtectedVmDetails>)DiscoveredVmDetails).Write(writer, options);
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
@@ -737,7 +765,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmProtectedDiskDetails> array = new List<InMageRcmProtectedDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmProtectedDiskDetails.DeserializeInMageRcmProtectedDiskDetails(item));
+                        }
                     }
                     protectedDisks = array;
                     continue;
@@ -774,7 +809,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmLastAgentUpgradeErrorDetails> array = new List<InMageRcmLastAgentUpgradeErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmLastAgentUpgradeErrorDetails.DeserializeInMageRcmLastAgentUpgradeErrorDetails(item));
+                        }
                     }
                     lastAgentUpgradeErrorDetails = array;
                     continue;
@@ -788,7 +830,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmAgentUpgradeBlockingErrorDetails> array = new List<InMageRcmAgentUpgradeBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmAgentUpgradeBlockingErrorDetails.DeserializeInMageRcmAgentUpgradeBlockingErrorDetails(item));
+                        }
                     }
                     agentUpgradeBlockingErrorDetails = array;
                     continue;
@@ -802,7 +851,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmNicDetails> array = new List<InMageRcmNicDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmNicDetails.DeserializeInMageRcmNicDetails(item));
+                        }
                     }
                     vmNics = array;
                     continue;

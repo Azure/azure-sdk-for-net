@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("sourceArmResourceId"u8);
-            writer.WriteStringValue(SourceArmResourceId);
+            if (SourceArmResourceId != null)
+            {
+                writer.WriteStringValue(SourceArmResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

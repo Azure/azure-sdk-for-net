@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetVaultID"u8);
-            writer.WriteStringValue(TargetVaultId);
+            if (TargetVaultId != null)
+            {
+                writer.WriteStringValue(TargetVaultId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetFabricID"u8);
-            writer.WriteStringValue(TargetFabricId);
+            if (TargetFabricId != null)
+            {
+                writer.WriteStringValue(TargetFabricId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetApplianceID"u8);
             writer.WriteStringValue(TargetApplianceId);
             writer.WritePropertyName("instanceType"u8);

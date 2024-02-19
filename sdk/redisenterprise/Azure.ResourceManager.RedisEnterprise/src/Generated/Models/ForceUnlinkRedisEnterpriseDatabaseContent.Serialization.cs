@@ -30,12 +30,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartArray();
             foreach (var item in Ids)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStringValue(item);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

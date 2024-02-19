@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Permission>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<Permission> array = new List<Permission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Permission.DeserializePermission(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Permission.DeserializePermission(item));
+                        }
                     }
                     permissions = array;
                     continue;

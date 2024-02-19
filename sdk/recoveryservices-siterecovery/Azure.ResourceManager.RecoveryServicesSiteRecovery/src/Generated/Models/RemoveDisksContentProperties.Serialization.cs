@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                ((IJsonModel<RemoveDisksProviderSpecificContent>)ProviderSpecificDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

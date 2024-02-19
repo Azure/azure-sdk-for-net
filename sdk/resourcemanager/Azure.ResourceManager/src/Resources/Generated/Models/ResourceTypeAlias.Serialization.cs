@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Paths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceTypeAliasPath>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,12 +61,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(DefaultPattern))
             {
                 writer.WritePropertyName("defaultPattern"u8);
-                writer.WriteObjectValue(DefaultPattern);
+                ((IJsonModel<ResourceTypeAliasPattern>)DefaultPattern).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
             {
                 writer.WritePropertyName("defaultMetadata"u8);
-                writer.WriteObjectValue(DefaultMetadata);
+                ((IJsonModel<ResourceTypeAliasPathMetadata>)DefaultMetadata).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -123,7 +130,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
+                        }
                     }
                     paths = array;
                     continue;

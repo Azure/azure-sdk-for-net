@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticPoolData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolData> array = new List<ElasticPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolData.DeserializeElasticPoolData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticPoolData.DeserializeElasticPoolData(item));
+                        }
                     }
                     value = array;
                     continue;

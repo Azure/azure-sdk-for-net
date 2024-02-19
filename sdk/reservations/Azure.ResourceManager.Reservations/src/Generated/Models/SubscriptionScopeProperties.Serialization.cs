@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScopeProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ScopeProperties> array = new List<ScopeProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeProperties.DeserializeScopeProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScopeProperties.DeserializeScopeProperties(item));
+                        }
                     }
                     scopes = array;
                     continue;

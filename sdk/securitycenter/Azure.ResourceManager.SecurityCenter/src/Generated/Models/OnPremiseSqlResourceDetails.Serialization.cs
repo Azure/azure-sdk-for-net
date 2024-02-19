@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("workspaceId"u8);
-            writer.WriteStringValue(WorkspaceId);
+            if (WorkspaceId != null)
+            {
+                writer.WriteStringValue(WorkspaceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("vmuuid"u8);
             writer.WriteStringValue(VmUuid);
             writer.WritePropertyName("sourceComputerId"u8);

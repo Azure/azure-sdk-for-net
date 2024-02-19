@@ -36,11 +36,32 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStringValue(ProtectedAccountKeyName2);
             }
             writer.WritePropertyName("blobEndpoint"u8);
-            writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
+            if (BlobEndpoint != null)
+            {
+                writer.WriteStringValue(BlobEndpoint.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("queueEndpoint"u8);
-            writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
+            if (QueueEndpoint != null)
+            {
+                writer.WriteStringValue(QueueEndpoint.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tableEndpoint"u8);
-            writer.WriteStringValue(TableEndpoint.AbsoluteUri);
+            if (TableEndpoint != null)
+            {
+                writer.WriteStringValue(TableEndpoint.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

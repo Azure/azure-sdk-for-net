@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceResourceId"u8);
-            writer.WriteStringValue(SourceResourceId);
+            if (SourceResourceId != null)
+            {
+                writer.WriteStringValue(SourceResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sourceRegion"u8);
             writer.WriteStringValue(SourceRegion);
             writer.WritePropertyName("dataMoveLevel"u8);
@@ -40,12 +47,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceContainerArmIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

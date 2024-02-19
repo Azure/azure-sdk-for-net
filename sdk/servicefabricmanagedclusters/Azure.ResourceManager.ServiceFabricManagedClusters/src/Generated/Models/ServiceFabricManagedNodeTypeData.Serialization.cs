@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<NodeTypeSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -116,12 +123,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(ApplicationPorts))
             {
                 writer.WritePropertyName("applicationPorts"u8);
-                writer.WriteObjectValue(ApplicationPorts);
+                ((IJsonModel<EndpointRangeDescription>)ApplicationPorts).Write(writer, options);
             }
             if (Optional.IsDefined(EphemeralPorts))
             {
                 writer.WritePropertyName("ephemeralPorts"u8);
-                writer.WriteObjectValue(EphemeralPorts);
+                ((IJsonModel<EndpointRangeDescription>)EphemeralPorts).Write(writer, options);
             }
             if (Optional.IsDefined(VmSize))
             {
@@ -154,7 +161,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in VmSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeTypeVaultSecretGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,14 +178,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in VmExtensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeTypeVmssExtension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VmManagedIdentity))
             {
                 writer.WritePropertyName("vmManagedIdentity"u8);
-                writer.WriteObjectValue(VmManagedIdentity);
+                ((IJsonModel<VmManagedIdentity>)VmManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(IsStateless))
             {
@@ -189,7 +210,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in FrontendConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeTypeFrontendConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -199,7 +227,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceFabricManagedNetworkSecurityRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +244,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeTypeVmssDataDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -331,7 +373,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             if (Optional.IsDefined(VmImagePlan))
             {
                 writer.WritePropertyName("vmImagePlan"u8);
-                writer.WriteObjectValue(VmImagePlan);
+                ((IJsonModel<VmImagePlan>)VmImagePlan).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReferenceId))
             {
@@ -349,7 +391,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AdditionalNetworkInterfaceConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -626,7 +675,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVaultSecretGroup> array = new List<NodeTypeVaultSecretGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVaultSecretGroup.DeserializeNodeTypeVaultSecretGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NodeTypeVaultSecretGroup.DeserializeNodeTypeVaultSecretGroup(item));
+                                }
                             }
                             vmSecrets = array;
                             continue;
@@ -640,7 +696,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVmssExtension> array = new List<NodeTypeVmssExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item));
+                                }
                             }
                             vmExtensions = array;
                             continue;
@@ -681,7 +744,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeFrontendConfiguration> array = new List<NodeTypeFrontendConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeFrontendConfiguration.DeserializeNodeTypeFrontendConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NodeTypeFrontendConfiguration.DeserializeNodeTypeFrontendConfiguration(item));
+                                }
                             }
                             frontendConfigurations = array;
                             continue;
@@ -695,7 +765,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
+                                }
                             }
                             networkSecurityRules = array;
                             continue;
@@ -709,7 +786,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<NodeTypeVmssDataDisk> array = new List<NodeTypeVmssDataDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeTypeVmssDataDisk.DeserializeNodeTypeVmssDataDisk(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NodeTypeVmssDataDisk.DeserializeNodeTypeVmssDataDisk(item));
+                                }
                             }
                             additionalDataDisks = array;
                             continue;
@@ -941,7 +1025,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                             List<AdditionalNetworkInterfaceConfiguration> array = new List<AdditionalNetworkInterfaceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AdditionalNetworkInterfaceConfiguration.DeserializeAdditionalNetworkInterfaceConfiguration(item));
+                                }
                             }
                             additionalNetworkInterfaceConfigurations = array;
                             continue;

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("hyperVSiteId"u8);
-            writer.WriteStringValue(HyperVSiteId);
+            if (HyperVSiteId != null)
+            {
+                writer.WriteStringValue(HyperVSiteId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);
@@ -39,7 +46,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStringValue(FabricContainerId);
             }
             writer.WritePropertyName("migrationSolutionId"u8);
-            writer.WriteStringValue(MigrationSolutionId);
+            if (MigrationSolutionId != null)
+            {
+                writer.WriteStringValue(MigrationSolutionId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(MigrationHubUri))
             {
                 writer.WritePropertyName("migrationHubUri"u8);

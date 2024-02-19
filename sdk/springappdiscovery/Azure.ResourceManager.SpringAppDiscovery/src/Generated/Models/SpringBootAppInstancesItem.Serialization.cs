@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
-            writer.WriteStringValue(MachineArmId);
+            if (MachineArmId != null)
+            {
+                writer.WriteStringValue(MachineArmId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);

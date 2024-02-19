@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue(AccountStatus);
+                ((IJsonModel<PurviewAccountStatus>)AccountStatus).Write(writer, options);
             }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue(CloudConnectors);
+                ((IJsonModel<CloudConnectors>)CloudConnectors).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                ((IJsonModel<PurviewAccountEndpoint>)Endpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue(IngestionStorage);
+                ((IJsonModel<PurviewIngestionStorage>)IngestionStorage).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedEventHubState))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Purview.Models
             if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue(ManagedResources);
+                ((IJsonModel<PurviewManagedResource>)ManagedResources).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
@@ -93,7 +93,14 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PurviewPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -265,7 +272,14 @@ namespace Azure.ResourceManager.Purview.Models
                     List<PurviewPrivateEndpointConnectionData> array = new List<PurviewPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;

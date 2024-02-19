@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                ((IJsonModel<ResourceQueryRequestOptions>)Options).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Facets))
             {
@@ -59,7 +59,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 writer.WriteStartArray();
                 foreach (var item in Facets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FacetRequest>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +168,14 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                     List<FacetRequest> array = new List<FacetRequest>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FacetRequest.DeserializeFacetRequest(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FacetRequest.DeserializeFacetRequest(item));
+                        }
                     }
                     facets = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecoverableDatabaseData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<RecoverableDatabaseData> array = new List<RecoverableDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoverableDatabaseData.DeserializeRecoverableDatabaseData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecoverableDatabaseData.DeserializeRecoverableDatabaseData(item));
+                        }
                     }
                     value = array;
                     continue;

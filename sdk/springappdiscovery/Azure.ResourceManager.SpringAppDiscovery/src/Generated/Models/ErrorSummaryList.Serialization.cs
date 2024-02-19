@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpringBootSiteErrorSummaryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteErrorSummaryData> array = new List<SpringBootSiteErrorSummaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteErrorSummaryData.DeserializeSpringBootSiteErrorSummaryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpringBootSiteErrorSummaryData.DeserializeSpringBootSiteErrorSummaryData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationPurchaseContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in SavingsPlansToPurchase)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SavingsPlanPurchase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in ReservationsToExchange)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReservationToReturn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationPurchaseContent> array = new List<ReservationPurchaseContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationPurchaseContent.DeserializeReservationPurchaseContent(item));
+                        }
                     }
                     reservationsToPurchase = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<SavingsPlanPurchase> array = new List<SavingsPlanPurchase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SavingsPlanPurchase.DeserializeSavingsPlanPurchase(item));
+                        }
                     }
                     savingsPlansToPurchase = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationToReturn> array = new List<ReservationToReturn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReservationToReturn.DeserializeReservationToReturn(item));
+                        }
                     }
                     reservationsToExchange = array;
                     continue;

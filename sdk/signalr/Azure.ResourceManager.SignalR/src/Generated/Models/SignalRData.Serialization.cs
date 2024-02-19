@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SignalR
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SignalRResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -59,7 +59,14 @@ namespace Azure.ResourceManager.SignalR
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,14 +138,21 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRSharedPrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                ((IJsonModel<SignalRTlsSettings>)Tls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostNamePrefix))
             {
@@ -144,34 +165,41 @@ namespace Azure.ResourceManager.SignalR
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRFeature>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LiveTraceConfiguration))
             {
                 writer.WritePropertyName("liveTraceConfiguration"u8);
-                writer.WriteObjectValue(LiveTraceConfiguration);
+                ((IJsonModel<SignalRLiveTraceConfiguration>)LiveTraceConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceLogConfiguration))
             {
                 writer.WritePropertyName("resourceLogConfiguration"u8);
-                writer.WriteObjectValue(ResourceLogConfiguration);
+                ((IJsonModel<SignalRResourceLogCategoryListResult>)ResourceLogConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                ((IJsonModel<SignalRCorsSettings>)Cors).Write(writer, options);
             }
             if (Optional.IsDefined(Upstream))
             {
                 writer.WritePropertyName("upstream"u8);
-                writer.WriteObjectValue(Upstream);
+                ((IJsonModel<ServerlessUpstreamSettings>)Upstream).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkACLs))
             {
                 writer.WritePropertyName("networkACLs"u8);
-                writer.WriteObjectValue(NetworkACLs);
+                ((IJsonModel<SignalRNetworkAcls>)NetworkACLs).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -389,7 +417,14 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRPrivateEndpointConnectionData> array = new List<SignalRPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SignalRPrivateEndpointConnectionData.DeserializeSignalRPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -403,7 +438,14 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRSharedPrivateLinkResourceData> array = new List<SignalRSharedPrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SignalRSharedPrivateLinkResourceData.DeserializeSignalRSharedPrivateLinkResourceData(item));
+                                }
                             }
                             sharedPrivateLinkResources = array;
                             continue;
@@ -431,7 +473,14 @@ namespace Azure.ResourceManager.SignalR
                             List<SignalRFeature> array = new List<SignalRFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SignalRFeature.DeserializeSignalRFeature(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SignalRFeature.DeserializeSignalRFeature(item));
+                                }
                             }
                             features = array;
                             continue;

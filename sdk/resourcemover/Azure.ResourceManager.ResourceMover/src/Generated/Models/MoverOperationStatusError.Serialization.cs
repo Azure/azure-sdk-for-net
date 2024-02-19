@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverOperationStatusError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +61,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     writer.WriteStartArray();
                     foreach (var item in AdditionalInfo)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<MoverOperationErrorAdditionalInfo>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -128,7 +142,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationStatusError> array = new List<MoverOperationStatusError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMoverOperationStatusError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeMoverOperationStatusError(item));
+                        }
                     }
                     details = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationErrorAdditionalInfo> array = new List<MoverOperationErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverOperationErrorAdditionalInfo.DeserializeMoverOperationErrorAdditionalInfo(item));
+                        }
                     }
                     additionalInfo = array;
                     continue;

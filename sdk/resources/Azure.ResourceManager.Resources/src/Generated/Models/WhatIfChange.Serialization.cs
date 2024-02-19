@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Delta)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WhatIfPropertyChange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +166,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<WhatIfPropertyChange> array = new List<WhatIfPropertyChange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WhatIfPropertyChange.DeserializeWhatIfPropertyChange(item));
+                        }
                     }
                     delta = array;
                     continue;

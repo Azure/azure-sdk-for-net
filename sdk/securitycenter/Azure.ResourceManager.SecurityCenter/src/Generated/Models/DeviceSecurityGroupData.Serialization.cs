@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in ThresholdRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThresholdCustomAlertRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +80,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in TimeWindowRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TimeWindowCustomAlertRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +97,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AllowlistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AllowlistCustomAlertRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +114,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in DenylistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DenylistCustomAlertRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +218,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<ThresholdCustomAlertRule> array = new List<ThresholdCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ThresholdCustomAlertRule.DeserializeThresholdCustomAlertRule(item));
+                                }
                             }
                             thresholdRules = array;
                             continue;
@@ -197,7 +239,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<TimeWindowCustomAlertRule> array = new List<TimeWindowCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TimeWindowCustomAlertRule.DeserializeTimeWindowCustomAlertRule(item));
+                                }
                             }
                             timeWindowRules = array;
                             continue;
@@ -211,7 +260,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<AllowlistCustomAlertRule> array = new List<AllowlistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AllowlistCustomAlertRule.DeserializeAllowlistCustomAlertRule(item));
+                                }
                             }
                             allowlistRules = array;
                             continue;
@@ -225,7 +281,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<DenylistCustomAlertRule> array = new List<DenylistCustomAlertRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DenylistCustomAlertRule.DeserializeDenylistCustomAlertRule(item));
+                                }
                             }
                             denylistRules = array;
                             continue;

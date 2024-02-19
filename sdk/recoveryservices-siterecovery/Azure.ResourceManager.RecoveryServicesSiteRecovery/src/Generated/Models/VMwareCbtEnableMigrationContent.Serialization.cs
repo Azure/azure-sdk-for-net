@@ -27,12 +27,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareMachineId"u8);
-            writer.WriteStringValue(VMwareMachineId);
+            if (VMwareMachineId != null)
+            {
+                writer.WriteStringValue(VMwareMachineId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("disksToInclude"u8);
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VMwareCbtDiskContent>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(LicenseType))
@@ -51,9 +65,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(PerformSqlBulkRegistration);
             }
             writer.WritePropertyName("dataMoverRunAsAccountId"u8);
-            writer.WriteStringValue(DataMoverRunAsAccountId);
+            if (DataMoverRunAsAccountId != null)
+            {
+                writer.WriteStringValue(DataMoverRunAsAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("snapshotRunAsAccountId"u8);
-            writer.WriteStringValue(SnapshotRunAsAccountId);
+            if (SnapshotRunAsAccountId != null)
+            {
+                writer.WriteStringValue(SnapshotRunAsAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
@@ -65,9 +93,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStringValue(TargetVmSize);
             }
             writer.WritePropertyName("targetResourceGroupId"u8);
-            writer.WriteStringValue(TargetResourceGroupId);
+            if (TargetResourceGroupId != null)
+            {
+                writer.WriteStringValue(TargetResourceGroupId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetNetworkId"u8);
-            writer.WriteStringValue(TargetNetworkId);
+            if (TargetNetworkId != null)
+            {
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
@@ -106,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(TargetVmSecurityProfile))
             {
                 writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile);
+                ((IJsonModel<VMwareCbtSecurityProfileProperties>)TargetVmSecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
@@ -242,7 +284,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<VMwareCbtDiskContent> array = new List<VMwareCbtDiskContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareCbtDiskContent.DeserializeVMwareCbtDiskContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareCbtDiskContent.DeserializeVMwareCbtDiskContent(item));
+                        }
                     }
                     disksToInclude = array;
                     continue;

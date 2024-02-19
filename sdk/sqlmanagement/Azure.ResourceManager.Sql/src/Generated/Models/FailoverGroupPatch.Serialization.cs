@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(ReadWriteEndpoint))
             {
                 writer.WritePropertyName("readWriteEndpoint"u8);
-                writer.WriteObjectValue(ReadWriteEndpoint);
+                ((IJsonModel<FailoverGroupReadWriteEndpoint>)ReadWriteEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ReadOnlyEndpoint))
             {
                 writer.WritePropertyName("readOnlyEndpoint"u8);
-                writer.WriteObjectValue(ReadOnlyEndpoint);
+                ((IJsonModel<FailoverGroupReadOnlyEndpoint>)ReadOnlyEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FailoverDatabases))
             {
@@ -55,12 +55,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in FailoverDatabases)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +72,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PartnerServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PartnerServerInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +202,14 @@ namespace Azure.ResourceManager.Sql.Models
                             List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
+                                }
                             }
                             partnerServers = array;
                             continue;

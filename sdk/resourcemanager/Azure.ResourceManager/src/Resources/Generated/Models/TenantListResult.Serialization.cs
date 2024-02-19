@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TenantData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TenantData> array = new List<TenantData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantData.DeserializeTenantData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TenantData.DeserializeTenantData(item));
+                        }
                     }
                     value = array;
                     continue;

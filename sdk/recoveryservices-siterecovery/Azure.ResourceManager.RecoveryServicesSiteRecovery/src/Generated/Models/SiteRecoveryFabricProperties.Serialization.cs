@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(EncryptionDetails))
             {
                 writer.WritePropertyName("encryptionDetails"u8);
-                writer.WriteObjectValue(EncryptionDetails);
+                ((IJsonModel<SiteRecoveryEncryptionDetails>)EncryptionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(RolloverEncryptionDetails))
             {
                 writer.WritePropertyName("rolloverEncryptionDetails"u8);
-                writer.WriteObjectValue(RolloverEncryptionDetails);
+                ((IJsonModel<SiteRecoveryEncryptionDetails>)RolloverEncryptionDetails).Write(writer, options);
             }
             if (Optional.IsDefined(InternalIdentifier))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(CustomDetails))
             {
                 writer.WritePropertyName("customDetails"u8);
-                writer.WriteObjectValue(CustomDetails);
+                ((IJsonModel<FabricSpecificDetails>)CustomDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(HealthErrorDetails))
             {
@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +179,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     healthErrorDetails = array;
                     continue;

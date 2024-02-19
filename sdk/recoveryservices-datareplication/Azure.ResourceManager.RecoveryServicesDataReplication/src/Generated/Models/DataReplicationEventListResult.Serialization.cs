@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataReplicationEventData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     List<DataReplicationEventData> array = new List<DataReplicationEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationEventData.DeserializeDataReplicationEventData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataReplicationEventData.DeserializeDataReplicationEventData(item));
+                        }
                     }
                     value = array;
                     continue;
