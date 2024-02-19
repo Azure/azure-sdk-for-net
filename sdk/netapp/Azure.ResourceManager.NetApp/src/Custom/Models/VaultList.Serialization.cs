@@ -24,7 +24,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetAppVault> array = new List<NetAppVault>();
