@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Workloads
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateSapSizingRecommendationsRequestUri(string subscriptionId, AzureLocation location, SapSizingRecommendationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sapVirtualInstanceMetadata/default/getSizingRecommendations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSapSizingRecommendationsRequest(string subscriptionId, AzureLocation location, SapSizingRecommendationContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -115,6 +128,19 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSapSupportedSkuRequestUri(string subscriptionId, AzureLocation location, SapSupportedSkusContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sapVirtualInstanceMetadata/default/getSapSupportedSku", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSapSupportedSkuRequest(string subscriptionId, AzureLocation location, SapSupportedSkusContent content)
@@ -197,6 +223,19 @@ namespace Azure.ResourceManager.Workloads
             }
         }
 
+        internal RequestUriBuilder CreateSapDiskConfigurationsRequestUri(string subscriptionId, AzureLocation location, SapDiskConfigurationsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sapVirtualInstanceMetadata/default/getDiskConfigurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSapDiskConfigurationsRequest(string subscriptionId, AzureLocation location, SapDiskConfigurationsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -275,6 +314,19 @@ namespace Azure.ResourceManager.Workloads
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSapAvailabilityZoneDetailsRequestUri(string subscriptionId, AzureLocation location, SapAvailabilityZoneDetailsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Workloads/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/sapVirtualInstanceMetadata/default/getAvailabilityZoneDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSapAvailabilityZoneDetailsRequest(string subscriptionId, AzureLocation location, SapAvailabilityZoneDetailsContent content)

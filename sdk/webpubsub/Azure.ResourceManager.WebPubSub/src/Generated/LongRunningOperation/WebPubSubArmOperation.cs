@@ -20,21 +20,24 @@ namespace Azure.ResourceManager.WebPubSub
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly OperationInternal _operation;
+        private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of WebPubSubArmOperation for mocking. </summary>
         protected WebPubSubArmOperation()
         {
         }
 
-        internal WebPubSubArmOperation(Response response)
+        internal WebPubSubArmOperation(Response response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal.Succeeded(response);
+            _operation = OperationInternal.Succeeded(response, rehydrationToken);
+            _rehydrationToken = rehydrationToken;
         }
 
         internal WebPubSubArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             var nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal(nextLinkOperation, clientDiagnostics, response, "WebPubSubArmOperation", fallbackStrategy: new SequentialDelayStrategy());
+            _rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
         }
 
         /// <inheritdoc />
@@ -42,6 +45,9 @@ namespace Azure.ResourceManager.WebPubSub
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => throw new NotImplementedException();
 #pragma warning restore CA1822
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
 
         /// <inheritdoc />
         public override bool HasCompleted => _operation.HasCompleted;
