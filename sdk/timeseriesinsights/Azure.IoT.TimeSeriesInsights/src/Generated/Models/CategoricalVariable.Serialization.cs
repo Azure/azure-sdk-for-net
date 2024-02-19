@@ -17,7 +17,14 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            if (Value != null)
+            {
+                writer.WriteObjectValue(Value);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
@@ -29,12 +36,26 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultCategory"u8);
-            writer.WriteObjectValue(DefaultCategory);
+            if (DefaultCategory != null)
+            {
+                writer.WriteObjectValue(DefaultCategory);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
@@ -82,7 +103,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<TimeSeriesAggregateCategory> array = new List<TimeSeriesAggregateCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesAggregateCategory.DeserializeTimeSeriesAggregateCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TimeSeriesAggregateCategory.DeserializeTimeSeriesAggregateCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

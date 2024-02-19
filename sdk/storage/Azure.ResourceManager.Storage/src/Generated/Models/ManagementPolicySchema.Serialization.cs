@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ManagementPolicyRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyRule> array = new List<ManagementPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagementPolicyRule.DeserializeManagementPolicyRule(item));
+                        }
                     }
                     rules = array;
                     continue;

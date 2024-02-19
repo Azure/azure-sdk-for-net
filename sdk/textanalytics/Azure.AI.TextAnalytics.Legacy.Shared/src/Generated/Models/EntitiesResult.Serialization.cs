@@ -30,7 +30,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<DocumentEntities> array = new List<DocumentEntities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentEntities.DeserializeDocumentEntities(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentEntities.DeserializeDocumentEntities(item));
+                        }
                     }
                     documents = array;
                     continue;
@@ -40,7 +47,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentError.DeserializeDocumentError(item));
+                        }
                     }
                     errors = array;
                     continue;

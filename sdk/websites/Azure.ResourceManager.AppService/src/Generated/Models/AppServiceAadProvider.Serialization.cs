@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                ((IJsonModel<AppServiceAadRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                ((IJsonModel<AppServiceAadLoginFlow>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation);
+                ((IJsonModel<AppServiceAadValidation>)Validation).Write(writer, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {

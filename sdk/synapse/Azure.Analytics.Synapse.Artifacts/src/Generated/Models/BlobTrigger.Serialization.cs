@@ -25,7 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,12 +49,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +67,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
             writer.WritePropertyName("linkedService"u8);
-            writer.WriteObjectValue(LinkedService);
+            if (LinkedService != null)
+            {
+                writer.WriteObjectValue(LinkedService);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -95,7 +111,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        }
                     }
                     pipelines = array;
                     continue;

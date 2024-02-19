@@ -30,7 +30,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content != null)
+            {
+                writer.WriteObjectValue(Content);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)

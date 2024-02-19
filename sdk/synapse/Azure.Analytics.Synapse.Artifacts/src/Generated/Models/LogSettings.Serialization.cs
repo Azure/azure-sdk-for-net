@@ -29,7 +29,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(CopyActivityLogSettings);
             }
             writer.WritePropertyName("logLocationSettings"u8);
-            writer.WriteObjectValue(LogLocationSettings);
+            if (LogLocationSettings != null)
+            {
+                writer.WriteObjectValue(LogLocationSettings);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

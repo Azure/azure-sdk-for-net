@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -61,7 +68,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageTableSignedIdentifier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +175,14 @@ namespace Azure.ResourceManager.Storage
                             List<StorageTableSignedIdentifier> array = new List<StorageTableSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
+                                }
                             }
                             signedIdentifiers = array;
                             continue;

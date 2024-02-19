@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Subscription.Models
             if (Optional.IsDefined(AdditionalProperties))
             {
                 writer.WritePropertyName("additionalProperties"u8);
-                writer.WriteObjectValue(AdditionalProperties);
+                ((IJsonModel<SubscriptionAliasAdditionalProperties>)AdditionalProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

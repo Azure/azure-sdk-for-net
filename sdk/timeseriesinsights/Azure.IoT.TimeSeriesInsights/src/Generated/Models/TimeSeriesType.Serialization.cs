@@ -33,7 +33,14 @@ namespace Azure.IoT.TimeSeriesInsights
             foreach (var item in Variables)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    writer.WriteObjectValue(item.Value);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -71,7 +78,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     Dictionary<string, TimeSeriesVariable> dictionary = new Dictionary<string, TimeSeriesVariable>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, TimeSeriesVariable.DeserializeTimeSeriesVariable(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, TimeSeriesVariable.DeserializeTimeSeriesVariable(property0.Value));
+                        }
                     }
                     variables = dictionary;
                     continue;

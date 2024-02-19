@@ -19,7 +19,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
-            writer.WriteObjectValue(LogPath);
+            if (LogPath != null)
+            {
+                writer.WriteObjectValue(LogPath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties"u8);

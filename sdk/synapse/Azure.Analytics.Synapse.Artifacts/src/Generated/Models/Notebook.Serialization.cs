@@ -54,7 +54,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            if (Metadata != null)
+            {
+                writer.WriteObjectValue(Metadata);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("nbformat"u8);
             writer.WriteNumberValue(NotebookFormat);
             writer.WritePropertyName("nbformat_minor"u8);
@@ -63,7 +70,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -159,7 +173,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<NotebookCell> array = new List<NotebookCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotebookCell.DeserializeNotebookCell(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotebookCell.DeserializeNotebookCell(item));
+                        }
                     }
                     cells = array;
                     continue;

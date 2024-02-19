@@ -29,7 +29,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Size);
             }
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue(ReferenceTrigger);
+            if (ReferenceTrigger != null)
+            {
+                writer.WriteObjectValue(ReferenceTrigger);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();

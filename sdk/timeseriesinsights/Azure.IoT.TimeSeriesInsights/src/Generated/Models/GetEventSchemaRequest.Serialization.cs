@@ -16,7 +16,14 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("searchSpan"u8);
-            writer.WriteObjectValue(SearchSpan);
+            if (SearchSpan != null)
+            {
+                writer.WriteObjectValue(SearchSpan);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

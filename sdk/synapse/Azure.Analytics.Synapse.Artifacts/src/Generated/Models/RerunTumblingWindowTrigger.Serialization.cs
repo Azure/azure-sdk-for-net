@@ -32,19 +32,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("parentTrigger"u8);
-            writer.WriteObjectValue(ParentTrigger);
+            if (ParentTrigger != null)
+            {
+                writer.WriteObjectValue(ParentTrigger);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("requestedStartTime"u8);
             writer.WriteStringValue(RequestedStartTime, "O");
             writer.WritePropertyName("requestedEndTime"u8);

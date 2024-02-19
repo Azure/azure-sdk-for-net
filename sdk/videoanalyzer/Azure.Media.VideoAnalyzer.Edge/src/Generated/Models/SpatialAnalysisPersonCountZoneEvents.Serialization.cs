@@ -17,14 +17,28 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue(Zone);
+            if (Zone != null)
+            {
+                writer.WriteObjectValue(Zone);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<SpatialAnalysisPersonCountEvent> array = new List<SpatialAnalysisPersonCountEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnalysisPersonCountEvent.DeserializeSpatialAnalysisPersonCountEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpatialAnalysisPersonCountEvent.DeserializeSpatialAnalysisPersonCountEvent(item));
+                        }
                     }
                     events = array;
                     continue;

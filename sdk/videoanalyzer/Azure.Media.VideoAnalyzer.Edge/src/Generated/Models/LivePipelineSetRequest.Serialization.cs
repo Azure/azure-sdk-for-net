@@ -16,7 +16,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("livePipeline"u8);
-            writer.WriteObjectValue(LivePipeline);
+            if (LivePipeline != null)
+            {
+                writer.WriteObjectValue(LivePipeline);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);

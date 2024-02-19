@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProblemClassificationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Support.Models
                     List<ProblemClassificationData> array = new List<ProblemClassificationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProblemClassificationData.DeserializeProblemClassificationData(item));
+                        }
                     }
                     value = array;
                     continue;

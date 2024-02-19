@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue(SampleUtterance);
+                ((IJsonModel<SampleUtterance>)SampleUtterance).Write(writer, options);
             }
             if (Optional.IsDefined(Score))
             {

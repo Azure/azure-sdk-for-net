@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Synapse.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key);
+            if (Key != null)
+            {
+                ((IJsonModel<SynapseSecureString>)Key).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

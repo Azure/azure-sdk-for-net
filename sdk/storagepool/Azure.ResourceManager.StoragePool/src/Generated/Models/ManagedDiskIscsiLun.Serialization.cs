@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("managedDiskAzureResourceId"u8);
-            writer.WriteStringValue(ManagedDiskAzureResourceId);
+            if (ManagedDiskAzureResourceId != null)
+            {
+                writer.WriteStringValue(ManagedDiskAzureResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);

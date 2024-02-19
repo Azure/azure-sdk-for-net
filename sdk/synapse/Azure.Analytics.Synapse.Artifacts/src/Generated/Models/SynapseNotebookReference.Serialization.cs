@@ -21,7 +21,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
-            writer.WriteObjectValue(ReferenceName);
+            if (ReferenceName != null)
+            {
+                writer.WriteObjectValue(ReferenceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

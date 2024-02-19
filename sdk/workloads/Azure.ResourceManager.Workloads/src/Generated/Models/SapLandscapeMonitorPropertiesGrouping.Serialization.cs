@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Landscape)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapLandscapeMonitorSidMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SapApplication)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapLandscapeMonitorSidMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        }
                     }
                     landscape = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        }
                     }
                     sapApplication = array;
                     continue;

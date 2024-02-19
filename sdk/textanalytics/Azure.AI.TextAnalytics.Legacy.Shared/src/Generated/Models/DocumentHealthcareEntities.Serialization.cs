@@ -36,7 +36,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<HealthcareEntity> array = new List<HealthcareEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntity.DeserializeHealthcareEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareEntity.DeserializeHealthcareEntity(item));
+                        }
                     }
                     entities = array;
                     continue;
@@ -46,7 +53,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<HealthcareRelation> array = new List<HealthcareRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareRelation.DeserializeHealthcareRelation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareRelation.DeserializeHealthcareRelation(item));
+                        }
                     }
                     relations = array;
                     continue;
@@ -56,7 +70,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<TextAnalyticsWarning> array = new List<TextAnalyticsWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextAnalyticsWarning.DeserializeTextAnalyticsWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

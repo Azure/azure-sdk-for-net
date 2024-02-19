@@ -779,12 +779,14 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        content.JsonWriter.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         content.JsonWriter.WriteNullValue();
-                        continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -904,12 +906,14 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        content.JsonWriter.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         content.JsonWriter.WriteNullValue();
-                        continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;
@@ -1134,12 +1138,14 @@ namespace Azure.Data.Tables
                 foreach (var item in tableEntityProperties)
                 {
                     content.JsonWriter.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        content.JsonWriter.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         content.JsonWriter.WriteNullValue();
-                        continue;
                     }
-                    content.JsonWriter.WriteObjectValue(item.Value);
                 }
                 content.JsonWriter.WriteEndObject();
                 request.Content = content;

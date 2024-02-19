@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkConnectionResource> array = new List<LinkConnectionResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkConnectionResource.DeserializeLinkConnectionResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinkConnectionResource.DeserializeLinkConnectionResource(item));
+                        }
                     }
                     value = array;
                     continue;

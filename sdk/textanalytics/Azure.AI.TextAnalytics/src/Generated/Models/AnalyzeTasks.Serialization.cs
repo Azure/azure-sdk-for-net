@@ -55,7 +55,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<AnalyzeTextLROResult> array = new List<AnalyzeTextLROResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeTextLROResult.DeserializeAnalyzeTextLROResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalyzeTextLROResult.DeserializeAnalyzeTextLROResult(item));
+                        }
                     }
                     items = array;
                     continue;

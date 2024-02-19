@@ -34,17 +34,17 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(Transliteration))
             {
                 writer.WritePropertyName("transliteration"u8);
-                writer.WriteObjectValue(Transliteration);
+                ((IJsonModel<TransliteratedText>)Transliteration).Write(writer, options);
             }
             if (Optional.IsDefined(Alignment))
             {
                 writer.WritePropertyName("alignment"u8);
-                writer.WriteObjectValue(Alignment);
+                ((IJsonModel<TranslatedTextAlignment>)Alignment).Write(writer, options);
             }
             if (Optional.IsDefined(SentLen))
             {
                 writer.WritePropertyName("sentLen"u8);
-                writer.WriteObjectValue(SentLen);
+                ((IJsonModel<SentenceLength>)SentLen).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

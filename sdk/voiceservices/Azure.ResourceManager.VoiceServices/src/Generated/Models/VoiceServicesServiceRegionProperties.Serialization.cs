@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("primaryRegionProperties"u8);
-            writer.WriteObjectValue(PrimaryRegionProperties);
+            if (PrimaryRegionProperties != null)
+            {
+                ((IJsonModel<VoiceServicesPrimaryRegionProperties>)PrimaryRegionProperties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

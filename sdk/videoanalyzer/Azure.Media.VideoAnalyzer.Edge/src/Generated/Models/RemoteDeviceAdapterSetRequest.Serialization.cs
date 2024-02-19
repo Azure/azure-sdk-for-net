@@ -16,7 +16,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("remoteDeviceAdapter"u8);
-            writer.WriteObjectValue(RemoteDeviceAdapter);
+            if (RemoteDeviceAdapter != null)
+            {
+                writer.WriteObjectValue(RemoteDeviceAdapter);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);

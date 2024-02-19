@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StoragePoolSkuZoneDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolSkuZoneDetails> array = new List<StoragePoolSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StoragePoolSkuZoneDetails.DeserializeStoragePoolSkuZoneDetails(item));
+                        }
                     }
                     zoneDetails = array;
                     continue;

@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(DnsConfig))
             {
                 writer.WritePropertyName("dnsConfig"u8);
-                writer.WriteObjectValue(DnsConfig);
+                ((IJsonModel<TrafficManagerDnsConfig>)DnsConfig).Write(writer, options);
             }
             if (Optional.IsDefined(MonitorConfig))
             {
                 writer.WritePropertyName("monitorConfig"u8);
-                writer.WriteObjectValue(MonitorConfig);
+                ((IJsonModel<TrafficManagerMonitorConfig>)MonitorConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerEndpointData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -273,7 +280,14 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TrafficManagerEndpointData.DeserializeTrafficManagerEndpointData(item));
+                                }
                             }
                             endpoints = array;
                             continue;

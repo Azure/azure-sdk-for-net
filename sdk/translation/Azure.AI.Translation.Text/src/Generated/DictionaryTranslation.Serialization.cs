@@ -41,7 +41,14 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in BackTranslations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<BackTranslation>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -122,7 +129,14 @@ namespace Azure.AI.Translation.Text
                     List<BackTranslation> array = new List<BackTranslation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackTranslation.DeserializeBackTranslation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackTranslation.DeserializeBackTranslation(item));
+                        }
                     }
                     backTranslations = array;
                     continue;

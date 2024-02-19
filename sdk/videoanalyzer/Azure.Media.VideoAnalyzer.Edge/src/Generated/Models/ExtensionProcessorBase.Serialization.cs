@@ -17,9 +17,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            if (Endpoint != null)
+            {
+                writer.WriteObjectValue(Endpoint);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            if (Image != null)
+            {
+                writer.WriteObjectValue(Image);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
@@ -33,7 +47,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -95,7 +116,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<NodeInput> array = new List<NodeInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeInput.DeserializeNodeInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NodeInput.DeserializeNodeInput(item));
+                        }
                     }
                     inputs = array;
                     continue;

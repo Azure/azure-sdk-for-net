@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -72,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition);
+                ((IJsonModel<DetectorDefinition>)DetectorDefinition).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -80,7 +87,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiagnosticMetricSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DetectorAbnormalTimePeriod>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,24 +121,33 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            if (item0 != null)
+                            {
+                                ((IJsonModel<AppServiceNameValuePair>)item0).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ResponseMetaData))
             {
                 writer.WritePropertyName("responseMetaData"u8);
-                writer.WriteObjectValue(ResponseMetaData);
+                ((IJsonModel<DetectorMetadata>)ResponseMetaData).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -258,7 +288,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                                }
                             }
                             metrics = array;
                             continue;
@@ -272,7 +309,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorAbnormalTimePeriod> array = new List<DetectorAbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DetectorAbnormalTimePeriod.DeserializeDetectorAbnormalTimePeriod(item));
+                                }
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -295,7 +339,14 @@ namespace Azure.ResourceManager.AppService.Models
                                     List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                                     foreach (var item0 in item.EnumerateArray())
                                     {
-                                        array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                        if (item0.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array0.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                        }
                                     }
                                     array.Add(array0);
                                 }

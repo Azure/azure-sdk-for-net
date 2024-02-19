@@ -22,7 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("cell_type"u8);
             writer.WriteStringValue(CellType);
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            if (Metadata != null)
+            {
+                writer.WriteObjectValue(Metadata);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("source"u8);
             writer.WriteStartArray();
             foreach (var item in Source)
@@ -48,7 +55,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotebookCellOutputItem.DeserializeNotebookCellOutputItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotebookCellOutputItem.DeserializeNotebookCellOutputItem(item));
+                        }
                     }
                     outputs = array;
                     continue;

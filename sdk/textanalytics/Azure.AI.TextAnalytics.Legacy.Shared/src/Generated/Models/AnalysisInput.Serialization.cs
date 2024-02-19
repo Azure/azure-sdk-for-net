@@ -16,7 +16,14 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInputValue);
+            if (AnalysisInputValue != null)
+            {
+                writer.WriteObjectValue(AnalysisInputValue);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
     }

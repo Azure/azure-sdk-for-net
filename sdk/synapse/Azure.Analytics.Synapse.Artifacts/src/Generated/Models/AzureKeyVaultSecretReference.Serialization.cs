@@ -19,9 +19,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
-            writer.WriteObjectValue(Store);
+            if (Store != null)
+            {
+                writer.WriteObjectValue(Store);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("secretName"u8);
-            writer.WriteObjectValue(SecretName);
+            if (SecretName != null)
+            {
+                writer.WriteObjectValue(SecretName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);

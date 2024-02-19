@@ -35,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +137,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DataFlowResource> array = new List<DataFlowResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowResource.DeserializeDataFlowResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowResource.DeserializeDataFlowResource(item));
+                        }
                     }
                     dataFlows = array;
                     continue;
@@ -130,7 +158,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DatasetResource> array = new List<DatasetResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetResource.DeserializeDatasetResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatasetResource.DeserializeDatasetResource(item));
+                        }
                     }
                     datasets = array;
                     continue;
@@ -144,7 +179,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkedServiceResource> array = new List<LinkedServiceResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
+                        }
                     }
                     linkedServices = array;
                     continue;

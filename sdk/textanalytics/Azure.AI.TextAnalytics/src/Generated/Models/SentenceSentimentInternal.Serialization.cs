@@ -22,7 +22,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            if (ConfidenceScores != null)
+            {
+                writer.WriteObjectValue(ConfidenceScores);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -33,7 +40,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +57,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +116,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<SentenceTarget> array = new List<SentenceTarget>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceTarget.DeserializeSentenceTarget(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SentenceTarget.DeserializeSentenceTarget(item));
+                        }
                     }
                     targets = array;
                     continue;
@@ -109,7 +137,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<SentenceAssessment> array = new List<SentenceAssessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SentenceAssessment.DeserializeSentenceAssessment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SentenceAssessment.DeserializeSentenceAssessment(item));
+                        }
                     }
                     assessments = array;
                     continue;

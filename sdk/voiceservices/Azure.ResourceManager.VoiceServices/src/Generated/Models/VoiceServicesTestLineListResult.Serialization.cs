@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.VoiceServices.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VoiceServicesTestLineData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.VoiceServices.Models
                     List<VoiceServicesTestLineData> array = new List<VoiceServicesTestLineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VoiceServicesTestLineData.DeserializeVoiceServicesTestLineData(item));
+                        }
                     }
                     value = array;
                     continue;

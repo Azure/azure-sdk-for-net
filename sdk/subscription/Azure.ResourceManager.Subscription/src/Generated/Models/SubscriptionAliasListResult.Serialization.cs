@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SubscriptionAliasData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
+                        }
                     }
                     value = array;
                     continue;

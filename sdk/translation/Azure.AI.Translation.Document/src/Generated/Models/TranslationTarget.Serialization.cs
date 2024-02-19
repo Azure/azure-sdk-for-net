@@ -16,7 +16,14 @@ namespace Azure.AI.Translation.Document
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetUrl"u8);
-            writer.WriteStringValue(TargetUri.AbsoluteUri);
+            if (TargetUri != null)
+            {
+                writer.WriteStringValue(TargetUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(CategoryId))
             {
                 writer.WritePropertyName("category"u8);
@@ -30,7 +37,14 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStartArray();
                 foreach (var item in Glossaries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

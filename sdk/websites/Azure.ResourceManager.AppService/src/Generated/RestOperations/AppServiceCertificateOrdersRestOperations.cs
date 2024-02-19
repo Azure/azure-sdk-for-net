@@ -1479,7 +1479,14 @@ namespace Azure.ResourceManager.AppService
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CertificateOrderAction.DeserializeCertificateOrderAction(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(CertificateOrderAction.DeserializeCertificateOrderAction(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1513,7 +1520,14 @@ namespace Azure.ResourceManager.AppService
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(CertificateOrderAction.DeserializeCertificateOrderAction(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(CertificateOrderAction.DeserializeCertificateOrderAction(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1568,7 +1582,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1602,7 +1623,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceCertificateEmail.DeserializeAppServiceCertificateEmail(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

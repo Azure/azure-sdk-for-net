@@ -31,7 +31,14 @@ namespace Azure.Storage.Files.DataLake.Models
                     List<FileSystem> array = new List<FileSystem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileSystem.DeserializeFileSystem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FileSystem.DeserializeFileSystem(item));
+                        }
                     }
                     filesystems = array;
                     continue;

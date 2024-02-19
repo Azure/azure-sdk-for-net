@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SynapseServerUsage>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseServerUsage> array = new List<SynapseServerUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseServerUsage.DeserializeSynapseServerUsage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseServerUsage.DeserializeSynapseServerUsage(item));
+                        }
                     }
                     value = array;
                     continue;

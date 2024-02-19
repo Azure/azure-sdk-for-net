@@ -37,7 +37,14 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     List<SparkStatement> array = new List<SparkStatement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkStatement.DeserializeSparkStatement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkStatement.DeserializeSparkStatement(item));
+                        }
                     }
                     statements = array;
                     continue;

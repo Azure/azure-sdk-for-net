@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHandlers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebPubSubEventHandler>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubEventHandler> array = new List<WebPubSubEventHandler>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebPubSubEventHandler.DeserializeWebPubSubEventHandler(item));
+                        }
                     }
                     eventHandlers = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DataFlowResource> array = new List<DataFlowResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowResource.DeserializeDataFlowResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowResource.DeserializeDataFlowResource(item));
+                        }
                     }
                     value = array;
                     continue;

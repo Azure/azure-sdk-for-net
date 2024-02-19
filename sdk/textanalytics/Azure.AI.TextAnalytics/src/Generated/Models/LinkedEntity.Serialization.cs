@@ -34,7 +34,14 @@ namespace Azure.AI.TextAnalytics
                 writer.WriteStringValue(DataSourceEntityId);
             }
             writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
+            if (Url != null)
+            {
+                writer.WriteStringValue(Url.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
             if (Optional.IsDefined(BingEntitySearchApiId))

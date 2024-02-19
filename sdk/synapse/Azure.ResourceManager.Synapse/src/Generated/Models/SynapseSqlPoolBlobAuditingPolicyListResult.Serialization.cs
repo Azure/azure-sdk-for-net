@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseSqlPoolBlobAuditingPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSqlPoolBlobAuditingPolicyData> array = new List<SynapseSqlPoolBlobAuditingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSqlPoolBlobAuditingPolicyData.DeserializeSynapseSqlPoolBlobAuditingPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseSqlPoolBlobAuditingPolicyData.DeserializeSynapseSqlPoolBlobAuditingPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

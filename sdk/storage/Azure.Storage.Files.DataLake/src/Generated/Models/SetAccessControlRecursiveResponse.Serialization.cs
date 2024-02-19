@@ -61,7 +61,14 @@ namespace Azure.Storage.Files.DataLake.Models
                     List<AclFailedEntry> array = new List<AclFailedEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AclFailedEntry.DeserializeAclFailedEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AclFailedEntry.DeserializeAclFailedEntry(item));
+                        }
                     }
                     failedEntries = array;
                     continue;

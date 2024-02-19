@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteObjectValue(PrivateIPAddress);
+                ((IJsonModel<AvailabilityGroupListenerPrivateIPAddress>)PrivateIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(PublicIPAddressResourceId))
             {
@@ -52,12 +52,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in SqlVmInstances)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

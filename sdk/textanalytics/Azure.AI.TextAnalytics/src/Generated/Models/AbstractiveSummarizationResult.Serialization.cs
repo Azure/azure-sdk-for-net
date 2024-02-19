@@ -21,7 +21,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
@@ -35,7 +42,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -58,7 +72,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentError.DeserializeDocumentError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -82,7 +103,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<AbstractiveSummaryDocumentResult> array = new List<AbstractiveSummaryDocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AbstractiveSummaryDocumentResult.DeserializeAbstractiveSummaryDocumentResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AbstractiveSummaryDocumentResult.DeserializeAbstractiveSummaryDocumentResult(item));
+                        }
                     }
                     documents = array;
                     continue;

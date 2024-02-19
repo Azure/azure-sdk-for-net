@@ -31,7 +31,14 @@ namespace Azure.Storage.Files.DataLake.Models
                     List<Path> array = new List<Path>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Path.DeserializePath(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Path.DeserializePath(item));
+                        }
                     }
                     paths = array;
                     continue;

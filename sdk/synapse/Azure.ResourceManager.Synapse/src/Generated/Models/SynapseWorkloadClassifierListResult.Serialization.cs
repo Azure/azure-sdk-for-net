@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseWorkloadClassifierData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseWorkloadClassifierData> array = new List<SynapseWorkloadClassifierData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseWorkloadClassifierData.DeserializeSynapseWorkloadClassifierData(item));
+                        }
                     }
                     value = array;
                     continue;

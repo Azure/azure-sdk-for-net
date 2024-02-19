@@ -20,7 +20,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Lines)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))
@@ -85,7 +92,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<SpatialAnalysisPersonLineCrossingLineEvents> array = new List<SpatialAnalysisPersonLineCrossingLineEvents>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnalysisPersonLineCrossingLineEvents.DeserializeSpatialAnalysisPersonLineCrossingLineEvents(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpatialAnalysisPersonLineCrossingLineEvents.DeserializeSpatialAnalysisPersonLineCrossingLineEvents(item));
+                        }
                     }
                     lines = array;
                     continue;

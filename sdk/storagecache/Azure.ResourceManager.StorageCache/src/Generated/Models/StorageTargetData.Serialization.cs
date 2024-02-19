@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -61,7 +68,14 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in Junctions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NamespaceJunction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -83,22 +97,22 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Nfs3))
             {
                 writer.WritePropertyName("nfs3"u8);
-                writer.WriteObjectValue(Nfs3);
+                ((IJsonModel<Nfs3Target>)Nfs3).Write(writer, options);
             }
             if (Optional.IsDefined(Clfs))
             {
                 writer.WritePropertyName("clfs"u8);
-                writer.WriteObjectValue(Clfs);
+                ((IJsonModel<ClfsTarget>)Clfs).Write(writer, options);
             }
             if (Optional.IsDefined(Unknown))
             {
                 writer.WritePropertyName("unknown"u8);
-                writer.WriteObjectValue(Unknown);
+                ((IJsonModel<UnknownTarget>)Unknown).Write(writer, options);
             }
             if (Optional.IsDefined(BlobNfs))
             {
                 writer.WritePropertyName("blobNfs"u8);
-                writer.WriteObjectValue(BlobNfs);
+                ((IJsonModel<BlobNfsTarget>)BlobNfs).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllocationPercentage))
             {
@@ -213,7 +227,14 @@ namespace Azure.ResourceManager.StorageCache
                             List<NamespaceJunction> array = new List<NamespaceJunction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NamespaceJunction.DeserializeNamespaceJunction(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NamespaceJunction.DeserializeNamespaceJunction(item));
+                                }
                             }
                             junctions = array;
                             continue;

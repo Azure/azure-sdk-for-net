@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                ((IJsonModel<AmlFileSystemEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                ((IJsonModel<AmlFileSystemUpdatePropertiesMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue(RootSquashSettings);
+                ((IJsonModel<AmlFileSystemRootSquashSettings>)RootSquashSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

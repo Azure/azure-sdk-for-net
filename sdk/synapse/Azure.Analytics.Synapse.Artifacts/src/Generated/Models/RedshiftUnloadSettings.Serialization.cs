@@ -19,9 +19,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            writer.WriteObjectValue(S3LinkedServiceName);
+            if (S3LinkedServiceName != null)
+            {
+                writer.WriteObjectValue(S3LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("bucketName"u8);
-            writer.WriteObjectValue(BucketName);
+            if (BucketName != null)
+            {
+                writer.WriteObjectValue(BucketName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

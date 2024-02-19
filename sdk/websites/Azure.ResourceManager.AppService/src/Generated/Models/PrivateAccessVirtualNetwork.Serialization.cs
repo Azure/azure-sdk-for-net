@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateAccessSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PrivateAccessSubnet> array = new List<PrivateAccessSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
+                        }
                     }
                     subnets = array;
                     continue;

@@ -28,12 +28,26 @@ namespace Azure.AI.Vision.ImageAnalysis
 
             writer.WriteStartObject();
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox);
+            if (BoundingBox != null)
+            {
+                ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tags"u8);
             writer.WriteStartArray();
             foreach (var item in Tags)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DetectedTag>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +104,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTag> array = new List<DetectedTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTag.DeserializeDetectedTag(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectedTag.DeserializeDetectedTag(item));
+                        }
                     }
                     tags = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                ((IJsonModel<StorageCacheEncryptionKeyVaultKeyReference>)KeyEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(EnableRotationToLatestKeyVersion))
             {

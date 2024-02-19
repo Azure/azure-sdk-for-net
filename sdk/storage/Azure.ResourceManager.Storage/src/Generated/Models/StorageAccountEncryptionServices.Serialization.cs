@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteObjectValue(Blob);
+                ((IJsonModel<StorageEncryptionService>)Blob).Write(writer, options);
             }
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File);
+                ((IJsonModel<StorageEncryptionService>)File).Write(writer, options);
             }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
-                writer.WriteObjectValue(Table);
+                ((IJsonModel<StorageEncryptionService>)Table).Write(writer, options);
             }
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue);
+                ((IJsonModel<StorageEncryptionService>)Queue).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

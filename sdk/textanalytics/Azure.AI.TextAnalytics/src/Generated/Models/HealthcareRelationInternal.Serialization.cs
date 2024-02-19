@@ -28,7 +28,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -64,7 +71,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<HealthcareRelationEntity> array = new List<HealthcareRelationEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareRelationEntity.DeserializeHealthcareRelationEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareRelationEntity.DeserializeHealthcareRelationEntity(item));
+                        }
                     }
                     entities = array;
                     continue;

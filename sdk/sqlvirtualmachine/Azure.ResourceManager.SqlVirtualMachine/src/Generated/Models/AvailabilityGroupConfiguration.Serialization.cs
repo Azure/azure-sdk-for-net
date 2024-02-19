@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Replicas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailabilityGroupReplica>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupReplica> array = new List<AvailabilityGroupReplica>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailabilityGroupReplica.DeserializeAvailabilityGroupReplica(item));
+                        }
                     }
                     replicas = array;
                     continue;

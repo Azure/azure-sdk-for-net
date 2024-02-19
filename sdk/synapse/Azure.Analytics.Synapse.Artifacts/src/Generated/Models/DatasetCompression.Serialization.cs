@@ -20,7 +20,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteObjectValue(Type);
+            if (Type != null)
+            {
+                writer.WriteObjectValue(Type);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);

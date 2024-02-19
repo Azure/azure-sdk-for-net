@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
-                writer.WriteObjectValue(UploadStatus);
+                ((IJsonModel<ServerEndpointSyncSessionStatus>)UploadStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus);
+                ((IJsonModel<ServerEndpointSyncSessionStatus>)DownloadStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UploadActivity))
             {
                 writer.WritePropertyName("uploadActivity"u8);
-                writer.WriteObjectValue(UploadActivity);
+                ((IJsonModel<ServerEndpointSyncActivityStatus>)UploadActivity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DownloadActivity))
             {
                 writer.WritePropertyName("downloadActivity"u8);
-                writer.WriteObjectValue(DownloadActivity);
+                ((IJsonModel<ServerEndpointSyncActivityStatus>)DownloadActivity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(OfflineDataTransferStatus))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(BackgroundDataDownloadActivity))
             {
                 writer.WritePropertyName("backgroundDataDownloadActivity"u8);
-                writer.WriteObjectValue(BackgroundDataDownloadActivity);
+                ((IJsonModel<ServerEndpointBackgroundDataDownloadActivity>)BackgroundDataDownloadActivity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

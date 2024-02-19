@@ -29,28 +29,49 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                ((IJsonModel<NetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue(CentralServer);
+            if (CentralServer != null)
+            {
+                ((IJsonModel<CentralServerConfiguration>)CentralServer).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue(ApplicationServer);
+            if (ApplicationServer != null)
+            {
+                ((IJsonModel<ApplicationServerConfiguration>)ApplicationServer).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue(DatabaseServer);
+            if (DatabaseServer != null)
+            {
+                ((IJsonModel<DatabaseConfiguration>)DatabaseServer).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue(HighAvailabilityConfig);
+                ((IJsonModel<HighAvailabilityConfiguration>)HighAvailabilityConfig).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration);
+                ((IJsonModel<SapStorageConfiguration>)StorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                ((IJsonModel<ThreeTierCustomResourceNames>)CustomResourceNames).Write(writer, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());

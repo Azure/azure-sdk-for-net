@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<WebJobData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<WebJobData> array = new List<WebJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebJobData.DeserializeWebJobData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebJobData.DeserializeWebJobData(item));
+                        }
                     }
                     value = array;
                     continue;

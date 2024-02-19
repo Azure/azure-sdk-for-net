@@ -95,7 +95,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -302,7 +309,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<LibraryInfo> array = new List<LibraryInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LibraryInfo.DeserializeLibraryInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LibraryInfo.DeserializeLibraryInfo(item));
+                                }
                             }
                             customLibraries = array;
                             continue;

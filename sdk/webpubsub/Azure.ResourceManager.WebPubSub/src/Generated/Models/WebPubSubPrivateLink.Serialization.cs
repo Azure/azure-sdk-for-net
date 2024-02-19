@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -80,7 +87,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareablePrivateLinkTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ShareablePrivateLinkType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +224,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                             List<ShareablePrivateLinkType> array = new List<ShareablePrivateLinkType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ShareablePrivateLinkType.DeserializeShareablePrivateLinkType(item));
+                                }
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;

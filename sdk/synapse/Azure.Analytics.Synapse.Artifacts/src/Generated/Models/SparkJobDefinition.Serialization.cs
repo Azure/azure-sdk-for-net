@@ -25,7 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
-            writer.WriteObjectValue(TargetBigDataPool);
+            if (TargetBigDataPool != null)
+            {
+                writer.WriteObjectValue(TargetBigDataPool);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
@@ -42,7 +49,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
-            writer.WriteObjectValue(JobProperties);
+            if (JobProperties != null)
+            {
+                writer.WriteObjectValue(JobProperties);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)

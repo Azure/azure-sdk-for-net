@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ProcessModuleInfoData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<ProcessModuleInfoData> array = new List<ProcessModuleInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                        }
                     }
                     value = array;
                     continue;

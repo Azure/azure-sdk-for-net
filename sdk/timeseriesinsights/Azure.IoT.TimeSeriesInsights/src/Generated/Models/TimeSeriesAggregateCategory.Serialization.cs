@@ -22,12 +22,14 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteStartArray();
             foreach (var item in Values)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

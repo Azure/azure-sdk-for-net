@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.AppService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,7 +65,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<DetectorInfo>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -66,14 +73,21 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiagnosticDataset>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<AppServiceStatusInfo>)Status).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataProvidersMetadata))
             {
@@ -81,14 +95,21 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in DataProvidersMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataProviderMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SuggestedUtterances))
             {
                 writer.WritePropertyName("suggestedUtterances"u8);
-                writer.WriteObjectValue(SuggestedUtterances);
+                ((IJsonModel<QueryUtterancesResults>)SuggestedUtterances).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -199,7 +220,14 @@ namespace Azure.ResourceManager.AppService
                             List<DiagnosticDataset> array = new List<DiagnosticDataset>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DiagnosticDataset.DeserializeDiagnosticDataset(item));
+                                }
                             }
                             dataset = array;
                             continue;
@@ -222,7 +250,14 @@ namespace Azure.ResourceManager.AppService
                             List<DataProviderMetadata> array = new List<DataProviderMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataProviderMetadata.DeserializeDataProviderMetadata(item));
+                                }
                             }
                             dataProvidersMetadata = array;
                             continue;

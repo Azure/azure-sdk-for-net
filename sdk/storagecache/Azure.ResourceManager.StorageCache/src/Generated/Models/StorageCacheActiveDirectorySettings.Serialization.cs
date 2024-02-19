@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.StorageCache.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("primaryDnsIpAddress"u8);
-            writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
+            if (PrimaryDnsIPAddress != null)
+            {
+                writer.WriteStringValue(PrimaryDnsIPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(SecondaryDnsIPAddress))
             {
                 writer.WritePropertyName("secondaryDnsIpAddress"u8);
@@ -48,7 +55,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<StorageCacheActiveDirectorySettingsCredentials>)Credentials).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

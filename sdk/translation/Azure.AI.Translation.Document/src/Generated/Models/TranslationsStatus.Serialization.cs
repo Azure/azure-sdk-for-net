@@ -29,7 +29,14 @@ namespace Azure.AI.Translation.Document.Models
                     List<TranslationStatusResult> array = new List<TranslationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TranslationStatusResult.DeserializeTranslationStatusResult(item));
+                        }
                     }
                     value = array;
                     continue;

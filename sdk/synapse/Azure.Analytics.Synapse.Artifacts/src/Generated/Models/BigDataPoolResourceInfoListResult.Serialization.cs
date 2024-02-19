@@ -40,7 +40,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<BigDataPoolResourceInfo> array = new List<BigDataPoolResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BigDataPoolResourceInfo.DeserializeBigDataPoolResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BigDataPoolResourceInfo.DeserializeBigDataPoolResourceInfo(item));
+                        }
                     }
                     value = array;
                     continue;

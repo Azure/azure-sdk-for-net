@@ -25,7 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteObjectValue(QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
-            writer.WriteObjectValue(FileExtension);
+            if (FileExtension != null)
+            {
+                writer.WriteObjectValue(FileExtension);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);

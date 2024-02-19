@@ -30,7 +30,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("boundingBox"u8);
-                writer.WriteObjectValue(BoundingBox);
+                if (BoundingBox != null)
+                {
+                    ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

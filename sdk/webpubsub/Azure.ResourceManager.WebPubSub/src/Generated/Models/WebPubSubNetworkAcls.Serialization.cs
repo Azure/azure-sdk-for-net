@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(PublicNetwork))
             {
                 writer.WritePropertyName("publicNetwork"u8);
-                writer.WriteObjectValue(PublicNetwork);
+                ((IJsonModel<PublicNetworkAcls>)PublicNetwork).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpoints))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateEndpointAcl>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<PrivateEndpointAcl> array = new List<PrivateEndpointAcl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointAcl.DeserializePrivateEndpointAcl(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateEndpointAcl.DeserializePrivateEndpointAcl(item));
+                        }
                     }
                     privateEndpoints = array;
                     continue;

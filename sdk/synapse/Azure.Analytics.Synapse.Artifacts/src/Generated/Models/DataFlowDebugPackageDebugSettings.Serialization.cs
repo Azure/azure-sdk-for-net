@@ -22,7 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -33,12 +40,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -70,7 +79,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item));
+                        }
                     }
                     sourceSettings = array;
                     continue;

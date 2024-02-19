@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FileServiceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<FileServiceData> array = new List<FileServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileServiceData.DeserializeFileServiceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FileServiceData.DeserializeFileServiceData(item));
+                        }
                     }
                     value = array;
                     continue;
