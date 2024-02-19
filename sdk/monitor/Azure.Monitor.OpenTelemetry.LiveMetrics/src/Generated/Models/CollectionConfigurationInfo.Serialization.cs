@@ -39,7 +39,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     List<DerivedMetricInfo> array = new List<DerivedMetricInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DerivedMetricInfo.DeserializeDerivedMetricInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DerivedMetricInfo.DeserializeDerivedMetricInfo(item));
+                        }
                     }
                     metrics = array;
                     continue;
@@ -53,7 +60,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     List<DocumentStreamInfo> array = new List<DocumentStreamInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentStreamInfo.DeserializeDocumentStreamInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentStreamInfo.DeserializeDocumentStreamInfo(item));
+                        }
                     }
                     documentStreams = array;
                     continue;

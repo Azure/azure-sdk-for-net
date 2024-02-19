@@ -31,11 +31,18 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<EmbeddingItem>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            ((IJsonModel<EmbeddingsUsage>)Usage).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -85,7 +92,14 @@ namespace Azure.AI.OpenAI
                     List<EmbeddingItem> array = new List<EmbeddingItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmbeddingItem.DeserializeEmbeddingItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EmbeddingItem.DeserializeEmbeddingItem(item));
+                        }
                     }
                     data = array;
                     continue;

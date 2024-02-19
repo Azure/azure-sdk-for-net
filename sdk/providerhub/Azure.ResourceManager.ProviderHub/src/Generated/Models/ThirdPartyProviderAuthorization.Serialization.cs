@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LightHouseAuthorization>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        }
                     }
                     authorizations = array;
                     continue;

@@ -78,7 +78,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerFrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontendIPConfigurationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateLinkServiceIPConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +112,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkInterfaceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,19 +134,26 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
-                writer.WriteObjectValue(Visibility);
+                ((IJsonModel<PrivateLinkServicePropertiesVisibility>)Visibility).Write(writer, options);
             }
             if (Optional.IsDefined(AutoApproval))
             {
                 writer.WritePropertyName("autoApproval"u8);
-                writer.WriteObjectValue(AutoApproval);
+                ((IJsonModel<PrivateLinkServicePropertiesAutoApproval>)AutoApproval).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -289,7 +317,14 @@ namespace Azure.ResourceManager.Network
                             List<FrontendIPConfigurationData> array = new List<FrontendIPConfigurationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontendIPConfigurationData.DeserializeFrontendIPConfigurationData(item));
+                                }
                             }
                             loadBalancerFrontendIPConfigurations = array;
                             continue;
@@ -303,7 +338,14 @@ namespace Azure.ResourceManager.Network
                             List<PrivateLinkServiceIPConfiguration> array = new List<PrivateLinkServiceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkServiceIPConfiguration.DeserializePrivateLinkServiceIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateLinkServiceIPConfiguration.DeserializePrivateLinkServiceIPConfiguration(item));
+                                }
                             }
                             ipConfigurations = array;
                             continue;
@@ -317,7 +359,14 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                }
                             }
                             networkInterfaces = array;
                             continue;
@@ -340,7 +389,14 @@ namespace Azure.ResourceManager.Network
                             List<NetworkPrivateEndpointConnectionData> array = new List<NetworkPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkPrivateEndpointConnectionData.DeserializeNetworkPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

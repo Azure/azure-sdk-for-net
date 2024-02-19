@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in RoleAssignmentResponse)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RoleAssignmentDetail>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<RoleAssignmentDetail> array = new List<RoleAssignmentDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleAssignmentDetail.DeserializeRoleAssignmentDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleAssignmentDetail.DeserializeRoleAssignmentDetail(item));
+                        }
                     }
                     roleAssignmentResponse = array;
                     continue;

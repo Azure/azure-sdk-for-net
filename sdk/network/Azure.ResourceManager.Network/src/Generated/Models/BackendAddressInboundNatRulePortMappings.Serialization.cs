@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRulePortMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InboundNatRulePortMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<InboundNatRulePortMapping> array = new List<InboundNatRulePortMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InboundNatRulePortMapping.DeserializeInboundNatRulePortMapping(item));
+                        }
                     }
                     inboundNatRulePortMappings = array;
                     continue;

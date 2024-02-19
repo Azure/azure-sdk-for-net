@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FieldRestriction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<FieldRestriction> array = new List<FieldRestriction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FieldRestriction.DeserializeFieldRestriction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FieldRestriction.DeserializeFieldRestriction(item));
+                        }
                     }
                     restrictions = array;
                     continue;

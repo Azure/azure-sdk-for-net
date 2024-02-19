@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PortRange))
             {
                 writer.WritePropertyName("portRange"u8);
-                writer.WriteObjectValue(PortRange);
+                ((IJsonModel<MobileNetworkPortRange>)PortRange).Write(writer, options);
             }
             if (Optional.IsDefined(PortReuseHoldTime))
             {
                 writer.WritePropertyName("portReuseHoldTime"u8);
-                writer.WriteObjectValue(PortReuseHoldTime);
+                ((IJsonModel<MobileNetworkPortReuseHoldTimes>)PortReuseHoldTime).Write(writer, options);
             }
             if (Optional.IsDefined(PinholeLimits))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PinholeTimeouts))
             {
                 writer.WritePropertyName("pinholeTimeouts"u8);
-                writer.WriteObjectValue(PinholeTimeouts);
+                ((IJsonModel<PinholeTimeouts>)PinholeTimeouts).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

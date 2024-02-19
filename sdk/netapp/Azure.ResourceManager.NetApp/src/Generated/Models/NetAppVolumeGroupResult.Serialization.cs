@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
-                writer.WriteObjectValue(GroupMetaData);
+                ((IJsonModel<NetAppVolumeGroupMetadata>)GroupMetaData).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

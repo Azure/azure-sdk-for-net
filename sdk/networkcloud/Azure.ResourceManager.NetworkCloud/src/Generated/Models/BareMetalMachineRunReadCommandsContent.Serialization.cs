@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             writer.WriteStartArray();
             foreach (var item in Commands)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<BareMetalMachineCommandSpecification>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("limitTimeSeconds"u8);
@@ -84,7 +91,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineCommandSpecification> array = new List<BareMetalMachineCommandSpecification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BareMetalMachineCommandSpecification.DeserializeBareMetalMachineCommandSpecification(item));
+                        }
                     }
                     commands = array;
                     continue;

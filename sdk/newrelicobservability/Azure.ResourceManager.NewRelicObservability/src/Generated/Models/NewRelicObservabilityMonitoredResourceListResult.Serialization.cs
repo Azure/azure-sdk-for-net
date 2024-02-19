@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NewRelicResourceMonitorResult>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     List<NewRelicResourceMonitorResult> array = new List<NewRelicResourceMonitorResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NewRelicResourceMonitorResult.DeserializeNewRelicResourceMonitorResult(item));
+                        }
                     }
                     value = array;
                     continue;

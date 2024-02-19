@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in PeeringFacilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DirectPeeringFacility>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in BandwidthOffers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PeeringBandwidthOffer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<DirectPeeringFacility> array = new List<DirectPeeringFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DirectPeeringFacility.DeserializeDirectPeeringFacility(item));
+                        }
                     }
                     peeringFacilities = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringBandwidthOffer> array = new List<PeeringBandwidthOffer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeeringBandwidthOffer.DeserializePeeringBandwidthOffer(item));
+                        }
                     }
                     bandwidthOffers = array;
                     continue;

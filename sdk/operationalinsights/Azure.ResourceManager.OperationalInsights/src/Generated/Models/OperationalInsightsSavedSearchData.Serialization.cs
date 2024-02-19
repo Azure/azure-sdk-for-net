@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalInsightsTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -227,7 +234,14 @@ namespace Azure.ResourceManager.OperationalInsights
                             List<OperationalInsightsTag> array = new List<OperationalInsightsTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsTag.DeserializeOperationalInsightsTag(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(OperationalInsightsTag.DeserializeOperationalInsightsTag(item));
+                                }
                             }
                             tags = array;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SlimPolicyMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<SlimPolicyMetadata> array = new List<SlimPolicyMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SlimPolicyMetadata.DeserializeSlimPolicyMetadata(item));
+                        }
                     }
                     value = array;
                     continue;

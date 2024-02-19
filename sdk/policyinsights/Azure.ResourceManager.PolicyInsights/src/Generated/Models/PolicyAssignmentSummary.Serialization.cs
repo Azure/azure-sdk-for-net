@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                ((IJsonModel<PolicySummaryResults>)Results).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitions))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyDefinitionSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyGroupSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +158,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyDefinitionSummary> array = new List<PolicyDefinitionSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolicyDefinitionSummary.DeserializePolicyDefinitionSummary(item));
+                        }
                     }
                     policyDefinitions = array;
                     continue;
@@ -158,7 +179,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyGroupSummary> array = new List<PolicyGroupSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolicyGroupSummary.DeserializePolicyGroupSummary(item));
+                        }
                     }
                     policyGroups = array;
                     continue;

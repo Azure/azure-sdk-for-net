@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(NasReroute))
             {
                 writer.WritePropertyName("nasReroute"u8);
-                writer.WriteObjectValue(NasReroute);
+                ((IJsonModel<NASRerouteConfiguration>)NasReroute).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

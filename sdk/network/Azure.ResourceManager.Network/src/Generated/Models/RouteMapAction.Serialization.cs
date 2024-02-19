@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteMapActionParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapActionParameter> array = new List<RouteMapActionParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteMapActionParameter.DeserializeRouteMapActionParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

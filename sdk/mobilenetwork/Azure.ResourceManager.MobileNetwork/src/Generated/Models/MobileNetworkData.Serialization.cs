@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
-            writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
+            ((IJsonModel<MobileNetworkPlmnId>)PublicLandMobileNetworkIdentifier).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ServiceKey))
             {
                 writer.WritePropertyName("serviceKey"u8);

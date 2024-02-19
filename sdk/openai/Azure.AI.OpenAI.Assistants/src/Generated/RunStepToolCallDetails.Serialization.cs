@@ -31,7 +31,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ToolCalls)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RunStepToolCall>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -85,7 +92,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStepToolCall> array = new List<RunStepToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStepToolCall.DeserializeRunStepToolCall(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunStepToolCall.DeserializeRunStepToolCall(item));
+                        }
                     }
                     toolCalls = array;
                     continue;

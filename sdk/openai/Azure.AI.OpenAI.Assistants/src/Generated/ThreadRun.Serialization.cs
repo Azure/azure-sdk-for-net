@@ -42,7 +42,7 @@ namespace Azure.AI.OpenAI.Assistants
                 if (RequiredAction != null)
                 {
                     writer.WritePropertyName("required_action"u8);
-                    writer.WriteObjectValue(RequiredAction);
+                    ((IJsonModel<RequiredAction>)RequiredAction).Write(writer, options);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ namespace Azure.AI.OpenAI.Assistants
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError);
+                ((IJsonModel<RunError>)LastError).Write(writer, options);
             }
             else
             {
@@ -66,7 +66,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ToolDefinition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("file_ids"u8);
@@ -258,7 +265,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolDefinition> array = new List<ToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ToolDefinition.DeserializeToolDefinition(item));
+                        }
                     }
                     tools = array;
                     continue;

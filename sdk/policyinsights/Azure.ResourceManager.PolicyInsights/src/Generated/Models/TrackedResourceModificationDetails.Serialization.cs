@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
-                writer.WriteObjectValue(PolicyDetails);
+                ((IJsonModel<PolicyDetails>)PolicyDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeploymentId))
             {

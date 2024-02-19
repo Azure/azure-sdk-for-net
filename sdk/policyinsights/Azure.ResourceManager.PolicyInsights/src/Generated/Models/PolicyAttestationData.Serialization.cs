@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WriteStartArray();
                 foreach (var item in Evidence)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AttestationEvidence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -252,7 +259,14 @@ namespace Azure.ResourceManager.PolicyInsights
                             List<AttestationEvidence> array = new List<AttestationEvidence>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AttestationEvidence.DeserializeAttestationEvidence(item));
+                                }
                             }
                             evidence = array;
                             continue;

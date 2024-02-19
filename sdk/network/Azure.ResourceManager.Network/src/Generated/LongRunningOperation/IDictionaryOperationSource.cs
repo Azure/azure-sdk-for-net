@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network
                     List<PeerRoute> array = new List<PeerRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeerRoute.DeserializePeerRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeerRoute.DeserializePeerRoute(item));
+                        }
                     }
                     dictionary.Add(property.Name, array);
                 }
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.Network
                     List<PeerRoute> array = new List<PeerRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeerRoute.DeserializePeerRoute(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeerRoute.DeserializePeerRoute(item));
+                        }
                     }
                     dictionary.Add(property.Name, array);
                 }

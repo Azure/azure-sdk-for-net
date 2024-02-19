@@ -231,7 +231,14 @@ namespace Azure.ResourceManager.OperationalInsights
                         List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -265,7 +272,14 @@ namespace Azure.ResourceManager.OperationalInsights
                         List<OperationalInsightsIntelligencePack> array = new List<OperationalInsightsIntelligencePack>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(OperationalInsightsIntelligencePack.DeserializeOperationalInsightsIntelligencePack(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.MixedReality.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RemoteRenderingAccountData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.MixedReality.Models
                     List<RemoteRenderingAccountData> array = new List<RemoteRenderingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RemoteRenderingAccountData.DeserializeRemoteRenderingAccountData(item));
+                        }
                     }
                     value = array;
                     continue;

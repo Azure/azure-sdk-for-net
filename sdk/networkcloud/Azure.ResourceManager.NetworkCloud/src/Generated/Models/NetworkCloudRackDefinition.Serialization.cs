@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BareMetalMachineConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BareMetalMachineConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +65,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageApplianceConfigurationData)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageApplianceConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +139,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BareMetalMachineConfiguration> array = new List<BareMetalMachineConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BareMetalMachineConfiguration.DeserializeBareMetalMachineConfiguration(item));
+                        }
                     }
                     bareMetalMachineConfigurationData = array;
                     continue;
@@ -159,7 +180,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<StorageApplianceConfiguration> array = new List<StorageApplianceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageApplianceConfiguration.DeserializeStorageApplianceConfiguration(item));
+                        }
                     }
                     storageApplianceConfigurationData = array;
                     continue;

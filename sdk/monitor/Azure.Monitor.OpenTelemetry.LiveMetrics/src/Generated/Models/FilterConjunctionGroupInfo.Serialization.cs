@@ -31,7 +31,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     List<FilterInfo> array = new List<FilterInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilterInfo.DeserializeFilterInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FilterInfo.DeserializeFilterInfo(item));
+                        }
                     }
                     filters = array;
                     continue;

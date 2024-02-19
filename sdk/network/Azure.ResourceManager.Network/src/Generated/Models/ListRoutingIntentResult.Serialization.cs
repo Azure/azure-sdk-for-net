@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingIntentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<RoutingIntentData> array = new List<RoutingIntentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutingIntentData.DeserializeRoutingIntentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoutingIntentData.DeserializeRoutingIntentData(item));
+                        }
                     }
                     value = array;
                     continue;

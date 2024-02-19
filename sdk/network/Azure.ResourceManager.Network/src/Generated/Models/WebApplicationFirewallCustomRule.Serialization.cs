@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MatchCondition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(GroupByUserSession))
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByUserSession)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GroupByUserSession>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +197,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchCondition> array = new List<MatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MatchCondition.DeserializeMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;
@@ -197,7 +218,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByUserSession> array = new List<GroupByUserSession>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.GroupByUserSession.DeserializeGroupByUserSession(item));
+                        }
                     }
                     groupByUserSession = array;
                     continue;

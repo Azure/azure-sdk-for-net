@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Signatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IdpsSignatureResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsSignatureResult> array = new List<IdpsSignatureResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IdpsSignatureResult.DeserializeIdpsSignatureResult(item));
+                        }
                     }
                     signatures = array;
                     continue;

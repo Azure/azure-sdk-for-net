@@ -103,7 +103,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeBackups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppVolumeBackupDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -284,7 +291,14 @@ namespace Azure.ResourceManager.NetApp.Models
                             List<NetAppVolumeBackupDetail> array = new List<NetAppVolumeBackupDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item));
+                                }
                             }
                             volumeBackups = array;
                             continue;

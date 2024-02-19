@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
-                writer.WriteObjectValue(Message);
+                ((IJsonModel<ChatResponseMessage>)Message).Write(writer, options);
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -46,22 +46,22 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FinishDetails))
             {
                 writer.WritePropertyName("finish_details"u8);
-                writer.WriteObjectValue(FinishDetails);
+                ((IJsonModel<ChatFinishDetails>)FinishDetails).Write(writer, options);
             }
             if (Optional.IsDefined(InternalStreamingDeltaMessage))
             {
                 writer.WritePropertyName("delta"u8);
-                writer.WriteObjectValue(InternalStreamingDeltaMessage);
+                ((IJsonModel<ChatResponseMessage>)InternalStreamingDeltaMessage).Write(writer, options);
             }
             if (Optional.IsDefined(ContentFilterResults))
             {
                 writer.WritePropertyName("content_filter_results"u8);
-                writer.WriteObjectValue(ContentFilterResults);
+                ((IJsonModel<ContentFilterResultsForChoice>)ContentFilterResults).Write(writer, options);
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue(Enhancements);
+                ((IJsonModel<AzureChatEnhancements>)Enhancements).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

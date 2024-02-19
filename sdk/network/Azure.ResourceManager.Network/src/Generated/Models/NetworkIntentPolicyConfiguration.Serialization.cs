@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(SourceNetworkIntentPolicy))
             {
                 writer.WritePropertyName("sourceNetworkIntentPolicy"u8);
-                writer.WriteObjectValue(SourceNetworkIntentPolicy);
+                ((IJsonModel<NetworkIntentPolicy>)SourceNetworkIntentPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

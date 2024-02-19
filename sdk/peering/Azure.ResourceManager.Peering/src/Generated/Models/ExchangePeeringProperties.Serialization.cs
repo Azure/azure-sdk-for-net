@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Connections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PeeringExchangeConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringExchangeConnection> array = new List<PeeringExchangeConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeeringExchangeConnection.DeserializePeeringExchangeConnection(item));
+                        }
                     }
                     connections = array;
                     continue;

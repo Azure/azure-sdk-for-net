@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ApplicationGatewayFirewallRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRule> array = new List<ApplicationGatewayFirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item));
+                        }
                     }
                     rules = array;
                     continue;

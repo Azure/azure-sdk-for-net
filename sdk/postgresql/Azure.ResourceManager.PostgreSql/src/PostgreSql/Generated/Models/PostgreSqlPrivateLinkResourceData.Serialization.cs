@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<PostgreSqlPrivateLinkResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

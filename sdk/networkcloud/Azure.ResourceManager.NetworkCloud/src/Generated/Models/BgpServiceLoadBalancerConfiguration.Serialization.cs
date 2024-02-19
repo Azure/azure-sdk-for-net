@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpAdvertisements)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BgpAdvertisement>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceLoadBalancerBgpPeer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPAddressPool>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +137,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<BgpAdvertisement> array = new List<BgpAdvertisement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpAdvertisement.DeserializeBgpAdvertisement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BgpAdvertisement.DeserializeBgpAdvertisement(item));
+                        }
                     }
                     bgpAdvertisements = array;
                     continue;
@@ -130,7 +158,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<ServiceLoadBalancerBgpPeer> array = new List<ServiceLoadBalancerBgpPeer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceLoadBalancerBgpPeer.DeserializeServiceLoadBalancerBgpPeer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceLoadBalancerBgpPeer.DeserializeServiceLoadBalancerBgpPeer(item));
+                        }
                     }
                     bgpPeers = array;
                     continue;
@@ -153,7 +188,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<IPAddressPool> array = new List<IPAddressPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPAddressPool.DeserializeIPAddressPool(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddressPool.DeserializeIPAddressPool(item));
+                        }
                     }
                     ipAddressPools = array;
                     continue;

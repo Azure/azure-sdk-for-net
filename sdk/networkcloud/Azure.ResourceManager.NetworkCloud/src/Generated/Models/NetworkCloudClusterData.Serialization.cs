@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-            writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
+            ((IJsonModel<NetworkCloudRackDefinition>)AggregatorOrSingleRackDefinition).Write(writer, options);
             if (Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
@@ -78,14 +78,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgradeVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterAvailableUpgradeVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterCapacity))
             {
                 writer.WritePropertyName("clusterCapacity"u8);
-                writer.WriteObjectValue(ClusterCapacity);
+                ((IJsonModel<ClusterCapacity>)ClusterCapacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterConnectionStatus))
             {
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(ClusterExtendedLocation))
             {
                 writer.WritePropertyName("clusterExtendedLocation"u8);
-                writer.WriteObjectValue(ClusterExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ClusterExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -115,7 +122,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue(ClusterServicePrincipal);
+                ((IJsonModel<ServicePrincipalInformation>)ClusterServicePrincipal).Write(writer, options);
             }
             writer.WritePropertyName("clusterType"u8);
             writer.WriteStringValue(ClusterType.ToString());
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue(ComputeDeploymentThreshold);
+                ((IJsonModel<ValidationThreshold>)ComputeDeploymentThreshold).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkCloudRackDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,12 +163,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HybridAksExtendedLocation))
             {
                 writer.WritePropertyName("hybridAksExtendedLocation"u8);
-                writer.WriteObjectValue(HybridAksExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)HybridAksExtendedLocation).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManualActionCount))
             {
@@ -179,12 +193,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in WorkloadResourceIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -341,7 +357,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableUpgradeVersion> array = new List<ClusterAvailableUpgradeVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ClusterAvailableUpgradeVersion.DeserializeClusterAvailableUpgradeVersion(item));
+                                }
                             }
                             availableUpgradeVersions = array;
                             continue;
@@ -433,7 +456,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkCloudRackDefinition> array = new List<NetworkCloudRackDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                }
                             }
                             computeRackDefinitions = array;
                             continue;

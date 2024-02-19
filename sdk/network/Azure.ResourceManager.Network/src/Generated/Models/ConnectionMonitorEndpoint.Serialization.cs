@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<ConnectionMonitorEndpointFilter>)Filter).Write(writer, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                ((IJsonModel<ConnectionMonitorEndpointScope>)Scope).Write(writer, options);
             }
             if (Optional.IsDefined(CoverageLevel))
             {

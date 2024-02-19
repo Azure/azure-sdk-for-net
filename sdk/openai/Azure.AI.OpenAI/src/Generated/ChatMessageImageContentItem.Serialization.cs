@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("image_url"u8);
-            writer.WriteObjectValue(ImageUrl);
+            ((IJsonModel<ChatMessageImageUrl>)ImageUrl).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

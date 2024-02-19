@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualHubRouteV2>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +182,14 @@ namespace Azure.ResourceManager.Network
                             List<VirtualHubRouteV2> array = new List<VirtualHubRouteV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualHubRouteV2.DeserializeVirtualHubRouteV2(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualHubRouteV2.DeserializeVirtualHubRouteV2(item));
+                                }
                             }
                             routes = array;
                             continue;

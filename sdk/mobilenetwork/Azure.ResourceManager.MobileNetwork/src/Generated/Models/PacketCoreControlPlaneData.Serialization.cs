@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(UserAssignedIdentity);
+                ((IJsonModel<MobileNetworkManagedServiceIdentity>)UserAssignedIdentity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,17 +77,24 @@ namespace Azure.ResourceManager.MobileNetwork
             if (Optional.IsDefined(Installation))
             {
                 writer.WritePropertyName("installation"u8);
-                writer.WriteObjectValue(Installation);
+                ((IJsonModel<MobileNetworkInstallation>)Installation).Write(writer, options);
             }
             writer.WritePropertyName("sites"u8);
             writer.WriteStartArray();
             foreach (var item in Sites)
             {
-                JsonSerializer.Serialize(writer, item);
+                if (item != null)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("platform"u8);
-            writer.WriteObjectValue(Platform);
+            ((IJsonModel<MobileNetworkPlatformConfiguration>)Platform).Write(writer, options);
             if (Optional.IsDefined(CoreNetworkTechnology))
             {
                 writer.WritePropertyName("coreNetworkTechnology"u8);
@@ -109,7 +116,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(RollbackVersion);
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
-            writer.WriteObjectValue(ControlPlaneAccessInterface);
+            ((IJsonModel<MobileNetworkInterfaceProperties>)ControlPlaneAccessInterface).Write(writer, options);
             if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
@@ -128,21 +135,21 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteNumberValue(UeMtu.Value);
             }
             writer.WritePropertyName("localDiagnosticsAccess"u8);
-            writer.WriteObjectValue(LocalDiagnosticsAccess);
+            ((IJsonModel<MobileNetworkLocalDiagnosticsAccessConfiguration>)LocalDiagnosticsAccess).Write(writer, options);
             if (Optional.IsDefined(DiagnosticsUpload))
             {
                 writer.WritePropertyName("diagnosticsUpload"u8);
-                writer.WriteObjectValue(DiagnosticsUpload);
+                ((IJsonModel<DiagnosticsUploadConfiguration>)DiagnosticsUpload).Write(writer, options);
             }
             if (Optional.IsDefined(EventHub))
             {
                 writer.WritePropertyName("eventHub"u8);
-                writer.WriteObjectValue(EventHub);
+                ((IJsonModel<MobileNetworkEventHubConfiguration>)EventHub).Write(writer, options);
             }
             if (Optional.IsDefined(Signaling))
             {
                 writer.WritePropertyName("signaling"u8);
-                writer.WriteObjectValue(Signaling);
+                ((IJsonModel<SignalingConfiguration>)Signaling).Write(writer, options);
             }
             if (Optional.IsDefined(InteropSettings))
             {
@@ -307,7 +314,14 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             sites = array;
                             continue;

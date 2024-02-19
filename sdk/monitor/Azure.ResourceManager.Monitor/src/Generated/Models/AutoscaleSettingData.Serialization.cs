@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.Monitor
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AutoscaleProfile>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Notifications))
@@ -78,7 +85,14 @@ namespace Azure.ResourceManager.Monitor
                     writer.WriteStartArray();
                     foreach (var item in Notifications)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<AutoscaleNotification>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -97,7 +111,7 @@ namespace Azure.ResourceManager.Monitor
                 if (PredictiveAutoscalePolicy != null)
                 {
                     writer.WritePropertyName("predictiveAutoscalePolicy"u8);
-                    writer.WriteObjectValue(PredictiveAutoscalePolicy);
+                    ((IJsonModel<PredictiveAutoscalePolicy>)PredictiveAutoscalePolicy).Write(writer, options);
                 }
                 else
                 {
@@ -232,7 +246,14 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleProfile> array = new List<AutoscaleProfile>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AutoscaleProfile.DeserializeAutoscaleProfile(item));
+                                }
                             }
                             profiles = array;
                             continue;
@@ -247,7 +268,14 @@ namespace Azure.ResourceManager.Monitor
                             List<AutoscaleNotification> array = new List<AutoscaleNotification>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AutoscaleNotification.DeserializeAutoscaleNotification(item));
+                                }
                             }
                             notifications = array;
                             continue;

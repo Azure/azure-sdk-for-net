@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(Replication))
             {
                 writer.WritePropertyName("replication"u8);
-                writer.WriteObjectValue(Replication);
+                ((IJsonModel<NetAppReplicationObject>)Replication).Write(writer, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                ((IJsonModel<VolumeSnapshotProperties>)Snapshot).Write(writer, options);
             }
             if (Optional.IsDefined(VolumeRelocation))
             {
                 writer.WritePropertyName("volumeRelocation"u8);
-                writer.WriteObjectValue(VolumeRelocation);
+                ((IJsonModel<NetAppVolumeRelocationProperties>)VolumeRelocation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

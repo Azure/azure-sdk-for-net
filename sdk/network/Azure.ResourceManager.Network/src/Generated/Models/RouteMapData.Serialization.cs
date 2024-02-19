@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteMapRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -222,7 +229,14 @@ namespace Azure.ResourceManager.Network
                             List<RouteMapRule> array = new List<RouteMapRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RouteMapRule.DeserializeRouteMapRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RouteMapRule.DeserializeRouteMapRule(item));
+                                }
                             }
                             rules = array;
                             continue;

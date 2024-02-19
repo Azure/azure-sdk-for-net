@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +81,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroupDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +176,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        }
                     }
                     resourceDetails = array;
                     continue;
@@ -169,7 +197,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        }
                     }
                     policyDetails = array;
                     continue;
@@ -183,7 +218,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComplianceDetail> array = new List<ComplianceDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComplianceDetail.DeserializeComplianceDetail(item));
+                        }
                     }
                     policyGroupDetails = array;
                     continue;

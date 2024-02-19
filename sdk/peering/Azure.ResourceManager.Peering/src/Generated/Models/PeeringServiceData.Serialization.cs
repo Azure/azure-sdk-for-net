@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<PeeringServiceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(LogAnalyticsWorkspaceProperties))
             {
                 writer.WritePropertyName("logAnalyticsWorkspaceProperties"u8);
-                writer.WriteObjectValue(LogAnalyticsWorkspaceProperties);
+                ((IJsonModel<PeeringLogAnalyticsWorkspaceProperties>)LogAnalyticsWorkspaceProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -29,12 +29,19 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("aggregationLevel"u8);
             writer.WriteStringValue(AggregationLevel);
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation);
+            ((IJsonModel<AzureReachabilityReportLocation>)ProviderLocation).Write(writer, options);
             writer.WritePropertyName("reachabilityReport"u8);
             writer.WriteStartArray();
             foreach (var item in ReachabilityReport)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AzureReachabilityReportItem>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<AzureReachabilityReportItem> array = new List<AzureReachabilityReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureReachabilityReportItem.DeserializeAzureReachabilityReportItem(item));
+                        }
                     }
                     reachabilityReport = array;
                     continue;

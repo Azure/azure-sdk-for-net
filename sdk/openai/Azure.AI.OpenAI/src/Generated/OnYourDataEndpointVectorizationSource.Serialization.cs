@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue(Authentication);
+            ((IJsonModel<OnYourDataAuthenticationOptions>)Authentication).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

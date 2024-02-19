@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI.Assistants
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreadInitializationMessage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +115,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ThreadInitializationMessage> array = new List<ThreadInitializationMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadInitializationMessage.DeserializeThreadInitializationMessage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreadInitializationMessage.DeserializeThreadInitializationMessage(item));
+                        }
                     }
                     messages = array;
                     continue;

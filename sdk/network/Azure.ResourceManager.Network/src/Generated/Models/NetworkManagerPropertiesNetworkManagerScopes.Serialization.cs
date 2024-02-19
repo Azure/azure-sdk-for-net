@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in CrossTenantScopes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CrossTenantScopes>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +145,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<CrossTenantScopes> array = new List<CrossTenantScopes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.CrossTenantScopes.DeserializeCrossTenantScopes(item));
+                        }
                     }
                     crossTenantScopes = array;
                     continue;

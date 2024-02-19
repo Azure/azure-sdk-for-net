@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RemediationDeployment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<RemediationDeployment> array = new List<RemediationDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RemediationDeployment.DeserializeRemediationDeployment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RemediationDeployment.DeserializeRemediationDeployment(item));
+                        }
                     }
                     value = array;
                     continue;

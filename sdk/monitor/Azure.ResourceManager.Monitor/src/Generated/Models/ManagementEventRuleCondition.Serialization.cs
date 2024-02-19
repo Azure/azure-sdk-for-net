@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Aggregation))
             {
                 writer.WritePropertyName("aggregation"u8);
-                writer.WriteObjectValue(Aggregation);
+                ((IJsonModel<ManagementEventAggregationCondition>)Aggregation).Write(writer, options);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
             if (Optional.IsDefined(DataSource))
             {
                 writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue(DataSource);
+                ((IJsonModel<RuleDataSource>)DataSource).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

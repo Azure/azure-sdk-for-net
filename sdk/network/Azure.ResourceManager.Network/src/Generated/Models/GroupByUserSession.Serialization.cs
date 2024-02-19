@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in GroupByVariables)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<GroupByVariable>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<GroupByVariable> array = new List<GroupByVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GroupByVariable.DeserializeGroupByVariable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GroupByVariable.DeserializeGroupByVariable(item));
+                        }
                     }
                     groupByVariables = array;
                     continue;

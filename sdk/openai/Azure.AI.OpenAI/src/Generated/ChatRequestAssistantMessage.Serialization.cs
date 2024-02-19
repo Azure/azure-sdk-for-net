@@ -47,14 +47,21 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in ToolCalls)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChatCompletionsToolCall>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
+                ((IJsonModel<FunctionCall>)FunctionCall).Write(writer, options);
             }
             writer.WritePropertyName("role"u8);
             writer.WriteStringValue(Role.ToString());
@@ -129,7 +136,14 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolCall> array = new List<ChatCompletionsToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        }
                     }
                     toolCalls = array;
                     continue;

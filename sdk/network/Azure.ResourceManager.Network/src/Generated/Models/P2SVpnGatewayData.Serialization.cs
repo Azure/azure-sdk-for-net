@@ -78,7 +78,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<P2SConnectionConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue(VpnClientConnectionHealth);
+                ((IJsonModel<VpnClientConnectionHealth>)VpnClientConnectionHealth).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -256,7 +263,14 @@ namespace Azure.ResourceManager.Network
                             List<P2SConnectionConfiguration> array = new List<P2SConnectionConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(P2SConnectionConfiguration.DeserializeP2SConnectionConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(P2SConnectionConfiguration.DeserializeP2SConnectionConfiguration(item));
+                                }
                             }
                             p2sConnectionConfigurations = array;
                             continue;

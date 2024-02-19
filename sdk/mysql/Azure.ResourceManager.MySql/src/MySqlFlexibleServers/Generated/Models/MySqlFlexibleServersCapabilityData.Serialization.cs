@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStartArray();
                 foreach (var item in SupportedFlexibleServerEditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServerEditionCapabilityV2>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStartArray();
                 foreach (var item in SupportedServerVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServerVersionCapabilityV2>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +200,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             List<ServerEditionCapabilityV2> array = new List<ServerEditionCapabilityV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerEditionCapabilityV2.DeserializeServerEditionCapabilityV2(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServerEditionCapabilityV2.DeserializeServerEditionCapabilityV2(item));
+                                }
                             }
                             supportedFlexibleServerEditions = array;
                             continue;
@@ -200,7 +221,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             List<ServerVersionCapabilityV2> array = new List<ServerVersionCapabilityV2>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerVersionCapabilityV2.DeserializeServerVersionCapabilityV2(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ServerVersionCapabilityV2.DeserializeServerVersionCapabilityV2(item));
+                                }
                             }
                             supportedServerVersions = array;
                             continue;

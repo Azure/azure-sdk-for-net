@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExtendedErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TypedErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +146,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ExtendedErrorInfo> array = new List<ExtendedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeExtendedErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeExtendedErrorInfo(item));
+                        }
                     }
                     details = array;
                     continue;
@@ -146,7 +167,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<TypedErrorInfo> array = new List<TypedErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TypedErrorInfo.DeserializeTypedErrorInfo(item));
+                        }
                     }
                     additionalInfo = array;
                     continue;

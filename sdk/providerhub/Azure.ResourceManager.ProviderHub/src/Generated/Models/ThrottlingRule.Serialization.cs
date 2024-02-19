@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ThrottlingMetric>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(RequiredFeatures))
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ThrottlingMetric> array = new List<ThrottlingMetric>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThrottlingMetric.DeserializeThrottlingMetric(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThrottlingMetric.DeserializeThrottlingMetric(item));
+                        }
                     }
                     metrics = array;
                     continue;

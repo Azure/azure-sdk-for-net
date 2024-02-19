@@ -89,17 +89,17 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                ((IJsonModel<RetentionPolicyParameters>)RetentionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                ((IJsonModel<FlowLogProperties>)Format).Write(writer, options);
             }
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(FlowAnalyticsConfiguration);
+                ((IJsonModel<TrafficAnalyticsProperties>)FlowAnalyticsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

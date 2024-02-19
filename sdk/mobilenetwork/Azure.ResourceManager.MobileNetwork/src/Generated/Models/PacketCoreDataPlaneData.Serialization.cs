@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("userPlaneAccessInterface"u8);
-            writer.WriteObjectValue(UserPlaneAccessInterface);
+            ((IJsonModel<MobileNetworkInterfaceProperties>)UserPlaneAccessInterface).Write(writer, options);
             if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
             {
                 writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);

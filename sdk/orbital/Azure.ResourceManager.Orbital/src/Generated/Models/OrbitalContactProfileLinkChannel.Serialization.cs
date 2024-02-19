@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Orbital.Models
             writer.WritePropertyName("bandwidthMHz"u8);
             writer.WriteNumberValue(BandwidthMHz);
             writer.WritePropertyName("endPoint"u8);
-            writer.WriteObjectValue(EndPoint);
+            ((IJsonModel<OrbitalContactEndpoint>)EndPoint).Write(writer, options);
             if (Optional.IsDefined(ModulationConfiguration))
             {
                 writer.WritePropertyName("modulationConfiguration"u8);

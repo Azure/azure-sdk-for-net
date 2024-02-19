@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(BmcCredentials))
             {
                 writer.WritePropertyName("bmcCredentials"u8);
-                writer.WriteObjectValue(BmcCredentials);
+                ((IJsonModel<AdministrativeCredentials>)BmcCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(BmcMacAddress))
             {

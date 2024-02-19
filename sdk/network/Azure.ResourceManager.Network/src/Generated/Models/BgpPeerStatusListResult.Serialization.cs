@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BgpPeerStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<BgpPeerStatus> array = new List<BgpPeerStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BgpPeerStatus.DeserializeBgpPeerStatus(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
-                writer.WriteObjectValue(BgpSession);
+                ((IJsonModel<PeeringBgpSession>)BgpSession).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionIdentifier))
             {

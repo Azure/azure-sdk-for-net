@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                ((IJsonModel<LogFileSettingsText>)Text).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
