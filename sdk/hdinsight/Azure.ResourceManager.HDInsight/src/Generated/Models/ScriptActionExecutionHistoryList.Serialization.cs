@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RuntimeScriptActionDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptActionDetail> array = new List<RuntimeScriptActionDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail(item));
+                        }
                     }
                     value = array;
                     continue;

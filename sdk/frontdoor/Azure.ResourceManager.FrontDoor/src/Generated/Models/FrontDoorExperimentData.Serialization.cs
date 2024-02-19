@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.FrontDoor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,12 +78,12 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(ExperimentEndpointA))
             {
                 writer.WritePropertyName("endpointA"u8);
-                writer.WriteObjectValue(ExperimentEndpointA);
+                ((IJsonModel<FrontDoorExperimentEndpointProperties>)ExperimentEndpointA).Write(writer, options);
             }
             if (Optional.IsDefined(ExperimentEndpointB))
             {
                 writer.WritePropertyName("endpointB"u8);
-                writer.WriteObjectValue(ExperimentEndpointB);
+                ((IJsonModel<FrontDoorExperimentEndpointProperties>)ExperimentEndpointB).Write(writer, options);
             }
             if (Optional.IsDefined(EnabledState))
             {

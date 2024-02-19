@@ -18,9 +18,23 @@ namespace Azure.DigitalTwins.Core
         {
             writer.WriteStartObject();
             writer.WritePropertyName("inputBlobUri"u8);
-            writer.WriteStringValue(InputBlobUri.AbsoluteUri);
+            if (InputBlobUri != null)
+            {
+                writer.WriteStringValue(InputBlobUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("outputBlobUri"u8);
-            writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
+            if (OutputBlobUri != null)
+            {
+                writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);

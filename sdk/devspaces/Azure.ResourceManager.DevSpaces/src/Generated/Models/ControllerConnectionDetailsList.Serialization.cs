@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ControllerConnectionDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     List<ControllerConnectionDetails> array = new List<ControllerConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControllerConnectionDetails.DeserializeControllerConnectionDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ControllerConnectionDetails.DeserializeControllerConnectionDetails(item));
+                        }
                     }
                     connectionDetailsList = array;
                     continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HealthcareApis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,9 +76,23 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WritePropertyName("resourceIdentityResolutionType"u8);
             writer.WriteStringValue(ResourceIdentityResolutionType.ToString());
             writer.WritePropertyName("fhirServiceResourceId"u8);
-            writer.WriteStringValue(FhirServiceResourceId);
+            if (FhirServiceResourceId != null)
+            {
+                writer.WriteStringValue(FhirServiceResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("fhirMapping"u8);
-            writer.WriteObjectValue(FhirMapping);
+            if (FhirMapping != null)
+            {
+                ((IJsonModel<HealthcareApisIotMappingProperties>)FhirMapping).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

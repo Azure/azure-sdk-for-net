@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EasmWorkspaceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmWorkspaceData> array = new List<EasmWorkspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EasmWorkspaceData.DeserializeEasmWorkspaceData(item));
+                        }
                     }
                     value = array;
                     continue;

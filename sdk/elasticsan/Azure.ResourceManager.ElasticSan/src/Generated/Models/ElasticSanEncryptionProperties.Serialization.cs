@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<ElasticSanKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionIdentity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(EncryptionIdentity);
+                ((IJsonModel<EncryptionIdentity>)EncryptionIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

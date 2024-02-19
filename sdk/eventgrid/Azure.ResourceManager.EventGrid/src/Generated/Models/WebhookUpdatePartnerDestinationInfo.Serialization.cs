@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(ClientAuthentication))
             {
                 writer.WritePropertyName("clientAuthentication"u8);
-                writer.WriteObjectValue(ClientAuthentication);
+                ((IJsonModel<PartnerClientAuthentication>)ClientAuthentication).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

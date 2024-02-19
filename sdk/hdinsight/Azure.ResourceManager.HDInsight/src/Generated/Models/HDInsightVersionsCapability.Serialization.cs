@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Available)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightVersionSpec>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVersionSpec> array = new List<HDInsightVersionSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightVersionSpec.DeserializeHDInsightVersionSpec(item));
+                        }
                     }
                     available = array;
                     continue;

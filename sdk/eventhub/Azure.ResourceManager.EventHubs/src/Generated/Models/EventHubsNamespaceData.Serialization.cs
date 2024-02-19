@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<EventHubsSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.EventHubs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -141,7 +148,7 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<EventHubsEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -149,7 +156,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -420,7 +434,14 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsPrivateEndpointConnectionData> array = new List<EventHubsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventHubsPrivateEndpointConnectionData.DeserializeEventHubsPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

@@ -31,23 +31,32 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             foreach (var item in FilterableProperties)
             {
                 writer.WritePropertyName(item.Key);
-                if (item.Value == null)
+                if (item.Value != null)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item.Value)
+                    {
+                        if (item0 != null)
+                        {
+                            ((IJsonModel<FilterableProperty>)item0).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
+                    }
+                    writer.WriteEndArray();
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStartArray();
-                foreach (var item0 in item.Value)
-                {
-                    writer.WriteObjectValue(item0);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(CustomerSubscriptionDetails))
             {
                 writer.WritePropertyName("customerSubscriptionDetails"u8);
-                writer.WriteObjectValue(CustomerSubscriptionDetails);
+                ((IJsonModel<CustomerSubscriptionDetails>)CustomerSubscriptionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +116,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                             List<FilterableProperty> array = new List<FilterableProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FilterableProperty.DeserializeFilterableProperty(item));
+                                }
                             }
                             dictionary.Add(property0.Name, array);
                         }

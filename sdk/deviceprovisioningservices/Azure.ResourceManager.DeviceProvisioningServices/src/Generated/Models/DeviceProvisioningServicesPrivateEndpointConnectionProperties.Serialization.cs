@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            if (ConnectionState != null)
+            {
+                ((IJsonModel<DeviceProvisioningServicesPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

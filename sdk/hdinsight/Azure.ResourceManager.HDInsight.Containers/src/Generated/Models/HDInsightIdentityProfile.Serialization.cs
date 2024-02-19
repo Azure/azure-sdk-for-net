@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("msiResourceId"u8);
-            writer.WriteStringValue(MsiResourceId);
+            if (MsiResourceId != null)
+            {
+                writer.WriteStringValue(MsiResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("msiClientId"u8);
             writer.WriteStringValue(MsiClientId);
             writer.WritePropertyName("msiObjectId"u8);

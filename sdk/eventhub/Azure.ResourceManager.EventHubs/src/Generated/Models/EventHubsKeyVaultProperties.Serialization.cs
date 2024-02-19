@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<UserAssignedIdentityProperties>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

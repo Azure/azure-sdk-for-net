@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(RemotePrivateEndpoint))
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint);
+                ((IJsonModel<DeviceUpdateRemotePrivateEndpoint>)RemotePrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -46,7 +46,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticSanSnapshotData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSnapshotData> array = new List<ElasticSanSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticSanSnapshotData.DeserializeElasticSanSnapshotData(item));
+                        }
                     }
                     value = array;
                     continue;

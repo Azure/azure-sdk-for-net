@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DigitalTwinsDescriptionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     List<DigitalTwinsDescriptionData> array = new List<DigitalTwinsDescriptionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DigitalTwinsDescriptionData.DeserializeDigitalTwinsDescriptionData(item));
+                        }
                     }
                     value = array;
                     continue;

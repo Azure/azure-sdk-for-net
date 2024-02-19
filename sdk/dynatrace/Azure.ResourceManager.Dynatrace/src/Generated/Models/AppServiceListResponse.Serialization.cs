@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DynatraceOneAgentEnabledAppServiceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceOneAgentEnabledAppServiceInfo> array = new List<DynatraceOneAgentEnabledAppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DynatraceOneAgentEnabledAppServiceInfo.DeserializeDynatraceOneAgentEnabledAppServiceInfo(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.FrontDoor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -74,7 +81,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +98,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorLoadBalancingSettingsData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +115,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in HealthProbeSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorHealthProbeSettingsData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +132,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in BackendPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorBackendPool>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,14 +149,21 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontendEndpointData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
-                writer.WriteObjectValue(BackendPoolsSettings);
+                ((IJsonModel<BackendPoolsSettings>)BackendPoolsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -154,7 +196,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RulesEngines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorRulesEngineData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -298,7 +347,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<RoutingRuleData> array = new List<RoutingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
+                                }
                             }
                             routingRules = array;
                             continue;
@@ -312,7 +368,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorLoadBalancingSettingsData> array = new List<FrontDoorLoadBalancingSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontDoorLoadBalancingSettingsData.DeserializeFrontDoorLoadBalancingSettingsData(item));
+                                }
                             }
                             loadBalancingSettings = array;
                             continue;
@@ -326,7 +389,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorHealthProbeSettingsData> array = new List<FrontDoorHealthProbeSettingsData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontDoorHealthProbeSettingsData.DeserializeFrontDoorHealthProbeSettingsData(item));
+                                }
                             }
                             healthProbeSettings = array;
                             continue;
@@ -340,7 +410,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorBackendPool> array = new List<FrontDoorBackendPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontDoorBackendPool.DeserializeFrontDoorBackendPool(item));
+                                }
                             }
                             backendPools = array;
                             continue;
@@ -354,7 +431,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontendEndpointData> array = new List<FrontendEndpointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontendEndpointData.DeserializeFrontendEndpointData(item));
+                                }
                             }
                             frontendEndpoints = array;
                             continue;
@@ -410,7 +494,14 @@ namespace Azure.ResourceManager.FrontDoor
                             List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                                }
                             }
                             rulesEngines = array;
                             continue;

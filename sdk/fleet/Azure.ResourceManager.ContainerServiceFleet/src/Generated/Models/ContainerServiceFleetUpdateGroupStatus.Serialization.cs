@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ContainerServiceFleetUpdateStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MemberUpdateStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<MemberUpdateStatus> array = new List<MemberUpdateStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MemberUpdateStatus.DeserializeMemberUpdateStatus(item));
+                        }
                     }
                     members = array;
                     continue;

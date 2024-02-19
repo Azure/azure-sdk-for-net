@@ -57,7 +57,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentPage> array = new List<DocumentPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentPage.DeserializeDocumentPage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentPage.DeserializeDocumentPage(item));
+                        }
                     }
                     pages = array;
                     continue;
@@ -71,7 +78,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentParagraph> array = new List<DocumentParagraph>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                        }
                     }
                     paragraphs = array;
                     continue;
@@ -85,7 +99,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentTable> array = new List<DocumentTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTable.DeserializeDocumentTable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentTable.DeserializeDocumentTable(item));
+                        }
                     }
                     tables = array;
                     continue;
@@ -99,7 +120,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentKeyValuePair> array = new List<DocumentKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item));
+                        }
                     }
                     keyValuePairs = array;
                     continue;
@@ -113,7 +141,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentStyle> array = new List<DocumentStyle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentStyle.DeserializeDocumentStyle(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentStyle.DeserializeDocumentStyle(item));
+                        }
                     }
                     styles = array;
                     continue;
@@ -127,7 +162,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentLanguage> array = new List<DocumentLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                        }
                     }
                     languages = array;
                     continue;
@@ -141,7 +183,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<AnalyzedDocument> array = new List<AnalyzedDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item));
+                        }
                     }
                     documents = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorRulesEngineData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontDoorRulesEngineData> array = new List<FrontDoorRulesEngineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FrontDoorRulesEngineData.DeserializeFrontDoorRulesEngineData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -38,7 +38,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in ComponentModels)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ComponentDocumentModelDetails>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Tags))
@@ -113,7 +120,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<ComponentDocumentModelDetails> array = new List<ComponentDocumentModelDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComponentDocumentModelDetails.DeserializeComponentDocumentModelDetails(item));
+                        }
                     }
                     componentModels = array;
                     continue;

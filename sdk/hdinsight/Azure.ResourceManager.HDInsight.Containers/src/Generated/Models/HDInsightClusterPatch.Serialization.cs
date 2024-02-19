@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -65,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                ((IJsonModel<UpdatableClusterProfile>)ClusterProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

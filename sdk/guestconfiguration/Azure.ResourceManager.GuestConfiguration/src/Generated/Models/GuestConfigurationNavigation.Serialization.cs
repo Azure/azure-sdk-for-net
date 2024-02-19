@@ -100,7 +100,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GuestConfigurationParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GuestConfigurationParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +133,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 if (ConfigurationSetting != null)
                 {
                     writer.WritePropertyName("configurationSetting"u8);
-                    writer.WriteObjectValue(ConfigurationSetting);
+                    ((IJsonModel<LcmConfigurationSetting>)ConfigurationSetting).Write(writer, options);
                 }
                 else
                 {
@@ -252,7 +266,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        }
                     }
                     configurationParameter = array;
                     continue;
@@ -266,7 +287,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationParameter> array = new List<GuestConfigurationParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GuestConfigurationParameter.DeserializeGuestConfigurationParameter(item));
+                        }
                     }
                     configurationProtectedParameter = array;
                     continue;

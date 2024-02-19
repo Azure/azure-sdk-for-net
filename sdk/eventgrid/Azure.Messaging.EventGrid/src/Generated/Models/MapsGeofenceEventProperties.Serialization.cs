@@ -48,7 +48,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<MapsGeofenceGeometry> array = new List<MapsGeofenceGeometry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsGeofenceGeometry.DeserializeMapsGeofenceGeometry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapsGeofenceGeometry.DeserializeMapsGeofenceGeometry(item));
+                        }
                     }
                     geometries = array;
                     continue;

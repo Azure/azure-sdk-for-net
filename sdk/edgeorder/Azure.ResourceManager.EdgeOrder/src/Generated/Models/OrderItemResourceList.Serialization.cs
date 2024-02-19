@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EdgeOrderItemData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderItemData> array = new List<EdgeOrderItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EdgeOrderItemData.DeserializeEdgeOrderItemData(item));
+                        }
                     }
                     value = array;
                     continue;

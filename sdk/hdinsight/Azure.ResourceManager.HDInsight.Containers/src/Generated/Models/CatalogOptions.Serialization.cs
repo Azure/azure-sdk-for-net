@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Hive)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HiveCatalogOption>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HiveCatalogOption> array = new List<HiveCatalogOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        }
                     }
                     hive = array;
                     continue;

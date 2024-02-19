@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedRuleExclusion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        }
                     }
                     exclusions = array;
                     continue;

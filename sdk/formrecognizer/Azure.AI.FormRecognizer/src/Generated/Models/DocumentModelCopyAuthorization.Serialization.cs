@@ -23,7 +23,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WritePropertyName("targetModelId"u8);
             writer.WriteStringValue(TargetModelId);
             writer.WritePropertyName("targetModelLocation"u8);
-            writer.WriteStringValue(TargetModelLocation.AbsoluteUri);
+            if (TargetModelLocation != null)
+            {
+                writer.WriteStringValue(TargetModelLocation.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expirationDateTime"u8);

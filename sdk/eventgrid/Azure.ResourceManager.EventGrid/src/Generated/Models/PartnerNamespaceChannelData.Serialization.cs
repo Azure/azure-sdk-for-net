@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.EventGrid
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,12 +65,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo);
+                ((IJsonModel<PartnerTopicInfo>)PartnerTopicInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo);
+                ((IJsonModel<PartnerDestinationInfo>)PartnerDestinationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(MessageForActivation))
             {

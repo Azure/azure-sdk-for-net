@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.DnsResolver
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet);
+            if (Subnet != null)
+            {
+                JsonSerializer.Serialize(writer, Subnet);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

@@ -65,12 +65,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue(AzureBlobSource);
+                ((IJsonModel<AzureBlobContentSource>)AzureBlobSource).Write(writer, options);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue(AzureBlobFileListSource);
+                ((IJsonModel<AzureBlobFileListContentSource>)AzureBlobFileListSource).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DocTypes))
             {
@@ -79,7 +79,14 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in DocTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DocumentTypeDetails>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -214,7 +221,14 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentTypeDetails> dictionary = new Dictionary<string, DocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
+                        }
                     }
                     docTypes = dictionary;
                     continue;

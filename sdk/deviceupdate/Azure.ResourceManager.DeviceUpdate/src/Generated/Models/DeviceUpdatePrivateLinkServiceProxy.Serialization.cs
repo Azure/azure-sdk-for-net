@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
+                ((IJsonModel<DeviceUpdatePrivateLinkServiceConnectionState>)RemotePrivateLinkServiceConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GroupConnectivityInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +141,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        }
                     }
                     groupConnectivityInformation = array;
                     continue;

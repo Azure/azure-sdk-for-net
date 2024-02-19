@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<HDInsightClusterProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.HDInsight
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,17 +76,17 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy);
+                ((IJsonModel<ContainerServiceFleetUpdateRunStrategy>)Strategy).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedClusterUpdate))
             {
                 writer.WritePropertyName("managedClusterUpdate"u8);
-                writer.WriteObjectValue(ManagedClusterUpdate);
+                ((IJsonModel<ContainerServiceFleetManagedClusterUpdate>)ManagedClusterUpdate).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ContainerServiceFleetUpdateRunStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -79,7 +86,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in IotHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdateIotHubSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +105,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(DiagnosticStorageProperties))
             {
                 writer.WritePropertyName("diagnosticStorageProperties"u8);
-                writer.WriteObjectValue(DiagnosticStorageProperties);
+                ((IJsonModel<DiagnosticStorageProperties>)DiagnosticStorageProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -222,7 +236,14 @@ namespace Azure.ResourceManager.DeviceUpdate
                             List<DeviceUpdateIotHubSettings> array = new List<DeviceUpdateIotHubSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeviceUpdateIotHubSettings.DeserializeDeviceUpdateIotHubSettings(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeviceUpdateIotHubSettings.DeserializeDeviceUpdateIotHubSettings(item));
+                                }
                             }
                             iotHubs = array;
                             continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkSecurityPerimeterProfileAccessRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<NetworkSecurityPerimeterProfileAccessRule> array = new List<NetworkSecurityPerimeterProfileAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkSecurityPerimeterProfileAccessRule.DeserializeNetworkSecurityPerimeterProfileAccessRule(item));
+                        }
                     }
                     accessRules = array;
                     continue;

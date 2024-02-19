@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -81,12 +88,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                ((IJsonModel<ComputeProfile>)ComputeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                ((IJsonModel<ClusterProfile>)ClusterProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

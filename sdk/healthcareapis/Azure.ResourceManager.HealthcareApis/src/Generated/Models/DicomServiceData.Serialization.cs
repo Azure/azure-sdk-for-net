@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.HealthcareApis
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -83,12 +90,12 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration);
+                ((IJsonModel<DicomServiceAuthenticationConfiguration>)AuthenticationConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration);
+                ((IJsonModel<DicomServiceCorsConfiguration>)CorsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceUri))
             {
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +132,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<Encryption>)Encryption).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -295,7 +309,14 @@ namespace Azure.ResourceManager.HealthcareApis
                             List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

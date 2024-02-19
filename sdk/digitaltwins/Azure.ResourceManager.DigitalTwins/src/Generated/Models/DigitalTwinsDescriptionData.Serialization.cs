@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.DigitalTwins
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.DigitalTwins
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<DigitalTwinsPrivateEndpointConnectionData>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -290,7 +304,14 @@ namespace Azure.ResourceManager.DigitalTwins
                             List<DigitalTwinsPrivateEndpointConnectionData> array = new List<DigitalTwinsPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DigitalTwinsPrivateEndpointConnectionData.DeserializeDigitalTwinsPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

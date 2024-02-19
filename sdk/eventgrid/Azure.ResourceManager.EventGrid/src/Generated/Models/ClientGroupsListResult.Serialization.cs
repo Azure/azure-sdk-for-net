@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventGridNamespaceClientGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridNamespaceClientGroupData> array = new List<EventGridNamespaceClientGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridNamespaceClientGroupData.DeserializeEventGridNamespaceClientGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventGridNamespaceClientGroupData.DeserializeEventGridNamespaceClientGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

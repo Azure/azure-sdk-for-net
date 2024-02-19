@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GuestConfigurationAssignmentReport>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<GuestConfigurationAssignmentReport> array = new List<GuestConfigurationAssignmentReport>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GuestConfigurationAssignmentReport.DeserializeGuestConfigurationAssignmentReport(item));
+                        }
                     }
                     value = array;
                     continue;

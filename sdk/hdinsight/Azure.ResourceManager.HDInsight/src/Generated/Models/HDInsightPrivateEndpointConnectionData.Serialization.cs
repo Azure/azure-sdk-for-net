@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.HDInsight
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            if (ConnectionState != null)
+            {
+                ((IJsonModel<HDInsightPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
             {
                 writer.WritePropertyName("linkIdentifier"u8);

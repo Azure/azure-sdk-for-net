@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DnsResolver
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WriteStartArray();
             foreach (var item in TargetDnsServers)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TargetDnsServer>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Metadata))
@@ -191,7 +205,14 @@ namespace Azure.ResourceManager.DnsResolver
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                }
                             }
                             targetDnsServers = array;
                             continue;

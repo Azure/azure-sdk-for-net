@@ -47,7 +47,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStringValue(CreatedDateTime.Value, "O");
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content != null)
+            {
+                ((IJsonModel<DocumentContent>)Content).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

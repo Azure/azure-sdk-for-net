@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitorWorkspaceIntegrations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorWorkspaceIntegration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<MonitorWorkspaceIntegration> array = new List<MonitorWorkspaceIntegration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorWorkspaceIntegration.DeserializeMonitorWorkspaceIntegration(item));
+                        }
                     }
                     azureMonitorWorkspaceIntegrations = array;
                     continue;

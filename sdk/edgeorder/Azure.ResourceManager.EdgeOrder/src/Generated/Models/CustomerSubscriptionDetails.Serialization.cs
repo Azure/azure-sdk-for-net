@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CustomerSubscriptionRegisteredFeatures>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<CustomerSubscriptionRegisteredFeatures> array = new List<CustomerSubscriptionRegisteredFeatures>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomerSubscriptionRegisteredFeatures.DeserializeCustomerSubscriptionRegisteredFeatures(item));
+                        }
                     }
                     registeredFeatures = array;
                     continue;

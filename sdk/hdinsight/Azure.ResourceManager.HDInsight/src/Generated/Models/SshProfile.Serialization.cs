@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightSshPublicKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightSshPublicKey> array = new List<HDInsightSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightSshPublicKey.DeserializeHDInsightSshPublicKey(item));
+                        }
                     }
                     publicKeys = array;
                     continue;

@@ -123,7 +123,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GeographicLocation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in FacilityAreas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GeographicArea>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -325,7 +339,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicLocation> array = new List<GeographicLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicLocation.DeserializeGeographicLocation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GeographicLocation.DeserializeGeographicLocation(item));
+                        }
                     }
                     facilityLocations = array;
                     continue;
@@ -339,7 +360,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<GeographicArea> array = new List<GeographicArea>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeographicArea.DeserializeGeographicArea(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GeographicArea.DeserializeGeographicArea(item));
+                        }
                     }
                     facilityAreas = array;
                     continue;

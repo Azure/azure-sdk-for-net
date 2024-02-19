@@ -27,11 +27,18 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("forwardAddress"u8);
-            writer.WriteObjectValue(ForwardAddress);
+            if (ForwardAddress != null)
+            {
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ForwardAddress).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ReturnAddress).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

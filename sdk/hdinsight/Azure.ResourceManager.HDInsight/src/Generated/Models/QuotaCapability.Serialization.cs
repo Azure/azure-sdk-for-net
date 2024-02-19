@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in RegionalQuotas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RegionalQuotaCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RegionalQuotaCapability> array = new List<RegionalQuotaCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RegionalQuotaCapability.DeserializeRegionalQuotaCapability(item));
+                        }
                     }
                     regionalQuotas = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MsixPackageData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<MsixPackageData> array = new List<MsixPackageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MsixPackageData.DeserializeMsixPackageData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MsixPackageData.DeserializeMsixPackageData(item));
+                        }
                     }
                     value = array;
                     continue;

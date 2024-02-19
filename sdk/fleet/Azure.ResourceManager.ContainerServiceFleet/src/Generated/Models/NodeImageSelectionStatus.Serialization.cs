@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in SelectedNodeImageVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeImageVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<NodeImageVersion> array = new List<NodeImageVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NodeImageVersion.DeserializeNodeImageVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NodeImageVersion.DeserializeNodeImageVersion(item));
+                        }
                     }
                     selectedNodeImageVersions = array;
                     continue;

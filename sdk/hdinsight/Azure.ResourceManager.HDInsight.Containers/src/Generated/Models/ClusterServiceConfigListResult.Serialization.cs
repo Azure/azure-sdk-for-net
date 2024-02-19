@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterServiceConfigResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfigResult> array = new List<ClusterServiceConfigResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterServiceConfigResult.DeserializeClusterServiceConfigResult(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                ((IJsonModel<ComputeProfile>)ComputeProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(InstallScriptActions))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in InstallScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RuntimeScriptAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +55,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in UninstallScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RuntimeScriptAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +72,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpsEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightApplicationHttpsEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +89,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in SshEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightApplicationEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +121,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +148,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightPrivateLinkConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +231,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptAction> array = new List<RuntimeScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        }
                     }
                     installScriptActions = array;
                     continue;
@@ -203,7 +252,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<RuntimeScriptAction> array = new List<RuntimeScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RuntimeScriptAction.DeserializeRuntimeScriptAction(item));
+                        }
                     }
                     uninstallScriptActions = array;
                     continue;
@@ -217,7 +273,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightApplicationHttpsEndpoint> array = new List<HDInsightApplicationHttpsEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightApplicationHttpsEndpoint.DeserializeHDInsightApplicationHttpsEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightApplicationHttpsEndpoint.DeserializeHDInsightApplicationHttpsEndpoint(item));
+                        }
                     }
                     httpsEndpoints = array;
                     continue;
@@ -231,7 +294,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightApplicationEndpoint> array = new List<HDInsightApplicationEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightApplicationEndpoint.DeserializeHDInsightApplicationEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightApplicationEndpoint.DeserializeHDInsightApplicationEndpoint(item));
+                        }
                     }
                     sshEndpoints = array;
                     continue;
@@ -260,7 +330,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        }
                     }
                     errors = array;
                     continue;
@@ -288,7 +365,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        }
                     }
                     privateLinkConfigurations = array;
                     continue;

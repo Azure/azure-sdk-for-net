@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                ((IJsonModel<HDInsightAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                ((IJsonModel<HardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<OSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                ((IJsonModel<HDInsightVirtualNetworkProfile>)VirtualNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDisksGroups))
             {
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightClusterDataDiskGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +231,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterDataDiskGroup> array = new List<HDInsightClusterDataDiskGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightClusterDataDiskGroup.DeserializeHDInsightClusterDataDiskGroup(item));
+                        }
                     }
                     dataDisksGroups = array;
                     continue;
@@ -231,7 +252,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ScriptAction> array = new List<ScriptAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptAction.DeserializeScriptAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptAction.DeserializeScriptAction(item));
+                        }
                     }
                     scriptActions = array;
                     continue;

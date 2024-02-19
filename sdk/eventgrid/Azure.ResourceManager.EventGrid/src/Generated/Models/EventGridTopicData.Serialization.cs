@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.EventGrid
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventGridPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +121,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
+                ((IJsonModel<PartnerTopicEventTypeInfo>)EventTypeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
@@ -122,7 +136,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(InputSchemaMapping))
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
-                writer.WriteObjectValue(InputSchemaMapping);
+                ((IJsonModel<EventGridInputSchemaMapping>)InputSchemaMapping).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
@@ -140,7 +154,14 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventGridInboundIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -316,7 +337,14 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridPrivateEndpointConnectionData> array = new List<EventGridPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventGridPrivateEndpointConnectionData.DeserializeEventGridPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -398,7 +426,14 @@ namespace Azure.ResourceManager.EventGrid
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                }
                             }
                             inboundIPRules = array;
                             continue;

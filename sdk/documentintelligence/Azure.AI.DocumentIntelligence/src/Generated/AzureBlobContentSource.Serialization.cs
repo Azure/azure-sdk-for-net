@@ -28,7 +28,14 @@ namespace Azure.AI.DocumentIntelligence
 
             writer.WriteStartObject();
             writer.WritePropertyName("containerUrl"u8);
-            writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            if (ContainerUrl != null)
+            {
+                writer.WriteStringValue(ContainerUrl.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Prefix))
             {
                 writer.WritePropertyName("prefix"u8);

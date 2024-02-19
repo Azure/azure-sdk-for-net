@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("adxResourceId"u8);
-            writer.WriteStringValue(AdxResourceId);
+            if (AdxResourceId != null)
+            {
+                writer.WriteStringValue(AdxResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("adxEndpointUri"u8);
-            writer.WriteStringValue(AdxEndpointUri.AbsoluteUri);
+            if (AdxEndpointUri != null)
+            {
+                writer.WriteStringValue(AdxEndpointUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("adxDatabaseName"u8);
             writer.WriteStringValue(AdxDatabaseName);
             if (Optional.IsDefined(AdxTableName))
@@ -69,11 +83,25 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             writer.WritePropertyName("eventHubEndpointUri"u8);
-            writer.WriteStringValue(EventHubEndpointUri.AbsoluteUri);
+            if (EventHubEndpointUri != null)
+            {
+                writer.WriteStringValue(EventHubEndpointUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("eventHubEntityPath"u8);
             writer.WriteStringValue(EventHubEntityPath);
             writer.WritePropertyName("eventHubNamespaceResourceId"u8);
-            writer.WriteStringValue(EventHubNamespaceResourceId);
+            if (EventHubNamespaceResourceId != null)
+            {
+                writer.WriteStringValue(EventHubNamespaceResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(EventHubConsumerGroup))
             {
                 if (EventHubConsumerGroup != null)
@@ -110,7 +138,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    ((IJsonModel<DigitalTwinsManagedIdentityReference>)Identity).Write(writer, options);
                 }
                 else
                 {

@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("ipAddress"u8);
-            writer.WriteStringValue(IPAddress.ToString());
+            if (IPAddress != null)
+            {
+                writer.WriteStringValue(IPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);

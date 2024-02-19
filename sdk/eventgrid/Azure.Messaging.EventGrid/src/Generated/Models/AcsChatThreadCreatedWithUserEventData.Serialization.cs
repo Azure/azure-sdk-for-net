@@ -86,7 +86,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsChatThreadParticipantProperties> array = new List<AcsChatThreadParticipantProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsChatThreadParticipantProperties.DeserializeAcsChatThreadParticipantProperties(item));
+                        }
                     }
                     participants = array;
                     continue;

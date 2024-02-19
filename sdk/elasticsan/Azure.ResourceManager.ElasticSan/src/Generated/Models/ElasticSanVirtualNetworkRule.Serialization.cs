@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(VirtualNetworkResourceId);
+            if (VirtualNetworkResourceId != null)
+            {
+                writer.WriteStringValue(VirtualNetworkResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);

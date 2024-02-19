@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<CloudHsmClusterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -55,7 +55,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(SecurityDomain))
             {
                 writer.WritePropertyName("securityDomain"u8);
-                writer.WriteObjectValue(SecurityDomain);
+                ((IJsonModel<CloudHsmClusterSecurityDomainProperties>)SecurityDomain).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Hsms))
             {
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteStartArray();
                 foreach (var item in Hsms)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CloudHsmProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +124,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HardwareSecurityModulesPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,12 +143,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(RestoreProperties))
             {
                 writer.WritePropertyName("restoreProperties"u8);
-                writer.WriteObjectValue(RestoreProperties);
+                ((IJsonModel<RestoreProperties>)RestoreProperties).Write(writer, options);
             }
             if (Optional.IsDefined(BackupProperties))
             {
                 writer.WritePropertyName("backupProperties"u8);
-                writer.WriteObjectValue(BackupProperties);
+                ((IJsonModel<BackupProperties>)BackupProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -292,7 +313,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             List<CloudHsmProperties> array = new List<CloudHsmProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CloudHsmProperties.DeserializeCloudHsmProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CloudHsmProperties.DeserializeCloudHsmProperties(item));
+                                }
                             }
                             hsms = array;
                             continue;
@@ -311,7 +339,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                             List<HardwareSecurityModulesPrivateEndpointConnectionData> array = new List<HardwareSecurityModulesPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HardwareSecurityModulesPrivateEndpointConnectionData.DeserializeHardwareSecurityModulesPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

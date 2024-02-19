@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserSessionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<UserSessionData> array = new List<UserSessionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserSessionData.DeserializeUserSessionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserSessionData.DeserializeUserSessionData(item));
+                        }
                     }
                     value = array;
                     continue;

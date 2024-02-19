@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GrafanaPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Grafana.Models
                     List<GrafanaPrivateEndpointConnectionData> array = new List<GrafanaPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GrafanaPrivateEndpointConnectionData.DeserializeGrafanaPrivateEndpointConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

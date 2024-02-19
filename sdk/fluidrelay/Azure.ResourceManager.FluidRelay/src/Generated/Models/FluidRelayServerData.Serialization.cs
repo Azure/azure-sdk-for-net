@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.FluidRelay
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
-                writer.WriteObjectValue(FluidRelayEndpoints);
+                ((IJsonModel<FluidRelayEndpoints>)FluidRelayEndpoints).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +93,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<Models.EncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(StorageSku))
             {

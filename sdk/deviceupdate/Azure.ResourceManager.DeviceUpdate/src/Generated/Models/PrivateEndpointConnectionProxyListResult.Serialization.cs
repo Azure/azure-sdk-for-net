@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateEndpointConnectionProxyData> array = new List<DeviceUpdatePrivateEndpointConnectionProxyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceUpdatePrivateEndpointConnectionProxyData.DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(item));
+                        }
                     }
                     value = array;
                     continue;

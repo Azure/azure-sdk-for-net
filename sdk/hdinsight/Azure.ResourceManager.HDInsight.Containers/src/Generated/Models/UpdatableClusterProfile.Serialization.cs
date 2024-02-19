@@ -32,34 +32,41 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterServiceConfigsProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                ((IJsonModel<ClusterSshProfile>)SshProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue(AutoscaleProfile);
+                ((IJsonModel<ClusterAutoscaleProfile>)AutoscaleProfile).Write(writer, options);
             }
             if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
-                writer.WriteObjectValue(AuthorizationProfile);
+                ((IJsonModel<AuthorizationProfile>)AuthorizationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                ((IJsonModel<ClusterLogAnalyticsProfile>)LogAnalyticsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue(PrometheusProfile);
+                ((IJsonModel<ClusterPrometheusProfile>)PrometheusProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptActionProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfigsProfile> array = new List<ClusterServiceConfigsProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item));
+                        }
                     }
                     serviceConfigsProfiles = array;
                     continue;
@@ -188,7 +209,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScriptActionProfile> array = new List<ScriptActionProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item));
+                        }
                     }
                     scriptActionProfiles = array;
                     continue;

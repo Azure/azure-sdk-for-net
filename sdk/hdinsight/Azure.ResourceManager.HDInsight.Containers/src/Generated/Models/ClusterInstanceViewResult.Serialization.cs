@@ -31,12 +31,26 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteObjectValue(Status);
+            if (Status != null)
+            {
+                ((IJsonModel<ClusterInstanceViewStatus>)Status).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("serviceStatuses"u8);
             writer.WriteStartArray();
             foreach (var item in ServiceStatuses)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HDInsightServiceStatus>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -109,7 +123,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             List<HDInsightServiceStatus> array = new List<HDInsightServiceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HDInsightServiceStatus.DeserializeHDInsightServiceStatus(item));
+                                }
                             }
                             serviceStatuses = array;
                             continue;

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            if (Action != null)
+            {
+                ((IJsonModel<RulesEngineAction>)Action).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
@@ -40,7 +47,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<RulesEngineMatchCondition>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -133,7 +147,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RulesEngineMatchCondition.DeserializeRulesEngineMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;

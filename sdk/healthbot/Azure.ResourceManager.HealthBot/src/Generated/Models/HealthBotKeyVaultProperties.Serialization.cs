@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.HealthBot.Models
                 writer.WriteStringValue(KeyVersion);
             }
             writer.WritePropertyName("keyVaultUri"u8);
-            writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            if (KeyVaultUri != null)
+            {
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);

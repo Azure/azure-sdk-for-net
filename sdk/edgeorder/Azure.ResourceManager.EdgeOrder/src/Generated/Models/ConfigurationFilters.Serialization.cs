@@ -27,14 +27,28 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
+            if (HierarchyInformation != null)
+            {
+                ((IJsonModel<HierarchyInformation>)HierarchyInformation).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(FilterableProperty))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperty)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FilterableProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +110,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<FilterableProperty> array = new List<FilterableProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.FilterableProperty.DeserializeFilterableProperty(item));
+                        }
                     }
                     filterableProperty = array;
                     continue;

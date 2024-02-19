@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -86,12 +93,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(FormulaContent))
             {
                 writer.WritePropertyName("formulaContent"u8);
-                writer.WriteObjectValue(FormulaContent);
+                ((IJsonModel<DevTestLabVmCreationContent>)FormulaContent).Write(writer, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                ((IJsonModel<FormulaPropertiesFromVm>)Vm).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

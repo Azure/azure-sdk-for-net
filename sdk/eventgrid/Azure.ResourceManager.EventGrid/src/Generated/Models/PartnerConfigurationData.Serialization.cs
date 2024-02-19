@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.EventGrid
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(PartnerAuthorization))
             {
                 writer.WritePropertyName("partnerAuthorization"u8);
-                writer.WriteObjectValue(PartnerAuthorization);
+                ((IJsonModel<PartnerAuthorization>)PartnerAuthorization).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

@@ -55,7 +55,14 @@ namespace Azure.DigitalTwins.Core
                     List<ErrorInformation> array = new List<ErrorInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeErrorInformation(item));
+                        }
                     }
                     details = array;
                     continue;

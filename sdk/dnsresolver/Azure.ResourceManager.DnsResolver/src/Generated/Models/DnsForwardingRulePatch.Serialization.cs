@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TargetDnsServer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             List<TargetDnsServer> array = new List<TargetDnsServer>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TargetDnsServer.DeserializeTargetDnsServer(item));
+                                }
                             }
                             targetDnsServers = array;
                             continue;

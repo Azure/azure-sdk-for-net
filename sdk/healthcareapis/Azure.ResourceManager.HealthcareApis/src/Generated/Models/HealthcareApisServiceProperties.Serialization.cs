@@ -38,29 +38,36 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisServiceAccessPolicyEntry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CosmosDbConfiguration))
             {
                 writer.WritePropertyName("cosmosDbConfiguration"u8);
-                writer.WriteObjectValue(CosmosDbConfiguration);
+                ((IJsonModel<HealthcareApisServiceCosmosDbConfiguration>)CosmosDbConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationConfiguration))
             {
                 writer.WritePropertyName("authenticationConfiguration"u8);
-                writer.WriteObjectValue(AuthenticationConfiguration);
+                ((IJsonModel<HealthcareApisServiceAuthenticationConfiguration>)AuthenticationConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CorsConfiguration))
             {
                 writer.WritePropertyName("corsConfiguration"u8);
-                writer.WriteObjectValue(CorsConfiguration);
+                ((IJsonModel<HealthcareApisServiceCorsConfiguration>)CorsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ExportConfiguration))
             {
                 writer.WritePropertyName("exportConfiguration"u8);
-                writer.WriteObjectValue(ExportConfiguration);
+                ((IJsonModel<ServiceExportConfigurationInfo>)ExportConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -68,7 +75,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,12 +94,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
-                writer.WriteObjectValue(AcrConfiguration);
+                ((IJsonModel<HealthcareApisServiceAcrConfiguration>)AcrConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImportConfiguration))
             {
                 writer.WritePropertyName("importConfiguration"u8);
-                writer.WriteObjectValue(ImportConfiguration);
+                ((IJsonModel<HealthcareApisServiceImportConfiguration>)ImportConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -157,7 +171,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisServiceAccessPolicyEntry> array = new List<HealthcareApisServiceAccessPolicyEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisServiceAccessPolicyEntry.DeserializeHealthcareApisServiceAccessPolicyEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisServiceAccessPolicyEntry.DeserializeHealthcareApisServiceAccessPolicyEntry(item));
+                        }
                     }
                     accessPolicies = array;
                     continue;
@@ -207,7 +228,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisPrivateEndpointConnectionData> array = new List<HealthcareApisPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisPrivateEndpointConnectionData.DeserializeHealthcareApisPrivateEndpointConnectionData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;
