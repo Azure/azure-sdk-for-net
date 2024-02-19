@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningUserFeature>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningUserFeature> array = new List<MachineLearningUserFeature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningUserFeature.DeserializeMachineLearningUserFeature(item));
+                        }
                     }
                     value = array;
                     continue;

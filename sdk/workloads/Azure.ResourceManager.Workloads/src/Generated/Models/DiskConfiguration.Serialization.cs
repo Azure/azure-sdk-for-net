@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 foreach (var item in DiskVolumeConfigurations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DiskVolumeConfiguration>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     Dictionary<string, DiskVolumeConfiguration> dictionary = new Dictionary<string, DiskVolumeConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DiskVolumeConfiguration.DeserializeDiskVolumeConfiguration(property0.Value));
+                        }
                     }
                     diskVolumeConfigurations = dictionary;
                     continue;

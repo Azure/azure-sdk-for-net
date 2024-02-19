@@ -47,7 +47,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<HealthcareEntityLink> array = new List<HealthcareEntityLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareEntityLink.DeserializeHealthcareEntityLink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareEntityLink.DeserializeHealthcareEntityLink(item));
+                        }
                     }
                     links = array;
                     continue;

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(SourceAgentIdentityDetails))
             {
                 writer.WritePropertyName("sourceAgentIdentityDetails"u8);
-                writer.WriteObjectValue(SourceAgentIdentityDetails);
+                ((IJsonModel<IdentityProviderDetails>)SourceAgentIdentityDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryProcessServerDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in RcmProxies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RcmProxyDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +106,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in PushInstallers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PushInstallerDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +123,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicationAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReplicationAgentDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +140,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ReprotectAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReprotectAgentDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +157,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in MarsAgents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MarsAgentDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +174,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Dras)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryDraDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +191,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryAgentDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -280,7 +336,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryProcessServerDetails> array = new List<SiteRecoveryProcessServerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryProcessServerDetails.DeserializeSiteRecoveryProcessServerDetails(item));
+                        }
                     }
                     processServers = array;
                     continue;
@@ -294,7 +357,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<RcmProxyDetails> array = new List<RcmProxyDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RcmProxyDetails.DeserializeRcmProxyDetails(item));
+                        }
                     }
                     rcmProxies = array;
                     continue;
@@ -308,7 +378,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<PushInstallerDetails> array = new List<PushInstallerDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PushInstallerDetails.DeserializePushInstallerDetails(item));
+                        }
                     }
                     pushInstallers = array;
                     continue;
@@ -322,7 +399,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReplicationAgentDetails> array = new List<ReplicationAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReplicationAgentDetails.DeserializeReplicationAgentDetails(item));
+                        }
                     }
                     replicationAgents = array;
                     continue;
@@ -336,7 +420,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ReprotectAgentDetails> array = new List<ReprotectAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReprotectAgentDetails.DeserializeReprotectAgentDetails(item));
+                        }
                     }
                     reprotectAgents = array;
                     continue;
@@ -350,7 +441,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<MarsAgentDetails> array = new List<MarsAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MarsAgentDetails.DeserializeMarsAgentDetails(item));
+                        }
                     }
                     marsAgents = array;
                     continue;
@@ -364,7 +462,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryDraDetails> array = new List<SiteRecoveryDraDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryDraDetails.DeserializeSiteRecoveryDraDetails(item));
+                        }
                     }
                     dras = array;
                     continue;
@@ -378,7 +483,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryAgentDetails> array = new List<SiteRecoveryAgentDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryAgentDetails.DeserializeSiteRecoveryAgentDetails(item));
+                        }
                     }
                     agentDetails = array;
                     continue;

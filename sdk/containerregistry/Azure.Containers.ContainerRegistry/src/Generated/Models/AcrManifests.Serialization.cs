@@ -44,7 +44,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<ManifestAttributesBase> array = new List<ManifestAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestAttributesBase.DeserializeManifestAttributesBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManifestAttributesBase.DeserializeManifestAttributesBase(item));
+                        }
                     }
                     manifests = array;
                     continue;

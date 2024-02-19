@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<EventGridPrivateEndpointConnectionState>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DetectedChangeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                     List<DetectedChangeData> array = new List<DetectedChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectedChangeData.DeserializeDetectedChangeData(item));
+                        }
                     }
                     value = array;
                     continue;

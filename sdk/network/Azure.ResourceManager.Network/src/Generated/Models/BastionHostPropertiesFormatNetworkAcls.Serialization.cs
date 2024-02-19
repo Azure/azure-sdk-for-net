@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BastionHostIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<BastionHostIPRule> array = new List<BastionHostIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BastionHostIPRule.DeserializeBastionHostIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;

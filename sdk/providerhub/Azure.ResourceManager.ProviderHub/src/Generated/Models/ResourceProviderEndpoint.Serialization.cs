@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                ((IJsonModel<FeaturesRule>)FeaturesRule).Write(writer, options);
             }
             if (Optional.IsDefined(Timeout))
             {

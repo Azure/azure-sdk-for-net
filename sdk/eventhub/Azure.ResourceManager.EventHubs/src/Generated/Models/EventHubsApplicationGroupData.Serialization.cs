@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WriteStartArray();
                 foreach (var item in Policies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsApplicationGroupPolicy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +198,14 @@ namespace Azure.ResourceManager.EventHubs
                             List<EventHubsApplicationGroupPolicy> array = new List<EventHubsApplicationGroupPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventHubsApplicationGroupPolicy.DeserializeEventHubsApplicationGroupPolicy(item));
+                                }
                             }
                             policies = array;
                             continue;

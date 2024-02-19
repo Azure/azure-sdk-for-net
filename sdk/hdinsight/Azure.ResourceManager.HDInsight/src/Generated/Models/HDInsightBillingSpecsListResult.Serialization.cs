@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in VmSizeFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightVmSizeCompatibilityFilterV2>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in VmSizeProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightVmSizeProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +86,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightBillingResources>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +181,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVmSizeCompatibilityFilterV2> array = new List<HDInsightVmSizeCompatibilityFilterV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVmSizeCompatibilityFilterV2.DeserializeHDInsightVmSizeCompatibilityFilterV2(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightVmSizeCompatibilityFilterV2.DeserializeHDInsightVmSizeCompatibilityFilterV2(item));
+                        }
                     }
                     vmSizeFilters = array;
                     continue;
@@ -174,7 +202,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVmSizeProperty> array = new List<HDInsightVmSizeProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVmSizeProperty.DeserializeHDInsightVmSizeProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightVmSizeProperty.DeserializeHDInsightVmSizeProperty(item));
+                        }
                     }
                     vmSizeProperties = array;
                     continue;
@@ -188,7 +223,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingResources> array = new List<HDInsightBillingResources>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingResources.DeserializeHDInsightBillingResources(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightBillingResources.DeserializeHDInsightBillingResources(item));
+                        }
                     }
                     billingResources = array;
                     continue;

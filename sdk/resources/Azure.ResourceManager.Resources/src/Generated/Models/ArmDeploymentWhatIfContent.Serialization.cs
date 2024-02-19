@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<ArmDeploymentWhatIfProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -33,7 +33,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                     List<HealthcareRelationEntity> array = new List<HealthcareRelationEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareRelationEntity.DeserializeHealthcareRelationEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareRelationEntity.DeserializeHealthcareRelationEntity(item));
+                        }
                     }
                     entities = array;
                     continue;

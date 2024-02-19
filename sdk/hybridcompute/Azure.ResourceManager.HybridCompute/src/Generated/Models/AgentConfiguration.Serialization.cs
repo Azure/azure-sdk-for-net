@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsAllowList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeConfigurationExtension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ExtensionsBlockList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeConfigurationExtension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -168,7 +182,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        }
                     }
                     extensionsAllowList = array;
                     continue;
@@ -182,7 +203,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeConfigurationExtension> array = new List<HybridComputeConfigurationExtension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeConfigurationExtension.DeserializeHybridComputeConfigurationExtension(item));
+                        }
                     }
                     extensionsBlockList = array;
                     continue;

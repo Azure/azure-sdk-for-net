@@ -29,7 +29,14 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Messages)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChatRequestMessage>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Functions))
@@ -38,14 +45,21 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FunctionDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(FunctionCall))
             {
                 writer.WritePropertyName("function_call"u8);
-                writer.WriteObjectValue(FunctionCall);
+                ((IJsonModel<FunctionDefinition>)FunctionCall).Write(writer, options);
             }
             if (Optional.IsDefined(MaxTokens))
             {
@@ -113,14 +127,21 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in InternalAzureExtensionsDataSources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureChatExtensionConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Enhancements))
             {
                 writer.WritePropertyName("enhancements"u8);
-                writer.WriteObjectValue(Enhancements);
+                ((IJsonModel<AzureChatEnhancementConfiguration>)Enhancements).Write(writer, options);
             }
             if (Optional.IsDefined(Seed))
             {
@@ -130,7 +151,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);
-                writer.WriteObjectValue(ResponseFormat);
+                ((IJsonModel<ChatCompletionsResponseFormat>)ResponseFormat).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tools))
             {
@@ -138,7 +159,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChatCompletionsToolDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -221,7 +249,14 @@ namespace Azure.AI.OpenAI
                     List<ChatRequestMessage> array = new List<ChatRequestMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatRequestMessage.DeserializeChatRequestMessage(item));
+                        }
                     }
                     messages = array;
                     continue;
@@ -235,7 +270,14 @@ namespace Azure.AI.OpenAI
                     List<FunctionDefinition> array = new List<FunctionDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionDefinition.DeserializeFunctionDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FunctionDefinition.DeserializeFunctionDefinition(item));
+                        }
                     }
                     functions = array;
                     continue;
@@ -350,7 +392,14 @@ namespace Azure.AI.OpenAI
                     List<AzureChatExtensionConfiguration> array = new List<AzureChatExtensionConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureChatExtensionConfiguration.DeserializeAzureChatExtensionConfiguration(item));
+                        }
                     }
                     dataSources = array;
                     continue;
@@ -391,7 +440,14 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolDefinition> array = new List<ChatCompletionsToolDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatCompletionsToolDefinition.DeserializeChatCompletionsToolDefinition(item));
+                        }
                     }
                     tools = array;
                     continue;

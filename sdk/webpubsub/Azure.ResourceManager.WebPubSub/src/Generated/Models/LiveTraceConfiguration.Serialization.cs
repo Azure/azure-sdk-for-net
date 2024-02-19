@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LiveTraceCategory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<LiveTraceCategory> array = new List<LiveTraceCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveTraceCategory.DeserializeLiveTraceCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LiveTraceCategory.DeserializeLiveTraceCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

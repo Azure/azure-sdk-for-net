@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
             writer.WritePropertyName("failingPeriods"u8);
-            writer.WriteObjectValue(FailingPeriods);
+            ((IJsonModel<DynamicThresholdFailingPeriods>)FailingPeriods).Write(writer, options);
             if (Optional.IsDefined(IgnoreDataBefore))
             {
                 writer.WritePropertyName("ignoreDataBefore"u8);
@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetricDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +180,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        }
                     }
                     dimensions = array;
                     continue;

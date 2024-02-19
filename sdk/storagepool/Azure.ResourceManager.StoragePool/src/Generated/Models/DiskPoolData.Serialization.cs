@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.StoragePool
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StoragePoolSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagedBy))
             {
@@ -104,7 +104,14 @@ namespace Azure.ResourceManager.StoragePool
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -287,7 +294,14 @@ namespace Azure.ResourceManager.StoragePool
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             disks = array;
                             continue;

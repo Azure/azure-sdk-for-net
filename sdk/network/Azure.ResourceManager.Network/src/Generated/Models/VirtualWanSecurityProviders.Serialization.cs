@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedProviders)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualWanSecurityProvider>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<VirtualWanSecurityProvider> array = new List<VirtualWanSecurityProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualWanSecurityProvider.DeserializeVirtualWanSecurityProvider(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualWanSecurityProvider.DeserializeVirtualWanSecurityProvider(item));
+                        }
                     }
                     supportedProviders = array;
                     continue;

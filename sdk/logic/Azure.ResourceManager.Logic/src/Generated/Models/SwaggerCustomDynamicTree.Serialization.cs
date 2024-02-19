@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                ((IJsonModel<SwaggerCustomDynamicTreeSettings>)Settings).Write(writer, options);
             }
             if (Optional.IsDefined(Open))
             {
                 writer.WritePropertyName("open"u8);
-                writer.WriteObjectValue(Open);
+                ((IJsonModel<SwaggerCustomDynamicTreeCommand>)Open).Write(writer, options);
             }
             if (Optional.IsDefined(Browse))
             {
                 writer.WritePropertyName("browse"u8);
-                writer.WriteObjectValue(Browse);
+                ((IJsonModel<SwaggerCustomDynamicTreeCommand>)Browse).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

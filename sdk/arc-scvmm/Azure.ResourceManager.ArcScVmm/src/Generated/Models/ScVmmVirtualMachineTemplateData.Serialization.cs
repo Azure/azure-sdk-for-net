@@ -147,7 +147,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkInterfaces>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +164,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -411,7 +425,14 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<NetworkInterfaces> array = new List<NetworkInterfaces>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                }
                             }
                             networkInterfaces = array;
                             continue;
@@ -425,7 +446,14 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<VirtualDisk> array = new List<VirtualDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualDisk.DeserializeVirtualDisk(item));
+                                }
                             }
                             disks = array;
                             continue;

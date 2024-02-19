@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.Logic
                         Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> dictionary = new Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, IntegrationServiceEnvironmentSubnetNetworkHealth.DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(property.Value));
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, IntegrationServiceEnvironmentSubnetNetworkHealth.DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(property.Value));
+                            }
                         }
                         value = dictionary;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.Logic
                         Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth> dictionary = new Dictionary<string, IntegrationServiceEnvironmentSubnetNetworkHealth>();
                         foreach (var property in document.RootElement.EnumerateObject())
                         {
-                            dictionary.Add(property.Name, IntegrationServiceEnvironmentSubnetNetworkHealth.DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(property.Value));
+                            if (property.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                dictionary.Add(property.Name, null);
+                            }
+                            else
+                            {
+                                dictionary.Add(property.Name, IntegrationServiceEnvironmentSubnetNetworkHealth.DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(property.Value));
+                            }
                         }
                         value = dictionary;
                         return Response.FromValue(value, message.Response);

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                ((IJsonModel<SshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {

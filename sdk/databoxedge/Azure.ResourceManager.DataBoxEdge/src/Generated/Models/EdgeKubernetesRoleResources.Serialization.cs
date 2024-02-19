@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                ((IJsonModel<EdgeKubernetesRoleStorage>)Storage).Write(writer, options);
             }
             writer.WritePropertyName("compute"u8);
-            writer.WriteObjectValue(Compute);
+            ((IJsonModel<EdgeKubernetesRoleCompute>)Compute).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                ((IJsonModel<EdgeKubernetesRoleNetwork>)Network).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

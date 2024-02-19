@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Logs))
             {
                 writer.WritePropertyName("logs"u8);
-                writer.WriteObjectValue(Logs);
+                ((IJsonModel<AwsCloudTrailDataConnectorDataTypesLogs>)Logs).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

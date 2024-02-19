@@ -32,7 +32,14 @@ namespace Azure.Maps.Search.Models
                     List<ReverseSearchAddressBatchItem> array = new List<ReverseSearchAddressBatchItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReverseSearchAddressBatchItem.DeserializeReverseSearchAddressBatchItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReverseSearchAddressBatchItem.DeserializeReverseSearchAddressBatchItem(item));
+                        }
                     }
                     batchItems = array;
                     continue;

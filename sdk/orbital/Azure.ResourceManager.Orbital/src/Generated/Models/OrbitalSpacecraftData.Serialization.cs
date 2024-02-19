@@ -100,7 +100,14 @@ namespace Azure.ResourceManager.Orbital
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OrbitalSpacecraftLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +266,14 @@ namespace Azure.ResourceManager.Orbital
                             List<OrbitalSpacecraftLink> array = new List<OrbitalSpacecraftLink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OrbitalSpacecraftLink.DeserializeOrbitalSpacecraftLink(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(OrbitalSpacecraftLink.DeserializeOrbitalSpacecraftLink(item));
+                                }
                             }
                             links = array;
                             continue;

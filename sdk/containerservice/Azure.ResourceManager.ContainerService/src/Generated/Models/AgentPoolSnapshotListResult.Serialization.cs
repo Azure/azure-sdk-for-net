@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AgentPoolSnapshotData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolSnapshotData> array = new List<AgentPoolSnapshotData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AgentPoolSnapshotData.DeserializeAgentPoolSnapshotData(item));
+                        }
                     }
                     value = array;
                     continue;

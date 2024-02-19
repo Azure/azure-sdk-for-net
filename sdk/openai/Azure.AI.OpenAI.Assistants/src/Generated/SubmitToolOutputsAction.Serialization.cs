@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("submit_tool_outputs"u8);
-            writer.WriteObjectValue(InternalDetails);
+            ((IJsonModel<InternalSubmitToolOutputsDetails>)InternalDetails).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

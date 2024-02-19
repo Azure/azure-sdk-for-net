@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppSubvolumeInfoData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppSubvolumeInfoData> array = new List<NetAppSubvolumeInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetAppSubvolumeInfoData.DeserializeNetAppSubvolumeInfoData(item));
+                        }
                     }
                     value = array;
                     continue;

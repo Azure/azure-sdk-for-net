@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesSkuRestrictions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +164,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuRestrictions> array = new List<CognitiveServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesSkuRestrictions.DeserializeCognitiveServicesSkuRestrictions(item));
+                        }
                     }
                     restrictions = array;
                     continue;

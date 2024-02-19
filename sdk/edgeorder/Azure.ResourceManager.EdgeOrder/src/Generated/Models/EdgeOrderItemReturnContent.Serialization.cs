@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ReturnAddress))
             {
                 writer.WritePropertyName("returnAddress"u8);
-                writer.WriteObjectValue(ReturnAddress);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ReturnAddress).Write(writer, options);
             }
             writer.WritePropertyName("returnReason"u8);
             writer.WriteStringValue(ReturnReason);

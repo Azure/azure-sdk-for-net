@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(PrimaryMasterKey))
             {
                 writer.WritePropertyName("primaryMasterKey"u8);
-                writer.WriteObjectValue(PrimaryMasterKey);
+                ((IJsonModel<AccountKeyMetadata>)PrimaryMasterKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryMasterKey))
             {
                 writer.WritePropertyName("secondaryMasterKey"u8);
-                writer.WriteObjectValue(SecondaryMasterKey);
+                ((IJsonModel<AccountKeyMetadata>)SecondaryMasterKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("primaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue(PrimaryReadonlyMasterKey);
+                ((IJsonModel<AccountKeyMetadata>)PrimaryReadonlyMasterKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryReadonlyMasterKey))
             {
                 writer.WritePropertyName("secondaryReadonlyMasterKey"u8);
-                writer.WriteObjectValue(SecondaryReadonlyMasterKey);
+                ((IJsonModel<AccountKeyMetadata>)SecondaryReadonlyMasterKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue(DefaultKey);
+                ((IJsonModel<EncryptionSchemeDefaultKey>)DefaultKey).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingPolicyContentKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyContentKey> array = new List<StreamingPolicyContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item));
+                        }
                     }
                     keyToTrackMappings = array;
                     continue;

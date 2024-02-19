@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpDiagnosticInvocation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.SelfHelp
                 writer.WriteStartArray();
                 foreach (var item in Diagnostics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpDiagnosticInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -199,7 +213,14 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpDiagnosticInvocation> array = new List<SelfHelpDiagnosticInvocation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SelfHelpDiagnosticInvocation.DeserializeSelfHelpDiagnosticInvocation(item));
+                                }
                             }
                             insights = array;
                             continue;
@@ -231,7 +252,14 @@ namespace Azure.ResourceManager.SelfHelp
                             List<SelfHelpDiagnosticInfo> array = new List<SelfHelpDiagnosticInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SelfHelpDiagnosticInfo.DeserializeSelfHelpDiagnosticInfo(item));
+                                }
                             }
                             diagnostics = array;
                             continue;

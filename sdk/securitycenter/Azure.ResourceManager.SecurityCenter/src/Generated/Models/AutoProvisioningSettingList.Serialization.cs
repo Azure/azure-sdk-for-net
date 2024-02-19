@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutoProvisioningSettingData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<AutoProvisioningSettingData> array = new List<AutoProvisioningSettingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutoProvisioningSettingData.DeserializeAutoProvisioningSettingData(item));
+                        }
                     }
                     value = array;
                     continue;

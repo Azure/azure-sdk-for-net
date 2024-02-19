@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomanageBestPracticeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageBestPracticeData> array = new List<AutomanageBestPracticeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomanageBestPracticeData.DeserializeAutomanageBestPracticeData(item));
+                        }
                     }
                     value = array;
                     continue;

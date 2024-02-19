@@ -20,7 +20,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Parameters))
@@ -46,7 +53,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerIndexProjectionSelector> array = new List<SearchIndexerIndexProjectionSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerIndexProjectionSelector.DeserializeSearchIndexerIndexProjectionSelector(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerIndexProjectionSelector.DeserializeSearchIndexerIndexProjectionSelector(item));
+                        }
                     }
                     selectors = array;
                     continue;

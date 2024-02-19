@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (AppliedBy != null)
                 {
                     writer.WritePropertyName("appliedBy"u8);
-                    writer.WriteObjectValue(AppliedBy);
+                    ((IJsonModel<KubernetesObjectReference>)AppliedBy).Write(writer, options);
                 }
                 else
                 {
@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<KubernetesObjectStatusCondition>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -80,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (HelmReleaseProperties != null)
                 {
                     writer.WritePropertyName("helmReleaseProperties"u8);
-                    writer.WriteObjectValue(HelmReleaseProperties);
+                    ((IJsonModel<HelmReleaseProperties>)HelmReleaseProperties).Write(writer, options);
                 }
                 else
                 {
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     List<KubernetesObjectStatusCondition> array = new List<KubernetesObjectStatusCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesObjectStatusCondition.DeserializeKubernetesObjectStatusCondition(item));
+                        }
                     }
                     statusConditions = array;
                     continue;

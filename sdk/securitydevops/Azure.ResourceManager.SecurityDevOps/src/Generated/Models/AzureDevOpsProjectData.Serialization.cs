@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<AzureDevOpsProjectProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

@@ -71,22 +71,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ContactAdmin))
             {
                 writer.WritePropertyName("contactAdmin"u8);
-                writer.WriteObjectValue(ContactAdmin);
+                ((IJsonModel<RegistrationContactInfo>)ContactAdmin).Write(writer, options);
             }
             if (Optional.IsDefined(ContactBilling))
             {
                 writer.WritePropertyName("contactBilling"u8);
-                writer.WriteObjectValue(ContactBilling);
+                ((IJsonModel<RegistrationContactInfo>)ContactBilling).Write(writer, options);
             }
             if (Optional.IsDefined(ContactRegistrant))
             {
                 writer.WritePropertyName("contactRegistrant"u8);
-                writer.WriteObjectValue(ContactRegistrant);
+                ((IJsonModel<RegistrationContactInfo>)ContactRegistrant).Write(writer, options);
             }
             if (Optional.IsDefined(ContactTech))
             {
                 writer.WritePropertyName("contactTech"u8);
-                writer.WriteObjectValue(ContactTech);
+                ((IJsonModel<RegistrationContactInfo>)ContactTech).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RegistrationStatus))
             {
@@ -144,14 +144,21 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in ManagedHostNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceHostName>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Consent))
             {
                 writer.WritePropertyName("consent"u8);
-                writer.WriteObjectValue(Consent);
+                ((IJsonModel<DomainPurchaseConsent>)Consent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DomainNotRenewableReasons))
             {
@@ -441,7 +448,14 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceHostName> array = new List<AppServiceHostName>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AppServiceHostName.DeserializeAppServiceHostName(item));
+                                }
                             }
                             managedHostNames = array;
                             continue;

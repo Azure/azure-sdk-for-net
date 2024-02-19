@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in StopSellNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StopSellNotifications>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in NewNotifications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NewPlanNotification>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalRequests)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RequestApprovalsDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<StopSellNotifications> array = new List<StopSellNotifications>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.StopSellNotifications.DeserializeStopSellNotifications(item));
+                        }
                     }
                     stopSellNotifications = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
+                        }
                     }
                     newNotifications = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<RequestApprovalsDetails> array = new List<RequestApprovalsDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RequestApprovalsDetails.DeserializeRequestApprovalsDetails(item));
+                        }
                     }
                     approvalRequests = array;
                     continue;

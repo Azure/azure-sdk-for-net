@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LinkProperties))
             {
                 writer.WritePropertyName("linkProperties"u8);
-                writer.WriteObjectValue(LinkProperties);
+                ((IJsonModel<VpnLinkProviderProperties>)LinkProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties);
+                ((IJsonModel<VpnLinkBgpSettings>)BgpProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

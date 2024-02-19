@@ -45,7 +45,14 @@ namespace Azure.Monitor.Query.Models
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ErrorDetail.DeserializeErrorDetail(item));
+                        }
                     }
                     details = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableServiceSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<AvailableServiceSku> array = new List<AvailableServiceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableServiceSku.DeserializeAvailableServiceSku(item));
+                        }
                     }
                     value = array;
                     continue;

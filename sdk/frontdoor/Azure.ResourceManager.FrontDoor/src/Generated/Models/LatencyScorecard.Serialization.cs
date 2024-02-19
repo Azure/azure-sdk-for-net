@@ -108,7 +108,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in LatencyMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LatencyMetric>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -287,7 +294,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<LatencyMetric> array = new List<LatencyMetric>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LatencyMetric.DeserializeLatencyMetric(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LatencyMetric.DeserializeLatencyMetric(item));
+                                }
                             }
                             latencyMetrics = array;
                             continue;

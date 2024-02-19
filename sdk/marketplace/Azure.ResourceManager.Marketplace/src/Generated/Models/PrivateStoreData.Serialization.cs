@@ -110,7 +110,14 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in Recipients)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NotificationRecipient>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -306,7 +313,14 @@ namespace Azure.ResourceManager.Marketplace
                                     List<NotificationRecipient> array = new List<NotificationRecipient>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
+                                        if (item.ValueKind == JsonValueKind.Null)
+                                        {
+                                            array.Add(null);
+                                        }
+                                        else
+                                        {
+                                            array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
+                                        }
                                     }
                                     recipients = array;
                                     continue;

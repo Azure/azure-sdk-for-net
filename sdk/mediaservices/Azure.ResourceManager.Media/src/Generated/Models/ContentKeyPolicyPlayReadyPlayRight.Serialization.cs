@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
-                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
+                ((IJsonModel<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>)ExplicitAnalogTelevisionOutputRestriction).Write(writer, options);
             }
             writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);

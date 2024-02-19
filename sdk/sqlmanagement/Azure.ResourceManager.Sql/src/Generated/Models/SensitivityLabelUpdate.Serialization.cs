@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(SensitivityLabel))
             {
                 writer.WritePropertyName("sensitivityLabel"u8);
-                writer.WriteObjectValue(SensitivityLabel);
+                ((IJsonModel<SensitivityLabelData>)SensitivityLabel).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

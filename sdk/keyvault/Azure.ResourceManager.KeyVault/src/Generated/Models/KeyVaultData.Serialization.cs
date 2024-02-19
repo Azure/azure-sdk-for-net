@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.KeyVault
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<Models.KeyVaultProperties>)Properties).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(ActionConfiguration))
             {
                 writer.WritePropertyName("actionConfiguration"u8);
-                writer.WriteObjectValue(ActionConfiguration);
+                ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)ActionConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("order"u8);
             writer.WriteNumberValue(Order);

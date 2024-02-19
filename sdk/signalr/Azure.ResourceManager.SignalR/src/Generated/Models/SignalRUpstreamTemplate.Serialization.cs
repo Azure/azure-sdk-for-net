@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth);
+                ((IJsonModel<SignalRUpstreamAuthSettings>)Auth).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CloudServiceVaultSecretGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceVaultSecretGroup> array = new List<CloudServiceVaultSecretGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceVaultSecretGroup.DeserializeCloudServiceVaultSecretGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CloudServiceVaultSecretGroup.DeserializeCloudServiceVaultSecretGroup(item));
+                        }
                     }
                     secrets = array;
                     continue;

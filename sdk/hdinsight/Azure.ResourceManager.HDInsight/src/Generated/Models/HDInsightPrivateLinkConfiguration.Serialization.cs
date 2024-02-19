@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStartArray();
             foreach (var item in IPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HDInsightIPConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -150,7 +157,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                             List<HDInsightIPConfiguration> array = new List<HDInsightIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HDInsightIPConfiguration.DeserializeHDInsightIPConfiguration(item));
+                                }
                             }
                             ipConfigurations = array;
                             continue;

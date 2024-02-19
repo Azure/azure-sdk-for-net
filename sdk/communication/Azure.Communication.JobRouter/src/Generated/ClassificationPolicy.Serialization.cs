@@ -53,14 +53,21 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in QueueSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QueueSelectorAttachment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PrioritizationRule))
             {
                 writer.WritePropertyName("prioritizationRule"u8);
-                writer.WriteObjectValue(PrioritizationRule);
+                ((IJsonModel<RouterRule>)PrioritizationRule).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
@@ -68,7 +75,14 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in WorkerSelectorAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkerSelectorAttachment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +164,14 @@ namespace Azure.Communication.JobRouter
                     List<QueueSelectorAttachment> array = new List<QueueSelectorAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueSelectorAttachment.DeserializeQueueSelectorAttachment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueueSelectorAttachment.DeserializeQueueSelectorAttachment(item));
+                        }
                     }
                     queueSelectorAttachments = array;
                     continue;
@@ -173,7 +194,14 @@ namespace Azure.Communication.JobRouter
                     List<WorkerSelectorAttachment> array = new List<WorkerSelectorAttachment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerSelectorAttachment.DeserializeWorkerSelectorAttachment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkerSelectorAttachment.DeserializeWorkerSelectorAttachment(item));
+                        }
                     }
                     workerSelectorAttachments = array;
                     continue;

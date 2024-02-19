@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
-                writer.WriteObjectValue(OverrideTaskStepProperties);
+                ((IJsonModel<ContainerRegistryOverrideTaskStepProperties>)OverrideTaskStepProperties).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);

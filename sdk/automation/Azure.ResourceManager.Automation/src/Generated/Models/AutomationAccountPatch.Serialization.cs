@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AutomationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<AutomationEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(IsPublicNetworkAccessAllowed))
             {

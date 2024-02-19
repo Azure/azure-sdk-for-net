@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            ((IJsonModel<SqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            ((IJsonModel<SqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             writer.WritePropertyName("selectedSourceDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedSourceDatabases)

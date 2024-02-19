@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeliveryRuleCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Cdn
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeliveryRuleAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +219,14 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeliveryRuleCondition.DeserializeDeliveryRuleCondition(item));
+                                }
                             }
                             conditions = array;
                             continue;
@@ -219,7 +240,14 @@ namespace Azure.ResourceManager.Cdn
                             List<DeliveryRuleAction> array = new List<DeliveryRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeliveryRuleAction.DeserializeDeliveryRuleAction(item));
+                                }
                             }
                             actions = array;
                             continue;

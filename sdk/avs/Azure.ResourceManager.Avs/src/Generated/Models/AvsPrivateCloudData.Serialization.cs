@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Avs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<AvsSku>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                ((IJsonModel<AvsManagementCluster>)ManagementCluster).Write(writer, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -86,19 +86,26 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SingleSignOnIdentitySource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                ((IJsonModel<PrivateCloudAvailabilityProperties>)Availability).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<CustomerManagedEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -118,12 +125,12 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Circuit))
             {
                 writer.WritePropertyName("circuit"u8);
-                writer.WriteObjectValue(Circuit);
+                ((IJsonModel<ExpressRouteCircuit>)Circuit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                ((IJsonModel<AvsPrivateCloudEndpoints>)Endpoints).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkBlock))
             {
@@ -171,19 +178,21 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in ExternalCloudLinks)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SecondaryCircuit))
             {
                 writer.WritePropertyName("secondaryCircuit"u8);
-                writer.WriteObjectValue(SecondaryCircuit);
+                ((IJsonModel<ExpressRouteCircuit>)SecondaryCircuit).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(NsxPublicIPQuotaRaised))
             {
@@ -354,7 +363,14 @@ namespace Azure.ResourceManager.Avs
                             List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                }
                             }
                             identitySources = array;
                             continue;

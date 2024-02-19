@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BotConnectionSettingParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +167,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotConnectionSettingParameter> array = new List<BotConnectionSettingParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BotConnectionSettingParameter.DeserializeBotConnectionSettingParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

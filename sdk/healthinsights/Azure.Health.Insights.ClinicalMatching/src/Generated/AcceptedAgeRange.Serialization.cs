@@ -30,12 +30,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(MinimumAge))
             {
                 writer.WritePropertyName("minimumAge"u8);
-                writer.WriteObjectValue(MinimumAge);
+                ((IJsonModel<AcceptedAge>)MinimumAge).Write(writer, options);
             }
             if (Optional.IsDefined(MaximumAge))
             {
                 writer.WritePropertyName("maximumAge"u8);
-                writer.WriteObjectValue(MaximumAge);
+                ((IJsonModel<AcceptedAge>)MaximumAge).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

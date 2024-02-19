@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue(Baseline);
+                ((IJsonModel<SqlVulnerabilityAssessmentBaseline>)Baseline).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -42,17 +42,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ResultsNotInBaseline)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            writer.WriteStringValue(item0);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
@@ -62,17 +64,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ResultsOnlyInBaseline)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            writer.WriteStringValue(item0);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }

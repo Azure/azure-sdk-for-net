@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(HybridComputeSettings))
             {
                 writer.WritePropertyName("hybridComputeSettings"u8);
-                writer.WriteObjectValue(HybridComputeSettings);
+                ((IJsonModel<HybridComputeSettingsProperties>)HybridComputeSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AuthenticationDetails))
             {
                 writer.WritePropertyName("authenticationDetails"u8);
-                writer.WriteObjectValue(AuthenticationDetails);
+                ((IJsonModel<AuthenticationDetailsProperties>)AuthenticationDetails).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

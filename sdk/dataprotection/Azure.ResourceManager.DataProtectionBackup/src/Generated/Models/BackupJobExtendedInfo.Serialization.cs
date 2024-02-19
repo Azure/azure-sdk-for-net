@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceRecoverPoint))
             {
                 writer.WritePropertyName("sourceRecoverPoint"u8);
-                writer.WriteObjectValue(SourceRecoverPoint);
+                ((IJsonModel<RestoreJobRecoveryPointDetails>)SourceRecoverPoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SubTasks))
             {
@@ -63,14 +63,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in SubTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupJobSubTask>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TargetRecoverPoint))
             {
                 writer.WritePropertyName("targetRecoverPoint"u8);
-                writer.WriteObjectValue(TargetRecoverPoint);
+                ((IJsonModel<RestoreJobRecoveryPointDetails>)TargetRecoverPoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WarningDetails))
             {
@@ -78,7 +85,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in WarningDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserFacingWarningDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +197,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupJobSubTask> array = new List<BackupJobSubTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupJobSubTask.DeserializeBackupJobSubTask(item));
+                        }
                     }
                     subTasks = array;
                     continue;
@@ -206,7 +227,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<UserFacingWarningDetail> array = new List<UserFacingWarningDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserFacingWarningDetail.DeserializeUserFacingWarningDetail(item));
+                        }
                     }
                     warningDetails = array;
                     continue;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<AzureKeyVaultSmbCredentials>)Credentials).Write(writer, options);
             }
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());

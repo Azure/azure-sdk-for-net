@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                ((IJsonModel<BfdConfiguration>)BfdConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPv4Routes))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StaticRouteProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StaticRouteProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        }
                     }
                     ipv4Routes = array;
                     continue;
@@ -128,7 +149,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<StaticRouteProperties> array = new List<StaticRouteProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StaticRouteProperties.DeserializeStaticRouteProperties(item));
+                        }
                     }
                     ipv6Routes = array;
                     continue;

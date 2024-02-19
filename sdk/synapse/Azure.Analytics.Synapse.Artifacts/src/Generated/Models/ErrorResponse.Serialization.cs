@@ -53,7 +53,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ErrorResponse> array = new List<ErrorResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorResponse(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeErrorResponse(item));
+                        }
                     }
                     details = array;
                     continue;
@@ -67,7 +74,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                        }
                     }
                     additionalInfo = array;
                     continue;

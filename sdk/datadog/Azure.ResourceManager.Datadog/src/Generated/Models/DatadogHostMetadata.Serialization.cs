@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
-                writer.WriteObjectValue(InstallMethod);
+                ((IJsonModel<DatadogInstallMethod>)InstallMethod).Write(writer, options);
             }
             if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
-                writer.WriteObjectValue(LogsAgent);
+                ((IJsonModel<DatadogLogsAgent>)LogsAgent).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

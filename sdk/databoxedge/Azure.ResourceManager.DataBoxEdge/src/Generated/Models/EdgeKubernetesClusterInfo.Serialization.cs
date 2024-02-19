@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
-                writer.WriteObjectValue(EtcdInfo);
+                ((IJsonModel<DataBoxEdgeEtcdInfo>)EtcdInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EdgeKubernetesNodeInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item));
+                        }
                     }
                     nodes = array;
                     continue;

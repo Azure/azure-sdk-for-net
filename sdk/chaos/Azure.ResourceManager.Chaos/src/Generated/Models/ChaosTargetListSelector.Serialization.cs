@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChaosTargetReference>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -40,7 +47,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<ChaosTargetFilter>)Filter).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosTargetReference> array = new List<ChaosTargetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChaosTargetReference.DeserializeChaosTargetReference(item));
+                        }
                     }
                     targets = array;
                     continue;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(DeliveryConfiguration))
             {
                 writer.WritePropertyName("deliveryConfiguration"u8);
-                writer.WriteObjectValue(DeliveryConfiguration);
+                ((IJsonModel<DeliveryConfiguration>)DeliveryConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EventDeliverySchema))
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(FiltersConfiguration))
             {
                 writer.WritePropertyName("filtersConfiguration"u8);
-                writer.WriteObjectValue(FiltersConfiguration);
+                ((IJsonModel<FiltersConfiguration>)FiltersConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

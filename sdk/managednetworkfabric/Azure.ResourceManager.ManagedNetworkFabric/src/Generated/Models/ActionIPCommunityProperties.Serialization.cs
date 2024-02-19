@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                ((IJsonModel<IPCommunityIdList>)Delete).Write(writer, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set);
+                ((IJsonModel<IPCommunityIdList>)Set).Write(writer, options);
             }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                ((IJsonModel<IPCommunityIdList>)Add).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

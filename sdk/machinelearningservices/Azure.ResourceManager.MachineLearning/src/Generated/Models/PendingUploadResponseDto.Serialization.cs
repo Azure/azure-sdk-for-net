@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (BlobReferenceForConsumption != null)
                 {
                     writer.WritePropertyName("blobReferenceForConsumption"u8);
-                    writer.WriteObjectValue(BlobReferenceForConsumption);
+                    ((IJsonModel<BlobReferenceForConsumptionDto>)BlobReferenceForConsumption).Write(writer, options);
                 }
                 else
                 {

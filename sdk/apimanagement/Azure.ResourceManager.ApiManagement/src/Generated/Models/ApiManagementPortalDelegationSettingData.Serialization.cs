@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(Subscriptions);
+                ((IJsonModel<SubscriptionDelegationSettingProperties>)Subscriptions).Write(writer, options);
             }
             if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(UserRegistration);
+                ((IJsonModel<RegistrationDelegationSettingProperties>)UserRegistration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

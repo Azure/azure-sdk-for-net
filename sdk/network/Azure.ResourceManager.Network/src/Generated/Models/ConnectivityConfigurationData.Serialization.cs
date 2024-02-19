@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectivityHub>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectivityGroupItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -227,7 +241,14 @@ namespace Azure.ResourceManager.Network
                             List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
+                                }
                             }
                             hubs = array;
                             continue;
@@ -250,7 +271,14 @@ namespace Azure.ResourceManager.Network
                             List<ConnectivityGroupItem> array = new List<ConnectivityGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item));
+                                }
                             }
                             appliesToGroups = array;
                             continue;

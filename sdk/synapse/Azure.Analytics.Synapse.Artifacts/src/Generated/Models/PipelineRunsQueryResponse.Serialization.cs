@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<PipelineRun> array = new List<PipelineRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineRun.DeserializePipelineRun(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineRun.DeserializePipelineRun(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<EncryptionUpdateProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
+                ((IJsonModel<FeatureStoreSettings>)FeatureStoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
+                ((IJsonModel<ManagedNetworkSettings>)ManagedNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                ((IJsonModel<ServiceManagedResourcesSettings>)ServiceManagedResourcesSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SoftDeleteRetentionInDays))
             {

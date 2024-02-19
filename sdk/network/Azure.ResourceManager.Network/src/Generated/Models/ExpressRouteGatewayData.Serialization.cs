@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoScaleConfiguration"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                ((IJsonModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>)AutoScaleConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExpressRouteConnectionList))
             {
@@ -78,7 +78,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in ExpressRouteConnectionList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -233,7 +240,14 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteConnectionData> array = new List<ExpressRouteConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteConnectionData.DeserializeExpressRouteConnectionData(item));
+                                }
                             }
                             expressRouteConnections = array;
                             continue;

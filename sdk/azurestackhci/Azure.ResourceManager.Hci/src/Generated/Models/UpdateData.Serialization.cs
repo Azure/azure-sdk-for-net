@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in Prerequisites)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UpdatePrerequisite>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in ComponentVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HciPackageVersionInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +125,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HciPrecheckResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -330,7 +351,14 @@ namespace Azure.ResourceManager.Hci
                             List<UpdatePrerequisite> array = new List<UpdatePrerequisite>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UpdatePrerequisite.DeserializeUpdatePrerequisite(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(UpdatePrerequisite.DeserializeUpdatePrerequisite(item));
+                                }
                             }
                             prerequisites = array;
                             continue;
@@ -344,7 +372,14 @@ namespace Azure.ResourceManager.Hci
                             List<HciPackageVersionInfo> array = new List<HciPackageVersionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HciPackageVersionInfo.DeserializeHciPackageVersionInfo(item));
+                                }
                             }
                             componentVersions = array;
                             continue;
@@ -376,7 +411,14 @@ namespace Azure.ResourceManager.Hci
                             List<HciPrecheckResult> array = new List<HciPrecheckResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HciPrecheckResult.DeserializeHciPrecheckResult(item));
+                                }
                             }
                             healthCheckResult = array;
                             continue;

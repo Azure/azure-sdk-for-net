@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.Storage.Models
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue(TierToCool);
+                ((IJsonModel<DateAfterModification>)TierToCool).Write(writer, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue(TierToArchive);
+                ((IJsonModel<DateAfterModification>)TierToArchive).Write(writer, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue(TierToCold);
+                ((IJsonModel<DateAfterModification>)TierToCold).Write(writer, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue(TierToHot);
+                ((IJsonModel<DateAfterModification>)TierToHot).Write(writer, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                ((IJsonModel<DateAfterModification>)Delete).Write(writer, options);
             }
             if (Optional.IsDefined(EnableAutoTierToHotFromCool))
             {

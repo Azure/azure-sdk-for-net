@@ -29,28 +29,28 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                ((IJsonModel<NetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue(CentralServer);
+            ((IJsonModel<CentralServerConfiguration>)CentralServer).Write(writer, options);
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue(ApplicationServer);
+            ((IJsonModel<ApplicationServerConfiguration>)ApplicationServer).Write(writer, options);
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue(DatabaseServer);
+            ((IJsonModel<DatabaseConfiguration>)DatabaseServer).Write(writer, options);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue(HighAvailabilityConfig);
+                ((IJsonModel<HighAvailabilityConfiguration>)HighAvailabilityConfig).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration);
+                ((IJsonModel<SapStorageConfiguration>)StorageConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                ((IJsonModel<ThreeTierCustomResourceNames>)CustomResourceNames).Write(writer, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());

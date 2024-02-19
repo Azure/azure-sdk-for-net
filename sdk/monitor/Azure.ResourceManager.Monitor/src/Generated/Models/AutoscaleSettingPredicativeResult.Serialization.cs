@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PredictiveValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +147,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<PredictiveValue> array = new List<PredictiveValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictiveValue.DeserializePredictiveValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PredictiveValue.DeserializePredictiveValue(item));
+                        }
                     }
                     data = array;
                     continue;

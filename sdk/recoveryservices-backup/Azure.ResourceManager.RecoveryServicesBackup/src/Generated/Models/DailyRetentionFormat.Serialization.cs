@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfTheMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupDay>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<BackupDay> array = new List<BackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDay.DeserializeBackupDay(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupDay.DeserializeBackupDay(item));
+                        }
                     }
                     daysOfTheMonth = array;
                     continue;

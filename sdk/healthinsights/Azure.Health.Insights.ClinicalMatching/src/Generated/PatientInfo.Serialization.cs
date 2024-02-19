@@ -43,7 +43,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in ClinicalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClinicalCodedElement>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +126,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalCodedElement> array = new List<ClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClinicalCodedElement.DeserializeClinicalCodedElement(item));
+                        }
                     }
                     clinicalInfo = array;
                     continue;

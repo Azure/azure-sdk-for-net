@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaOutputFile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOutputFile> array = new List<MediaOutputFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaOutputFile.DeserializeMediaOutputFile(item));
+                        }
                     }
                     outputFiles = array;
                     continue;

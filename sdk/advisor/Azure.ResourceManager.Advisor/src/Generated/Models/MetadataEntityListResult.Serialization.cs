@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetadataEntityData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<MetadataEntityData> array = new List<MetadataEntityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetadataEntityData.DeserializeMetadataEntityData(item));
+                        }
                     }
                     value = array;
                     continue;

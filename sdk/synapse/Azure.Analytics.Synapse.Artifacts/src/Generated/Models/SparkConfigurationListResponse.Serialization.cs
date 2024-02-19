@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<SparkConfigurationResource> array = new List<SparkConfigurationResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkConfigurationResource.DeserializeSparkConfigurationResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkConfigurationResource.DeserializeSparkConfigurationResource(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -97,7 +97,14 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in ExtensionHandler)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DscNodeExtensionHandlerAssociationProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -271,7 +278,14 @@ namespace Azure.ResourceManager.Automation
                             List<DscNodeExtensionHandlerAssociationProperty> array = new List<DscNodeExtensionHandlerAssociationProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DscNodeExtensionHandlerAssociationProperty.DeserializeDscNodeExtensionHandlerAssociationProperty(item));
+                                }
                             }
                             extensionHandler = array;
                             continue;

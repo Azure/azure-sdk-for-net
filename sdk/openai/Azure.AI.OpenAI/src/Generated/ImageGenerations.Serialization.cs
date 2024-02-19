@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ImageGenerationData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +97,14 @@ namespace Azure.AI.OpenAI
                     List<ImageGenerationData> array = new List<ImageGenerationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageGenerationData.DeserializeImageGenerationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImageGenerationData.DeserializeImageGenerationData(item));
+                        }
                     }
                     data = array;
                     continue;

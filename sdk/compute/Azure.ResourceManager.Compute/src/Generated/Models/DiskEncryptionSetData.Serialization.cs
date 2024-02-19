@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                ((IJsonModel<KeyForDiskEncryptionSet>)ActiveKey).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KeyForDiskEncryptionSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +113,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue(AutoKeyRotationError);
+                ((IJsonModel<ComputeApiError>)AutoKeyRotationError).Write(writer, options);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
@@ -259,7 +266,14 @@ namespace Azure.ResourceManager.Compute
                             List<KeyForDiskEncryptionSet> array = new List<KeyForDiskEncryptionSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KeyForDiskEncryptionSet.DeserializeKeyForDiskEncryptionSet(item));
+                                }
                             }
                             previousKeys = array;
                             continue;

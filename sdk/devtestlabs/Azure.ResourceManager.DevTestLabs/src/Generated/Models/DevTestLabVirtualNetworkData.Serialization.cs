@@ -69,7 +69,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in AllowedSubnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in ExternalSubnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabExternalSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in SubnetOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabSubnetOverride>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +257,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabSubnet> array = new List<DevTestLabSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabSubnet.DeserializeDevTestLabSubnet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabSubnet.DeserializeDevTestLabSubnet(item));
+                                }
                             }
                             allowedSubnets = array;
                             continue;
@@ -260,7 +288,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabExternalSubnet> array = new List<DevTestLabExternalSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabExternalSubnet.DeserializeDevTestLabExternalSubnet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabExternalSubnet.DeserializeDevTestLabExternalSubnet(item));
+                                }
                             }
                             externalSubnets = array;
                             continue;
@@ -274,7 +309,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabSubnetOverride> array = new List<DevTestLabSubnetOverride>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabSubnetOverride.DeserializeDevTestLabSubnetOverride(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabSubnetOverride.DeserializeDevTestLabSubnetOverride(item));
+                                }
                             }
                             subnetOverrides = array;
                             continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PeeringData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringData> array = new List<PeeringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringData.DeserializePeeringData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeeringData.DeserializePeeringData(item));
+                        }
                     }
                     value = array;
                     continue;

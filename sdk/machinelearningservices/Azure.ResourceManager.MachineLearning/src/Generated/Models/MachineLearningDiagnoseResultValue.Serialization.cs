@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in UserDefinedRouteResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityRuleResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceLockResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +83,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResolutionResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +100,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccountResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +117,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +134,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistryResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +151,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationInsightsResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +168,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningDiagnoseResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +239,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     userDefinedRouteResults = array;
                     continue;
@@ -190,7 +260,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     networkSecurityRuleResults = array;
                     continue;
@@ -204,7 +281,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     resourceLockResults = array;
                     continue;
@@ -218,7 +302,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     dnsResolutionResults = array;
                     continue;
@@ -232,7 +323,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     storageAccountResults = array;
                     continue;
@@ -246,7 +344,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     keyVaultResults = array;
                     continue;
@@ -260,7 +365,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     containerRegistryResults = array;
                     continue;
@@ -274,7 +386,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     applicationInsightsResults = array;
                     continue;
@@ -288,7 +407,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningDiagnoseResult.DeserializeMachineLearningDiagnoseResult(item));
+                        }
                     }
                     otherResults = array;
                     continue;

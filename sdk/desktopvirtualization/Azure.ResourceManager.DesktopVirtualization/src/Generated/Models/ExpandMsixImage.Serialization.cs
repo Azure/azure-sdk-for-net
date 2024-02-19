@@ -109,7 +109,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStartArray();
                     foreach (var item in PackageDependencies)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<MsixPackageDependencies>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -134,7 +141,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in PackageApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MsixPackageApplications>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -299,7 +313,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageDependencies> array = new List<MsixPackageDependencies>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MsixPackageDependencies.DeserializeMsixPackageDependencies(item));
+                                }
                             }
                             packageDependencies = array;
                             continue;
@@ -327,7 +348,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<MsixPackageApplications> array = new List<MsixPackageApplications>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MsixPackageApplications.DeserializeMsixPackageApplications(item));
+                                }
                             }
                             packageApplications = array;
                             continue;

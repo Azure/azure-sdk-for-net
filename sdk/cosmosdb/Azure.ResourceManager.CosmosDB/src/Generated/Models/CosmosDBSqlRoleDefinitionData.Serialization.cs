@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBSqlRolePermission>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -201,7 +208,14 @@ namespace Azure.ResourceManager.CosmosDB
                             List<CosmosDBSqlRolePermission> array = new List<CosmosDBSqlRolePermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CosmosDBSqlRolePermission.DeserializeCosmosDBSqlRolePermission(item));
+                                }
                             }
                             permissions = array;
                             continue;

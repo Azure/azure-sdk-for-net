@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiRevisionContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiRevisionContract> array = new List<ApiRevisionContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiRevisionContract.DeserializeApiRevisionContract(item));
+                        }
                     }
                     value = array;
                     continue;

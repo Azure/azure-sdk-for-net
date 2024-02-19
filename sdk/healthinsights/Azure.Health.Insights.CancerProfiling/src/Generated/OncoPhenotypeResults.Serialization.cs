@@ -31,7 +31,14 @@ namespace Azure.Health.Insights.CancerProfiling
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<OncoPhenotypePatientResult>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -85,7 +92,14 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<OncoPhenotypePatientResult> array = new List<OncoPhenotypePatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OncoPhenotypePatientResult.DeserializeOncoPhenotypePatientResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OncoPhenotypePatientResult.DeserializeOncoPhenotypePatientResult(item));
+                        }
                     }
                     patients = array;
                     continue;

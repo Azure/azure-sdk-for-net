@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SoftwareInventoryData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SoftwareInventoryData> array = new List<SoftwareInventoryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SoftwareInventoryData.DeserializeSoftwareInventoryData(item));
+                        }
                     }
                     value = array;
                     continue;

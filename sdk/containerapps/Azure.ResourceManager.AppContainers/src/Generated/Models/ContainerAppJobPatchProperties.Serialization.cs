@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<ContainerAppJobConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                ((IJsonModel<ContainerAppJobTemplate>)Template).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(OutboundIPAddresses))
             {

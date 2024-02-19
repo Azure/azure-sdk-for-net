@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareablePrivateLinkResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ShareablePrivateLinkResourceType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -210,7 +217,14 @@ namespace Azure.ResourceManager.SignalR.Models
                             List<ShareablePrivateLinkResourceType> array = new List<ShareablePrivateLinkResourceType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ShareablePrivateLinkResourceType.DeserializeShareablePrivateLinkResourceType(item));
+                                }
                             }
                             shareablePrivateLinkResourceTypes = array;
                             continue;

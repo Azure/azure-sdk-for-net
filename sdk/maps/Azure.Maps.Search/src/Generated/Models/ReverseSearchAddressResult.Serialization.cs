@@ -41,7 +41,14 @@ namespace Azure.Maps.Search.Models
                     List<ReverseSearchAddressItem> array = new List<ReverseSearchAddressItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReverseSearchAddressItem.DeserializeReverseSearchAddressItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReverseSearchAddressItem.DeserializeReverseSearchAddressItem(item));
+                        }
                     }
                     addresses = array;
                     continue;

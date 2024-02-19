@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CostManagementExportData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementExportData> array = new List<CostManagementExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CostManagementExportData.DeserializeCostManagementExportData(item));
+                        }
                     }
                     value = array;
                     continue;

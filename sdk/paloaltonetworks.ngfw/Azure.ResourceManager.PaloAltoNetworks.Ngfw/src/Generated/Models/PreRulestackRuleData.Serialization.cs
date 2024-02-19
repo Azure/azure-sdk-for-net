@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<SourceAddressInfo>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(NegateSource))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                ((IJsonModel<DestinationAddressInfo>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(NegateDestination))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category);
+                ((IJsonModel<EdlMatchCategory>)Category).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -154,7 +154,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RulestackTagInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -424,7 +431,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                             List<RulestackTagInfo> array = new List<RulestackTagInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RulestackTagInfo.DeserializeRulestackTagInfo(item));
+                                }
                             }
                             tags = array;
                             continue;

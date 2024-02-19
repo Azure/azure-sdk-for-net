@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TenantResourceProvider>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Resources.Models
                     List<TenantResourceProvider> array = new List<TenantResourceProvider>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantResourceProvider.DeserializeTenantResourceProvider(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TenantResourceProvider.DeserializeTenantResourceProvider(item));
+                        }
                     }
                     value = array;
                     continue;

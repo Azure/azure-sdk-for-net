@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<HybridContainerServiceExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<AgentPoolProvisioningStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

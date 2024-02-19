@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NginxConfigurationFile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +54,21 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NginxConfigurationFile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Package))
             {
                 writer.WritePropertyName("package"u8);
-                writer.WriteObjectValue(Package);
+                ((IJsonModel<NginxConfigurationPackage>)Package).Write(writer, options);
             }
             if (Optional.IsDefined(RootFile))
             {
@@ -126,7 +140,14 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        }
                     }
                     files = array;
                     continue;
@@ -140,7 +161,14 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                        }
                     }
                     protectedFiles = array;
                     continue;

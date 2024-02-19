@@ -31,7 +31,14 @@ namespace Azure.AI.Language.QuestionAnswering
                     List<KnowledgeBaseAnswer> array = new List<KnowledgeBaseAnswer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KnowledgeBaseAnswer.DeserializeKnowledgeBaseAnswer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KnowledgeBaseAnswer.DeserializeKnowledgeBaseAnswer(item));
+                        }
                     }
                     answers = array;
                     continue;

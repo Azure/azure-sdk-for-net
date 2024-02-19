@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(BaseModel))
             {
                 writer.WritePropertyName("baseModel"u8);
-                writer.WriteObjectValue(BaseModel);
+                ((IJsonModel<CognitiveServicesAccountDeploymentModel>)BaseModel).Write(writer, options);
             }
             if (Optional.IsDefined(IsDefaultVersion))
             {
@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Skus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesModelSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +84,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Deprecation))
             {
                 writer.WritePropertyName("deprecation"u8);
-                writer.WriteObjectValue(Deprecation);
+                ((IJsonModel<ServiceAccountModelDeprecationInfo>)Deprecation).Write(writer, options);
             }
             if (Optional.IsDefined(LifecycleStatus))
             {
@@ -112,7 +119,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesModelSku> array = new List<CognitiveServicesModelSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesModelSku.DeserializeCognitiveServicesModelSku(item));
+                        }
                     }
                     skus = array;
                     continue;

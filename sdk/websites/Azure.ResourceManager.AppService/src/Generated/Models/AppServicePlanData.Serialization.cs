@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
                 if (HostingEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                    writer.WriteObjectValue(HostingEnvironmentProfile);
+                    ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
                 if (KubeEnvironmentProfile != null)
                 {
                     writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                    writer.WriteObjectValue(KubeEnvironmentProfile);
+                    ((IJsonModel<KubeEnvironmentProfile>)KubeEnvironmentProfile).Write(writer, options);
                 }
                 else
                 {

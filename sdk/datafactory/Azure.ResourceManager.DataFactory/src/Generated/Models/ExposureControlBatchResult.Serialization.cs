@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in ExposureControlResults)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ExposureControlResult>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ExposureControlResult> array = new List<ExposureControlResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExposureControlResult.DeserializeExposureControlResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExposureControlResult.DeserializeExposureControlResult(item));
+                        }
                     }
                     exposureControlResponses = array;
                     continue;

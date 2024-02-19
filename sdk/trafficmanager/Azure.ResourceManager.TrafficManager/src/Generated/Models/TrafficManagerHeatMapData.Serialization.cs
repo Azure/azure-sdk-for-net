@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerHeatMapEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +77,14 @@ namespace Azure.ResourceManager.TrafficManager
                 writer.WriteStartArray();
                 foreach (var item in TrafficFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerHeatMapTrafficFlow>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -183,7 +197,14 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapEndpoint> array = new List<TrafficManagerHeatMapEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TrafficManagerHeatMapEndpoint.DeserializeTrafficManagerHeatMapEndpoint(item));
+                                }
                             }
                             endpoints = array;
                             continue;
@@ -197,7 +218,14 @@ namespace Azure.ResourceManager.TrafficManager
                             List<TrafficManagerHeatMapTrafficFlow> array = new List<TrafficManagerHeatMapTrafficFlow>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TrafficManagerHeatMapTrafficFlow.DeserializeTrafficManagerHeatMapTrafficFlow(item));
+                                }
                             }
                             trafficFlows = array;
                             continue;

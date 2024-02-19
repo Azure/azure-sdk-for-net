@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("canary"u8);
-            writer.WriteObjectValue(Canary);
+            ((IJsonModel<TrafficRegions>)Canary).Write(writer, options);
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration);
+                ((IJsonModel<ProviderRegistrationData>)ProviderRegistration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -40,7 +40,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceTypeRegistrationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        }
                     }
                     resourceTypeRegistrations = array;
                     continue;

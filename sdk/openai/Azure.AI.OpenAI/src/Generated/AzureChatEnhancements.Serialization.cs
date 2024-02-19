@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
-                writer.WriteObjectValue(Grounding);
+                ((IJsonModel<AzureGroundingEnhancement>)Grounding).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

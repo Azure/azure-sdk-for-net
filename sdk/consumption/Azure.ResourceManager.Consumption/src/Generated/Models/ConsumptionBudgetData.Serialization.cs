@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                ((IJsonModel<BudgetTimePeriod>)TimePeriod).Write(writer, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<ConsumptionBudgetFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
-                writer.WriteObjectValue(CurrentSpend);
+                ((IJsonModel<BudgetCurrentSpend>)CurrentSpend).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -93,14 +93,21 @@ namespace Azure.ResourceManager.Consumption
                 foreach (var item in Notifications)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<BudgetAssociatedNotification>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
-                writer.WriteObjectValue(ForecastSpend);
+                ((IJsonModel<BudgetForecastSpend>)ForecastSpend).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -263,7 +270,14 @@ namespace Azure.ResourceManager.Consumption
                             Dictionary<string, BudgetAssociatedNotification> dictionary = new Dictionary<string, BudgetAssociatedNotification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BudgetAssociatedNotification.DeserializeBudgetAssociatedNotification(property1.Value));
+                                }
                             }
                             notifications = dictionary;
                             continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {

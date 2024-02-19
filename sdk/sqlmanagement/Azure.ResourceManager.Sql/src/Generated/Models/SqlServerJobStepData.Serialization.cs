@@ -68,17 +68,17 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                ((IJsonModel<JobStepAction>)Action).Write(writer, options);
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                ((IJsonModel<JobStepOutput>)Output).Write(writer, options);
             }
             if (Optional.IsDefined(ExecutionOptions))
             {
                 writer.WritePropertyName("executionOptions"u8);
-                writer.WriteObjectValue(ExecutionOptions);
+                ((IJsonModel<JobStepExecutionOptions>)ExecutionOptions).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

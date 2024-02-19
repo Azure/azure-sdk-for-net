@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PlaywrightTestingAccountData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                     List<PlaywrightTestingAccountData> array = new List<PlaywrightTestingAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PlaywrightTestingAccountData.DeserializePlaywrightTestingAccountData(item));
+                        }
                     }
                     value = array;
                     continue;

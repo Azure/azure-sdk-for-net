@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PeeringRegisteredAsnData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Peering.Models
                     List<PeeringRegisteredAsnData> array = new List<PeeringRegisteredAsnData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PeeringRegisteredAsnData.DeserializePeeringRegisteredAsnData(item));
+                        }
                     }
                     value = array;
                     continue;

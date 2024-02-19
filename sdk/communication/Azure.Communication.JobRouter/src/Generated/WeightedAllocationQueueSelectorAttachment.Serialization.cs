@@ -31,7 +31,14 @@ namespace Azure.Communication.JobRouter
             writer.WriteStartArray();
             foreach (var item in Allocations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<QueueWeightedAllocation>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -85,7 +92,14 @@ namespace Azure.Communication.JobRouter
                     List<QueueWeightedAllocation> array = new List<QueueWeightedAllocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueueWeightedAllocation.DeserializeQueueWeightedAllocation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueueWeightedAllocation.DeserializeQueueWeightedAllocation(item));
+                        }
                     }
                     allocations = array;
                     continue;

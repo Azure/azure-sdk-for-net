@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CodeConfiguration))
             {
                 writer.WritePropertyName("codeConfiguration"u8);
-                writer.WriteObjectValue(CodeConfiguration);
+                ((IJsonModel<GitHubActionCodeConfiguration>)CodeConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ContainerConfiguration))
             {
                 writer.WritePropertyName("containerConfiguration"u8);
-                writer.WriteObjectValue(ContainerConfiguration);
+                ((IJsonModel<GitHubActionContainerConfiguration>)ContainerConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IsLinux))
             {

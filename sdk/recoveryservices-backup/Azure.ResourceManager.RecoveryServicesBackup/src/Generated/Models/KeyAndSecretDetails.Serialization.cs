@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(KekDetails))
             {
                 writer.WritePropertyName("kekDetails"u8);
-                writer.WriteObjectValue(KekDetails);
+                ((IJsonModel<KekDetails>)KekDetails).Write(writer, options);
             }
             if (Optional.IsDefined(BekDetails))
             {
                 writer.WritePropertyName("bekDetails"u8);
-                writer.WriteObjectValue(BekDetails);
+                ((IJsonModel<BekDetails>)BekDetails).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionMechanism))
             {

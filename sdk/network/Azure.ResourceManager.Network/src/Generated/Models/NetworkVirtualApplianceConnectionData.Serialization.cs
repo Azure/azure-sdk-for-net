@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ConnectionRoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(ConnectionRoutingConfiguration);
+                ((IJsonModel<RoutingConfiguration>)ConnectionRoutingConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

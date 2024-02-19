@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                ((IJsonModel<MoverDisplayInfo>)Display).Write(writer, options);
             }
             if (Optional.IsDefined(Origin))
             {

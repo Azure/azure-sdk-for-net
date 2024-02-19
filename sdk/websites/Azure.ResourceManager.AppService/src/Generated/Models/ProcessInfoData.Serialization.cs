@@ -111,7 +111,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Threads)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProcessThreadInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProcessModuleInfoData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -462,7 +476,14 @@ namespace Azure.ResourceManager.AppService
                             List<ProcessThreadInfo> array = new List<ProcessThreadInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ProcessThreadInfo.DeserializeProcessThreadInfo(item));
+                                }
                             }
                             threads = array;
                             continue;
@@ -490,7 +511,14 @@ namespace Azure.ResourceManager.AppService
                             List<ProcessModuleInfoData> array = new List<ProcessModuleInfoData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ProcessModuleInfoData.DeserializeProcessModuleInfoData(item));
+                                }
                             }
                             modules = array;
                             continue;

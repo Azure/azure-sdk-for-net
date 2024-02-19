@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AdministratorAccount))
             {
                 writer.WritePropertyName("administratorAccount"u8);
-                writer.WriteObjectValue(AdministratorAccount);
+                ((IJsonModel<MachineLearningVmSshCredentials>)AdministratorAccount).Write(writer, options);
             }
             writer.WritePropertyName("computeType"u8);
             writer.WriteStringValue(ComputeType.ToString());

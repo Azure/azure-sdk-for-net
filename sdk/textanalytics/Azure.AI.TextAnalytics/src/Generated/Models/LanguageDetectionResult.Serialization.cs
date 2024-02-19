@@ -21,14 +21,28 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
@@ -58,7 +72,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<LanguageDetectionDocumentResult> array = new List<LanguageDetectionDocumentResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LanguageDetectionDocumentResult.DeserializeLanguageDetectionDocumentResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LanguageDetectionDocumentResult.DeserializeLanguageDetectionDocumentResult(item));
+                        }
                     }
                     documents = array;
                     continue;
@@ -68,7 +89,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<DocumentError> array = new List<DocumentError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentError.DeserializeDocumentError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentError.DeserializeDocumentError(item));
+                        }
                     }
                     errors = array;
                     continue;

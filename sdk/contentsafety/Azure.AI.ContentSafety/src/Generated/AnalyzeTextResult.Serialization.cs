@@ -33,7 +33,14 @@ namespace Azure.AI.ContentSafety
                 writer.WriteStartArray();
                 foreach (var item in BlocklistsMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TextBlocklistMatch>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +48,14 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TextCategoriesAnalysis>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +111,14 @@ namespace Azure.AI.ContentSafety
                     List<TextBlocklistMatch> array = new List<TextBlocklistMatch>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextBlocklistMatch.DeserializeTextBlocklistMatch(item));
+                        }
                     }
                     blocklistsMatch = array;
                     continue;
@@ -107,7 +128,14 @@ namespace Azure.AI.ContentSafety
                     List<TextCategoriesAnalysis> array = new List<TextCategoriesAnalysis>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextCategoriesAnalysis.DeserializeTextCategoriesAnalysis(item));
+                        }
                     }
                     categoriesAnalysis = array;
                     continue;

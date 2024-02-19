@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TopologyResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<TopologyResourceInfo> array = new List<TopologyResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TopologyResourceInfo.DeserializeTopologyResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TopologyResourceInfo.DeserializeTopologyResourceInfo(item));
+                        }
                     }
                     resources = array;
                     continue;

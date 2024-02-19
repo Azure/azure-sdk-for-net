@@ -27,7 +27,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentFields)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -37,7 +44,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in KeywordsFields)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +87,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SemanticField> array = new List<SemanticField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SemanticField.DeserializeSemanticField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SemanticField.DeserializeSemanticField(item));
+                        }
                     }
                     prioritizedContentFields = array;
                     continue;
@@ -87,7 +108,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SemanticField> array = new List<SemanticField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SemanticField.DeserializeSemanticField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SemanticField.DeserializeSemanticField(item));
+                        }
                     }
                     prioritizedKeywordsFields = array;
                     continue;

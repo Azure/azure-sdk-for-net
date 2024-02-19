@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Bind != null)
                 {
                     writer.WritePropertyName("bind"u8);
-                    writer.WriteObjectValue(Bind);
+                    ((IJsonModel<MountBindOptions>)Bind).Write(writer, options);
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Volume != null)
                 {
                     writer.WritePropertyName("volume"u8);
-                    writer.WriteObjectValue(Volume);
+                    ((IJsonModel<VolumeOptions>)Volume).Write(writer, options);
                 }
                 else
                 {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Tmpfs != null)
                 {
                     writer.WritePropertyName("tmpfs"u8);
-                    writer.WriteObjectValue(Tmpfs);
+                    ((IJsonModel<TmpfsOptions>)Tmpfs).Write(writer, options);
                 }
                 else
                 {

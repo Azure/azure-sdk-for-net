@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStartArray();
             foreach (var item in Options)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContentKeyPolicyOption>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<ContentKeyPolicyOption> array = new List<ContentKeyPolicyOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContentKeyPolicyOption.DeserializeContentKeyPolicyOption(item));
+                        }
                     }
                     options0 = array;
                     continue;

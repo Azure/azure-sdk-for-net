@@ -28,7 +28,14 @@ namespace Azure.Search.Documents.Models
                     List<SuggestResult> array = new List<SuggestResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuggestResult.DeserializeSuggestResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SuggestResult.DeserializeSuggestResult(item));
+                        }
                     }
                     value = array;
                     continue;

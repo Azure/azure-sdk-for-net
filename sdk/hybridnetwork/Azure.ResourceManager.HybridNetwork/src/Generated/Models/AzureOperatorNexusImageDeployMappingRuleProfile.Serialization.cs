@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ImageMappingRuleProfile))
             {
                 writer.WritePropertyName("imageMappingRuleProfile"u8);
-                writer.WriteObjectValue(ImageMappingRuleProfile);
+                ((IJsonModel<ImageMappingRuleProfile>)ImageMappingRuleProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {

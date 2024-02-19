@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("artifact"u8);
-            writer.WriteObjectValue(Artifact);
+            ((IJsonModel<OneLakeArtifact>)Artifact).Write(writer, options);
             if (Optional.IsDefined(Endpoint))
             {
                 if (Endpoint != null)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStringValue(ServiceDataAccessAuthIdentity.Value.ToString());
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            ((IJsonModel<MachineLearningDatastoreCredentials>)Credentials).Write(writer, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SearchServiceQueryKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Search.Models
                     List<SearchServiceQueryKey> array = new List<SearchServiceQueryKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchServiceQueryKey.DeserializeSearchServiceQueryKey(item));
+                        }
                     }
                     value = array;
                     continue;

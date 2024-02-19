@@ -31,7 +31,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in ToolOutputs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ToolOutput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<ToolOutput> array = new List<ToolOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolOutput.DeserializeToolOutput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ToolOutput.DeserializeToolOutput(item));
+                        }
                     }
                     toolOutputs = array;
                     continue;

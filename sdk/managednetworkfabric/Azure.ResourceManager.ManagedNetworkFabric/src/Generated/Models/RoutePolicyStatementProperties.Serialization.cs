@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             writer.WritePropertyName("sequenceNumber"u8);
             writer.WriteNumberValue(SequenceNumber);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            ((IJsonModel<StatementConditionProperties>)Condition).Write(writer, options);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            ((IJsonModel<StatementActionProperties>)Action).Write(writer, options);
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);

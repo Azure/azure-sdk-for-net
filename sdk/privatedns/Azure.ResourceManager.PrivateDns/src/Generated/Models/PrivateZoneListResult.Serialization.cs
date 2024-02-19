@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateDnsZoneData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
                     List<PrivateDnsZoneData> array = new List<PrivateDnsZoneData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateDnsZoneData.DeserializePrivateDnsZoneData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateDnsZoneData.DeserializePrivateDnsZoneData(item));
+                        }
                     }
                     value = array;
                     continue;

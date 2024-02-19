@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PrivateEndpoint != null)
                 {
                     writer.WritePropertyName("privateEndpoint"u8);
-                    writer.WriteObjectValue(PrivateEndpoint);
+                    ((IJsonModel<RegistryPrivateEndpoint>)PrivateEndpoint).Write(writer, options);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (PrivateLinkServiceConnectionState != null)
                 {
                     writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                    writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                    ((IJsonModel<RegistryPrivateLinkServiceConnectionState>)PrivateLinkServiceConnectionState).Write(writer, options);
                 }
                 else
                 {

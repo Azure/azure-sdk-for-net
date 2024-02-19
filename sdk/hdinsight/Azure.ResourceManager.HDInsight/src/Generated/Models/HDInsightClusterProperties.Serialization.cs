@@ -54,21 +54,21 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(ClusterId);
             }
             writer.WritePropertyName("clusterDefinition"u8);
-            writer.WriteObjectValue(ClusterDefinition);
+            ((IJsonModel<HDInsightClusterDefinition>)ClusterDefinition).Write(writer, options);
             if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
-                writer.WriteObjectValue(KafkaRestProperties);
+                ((IJsonModel<KafkaRestProperties>)KafkaRestProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<HDInsightSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                ((IJsonModel<ComputeProfile>)ComputeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(QuotaInfo))
             {
                 writer.WritePropertyName("quotaInfo"u8);
-                writer.WriteObjectValue(QuotaInfo);
+                ((IJsonModel<QuotaInfo>)QuotaInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -96,7 +96,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,24 +113,31 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectivityEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectivityEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
-                writer.WriteObjectValue(DiskEncryptionProperties);
+                ((IJsonModel<HDInsightDiskEncryptionProperties>)DiskEncryptionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
-                writer.WriteObjectValue(EncryptionInTransitProperties);
+                ((IJsonModel<EncryptionInTransitProperties>)EncryptionInTransitProperties).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<StorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(MinSupportedTlsVersion))
             {
@@ -133,17 +147,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ExcludedServicesConfig))
             {
                 writer.WritePropertyName("excludedServicesConfig"u8);
-                writer.WriteObjectValue(ExcludedServicesConfig);
+                ((IJsonModel<ExcludedServicesConfig>)ExcludedServicesConfig).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
-                writer.WriteObjectValue(NetworkProperties);
+                ((IJsonModel<HDInsightClusterNetworkProperties>)NetworkProperties).Write(writer, options);
             }
             if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
-                writer.WriteObjectValue(ComputeIsolationProperties);
+                ((IJsonModel<HDInsightComputeIsolationProperties>)ComputeIsolationProperties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -151,7 +165,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightPrivateLinkConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +182,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -337,7 +365,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        }
                     }
                     errors = array;
                     continue;
@@ -351,7 +386,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<ConnectivityEndpoint> array = new List<ConnectivityEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityEndpoint.DeserializeConnectivityEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectivityEndpoint.DeserializeConnectivityEndpoint(item));
+                        }
                     }
                     connectivityEndpoints = array;
                     continue;
@@ -424,7 +466,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkConfiguration> array = new List<HDInsightPrivateLinkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightPrivateLinkConfiguration.DeserializeHDInsightPrivateLinkConfiguration(item));
+                        }
                     }
                     privateLinkConfigurations = array;
                     continue;
@@ -438,7 +487,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateEndpointConnectionData> array = new List<HDInsightPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightPrivateEndpointConnectionData.DeserializeHDInsightPrivateEndpointConnectionData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;

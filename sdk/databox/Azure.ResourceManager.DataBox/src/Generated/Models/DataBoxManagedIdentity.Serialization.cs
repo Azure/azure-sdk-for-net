@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(UserAssigned))
             {
                 writer.WritePropertyName("userAssigned"u8);
-                writer.WriteObjectValue(UserAssigned);
+                ((IJsonModel<DataBoxUserAssignedIdentity>)UserAssigned).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

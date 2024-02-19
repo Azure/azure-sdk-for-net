@@ -41,7 +41,14 @@ namespace Azure.Communication.Chat
                     List<ChatError> array = new List<ChatError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatError.DeserializeChatError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatError.DeserializeChatError(item));
+                        }
                     }
                     invalidParticipants = array;
                     continue;

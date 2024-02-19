@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(PresentationTimeRange))
             {
                 writer.WritePropertyName("presentationTimeRange"u8);
-                writer.WriteObjectValue(PresentationTimeRange);
+                ((IJsonModel<PresentationTimeRange>)PresentationTimeRange).Write(writer, options);
             }
             if (Optional.IsDefined(FirstQuality))
             {
                 writer.WritePropertyName("firstQuality"u8);
-                writer.WriteObjectValue(FirstQuality);
+                ((IJsonModel<FirstQuality>)FirstQuality).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tracks))
             {
@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Tracks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FilterTrackSelection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.Media
                             List<FilterTrackSelection> array = new List<FilterTrackSelection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FilterTrackSelection.DeserializeFilterTrackSelection(item));
+                                }
                             }
                             tracks = array;
                             continue;

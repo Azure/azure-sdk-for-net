@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                ((IJsonModel<GalleryOSDiskImage>)OSDiskImage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

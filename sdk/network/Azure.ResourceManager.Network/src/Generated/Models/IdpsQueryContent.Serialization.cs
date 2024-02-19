@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IdpsQueryFilterItems>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(OrderBy))
             {
                 writer.WritePropertyName("orderBy"u8);
-                writer.WriteObjectValue(OrderBy);
+                ((IJsonModel<IdpsQueryOrderBy>)OrderBy).Write(writer, options);
             }
             if (Optional.IsDefined(ResultsPerPage))
             {
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<IdpsQueryFilterItems> array = new List<IdpsQueryFilterItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IdpsQueryFilterItems.DeserializeIdpsQueryFilterItems(item));
+                        }
                     }
                     filters = array;
                     continue;

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             if (Optional.IsDefined(FreeTrial))
             {
                 writer.WritePropertyName("freeTrial"u8);
-                writer.WriteObjectValue(FreeTrial);
+                ((IJsonModel<FreeTrialProperties>)FreeTrial).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

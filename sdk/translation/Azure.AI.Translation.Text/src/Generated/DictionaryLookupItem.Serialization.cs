@@ -35,7 +35,14 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DictionaryTranslation>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +105,14 @@ namespace Azure.AI.Translation.Text
                     List<DictionaryTranslation> array = new List<DictionaryTranslation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DictionaryTranslation.DeserializeDictionaryTranslation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DictionaryTranslation.DeserializeDictionaryTranslation(item));
+                        }
                     }
                     translations = array;
                     continue;

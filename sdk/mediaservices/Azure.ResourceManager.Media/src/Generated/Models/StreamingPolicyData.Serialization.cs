@@ -63,22 +63,22 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(EnvelopeEncryption))
             {
                 writer.WritePropertyName("envelopeEncryption"u8);
-                writer.WriteObjectValue(EnvelopeEncryption);
+                ((IJsonModel<EnvelopeEncryption>)EnvelopeEncryption).Write(writer, options);
             }
             if (Optional.IsDefined(CommonEncryptionCenc))
             {
                 writer.WritePropertyName("commonEncryptionCenc"u8);
-                writer.WriteObjectValue(CommonEncryptionCenc);
+                ((IJsonModel<CommonEncryptionCenc>)CommonEncryptionCenc).Write(writer, options);
             }
             if (Optional.IsDefined(CommonEncryptionCbcs))
             {
                 writer.WritePropertyName("commonEncryptionCbcs"u8);
-                writer.WriteObjectValue(CommonEncryptionCbcs);
+                ((IJsonModel<CommonEncryptionCbcs>)CommonEncryptionCbcs).Write(writer, options);
             }
             if (Optional.IsDefined(NoEncryption))
             {
                 writer.WritePropertyName("noEncryption"u8);
-                writer.WriteObjectValue(NoEncryption);
+                ((IJsonModel<NoEncryption>)NoEncryption).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

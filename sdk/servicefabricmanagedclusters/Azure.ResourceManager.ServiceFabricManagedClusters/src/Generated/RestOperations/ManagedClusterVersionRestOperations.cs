@@ -234,7 +234,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -265,7 +272,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -318,7 +332,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -350,7 +371,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

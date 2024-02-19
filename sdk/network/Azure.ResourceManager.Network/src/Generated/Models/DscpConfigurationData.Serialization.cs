@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourceIPRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosIPRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationIPRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosIPRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +116,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosPortRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +133,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in DestinationPortRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosPortRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +155,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in QosDefinitionCollection)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DscpQosDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +177,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AssociatedNetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkInterfaceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -303,7 +345,14 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                }
                             }
                             sourceIPRanges = array;
                             continue;
@@ -317,7 +366,14 @@ namespace Azure.ResourceManager.Network
                             List<QosIPRange> array = new List<QosIPRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(QosIPRange.DeserializeQosIPRange(item));
+                                }
                             }
                             destinationIPRanges = array;
                             continue;
@@ -331,7 +387,14 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                }
                             }
                             sourcePortRanges = array;
                             continue;
@@ -345,7 +408,14 @@ namespace Azure.ResourceManager.Network
                             List<QosPortRange> array = new List<QosPortRange>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(QosPortRange.DeserializeQosPortRange(item));
+                                }
                             }
                             destinationPortRanges = array;
                             continue;
@@ -368,7 +438,14 @@ namespace Azure.ResourceManager.Network
                             List<DscpQosDefinition> array = new List<DscpQosDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DscpQosDefinition.DeserializeDscpQosDefinition(item));
+                                }
                             }
                             qosDefinitionCollection = array;
                             continue;
@@ -387,7 +464,14 @@ namespace Azure.ResourceManager.Network
                             List<NetworkInterfaceData> array = new List<NetworkInterfaceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkInterfaceData.DeserializeNetworkInterfaceData(item));
+                                }
                             }
                             associatedNetworkInterfaces = array;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataColumnDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataColumnDefinition> array = new List<DataColumnDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataColumnDefinition.DeserializeDataColumnDefinition(item));
+                        }
                     }
                     columns = array;
                     continue;

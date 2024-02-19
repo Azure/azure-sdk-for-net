@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in SkuSettings)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ResourceTypeSkuSetting>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProvisioningState))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeSkuSetting> array = new List<ResourceTypeSkuSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceTypeSkuSetting.DeserializeResourceTypeSkuSetting(item));
+                        }
                     }
                     skuSettings = array;
                     continue;

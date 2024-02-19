@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseBigDataPoolInfoData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseBigDataPoolInfoData> array = new List<SynapseBigDataPoolInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseBigDataPoolInfoData.DeserializeSynapseBigDataPoolInfoData(item));
+                        }
                     }
                     value = array;
                     continue;

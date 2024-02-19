@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Publishers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PublisherInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +172,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
                             List<PublisherInformation> array = new List<PublisherInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PublisherInformation.DeserializePublisherInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PublisherInformation.DeserializePublisherInformation(item));
+                                }
                             }
                             publishers = array;
                             continue;

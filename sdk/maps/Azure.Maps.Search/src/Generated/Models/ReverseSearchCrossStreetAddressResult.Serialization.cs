@@ -41,7 +41,14 @@ namespace Azure.Maps.Search.Models
                     List<ReverseSearchCrossStreetAddressResultItem> array = new List<ReverseSearchCrossStreetAddressResultItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReverseSearchCrossStreetAddressResultItem.DeserializeReverseSearchCrossStreetAddressResultItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReverseSearchCrossStreetAddressResultItem.DeserializeReverseSearchCrossStreetAddressResultItem(item));
+                        }
                     }
                     addresses = array;
                     continue;

@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Entries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebAppMSDeployLogEntry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +167,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMSDeployLogEntry> array = new List<WebAppMSDeployLogEntry>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WebAppMSDeployLogEntry.DeserializeWebAppMSDeployLogEntry(item));
+                                }
                             }
                             entries = array;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseKustoPoolPrivateLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseKustoPoolPrivateLinkData> array = new List<SynapseKustoPoolPrivateLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseKustoPoolPrivateLinkData.DeserializeSynapseKustoPoolPrivateLinkData(item));
+                        }
                     }
                     value = array;
                     continue;

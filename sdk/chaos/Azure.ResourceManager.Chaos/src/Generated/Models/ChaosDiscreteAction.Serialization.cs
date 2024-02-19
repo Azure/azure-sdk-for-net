@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Parameters)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChaosKeyValuePair>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("selectorId"u8);
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosKeyValuePair> array = new List<ChaosKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChaosKeyValuePair.DeserializeChaosKeyValuePair(item));
+                        }
                     }
                     parameters = array;
                     continue;

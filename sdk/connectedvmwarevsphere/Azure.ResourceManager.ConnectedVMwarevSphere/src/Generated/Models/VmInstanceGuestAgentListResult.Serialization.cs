@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VmInstanceGuestAgentData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VmInstanceGuestAgentData> array = new List<VmInstanceGuestAgentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(item));
+                        }
                     }
                     value = array;
                     continue;

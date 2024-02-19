@@ -33,7 +33,14 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Inferences)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TrialMatcherInference>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(NeededClinicalInfo))
@@ -42,7 +49,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in NeededClinicalInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExtendedClinicalCodedElement>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +115,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherInference> array = new List<TrialMatcherInference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherInference.DeserializeTrialMatcherInference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrialMatcherInference.DeserializeTrialMatcherInference(item));
+                        }
                     }
                     inferences = array;
                     continue;
@@ -115,7 +136,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ExtendedClinicalCodedElement> array = new List<ExtendedClinicalCodedElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedClinicalCodedElement.DeserializeExtendedClinicalCodedElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExtendedClinicalCodedElement.DeserializeExtendedClinicalCodedElement(item));
+                        }
                     }
                     neededClinicalInfo = array;
                     continue;

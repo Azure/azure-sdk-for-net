@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("image_file"u8);
-            writer.WriteObjectValue(InternalDetails);
+            ((IJsonModel<InternalMessageImageFileDetails>)InternalDetails).Write(writer, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

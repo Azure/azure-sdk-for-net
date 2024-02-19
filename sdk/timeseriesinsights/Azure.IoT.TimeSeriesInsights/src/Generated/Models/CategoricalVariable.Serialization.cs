@@ -29,7 +29,14 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<TimeSeriesAggregateCategory> array = new List<TimeSeriesAggregateCategory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesAggregateCategory.DeserializeTimeSeriesAggregateCategory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TimeSeriesAggregateCategory.DeserializeTimeSeriesAggregateCategory(item));
+                        }
                     }
                     categories = array;
                     continue;

@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DenyAssignmentPermission>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +93,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementPrincipal>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +110,14 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in ExcludePrincipals)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementPrincipal>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +233,14 @@ namespace Azure.ResourceManager.Authorization
                             List<DenyAssignmentPermission> array = new List<DenyAssignmentPermission>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DenyAssignmentPermission.DeserializeDenyAssignmentPermission(item));
+                                }
                             }
                             permissions = array;
                             continue;
@@ -240,7 +268,14 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                }
                             }
                             principals = array;
                             continue;
@@ -254,7 +289,14 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPrincipal> array = new List<RoleManagementPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoleManagementPrincipal.DeserializeRoleManagementPrincipal(item));
+                                }
                             }
                             excludePrincipals = array;
                             continue;

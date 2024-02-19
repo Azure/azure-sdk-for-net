@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption);
+                ((IJsonModel<CmkEncryptionProperties>)CustomerManagedKeyEncryption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges);
+                ((IJsonModel<ConsumptionAmount>)AzureCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately);
+                ((IJsonModel<ConsumptionAmount>)ChargesBilledSeparately).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges);
+                ((IJsonModel<ConsumptionAmount>)MarketplaceCharges).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {

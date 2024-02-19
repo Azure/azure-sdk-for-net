@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("scalingMechanism"u8);
-            writer.WriteObjectValue(ScalingMechanism);
+            ((IJsonModel<ManagedServiceScalingMechanism>)ScalingMechanism).Write(writer, options);
             writer.WritePropertyName("scalingTrigger"u8);
-            writer.WriteObjectValue(ScalingTrigger);
+            ((IJsonModel<ManagedServiceScalingTrigger>)ScalingTrigger).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

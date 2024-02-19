@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Static)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StaticRoutingEnrichment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Dynamic)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DynamicRoutingEnrichment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<StaticRoutingEnrichment> array = new List<StaticRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StaticRoutingEnrichment.DeserializeStaticRoutingEnrichment(item));
+                        }
                     }
                     @static = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DynamicRoutingEnrichment> array = new List<DynamicRoutingEnrichment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DynamicRoutingEnrichment.DeserializeDynamicRoutingEnrichment(item));
+                        }
                     }
                     @dynamic = array;
                     continue;

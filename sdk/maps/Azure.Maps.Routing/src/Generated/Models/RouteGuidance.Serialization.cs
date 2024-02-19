@@ -32,7 +32,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteInstruction> array = new List<RouteInstruction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteInstruction.DeserializeRouteInstruction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteInstruction.DeserializeRouteInstruction(item));
+                        }
                     }
                     instructions = array;
                     continue;
@@ -46,7 +53,14 @@ namespace Azure.Maps.Routing.Models
                     List<RouteInstructionGroup> array = new List<RouteInstructionGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteInstructionGroup.DeserializeRouteInstructionGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteInstructionGroup.DeserializeRouteInstructionGroup(item));
+                        }
                     }
                     instructionGroups = array;
                     continue;

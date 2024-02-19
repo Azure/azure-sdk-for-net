@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterServerCertificateCommonName>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     List<ClusterServerCertificateCommonName> array = new List<ClusterServerCertificateCommonName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterServerCertificateCommonName.DeserializeClusterServerCertificateCommonName(item));
+                        }
                     }
                     commonNames = array;
                     continue;

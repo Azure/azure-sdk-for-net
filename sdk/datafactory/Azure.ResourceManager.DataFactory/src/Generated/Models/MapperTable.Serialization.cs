@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Schema)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapperTableSchema>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapperDslConnectorProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +136,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperTableSchema> array = new List<MapperTableSchema>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperTableSchema.DeserializeMapperTableSchema(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MapperTableSchema.DeserializeMapperTableSchema(item));
+                                }
                             }
                             schema = array;
                             continue;
@@ -136,7 +157,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                                }
                             }
                             dslConnectorProperties = array;
                             continue;

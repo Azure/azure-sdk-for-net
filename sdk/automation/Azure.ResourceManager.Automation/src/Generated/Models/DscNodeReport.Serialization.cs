@@ -101,7 +101,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DscReportError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,14 +118,21 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DscReportResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MetaConfiguration))
             {
                 writer.WritePropertyName("metaConfiguration"u8);
-                writer.WriteObjectValue(MetaConfiguration);
+                ((IJsonModel<DscMetaConfiguration>)MetaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -294,7 +308,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportError> array = new List<DscReportError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportError.DeserializeDscReportError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DscReportError.DeserializeDscReportError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -308,7 +329,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResource> array = new List<DscReportResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResource.DeserializeDscReportResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DscReportResource.DeserializeDscReportResource(item));
+                        }
                     }
                     resources = array;
                     continue;

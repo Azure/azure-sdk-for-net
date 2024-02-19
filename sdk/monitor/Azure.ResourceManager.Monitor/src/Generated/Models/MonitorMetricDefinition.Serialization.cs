@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<MonitorLocalizableString>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(DisplayDescription))
             {
@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorMetricAvailability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorLocalizableString>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -249,7 +263,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricAvailability> array = new List<MonitorMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorMetricAvailability.DeserializeMonitorMetricAvailability(item));
+                        }
                     }
                     metricAvailabilities = array;
                     continue;
@@ -268,7 +289,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorLocalizableString> array = new List<MonitorLocalizableString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorLocalizableString.DeserializeMonitorLocalizableString(item));
+                        }
                     }
                     dimensions = array;
                     continue;

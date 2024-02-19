@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentOptions))
             {
                 writer.WritePropertyName("agentOptions"u8);
-                writer.WriteObjectValue(AgentOptions);
+                ((IJsonModel<NetworkCloudAgentConfiguration>)AgentOptions).Write(writer, options);
             }
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration);
+                ((IJsonModel<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -116,7 +116,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,14 +140,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Taints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesLabel>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             writer.WritePropertyName("vmSkuName"u8);
             writer.WriteStringValue(VmSkuName);
@@ -343,7 +357,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                }
                             }
                             labels = array;
                             continue;
@@ -371,7 +392,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesLabel> array = new List<KubernetesLabel>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KubernetesLabel.DeserializeKubernetesLabel(item));
+                                }
                             }
                             taints = array;
                             continue;

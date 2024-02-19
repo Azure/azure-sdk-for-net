@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkFunctionApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureArcKubernetesNetworkFunctionApplication>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<AzureArcKubernetesNetworkFunctionApplication> array = new List<AzureArcKubernetesNetworkFunctionApplication>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureArcKubernetesNetworkFunctionApplication.DeserializeAzureArcKubernetesNetworkFunctionApplication(item));
+                        }
                     }
                     networkFunctionApplications = array;
                     continue;

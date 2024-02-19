@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("tableLevelSharingProperties"u8);
-            writer.WriteObjectValue(TableLevelSharingProperties);
+            ((IJsonModel<TableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

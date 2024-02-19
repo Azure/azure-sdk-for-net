@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 if (Error != null)
                 {
                     writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error);
+                    ((IJsonModel<ExperimentExecutionActionTargetDetailsError>)Error).Write(writer, options);
                 }
                 else
                 {

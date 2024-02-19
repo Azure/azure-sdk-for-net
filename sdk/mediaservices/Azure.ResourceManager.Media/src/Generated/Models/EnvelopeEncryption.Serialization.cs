@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                ((IJsonModel<MediaEnabledProtocols>)EnabledProtocols).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -37,14 +37,21 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaTrackSelection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                ((IJsonModel<StreamingPolicyContentKeys>)ContentKeys).Write(writer, options);
             }
             if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaTrackSelection.DeserializeMediaTrackSelection(item));
+                        }
                     }
                     clearTracks = array;
                     continue;

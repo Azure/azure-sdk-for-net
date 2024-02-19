@@ -92,7 +92,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteRecoveryHealthError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -119,22 +126,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(AuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("authenticationIdentityDetails"u8);
-                writer.WriteObjectValue(AuthenticationIdentityDetails);
+                ((IJsonModel<IdentityProviderDetails>)AuthenticationIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAccessIdentityDetails))
             {
                 writer.WritePropertyName("resourceAccessIdentityDetails"u8);
-                writer.WriteObjectValue(ResourceAccessIdentityDetails);
+                ((IJsonModel<IdentityProviderDetails>)ResourceAccessIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(DataPlaneAuthenticationIdentityDetails))
             {
                 writer.WritePropertyName("dataPlaneAuthenticationIdentityDetails"u8);
-                writer.WriteObjectValue(DataPlaneAuthenticationIdentityDetails);
+                ((IJsonModel<IdentityProviderDetails>)DataPlaneAuthenticationIdentityDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ProviderVersionDetails))
             {
                 writer.WritePropertyName("providerVersionDetails"u8);
-                writer.WriteObjectValue(ProviderVersionDetails);
+                ((IJsonModel<SiteRecoveryVersionDetails>)ProviderVersionDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -283,7 +290,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        }
                     }
                     healthErrorDetails = array;
                     continue;

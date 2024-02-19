@@ -31,7 +31,14 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TimeSeriesPoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Granularity))
@@ -124,7 +131,14 @@ namespace Azure.AI.AnomalyDetector
                     List<TimeSeriesPoint> array = new List<TimeSeriesPoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TimeSeriesPoint.DeserializeTimeSeriesPoint(item));
+                        }
                     }
                     series = array;
                     continue;

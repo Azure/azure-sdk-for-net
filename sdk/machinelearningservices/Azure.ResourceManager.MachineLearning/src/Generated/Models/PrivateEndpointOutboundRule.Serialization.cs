@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                ((IJsonModel<PrivateEndpointDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(Category))
             {

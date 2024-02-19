@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(BackupParameters))
             {
                 writer.WritePropertyName("backupParameters"u8);
-                writer.WriteObjectValue(BackupParameters);
+                ((IJsonModel<DataProtectionBackupSettingsBase>)BackupParameters).Write(writer, options);
             }
             writer.WritePropertyName("dataStore"u8);
-            writer.WriteObjectValue(DataStore);
+            ((IJsonModel<DataStoreInfoBase>)DataStore).Write(writer, options);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            ((IJsonModel<DataProtectionBackupTriggerContext>)Trigger).Write(writer, options);
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("objectType"u8);

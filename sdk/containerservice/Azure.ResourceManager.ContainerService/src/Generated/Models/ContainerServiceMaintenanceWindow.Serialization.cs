@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            ((IJsonModel<ContainerServiceMaintenanceSchedule>)Schedule).Write(writer, options);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServiceDateSpan>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +141,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceDateSpan> array = new List<ContainerServiceDateSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item));
+                        }
                     }
                     notAllowedDates = array;
                     continue;

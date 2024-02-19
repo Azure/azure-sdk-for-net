@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(ManagedIdentity))
             {
                 writer.WritePropertyName("managedIdentity"u8);
-                writer.WriteObjectValue(ManagedIdentity);
+                ((IJsonModel<ManagedIdentitySettings>)ManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

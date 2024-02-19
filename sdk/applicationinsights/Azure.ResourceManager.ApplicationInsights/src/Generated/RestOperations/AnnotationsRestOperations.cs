@@ -178,7 +178,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<Annotation> array = new List<Annotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(Annotation.DeserializeAnnotation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -214,7 +221,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<Annotation> array = new List<Annotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(Annotation.DeserializeAnnotation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -345,7 +359,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<Annotation> array = new List<Annotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(Annotation.DeserializeAnnotation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -381,7 +402,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<Annotation> array = new List<Annotation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(Annotation.DeserializeAnnotation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(Annotation.DeserializeAnnotation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

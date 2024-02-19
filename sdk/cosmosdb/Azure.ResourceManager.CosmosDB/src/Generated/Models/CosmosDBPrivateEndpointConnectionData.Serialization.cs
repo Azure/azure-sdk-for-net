@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint);
+                ((IJsonModel<PrivateEndpointProperty>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<CosmosDBPrivateLinkServiceConnectionStateProperty>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsDefined(GroupId))
             {

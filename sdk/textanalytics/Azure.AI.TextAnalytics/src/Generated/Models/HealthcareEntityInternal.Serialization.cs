@@ -48,7 +48,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<EntityDataSource> array = new List<EntityDataSource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EntityDataSource.DeserializeEntityDataSource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EntityDataSource.DeserializeEntityDataSource(item));
+                        }
                     }
                     links = array;
                     continue;

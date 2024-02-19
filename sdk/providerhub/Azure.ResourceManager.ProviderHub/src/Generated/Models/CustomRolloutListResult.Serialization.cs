@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CustomRolloutData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<CustomRolloutData> array = new List<CustomRolloutData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRolloutData.DeserializeCustomRolloutData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomRolloutData.DeserializeCustomRolloutData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -51,7 +51,14 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -131,7 +138,14 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
+                {
+                    content.JsonWriter.WriteNullValue();
+                }
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -209,12 +223,14 @@ namespace Azure.Messaging.EventGrid
             content.JsonWriter.WriteStartArray();
             foreach (var item in events)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

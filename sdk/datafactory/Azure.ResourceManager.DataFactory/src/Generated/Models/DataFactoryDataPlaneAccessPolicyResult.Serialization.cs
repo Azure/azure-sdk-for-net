@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                ((IJsonModel<DataFactoryDataPlaneUserAccessPolicy>)Policy).Write(writer, options);
             }
             if (Optional.IsDefined(AccessToken))
             {

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (Optional.IsDefined(ManagementCluster))
             {
                 writer.WritePropertyName("managementCluster"u8);
-                writer.WriteObjectValue(ManagementCluster);
+                ((IJsonModel<AvsManagementCluster>)ManagementCluster).Write(writer, options);
             }
             if (Optional.IsDefined(Internet))
             {
@@ -61,19 +61,26 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in IdentitySources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SingleSignOnIdentitySource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
-                writer.WriteObjectValue(Availability);
+                ((IJsonModel<PrivateCloudAvailabilityProperties>)Availability).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<CustomerManagedEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExtendedNetworkBlocks))
             {
@@ -195,7 +202,14 @@ namespace Azure.ResourceManager.Avs.Models
                             List<SingleSignOnIdentitySource> array = new List<SingleSignOnIdentitySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SingleSignOnIdentitySource.DeserializeSingleSignOnIdentitySource(item));
+                                }
                             }
                             identitySources = array;
                             continue;

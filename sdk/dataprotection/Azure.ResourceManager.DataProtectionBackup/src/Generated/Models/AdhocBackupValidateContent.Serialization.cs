@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("backupInstance"u8);
-            writer.WriteObjectValue(BackupInstance);
+            ((IJsonModel<DataProtectionBackupInstanceProperties>)BackupInstance).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

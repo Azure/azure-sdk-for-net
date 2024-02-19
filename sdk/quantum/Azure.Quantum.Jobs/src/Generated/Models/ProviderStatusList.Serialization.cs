@@ -32,7 +32,14 @@ namespace Azure.Quantum.Jobs.Models
                     List<ProviderStatus> array = new List<ProviderStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProviderStatus.DeserializeProviderStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProviderStatus.DeserializeProviderStatus(item));
+                        }
                     }
                     value = array;
                     continue;

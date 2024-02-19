@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(HlsSettings))
             {
                 writer.WritePropertyName("hlsSettings"u8);
-                writer.WriteObjectValue(HlsSettings);
+                ((IJsonModel<HlsSettings>)HlsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DashSettings))
             {
                 writer.WritePropertyName("dashSettings"u8);
-                writer.WriteObjectValue(DashSettings);
+                ((IJsonModel<TrackDashSettings>)DashSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Mpeg4TrackId))
             {

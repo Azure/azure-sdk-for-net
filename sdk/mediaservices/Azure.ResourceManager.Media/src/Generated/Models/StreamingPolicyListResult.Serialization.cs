@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyData> array = new List<StreamingPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingPolicyData.DeserializeStreamingPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

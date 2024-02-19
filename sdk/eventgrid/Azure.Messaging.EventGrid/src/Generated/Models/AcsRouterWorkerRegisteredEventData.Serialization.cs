@@ -44,7 +44,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRouterQueueDetails> array = new List<AcsRouterQueueDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsRouterQueueDetails.DeserializeAcsRouterQueueDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsRouterQueueDetails.DeserializeAcsRouterQueueDetails(item));
+                        }
                     }
                     queueAssignments = array;
                     continue;
@@ -58,7 +65,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRouterChannelConfiguration> array = new List<AcsRouterChannelConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsRouterChannelConfiguration.DeserializeAcsRouterChannelConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsRouterChannelConfiguration.DeserializeAcsRouterChannelConfiguration(item));
+                        }
                     }
                     channelConfigurations = array;
                     continue;

@@ -30,12 +30,19 @@ namespace Azure.Communication.JobRouter
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            ((IJsonModel<ExceptionTrigger>)Trigger).Write(writer, options);
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ExceptionAction>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +105,14 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionAction> array = new List<ExceptionAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionAction.DeserializeExceptionAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExceptionAction.DeserializeExceptionAction(item));
+                        }
                     }
                     actions = array;
                     continue;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionKeyInfo))
             {
                 writer.WritePropertyName("diskEncryptionKeyInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionKeyInfo);
+                ((IJsonModel<SiteRecoveryDiskEncryptionKeyInfo>)DiskEncryptionKeyInfo).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyInfo))
             {
                 writer.WritePropertyName("keyEncryptionKeyInfo"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyInfo);
+                ((IJsonModel<SiteRecoveryKeyEncryptionKeyInfo>)KeyEncryptionKeyInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

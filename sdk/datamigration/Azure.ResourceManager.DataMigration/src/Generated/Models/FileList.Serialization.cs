@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProjectFileData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ProjectFileData> array = new List<ProjectFileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProjectFileData.DeserializeProjectFileData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProjectFileData.DeserializeProjectFileData(item));
+                        }
                     }
                     value = array;
                     continue;

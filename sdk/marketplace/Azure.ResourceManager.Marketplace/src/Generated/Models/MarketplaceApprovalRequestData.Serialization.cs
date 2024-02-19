@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in PlansDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStorePlanDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +202,14 @@ namespace Azure.ResourceManager.Marketplace
                             List<PrivateStorePlanDetails> array = new List<PrivateStorePlanDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(item));
+                                }
                             }
                             plansDetails = array;
                             continue;

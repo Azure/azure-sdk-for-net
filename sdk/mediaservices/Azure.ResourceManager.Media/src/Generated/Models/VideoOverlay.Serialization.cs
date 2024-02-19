@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                ((IJsonModel<RectangularWindow>)Position).Write(writer, options);
             }
             if (Optional.IsDefined(Opacity))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CropRectangle))
             {
                 writer.WritePropertyName("cropRectangle"u8);
-                writer.WriteObjectValue(CropRectangle);
+                ((IJsonModel<RectangularWindow>)CropRectangle).Write(writer, options);
             }
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);

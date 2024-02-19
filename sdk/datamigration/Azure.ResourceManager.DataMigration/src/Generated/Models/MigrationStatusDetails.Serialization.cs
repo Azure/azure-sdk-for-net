@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
-                writer.WriteObjectValue(FullBackupSetInfo);
+                ((IJsonModel<SqlBackupSetInfo>)FullBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
-                writer.WriteObjectValue(LastRestoredBackupSetInfo);
+                ((IJsonModel<SqlBackupSetInfo>)LastRestoredBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlBackupSetInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +200,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SqlBackupSetInfo> array = new List<SqlBackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlBackupSetInfo.DeserializeSqlBackupSetInfo(item));
+                        }
                     }
                     activeBackupSets = array;
                     continue;

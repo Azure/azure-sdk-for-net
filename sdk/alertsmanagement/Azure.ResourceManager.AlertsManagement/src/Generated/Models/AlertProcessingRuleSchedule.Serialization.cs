@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Recurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AlertProcessingRuleRecurrence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleRecurrence> array = new List<AlertProcessingRuleRecurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item));
+                        }
                     }
                     recurrences = array;
                     continue;

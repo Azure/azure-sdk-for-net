@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MaintenanceWindowPatchProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<MaintenanceWindowPatchProperties> array = new List<MaintenanceWindowPatchProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item));
+                        }
                     }
                     maintenanceWindows = array;
                     continue;

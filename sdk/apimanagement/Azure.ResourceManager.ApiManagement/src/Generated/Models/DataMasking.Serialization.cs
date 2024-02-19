@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in QueryParams)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataMaskingEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataMaskingEntity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        }
                     }
                     queryParams = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<DataMaskingEntity> array = new List<DataMaskingEntity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataMaskingEntity.DeserializeDataMaskingEntity(item));
+                        }
                     }
                     headers = array;
                     continue;

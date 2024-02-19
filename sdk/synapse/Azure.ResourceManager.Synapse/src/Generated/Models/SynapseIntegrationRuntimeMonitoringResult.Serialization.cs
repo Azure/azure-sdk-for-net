@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseIntegrationRuntimeNodeMonitoringResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeNodeMonitoringResult> array = new List<SynapseIntegrationRuntimeNodeMonitoringResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseIntegrationRuntimeNodeMonitoringResult.DeserializeSynapseIntegrationRuntimeNodeMonitoringResult(item));
+                        }
                     }
                     nodes = array;
                     continue;

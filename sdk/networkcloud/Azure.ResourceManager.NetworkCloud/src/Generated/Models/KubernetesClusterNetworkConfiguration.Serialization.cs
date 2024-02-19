@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AttachedNetworkConfiguration))
             {
                 writer.WritePropertyName("attachedNetworkConfiguration"u8);
-                writer.WriteObjectValue(AttachedNetworkConfiguration);
+                ((IJsonModel<AttachedNetworkConfiguration>)AttachedNetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BgpServiceLoadBalancerConfiguration))
             {
                 writer.WritePropertyName("bgpServiceLoadBalancerConfiguration"u8);
-                writer.WriteObjectValue(BgpServiceLoadBalancerConfiguration);
+                ((IJsonModel<BgpServiceLoadBalancerConfiguration>)BgpServiceLoadBalancerConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("cloudServicesNetworkId"u8);
             writer.WriteStringValue(CloudServicesNetworkId);

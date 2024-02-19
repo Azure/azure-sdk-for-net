@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NginxDeploymentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Nginx.Models
                     List<NginxDeploymentData> array = new List<NginxDeploymentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NginxDeploymentData.DeserializeNginxDeploymentData(item));
+                        }
                     }
                     value = array;
                     continue;

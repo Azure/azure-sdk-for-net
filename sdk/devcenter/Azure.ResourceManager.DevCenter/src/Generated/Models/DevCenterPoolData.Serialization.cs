@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(StopOnDisconnect))
             {
                 writer.WritePropertyName("stopOnDisconnect"u8);
-                writer.WriteObjectValue(StopOnDisconnect);
+                ((IJsonModel<StopOnDisconnectConfiguration>)StopOnDisconnect).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HealthStatus))
             {
@@ -99,7 +99,14 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStartArray();
                 foreach (var item in HealthStatusDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevCenterHealthStatusDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -272,7 +279,14 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthStatusDetail> array = new List<DevCenterHealthStatusDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthStatusDetail.DeserializeDevCenterHealthStatusDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevCenterHealthStatusDetail.DeserializeDevCenterHealthStatusDetail(item));
+                                }
                             }
                             healthStatusDetails = array;
                             continue;

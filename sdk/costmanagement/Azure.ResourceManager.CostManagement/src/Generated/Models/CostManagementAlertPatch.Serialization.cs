@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                ((IJsonModel<AlertPropertiesDefinition>)Definition).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
-                writer.WriteObjectValue(Details);
+                ((IJsonModel<AlertPropertiesDetails>)Details).Write(writer, options);
             }
             if (Optional.IsDefined(CostEntityId))
             {

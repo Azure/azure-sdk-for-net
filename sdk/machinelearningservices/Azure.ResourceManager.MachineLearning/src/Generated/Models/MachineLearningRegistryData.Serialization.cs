@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning
                 if (ManagedResourceGroup != null)
                 {
                     writer.WritePropertyName("managedResourceGroup"u8);
-                    writer.WriteObjectValue(ManagedResourceGroup);
+                    ((IJsonModel<ArmResourceId>)ManagedResourceGroup).Write(writer, options);
                 }
                 else
                 {
@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<RegistryPrivateEndpointConnection>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in RegionDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<RegistryRegionArmDetails>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -358,7 +372,14 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryPrivateEndpointConnection> array = new List<RegistryPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RegistryPrivateEndpointConnection.DeserializeRegistryPrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -383,7 +404,14 @@ namespace Azure.ResourceManager.MachineLearning
                             List<RegistryRegionArmDetails> array = new List<RegistryRegionArmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RegistryRegionArmDetails.DeserializeRegistryRegionArmDetails(item));
+                                }
                             }
                             regionDetails = array;
                             continue;

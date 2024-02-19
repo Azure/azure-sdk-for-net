@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WriteEndArray();
             writer.WritePropertyName("retentionPolicy"u8);
-            writer.WriteObjectValue(RetentionPolicy);
+            ((IJsonModel<RetentionPolicy>)RetentionPolicy).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

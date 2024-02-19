@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Sphere
                 writer.WriteStartArray();
                 foreach (var item in DeployedImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SphereImageData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +180,14 @@ namespace Azure.ResourceManager.Sphere
                             List<SphereImageData> array = new List<SphereImageData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SphereImageData.DeserializeSphereImageData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SphereImageData.DeserializeSphereImageData(item));
+                                }
                             }
                             deployedImages = array;
                             continue;

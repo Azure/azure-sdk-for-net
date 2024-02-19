@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<AutomationPrivateLinkServiceConnectionStateProperty>)ConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

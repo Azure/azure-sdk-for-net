@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WriteStartArray();
                 foreach (var item in Configurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SourceConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     List<SourceConfiguration> array = new List<SourceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceConfiguration.DeserializeSourceConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SourceConfiguration.DeserializeSourceConfiguration(item));
+                        }
                     }
                     configurations = array;
                     continue;

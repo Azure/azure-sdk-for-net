@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Grafana
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<GrafanaPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {

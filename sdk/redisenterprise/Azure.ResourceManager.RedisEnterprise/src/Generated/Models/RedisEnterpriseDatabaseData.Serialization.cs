@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence);
+                ((IJsonModel<RedisPersistenceSettings>)Persistence).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
@@ -91,14 +91,21 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RedisEnterpriseModule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue(GeoReplication);
+                ((IJsonModel<RedisEnterpriseDatabaseGeoReplication>)GeoReplication).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -261,7 +268,14 @@ namespace Azure.ResourceManager.RedisEnterprise
                             List<RedisEnterpriseModule> array = new List<RedisEnterpriseModule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RedisEnterpriseModule.DeserializeRedisEnterpriseModule(item));
+                                }
                             }
                             modules = array;
                             continue;

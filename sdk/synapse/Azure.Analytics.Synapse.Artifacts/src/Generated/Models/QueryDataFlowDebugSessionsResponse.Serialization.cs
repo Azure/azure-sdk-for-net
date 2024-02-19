@@ -35,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DataFlowDebugSessionInfo> array = new List<DataFlowDebugSessionInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item));
+                        }
                     }
                     value = array;
                     continue;

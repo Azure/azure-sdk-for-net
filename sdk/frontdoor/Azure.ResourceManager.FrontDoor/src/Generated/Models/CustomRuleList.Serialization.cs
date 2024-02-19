@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebApplicationCustomRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<WebApplicationCustomRule> array = new List<WebApplicationCustomRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebApplicationCustomRule.DeserializeWebApplicationCustomRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebApplicationCustomRule.DeserializeWebApplicationCustomRule(item));
+                        }
                     }
                     rules = array;
                     continue;

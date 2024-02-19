@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureTrafficCollectorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<AzureTrafficCollectorData> array = new List<AzureTrafficCollectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureTrafficCollectorData.DeserializeAzureTrafficCollectorData(item));
+                        }
                     }
                     value = array;
                     continue;

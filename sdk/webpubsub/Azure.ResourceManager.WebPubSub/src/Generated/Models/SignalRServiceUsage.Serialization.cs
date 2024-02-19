@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<SignalRServiceUsageName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {

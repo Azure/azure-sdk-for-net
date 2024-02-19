@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ExtendedLocations
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                ((IJsonModel<CustomLocationAuthentication>)Authentication).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ClusterExtensionIds))
             {
@@ -79,12 +79,14 @@ namespace Azure.ResourceManager.ExtendedLocations
                 writer.WriteStartArray();
                 foreach (var item in ClusterExtensionIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }

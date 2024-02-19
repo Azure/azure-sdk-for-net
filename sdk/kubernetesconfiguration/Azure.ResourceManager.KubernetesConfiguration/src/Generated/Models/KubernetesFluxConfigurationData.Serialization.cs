@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (GitRepository != null)
                 {
                     writer.WritePropertyName("gitRepository"u8);
-                    writer.WriteObjectValue(GitRepository);
+                    ((IJsonModel<KubernetesGitRepository>)GitRepository).Write(writer, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (Bucket != null)
                 {
                     writer.WritePropertyName("bucket"u8);
-                    writer.WriteObjectValue(Bucket);
+                    ((IJsonModel<KubernetesBucket>)Bucket).Write(writer, options);
                 }
                 else
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (AzureBlob != null)
                 {
                     writer.WritePropertyName("azureBlob"u8);
-                    writer.WriteObjectValue(AzureBlob);
+                    ((IJsonModel<KubernetesAzureBlob>)AzureBlob).Write(writer, options);
                 }
                 else
                 {
@@ -115,7 +115,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     foreach (var item in Kustomizations)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<Kustomization>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -150,7 +157,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<KubernetesObjectStatus>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -398,7 +412,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, Kustomization.DeserializeKustomization(property1.Value));
+                                }
                             }
                             kustomizations = dictionary;
                             continue;
@@ -428,7 +449,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                             List<KubernetesObjectStatus> array = new List<KubernetesObjectStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KubernetesObjectStatus.DeserializeKubernetesObjectStatus(item));
+                                }
                             }
                             statuses = array;
                             continue;

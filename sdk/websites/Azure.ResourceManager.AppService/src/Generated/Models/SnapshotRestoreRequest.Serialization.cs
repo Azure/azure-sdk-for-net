@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(RecoverySource))
             {
                 writer.WritePropertyName("recoverySource"u8);
-                writer.WriteObjectValue(RecoverySource);
+                ((IJsonModel<SnapshotRecoverySource>)RecoverySource).Write(writer, options);
             }
             if (Optional.IsDefined(CanOverwrite))
             {

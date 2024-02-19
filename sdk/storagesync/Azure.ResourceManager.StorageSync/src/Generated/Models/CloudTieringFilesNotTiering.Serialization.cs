@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FilesNotTieringError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<FilesNotTieringError> array = new List<FilesNotTieringError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilesNotTieringError.DeserializeFilesNotTieringError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FilesNotTieringError.DeserializeFilesNotTieringError(item));
+                        }
                     }
                     errors = array;
                     continue;

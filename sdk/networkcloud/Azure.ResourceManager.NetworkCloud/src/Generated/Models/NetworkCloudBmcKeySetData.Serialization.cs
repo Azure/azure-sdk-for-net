@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -95,7 +95,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in UserList)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<KeySetUser>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsCollectionDefined(UserListStatus))
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in UserListStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KeySetUserStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -276,7 +290,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUser> array = new List<KeySetUser>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KeySetUser.DeserializeKeySetUser(item));
+                                }
                             }
                             userList = array;
                             continue;
@@ -290,7 +311,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KeySetUserStatus> array = new List<KeySetUserStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KeySetUserStatus.DeserializeKeySetUserStatus(item));
+                                }
                             }
                             userListStatus = array;
                             continue;

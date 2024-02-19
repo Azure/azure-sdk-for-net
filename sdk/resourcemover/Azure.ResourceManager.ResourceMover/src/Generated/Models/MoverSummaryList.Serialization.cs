@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverSummaryItemInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverSummaryItemInfo> array = new List<MoverSummaryItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverSummaryItemInfo.DeserializeMoverSummaryItemInfo(item));
+                        }
                     }
                     summary = array;
                     continue;

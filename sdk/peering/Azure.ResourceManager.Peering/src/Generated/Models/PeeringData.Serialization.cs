@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Peering
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<PeeringSku>)Sku).Write(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsCollectionDefined(Tags))
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.Peering
             if (Optional.IsDefined(Direct))
             {
                 writer.WritePropertyName("direct"u8);
-                writer.WriteObjectValue(Direct);
+                ((IJsonModel<DirectPeeringProperties>)Direct).Write(writer, options);
             }
             if (Optional.IsDefined(Exchange))
             {
                 writer.WritePropertyName("exchange"u8);
-                writer.WriteObjectValue(Exchange);
+                ((IJsonModel<ExchangePeeringProperties>)Exchange).Write(writer, options);
             }
             if (Optional.IsDefined(PeeringLocation))
             {

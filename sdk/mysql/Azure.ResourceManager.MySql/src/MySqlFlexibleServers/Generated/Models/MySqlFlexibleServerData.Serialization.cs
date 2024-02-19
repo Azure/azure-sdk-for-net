@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MySqlFlexibleServerSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(DataEncryption))
             {
                 writer.WritePropertyName("dataEncryption"u8);
-                writer.WriteObjectValue(DataEncryption);
+                ((IJsonModel<MySqlFlexibleServerDataEncryption>)DataEncryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -136,22 +136,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                ((IJsonModel<MySqlFlexibleServerStorage>)Storage).Write(writer, options);
             }
             if (Optional.IsDefined(Backup))
             {
                 writer.WritePropertyName("backup"u8);
-                writer.WriteObjectValue(Backup);
+                ((IJsonModel<MySqlFlexibleServerBackupProperties>)Backup).Write(writer, options);
             }
             if (Optional.IsDefined(HighAvailability))
             {
                 writer.WritePropertyName("highAvailability"u8);
-                writer.WriteObjectValue(HighAvailability);
+                ((IJsonModel<MySqlFlexibleServerHighAvailability>)HighAvailability).Write(writer, options);
             }
             if (Optional.IsDefined(Network))
             {
                 writer.WritePropertyName("network"u8);
-                writer.WriteObjectValue(Network);
+                ((IJsonModel<MySqlFlexibleServerNetwork>)Network).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -159,19 +159,26 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MySqlFlexibleServersPrivateEndpointConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                ((IJsonModel<MySqlFlexibleServerMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(ImportSourceProperties))
             {
                 writer.WritePropertyName("importSourceProperties"u8);
-                writer.WriteObjectValue(ImportSourceProperties);
+                ((IJsonModel<ImportSourceProperties>)ImportSourceProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -450,7 +457,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                             List<MySqlFlexibleServersPrivateEndpointConnection> array = new List<MySqlFlexibleServersPrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MySqlFlexibleServersPrivateEndpointConnection.DeserializeMySqlFlexibleServersPrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MySqlFlexibleServersPrivateEndpointConnection.DeserializeMySqlFlexibleServersPrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

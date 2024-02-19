@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PreconfiguredEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<PreconfiguredEndpoint> array = new List<PreconfiguredEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        }
                     }
                     value = array;
                     continue;

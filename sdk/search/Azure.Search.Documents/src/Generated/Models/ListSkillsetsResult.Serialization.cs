@@ -26,7 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchIndexerSkillset> array = new List<SearchIndexerSkillset>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchIndexerSkillset.DeserializeSearchIndexerSkillset(item));
+                        }
                     }
                     value = array;
                     continue;

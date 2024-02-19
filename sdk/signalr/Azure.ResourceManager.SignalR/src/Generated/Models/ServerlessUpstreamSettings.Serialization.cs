@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Templates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SignalRUpstreamTemplate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SignalR.Models
                     List<SignalRUpstreamTemplate> array = new List<SignalRUpstreamTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SignalRUpstreamTemplate.DeserializeSignalRUpstreamTemplate(item));
+                        }
                     }
                     templates = array;
                     continue;

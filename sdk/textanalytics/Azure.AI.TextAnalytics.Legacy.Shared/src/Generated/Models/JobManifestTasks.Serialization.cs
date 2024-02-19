@@ -21,7 +21,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +38,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityRecognitionPiiTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +55,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in KeyPhraseExtractionTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -51,7 +72,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in EntityLinkingTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +89,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 writer.WriteStartArray();
                 foreach (var item in SentimentAnalysisTasks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

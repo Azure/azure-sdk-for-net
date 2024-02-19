@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                ((IJsonModel<SsisAccessCredential>)AccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                ((IJsonModel<SsisAccessCredential>)ConfigurationAccessCredential).Write(writer, options);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SsisChildPackage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +235,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SsisChildPackage> array = new List<SsisChildPackage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SsisChildPackage.DeserializeSsisChildPackage(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SsisChildPackage.DeserializeSsisChildPackage(item));
+                                }
                             }
                             childPackages = array;
                             continue;

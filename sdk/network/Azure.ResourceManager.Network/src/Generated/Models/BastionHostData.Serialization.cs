@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<NetworkSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Id))
             {
@@ -88,7 +88,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BastionHostIPConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                ((IJsonModel<BastionHostPropertiesFormatNetworkAcls>)NetworkAcls).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -306,7 +313,14 @@ namespace Azure.ResourceManager.Network
                             List<BastionHostIPConfiguration> array = new List<BastionHostIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BastionHostIPConfiguration.DeserializeBastionHostIPConfiguration(item));
+                                }
                             }
                             ipConfigurations = array;
                             continue;

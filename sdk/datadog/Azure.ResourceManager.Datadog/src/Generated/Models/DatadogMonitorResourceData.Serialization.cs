@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Datadog
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<MonitorProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {

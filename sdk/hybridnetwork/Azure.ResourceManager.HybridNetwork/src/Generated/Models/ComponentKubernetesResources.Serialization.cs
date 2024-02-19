@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Deployments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesDeployment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Pods)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesPod>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ReplicaSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesReplicaSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +83,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in StatefulSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesStatefulSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +100,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in DaemonSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesDaemonSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +167,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDeployment> array = new List<KubernetesDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
+                        }
                     }
                     deployments = array;
                     continue;
@@ -146,7 +188,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesPod> array = new List<KubernetesPod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesPod.DeserializeKubernetesPod(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesPod.DeserializeKubernetesPod(item));
+                        }
                     }
                     pods = array;
                     continue;
@@ -160,7 +209,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesReplicaSet> array = new List<KubernetesReplicaSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
+                        }
                     }
                     replicaSets = array;
                     continue;
@@ -174,7 +230,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesStatefulSet> array = new List<KubernetesStatefulSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
+                        }
                     }
                     statefulSets = array;
                     continue;
@@ -188,7 +251,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDaemonSet> array = new List<KubernetesDaemonSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
+                        }
                     }
                     daemonSets = array;
                     continue;

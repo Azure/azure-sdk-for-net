@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in SecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkSecurityGroupSecurityRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<NetworkSecurityGroupSecurityRule> array = new List<NetworkSecurityGroupSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkSecurityGroupSecurityRule.DeserializeNetworkSecurityGroupSecurityRule(item));
+                        }
                     }
                     securityRules = array;
                     continue;

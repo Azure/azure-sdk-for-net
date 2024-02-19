@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Databases)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<MongoDBDatabaseSettings>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(Replication))
@@ -45,13 +52,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(Replication.Value.ToString());
             }
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            ((IJsonModel<MongoDBConnectionInfo>)Source).Write(writer, options);
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            ((IJsonModel<MongoDBConnectionInfo>)Target).Write(writer, options);
             if (Optional.IsDefined(Throttling))
             {
                 writer.WritePropertyName("throttling"u8);
-                writer.WriteObjectValue(Throttling);
+                ((IJsonModel<MongoDBThrottlingSettings>)Throttling).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBDatabaseSettings> dictionary = new Dictionary<string, MongoDBDatabaseSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBDatabaseSettings.DeserializeMongoDBDatabaseSettings(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MongoDBDatabaseSettings.DeserializeMongoDBDatabaseSettings(property0.Value));
+                        }
                     }
                     databases = dictionary;
                     continue;

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue(DeploymentConfiguration);
+                ((IJsonModel<BatchDeploymentConfiguration>)DeploymentConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                ((IJsonModel<BatchAccountPoolScaleSettings>)ScaleSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
-                writer.WriteObjectValue(AutoScaleRun);
+                ((IJsonModel<BatchAccountPoolAutoScaleRun>)AutoScaleRun).Write(writer, options);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                ((IJsonModel<BatchNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue(TaskSchedulingPolicy);
+                ((IJsonModel<TaskSchedulingPolicy>)TaskSchedulingPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchUserAccount>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -162,14 +169,21 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchAccountPoolMetadataItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask);
+                ((IJsonModel<BatchAccountPoolStartTask>)StartTask).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
@@ -177,7 +191,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchCertificateReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +208,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchApplicationPackageReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +232,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
             {
                 writer.WritePropertyName("resizeOperationStatus"u8);
-                writer.WriteObjectValue(ResizeOperationStatus);
+                ((IJsonModel<BatchResizeOperationStatus>)ResizeOperationStatus).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -212,7 +240,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchMountConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -526,7 +561,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchUserAccount> array = new List<BatchUserAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchUserAccount.DeserializeBatchUserAccount(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchUserAccount.DeserializeBatchUserAccount(item));
+                                }
                             }
                             userAccounts = array;
                             continue;
@@ -540,7 +582,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchAccountPoolMetadataItem> array = new List<BatchAccountPoolMetadataItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchAccountPoolMetadataItem.DeserializeBatchAccountPoolMetadataItem(item));
+                                }
                             }
                             metadata = array;
                             continue;
@@ -563,7 +612,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchCertificateReference> array = new List<BatchCertificateReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item));
+                                }
                             }
                             certificates = array;
                             continue;
@@ -577,7 +633,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item));
+                                }
                             }
                             applicationPackages = array;
                             continue;
@@ -614,7 +677,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchMountConfiguration> array = new List<BatchMountConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchMountConfiguration.DeserializeBatchMountConfiguration(item));
+                                }
                             }
                             mountConfiguration = array;
                             continue;

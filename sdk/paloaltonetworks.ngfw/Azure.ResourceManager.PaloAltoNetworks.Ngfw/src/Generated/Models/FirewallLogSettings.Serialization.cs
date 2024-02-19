@@ -39,27 +39,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(ApplicationInsights))
             {
                 writer.WritePropertyName("applicationInsights"u8);
-                writer.WriteObjectValue(ApplicationInsights);
+                ((IJsonModel<FirewallApplicationInsights>)ApplicationInsights).Write(writer, options);
             }
             if (Optional.IsDefined(CommonDestination))
             {
                 writer.WritePropertyName("commonDestination"u8);
-                writer.WriteObjectValue(CommonDestination);
+                ((IJsonModel<FirewallLogDestination>)CommonDestination).Write(writer, options);
             }
             if (Optional.IsDefined(TrafficLogDestination))
             {
                 writer.WritePropertyName("trafficLogDestination"u8);
-                writer.WriteObjectValue(TrafficLogDestination);
+                ((IJsonModel<FirewallLogDestination>)TrafficLogDestination).Write(writer, options);
             }
             if (Optional.IsDefined(ThreatLogDestination))
             {
                 writer.WritePropertyName("threatLogDestination"u8);
-                writer.WriteObjectValue(ThreatLogDestination);
+                ((IJsonModel<FirewallLogDestination>)ThreatLogDestination).Write(writer, options);
             }
             if (Optional.IsDefined(DecryptLogDestination))
             {
                 writer.WritePropertyName("decryptLogDestination"u8);
-                writer.WriteObjectValue(DecryptLogDestination);
+                ((IJsonModel<FirewallLogDestination>)DecryptLogDestination).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessRoute != null)
                 {
                     writer.WritePropertyName("livenessRoute"u8);
-                    writer.WriteObjectValue(LivenessRoute);
+                    ((IJsonModel<MachineLearningInferenceContainerRoute>)LivenessRoute).Write(writer, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessRoute != null)
                 {
                     writer.WritePropertyName("readinessRoute"u8);
-                    writer.WriteObjectValue(ReadinessRoute);
+                    ((IJsonModel<MachineLearningInferenceContainerRoute>)ReadinessRoute).Write(writer, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScoringRoute != null)
                 {
                     writer.WritePropertyName("scoringRoute"u8);
-                    writer.WriteObjectValue(ScoringRoute);
+                    ((IJsonModel<MachineLearningInferenceContainerRoute>)ScoringRoute).Write(writer, options);
                 }
                 else
                 {

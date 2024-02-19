@@ -69,7 +69,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetricTimeSeriesElement> array = new List<MetricTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricTimeSeriesElement.DeserializeMetricTimeSeriesElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricTimeSeriesElement.DeserializeMetricTimeSeriesElement(item));
+                        }
                     }
                     timeseries = array;
                     continue;

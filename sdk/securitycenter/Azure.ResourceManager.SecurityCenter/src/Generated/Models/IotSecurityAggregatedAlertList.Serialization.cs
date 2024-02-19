@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<IotSecurityAggregatedAlertData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<IotSecurityAggregatedAlertData> array = new List<IotSecurityAggregatedAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(item));
+                        }
                     }
                     value = array;
                     continue;

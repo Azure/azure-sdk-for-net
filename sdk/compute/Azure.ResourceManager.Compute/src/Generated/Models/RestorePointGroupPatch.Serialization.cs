@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<RestorePointGroupSource>)Source).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in RestorePoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestorePointData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RestorePointData> array = new List<RestorePointData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RestorePointData.DeserializeRestorePointData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RestorePointData.DeserializeRestorePointData(item));
+                                }
                             }
                             restorePoints = array;
                             continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerRegion> array = new List<TrafficManagerRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeTrafficManagerRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeTrafficManagerRegion(item));
+                        }
                     }
                     regions = array;
                     continue;

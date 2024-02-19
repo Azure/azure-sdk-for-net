@@ -32,7 +32,14 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     List<ManagedPrivateEndpoint> array = new List<ManagedPrivateEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedPrivateEndpoint.DeserializeManagedPrivateEndpoint(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ReadyReplicas)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AgentPoolUpdateProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<AgentPoolUpdateProfile> array = new List<AgentPoolUpdateProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AgentPoolUpdateProfile.DeserializeAgentPoolUpdateProfile(item));
+                        }
                     }
                     readyReplicas = array;
                     continue;

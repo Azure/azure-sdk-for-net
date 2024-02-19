@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProtectionContainerMappingData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<ProtectionContainerMappingData> array = new List<ProtectionContainerMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(item));
+                        }
                     }
                     value = array;
                     continue;

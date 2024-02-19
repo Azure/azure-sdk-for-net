@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpCommunities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BgpCommunity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +200,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<BgpCommunity> array = new List<BgpCommunity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BgpCommunity.DeserializeBgpCommunity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BgpCommunity.DeserializeBgpCommunity(item));
+                                }
                             }
                             bgpCommunities = array;
                             continue;

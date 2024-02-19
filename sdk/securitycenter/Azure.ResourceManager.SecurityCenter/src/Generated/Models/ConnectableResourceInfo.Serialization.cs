@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectedResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectedResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        }
                     }
                     inboundConnectedResources = array;
                     continue;
@@ -128,7 +149,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        }
                     }
                     outboundConnectedResources = array;
                     continue;

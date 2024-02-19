@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(P1Y))
             {
                 writer.WritePropertyName("p1Y"u8);
-                writer.WriteObjectValue(P1Y);
+                ((IJsonModel<PurchasePrice>)P1Y).Write(writer, options);
             }
             if (Optional.IsDefined(P3Y))
             {
                 writer.WritePropertyName("p3Y"u8);
-                writer.WriteObjectValue(P3Y);
+                ((IJsonModel<PurchasePrice>)P3Y).Write(writer, options);
             }
             if (Optional.IsDefined(P5Y))
             {
                 writer.WritePropertyName("p5Y"u8);
-                writer.WriteObjectValue(P5Y);
+                ((IJsonModel<PurchasePrice>)P5Y).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

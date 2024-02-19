@@ -90,7 +90,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAutomationScope>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAutomationSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +124,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityAutomationAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -259,7 +280,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationScope> array = new List<SecurityAutomationScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityAutomationScope.DeserializeSecurityAutomationScope(item));
+                                }
                             }
                             scopes = array;
                             continue;
@@ -273,7 +301,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationSource> array = new List<SecurityAutomationSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationSource.DeserializeSecurityAutomationSource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityAutomationSource.DeserializeSecurityAutomationSource(item));
+                                }
                             }
                             sources = array;
                             continue;
@@ -287,7 +322,14 @@ namespace Azure.ResourceManager.SecurityCenter
                             List<SecurityAutomationAction> array = new List<SecurityAutomationAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityAutomationAction.DeserializeSecurityAutomationAction(item));
+                                }
                             }
                             actions = array;
                             continue;

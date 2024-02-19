@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<SqlMetricName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryAggregationType))
             {
@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlMetricAvailability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +151,14 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlMetricAvailability.DeserializeSqlMetricAvailability(item));
+                        }
                     }
                     metricAvailabilities = array;
                     continue;

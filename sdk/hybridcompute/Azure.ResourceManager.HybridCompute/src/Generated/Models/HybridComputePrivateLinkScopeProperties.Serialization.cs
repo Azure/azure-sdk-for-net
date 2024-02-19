@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateEndpointConnectionDataModel>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<PrivateEndpointConnectionDataModel> array = new List<PrivateEndpointConnectionDataModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateEndpointConnectionDataModel.DeserializePrivateEndpointConnectionDataModel(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;

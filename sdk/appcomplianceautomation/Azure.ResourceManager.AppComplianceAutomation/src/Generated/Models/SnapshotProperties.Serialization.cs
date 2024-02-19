@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties);
+                ((IJsonModel<ReportProperties>)ReportProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
@@ -63,7 +63,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -171,7 +178,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceResult> array = new List<ComplianceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceResult.DeserializeComplianceResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComplianceResult.DeserializeComplianceResult(item));
+                        }
                     }
                     complianceResults = array;
                     continue;

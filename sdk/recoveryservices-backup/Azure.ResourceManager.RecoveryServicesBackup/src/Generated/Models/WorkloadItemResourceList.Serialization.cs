@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkloadItemResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<WorkloadItemResource> array = new List<WorkloadItemResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkloadItemResource.DeserializeWorkloadItemResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkloadItemResource.DeserializeWorkloadItemResource(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeStoreAccountBasicData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreAccountBasicData> array = new List<DataLakeStoreAccountBasicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataLakeStoreAccountBasicData.DeserializeDataLakeStoreAccountBasicData(item));
+                        }
                     }
                     value = array;
                     continue;

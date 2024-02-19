@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventGridFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +120,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<EventGridFilter> array = new List<EventGridFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventGridFilter.DeserializeEventGridFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventGridFilter.DeserializeEventGridFilter(item));
+                        }
                     }
                     filters = array;
                     continue;

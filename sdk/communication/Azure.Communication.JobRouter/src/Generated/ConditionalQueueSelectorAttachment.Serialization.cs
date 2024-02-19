@@ -28,12 +28,19 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            ((IJsonModel<RouterRule>)Condition).Write(writer, options);
             writer.WritePropertyName("queueSelectors"u8);
             writer.WriteStartArray();
             foreach (var item in QueueSelectors)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RouterQueueSelector>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -93,7 +100,14 @@ namespace Azure.Communication.JobRouter
                     List<RouterQueueSelector> array = new List<RouterQueueSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouterQueueSelector.DeserializeRouterQueueSelector(item));
+                        }
                     }
                     queueSelectors = array;
                     continue;

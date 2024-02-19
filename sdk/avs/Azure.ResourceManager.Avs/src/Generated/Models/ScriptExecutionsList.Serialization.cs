@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptExecutionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Avs.Models
                     List<ScriptExecutionData> array = new List<ScriptExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptExecutionData.DeserializeScriptExecutionData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                ((IJsonModel<MongoClusterRestoreParameters>)RestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(AdministratorLogin))
             {
@@ -114,7 +114,14 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in NodeGroupSpecs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NodeGroupSpec>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -299,7 +306,14 @@ namespace Azure.ResourceManager.CosmosDB
                             List<NodeGroupSpec> array = new List<NodeGroupSpec>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NodeGroupSpec.DeserializeNodeGroupSpec(item));
+                                }
                             }
                             nodeGroupSpecs = array;
                             continue;

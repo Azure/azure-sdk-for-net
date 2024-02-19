@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedDiskList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiskInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedDiskList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiskInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        }
                     }
                     includedDiskList = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DiskInformation> array = new List<DiskInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DiskInformation.DeserializeDiskInformation(item));
+                        }
                     }
                     excludedDiskList = array;
                     continue;

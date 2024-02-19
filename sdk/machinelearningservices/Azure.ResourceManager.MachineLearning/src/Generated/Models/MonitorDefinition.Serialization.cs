@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AlertNotificationSetting != null)
                 {
                     writer.WritePropertyName("alertNotificationSetting"u8);
-                    writer.WriteObjectValue(AlertNotificationSetting);
+                    ((IJsonModel<MonitoringAlertNotificationSettingsBase>)AlertNotificationSetting).Write(writer, options);
                 }
                 else
                 {
@@ -39,13 +39,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("computeConfiguration"u8);
-            writer.WriteObjectValue(ComputeConfiguration);
+            ((IJsonModel<MonitorComputeConfigurationBase>)ComputeConfiguration).Write(writer, options);
             if (Optional.IsDefined(MonitoringTarget))
             {
                 if (MonitoringTarget != null)
                 {
                     writer.WritePropertyName("monitoringTarget"u8);
-                    writer.WriteObjectValue(MonitoringTarget);
+                    ((IJsonModel<MonitoringTarget>)MonitoringTarget).Write(writer, options);
                 }
                 else
                 {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             foreach (var item in Signals)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<MonitoringSignalBase>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringSignalBase> dictionary = new Dictionary<string, MonitoringSignalBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MonitoringSignalBase.DeserializeMonitoringSignalBase(property0.Value));
+                        }
                     }
                     signals = dictionary;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CloudHsmClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<CloudHsmClusterData> array = new List<CloudHsmClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CloudHsmClusterData.DeserializeCloudHsmClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

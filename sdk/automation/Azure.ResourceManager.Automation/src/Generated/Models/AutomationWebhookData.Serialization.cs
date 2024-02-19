@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                ((IJsonModel<RunbookAssociationProperty>)Runbook).Write(writer, options);
             }
             if (Optional.IsDefined(RunOn))
             {

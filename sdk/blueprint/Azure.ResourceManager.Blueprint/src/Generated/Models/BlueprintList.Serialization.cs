@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BlueprintData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<BlueprintData> array = new List<BlueprintData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BlueprintData.DeserializeBlueprintData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BlueprintData.DeserializeBlueprintData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                ((IJsonModel<ResourcesHistoryRequestOptions>)Options).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ManagementGroups))
             {

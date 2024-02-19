@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Images)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryImageDescriptor>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryImageDescriptor> array = new List<ContainerRegistryImageDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                        }
                     }
                     images = array;
                     continue;

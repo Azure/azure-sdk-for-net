@@ -52,7 +52,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<FsLayer> array = new List<FsLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FsLayer.DeserializeFsLayer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FsLayer.DeserializeFsLayer(item));
+                        }
                     }
                     fsLayers = array;
                     continue;
@@ -66,7 +73,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<History> array = new List<History>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistry.History.DeserializeHistory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistry.History.DeserializeHistory(item));
+                        }
                     }
                     history = array;
                     continue;
@@ -80,7 +94,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<ImageSignature> array = new List<ImageSignature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageSignature.DeserializeImageSignature(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImageSignature.DeserializeImageSignature(item));
+                        }
                     }
                     signatures = array;
                     continue;

@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppPlatform
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<AppPlatformConfigServerProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(AadConfiguration))
             {
                 writer.WritePropertyName("aadConfiguration"u8);
-                writer.WriteObjectValue(AadConfiguration);
+                ((IJsonModel<NetworkCloudAadConfiguration>)AadConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                ((IJsonModel<AdministratorConfiguration>)AdministratorConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AttachedNetworkIds))
             {
@@ -81,12 +81,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AttachedNetworkIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +98,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AvailableUpgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableUpgrade>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(ControlPlaneKubernetesVersion);
             }
             writer.WritePropertyName("controlPlaneNodeConfiguration"u8);
-            writer.WriteObjectValue(ControlPlaneNodeConfiguration);
+            ((IJsonModel<ControlPlaneNodeConfiguration>)ControlPlaneNodeConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
@@ -133,7 +142,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in FeatureStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FeatureStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +157,14 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartArray();
             foreach (var item in InitialAgentPoolConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<InitialAgentPoolConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kubernetesVersion"u8);
@@ -149,17 +172,24 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("networkConfiguration"u8);
-            writer.WriteObjectValue(NetworkConfiguration);
+            ((IJsonModel<KubernetesClusterNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
                 writer.WritePropertyName("nodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesClusterNode>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -340,7 +370,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<AvailableUpgrade> array = new List<AvailableUpgrade>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailableUpgrade.DeserializeAvailableUpgrade(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AvailableUpgrade.DeserializeAvailableUpgrade(item));
+                                }
                             }
                             availableUpgrades = array;
                             continue;
@@ -396,7 +433,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<FeatureStatus> array = new List<FeatureStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FeatureStatus.DeserializeFeatureStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FeatureStatus.DeserializeFeatureStatus(item));
+                                }
                             }
                             featureStatuses = array;
                             continue;
@@ -406,7 +450,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<InitialAgentPoolConfiguration> array = new List<InitialAgentPoolConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(InitialAgentPoolConfiguration.DeserializeInitialAgentPoolConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(InitialAgentPoolConfiguration.DeserializeInitialAgentPoolConfiguration(item));
+                                }
                             }
                             initialAgentPoolConfigurations = array;
                             continue;
@@ -439,7 +490,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<KubernetesClusterNode> array = new List<KubernetesClusterNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KubernetesClusterNode.DeserializeKubernetesClusterNode(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(KubernetesClusterNode.DeserializeKubernetesClusterNode(item));
+                                }
                             }
                             nodes = array;
                             continue;

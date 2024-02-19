@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectedClusterData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
                     List<ConnectedClusterData> array = new List<ConnectedClusterData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedClusterData.DeserializeConnectedClusterData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectedClusterData.DeserializeConnectedClusterData(item));
+                        }
                     }
                     value = array;
                     continue;

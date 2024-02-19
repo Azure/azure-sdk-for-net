@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationActivityParameterDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationActivityParameterDefinition> array = new List<AutomationActivityParameterDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationActivityParameterDefinition.DeserializeAutomationActivityParameterDefinition(item));
+                        }
                     }
                     parameters = array;
                     continue;

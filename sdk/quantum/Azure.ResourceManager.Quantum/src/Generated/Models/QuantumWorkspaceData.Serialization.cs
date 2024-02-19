@@ -74,7 +74,14 @@ namespace Azure.ResourceManager.Quantum
                 writer.WriteStartArray();
                 foreach (var item in Providers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Provider>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -223,7 +230,14 @@ namespace Azure.ResourceManager.Quantum
                             List<Provider> array = new List<Provider>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Provider.DeserializeProvider(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Provider.DeserializeProvider(item));
+                                }
                             }
                             providers = array;
                             continue;

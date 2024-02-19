@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                ((IJsonModel<PolicySummaryResults>)Results).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

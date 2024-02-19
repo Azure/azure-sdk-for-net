@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StorageCacheSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {

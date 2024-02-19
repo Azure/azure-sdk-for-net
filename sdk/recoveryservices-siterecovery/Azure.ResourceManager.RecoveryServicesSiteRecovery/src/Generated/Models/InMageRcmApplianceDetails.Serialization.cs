@@ -44,37 +44,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (options.Format != "W" && Optional.IsDefined(ProcessServer))
             {
                 writer.WritePropertyName("processServer"u8);
-                writer.WriteObjectValue(ProcessServer);
+                ((IJsonModel<SiteRecoveryProcessServerDetails>)ProcessServer).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RcmProxy))
             {
                 writer.WritePropertyName("rcmProxy"u8);
-                writer.WriteObjectValue(RcmProxy);
+                ((IJsonModel<RcmProxyDetails>)RcmProxy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PushInstaller))
             {
                 writer.WritePropertyName("pushInstaller"u8);
-                writer.WriteObjectValue(PushInstaller);
+                ((IJsonModel<PushInstallerDetails>)PushInstaller).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationAgent))
             {
                 writer.WritePropertyName("replicationAgent"u8);
-                writer.WriteObjectValue(ReplicationAgent);
+                ((IJsonModel<ReplicationAgentDetails>)ReplicationAgent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReprotectAgent))
             {
                 writer.WritePropertyName("reprotectAgent"u8);
-                writer.WriteObjectValue(ReprotectAgent);
+                ((IJsonModel<ReprotectAgentDetails>)ReprotectAgent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarsAgent))
             {
                 writer.WritePropertyName("marsAgent"u8);
-                writer.WriteObjectValue(MarsAgent);
+                ((IJsonModel<MarsAgentDetails>)MarsAgent).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Dra))
             {
                 writer.WritePropertyName("dra"u8);
-                writer.WriteObjectValue(Dra);
+                ((IJsonModel<SiteRecoveryDraDetails>)Dra).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SwitchProviderBlockingErrorDetails))
             {
@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in SwitchProviderBlockingErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InMageRcmFabricSwitchProviderBlockingErrorDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -230,7 +237,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<InMageRcmFabricSwitchProviderBlockingErrorDetails> array = new List<InMageRcmFabricSwitchProviderBlockingErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InMageRcmFabricSwitchProviderBlockingErrorDetails.DeserializeInMageRcmFabricSwitchProviderBlockingErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InMageRcmFabricSwitchProviderBlockingErrorDetails.DeserializeInMageRcmFabricSwitchProviderBlockingErrorDetails(item));
+                        }
                     }
                     switchProviderBlockingErrorDetails = array;
                     continue;

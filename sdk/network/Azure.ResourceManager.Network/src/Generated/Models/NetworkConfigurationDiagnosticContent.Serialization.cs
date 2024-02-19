@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Profiles)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NetworkConfigurationDiagnosticProfile>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationDiagnosticProfile> array = new List<NetworkConfigurationDiagnosticProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(item));
+                        }
                     }
                     profiles = array;
                     continue;

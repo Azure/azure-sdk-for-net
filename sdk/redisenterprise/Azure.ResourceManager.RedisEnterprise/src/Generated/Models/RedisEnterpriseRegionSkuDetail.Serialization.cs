@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
-                writer.WriteObjectValue(LocationInfo);
+                ((IJsonModel<RedisEnterpriseLocationInfo>)LocationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(SkuDetails))
             {
                 writer.WritePropertyName("skuDetails"u8);
-                writer.WriteObjectValue(SkuDetails);
+                ((IJsonModel<SkuDetail>)SkuDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

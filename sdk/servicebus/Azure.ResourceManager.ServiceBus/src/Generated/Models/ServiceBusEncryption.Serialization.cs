@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceBusKeyVaultProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     List<ServiceBusKeyVaultProperties> array = new List<ServiceBusKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceBusKeyVaultProperties.DeserializeServiceBusKeyVaultProperties(item));
+                        }
                     }
                     keyVaultProperties = array;
                     continue;

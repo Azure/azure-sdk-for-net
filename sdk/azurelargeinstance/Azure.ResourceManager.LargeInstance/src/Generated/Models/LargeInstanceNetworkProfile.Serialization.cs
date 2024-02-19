@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LargeInstanceIPAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceIPAddress> array = new List<LargeInstanceIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LargeInstanceIPAddress.DeserializeLargeInstanceIPAddress(item));
+                        }
                     }
                     networkInterfaces = array;
                     continue;

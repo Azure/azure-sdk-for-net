@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("cluster"u8);
-            writer.WriteObjectValue(Cluster);
+            ((IJsonModel<AzStackHciClusterProperties>)Cluster).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(FabricResourceId))
             {
                 writer.WritePropertyName("fabricResourceId"u8);

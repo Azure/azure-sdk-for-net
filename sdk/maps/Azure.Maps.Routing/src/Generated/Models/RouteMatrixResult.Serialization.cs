@@ -47,7 +47,14 @@ namespace Azure.Maps.Routing.Models
                             List<RouteMatrix> array0 = new List<RouteMatrix>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    array0.Add(RouteMatrix.DeserializeRouteMatrix(item0));
+                                }
                             }
                             array.Add(array0);
                         }

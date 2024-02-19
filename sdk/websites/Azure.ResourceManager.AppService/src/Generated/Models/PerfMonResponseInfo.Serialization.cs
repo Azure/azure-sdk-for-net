@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                writer.WriteObjectValue(Data);
+                ((IJsonModel<PerfMonSet>)Data).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

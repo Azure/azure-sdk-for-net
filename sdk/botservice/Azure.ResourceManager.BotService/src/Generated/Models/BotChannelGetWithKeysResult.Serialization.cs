@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                ((IJsonModel<BotChannelProperties>)Resource).Write(writer, options);
             }
             if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Setting);
+                ((IJsonModel<BotChannelSettings>)Setting).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<BotChannelProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<BotServiceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {

@@ -20,7 +20,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Zones)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))
@@ -85,7 +92,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     List<SpatialAnalysisPersonDistanceZoneEvents> array = new List<SpatialAnalysisPersonDistanceZoneEvents>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialAnalysisPersonDistanceZoneEvents.DeserializeSpatialAnalysisPersonDistanceZoneEvents(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpatialAnalysisPersonDistanceZoneEvents.DeserializeSpatialAnalysisPersonDistanceZoneEvents(item));
+                        }
                     }
                     zones = array;
                     continue;

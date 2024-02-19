@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureConfiguration);
+                ((IJsonModel<InfrastructureConfiguration>)InfrastructureConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
-                writer.WriteObjectValue(SoftwareConfiguration);
+                ((IJsonModel<SapSoftwareConfiguration>)SoftwareConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
-                writer.WriteObjectValue(OSSapConfiguration);
+                ((IJsonModel<OSSapConfiguration>)OSSapConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());

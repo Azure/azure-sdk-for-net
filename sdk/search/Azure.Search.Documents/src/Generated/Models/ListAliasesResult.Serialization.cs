@@ -26,7 +26,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<SearchAlias> array = new List<SearchAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchAlias.DeserializeSearchAlias(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchAlias.DeserializeSearchAlias(item));
+                        }
                     }
                     value = array;
                     continue;

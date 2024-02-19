@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Repositories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConfigServerGitPatternRepository>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +151,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<ConfigServerGitPatternRepository> array = new List<ConfigServerGitPatternRepository>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConfigServerGitPatternRepository.DeserializeConfigServerGitPatternRepository(item));
+                        }
                     }
                     repositories = array;
                     continue;

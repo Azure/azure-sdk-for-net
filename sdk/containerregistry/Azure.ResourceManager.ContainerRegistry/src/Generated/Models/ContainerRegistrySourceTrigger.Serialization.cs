@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceRepository"u8);
-            writer.WriteObjectValue(SourceRepository);
+            ((IJsonModel<SourceCodeRepoProperties>)SourceRepository).Write(writer, options);
             writer.WritePropertyName("sourceTriggerEvents"u8);
             writer.WriteStartArray();
             foreach (var item in SourceTriggerEvents)

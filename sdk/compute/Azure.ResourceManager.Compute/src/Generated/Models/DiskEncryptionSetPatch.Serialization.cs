@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                ((IJsonModel<KeyForDiskEncryptionSet>)ActiveKey).Write(writer, options);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {

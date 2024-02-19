@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MinorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FunctionAppMinorVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<FunctionAppMinorVersion> array = new List<FunctionAppMinorVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FunctionAppMinorVersion.DeserializeFunctionAppMinorVersion(item));
+                        }
                     }
                     minorVersions = array;
                     continue;

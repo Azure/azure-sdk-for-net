@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             if (Optional.IsDefined(EncryptionProperties))
             {
                 writer.WritePropertyName("encryptionProperties"u8);
-                writer.WriteObjectValue(EncryptionProperties);
+                ((IJsonModel<ElasticSanEncryptionProperties>)EncryptionProperties).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                ((IJsonModel<NetworkRuleSet>)NetworkAcls).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

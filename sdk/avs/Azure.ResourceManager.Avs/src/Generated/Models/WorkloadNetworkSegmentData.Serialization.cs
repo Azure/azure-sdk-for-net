@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Avs
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                ((IJsonModel<WorkloadNetworkSegmentSubnet>)Subnet).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PortVif))
             {
@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in PortVif)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkloadNetworkSegmentPortVif>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -205,7 +212,14 @@ namespace Azure.ResourceManager.Avs
                             List<WorkloadNetworkSegmentPortVif> array = new List<WorkloadNetworkSegmentPortVif>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WorkloadNetworkSegmentPortVif.DeserializeWorkloadNetworkSegmentPortVif(item));
+                                }
                             }
                             portVif = array;
                             continue;

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(UpgradeDetails))
             {
                 writer.WritePropertyName("upgradeDetails"u8);
-                writer.WriteObjectValue(UpgradeDetails);
+                ((IJsonModel<VaultUpgradeDetails>)UpgradeDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,12 +66,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<VaultPropertiesEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(MoveDetails))
             {
                 writer.WritePropertyName("moveDetails"u8);
-                writer.WriteObjectValue(MoveDetails);
+                ((IJsonModel<VaultPropertiesMoveDetails>)MoveDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MoveState))
             {
@@ -84,22 +91,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                ((IJsonModel<VaultMonitoringSettings>)MonitoringSettings).Write(writer, options);
             }
             if (Optional.IsDefined(RestoreSettings))
             {
                 writer.WritePropertyName("restoreSettings"u8);
-                writer.WriteObjectValue(RestoreSettings);
+                ((IJsonModel<RestoreSettings>)RestoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
-                writer.WriteObjectValue(RedundancySettings);
+                ((IJsonModel<VaultPropertiesRedundancySettings>)RedundancySettings).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                ((IJsonModel<RecoveryServicesSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
@@ -186,7 +193,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     List<RecoveryServicesPrivateEndpointConnectionVaultProperties> array = new List<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RecoveryServicesPrivateEndpointConnectionVaultProperties.DeserializeRecoveryServicesPrivateEndpointConnectionVaultProperties(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;

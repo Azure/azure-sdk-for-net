@@ -146,7 +146,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteStartArray();
                     foreach (var item in Aliases)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            writer.WriteObjectValue(item);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -293,7 +300,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     List<CustomEntityAlias> array = new List<CustomEntityAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomEntityAlias.DeserializeCustomEntityAlias(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomEntityAlias.DeserializeCustomEntityAlias(item));
+                        }
                     }
                     aliases = array;
                     continue;

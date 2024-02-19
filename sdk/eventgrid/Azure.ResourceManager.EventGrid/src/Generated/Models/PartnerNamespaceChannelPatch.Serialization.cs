@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(PartnerDestinationInfo))
             {
                 writer.WritePropertyName("partnerDestinationInfo"u8);
-                writer.WriteObjectValue(PartnerDestinationInfo);
+                ((IJsonModel<PartnerUpdateDestinationInfo>)PartnerDestinationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PartnerTopicInfo))
             {
                 writer.WritePropertyName("partnerTopicInfo"u8);
-                writer.WriteObjectValue(PartnerTopicInfo);
+                ((IJsonModel<PartnerUpdateTopicInfo>)PartnerTopicInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

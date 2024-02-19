@@ -42,11 +42,11 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("step_details"u8);
-            writer.WriteObjectValue(StepDetails);
+            ((IJsonModel<RunStepDetails>)StepDetails).Write(writer, options);
             if (LastError != null)
             {
                 writer.WritePropertyName("last_error"u8);
-                writer.WriteObjectValue(LastError);
+                ((IJsonModel<RunStepError>)LastError).Write(writer, options);
             }
             else
             {

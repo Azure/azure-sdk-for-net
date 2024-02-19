@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RunStepCodeInterpreterToolCallOutput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,7 +97,14 @@ namespace Azure.AI.OpenAI.Assistants
                     List<RunStepCodeInterpreterToolCallOutput> array = new List<RunStepCodeInterpreterToolCallOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunStepCodeInterpreterToolCallOutput.DeserializeRunStepCodeInterpreterToolCallOutput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunStepCodeInterpreterToolCallOutput.DeserializeRunStepCodeInterpreterToolCallOutput(item));
+                        }
                     }
                     outputs = array;
                     continue;

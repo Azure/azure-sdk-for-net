@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RuleCollections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirewallPolicyRuleCollectionInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +197,14 @@ namespace Azure.ResourceManager.Network
                             List<FirewallPolicyRuleCollectionInfo> array = new List<FirewallPolicyRuleCollectionInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallPolicyRuleCollectionInfo.DeserializeFirewallPolicyRuleCollectionInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FirewallPolicyRuleCollectionInfo.DeserializeFirewallPolicyRuleCollectionInfo(item));
+                                }
                             }
                             ruleCollections = array;
                             continue;

@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<ContainerServicePrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

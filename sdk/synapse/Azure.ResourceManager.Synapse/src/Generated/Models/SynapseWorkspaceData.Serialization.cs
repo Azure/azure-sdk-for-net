@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue(DefaultDataLakeStorage);
+                ((IJsonModel<SynapseDataLakeStorageAccountDetails>)DefaultDataLakeStorage).Write(writer, options);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                ((IJsonModel<VirtualNetworkProfile>)VirtualNetworkProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -121,14 +121,21 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapsePrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<SynapseEncryptionDetails>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceUid))
             {
@@ -142,36 +149,38 @@ namespace Azure.ResourceManager.Synapse
                 foreach (var item in ExtraProperties)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+                ((IJsonModel<SynapseManagedVirtualNetworkSettings>)ManagedVirtualNetworkSettings).Write(writer, options);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+                ((IJsonModel<SynapseWorkspaceRepositoryConfiguration>)WorkspaceRepositoryConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                ((IJsonModel<PurviewConfiguration>)PurviewConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AdlaResourceId))
             {
@@ -186,7 +195,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(CspWorkspaceAdminProperties))
             {
                 writer.WritePropertyName("cspWorkspaceAdminProperties"u8);
-                writer.WriteObjectValue(CspWorkspaceAdminProperties);
+                ((IJsonModel<CspWorkspaceAdminProperties>)CspWorkspaceAdminProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Settings))
             {
@@ -195,19 +204,21 @@ namespace Azure.ResourceManager.Synapse
                 foreach (var item in Settings)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -420,7 +431,14 @@ namespace Azure.ResourceManager.Synapse
                             List<SynapsePrivateEndpointConnectionData> array = new List<SynapsePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SynapsePrivateEndpointConnectionData.DeserializeSynapsePrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

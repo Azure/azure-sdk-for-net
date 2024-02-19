@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterSecretReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterSecretReference> array = new List<ClusterSecretReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item));
+                        }
                     }
                     secrets = array;
                     continue;

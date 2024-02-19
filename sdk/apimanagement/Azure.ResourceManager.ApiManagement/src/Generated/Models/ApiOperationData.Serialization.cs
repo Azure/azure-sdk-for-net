@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in TemplateParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ParameterContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                ((IJsonModel<RequestContract>)Request).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Responses))
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Responses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResponseContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +211,14 @@ namespace Azure.ResourceManager.ApiManagement
                             List<ParameterContract> array = new List<ParameterContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParameterContract.DeserializeParameterContract(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ParameterContract.DeserializeParameterContract(item));
+                                }
                             }
                             templateParameters = array;
                             continue;
@@ -225,7 +246,14 @@ namespace Azure.ResourceManager.ApiManagement
                             List<ResponseContract> array = new List<ResponseContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseContract.DeserializeResponseContract(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResponseContract.DeserializeResponseContract(item));
+                                }
                             }
                             responses = array;
                             continue;

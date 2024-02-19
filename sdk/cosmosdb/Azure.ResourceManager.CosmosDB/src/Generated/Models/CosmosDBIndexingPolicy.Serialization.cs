@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in IncludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBIncludedPath>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ExcludedPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBExcludedPath>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,17 +76,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in CompositeIndexes)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            if (item0 != null)
+                            {
+                                ((IJsonModel<CosmosDBCompositePath>)item0).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +105,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SpatialIndexes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SpatialSpec>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +191,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBIncludedPath> array = new List<CosmosDBIncludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBIncludedPath.DeserializeCosmosDBIncludedPath(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBIncludedPath.DeserializeCosmosDBIncludedPath(item));
+                        }
                     }
                     includedPaths = array;
                     continue;
@@ -175,7 +212,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBExcludedPath> array = new List<CosmosDBExcludedPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBExcludedPath.DeserializeCosmosDBExcludedPath(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBExcludedPath.DeserializeCosmosDBExcludedPath(item));
+                        }
                     }
                     excludedPaths = array;
                     continue;
@@ -198,7 +242,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                             List<CosmosDBCompositePath> array0 = new List<CosmosDBCompositePath>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    array0.Add(CosmosDBCompositePath.DeserializeCosmosDBCompositePath(item0));
+                                }
                             }
                             array.Add(array0);
                         }
@@ -215,7 +266,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<SpatialSpec> array = new List<SpatialSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpatialSpec.DeserializeSpatialSpec(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SpatialSpec.DeserializeSpatialSpec(item));
+                        }
                     }
                     spatialIndexes = array;
                     continue;

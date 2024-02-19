@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RouteConfiguration))
             {
                 writer.WritePropertyName("routeConfiguration"u8);
-                writer.WriteObjectValue(RouteConfiguration);
+                ((IJsonModel<RouteConfiguration>)RouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RulesEngine))
             {
@@ -194,7 +201,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                }
                             }
                             frontendEndpoints = array;
                             continue;

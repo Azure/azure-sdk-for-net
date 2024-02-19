@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                writer.WriteObjectValue(Container);
+                ((IJsonModel<RestorableSqlContainerPropertiesResourceContainer>)Container).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                ((IJsonModel<AmlFileSystemHsmSettings>)Settings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in ArchiveStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AmlFileSystemArchive>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<AmlFileSystemArchive> array = new List<AmlFileSystemArchive>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AmlFileSystemArchive.DeserializeAmlFileSystemArchive(item));
+                        }
                     }
                     archiveStatus = array;
                     continue;

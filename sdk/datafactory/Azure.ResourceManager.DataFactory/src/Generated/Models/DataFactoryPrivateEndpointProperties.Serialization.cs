@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<ConnectionStateProperties>)ConnectionState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {

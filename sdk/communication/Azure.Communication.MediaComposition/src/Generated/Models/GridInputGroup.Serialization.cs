@@ -21,17 +21,19 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStartArray();
             foreach (var item in InputIds)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        writer.WriteStringValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteStringValue(item0);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndArray();
             writer.WritePropertyName("rows"u8);

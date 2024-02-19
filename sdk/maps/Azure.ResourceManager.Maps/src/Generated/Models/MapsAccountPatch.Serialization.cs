@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Maps.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MapsSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -76,14 +76,21 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapsLinkedResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Cors))
             {
                 writer.WritePropertyName("cors"u8);
-                writer.WriteObjectValue(Cors);
+                ((IJsonModel<CorsRules>)Cors).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -219,7 +226,14 @@ namespace Azure.ResourceManager.Maps.Models
                             List<MapsLinkedResource> array = new List<MapsLinkedResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MapsLinkedResource.DeserializeMapsLinkedResource(item));
+                                }
                             }
                             linkedResources = array;
                             continue;

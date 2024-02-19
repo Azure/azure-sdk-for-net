@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in SkuMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HciSkuMappings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -194,7 +201,14 @@ namespace Azure.ResourceManager.Hci
                             List<HciSkuMappings> array = new List<HciSkuMappings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HciSkuMappings.DeserializeHciSkuMappings(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HciSkuMappings.DeserializeHciSkuMappings(item));
+                                }
                             }
                             skuMappings = array;
                             continue;

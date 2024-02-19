@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage);
+                ((IJsonModel<DetectedLanguage>)DetectedLanguage).Write(writer, options);
             }
             writer.WritePropertyName("sentLen"u8);
             writer.WriteStartArray();

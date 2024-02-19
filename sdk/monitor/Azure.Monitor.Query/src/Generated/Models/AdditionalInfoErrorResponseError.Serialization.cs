@@ -33,7 +33,14 @@ namespace Azure.Monitor.Query.Models
                     List<AdditionalInfoErrorResponseErrorAdditionalInfoItem> array = new List<AdditionalInfoErrorResponseErrorAdditionalInfoItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdditionalInfoErrorResponseErrorAdditionalInfoItem.DeserializeAdditionalInfoErrorResponseErrorAdditionalInfoItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AdditionalInfoErrorResponseErrorAdditionalInfoItem.DeserializeAdditionalInfoErrorResponseErrorAdditionalInfoItem(item));
+                        }
                     }
                     additionalInfo = array;
                     continue;

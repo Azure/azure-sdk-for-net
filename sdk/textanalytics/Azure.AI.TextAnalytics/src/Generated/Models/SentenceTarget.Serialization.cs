@@ -30,7 +30,14 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Relations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -80,7 +87,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<TargetRelation> array = new List<TargetRelation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TargetRelation.DeserializeTargetRelation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TargetRelation.DeserializeTargetRelation(item));
+                        }
                     }
                     relations = array;
                     continue;

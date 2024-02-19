@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(PublishContentLink))
             {
                 writer.WritePropertyName("publishContentLink"u8);
-                writer.WriteObjectValue(PublishContentLink);
+                ((IJsonModel<AutomationContentLink>)PublishContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -111,7 +111,14 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<RunbookParameterDefinition>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Draft))
             {
                 writer.WritePropertyName("draft"u8);
-                writer.WriteObjectValue(Draft);
+                ((IJsonModel<AutomationRunbookDraft>)Draft).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -353,7 +360,14 @@ namespace Azure.ResourceManager.Automation
                             Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -72,19 +72,21 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AssociatedResourceIds)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("bmcConnectionString"u8);
             writer.WriteStringValue(BmcConnectionString);
             writer.WritePropertyName("bmcCredentials"u8);
-            writer.WriteObjectValue(BmcCredentials);
+            ((IJsonModel<AdministrativeCredentials>)BmcCredentials).Write(writer, options);
             writer.WritePropertyName("bmcMacAddress"u8);
             writer.WriteStringValue(BmcMacAddress);
             writer.WritePropertyName("bootMacAddress"u8);
@@ -112,12 +114,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W" && Optional.IsDefined(HardwareInventory))
             {
                 writer.WritePropertyName("hardwareInventory"u8);
-                writer.WriteObjectValue(HardwareInventory);
+                ((IJsonModel<HardwareInventory>)HardwareInventory).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HardwareValidationStatus))
             {
                 writer.WritePropertyName("hardwareValidationStatus"u8);
-                writer.WriteObjectValue(HardwareValidationStatus);
+                ((IJsonModel<HardwareValidationStatus>)HardwareValidationStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(HybridAksClustersAssociatedIds))
             {

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityConnectorGitLabGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityConnectorGitLabGroupData> array = new List<SecurityConnectorGitLabGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecurityConnectorGitLabGroupData.DeserializeSecurityConnectorGitLabGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

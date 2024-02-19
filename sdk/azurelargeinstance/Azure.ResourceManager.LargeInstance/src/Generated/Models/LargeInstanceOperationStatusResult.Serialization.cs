@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LargeInstanceOperationStatusResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +196,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeInstanceOperationStatusResult> array = new List<LargeInstanceOperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeLargeInstanceOperationStatusResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeLargeInstanceOperationStatusResult(item));
+                        }
                     }
                     operations = array;
                     continue;

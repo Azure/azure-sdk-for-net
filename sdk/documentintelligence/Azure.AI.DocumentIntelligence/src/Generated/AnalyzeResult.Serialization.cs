@@ -44,7 +44,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Pages)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DocumentPage>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Paragraphs))
@@ -53,7 +60,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Paragraphs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentParagraph>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +77,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentTable>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +94,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Figures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentFigure>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -83,7 +111,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Lists)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentList>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +128,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentSection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +145,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in KeyValuePairs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentKeyValuePair>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +162,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Styles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentStyle>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +179,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Languages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DocumentLanguage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +196,14 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AnalyzedDocument>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +298,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentPage> array = new List<DocumentPage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentPage.DeserializeDocumentPage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentPage.DeserializeDocumentPage(item));
+                        }
                     }
                     pages = array;
                     continue;
@@ -242,7 +319,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentParagraph> array = new List<DocumentParagraph>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentParagraph.DeserializeDocumentParagraph(item));
+                        }
                     }
                     paragraphs = array;
                     continue;
@@ -256,7 +340,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentTable> array = new List<DocumentTable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTable.DeserializeDocumentTable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentTable.DeserializeDocumentTable(item));
+                        }
                     }
                     tables = array;
                     continue;
@@ -270,7 +361,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFigure> array = new List<DocumentFigure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFigure.DeserializeDocumentFigure(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentFigure.DeserializeDocumentFigure(item));
+                        }
                     }
                     figures = array;
                     continue;
@@ -284,7 +382,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentList> array = new List<DocumentList>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentList.DeserializeDocumentList(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentList.DeserializeDocumentList(item));
+                        }
                     }
                     lists = array;
                     continue;
@@ -298,7 +403,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSection> array = new List<DocumentSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSection.DeserializeDocumentSection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentSection.DeserializeDocumentSection(item));
+                        }
                     }
                     sections = array;
                     continue;
@@ -312,7 +424,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentKeyValuePair> array = new List<DocumentKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentKeyValuePair.DeserializeDocumentKeyValuePair(item));
+                        }
                     }
                     keyValuePairs = array;
                     continue;
@@ -326,7 +445,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentStyle> array = new List<DocumentStyle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentStyle.DeserializeDocumentStyle(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentStyle.DeserializeDocumentStyle(item));
+                        }
                     }
                     styles = array;
                     continue;
@@ -340,7 +466,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLanguage> array = new List<DocumentLanguage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentLanguage.DeserializeDocumentLanguage(item));
+                        }
                     }
                     languages = array;
                     continue;
@@ -354,7 +487,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<AnalyzedDocument> array = new List<AnalyzedDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnalyzedDocument.DeserializeAnalyzedDocument(item));
+                        }
                     }
                     documents = array;
                     continue;

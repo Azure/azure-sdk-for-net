@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Succeeded)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStoreCollectionDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Failed)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateStoreCollectionDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        }
                     }
                     succeeded = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
+                        }
                     }
                     failed = array;
                     continue;

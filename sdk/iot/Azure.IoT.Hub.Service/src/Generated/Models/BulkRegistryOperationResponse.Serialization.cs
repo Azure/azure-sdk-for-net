@@ -42,7 +42,14 @@ namespace Azure.IoT.Hub.Service.Models
                     List<DeviceRegistryOperationError> array = new List<DeviceRegistryOperationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceRegistryOperationError.DeserializeDeviceRegistryOperationError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceRegistryOperationError.DeserializeDeviceRegistryOperationError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -56,7 +63,14 @@ namespace Azure.IoT.Hub.Service.Models
                     List<DeviceRegistryOperationWarning> array = new List<DeviceRegistryOperationWarning>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceRegistryOperationWarning.DeserializeDeviceRegistryOperationWarning(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceRegistryOperationWarning.DeserializeDeviceRegistryOperationWarning(item));
+                        }
                     }
                     warnings = array;
                     continue;

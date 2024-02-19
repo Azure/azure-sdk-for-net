@@ -31,7 +31,14 @@ namespace Azure.Monitor.Query.Models
                     List<BatchQueryResponse> array = new List<BatchQueryResponse>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchQueryResponse.DeserializeBatchQueryResponse(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchQueryResponse.DeserializeBatchQueryResponse(item));
+                        }
                     }
                     responses = array;
                     continue;

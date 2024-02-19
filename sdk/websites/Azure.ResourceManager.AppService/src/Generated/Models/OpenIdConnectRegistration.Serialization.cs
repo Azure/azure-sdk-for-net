@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ClientCredential))
             {
                 writer.WritePropertyName("clientCredential"u8);
-                writer.WriteObjectValue(ClientCredential);
+                ((IJsonModel<OpenIdConnectClientCredential>)ClientCredential).Write(writer, options);
             }
             if (Optional.IsDefined(OpenIdConnectConfiguration))
             {
                 writer.WritePropertyName("openIdConnectConfiguration"u8);
-                writer.WriteObjectValue(OpenIdConnectConfiguration);
+                ((IJsonModel<OpenIdConnectConfig>)OpenIdConnectConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

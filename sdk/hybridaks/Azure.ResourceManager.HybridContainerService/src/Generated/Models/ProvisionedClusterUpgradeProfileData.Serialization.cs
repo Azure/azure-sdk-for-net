@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("controlPlaneProfile"u8);
-            writer.WriteObjectValue(ControlPlaneProfile);
+            ((IJsonModel<ProvisionedClusterPoolUpgradeProfile>)ControlPlaneProfile).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

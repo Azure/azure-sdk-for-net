@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FederatedIdentityCredentialData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     List<FederatedIdentityCredentialData> array = new List<FederatedIdentityCredentialData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FederatedIdentityCredentialData.DeserializeFederatedIdentityCredentialData(item));
+                        }
                     }
                     value = array;
                     continue;

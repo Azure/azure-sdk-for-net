@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Current))
             {
                 writer.WritePropertyName("current"u8);
-                writer.WriteObjectValue(Current);
+                ((IJsonModel<CommitmentPeriod>)Current).Write(writer, options);
             }
             if (Optional.IsDefined(AutoRenew))
             {
@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Next))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue(Next);
+                ((IJsonModel<CommitmentPeriod>)Next).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
-                writer.WriteObjectValue(Last);
+                ((IJsonModel<CommitmentPeriod>)Last).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ProvisioningIssues))
             {

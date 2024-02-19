@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrder))
             {
                 writer.WritePropertyName("reservationOrder"u8);
-                writer.WriteObjectValue(ReservationOrder);
+                ((IJsonModel<ChangeDirectoryResult>)ReservationOrder).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Reservations))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WriteStartArray();
                 foreach (var item in Reservations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChangeDirectoryResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ChangeDirectoryResult> array = new List<ChangeDirectoryResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChangeDirectoryResult.DeserializeChangeDirectoryResult(item));
+                        }
                     }
                     reservations = array;
                     continue;

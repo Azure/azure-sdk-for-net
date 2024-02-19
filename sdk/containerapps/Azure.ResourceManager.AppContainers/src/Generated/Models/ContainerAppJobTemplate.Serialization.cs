@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppInitContainer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppContainer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppVolume>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppInitContainer.DeserializeContainerAppInitContainer(item));
+                        }
                     }
                     initContainers = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppContainer.DeserializeContainerAppContainer(item));
+                        }
                     }
                     containers = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppVolume.DeserializeContainerAppVolume(item));
+                        }
                     }
                     volumes = array;
                     continue;

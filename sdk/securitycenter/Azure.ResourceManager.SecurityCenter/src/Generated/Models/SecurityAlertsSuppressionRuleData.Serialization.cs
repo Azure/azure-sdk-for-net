@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
-                writer.WriteObjectValue(SuppressionAlertsScope);
+                ((IJsonModel<SuppressionAlertsScope>)SuppressionAlertsScope).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

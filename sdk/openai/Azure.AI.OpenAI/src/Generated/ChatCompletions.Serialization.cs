@@ -34,7 +34,14 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Choices)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ChatChoice>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PromptFilterResults))
@@ -43,7 +50,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in PromptFilterResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContentFilterResultsForPrompt>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +67,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStringValue(SystemFingerprint);
             }
             writer.WritePropertyName("usage"u8);
-            writer.WriteObjectValue(Usage);
+            ((IJsonModel<CompletionsUsage>)Usage).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

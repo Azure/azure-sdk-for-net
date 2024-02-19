@@ -199,7 +199,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -239,7 +246,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -293,7 +307,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -326,7 +347,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -376,7 +404,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -407,7 +442,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -465,7 +507,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -500,7 +549,14 @@ namespace Azure.ResourceManager.Compute
                         List<VirtualMachineImageBase> array = new List<VirtualMachineImageBase>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(VirtualMachineImageBase.DeserializeVirtualMachineImageBase(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

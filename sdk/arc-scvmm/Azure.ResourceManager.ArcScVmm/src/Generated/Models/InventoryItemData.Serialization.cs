@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcScVmm
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<InventoryItemProperties>)Properties).Write(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);

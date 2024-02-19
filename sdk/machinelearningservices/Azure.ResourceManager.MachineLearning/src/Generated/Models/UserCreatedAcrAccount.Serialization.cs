@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    ((IJsonModel<ArmResourceId>)ArmResourceIdentifier).Write(writer, options);
                 }
                 else
                 {

@@ -110,7 +110,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostNameSslStates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HostNameSslState>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -142,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SiteConfig))
             {
                 writer.WritePropertyName("siteConfig"u8);
-                writer.WriteObjectValue(SiteConfig);
+                ((IJsonModel<SiteConfigProperties>)SiteConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(TrafficManagerHostNames))
             {
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile);
+                ((IJsonModel<HostingEnvironmentProfile>)HostingEnvironmentProfile).Write(writer, options);
             }
             if (Optional.IsDefined(IsClientAffinityEnabled))
             {
@@ -232,7 +239,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CloningInfo))
             {
                 writer.WritePropertyName("cloningInfo"u8);
-                writer.WriteObjectValue(CloningInfo);
+                ((IJsonModel<CloningInfo>)CloningInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -252,7 +259,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(SlotSwapStatus))
             {
                 writer.WritePropertyName("slotSwapStatus"u8);
-                writer.WriteObjectValue(SlotSwapStatus);
+                ((IJsonModel<SlotSwapStatus>)SlotSwapStatus).Write(writer, options);
             }
             if (Optional.IsDefined(IsHttpsOnly))
             {
@@ -495,7 +502,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<HostNameSslState> array = new List<HostNameSslState>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HostNameSslState.DeserializeHostNameSslState(item));
+                                }
                             }
                             hostNameSslStates = array;
                             continue;

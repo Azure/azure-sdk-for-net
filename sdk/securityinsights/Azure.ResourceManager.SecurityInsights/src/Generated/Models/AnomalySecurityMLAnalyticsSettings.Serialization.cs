@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RequiredDataConnectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecurityMLAnalyticsSettingsDataSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -296,7 +303,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                             List<SecurityMLAnalyticsSettingsDataSource> array = new List<SecurityMLAnalyticsSettingsDataSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SecurityMLAnalyticsSettingsDataSource.DeserializeSecurityMLAnalyticsSettingsDataSource(item));
+                                }
                             }
                             requiredDataConnectors = array;
                             continue;

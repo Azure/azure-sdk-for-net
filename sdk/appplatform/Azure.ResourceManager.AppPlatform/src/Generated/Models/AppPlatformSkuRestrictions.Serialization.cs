@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(RestrictionInfo))
             {
                 writer.WritePropertyName("restrictionInfo"u8);
-                writer.WriteObjectValue(RestrictionInfo);
+                ((IJsonModel<AppPlatformSkuRestrictionInfo>)RestrictionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(ReasonCode))
             {

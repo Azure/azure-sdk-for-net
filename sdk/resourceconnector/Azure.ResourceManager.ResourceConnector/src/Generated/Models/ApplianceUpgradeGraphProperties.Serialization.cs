@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplianceSupportedVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        }
                     }
                     supportedVersions = array;
                     continue;

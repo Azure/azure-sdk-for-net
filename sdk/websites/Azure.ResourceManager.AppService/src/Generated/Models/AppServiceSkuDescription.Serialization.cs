@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(SkuCapacity))
             {
                 writer.WritePropertyName("skuCapacity"u8);
-                writer.WriteObjectValue(SkuCapacity);
+                ((IJsonModel<AppServiceSkuCapacity>)SkuCapacity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +194,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

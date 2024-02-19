@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +49,26 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceReport)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComplianceReportItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(CompliancePdfReport))
             {
                 writer.WritePropertyName("compliancePdfReport"u8);
-                writer.WriteObjectValue(CompliancePdfReport);
+                ((IJsonModel<DownloadResponseCompliancePdfReport>)CompliancePdfReport).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceDetailedPdfReport))
             {
                 writer.WritePropertyName("complianceDetailedPdfReport"u8);
-                writer.WriteObjectValue(ComplianceDetailedPdfReport);
+                ((IJsonModel<DownloadResponseComplianceDetailedPdfReport>)ComplianceDetailedPdfReport).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +125,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceItem> array = new List<ResourceItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceItem.DeserializeResourceItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceItem.DeserializeResourceItem(item));
+                        }
                     }
                     resourceList = array;
                     continue;
@@ -125,7 +146,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ComplianceReportItem> array = new List<ComplianceReportItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComplianceReportItem.DeserializeComplianceReportItem(item));
+                        }
                     }
                     complianceReport = array;
                     continue;

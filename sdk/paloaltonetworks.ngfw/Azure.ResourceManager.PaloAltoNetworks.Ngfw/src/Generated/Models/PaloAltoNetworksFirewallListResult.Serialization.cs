@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PaloAltoNetworksFirewallData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<PaloAltoNetworksFirewallData> array = new List<PaloAltoNetworksFirewallData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PaloAltoNetworksFirewallData.DeserializePaloAltoNetworksFirewallData(item));
+                        }
                     }
                     value = array;
                     continue;

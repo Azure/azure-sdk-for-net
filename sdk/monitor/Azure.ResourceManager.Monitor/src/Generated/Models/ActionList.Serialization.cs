@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ActivityLogAlertActionGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ActivityLogAlertActionGroup> array = new List<ActivityLogAlertActionGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ActivityLogAlertActionGroup.DeserializeActivityLogAlertActionGroup(item));
+                        }
                     }
                     actionGroups = array;
                     continue;

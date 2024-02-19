@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<QueryDatasetConfiguration>)Configuration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Aggregation))
             {
@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 foreach (var item in Aggregation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<QueryAggregation>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -53,14 +60,21 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Grouping)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QueryGrouping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<QueryFilter>)Filter).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -136,7 +150,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     Dictionary<string, QueryAggregation> dictionary = new Dictionary<string, QueryAggregation>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, QueryAggregation.DeserializeQueryAggregation(property0.Value));
+                        }
                     }
                     aggregation = dictionary;
                     continue;
@@ -150,7 +171,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<QueryGrouping> array = new List<QueryGrouping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryGrouping.DeserializeQueryGrouping(item));
+                        }
                     }
                     grouping = array;
                     continue;

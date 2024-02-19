@@ -31,7 +31,14 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteStartArray();
             foreach (var item in Variables)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VariableValues>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(TopContributorCount))
@@ -88,7 +95,14 @@ namespace Azure.AI.AnomalyDetector
                     List<VariableValues> array = new List<VariableValues>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VariableValues.DeserializeVariableValues(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VariableValues.DeserializeVariableValues(item));
+                        }
                     }
                     variables = array;
                     continue;

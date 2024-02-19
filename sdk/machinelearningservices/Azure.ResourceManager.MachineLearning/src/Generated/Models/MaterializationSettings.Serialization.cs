@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Notification != null)
                 {
                     writer.WritePropertyName("notification"u8);
-                    writer.WriteObjectValue(Notification);
+                    ((IJsonModel<NotificationSetting>)Notification).Write(writer, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resource != null)
                 {
                     writer.WritePropertyName("resource"u8);
-                    writer.WriteObjectValue(Resource);
+                    ((IJsonModel<MaterializationComputeResource>)Resource).Write(writer, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    ((IJsonModel<MachineLearningRecurrenceTrigger>)Schedule).Write(writer, options);
                 }
                 else
                 {

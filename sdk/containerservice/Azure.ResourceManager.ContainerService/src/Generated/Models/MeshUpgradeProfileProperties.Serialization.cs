@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in CompatibleWith)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CompatibleVersions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<CompatibleVersions> array = new List<CompatibleVersions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CompatibleVersions.DeserializeCompatibleVersions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CompatibleVersions.DeserializeCompatibleVersions(item));
+                        }
                     }
                     compatibleWith = array;
                     continue;

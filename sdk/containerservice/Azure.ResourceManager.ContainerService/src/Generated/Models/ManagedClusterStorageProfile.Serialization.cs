@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(DiskCsiDriver))
             {
                 writer.WritePropertyName("diskCSIDriver"u8);
-                writer.WriteObjectValue(DiskCsiDriver);
+                ((IJsonModel<ManagedClusterStorageProfileDiskCsiDriver>)DiskCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(FileCsiDriver))
             {
                 writer.WritePropertyName("fileCSIDriver"u8);
-                writer.WriteObjectValue(FileCsiDriver);
+                ((IJsonModel<ManagedClusterStorageProfileFileCsiDriver>)FileCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(SnapshotController))
             {
                 writer.WritePropertyName("snapshotController"u8);
-                writer.WriteObjectValue(SnapshotController);
+                ((IJsonModel<ManagedClusterStorageProfileSnapshotController>)SnapshotController).Write(writer, options);
             }
             if (Optional.IsDefined(BlobCsiDriver))
             {
                 writer.WritePropertyName("blobCSIDriver"u8);
-                writer.WriteObjectValue(BlobCsiDriver);
+                ((IJsonModel<ManagedClusterStorageProfileBlobCsiDriver>)BlobCsiDriver).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

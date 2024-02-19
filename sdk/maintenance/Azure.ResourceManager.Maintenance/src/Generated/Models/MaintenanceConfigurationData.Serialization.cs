@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Maintenance
             if (Optional.IsDefined(InstallPatches))
             {
                 writer.WritePropertyName("installPatches"u8);
-                writer.WriteObjectValue(InstallPatches);
+                ((IJsonModel<MaintenancePatchConfiguration>)InstallPatches).Write(writer, options);
             }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();

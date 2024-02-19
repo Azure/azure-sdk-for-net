@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkCloudCloudServicesNetworkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudCloudServicesNetworkData> array = new List<NetworkCloudCloudServicesNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkCloudCloudServicesNetworkData.DeserializeNetworkCloudCloudServicesNetworkData(item));
+                        }
                     }
                     value = array;
                     continue;

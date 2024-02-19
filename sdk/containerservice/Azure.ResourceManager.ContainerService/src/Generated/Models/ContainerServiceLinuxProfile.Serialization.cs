@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WritePropertyName("adminUsername"u8);
             writer.WriteStringValue(AdminUsername);
             writer.WritePropertyName("ssh"u8);
-            writer.WriteObjectValue(Ssh);
+            ((IJsonModel<ContainerServiceSshConfiguration>)Ssh).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

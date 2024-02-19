@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings);
+                    ((IJsonModel<NlpVerticalFeaturizationSettings>)FeaturizationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FixedParameters != null)
                 {
                     writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters);
+                    ((IJsonModel<NlpFixedParameters>)FixedParameters).Write(writer, options);
                 }
                 else
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings);
+                    ((IJsonModel<NlpVerticalLimitSettings>)LimitSettings).Write(writer, options);
                 }
                 else
                 {
@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<NlpParameterSubspace>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    ((IJsonModel<NlpSweepSettings>)SweepSettings).Write(writer, options);
                 }
                 else
                 {
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    ((IJsonModel<MachineLearningTableJobInput>)ValidationData).Write(writer, options);
                 }
                 else
                 {
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            ((IJsonModel<MachineLearningTableJobInput>)TrainingData).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -231,7 +238,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<NlpParameterSubspace> array = new List<NlpParameterSubspace>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NlpParameterSubspace.DeserializeNlpParameterSubspace(item));
+                        }
                     }
                     searchSpace = array;
                     continue;

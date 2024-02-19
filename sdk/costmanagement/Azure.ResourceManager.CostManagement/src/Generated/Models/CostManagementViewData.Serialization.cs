@@ -107,7 +107,14 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ViewKpiProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ViewPivotProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,12 +150,12 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                ((IJsonModel<ReportConfigTimePeriod>)TimePeriod).Write(writer, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                ((IJsonModel<ReportConfigDataset>)DataSet).Write(writer, options);
             }
             if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
@@ -333,7 +347,14 @@ namespace Azure.ResourceManager.CostManagement
                             List<ViewKpiProperties> array = new List<ViewKpiProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ViewKpiProperties.DeserializeViewKpiProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ViewKpiProperties.DeserializeViewKpiProperties(item));
+                                }
                             }
                             kpis = array;
                             continue;
@@ -347,7 +368,14 @@ namespace Azure.ResourceManager.CostManagement
                             List<ViewPivotProperties> array = new List<ViewPivotProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ViewPivotProperties.DeserializeViewPivotProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ViewPivotProperties.DeserializeViewPivotProperties(item));
+                                }
                             }
                             pivots = array;
                             continue;

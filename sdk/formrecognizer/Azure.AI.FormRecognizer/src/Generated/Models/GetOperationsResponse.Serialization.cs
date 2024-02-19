@@ -29,7 +29,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<OperationSummary> array = new List<OperationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationSummary.DeserializeOperationSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperationSummary.DeserializeOperationSummary(item));
+                        }
                     }
                     value = array;
                     continue;

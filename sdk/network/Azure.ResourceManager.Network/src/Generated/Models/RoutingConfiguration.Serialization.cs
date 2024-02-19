@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PropagatedRouteTables))
             {
                 writer.WritePropertyName("propagatedRouteTables"u8);
-                writer.WriteObjectValue(PropagatedRouteTables);
+                ((IJsonModel<PropagatedRouteTable>)PropagatedRouteTables).Write(writer, options);
             }
             if (Optional.IsDefined(VnetRoutes))
             {
                 writer.WritePropertyName("vnetRoutes"u8);
-                writer.WriteObjectValue(VnetRoutes);
+                ((IJsonModel<VnetRoute>)VnetRoutes).Write(writer, options);
             }
             if (Optional.IsDefined(InboundRouteMap))
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ElapsedTimeMetric))
             {
                 writer.WritePropertyName("elapsedTimeMetric"u8);
-                writer.WriteObjectValue(ElapsedTimeMetric);
+                ((IJsonModel<PipelineElapsedTimeMetricPolicy>)ElapsedTimeMetric).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Relay
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RelayNetworkRuleSetIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.Relay
                             List<RelayNetworkRuleSetIPRule> array = new List<RelayNetworkRuleSetIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelayNetworkRuleSetIPRule.DeserializeRelayNetworkRuleSetIPRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RelayNetworkRuleSetIPRule.DeserializeRelayNetworkRuleSetIPRule(item));
+                                }
                             }
                             ipRules = array;
                             continue;

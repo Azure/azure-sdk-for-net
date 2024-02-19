@@ -75,7 +75,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MajorVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebAppMajorVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +210,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<WebAppMajorVersion> array = new List<WebAppMajorVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(WebAppMajorVersion.DeserializeWebAppMajorVersion(item));
+                                }
                             }
                             majorVersions = array;
                             continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FluidRelayContainerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     List<FluidRelayContainerData> array = new List<FluidRelayContainerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FluidRelayContainerData.DeserializeFluidRelayContainerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FluidRelayContainerData.DeserializeFluidRelayContainerData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Controls)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Control>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Control> array = new List<Control>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Control.DeserializeControl(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Control.DeserializeControl(item));
+                        }
                     }
                     controls = array;
                     continue;

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                ((IJsonModel<ContainerSupportedCapabilities>)Capabilities).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

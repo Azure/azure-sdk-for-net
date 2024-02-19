@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PostgreSqlPerformanceTierServiceLevelObjectives>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +196,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     List<PostgreSqlPerformanceTierServiceLevelObjectives> array = new List<PostgreSqlPerformanceTierServiceLevelObjectives>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlPerformanceTierServiceLevelObjectives.DeserializePostgreSqlPerformanceTierServiceLevelObjectives(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PostgreSqlPerformanceTierServiceLevelObjectives.DeserializePostgreSqlPerformanceTierServiceLevelObjectives(item));
+                        }
                     }
                     serviceLevelObjectives = array;
                     continue;

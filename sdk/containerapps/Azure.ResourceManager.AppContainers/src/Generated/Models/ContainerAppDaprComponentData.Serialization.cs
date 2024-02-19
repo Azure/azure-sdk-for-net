@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppWritableSecret>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppDaprMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -226,7 +240,14 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                                }
                             }
                             secrets = array;
                             continue;
@@ -245,7 +266,14 @@ namespace Azure.ResourceManager.AppContainers
                             List<ContainerAppDaprMetadata> array = new List<ContainerAppDaprMetadata>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerAppDaprMetadata.DeserializeContainerAppDaprMetadata(item));
+                                }
                             }
                             metadata = array;
                             continue;

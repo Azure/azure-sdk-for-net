@@ -71,14 +71,21 @@ namespace Azure.ResourceManager.Authorization
                 writer.WriteStartArray();
                 foreach (var item in EffectiveRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementPolicyRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PolicyAssignmentProperties))
             {
                 writer.WritePropertyName("policyAssignmentProperties"u8);
-                writer.WriteObjectValue(PolicyAssignmentProperties);
+                ((IJsonModel<PolicyAssignmentProperties>)PolicyAssignmentProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.Authorization
                             List<RoleManagementPolicyRule> array = new List<RoleManagementPolicyRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoleManagementPolicyRule.DeserializeRoleManagementPolicyRule(item));
+                                }
                             }
                             effectiveRules = array;
                             continue;

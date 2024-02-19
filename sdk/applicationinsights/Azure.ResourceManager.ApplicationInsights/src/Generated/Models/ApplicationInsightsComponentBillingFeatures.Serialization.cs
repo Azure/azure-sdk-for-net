@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
-                writer.WriteObjectValue(DataVolumeCap);
+                ((IJsonModel<ApplicationInsightsComponentDataVolumeCap>)DataVolumeCap).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {

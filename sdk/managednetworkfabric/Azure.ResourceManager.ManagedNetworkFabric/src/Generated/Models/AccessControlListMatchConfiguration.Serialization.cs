@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AccessControlListMatchCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AccessControlListAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +154,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListMatchCondition> array = new List<AccessControlListMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AccessControlListMatchCondition.DeserializeAccessControlListMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;
@@ -154,7 +175,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<AccessControlListAction> array = new List<AccessControlListAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AccessControlListAction.DeserializeAccessControlListAction(item));
+                        }
                     }
                     actions = array;
                     continue;

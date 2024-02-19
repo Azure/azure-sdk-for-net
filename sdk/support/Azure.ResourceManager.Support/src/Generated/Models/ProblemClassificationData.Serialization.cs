@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsentEnabled)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecondaryConsentEnabled>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +168,14 @@ namespace Azure.ResourceManager.Support
                             List<SecondaryConsentEnabled> array = new List<SecondaryConsentEnabled>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.SecondaryConsentEnabled.DeserializeSecondaryConsentEnabled(item));
+                                }
                             }
                             secondaryConsentEnabled = array;
                             continue;

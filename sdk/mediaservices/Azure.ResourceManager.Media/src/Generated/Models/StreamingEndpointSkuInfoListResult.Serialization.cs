@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingEndpointSkuInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointSkuInfo> array = new List<StreamingEndpointSkuInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingEndpointSkuInfo.DeserializeStreamingEndpointSkuInfo(item));
+                        }
                     }
                     value = array;
                     continue;

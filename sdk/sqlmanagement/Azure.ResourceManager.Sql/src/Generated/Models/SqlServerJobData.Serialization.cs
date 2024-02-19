@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sql
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                ((IJsonModel<SqlServerJobSchedule>)Schedule).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

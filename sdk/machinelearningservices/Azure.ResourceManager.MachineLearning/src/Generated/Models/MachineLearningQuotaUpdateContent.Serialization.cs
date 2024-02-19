@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningQuotaProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningQuotaProperties> array = new List<MachineLearningQuotaProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningQuotaProperties.DeserializeMachineLearningQuotaProperties(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfBackupFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupFileInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +182,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<BackupFileInfo> array = new List<BackupFileInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupFileInfo.DeserializeBackupFileInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupFileInfo.DeserializeBackupFileInfo(item));
+                        }
                     }
                     listOfBackupFiles = array;
                     continue;

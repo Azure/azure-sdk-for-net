@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in IndividualResponseDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxValidationInputResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxValidationInputResult> array = new List<DataBoxValidationInputResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxValidationInputResult.DeserializeDataBoxValidationInputResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxValidationInputResult.DeserializeDataBoxValidationInputResult(item));
+                                }
                             }
                             individualResponseDetails = array;
                             continue;

@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in ScheduleList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlScheduleItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +191,14 @@ namespace Azure.ResourceManager.Sql
                             List<SqlScheduleItem> array = new List<SqlScheduleItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SqlScheduleItem.DeserializeSqlScheduleItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SqlScheduleItem.DeserializeSqlScheduleItem(item));
+                                }
                             }
                             scheduleList = array;
                             continue;

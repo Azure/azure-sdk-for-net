@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<DataCollectionRuleMetadata>)Metadata).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StreamDeclarations))
             {
@@ -106,19 +106,26 @@ namespace Azure.ResourceManager.Monitor
                 foreach (var item in StreamDeclarations)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DataStreamDeclaration>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(DataSources))
             {
                 writer.WritePropertyName("dataSources"u8);
-                writer.WriteObjectValue(DataSources);
+                ((IJsonModel<DataCollectionRuleDataSources>)DataSources).Write(writer, options);
             }
             if (Optional.IsDefined(Destinations))
             {
                 writer.WritePropertyName("destinations"u8);
-                writer.WriteObjectValue(Destinations);
+                ((IJsonModel<DataCollectionRuleDestinations>)Destinations).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFlow>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -312,7 +326,14 @@ namespace Azure.ResourceManager.Monitor
                             Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, DataStreamDeclaration.DeserializeDataStreamDeclaration(property1.Value));
+                                }
                             }
                             streamDeclarations = dictionary;
                             continue;
@@ -344,7 +365,14 @@ namespace Azure.ResourceManager.Monitor
                             List<DataFlow> array = new List<DataFlow>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlow.DeserializeDataFlow(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataFlow.DeserializeDataFlow(item));
+                                }
                             }
                             dataFlows = array;
                             continue;

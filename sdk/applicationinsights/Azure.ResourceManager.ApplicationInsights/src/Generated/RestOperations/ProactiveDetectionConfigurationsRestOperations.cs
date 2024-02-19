@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentProactiveDetectionConfiguration> array = new List<ApplicationInsightsComponentProactiveDetectionConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

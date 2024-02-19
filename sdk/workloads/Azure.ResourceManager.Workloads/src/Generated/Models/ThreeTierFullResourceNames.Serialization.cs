@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(CentralServer))
             {
                 writer.WritePropertyName("centralServer"u8);
-                writer.WriteObjectValue(CentralServer);
+                ((IJsonModel<CentralServerFullResourceNames>)CentralServer).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationServer))
             {
                 writer.WritePropertyName("applicationServer"u8);
-                writer.WriteObjectValue(ApplicationServer);
+                ((IJsonModel<ApplicationServerFullResourceNames>)ApplicationServer).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseServer))
             {
                 writer.WritePropertyName("databaseServer"u8);
-                writer.WriteObjectValue(DatabaseServer);
+                ((IJsonModel<DatabaseServerFullResourceNames>)DatabaseServer).Write(writer, options);
             }
             if (Optional.IsDefined(SharedStorage))
             {
                 writer.WritePropertyName("sharedStorage"u8);
-                writer.WriteObjectValue(SharedStorage);
+                ((IJsonModel<SharedStorageResourceNames>)SharedStorage).Write(writer, options);
             }
             writer.WritePropertyName("namingPatternType"u8);
             writer.WriteStringValue(NamingPatternType.ToString());

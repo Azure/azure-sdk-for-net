@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.DevCenter.Models
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                ((IJsonModel<DevCenterGitCatalog>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(AdoGit))
             {
                 writer.WritePropertyName("adoGit"u8);
-                writer.WriteObjectValue(AdoGit);
+                ((IJsonModel<DevCenterGitCatalog>)AdoGit).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

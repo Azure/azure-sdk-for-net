@@ -30,41 +30,41 @@ namespace Azure.AI.Vision.ImageAnalysis
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("captionResult"u8);
-                writer.WriteObjectValue(Caption);
+                ((IJsonModel<CaptionResult>)Caption).Write(writer, options);
             }
             if (Optional.IsDefined(DenseCaptions))
             {
                 writer.WritePropertyName("denseCaptionsResult"u8);
-                writer.WriteObjectValue(DenseCaptions);
+                ((IJsonModel<DenseCaptionsResult>)DenseCaptions).Write(writer, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            ((IJsonModel<ImageMetadata>)Metadata).Write(writer, options);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
             if (Optional.IsDefined(Objects))
             {
                 writer.WritePropertyName("objectsResult"u8);
-                writer.WriteObjectValue(Objects);
+                ((IJsonModel<ObjectsResult>)Objects).Write(writer, options);
             }
             if (Optional.IsDefined(People))
             {
                 writer.WritePropertyName("peopleResult"u8);
-                writer.WriteObjectValue(People);
+                ((IJsonModel<PeopleResult>)People).Write(writer, options);
             }
             if (Optional.IsDefined(Read))
             {
                 writer.WritePropertyName("readResult"u8);
-                writer.WriteObjectValue(Read);
+                ((IJsonModel<ReadResult>)Read).Write(writer, options);
             }
             if (Optional.IsDefined(SmartCrops))
             {
                 writer.WritePropertyName("smartCropsResult"u8);
-                writer.WriteObjectValue(SmartCrops);
+                ((IJsonModel<SmartCropsResult>)SmartCrops).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tagsResult"u8);
-                writer.WriteObjectValue(Tags);
+                ((IJsonModel<TagsResult>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

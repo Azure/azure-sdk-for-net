@@ -31,7 +31,14 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in ToScripts)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<CommonScriptModel>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("code"u8);
@@ -94,7 +101,14 @@ namespace Azure.AI.Translation.Text
                     List<CommonScriptModel> array = new List<CommonScriptModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeCommonScriptModel(item));
+                        }
                     }
                     toScripts = array;
                     continue;

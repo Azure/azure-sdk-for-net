@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebPubSubPrivateLink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     List<WebPubSubPrivateLink> array = new List<WebPubSubPrivateLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebPubSubPrivateLink.DeserializeWebPubSubPrivateLink(item));
+                        }
                     }
                     value = array;
                     continue;

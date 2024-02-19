@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStringValue(Kind);
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<MachineLearningBatchDeploymentProperties>)Properties).Write(writer, options);
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

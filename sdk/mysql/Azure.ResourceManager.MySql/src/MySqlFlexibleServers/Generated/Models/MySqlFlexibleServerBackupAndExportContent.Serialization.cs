@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
+            ((IJsonModel<MySqlFlexibleServerBackupStoreDetails>)TargetDetails).Write(writer, options);
             writer.WritePropertyName("backupSettings"u8);
-            writer.WriteObjectValue(BackupSettings);
+            ((IJsonModel<MySqlFlexibleServerBackupSettings>)BackupSettings).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

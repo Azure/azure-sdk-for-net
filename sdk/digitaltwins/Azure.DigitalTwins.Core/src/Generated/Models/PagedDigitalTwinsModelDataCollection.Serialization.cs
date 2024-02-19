@@ -28,7 +28,14 @@ namespace Azure.DigitalTwins.Core
                     List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                        }
                     }
                     value = array;
                     continue;

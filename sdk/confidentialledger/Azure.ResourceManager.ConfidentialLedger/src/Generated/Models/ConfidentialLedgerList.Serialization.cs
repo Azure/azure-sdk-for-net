@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConfidentialLedgerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ConfidentialLedgerData> array = new List<ConfidentialLedgerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfidentialLedgerData.DeserializeConfidentialLedgerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConfidentialLedgerData.DeserializeConfidentialLedgerData(item));
+                        }
                     }
                     value = array;
                     continue;

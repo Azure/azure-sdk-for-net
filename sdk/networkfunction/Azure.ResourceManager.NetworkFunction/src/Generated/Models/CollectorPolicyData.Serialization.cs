@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetworkFunction
             if (Optional.IsDefined(IngestionPolicy))
             {
                 writer.WritePropertyName("ingestionPolicy"u8);
-                writer.WriteObjectValue(IngestionPolicy);
+                ((IJsonModel<IngestionPolicyPropertiesFormat>)IngestionPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EmissionPolicies))
             {
@@ -80,7 +80,14 @@ namespace Azure.ResourceManager.NetworkFunction
                 writer.WriteStartArray();
                 foreach (var item in EmissionPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmissionPoliciesPropertiesFormat>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -221,7 +228,14 @@ namespace Azure.ResourceManager.NetworkFunction
                             List<EmissionPoliciesPropertiesFormat> array = new List<EmissionPoliciesPropertiesFormat>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EmissionPoliciesPropertiesFormat.DeserializeEmissionPoliciesPropertiesFormat(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EmissionPoliciesPropertiesFormat.DeserializeEmissionPoliciesPropertiesFormat(item));
+                                }
                             }
                             emissionPolicies = array;
                             continue;

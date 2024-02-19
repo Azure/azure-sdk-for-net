@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualDirectories)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualDirectory>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<VirtualDirectory> array = new List<VirtualDirectory>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualDirectory.DeserializeVirtualDirectory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualDirectory.DeserializeVirtualDirectory(item));
+                        }
                     }
                     virtualDirectories = array;
                     continue;

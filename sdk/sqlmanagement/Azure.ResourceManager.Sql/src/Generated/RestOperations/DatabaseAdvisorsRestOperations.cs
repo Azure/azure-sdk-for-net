@@ -91,7 +91,14 @@ namespace Azure.ResourceManager.Sql
                         List<SqlAdvisorData> array = new List<SqlAdvisorData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(SqlAdvisorData.DeserializeSqlAdvisorData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(SqlAdvisorData.DeserializeSqlAdvisorData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.Sql
                         List<SqlAdvisorData> array = new List<SqlAdvisorData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(SqlAdvisorData.DeserializeSqlAdvisorData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(SqlAdvisorData.DeserializeSqlAdvisorData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

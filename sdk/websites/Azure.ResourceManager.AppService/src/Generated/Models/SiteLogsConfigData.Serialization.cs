@@ -58,22 +58,22 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(ApplicationLogs))
             {
                 writer.WritePropertyName("applicationLogs"u8);
-                writer.WriteObjectValue(ApplicationLogs);
+                ((IJsonModel<ApplicationLogsConfig>)ApplicationLogs).Write(writer, options);
             }
             if (Optional.IsDefined(HttpLogs))
             {
                 writer.WritePropertyName("httpLogs"u8);
-                writer.WriteObjectValue(HttpLogs);
+                ((IJsonModel<AppServiceHttpLogsConfig>)HttpLogs).Write(writer, options);
             }
             if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing"u8);
-                writer.WriteObjectValue(IsFailedRequestsTracing);
+                ((IJsonModel<WebAppEnabledConfig>)IsFailedRequestsTracing).Write(writer, options);
             }
             if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages"u8);
-                writer.WriteObjectValue(IsDetailedErrorMessages);
+                ((IJsonModel<WebAppEnabledConfig>)IsDetailedErrorMessages).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

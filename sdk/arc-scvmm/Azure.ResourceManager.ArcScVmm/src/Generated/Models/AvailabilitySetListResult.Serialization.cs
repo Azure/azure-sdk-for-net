@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScVmmAvailabilitySetData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     List<ScVmmAvailabilitySetData> array = new List<ScVmmAvailabilitySetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScVmmAvailabilitySetData.DeserializeScVmmAvailabilitySetData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NicIPAddressSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<NicIPAddressSettings> array = new List<NicIPAddressSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NicIPAddressSettings.DeserializeNicIPAddressSettings(item));
+                        }
                     }
                     ipAddressInfo = array;
                     continue;

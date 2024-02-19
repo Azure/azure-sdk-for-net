@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkbookTemplateGallery>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkbookTemplateGallery> array = new List<WorkbookTemplateGallery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkbookTemplateGallery.DeserializeWorkbookTemplateGallery(item));
+                        }
                     }
                     galleries = array;
                     continue;

@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("productDetails"u8);
-            writer.WriteObjectValue(ProductDetails);
+            ((IJsonModel<ProductDetails>)ProductDetails).Write(writer, options);
             writer.WritePropertyName("orderItemType"u8);
             writer.WriteStringValue(OrderItemType.ToString());
             if (options.Format != "W" && Optional.IsDefined(CurrentStage))
             {
                 writer.WritePropertyName("currentStage"u8);
-                writer.WriteObjectValue(CurrentStage);
+                ((IJsonModel<EdgeOrderStageDetails>)CurrentStage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderItemStageHistory))
             {
@@ -42,24 +42,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderItemStageHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EdgeOrderStageDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                ((IJsonModel<OrderItemPreferences>)Preferences).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ForwardShippingDetails))
             {
                 writer.WritePropertyName("forwardShippingDetails"u8);
-                writer.WriteObjectValue(ForwardShippingDetails);
+                ((IJsonModel<ForwardShippingDetails>)ForwardShippingDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                ((IJsonModel<ReverseShippingDetails>)ReverseShippingDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {
@@ -99,7 +106,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (options.Format != "W" && Optional.IsDefined(FirstOrDefaultManagement))
             {
                 writer.WritePropertyName("managementRpDetails"u8);
-                writer.WriteObjectValue(FirstOrDefaultManagement);
+                ((IJsonModel<ResourceProviderDetails>)FirstOrDefaultManagement).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ManagementRPDetailsList))
             {
@@ -107,7 +114,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in ManagementRPDetailsList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceProviderDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -202,7 +216,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<EdgeOrderStageDetails> array = new List<EdgeOrderStageDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EdgeOrderStageDetails.DeserializeEdgeOrderStageDetails(item));
+                        }
                     }
                     orderItemStageHistory = array;
                     continue;
@@ -303,7 +324,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<ResourceProviderDetails> array = new List<ResourceProviderDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceProviderDetails.DeserializeResourceProviderDetails(item));
+                        }
                     }
                     managementRPDetailsList = array;
                     continue;

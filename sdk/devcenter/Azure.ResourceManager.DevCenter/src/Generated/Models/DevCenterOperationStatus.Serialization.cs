@@ -78,12 +78,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }

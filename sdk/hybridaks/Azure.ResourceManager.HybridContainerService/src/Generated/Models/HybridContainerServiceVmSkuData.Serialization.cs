@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridContainerService
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<HybridContainerServiceExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridContainerServiceVmSkuProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.HybridContainerService
                             List<HybridContainerServiceVmSkuProperties> array = new List<HybridContainerServiceVmSkuProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridContainerServiceVmSkuProperties.DeserializeHybridContainerServiceVmSkuProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HybridContainerServiceVmSkuProperties.DeserializeHybridContainerServiceVmSkuProperties(item));
+                                }
                             }
                             values = array;
                             continue;

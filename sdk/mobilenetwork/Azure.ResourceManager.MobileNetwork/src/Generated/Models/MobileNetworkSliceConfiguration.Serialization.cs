@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataNetworkConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +105,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<DataNetworkConfiguration> array = new List<DataNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        }
                     }
                     dataNetworkConfigurations = array;
                     continue;

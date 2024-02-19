@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AttestationProviderData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +112,14 @@ namespace Azure.ResourceManager.Attestation.Models
                     List<AttestationProviderData> array = new List<AttestationProviderData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttestationProviderData.DeserializeAttestationProviderData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AttestationProviderData.DeserializeAttestationProviderData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in Groups)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<WafMetricsResponseSeriesPropertiesItemsItem>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +147,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<WafMetricsResponseSeriesPropertiesItemsItem> array = new List<WafMetricsResponseSeriesPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WafMetricsResponseSeriesPropertiesItemsItem.DeserializeWafMetricsResponseSeriesPropertiesItemsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WafMetricsResponseSeriesPropertiesItemsItem.DeserializeWafMetricsResponseSeriesPropertiesItemsItem(item));
+                        }
                     }
                     groups = array;
                     continue;
@@ -147,7 +168,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems> array = new List<Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Components18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems.DeserializeComponents18OrqelSchemasWafmetricsresponsePropertiesSeriesItemsPropertiesDataItems(item));
+                        }
                     }
                     data = array;
                     continue;

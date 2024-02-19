@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LoadBalancerVipSwapRequestFrontendIPConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<LoadBalancerVipSwapRequestFrontendIPConfiguration> array = new List<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item));
+                        }
                     }
                     frontendIPConfigurations = array;
                     continue;

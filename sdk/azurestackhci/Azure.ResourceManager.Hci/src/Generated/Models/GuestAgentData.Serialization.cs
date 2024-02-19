@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<GuestCredential>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningAction))
             {

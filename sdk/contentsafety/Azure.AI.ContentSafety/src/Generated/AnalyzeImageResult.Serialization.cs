@@ -31,7 +31,14 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in CategoriesAnalysis)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ImageCategoriesAnalysis>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.ContentSafety
                     List<ImageCategoriesAnalysis> array = new List<ImageCategoriesAnalysis>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImageCategoriesAnalysis.DeserializeImageCategoriesAnalysis(item));
+                        }
                     }
                     categoriesAnalysis = array;
                     continue;

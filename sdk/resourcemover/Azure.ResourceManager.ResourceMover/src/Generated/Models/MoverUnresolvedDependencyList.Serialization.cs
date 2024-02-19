@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MoverUnresolvedDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
-                writer.WriteObjectValue(SummaryCollection);
+                ((IJsonModel<MoverSummaryList>)SummaryCollection).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverUnresolvedDependency> array = new List<MoverUnresolvedDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency(item));
+                        }
                     }
                     value = array;
                     continue;

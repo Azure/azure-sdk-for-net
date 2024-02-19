@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataTableResponseColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,17 +54,19 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Rows)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            writer.WriteStringValue(item0);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +129,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataTableResponseColumn> array = new List<DataTableResponseColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataTableResponseColumn.DeserializeDataTableResponseColumn(item));
+                        }
                     }
                     columns = array;
                     continue;

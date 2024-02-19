@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             writer.WriteStartArray();
             foreach (var item in PublicKeys)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerServiceSshPublicKey>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceSshPublicKey> array = new List<ContainerServiceSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceSshPublicKey.DeserializeContainerServiceSshPublicKey(item));
+                        }
                     }
                     publicKeys = array;
                     continue;

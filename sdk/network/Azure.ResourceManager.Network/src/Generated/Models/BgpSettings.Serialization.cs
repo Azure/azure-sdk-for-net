@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeeringAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkIPConfigurationBgpPeeringAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkIPConfigurationBgpPeeringAddress.DeserializeNetworkIPConfigurationBgpPeeringAddress(item));
+                        }
                     }
                     bgpPeeringAddresses = array;
                     continue;

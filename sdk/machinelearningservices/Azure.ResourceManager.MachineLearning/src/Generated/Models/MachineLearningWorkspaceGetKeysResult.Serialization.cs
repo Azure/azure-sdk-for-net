@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ContainerRegistryCredentials))
             {
                 writer.WritePropertyName("containerRegistryCredentials"u8);
-                writer.WriteObjectValue(ContainerRegistryCredentials);
+                ((IJsonModel<MachineLearningContainerRegistryCredentials>)ContainerRegistryCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(NotebookAccessKeys))
             {
                 writer.WritePropertyName("notebookAccessKeys"u8);
-                writer.WriteObjectValue(NotebookAccessKeys);
+                ((IJsonModel<MachineLearningWorkspaceGetNotebookKeysResult>)NotebookAccessKeys).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UserStorageResourceId))
             {

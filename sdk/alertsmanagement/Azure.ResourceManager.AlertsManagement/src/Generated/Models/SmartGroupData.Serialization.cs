@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +120,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in ResourceGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +137,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorServices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -126,7 +154,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in MonitorConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +171,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertStates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +188,14 @@ namespace Azure.ResourceManager.AlertsManagement
                 writer.WriteStartArray();
                 foreach (var item in AlertSeverities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SmartGroupAggregatedProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -308,7 +357,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             resources = array;
                             continue;
@@ -322,7 +378,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             resourceTypes = array;
                             continue;
@@ -336,7 +399,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             resourceGroups = array;
                             continue;
@@ -350,7 +420,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             monitorServices = array;
                             continue;
@@ -364,7 +441,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             monitorConditions = array;
                             continue;
@@ -378,7 +462,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             alertStates = array;
                             continue;
@@ -392,7 +483,14 @@ namespace Azure.ResourceManager.AlertsManagement
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SmartGroupAggregatedProperty.DeserializeSmartGroupAggregatedProperty(item));
+                                }
                             }
                             alertSeverities = array;
                             continue;

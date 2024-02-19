@@ -27,26 +27,33 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            ((IJsonModel<X12ValidationSettings>)ValidationSettings).Write(writer, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            ((IJsonModel<X12FramingSettings>)FramingSettings).Write(writer, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            ((IJsonModel<X12EnvelopeSettings>)EnvelopeSettings).Write(writer, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            ((IJsonModel<X12AcknowledgementSettings>)AcknowledgementSettings).Write(writer, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            ((IJsonModel<X12MessageFilter>)MessageFilter).Write(writer, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            ((IJsonModel<X12SecuritySettings>)SecuritySettings).Write(writer, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
+            ((IJsonModel<X12ProcessingSettings>)ProcessingSettings).Write(writer, options);
             if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<X12EnvelopeOverride>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<X12ValidationOverride>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +80,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<X12MessageIdentifier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +95,14 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<X12SchemaReference>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(X12DelimiterOverrides))
@@ -83,7 +111,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<X12DelimiterOverrides>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +220,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12EnvelopeOverride> array = new List<X12EnvelopeOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12EnvelopeOverride.DeserializeX12EnvelopeOverride(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(X12EnvelopeOverride.DeserializeX12EnvelopeOverride(item));
+                        }
                     }
                     envelopeOverrides = array;
                     continue;
@@ -199,7 +241,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12ValidationOverride> array = new List<X12ValidationOverride>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12ValidationOverride.DeserializeX12ValidationOverride(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(X12ValidationOverride.DeserializeX12ValidationOverride(item));
+                        }
                     }
                     validationOverrides = array;
                     continue;
@@ -213,7 +262,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12MessageIdentifier> array = new List<X12MessageIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12MessageIdentifier.DeserializeX12MessageIdentifier(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(X12MessageIdentifier.DeserializeX12MessageIdentifier(item));
+                        }
                     }
                     messageFilterList = array;
                     continue;
@@ -223,7 +279,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12SchemaReference> array = new List<X12SchemaReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(X12SchemaReference.DeserializeX12SchemaReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(X12SchemaReference.DeserializeX12SchemaReference(item));
+                        }
                     }
                     schemaReferences = array;
                     continue;
@@ -237,7 +300,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<X12DelimiterOverrides> array = new List<X12DelimiterOverrides>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.X12DelimiterOverrides.DeserializeX12DelimiterOverrides(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.X12DelimiterOverrides.DeserializeX12DelimiterOverrides(item));
+                        }
                     }
                     x12DelimiterOverrides = array;
                     continue;

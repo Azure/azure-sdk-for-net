@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetricAlertStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MetricAlertStatus> array = new List<MetricAlertStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricAlertStatus.DeserializeMetricAlertStatus(item));
+                        }
                     }
                     value = array;
                     continue;

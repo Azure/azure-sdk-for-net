@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserAssignedIdentityData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
                     List<UserAssignedIdentityData> array = new List<UserAssignedIdentityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserAssignedIdentityData.DeserializeUserAssignedIdentityData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserAssignedIdentityData.DeserializeUserAssignedIdentityData(item));
+                        }
                     }
                     value = array;
                     continue;

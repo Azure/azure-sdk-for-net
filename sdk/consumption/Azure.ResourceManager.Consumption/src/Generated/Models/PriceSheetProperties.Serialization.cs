@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(MeterDetails))
             {
                 writer.WritePropertyName("meterDetails"u8);
-                writer.WriteObjectValue(MeterDetails);
+                ((IJsonModel<ConsumptionMeterDetails>)MeterDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
             {

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<CommunityGalleryImageVersionData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CommunityGalleryImageVersionData> array = new List<CommunityGalleryImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalInsightsManagementGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     List<OperationalInsightsManagementGroup> array = new List<OperationalInsightsManagementGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OperationalInsightsManagementGroup.DeserializeOperationalInsightsManagementGroup(item));
+                        }
                     }
                     value = array;
                     continue;

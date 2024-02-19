@@ -79,7 +79,14 @@ namespace Azure.Search.Documents.Models
                     List<QueryCaptionResult> array = new List<QueryCaptionResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryCaptionResult.DeserializeQueryCaptionResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryCaptionResult.DeserializeQueryCaptionResult(item));
+                        }
                     }
                     searchCaptions = array;
                     continue;
@@ -94,7 +101,14 @@ namespace Azure.Search.Documents.Models
                     List<DocumentDebugInfo> array = new List<DocumentDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(item));
+                        }
                     }
                     searchDocumentDebugInfo = array;
                     continue;

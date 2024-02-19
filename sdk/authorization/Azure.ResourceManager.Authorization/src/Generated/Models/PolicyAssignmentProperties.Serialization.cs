@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Authorization.Models
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
-                writer.WriteObjectValue(LastModifiedBy);
+                ((IJsonModel<RoleManagementPrincipal>)LastModifiedBy).Write(writer, options);
             }
             if (Optional.IsDefined(LastModifiedOn))
             {

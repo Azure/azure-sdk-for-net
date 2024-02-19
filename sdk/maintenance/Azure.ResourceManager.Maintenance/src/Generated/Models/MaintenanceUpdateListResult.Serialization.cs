@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MaintenanceUpdate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Maintenance.Models
                     List<MaintenanceUpdate> array = new List<MaintenanceUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MaintenanceUpdate.DeserializeMaintenanceUpdate(item));
+                        }
                     }
                     value = array;
                     continue;

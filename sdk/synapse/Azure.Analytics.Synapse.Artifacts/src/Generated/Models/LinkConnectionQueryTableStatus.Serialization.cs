@@ -35,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkTableStatus> array = new List<LinkTableStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkTableStatus.DeserializeLinkTableStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinkTableStatus.DeserializeLinkTableStatus(item));
+                        }
                     }
                     value = array;
                     continue;

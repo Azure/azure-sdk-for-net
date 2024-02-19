@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WorkbookData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     List<WorkbookData> array = new List<WorkbookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkbookData.DeserializeWorkbookData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WorkbookData.DeserializeWorkbookData(item));
+                        }
                     }
                     value = array;
                     continue;

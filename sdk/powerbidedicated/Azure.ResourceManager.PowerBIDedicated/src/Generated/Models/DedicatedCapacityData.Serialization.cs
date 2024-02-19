@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<CapacitySku>)Sku).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                ((IJsonModel<SystemData>)SystemData).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
-                writer.WriteObjectValue(Administration);
+                ((IJsonModel<DedicatedCapacityAdministrators>)Administration).Write(writer, options);
             }
             if (Optional.IsDefined(Mode))
             {

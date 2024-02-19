@@ -40,7 +40,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<TagAttributesBase> array = new List<TagAttributesBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TagAttributesBase.DeserializeTagAttributesBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TagAttributesBase.DeserializeTagAttributesBase(item));
+                        }
                     }
                     tags = array;
                     continue;

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                ((IJsonModel<ResourceRestoreParameters>)RestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(CreateMode))
             {

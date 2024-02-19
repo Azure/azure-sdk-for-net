@@ -33,7 +33,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<AnomalyAlert> array = new List<AnomalyAlert>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnomalyAlert.DeserializeAnomalyAlert(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AnomalyAlert.DeserializeAnomalyAlert(item));
+                        }
                     }
                     value = array;
                     continue;

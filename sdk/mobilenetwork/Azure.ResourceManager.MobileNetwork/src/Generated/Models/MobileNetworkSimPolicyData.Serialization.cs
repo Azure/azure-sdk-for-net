@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("ueAmbr"u8);
-            writer.WriteObjectValue(UeAmbr);
+            ((IJsonModel<Ambr>)UeAmbr).Write(writer, options);
             writer.WritePropertyName("defaultSlice"u8);
             JsonSerializer.Serialize(writer, DefaultSlice);
             if (Optional.IsDefined(RfspIndex))
@@ -98,7 +98,14 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartArray();
             foreach (var item in SliceConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MobileNetworkSliceConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -265,7 +272,14 @@ namespace Azure.ResourceManager.MobileNetwork
                             List<MobileNetworkSliceConfiguration> array = new List<MobileNetworkSliceConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MobileNetworkSliceConfiguration.DeserializeMobileNetworkSliceConfiguration(item));
+                                }
                             }
                             sliceConfigurations = array;
                             continue;

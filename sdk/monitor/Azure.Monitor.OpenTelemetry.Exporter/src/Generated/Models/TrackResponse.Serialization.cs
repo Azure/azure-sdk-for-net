@@ -51,7 +51,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelemetryErrorDetails.DeserializeTelemetryErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TelemetryErrorDetails.DeserializeTelemetryErrorDetails(item));
+                        }
                     }
                     errors = array;
                     continue;

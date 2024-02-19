@@ -79,13 +79,20 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             writer.WriteStartArray();
             foreach (var item in Resources)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ResourceMetadata>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
                 writer.WritePropertyName("complianceStatus"u8);
-                writer.WriteObjectValue(ComplianceStatus);
+                ((IJsonModel<ReportComplianceStatus>)ComplianceStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -227,7 +234,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceMetadata.DeserializeResourceMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceMetadata.DeserializeResourceMetadata(item));
+                        }
                     }
                     resources = array;
                     continue;

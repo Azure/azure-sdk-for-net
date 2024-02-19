@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in TriggerCriteria)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TriggerCriterion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             if (Optional.IsDefined(ReplacementMaps))
             {
                 writer.WritePropertyName("replacementMaps"u8);
-                writer.WriteObjectValue(ReplacementMaps);
+                ((IJsonModel<ReplacementMaps>)ReplacementMaps).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sections))
             {
@@ -78,7 +85,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Sections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpSection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -141,7 +155,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<TriggerCriterion> array = new List<TriggerCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerCriterion.DeserializeTriggerCriterion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TriggerCriterion.DeserializeTriggerCriterion(item));
+                        }
                     }
                     triggerCriteria = array;
                     continue;
@@ -202,7 +223,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpSection> array = new List<SelfHelpSection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        }
                     }
                     sections = array;
                     continue;

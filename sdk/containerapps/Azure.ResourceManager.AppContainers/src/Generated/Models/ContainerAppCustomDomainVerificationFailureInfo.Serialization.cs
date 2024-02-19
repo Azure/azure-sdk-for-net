@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +128,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem> array = new List<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCustomDomainVerificationFailureInfoDetailsItem.DeserializeContainerAppCustomDomainVerificationFailureInfoDetailsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppCustomDomainVerificationFailureInfoDetailsItem.DeserializeContainerAppCustomDomainVerificationFailureInfoDetailsItem(item));
+                        }
                     }
                     details = array;
                     continue;

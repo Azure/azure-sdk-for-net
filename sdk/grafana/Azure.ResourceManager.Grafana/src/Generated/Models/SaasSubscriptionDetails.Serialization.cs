@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
-                writer.WriteObjectValue(Term);
+                ((IJsonModel<SubscriptionTerm>)Term).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

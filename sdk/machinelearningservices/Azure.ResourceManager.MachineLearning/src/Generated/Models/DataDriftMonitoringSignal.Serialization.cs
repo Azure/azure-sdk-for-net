@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataSegment != null)
                 {
                     writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment);
+                    ((IJsonModel<MonitoringDataSegment>)DataSegment).Write(writer, options);
                 }
                 else
                 {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features);
+                    ((IJsonModel<MonitoringFeatureFilterBase>)Features).Write(writer, options);
                 }
                 else
                 {
@@ -72,13 +72,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataDriftMetricThresholdBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            ((IJsonModel<MonitoringInputDataBase>)ProductionData).Write(writer, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -195,7 +202,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<DataDriftMetricThresholdBase> array = new List<DataDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataDriftMetricThresholdBase.DeserializeDataDriftMetricThresholdBase(item));
+                        }
                     }
                     metricThresholds = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.AI.ContentSafety
             writer.WriteStartArray();
             foreach (var item in BlocklistItems)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TextBlocklistItem>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.ContentSafety
                     List<TextBlocklistItem> array = new List<TextBlocklistItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextBlocklistItem.DeserializeTextBlocklistItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextBlocklistItem.DeserializeTextBlocklistItem(item));
+                        }
                     }
                     blocklistItems = array;
                     continue;

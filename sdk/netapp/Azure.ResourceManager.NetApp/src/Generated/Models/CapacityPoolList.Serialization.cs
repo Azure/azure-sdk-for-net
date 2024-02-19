@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CapacityPoolData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<CapacityPoolData> array = new List<CapacityPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CapacityPoolData.DeserializeCapacityPoolData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CapacityPoolData.DeserializeCapacityPoolData(item));
+                        }
                     }
                     value = array;
                     continue;

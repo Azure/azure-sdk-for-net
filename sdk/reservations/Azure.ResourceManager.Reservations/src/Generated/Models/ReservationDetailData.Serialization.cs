@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.Reservations
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ReservationsSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ReservationProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {

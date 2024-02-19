@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WritePropertyName("batchGroupName"u8);
             writer.WriteStringValue(BatchGroupName);
             writer.WritePropertyName("releaseCriteria"u8);
-            writer.WriteObjectValue(ReleaseCriteria);
+            ((IJsonModel<IntegrationAccountBatchReleaseCriteria>)ReleaseCriteria).Write(writer, options);
             if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);

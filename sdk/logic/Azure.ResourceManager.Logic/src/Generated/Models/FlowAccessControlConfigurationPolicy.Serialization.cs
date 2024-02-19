@@ -32,14 +32,21 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedCallerIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FlowAccessControlIPAddressRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OpenAuthenticationPolicies))
             {
                 writer.WritePropertyName("openAuthenticationPolicies"u8);
-                writer.WriteObjectValue(OpenAuthenticationPolicies);
+                ((IJsonModel<OpenAuthenticationAccessPolicies>)OpenAuthenticationPolicies).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<FlowAccessControlIPAddressRange> array = new List<FlowAccessControlIPAddressRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FlowAccessControlIPAddressRange.DeserializeFlowAccessControlIPAddressRange(item));
+                        }
                     }
                     allowedCallerIPAddresses = array;
                     continue;

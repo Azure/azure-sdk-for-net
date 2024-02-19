@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogAnalyticsDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,14 +49,21 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitoringAccountDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue(AzureMonitorMetrics);
+                ((IJsonModel<DestinationsSpecAzureMonitorMetrics>)AzureMonitorMetrics).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataCollectionRuleEventHubDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +88,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataCollectionRuleEventHubDirectDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +105,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataCollectionRuleStorageBlobDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +122,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataCollectionRuleStorageTableDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +139,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataCollectionRuleStorageBlobDestination>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +209,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<LogAnalyticsDestination> array = new List<LogAnalyticsDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LogAnalyticsDestination.DeserializeLogAnalyticsDestination(item));
+                        }
                     }
                     logAnalytics = array;
                     continue;
@@ -174,7 +230,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitoringAccountDestination> array = new List<MonitoringAccountDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitoringAccountDestination.DeserializeMonitoringAccountDestination(item));
+                        }
                     }
                     monitoringAccounts = array;
                     continue;
@@ -197,7 +260,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDestination> array = new List<DataCollectionRuleEventHubDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleEventHubDestination.DeserializeDataCollectionRuleEventHubDestination(item));
+                        }
                     }
                     eventHubs = array;
                     continue;
@@ -211,7 +281,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleEventHubDirectDestination> array = new List<DataCollectionRuleEventHubDirectDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleEventHubDirectDestination.DeserializeDataCollectionRuleEventHubDirectDestination(item));
+                        }
                     }
                     eventHubsDirect = array;
                     continue;
@@ -225,7 +302,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        }
                     }
                     storageBlobsDirect = array;
                     continue;
@@ -239,7 +323,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageTableDestination> array = new List<DataCollectionRuleStorageTableDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleStorageTableDestination.DeserializeDataCollectionRuleStorageTableDestination(item));
+                        }
                     }
                     storageTablesDirect = array;
                     continue;
@@ -253,7 +344,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleStorageBlobDestination> array = new List<DataCollectionRuleStorageBlobDestination>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleStorageBlobDestination.DeserializeDataCollectionRuleStorageBlobDestination(item));
+                        }
                     }
                     storageAccounts = array;
                     continue;

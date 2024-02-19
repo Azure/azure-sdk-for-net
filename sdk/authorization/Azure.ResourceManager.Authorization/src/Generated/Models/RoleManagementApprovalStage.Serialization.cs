@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in PrimaryApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementUserInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +69,14 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in EscalationApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoleManagementUserInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +164,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        }
                     }
                     primaryApprovers = array;
                     continue;
@@ -173,7 +194,14 @@ namespace Azure.ResourceManager.Authorization.Models
                     List<RoleManagementUserInfo> array = new List<RoleManagementUserInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoleManagementUserInfo.DeserializeRoleManagementUserInfo(item));
+                        }
                     }
                     escalationApprovers = array;
                     continue;

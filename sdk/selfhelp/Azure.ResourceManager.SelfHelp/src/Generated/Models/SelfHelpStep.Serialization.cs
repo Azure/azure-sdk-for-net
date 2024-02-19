@@ -73,14 +73,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StepInput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomatedCheckResults))
             {
                 writer.WritePropertyName("automatedCheckResults"u8);
-                writer.WriteObjectValue(AutomatedCheckResults);
+                ((IJsonModel<AutomatedCheckResult>)AutomatedCheckResults).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Insights))
             {
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Insights)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SelfHelpDiagnosticInsight>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +226,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<StepInput> array = new List<StepInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StepInput.DeserializeStepInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StepInput.DeserializeStepInput(item));
+                        }
                     }
                     inputs = array;
                     continue;
@@ -235,7 +256,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SelfHelpDiagnosticInsight> array = new List<SelfHelpDiagnosticInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelfHelpDiagnosticInsight.DeserializeSelfHelpDiagnosticInsight(item));
+                        }
                     }
                     insights = array;
                     continue;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                ((IJsonModel<PacketCaptureMachineScope>)Scope).Write(writer, options);
             }
             if (Optional.IsDefined(TargetType))
             {
@@ -56,14 +56,21 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue(StorageLocation);
+            ((IJsonModel<PacketCaptureStorageLocation>)StorageLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PacketCaptureFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +198,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<PacketCaptureFilter> array = new List<PacketCaptureFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PacketCaptureFilter.DeserializePacketCaptureFilter(item));
+                                }
                             }
                             filters = array;
                             continue;

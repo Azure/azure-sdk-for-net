@@ -135,7 +135,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareNetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -145,7 +152,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareVirtualDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -175,7 +189,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareResourceStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -400,7 +421,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareNetworkInterface> array = new List<VMwareNetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                                }
                             }
                             networkInterfaces = array;
                             continue;
@@ -414,7 +442,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareVirtualDisk> array = new List<VMwareVirtualDisk>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                                }
                             }
                             disks = array;
                             continue;
@@ -452,7 +487,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                }
                             }
                             statuses = array;
                             continue;

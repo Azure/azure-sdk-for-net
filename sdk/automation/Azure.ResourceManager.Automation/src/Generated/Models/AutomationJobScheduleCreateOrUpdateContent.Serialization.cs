@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.Automation.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            ((IJsonModel<ScheduleAssociationProperty>)Schedule).Write(writer, options);
             writer.WritePropertyName("runbook"u8);
-            writer.WriteObjectValue(Runbook);
+            ((IJsonModel<RunbookAssociationProperty>)Runbook).Write(writer, options);
             if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);

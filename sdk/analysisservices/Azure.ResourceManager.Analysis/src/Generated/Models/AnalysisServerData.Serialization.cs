@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Analysis
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(AnalysisSku);
+            ((IJsonModel<AnalysisResourceSku>)AnalysisSku).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                ((IJsonModel<ServerAdministrators>)AsAdministrators).Write(writer, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                ((IJsonModel<AnalysisGatewayDetails>)GatewayDetails).Write(writer, options);
             }
             if (Optional.IsDefined(IPv4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPv4FirewallSettings);
+                ((IJsonModel<AnalysisIPv4FirewallSettings>)IPv4FirewallSettings).Write(writer, options);
             }
             if (Optional.IsDefined(QueryPoolConnectionMode))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(AnalysisServerSku);
+                ((IJsonModel<AnalysisResourceSku>)AnalysisServerSku).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

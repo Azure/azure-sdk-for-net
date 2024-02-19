@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LibraryResource> array = new List<LibraryResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LibraryResource.DeserializeLibraryResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LibraryResource.DeserializeLibraryResource(item));
+                        }
                     }
                     value = array;
                     continue;

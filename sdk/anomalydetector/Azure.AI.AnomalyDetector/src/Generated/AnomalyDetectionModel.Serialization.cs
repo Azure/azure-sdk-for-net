@@ -36,7 +36,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(ModelInfo))
             {
                 writer.WritePropertyName("modelInfo"u8);
-                writer.WriteObjectValue(ModelInfo);
+                ((IJsonModel<ModelInfo>)ModelInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -155,7 +155,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppSnapshot> array = new List<AppSnapshot>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppSnapshot.DeserializeAppSnapshot(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppSnapshot.DeserializeAppSnapshot(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -187,7 +194,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppSnapshot> array = new List<AppSnapshot>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppSnapshot.DeserializeAppSnapshot(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppSnapshot.DeserializeAppSnapshot(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

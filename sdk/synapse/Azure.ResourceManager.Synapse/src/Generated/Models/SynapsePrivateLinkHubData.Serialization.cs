@@ -74,7 +74,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PrivateEndpointConnectionForPrivateLinkHubBasic>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +202,14 @@ namespace Azure.ResourceManager.Synapse
                             List<PrivateEndpointConnectionForPrivateLinkHubBasic> array = new List<PrivateEndpointConnectionForPrivateLinkHubBasic>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateEndpointConnectionForPrivateLinkHubBasic.DeserializePrivateEndpointConnectionForPrivateLinkHubBasic(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PrivateEndpointConnectionForPrivateLinkHubBasic.DeserializePrivateEndpointConnectionForPrivateLinkHubBasic(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

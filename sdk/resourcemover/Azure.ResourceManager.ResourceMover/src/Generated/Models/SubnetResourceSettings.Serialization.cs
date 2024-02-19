@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (NetworkSecurityGroup != null)
                 {
                     writer.WritePropertyName("networkSecurityGroup"u8);
-                    writer.WriteObjectValue(NetworkSecurityGroup);
+                    ((IJsonModel<NetworkSecurityGroupResourceReferenceInfo>)NetworkSecurityGroup).Write(writer, options);
                 }
                 else
                 {

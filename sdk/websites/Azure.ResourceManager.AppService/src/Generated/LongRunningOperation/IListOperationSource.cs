@@ -23,7 +23,14 @@ namespace Azure.ResourceManager.AppService
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    array.Add(null);
+                }
+                else
+                {
+                    array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                }
             }
             return array;
         }
@@ -34,7 +41,14 @@ namespace Azure.ResourceManager.AppService
             List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    array.Add(null);
+                }
+                else
+                {
+                    array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
+                }
             }
             return array;
         }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds);
+                ((IJsonModel<VirtualNetworkGatewayAutoScaleBounds>)Bounds).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

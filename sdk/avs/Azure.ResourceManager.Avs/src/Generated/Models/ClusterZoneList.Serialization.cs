@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvsClusterZone>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Avs.Models
                     List<AvsClusterZone> array = new List<AvsClusterZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvsClusterZone.DeserializeAvsClusterZone(item));
+                        }
                     }
                     zones = array;
                     continue;

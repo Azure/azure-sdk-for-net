@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DynatraceTagRuleData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     List<DynatraceTagRuleData> array = new List<DynatraceTagRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DynatraceTagRuleData.DeserializeDynatraceTagRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

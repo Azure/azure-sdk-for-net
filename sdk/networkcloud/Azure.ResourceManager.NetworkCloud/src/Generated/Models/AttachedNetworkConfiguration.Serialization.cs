@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in L2Networks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<L2NetworkAttachmentConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in L3Networks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<L3NetworkAttachmentConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in TrunkedNetworks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrunkedNetworkAttachmentConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<L2NetworkAttachmentConfiguration> array = new List<L2NetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L2NetworkAttachmentConfiguration.DeserializeL2NetworkAttachmentConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(L2NetworkAttachmentConfiguration.DeserializeL2NetworkAttachmentConfiguration(item));
+                        }
                     }
                     l2Networks = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<L3NetworkAttachmentConfiguration> array = new List<L3NetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L3NetworkAttachmentConfiguration.DeserializeL3NetworkAttachmentConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(L3NetworkAttachmentConfiguration.DeserializeL3NetworkAttachmentConfiguration(item));
+                        }
                     }
                     l3Networks = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<TrunkedNetworkAttachmentConfiguration> array = new List<TrunkedNetworkAttachmentConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrunkedNetworkAttachmentConfiguration.DeserializeTrunkedNetworkAttachmentConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrunkedNetworkAttachmentConfiguration.DeserializeTrunkedNetworkAttachmentConfiguration(item));
+                        }
                     }
                     trunkedNetworks = array;
                     continue;

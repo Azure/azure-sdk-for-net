@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(CompanyInfo))
             {
                 writer.WritePropertyName("companyInfo"u8);
-                writer.WriteObjectValue(CompanyInfo);
+                ((IJsonModel<CompanyInfo>)CompanyInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

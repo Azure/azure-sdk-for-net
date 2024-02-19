@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                ((IJsonModel<AuthenticationSettingsContract>)AuthenticationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                ((IJsonModel<SubscriptionKeyParameterNamesContract>)SubscriptionKeyParameterNames).Write(writer, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                ((IJsonModel<ApiContactInformation>)Contact).Write(writer, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                ((IJsonModel<ApiLicenseInformation>)License).Write(writer, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue(ApiVersionSet);
+                ((IJsonModel<ApiVersionSetContractDetails>)ApiVersionSet).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

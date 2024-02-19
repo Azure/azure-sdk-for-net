@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ReservationOrderIds))
             {
                 writer.WritePropertyName("reservationOrderIds"u8);
-                writer.WriteObjectValue(ReservationOrderIds);
+                ((IJsonModel<AppliedReservationList>)ReservationOrderIds).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

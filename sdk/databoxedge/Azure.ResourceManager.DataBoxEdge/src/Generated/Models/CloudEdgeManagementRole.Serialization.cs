@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                ((IJsonModel<EdgeProfile>)EdgeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {

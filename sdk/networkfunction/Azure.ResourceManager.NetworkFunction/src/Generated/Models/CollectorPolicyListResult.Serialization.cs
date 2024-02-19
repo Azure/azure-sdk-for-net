@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CollectorPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<CollectorPolicyData> array = new List<CollectorPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CollectorPolicyData.DeserializeCollectorPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

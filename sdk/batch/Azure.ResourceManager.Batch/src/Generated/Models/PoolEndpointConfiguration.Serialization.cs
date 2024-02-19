@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Batch.Models
             writer.WriteStartArray();
             foreach (var item in InboundNatPools)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<BatchInboundNatPool>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchInboundNatPool> array = new List<BatchInboundNatPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchInboundNatPool.DeserializeBatchInboundNatPool(item));
+                        }
                     }
                     inboundNatPools = array;
                     continue;

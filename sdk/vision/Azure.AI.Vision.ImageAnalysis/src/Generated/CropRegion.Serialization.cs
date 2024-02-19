@@ -30,7 +30,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WritePropertyName("aspectRatio"u8);
             writer.WriteNumberValue(AspectRatio);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox);
+            ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

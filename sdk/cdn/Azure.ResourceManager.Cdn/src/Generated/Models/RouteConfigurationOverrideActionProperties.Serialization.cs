@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (OriginGroupOverride != null)
                 {
                     writer.WritePropertyName("originGroupOverride"u8);
-                    writer.WriteObjectValue(OriginGroupOverride);
+                    ((IJsonModel<OriginGroupOverride>)OriginGroupOverride).Write(writer, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(CacheConfiguration))
             {
                 writer.WritePropertyName("cacheConfiguration"u8);
-                writer.WriteObjectValue(CacheConfiguration);
+                ((IJsonModel<CacheConfiguration>)CacheConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

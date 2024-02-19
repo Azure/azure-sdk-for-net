@@ -147,7 +147,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in DisksToIncludeForManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HyperVReplicaAzureDiskDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -445,7 +452,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<HyperVReplicaAzureDiskDetails> array = new List<HyperVReplicaAzureDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HyperVReplicaAzureDiskDetails.DeserializeHyperVReplicaAzureDiskDetails(item));
+                        }
                     }
                     disksToIncludeForManagedDisks = array;
                     continue;

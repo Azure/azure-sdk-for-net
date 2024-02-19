@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    ((IJsonModel<MachineLearningCodeConfiguration>)CodeConfiguration).Write(writer, options);
                 }
                 else
                 {

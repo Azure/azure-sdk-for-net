@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PatternTypeValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ThreatIntelligenceParsedPatternTypeValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<ThreatIntelligenceParsedPatternTypeValue> array = new List<ThreatIntelligenceParsedPatternTypeValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ThreatIntelligenceParsedPatternTypeValue.DeserializeThreatIntelligenceParsedPatternTypeValue(item));
+                        }
                     }
                     patternTypeValues = array;
                     continue;

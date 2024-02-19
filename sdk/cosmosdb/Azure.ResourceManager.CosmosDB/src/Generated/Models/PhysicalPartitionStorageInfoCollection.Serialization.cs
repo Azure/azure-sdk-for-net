@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PhysicalPartitionStorageInfoCollectionValue)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PhysicalPartitionStorageInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionStorageInfo> array = new List<PhysicalPartitionStorageInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PhysicalPartitionStorageInfo.DeserializePhysicalPartitionStorageInfo(item));
+                        }
                     }
                     physicalPartitionStorageInfoCollection = array;
                     continue;

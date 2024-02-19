@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Branches)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChaosExperimentRunBranchStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +128,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentRunBranchStatus> array = new List<ChaosExperimentRunBranchStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentRunBranchStatus.DeserializeChaosExperimentRunBranchStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChaosExperimentRunBranchStatus.DeserializeChaosExperimentRunBranchStatus(item));
+                        }
                     }
                     branches = array;
                     continue;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                ((IJsonModel<AsymmetricEncryptedSecret>)Password).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

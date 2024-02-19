@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<ConnectionMonitorSource>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                ((IJsonModel<ConnectionMonitorDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(AutoStart))
             {
@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectionMonitorEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +87,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TestConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectionMonitorTestConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TestGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectionMonitorTestGroup>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +121,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectionMonitorOutput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -240,7 +268,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorEndpoint> array = new List<ConnectionMonitorEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectionMonitorEndpoint.DeserializeConnectionMonitorEndpoint(item));
+                                }
                             }
                             endpoints = array;
                             continue;
@@ -254,7 +289,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorTestConfiguration> array = new List<ConnectionMonitorTestConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectionMonitorTestConfiguration.DeserializeConnectionMonitorTestConfiguration(item));
+                                }
                             }
                             testConfigurations = array;
                             continue;
@@ -268,7 +310,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorTestGroup> array = new List<ConnectionMonitorTestGroup>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectionMonitorTestGroup.DeserializeConnectionMonitorTestGroup(item));
+                                }
                             }
                             testGroups = array;
                             continue;
@@ -282,7 +331,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectionMonitorOutput> array = new List<ConnectionMonitorOutput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectionMonitorOutput.DeserializeConnectionMonitorOutput(item));
+                                }
                             }
                             outputs = array;
                             continue;

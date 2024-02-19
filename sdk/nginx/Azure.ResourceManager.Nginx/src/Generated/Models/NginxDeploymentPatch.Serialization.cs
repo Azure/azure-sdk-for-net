@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<NginxResourceSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<NginxDeploymentUpdateProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

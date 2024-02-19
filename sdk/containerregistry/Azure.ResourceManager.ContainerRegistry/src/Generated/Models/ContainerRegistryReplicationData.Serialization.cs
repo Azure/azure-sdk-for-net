@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ContainerRegistryResourceStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(IsRegionEndpointEnabled))
             {

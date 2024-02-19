@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(InfraNetworkProfile))
             {
                 writer.WritePropertyName("infraNetworkProfile"u8);
-                writer.WriteObjectValue(InfraNetworkProfile);
+                ((IJsonModel<ProvisionedClusterInfraNetworkProfile>)InfraNetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

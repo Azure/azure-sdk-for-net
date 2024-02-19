@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (options.Format != "W" && Optional.IsDefined(CountDetails))
             {
                 writer.WritePropertyName("countDetails"u8);
-                writer.WriteObjectValue(CountDetails);
+                ((IJsonModel<MessageCountDetails>)CountDetails).Write(writer, options);
             }
             if (Optional.IsDefined(LockDuration))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceBus
             if (Optional.IsDefined(ClientAffineProperties))
             {
                 writer.WritePropertyName("clientAffineProperties"u8);
-                writer.WriteObjectValue(ClientAffineProperties);
+                ((IJsonModel<ServiceBusClientAffineProperties>)ClientAffineProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

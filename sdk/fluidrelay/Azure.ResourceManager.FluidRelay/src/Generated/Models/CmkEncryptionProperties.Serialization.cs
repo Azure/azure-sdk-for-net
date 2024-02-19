@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity);
+                ((IJsonModel<CmkIdentity>)KeyEncryptionKeyIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {

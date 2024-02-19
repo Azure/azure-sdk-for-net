@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TrafficAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(TrafficAnalyticsConfiguration);
+                ((IJsonModel<TrafficAnalyticsConfigurationProperties>)TrafficAnalyticsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

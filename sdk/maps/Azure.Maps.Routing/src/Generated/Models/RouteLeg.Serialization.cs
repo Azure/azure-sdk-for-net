@@ -41,7 +41,14 @@ namespace Azure.Maps.Routing.Models
                     List<LatLongPair> array = new List<LatLongPair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LatLongPair.DeserializeLatLongPair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LatLongPair.DeserializeLatLongPair(item));
+                        }
                     }
                     points = array;
                     continue;

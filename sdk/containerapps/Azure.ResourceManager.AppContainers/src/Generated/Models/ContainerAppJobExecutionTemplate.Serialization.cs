@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Containers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JobExecutionContainer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in InitContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JobExecutionContainer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        }
                     }
                     containers = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<JobExecutionContainer> array = new List<JobExecutionContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JobExecutionContainer.DeserializeJobExecutionContainer(item));
+                        }
                     }
                     initContainers = array;
                     continue;

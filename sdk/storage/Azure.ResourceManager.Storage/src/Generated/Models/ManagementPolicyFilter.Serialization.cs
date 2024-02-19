@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in BlobIndexMatch)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagementPolicyTagFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagementPolicyTagFilter.DeserializeManagementPolicyTagFilter(item));
+                        }
                     }
                     blobIndexMatch = array;
                     continue;

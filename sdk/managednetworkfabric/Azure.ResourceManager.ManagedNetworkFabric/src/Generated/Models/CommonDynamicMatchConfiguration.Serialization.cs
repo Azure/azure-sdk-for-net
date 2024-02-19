@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MatchConfigurationIPGroupProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in VlanGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VlanGroupProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in PortGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PortGroupProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<MatchConfigurationIPGroupProperties> array = new List<MatchConfigurationIPGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MatchConfigurationIPGroupProperties.DeserializeMatchConfigurationIPGroupProperties(item));
+                        }
                     }
                     ipGroups = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<VlanGroupProperties> array = new List<VlanGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VlanGroupProperties.DeserializeVlanGroupProperties(item));
+                        }
                     }
                     vlanGroups = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<PortGroupProperties> array = new List<PortGroupProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PortGroupProperties.DeserializePortGroupProperties(item));
+                        }
                     }
                     portGroups = array;
                     continue;

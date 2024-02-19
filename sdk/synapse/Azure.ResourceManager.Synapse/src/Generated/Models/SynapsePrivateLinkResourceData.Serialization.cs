@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SynapsePrivateLinkResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

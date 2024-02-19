@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Keys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationKey> array = new List<AutomationKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationKey.DeserializeAutomationKey(item));
+                        }
                     }
                     keys = array;
                     continue;

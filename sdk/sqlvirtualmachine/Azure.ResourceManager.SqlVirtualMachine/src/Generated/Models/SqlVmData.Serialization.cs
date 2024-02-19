@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainCredentials))
             {
                 writer.WritePropertyName("wsfcDomainCredentials"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainCredentials);
+                ((IJsonModel<WindowsServerFailoverClusterDomainCredentials>)WindowsServerFailoverClusterDomainCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(WindowsServerFailoverClusterStaticIP))
             {
@@ -117,32 +117,32 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AutoPatchingSettings))
             {
                 writer.WritePropertyName("autoPatchingSettings"u8);
-                writer.WriteObjectValue(AutoPatchingSettings);
+                ((IJsonModel<SqlVmAutoPatchingSettings>)AutoPatchingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AutoBackupSettings))
             {
                 writer.WritePropertyName("autoBackupSettings"u8);
-                writer.WriteObjectValue(AutoBackupSettings);
+                ((IJsonModel<SqlVmAutoBackupSettings>)AutoBackupSettings).Write(writer, options);
             }
             if (Optional.IsDefined(KeyVaultCredentialSettings))
             {
                 writer.WritePropertyName("keyVaultCredentialSettings"u8);
-                writer.WriteObjectValue(KeyVaultCredentialSettings);
+                ((IJsonModel<SqlVmKeyVaultCredentialSettings>)KeyVaultCredentialSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ServerConfigurationsManagementSettings))
             {
                 writer.WritePropertyName("serverConfigurationsManagementSettings"u8);
-                writer.WriteObjectValue(ServerConfigurationsManagementSettings);
+                ((IJsonModel<SqlServerConfigurationsManagementSettings>)ServerConfigurationsManagementSettings).Write(writer, options);
             }
             if (Optional.IsDefined(StorageConfigurationSettings))
             {
                 writer.WritePropertyName("storageConfigurationSettings"u8);
-                writer.WriteObjectValue(StorageConfigurationSettings);
+                ((IJsonModel<SqlVmStorageConfigurationSettings>)StorageConfigurationSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AssessmentSettings))
             {
                 writer.WritePropertyName("assessmentSettings"u8);
-                writer.WriteObjectValue(AssessmentSettings);
+                ((IJsonModel<SqlVmAssessmentSettings>)AssessmentSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

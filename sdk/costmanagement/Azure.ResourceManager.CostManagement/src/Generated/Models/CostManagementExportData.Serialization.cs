@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(DeliveryInfo))
             {
                 writer.WritePropertyName("deliveryInfo"u8);
-                writer.WriteObjectValue(DeliveryInfo);
+                ((IJsonModel<ExportDeliveryInfo>)DeliveryInfo).Write(writer, options);
             }
             if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
-                writer.WriteObjectValue(Definition);
+                ((IJsonModel<ExportDefinition>)Definition).Write(writer, options);
             }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                ((IJsonModel<ExportExecutionListResult>)RunHistory).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                ((IJsonModel<ExportSchedule>)Schedule).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

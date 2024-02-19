@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.ApiManagement
                         List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.ApiManagement
                         List<NetworkStatusContractWithLocation> array = new List<NetworkStatusContractWithLocation>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

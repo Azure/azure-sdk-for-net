@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<NginxNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue(Logging);
+                ((IJsonModel<NginxLogging>)Logging).Write(writer, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue(ScalingProperties);
+                ((IJsonModel<NginxDeploymentScalingProperties>)ScalingProperties).Write(writer, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue(UserProfile);
+                ((IJsonModel<NginxDeploymentUserProfile>)UserProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -50,7 +50,14 @@ namespace Azure.Maps.Rendering
                     List<ErrorDetail> array = new List<ErrorDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeErrorDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeErrorDetail(item));
+                        }
                     }
                     details = array;
                     continue;
@@ -64,7 +71,14 @@ namespace Azure.Maps.Rendering
                     List<ErrorAdditionalInfo> array = new List<ErrorAdditionalInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ErrorAdditionalInfo.DeserializeErrorAdditionalInfo(item));
+                        }
                     }
                     additionalInfo = array;
                     continue;

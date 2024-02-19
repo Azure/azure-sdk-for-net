@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in IngestionSources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IngestionSourcesPropertiesFormat>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                     List<IngestionSourcesPropertiesFormat> array = new List<IngestionSourcesPropertiesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IngestionSourcesPropertiesFormat.DeserializeIngestionSourcesPropertiesFormat(item));
+                        }
                     }
                     ingestionSources = array;
                     continue;

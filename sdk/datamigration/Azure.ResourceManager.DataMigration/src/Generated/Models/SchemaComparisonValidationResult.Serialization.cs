@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SchemaDifferences))
             {
                 writer.WritePropertyName("schemaDifferences"u8);
-                writer.WriteObjectValue(SchemaDifferences);
+                ((IJsonModel<SchemaComparisonValidationResultType>)SchemaDifferences).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors);
+                ((IJsonModel<ValidationError>)ValidationErrors).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
             {

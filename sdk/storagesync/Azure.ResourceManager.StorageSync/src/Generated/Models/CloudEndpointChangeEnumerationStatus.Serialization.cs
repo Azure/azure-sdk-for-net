@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(LastEnumerationStatus))
             {
                 writer.WritePropertyName("lastEnumerationStatus"u8);
-                writer.WriteObjectValue(LastEnumerationStatus);
+                ((IJsonModel<CloudEndpointLastChangeEnumerationStatus>)LastEnumerationStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Activity))
             {
                 writer.WritePropertyName("activity"u8);
-                writer.WriteObjectValue(Activity);
+                ((IJsonModel<CloudEndpointChangeEnumerationActivity>)Activity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

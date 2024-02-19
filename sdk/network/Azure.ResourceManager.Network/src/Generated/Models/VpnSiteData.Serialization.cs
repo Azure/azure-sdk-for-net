@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue(DeviceProperties);
+                ((IJsonModel<DeviceProperties>)DeviceProperties).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                ((IJsonModel<AddressSpace>)AddressSpace).Write(writer, options);
             }
             if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties);
+                ((IJsonModel<BgpSettings>)BgpProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -113,14 +113,21 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnSiteLinks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VpnSiteLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy);
+                ((IJsonModel<O365PolicyProperties>)O365Policy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -318,7 +325,14 @@ namespace Azure.ResourceManager.Network
                             List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                                }
                             }
                             vpnSiteLinks = array;
                             continue;

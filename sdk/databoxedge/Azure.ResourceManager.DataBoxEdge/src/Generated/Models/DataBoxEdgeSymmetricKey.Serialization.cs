@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                ((IJsonModel<AsymmetricEncryptedSecret>)ConnectionString).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

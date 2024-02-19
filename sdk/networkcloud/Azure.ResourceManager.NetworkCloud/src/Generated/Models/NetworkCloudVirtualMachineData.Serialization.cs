@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NetworkCloud
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(BootMethod.Value.ToString());
             }
             writer.WritePropertyName("cloudServicesNetworkAttachment"u8);
-            writer.WriteObjectValue(CloudServicesNetworkAttachment);
+            ((IJsonModel<NetworkAttachment>)CloudServicesNetworkAttachment).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
@@ -114,7 +114,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in NetworkAttachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkAttachment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in PlacementHints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualMachinePlacementHint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,12 +163,19 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in SshPublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkCloudSshPublicKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("storageProfile"u8);
-            writer.WriteObjectValue(StorageProfile);
+            ((IJsonModel<NetworkCloudStorageProfile>)StorageProfile).Write(writer, options);
             if (Optional.IsDefined(UserData))
             {
                 writer.WritePropertyName("userData"u8);
@@ -175,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials);
+                ((IJsonModel<ImageRepositoryCredentials>)VmImageRepositoryCredentials).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Volumes))
             {
@@ -183,12 +204,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -407,7 +430,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkAttachment> array = new List<NetworkAttachment>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkAttachment.DeserializeNetworkAttachment(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkAttachment.DeserializeNetworkAttachment(item));
+                                }
                             }
                             networkAttachments = array;
                             continue;
@@ -426,7 +456,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<VirtualMachinePlacementHint> array = new List<VirtualMachinePlacementHint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachinePlacementHint.DeserializeVirtualMachinePlacementHint(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualMachinePlacementHint.DeserializeVirtualMachinePlacementHint(item));
+                                }
                             }
                             placementHints = array;
                             continue;
@@ -458,7 +495,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
+                                }
                             }
                             sshPublicKeys = array;
                             continue;

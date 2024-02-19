@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in MonthlyOccurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFactoryRecurrenceScheduleOccurrence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -185,7 +192,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryRecurrenceScheduleOccurrence> array = new List<DataFactoryRecurrenceScheduleOccurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryRecurrenceScheduleOccurrence.DeserializeDataFactoryRecurrenceScheduleOccurrence(item));
+                        }
                     }
                     monthlyOccurrences = array;
                     continue;

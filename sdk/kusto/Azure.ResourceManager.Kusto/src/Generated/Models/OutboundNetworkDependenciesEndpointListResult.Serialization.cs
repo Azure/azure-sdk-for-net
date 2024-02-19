@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<OutboundNetworkDependenciesEndpoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Kusto.Models
                     List<OutboundNetworkDependenciesEndpoint> array = new List<OutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutboundNetworkDependenciesEndpoint.DeserializeOutboundNetworkDependenciesEndpoint(item));
+                        }
                     }
                     value = array;
                     continue;

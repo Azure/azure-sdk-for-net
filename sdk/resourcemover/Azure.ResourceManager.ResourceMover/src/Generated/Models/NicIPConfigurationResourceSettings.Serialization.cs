@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                writer.WriteObjectValue(Subnet);
+                ((IJsonModel<SubnetReferenceInfo>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(IsPrimary))
             {
@@ -58,7 +58,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerBackendAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LoadBalancerBackendAddressPoolReferenceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -68,14 +75,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LoadBalancerNatRuleReferenceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PublicIP))
             {
                 writer.WritePropertyName("publicIp"u8);
-                writer.WriteObjectValue(PublicIP);
+                ((IJsonModel<PublicIPReferenceInfo>)PublicIP).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -173,7 +187,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerBackendAddressPoolReferenceInfo> array = new List<LoadBalancerBackendAddressPoolReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LoadBalancerBackendAddressPoolReferenceInfo.DeserializeLoadBalancerBackendAddressPoolReferenceInfo(item));
+                        }
                     }
                     loadBalancerBackendAddressPools = array;
                     continue;
@@ -187,7 +208,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<LoadBalancerNatRuleReferenceInfo> array = new List<LoadBalancerNatRuleReferenceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LoadBalancerNatRuleReferenceInfo.DeserializeLoadBalancerNatRuleReferenceInfo(item));
+                        }
                     }
                     loadBalancerNatRules = array;
                     continue;

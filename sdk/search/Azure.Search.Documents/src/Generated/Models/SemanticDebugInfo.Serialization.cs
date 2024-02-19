@@ -43,7 +43,14 @@ namespace Azure.Search.Documents.Models
                     List<QueryResultDocumentSemanticField> array = new List<QueryResultDocumentSemanticField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item));
+                        }
                     }
                     contentFields = array;
                     continue;
@@ -57,7 +64,14 @@ namespace Azure.Search.Documents.Models
                     List<QueryResultDocumentSemanticField> array = new List<QueryResultDocumentSemanticField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QueryResultDocumentSemanticField.DeserializeQueryResultDocumentSemanticField(item));
+                        }
                     }
                     keywordFields = array;
                     continue;

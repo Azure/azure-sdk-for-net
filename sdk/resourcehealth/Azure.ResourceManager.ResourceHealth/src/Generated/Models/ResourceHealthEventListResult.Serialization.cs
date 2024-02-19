@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ResourceHealthEventData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     List<ResourceHealthEventData> array = new List<ResourceHealthEventData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceHealthEventData.DeserializeResourceHealthEventData(item));
+                        }
                     }
                     value = array;
                     continue;

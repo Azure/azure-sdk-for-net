@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WritePropertyName("fhirServiceResourceId"u8);
             writer.WriteStringValue(FhirServiceResourceId);
             writer.WritePropertyName("fhirMapping"u8);
-            writer.WriteObjectValue(FhirMapping);
+            ((IJsonModel<HealthcareApisIotMappingProperties>)FhirMapping).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

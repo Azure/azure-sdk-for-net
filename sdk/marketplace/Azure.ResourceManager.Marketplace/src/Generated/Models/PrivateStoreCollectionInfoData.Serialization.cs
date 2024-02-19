@@ -106,7 +106,14 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in AppliedRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MarketplaceRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -287,7 +294,14 @@ namespace Azure.ResourceManager.Marketplace
                             List<MarketplaceRule> array = new List<MarketplaceRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MarketplaceRule.DeserializeMarketplaceRule(item));
+                                }
                             }
                             appliedRules = array;
                             continue;

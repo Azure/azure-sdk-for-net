@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(DevicesMetrics))
             {
                 writer.WritePropertyName("devicesMetrics"u8);
-                writer.WriteObjectValue(DevicesMetrics);
+                ((IJsonModel<IotSeverityMetrics>)DevicesMetrics).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

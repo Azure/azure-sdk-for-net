@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                ((IJsonModel<DevTestLabGalleryImageReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(Icon))
             {

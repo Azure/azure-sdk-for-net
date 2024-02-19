@@ -33,7 +33,14 @@ namespace Azure.Security.KeyVault.Administration.Models
                     List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item));
+                        }
                     }
                     value = array;
                     continue;
