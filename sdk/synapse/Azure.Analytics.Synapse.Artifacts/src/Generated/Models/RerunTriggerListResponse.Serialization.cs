@@ -23,7 +23,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -44,7 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<RerunTriggerResource> array = new List<RerunTriggerResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RerunTriggerResource.DeserializeRerunTriggerResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RerunTriggerResource.DeserializeRerunTriggerResource(item));
+                        }
                     }
                     value = array;
                     continue;

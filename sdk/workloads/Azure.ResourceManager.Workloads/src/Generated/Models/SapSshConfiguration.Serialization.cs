@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in PublicKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapSshPublicKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSshPublicKey> array = new List<SapSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item));
+                        }
                     }
                     publicKeys = array;
                     continue;

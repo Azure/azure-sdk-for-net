@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService
                 if (GitHubActionConfiguration != null)
                 {
                     writer.WritePropertyName("gitHubActionConfiguration"u8);
-                    writer.WriteObjectValue(GitHubActionConfiguration);
+                    ((IJsonModel<GitHubActionConfiguration>)GitHubActionConfiguration).Write(writer, options);
                 }
                 else
                 {

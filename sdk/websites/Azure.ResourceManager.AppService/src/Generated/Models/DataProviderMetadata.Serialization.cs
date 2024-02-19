@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataProviderKeyValuePair>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DataProviderKeyValuePair> array = new List<DataProviderKeyValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProviderKeyValuePair.DeserializeDataProviderKeyValuePair(item));
+                        }
                     }
                     propertyBag = array;
                     continue;

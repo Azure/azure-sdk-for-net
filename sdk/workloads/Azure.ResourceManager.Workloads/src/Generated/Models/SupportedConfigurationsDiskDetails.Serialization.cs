@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SapDiskSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(SizeInGB))
             {

@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkedServiceResource> array = new List<LinkedServiceResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinkedServiceResource.DeserializeLinkedServiceResource(item));
+                        }
                     }
                     value = array;
                     continue;

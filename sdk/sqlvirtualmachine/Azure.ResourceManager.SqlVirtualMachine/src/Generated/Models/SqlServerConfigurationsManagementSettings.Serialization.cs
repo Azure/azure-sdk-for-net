@@ -29,27 +29,27 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
-                writer.WriteObjectValue(SqlConnectivityUpdateSettings);
+                ((IJsonModel<SqlConnectivityUpdateSettings>)SqlConnectivityUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
-                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
+                ((IJsonModel<SqlWorkloadTypeUpdateSettings>)SqlWorkloadTypeUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
-                writer.WriteObjectValue(SqlStorageUpdateSettings);
+                ((IJsonModel<SqlStorageUpdateSettings>)SqlStorageUpdateSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
-                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
+                ((IJsonModel<AdditionalFeaturesServerConfigurations>)AdditionalFeaturesServerConfigurations).Write(writer, options);
             }
             if (Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
-                writer.WriteObjectValue(SqlInstanceSettings);
+                ((IJsonModel<SqlInstanceSettings>)SqlInstanceSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

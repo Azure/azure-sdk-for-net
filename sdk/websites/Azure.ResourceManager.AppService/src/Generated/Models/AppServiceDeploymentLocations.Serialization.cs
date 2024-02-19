@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceGeoRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceEnvironmentProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in HostingEnvironmentDeploymentInfos)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HostingEnvironmentDeploymentInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceGeoRegion> array = new List<AppServiceGeoRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppServiceGeoRegion.DeserializeAppServiceGeoRegion(item));
+                        }
                     }
                     locations = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceEnvironmentProperties> array = new List<AppServiceEnvironmentProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppServiceEnvironmentProperties.DeserializeAppServiceEnvironmentProperties(item));
+                        }
                     }
                     hostingEnvironments = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<HostingEnvironmentDeploymentInfo> array = new List<HostingEnvironmentDeploymentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HostingEnvironmentDeploymentInfo.DeserializeHostingEnvironmentDeploymentInfo(item));
+                        }
                     }
                     hostingEnvironmentDeploymentInfos = array;
                     continue;

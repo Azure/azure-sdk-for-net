@@ -83,17 +83,19 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in Headers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WriteStringValue(item0);
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WriteStringValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndObject();
             }

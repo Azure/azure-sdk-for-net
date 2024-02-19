@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseGeoBackupPolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseGeoBackupPolicyData> array = new List<SynapseGeoBackupPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseGeoBackupPolicyData.DeserializeSynapseGeoBackupPolicyData(item));
+                        }
                     }
                     value = array;
                     continue;

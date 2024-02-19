@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseDatabasePrincipalAssignmentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseDatabasePrincipalAssignmentData> array = new List<SynapseDatabasePrincipalAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseDatabasePrincipalAssignmentData.DeserializeSynapseDatabasePrincipalAssignmentData(item));
+                        }
                     }
                     value = array;
                     continue;

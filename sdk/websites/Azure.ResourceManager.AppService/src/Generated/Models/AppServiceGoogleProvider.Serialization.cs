@@ -34,17 +34,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                ((IJsonModel<ClientRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                ((IJsonModel<LoginScopes>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation);
+                ((IJsonModel<AllowedAudiencesValidation>)Validation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

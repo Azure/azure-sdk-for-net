@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<UserAssignedServiceIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W")
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(ProviderSettings))
             {
                 writer.WritePropertyName("providerSettings"u8);
-                writer.WriteObjectValue(ProviderSettings);
+                ((IJsonModel<ProviderSpecificProperties>)ProviderSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

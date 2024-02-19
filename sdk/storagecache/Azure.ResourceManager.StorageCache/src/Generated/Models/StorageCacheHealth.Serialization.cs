@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OutstandingCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +121,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<OutstandingCondition> array = new List<OutstandingCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OutstandingCondition.DeserializeOutstandingCondition(item));
+                        }
                     }
                     conditions = array;
                     continue;

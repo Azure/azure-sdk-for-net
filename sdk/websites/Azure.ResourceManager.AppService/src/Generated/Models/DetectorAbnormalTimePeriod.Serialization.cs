@@ -57,17 +57,26 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetaData)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
+                        {
+                            if (item0 != null)
+                            {
+                                ((IJsonModel<AppServiceNameValuePair>)item0).Write(writer, options);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndArray();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        writer.WriteObjectValue(item0);
-                    }
-                    writer.WriteEndArray();
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +91,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DiagnosticSolution>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +207,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                if (item0.ValueKind == JsonValueKind.Null)
+                                {
+                                    array0.Add(null);
+                                }
+                                else
+                                {
+                                    array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                }
                             }
                             array.Add(array0);
                         }
@@ -217,7 +240,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticSolution> array = new List<DiagnosticSolution>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DiagnosticSolution.DeserializeDiagnosticSolution(item));
+                        }
                     }
                     solutions = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.AI.Translation.Document
                 writer.WriteStartArray();
                 foreach (var item in Glossaries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

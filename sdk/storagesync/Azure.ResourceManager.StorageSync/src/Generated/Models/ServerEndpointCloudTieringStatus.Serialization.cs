@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.StorageSync.Models
             if (options.Format != "W" && Optional.IsDefined(SpaceSavings))
             {
                 writer.WritePropertyName("spaceSavings"u8);
-                writer.WriteObjectValue(SpaceSavings);
+                ((IJsonModel<CloudTieringSpaceSavings>)SpaceSavings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CachePerformance))
             {
                 writer.WritePropertyName("cachePerformance"u8);
-                writer.WriteObjectValue(CachePerformance);
+                ((IJsonModel<CloudTieringCachePerformance>)CachePerformance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FilesNotTiering))
             {
                 writer.WritePropertyName("filesNotTiering"u8);
-                writer.WriteObjectValue(FilesNotTiering);
+                ((IJsonModel<CloudTieringFilesNotTiering>)FilesNotTiering).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VolumeFreeSpacePolicyStatus))
             {
                 writer.WritePropertyName("volumeFreeSpacePolicyStatus"u8);
-                writer.WriteObjectValue(VolumeFreeSpacePolicyStatus);
+                ((IJsonModel<CloudTieringVolumeFreeSpacePolicyStatus>)VolumeFreeSpacePolicyStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DatePolicyStatus))
             {
                 writer.WritePropertyName("datePolicyStatus"u8);
-                writer.WriteObjectValue(DatePolicyStatus);
+                ((IJsonModel<CloudTieringDatePolicyStatus>)DatePolicyStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LowDiskMode))
             {
                 writer.WritePropertyName("lowDiskMode"u8);
-                writer.WriteObjectValue(LowDiskMode);
+                ((IJsonModel<CloudTieringLowDiskMode>)LowDiskMode).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

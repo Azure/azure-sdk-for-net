@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(WindowsServerFailoverClusterDomainProfile))
             {
                 writer.WritePropertyName("wsfcDomainProfile"u8);
-                writer.WriteObjectValue(WindowsServerFailoverClusterDomainProfile);
+                ((IJsonModel<WindowsServerFailoverClusterDomainProfile>)WindowsServerFailoverClusterDomainProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

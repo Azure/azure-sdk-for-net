@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<StoragePoolOutboundEnvironment>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<StoragePoolOutboundEnvironment> array = new List<StoragePoolOutboundEnvironment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(item));
+                        }
                     }
                     value = array;
                     continue;

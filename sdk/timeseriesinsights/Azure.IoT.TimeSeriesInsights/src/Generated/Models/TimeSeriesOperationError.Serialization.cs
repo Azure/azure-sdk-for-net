@@ -61,7 +61,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<TimeSeriesOperationErrorDetails> array = new List<TimeSeriesOperationErrorDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesOperationErrorDetails.DeserializeTimeSeriesOperationErrorDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TimeSeriesOperationErrorDetails.DeserializeTimeSeriesOperationErrorDetails(item));
+                        }
                     }
                     details = array;
                     continue;

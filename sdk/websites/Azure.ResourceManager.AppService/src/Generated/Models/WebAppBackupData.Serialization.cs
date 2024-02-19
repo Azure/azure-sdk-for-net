@@ -101,7 +101,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in Databases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceDatabaseBackupSetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -299,7 +306,14 @@ namespace Azure.ResourceManager.AppService
                             List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
+                                }
                             }
                             databases = array;
                             continue;

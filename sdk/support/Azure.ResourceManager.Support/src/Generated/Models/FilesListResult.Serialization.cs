@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SupportFileDetailData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportFileDetailData> array = new List<SupportFileDetailData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportFileDetailData.DeserializeSupportFileDetailData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SupportFileDetailData.DeserializeSupportFileDetailData(item));
+                        }
                     }
                     value = array;
                     continue;

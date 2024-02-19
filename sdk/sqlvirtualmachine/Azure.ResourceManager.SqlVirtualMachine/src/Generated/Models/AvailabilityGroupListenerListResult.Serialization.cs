@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailabilityGroupListenerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<AvailabilityGroupListenerData> array = new List<AvailabilityGroupListenerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailabilityGroupListenerData.DeserializeAvailabilityGroupListenerData(item));
+                        }
                     }
                     value = array;
                     continue;

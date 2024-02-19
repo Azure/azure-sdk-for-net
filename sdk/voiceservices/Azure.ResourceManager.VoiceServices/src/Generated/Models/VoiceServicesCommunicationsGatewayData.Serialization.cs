@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.VoiceServices
                 writer.WriteStartArray();
                 foreach (var item in ServiceLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VoiceServicesServiceRegionProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -296,7 +303,14 @@ namespace Azure.ResourceManager.VoiceServices
                             List<VoiceServicesServiceRegionProperties> array = new List<VoiceServicesServiceRegionProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VoiceServicesServiceRegionProperties.DeserializeVoiceServicesServiceRegionProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VoiceServicesServiceRegionProperties.DeserializeVoiceServicesServiceRegionProperties(item));
+                                }
                             }
                             serviceLocations = array;
                             continue;

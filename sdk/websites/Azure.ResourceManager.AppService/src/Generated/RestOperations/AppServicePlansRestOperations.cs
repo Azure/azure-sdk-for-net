@@ -553,7 +553,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -587,7 +594,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceSkuCapability> array = new List<AppServiceSkuCapability>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceSkuCapability.DeserializeAppServiceSkuCapability(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1496,7 +1510,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1530,7 +1551,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkData> array = new List<AppServiceVirtualNetworkData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkData.DeserializeAppServiceVirtualNetworkData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1869,7 +1897,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1905,7 +1940,14 @@ namespace Azure.ResourceManager.AppService
                         List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(AppServiceVirtualNetworkRoute.DeserializeAppServiceVirtualNetworkRoute(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

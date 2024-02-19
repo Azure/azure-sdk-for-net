@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<StorageCacheUsageName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

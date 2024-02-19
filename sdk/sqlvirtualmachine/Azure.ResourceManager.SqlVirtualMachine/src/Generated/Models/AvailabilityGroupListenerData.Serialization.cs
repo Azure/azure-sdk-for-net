@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancerConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailabilityGroupListenerLoadBalancerConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 writer.WriteStartArray();
                 foreach (var item in MultiSubnetIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MultiSubnetIPConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +107,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             if (Optional.IsDefined(AvailabilityGroupConfiguration))
             {
                 writer.WritePropertyName("availabilityGroupConfiguration"u8);
-                writer.WriteObjectValue(AvailabilityGroupConfiguration);
+                ((IJsonModel<AvailabilityGroupConfiguration>)AvailabilityGroupConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -201,7 +215,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<AvailabilityGroupListenerLoadBalancerConfiguration> array = new List<AvailabilityGroupListenerLoadBalancerConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AvailabilityGroupListenerLoadBalancerConfiguration.DeserializeAvailabilityGroupListenerLoadBalancerConfiguration(item));
+                                }
                             }
                             loadBalancerConfigurations = array;
                             continue;
@@ -215,7 +236,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                             List<MultiSubnetIPConfiguration> array = new List<MultiSubnetIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MultiSubnetIPConfiguration.DeserializeMultiSubnetIPConfiguration(item));
+                                }
                             }
                             multiSubnetIPConfigurations = array;
                             continue;

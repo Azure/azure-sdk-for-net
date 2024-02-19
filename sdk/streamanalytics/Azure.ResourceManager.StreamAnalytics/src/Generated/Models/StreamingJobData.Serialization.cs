@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StreamAnalyticsSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(JobId))
             {
@@ -151,14 +151,21 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobInputData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Transformation))
             {
                 writer.WritePropertyName("transformation"u8);
-                writer.WriteObjectValue(Transformation);
+                ((IJsonModel<StreamingJobTransformationData>)Transformation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -166,7 +173,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobOutputData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -176,7 +190,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobFunctionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +211,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 if (JobStorageAccount != null)
                 {
                     writer.WritePropertyName("jobStorageAccount"u8);
-                    writer.WriteObjectValue(JobStorageAccount);
+                    ((IJsonModel<StreamingJobStorageAccount>)JobStorageAccount).Write(writer, options);
                 }
                 else
                 {
@@ -205,14 +226,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Externals))
             {
                 writer.WritePropertyName("externals"u8);
-                writer.WriteObjectValue(Externals);
+                ((IJsonModel<StreamingJobExternal>)Externals).Write(writer, options);
             }
             if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue(Cluster);
+                    ((IJsonModel<ClusterInfo>)Cluster).Write(writer, options);
                 }
                 else
                 {
@@ -491,7 +512,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobInputData> array = new List<StreamingJobInputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StreamingJobInputData.DeserializeStreamingJobInputData(item));
+                                }
                             }
                             inputs = array;
                             continue;
@@ -514,7 +542,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobOutputData> array = new List<StreamingJobOutputData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StreamingJobOutputData.DeserializeStreamingJobOutputData(item));
+                                }
                             }
                             outputs = array;
                             continue;
@@ -528,7 +563,14 @@ namespace Azure.ResourceManager.StreamAnalytics
                             List<StreamingJobFunctionData> array = new List<StreamingJobFunctionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionData.DeserializeStreamingJobFunctionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StreamingJobFunctionData.DeserializeStreamingJobFunctionData(item));
+                                }
                             }
                             functions = array;
                             continue;

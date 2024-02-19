@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CatalogInfo))
             {
                 writer.WritePropertyName("catalogInfo"u8);
-                writer.WriteObjectValue(CatalogInfo);
+                ((IJsonModel<SynapseIntegrationRuntimeSsisCatalogInfo>)CatalogInfo).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(CustomSetupScriptProperties))
             {
                 writer.WritePropertyName("customSetupScriptProperties"u8);
-                writer.WriteObjectValue(CustomSetupScriptProperties);
+                ((IJsonModel<SynapseIntegrationRuntimeCustomSetupScriptProperties>)CustomSetupScriptProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DataProxyProperties))
             {
                 writer.WritePropertyName("dataProxyProperties"u8);
-                writer.WriteObjectValue(DataProxyProperties);
+                ((IJsonModel<SynapseIntegrationRuntimeDataProxyProperties>)DataProxyProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Edition))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseCustomSetupBase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +167,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseCustomSetupBase> array = new List<SynapseCustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseCustomSetupBase.DeserializeSynapseCustomSetupBase(item));
+                        }
                     }
                     expressCustomSetupProperties = array;
                     continue;

@@ -100,7 +100,14 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     List<SparkJob> array = new List<SparkJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeSparkJob(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeSparkJob(item));
+                        }
                     }
                     pipeline = array;
                     continue;

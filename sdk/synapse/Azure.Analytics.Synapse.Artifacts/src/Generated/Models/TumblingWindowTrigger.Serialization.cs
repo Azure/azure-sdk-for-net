@@ -34,12 +34,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +76,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -220,7 +229,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<DependencyReference> array = new List<DependencyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DependencyReference.DeserializeDependencyReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DependencyReference.DeserializeDependencyReference(item));
+                                }
                             }
                             dependsOn = array;
                             continue;

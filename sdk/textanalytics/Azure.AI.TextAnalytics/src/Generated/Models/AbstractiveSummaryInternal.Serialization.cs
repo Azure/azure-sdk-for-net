@@ -24,7 +24,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +62,14 @@ namespace Azure.AI.TextAnalytics.Models
                     List<SummaryContextInternal> array = new List<SummaryContextInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SummaryContextInternal.DeserializeSummaryContextInternal(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SummaryContextInternal.DeserializeSummaryContextInternal(item));
+                        }
                     }
                     contexts = array;
                     continue;

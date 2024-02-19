@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseAadOnlyAuthenticationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseAadOnlyAuthenticationData> array = new List<SynapseAadOnlyAuthenticationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseAadOnlyAuthenticationData.DeserializeSynapseAadOnlyAuthenticationData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageAccountLocalUserData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<StorageAccountLocalUserData> array = new List<StorageAccountLocalUserData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageAccountLocalUserData.DeserializeStorageAccountLocalUserData(item));
+                        }
                     }
                     value = array;
                     continue;

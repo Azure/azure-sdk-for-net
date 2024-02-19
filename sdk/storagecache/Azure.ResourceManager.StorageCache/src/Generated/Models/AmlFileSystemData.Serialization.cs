@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StorageCacheSkuName>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health);
+                ((IJsonModel<AmlFileSystemHealth>)Health).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(ClientInfo))
             {
                 writer.WritePropertyName("clientInfo"u8);
-                writer.WriteObjectValue(ClientInfo);
+                ((IJsonModel<AmlFileSystemClientInfo>)ClientInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ThroughputProvisionedMBps))
             {
@@ -116,22 +116,22 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                ((IJsonModel<AmlFileSystemEncryptionSettings>)EncryptionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                ((IJsonModel<AmlFileSystemPropertiesMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(Hsm))
             {
                 writer.WritePropertyName("hsm"u8);
-                writer.WriteObjectValue(Hsm);
+                ((IJsonModel<AmlFileSystemPropertiesHsm>)Hsm).Write(writer, options);
             }
             if (Optional.IsDefined(RootSquashSettings))
             {
                 writer.WritePropertyName("rootSquashSettings"u8);
-                writer.WriteObjectValue(RootSquashSettings);
+                ((IJsonModel<AmlFileSystemRootSquashSettings>)RootSquashSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

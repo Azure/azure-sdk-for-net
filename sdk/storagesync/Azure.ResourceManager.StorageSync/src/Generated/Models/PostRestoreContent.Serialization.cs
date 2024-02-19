@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreFileSpec)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestoreFileSpec>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +180,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<RestoreFileSpec> array = new List<RestoreFileSpec>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.RestoreFileSpec.DeserializeRestoreFileSpec(item));
+                        }
                     }
                     restoreFileSpec = array;
                     continue;

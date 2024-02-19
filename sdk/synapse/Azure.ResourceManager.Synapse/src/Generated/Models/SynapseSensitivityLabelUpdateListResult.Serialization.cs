@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseSensitivityLabelUpdate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseSensitivityLabelUpdate> array = new List<SynapseSensitivityLabelUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseSensitivityLabelUpdate.DeserializeSynapseSensitivityLabelUpdate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseSensitivityLabelUpdate.DeserializeSynapseSensitivityLabelUpdate(item));
+                        }
                     }
                     operations = array;
                     continue;

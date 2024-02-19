@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Conditions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingJobDiagnosticCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobDiagnosticCondition> array = new List<StreamingJobDiagnosticCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingJobDiagnosticCondition.DeserializeStreamingJobDiagnosticCondition(item));
+                        }
                     }
                     conditions = array;
                     continue;

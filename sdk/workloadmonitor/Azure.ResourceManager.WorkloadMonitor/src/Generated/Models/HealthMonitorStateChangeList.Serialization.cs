@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthMonitorStateChangeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
                     List<HealthMonitorStateChangeData> array = new List<HealthMonitorStateChangeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(item));
+                        }
                     }
                     value = array;
                     continue;

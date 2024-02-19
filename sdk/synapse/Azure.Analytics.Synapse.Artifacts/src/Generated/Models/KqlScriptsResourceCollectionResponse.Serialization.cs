@@ -35,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<KqlScriptResource> array = new List<KqlScriptResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KqlScriptResource.DeserializeKqlScriptResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KqlScriptResource.DeserializeKqlScriptResource(item));
+                        }
                     }
                     value = array;
                     continue;

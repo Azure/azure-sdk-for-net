@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.Storage.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("actions"u8);
-            writer.WriteObjectValue(Actions);
+            ((IJsonModel<ManagementPolicyAction>)Actions).Write(writer, options);
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
-                writer.WriteObjectValue(Filters);
+                ((IJsonModel<ManagementPolicyFilter>)Filters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

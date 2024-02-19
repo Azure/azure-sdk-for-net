@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(PolicySchema))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(PolicySchema);
+                ((IJsonModel<BlobInventoryPolicySchema>)PolicySchema).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

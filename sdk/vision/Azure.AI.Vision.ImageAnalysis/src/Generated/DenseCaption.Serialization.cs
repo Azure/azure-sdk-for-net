@@ -32,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox);
+            ((IJsonModel<ImageBoundingBox>)BoundingBox).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

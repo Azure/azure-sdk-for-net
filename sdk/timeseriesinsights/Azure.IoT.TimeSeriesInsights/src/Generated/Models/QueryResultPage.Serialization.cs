@@ -49,7 +49,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<PropertyValues> array = new List<PropertyValues>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PropertyValues.DeserializePropertyValues(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PropertyValues.DeserializePropertyValues(item));
+                        }
                     }
                     properties = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<NotebookResource> array = new List<NotebookResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotebookResource.DeserializeNotebookResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotebookResource.DeserializeNotebookResource(item));
+                        }
                     }
                     value = array;
                     continue;

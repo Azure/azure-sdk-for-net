@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<StorageSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoints))
             {
                 writer.WritePropertyName("primaryEndpoints"u8);
-                writer.WriteObjectValue(PrimaryEndpoints);
+                ((IJsonModel<StorageAccountEndpoints>)PrimaryEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryLocation))
             {
@@ -128,32 +128,32 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(CustomDomain))
             {
                 writer.WritePropertyName("customDomain"u8);
-                writer.WriteObjectValue(CustomDomain);
+                ((IJsonModel<StorageCustomDomain>)CustomDomain).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SasPolicy))
             {
                 writer.WritePropertyName("sasPolicy"u8);
-                writer.WriteObjectValue(SasPolicy);
+                ((IJsonModel<StorageAccountSasPolicy>)SasPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyPolicy))
             {
                 writer.WritePropertyName("keyPolicy"u8);
-                writer.WriteObjectValue(KeyPolicy);
+                ((IJsonModel<StorageAccountKeyPolicy>)KeyPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyCreationTime))
             {
                 writer.WritePropertyName("keyCreationTime"u8);
-                writer.WriteObjectValue(KeyCreationTime);
+                ((IJsonModel<StorageAccountKeyCreationTime>)KeyCreationTime).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecondaryEndpoints))
             {
                 writer.WritePropertyName("secondaryEndpoints"u8);
-                writer.WriteObjectValue(SecondaryEndpoints);
+                ((IJsonModel<StorageAccountEndpoints>)SecondaryEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<StorageAccountEncryption>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AccessTier))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(AzureFilesIdentityBasedAuthentication))
             {
                 writer.WritePropertyName("azureFilesIdentityBasedAuthentication"u8);
-                writer.WriteObjectValue(AzureFilesIdentityBasedAuthentication);
+                ((IJsonModel<FilesIdentityBasedAuthentication>)AzureFilesIdentityBasedAuthentication).Write(writer, options);
             }
             if (Optional.IsDefined(EnableHttpsTrafficOnly))
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                ((IJsonModel<StorageAccountNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(IsSftpEnabled))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage
             if (options.Format != "W" && Optional.IsDefined(GeoReplicationStats))
             {
                 writer.WritePropertyName("geoReplicationStats"u8);
-                writer.WriteObjectValue(GeoReplicationStats);
+                ((IJsonModel<GeoReplicationStatistics>)GeoReplicationStats).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsFailoverInProgress))
             {
@@ -211,19 +211,26 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StoragePrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RoutingPreference))
             {
                 writer.WritePropertyName("routingPreference"u8);
-                writer.WriteObjectValue(RoutingPreference);
+                ((IJsonModel<StorageRoutingPreference>)RoutingPreference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BlobRestoreStatus))
             {
                 writer.WritePropertyName("blobRestoreStatus"u8);
-                writer.WriteObjectValue(BlobRestoreStatus);
+                ((IJsonModel<BlobRestoreStatus>)BlobRestoreStatus).Write(writer, options);
             }
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
@@ -263,7 +270,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(ImmutableStorageWithVersioning))
             {
                 writer.WritePropertyName("immutableStorageWithVersioning"u8);
-                writer.WriteObjectValue(ImmutableStorageWithVersioning);
+                ((IJsonModel<ImmutableStorageAccount>)ImmutableStorageWithVersioning).Write(writer, options);
             }
             if (Optional.IsDefined(AllowedCopyScope))
             {
@@ -273,7 +280,7 @@ namespace Azure.ResourceManager.Storage
             if (Optional.IsDefined(StorageAccountSkuConversionStatus))
             {
                 writer.WritePropertyName("storageAccountSkuConversionStatus"u8);
-                writer.WriteObjectValue(StorageAccountSkuConversionStatus);
+                ((IJsonModel<StorageAccountSkuConversionStatus>)StorageAccountSkuConversionStatus).Write(writer, options);
             }
             if (Optional.IsDefined(DnsEndpointType))
             {
@@ -685,7 +692,14 @@ namespace Azure.ResourceManager.Storage
                             List<StoragePrivateEndpointConnectionData> array = new List<StoragePrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StoragePrivateEndpointConnectionData.DeserializeStoragePrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

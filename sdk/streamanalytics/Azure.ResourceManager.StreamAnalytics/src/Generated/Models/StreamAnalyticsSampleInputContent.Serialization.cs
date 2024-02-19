@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                ((IJsonModel<StreamingJobInputData>)Input).Write(writer, options);
             }
             if (Optional.IsDefined(CompatibilityLevel))
             {

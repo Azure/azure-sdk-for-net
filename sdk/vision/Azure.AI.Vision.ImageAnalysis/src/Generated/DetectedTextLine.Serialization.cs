@@ -33,14 +33,28 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ImagePoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("words"u8);
             writer.WriteStartArray();
             foreach (var item in Words)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DetectedTextWord>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +112,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<ImagePoint> array = new List<ImagePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImagePoint.DeserializeImagePoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImagePoint.DeserializeImagePoint(item));
+                        }
                     }
                     boundingPolygon = array;
                     continue;
@@ -108,7 +129,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTextWord> array = new List<DetectedTextWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTextWord.DeserializeDetectedTextWord(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectedTextWord.DeserializeDetectedTextWord(item));
+                        }
                     }
                     words = array;
                     continue;

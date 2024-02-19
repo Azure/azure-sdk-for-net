@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ConnStringValueTypePair>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -120,7 +127,14 @@ namespace Azure.ResourceManager.AppService.Models
                     Dictionary<string, ConnStringValueTypePair> dictionary = new Dictionary<string, ConnStringValueTypePair>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ConnStringValueTypePair.DeserializeConnStringValueTypePair(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ConnStringValueTypePair.DeserializeConnStringValueTypePair(property0.Value));
+                        }
                     }
                     properties = dictionary;
                     continue;

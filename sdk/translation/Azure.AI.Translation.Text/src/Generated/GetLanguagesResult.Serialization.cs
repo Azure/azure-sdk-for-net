@@ -34,7 +34,14 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Translation)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<TranslationLanguage>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -45,7 +52,14 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Transliteration)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<TransliterationLanguage>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -56,7 +70,14 @@ namespace Azure.AI.Translation.Text
                 foreach (var item in Dictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<SourceDictionaryLanguage>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -114,7 +135,14 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TranslationLanguage> dictionary0 = new Dictionary<string, TranslationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary0.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary0.Add(property0.Name, TranslationLanguage.DeserializeTranslationLanguage(property0.Value));
+                        }
                     }
                     translation = dictionary0;
                     continue;
@@ -128,7 +156,14 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, TransliterationLanguage> dictionary0 = new Dictionary<string, TransliterationLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary0.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary0.Add(property0.Name, TransliterationLanguage.DeserializeTransliterationLanguage(property0.Value));
+                        }
                     }
                     transliteration = dictionary0;
                     continue;
@@ -142,7 +177,14 @@ namespace Azure.AI.Translation.Text
                     Dictionary<string, SourceDictionaryLanguage> dictionary0 = new Dictionary<string, SourceDictionaryLanguage>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary0.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary0.Add(property0.Name, SourceDictionaryLanguage.DeserializeSourceDictionaryLanguage(property0.Value));
+                        }
                     }
                     dictionary = dictionary0;
                     continue;

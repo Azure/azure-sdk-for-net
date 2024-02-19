@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UnsupportedFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingCharacteristics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SiteCloneabilityCriterion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +146,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        }
                     }
                     blockingFeatures = array;
                     continue;
@@ -139,7 +167,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        }
                     }
                     unsupportedFeatures = array;
                     continue;
@@ -153,7 +188,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<SiteCloneabilityCriterion> array = new List<SiteCloneabilityCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SiteCloneabilityCriterion.DeserializeSiteCloneabilityCriterion(item));
+                        }
                     }
                     blockingCharacteristics = array;
                     continue;

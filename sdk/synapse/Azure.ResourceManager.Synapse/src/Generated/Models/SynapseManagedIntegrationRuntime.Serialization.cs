@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                ((IJsonModel<SynapseIntegrationRuntimeComputeProperties>)ComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                ((IJsonModel<SynapseIntegrationRuntimeSsisProperties>)SsisProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

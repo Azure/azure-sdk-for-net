@@ -57,27 +57,27 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                ((IJsonModel<AuthPlatform>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue(GlobalValidation);
+                ((IJsonModel<GlobalValidation>)GlobalValidation).Write(writer, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue(IdentityProviders);
+                ((IJsonModel<AppServiceIdentityProviders>)IdentityProviders).Write(writer, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                ((IJsonModel<WebAppLoginInfo>)Login).Write(writer, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue(HttpSettings);
+                ((IJsonModel<AppServiceHttpSettings>)HttpSettings).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrafficManagerMonitorConfigCustomHeaderInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +84,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpectedStatusCodeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpectedStatusCodeRangeInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +214,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<TrafficManagerMonitorConfigCustomHeaderInfo> array = new List<TrafficManagerMonitorConfigCustomHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrafficManagerMonitorConfigCustomHeaderInfo.DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrafficManagerMonitorConfigCustomHeaderInfo.DeserializeTrafficManagerMonitorConfigCustomHeaderInfo(item));
+                        }
                     }
                     customHeaders = array;
                     continue;
@@ -214,7 +235,14 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     List<ExpectedStatusCodeRangeInfo> array = new List<ExpectedStatusCodeRangeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExpectedStatusCodeRangeInfo.DeserializeExpectedStatusCodeRangeInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExpectedStatusCodeRangeInfo.DeserializeExpectedStatusCodeRangeInfo(item));
+                        }
                     }
                     expectedStatusCodeRanges = array;
                     continue;

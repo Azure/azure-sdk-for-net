@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in AbnormalTimePeriods)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AbnormalTimePeriod>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +87,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Payload)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AnalysisDetectorEvidences>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in NonCorrelatedDetectors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DetectorDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +233,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AbnormalTimePeriod> array = new List<AbnormalTimePeriod>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AbnormalTimePeriod.DeserializeAbnormalTimePeriod(item));
+                                }
                             }
                             abnormalTimePeriods = array;
                             continue;
@@ -226,7 +254,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AnalysisDetectorEvidences> array = new List<AnalysisDetectorEvidences>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AnalysisDetectorEvidences.DeserializeAnalysisDetectorEvidences(item));
+                                }
                             }
                             payload = array;
                             continue;
@@ -240,7 +275,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<DetectorDefinition> array = new List<DetectorDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DetectorDefinition.DeserializeDetectorDefinition(item));
+                                }
                             }
                             nonCorrelatedDetectors = array;
                             continue;

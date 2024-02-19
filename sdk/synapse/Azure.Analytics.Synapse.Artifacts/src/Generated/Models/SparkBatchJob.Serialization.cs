@@ -126,7 +126,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<SparkServiceError> array = new List<SparkServiceError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkServiceError.DeserializeSparkServiceError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkServiceError.DeserializeSparkServiceError(item));
+                        }
                     }
                     errorInfo = array;
                     continue;

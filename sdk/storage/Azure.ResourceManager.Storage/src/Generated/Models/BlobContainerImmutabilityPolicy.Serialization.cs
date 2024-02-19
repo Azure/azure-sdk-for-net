@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in UpdateHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UpdateHistoryEntry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.Storage.Models
                     List<UpdateHistoryEntry> array = new List<UpdateHistoryEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UpdateHistoryEntry.DeserializeUpdateHistoryEntry(item));
+                        }
                     }
                     updateHistory = array;
                     continue;

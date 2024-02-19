@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageSyncWorkflowData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<StorageSyncWorkflowData> array = new List<StorageSyncWorkflowData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageSyncWorkflowData.DeserializeStorageSyncWorkflowData(item));
+                        }
                     }
                     value = array;
                     continue;

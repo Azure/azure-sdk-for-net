@@ -33,7 +33,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<HierarchyHit> array = new List<HierarchyHit>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HierarchyHit.DeserializeHierarchyHit(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HierarchyHit.DeserializeHierarchyHit(item));
+                        }
                     }
                     hits = array;
                     continue;

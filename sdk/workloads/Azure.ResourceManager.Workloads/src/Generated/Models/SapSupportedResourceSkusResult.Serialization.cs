@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapSupportedSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapSupportedSku> array = new List<SapSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapSupportedSku.DeserializeSapSupportedSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SapSupportedSku.DeserializeSapSupportedSku(item));
+                        }
                     }
                     supportedSkus = array;
                     continue;

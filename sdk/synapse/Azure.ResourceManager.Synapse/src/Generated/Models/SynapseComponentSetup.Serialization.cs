@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
-                writer.WriteObjectValue(LicenseKey);
+                ((IJsonModel<SynapseSecretBase>)LicenseKey).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -29,22 +29,22 @@ namespace Azure.ResourceManager.AppService.Models
             if (options.Format != "W" && Optional.IsDefined(LinuxRuntimeSettings))
             {
                 writer.WritePropertyName("linuxRuntimeSettings"u8);
-                writer.WriteObjectValue(LinuxRuntimeSettings);
+                ((IJsonModel<WebAppRuntimeSettings>)LinuxRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsRuntimeSettings))
             {
                 writer.WritePropertyName("windowsRuntimeSettings"u8);
-                writer.WriteObjectValue(WindowsRuntimeSettings);
+                ((IJsonModel<WebAppRuntimeSettings>)WindowsRuntimeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LinuxContainerSettings))
             {
                 writer.WritePropertyName("linuxContainerSettings"u8);
-                writer.WriteObjectValue(LinuxContainerSettings);
+                ((IJsonModel<LinuxJavaContainerSettings>)LinuxContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WindowsContainerSettings))
             {
                 writer.WritePropertyName("windowsContainerSettings"u8);
-                writer.WriteObjectValue(WindowsContainerSettings);
+                ((IJsonModel<WindowsJavaContainerSettings>)WindowsContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -35,7 +35,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +138,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DataFlowDebugResource> array = new List<DataFlowDebugResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowDebugResource.DeserializeDataFlowDebugResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowDebugResource.DeserializeDataFlowDebugResource(item));
+                        }
                     }
                     dataFlows = array;
                     continue;
@@ -131,7 +159,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DatasetDebugResource> array = new List<DatasetDebugResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetDebugResource.DeserializeDatasetDebugResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatasetDebugResource.DeserializeDatasetDebugResource(item));
+                        }
                     }
                     datasets = array;
                     continue;
@@ -145,7 +180,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<LinkedServiceDebugResource> array = new List<LinkedServiceDebugResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LinkedServiceDebugResource.DeserializeLinkedServiceDebugResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LinkedServiceDebugResource.DeserializeLinkedServiceDebugResource(item));
+                        }
                     }
                     linkedServices = array;
                     continue;

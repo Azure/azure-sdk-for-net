@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in PermissionScopes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StoragePermissionScope>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SshAuthorizedKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageSshPublicKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +205,14 @@ namespace Azure.ResourceManager.Storage
                             List<StoragePermissionScope> array = new List<StoragePermissionScope>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StoragePermissionScope.DeserializeStoragePermissionScope(item));
+                                }
                             }
                             permissionScopes = array;
                             continue;
@@ -210,7 +231,14 @@ namespace Azure.ResourceManager.Storage
                             List<StorageSshPublicKey> array = new List<StorageSshPublicKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageSshPublicKey.DeserializeStorageSshPublicKey(item));
+                                }
                             }
                             sshAuthorizedKeys = array;
                             continue;

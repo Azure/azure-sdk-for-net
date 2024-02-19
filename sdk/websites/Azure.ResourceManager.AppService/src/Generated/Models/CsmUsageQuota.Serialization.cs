@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<LocalizableString>)Name).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

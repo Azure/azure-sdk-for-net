@@ -54,7 +54,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +71,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +115,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -112,7 +133,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -123,18 +151,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in ProjectConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
+                                writer.WriteObjectValue(item0.Value);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -145,18 +182,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PackageConnectionManagers)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
+                                writer.WriteObjectValue(item0.Value);
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
@@ -167,7 +213,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -276,7 +329,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<ActivityDependency> array = new List<ActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ActivityDependency.DeserializeActivityDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -290,7 +350,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<UserProperty> array = new List<UserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UserProperty.DeserializeUserProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UserProperty.DeserializeUserProperty(item));
+                        }
                     }
                     userProperties = array;
                     continue;
@@ -359,7 +426,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                }
                             }
                             projectParameters = dictionary;
                             continue;
@@ -373,7 +447,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, SsisExecutionParameter> dictionary = new Dictionary<string, SsisExecutionParameter>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property1.Value));
+                                }
                             }
                             packageParameters = dictionary;
                             continue;
@@ -396,7 +477,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        if (property2.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary0.Add(property2.Name, null);
+                                        }
+                                        else
+                                        {
+                                            dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        }
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -422,7 +510,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                                     Dictionary<string, SsisExecutionParameter> dictionary0 = new Dictionary<string, SsisExecutionParameter>();
                                     foreach (var property2 in property1.Value.EnumerateObject())
                                     {
-                                        dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        if (property2.Value.ValueKind == JsonValueKind.Null)
+                                        {
+                                            dictionary0.Add(property2.Name, null);
+                                        }
+                                        else
+                                        {
+                                            dictionary0.Add(property2.Name, SsisExecutionParameter.DeserializeSsisExecutionParameter(property2.Value));
+                                        }
                                     }
                                     dictionary.Add(property1.Name, dictionary0);
                                 }
@@ -439,7 +534,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             Dictionary<string, SsisPropertyOverride> dictionary = new Dictionary<string, SsisPropertyOverride>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, SsisPropertyOverride.DeserializeSsisPropertyOverride(property1.Value));
+                                }
                             }
                             propertyOverrides = dictionary;
                             continue;

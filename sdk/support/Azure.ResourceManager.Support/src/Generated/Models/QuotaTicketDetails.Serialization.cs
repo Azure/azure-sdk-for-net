@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WriteStartArray();
                 foreach (var item in QuotaChangeRequests)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SupportQuotaChangeContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.Support.Models
                     List<SupportQuotaChangeContent> array = new List<SupportQuotaChangeContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item));
+                        }
                     }
                     quotaChangeRequests = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in Blocks)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DetectedTextBlock>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +89,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<DetectedTextBlock> array = new List<DetectedTextBlock>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectedTextBlock.DeserializeDetectedTextBlock(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectedTextBlock.DeserializeDetectedTextBlock(item));
+                        }
                     }
                     blocks = array;
                     continue;

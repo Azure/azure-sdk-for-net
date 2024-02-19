@@ -38,7 +38,14 @@ namespace Azure.IoT.TimeSeriesInsights
                     List<TimeSeriesIdProperty> array = new List<TimeSeriesIdProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TimeSeriesIdProperty.DeserializeTimeSeriesIdProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TimeSeriesIdProperty.DeserializeTimeSeriesIdProperty(item));
+                        }
                     }
                     timeSeriesIdProperties = array;
                     continue;

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<AppServicePrivateLinkResourceProperties>)Properties).Write(writer, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);

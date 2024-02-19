@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportTopicList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DetectorSupportTopic>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +173,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DetectorSupportTopic> array = new List<DetectorSupportTopic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DetectorSupportTopic.DeserializeDetectorSupportTopic(item));
+                        }
                     }
                     supportTopicList = array;
                     continue;

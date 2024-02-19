@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageTableSignedIdentifier>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +168,14 @@ namespace Azure.ResourceManager.Storage
                             List<StorageTableSignedIdentifier> array = new List<StorageTableSignedIdentifier>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageTableSignedIdentifier.DeserializeStorageTableSignedIdentifier(item));
+                                }
                             }
                             signedIdentifiers = array;
                             continue;

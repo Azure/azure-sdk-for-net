@@ -33,7 +33,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             writer.WriteStartArray();
             foreach (var item in BoundingPolygon)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ImagePoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("confidence"u8);
@@ -93,7 +100,14 @@ namespace Azure.AI.Vision.ImageAnalysis
                     List<ImagePoint> array = new List<ImagePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImagePoint.DeserializeImagePoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImagePoint.DeserializeImagePoint(item));
+                        }
                     }
                     boundingPolygon = array;
                     continue;

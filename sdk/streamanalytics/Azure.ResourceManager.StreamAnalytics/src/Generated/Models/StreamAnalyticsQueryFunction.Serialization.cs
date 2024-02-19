@@ -36,11 +36,18 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<StreamingJobFunctionInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("output"u8);
-            writer.WriteObjectValue(Output);
+            ((IJsonModel<StreamingJobFunctionOutput>)Output).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,7 +115,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                        }
                     }
                     inputs = array;
                     continue;

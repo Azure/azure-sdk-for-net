@@ -35,7 +35,14 @@ namespace Azure.AI.Translation.Text
             writer.WriteStartArray();
             foreach (var item in Scripts)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TransliterableScript>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +105,14 @@ namespace Azure.AI.Translation.Text
                     List<TransliterableScript> array = new List<TransliterableScript>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TransliterableScript.DeserializeTransliterableScript(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TransliterableScript.DeserializeTransliterableScript(item));
+                        }
                     }
                     scripts = array;
                     continue;

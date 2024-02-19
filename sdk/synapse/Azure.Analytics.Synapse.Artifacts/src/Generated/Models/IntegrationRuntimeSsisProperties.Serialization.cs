@@ -50,7 +50,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ExpressCustomSetupProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<CustomSetupBase> array = new List<CustomSetupBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomSetupBase.DeserializeCustomSetupBase(item));
+                        }
                     }
                     expressCustomSetupProperties = array;
                     continue;

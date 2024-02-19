@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
-                writer.WriteObjectValue(Grouping);
+                ((IJsonModel<SapLandscapeMonitorPropertiesGrouping>)Grouping).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in TopMetricsThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SapLandscapeMonitorMetricThresholds>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.Workloads
                             List<SapLandscapeMonitorMetricThresholds> array = new List<SapLandscapeMonitorMetricThresholds>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SapLandscapeMonitorMetricThresholds.DeserializeSapLandscapeMonitorMetricThresholds(item));
+                                }
                             }
                             topMetricsThresholds = array;
                             continue;

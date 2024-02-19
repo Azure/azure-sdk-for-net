@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStartArray();
             foreach (var item in AccessRules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NfsAccessRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.StorageCache.Models
                     List<NfsAccessRule> array = new List<NfsAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NfsAccessRule.DeserializeNfsAccessRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NfsAccessRule.DeserializeNfsAccessRule(item));
+                        }
                     }
                     accessRules = array;
                     continue;

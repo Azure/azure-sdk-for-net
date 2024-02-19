@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.StoragePool.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DiskPoolIscsiTargetData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.StoragePool.Models
                     List<DiskPoolIscsiTargetData> array = new List<DiskPoolIscsiTargetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DiskPoolIscsiTargetData.DeserializeDiskPoolIscsiTargetData(item));
+                        }
                     }
                     value = array;
                     continue;

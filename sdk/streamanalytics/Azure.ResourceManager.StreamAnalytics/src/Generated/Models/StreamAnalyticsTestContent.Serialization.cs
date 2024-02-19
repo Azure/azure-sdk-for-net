@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("input"u8);
-            writer.WriteObjectValue(Input);
+            ((IJsonModel<StreamingJobInputData>)Input).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

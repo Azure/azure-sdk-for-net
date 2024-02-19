@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SqlVmData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     List<SqlVmData> array = new List<SqlVmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlVmData.DeserializeSqlVmData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlVmData.DeserializeSqlVmData(item));
+                        }
                     }
                     value = array;
                     continue;

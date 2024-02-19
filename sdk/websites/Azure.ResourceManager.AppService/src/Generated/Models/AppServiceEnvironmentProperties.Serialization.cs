@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("virtualNetwork"u8);
-            writer.WriteObjectValue(VirtualNetwork);
+            ((IJsonModel<AppServiceVirtualNetworkProfile>)VirtualNetwork).Write(writer, options);
             if (Optional.IsDefined(InternalLoadBalancingMode))
             {
                 writer.WritePropertyName("internalLoadBalancingMode"u8);
@@ -84,7 +84,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AppServiceNameValuePair>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -267,7 +274,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
+                        }
                     }
                     clusterSettings = array;
                     continue;

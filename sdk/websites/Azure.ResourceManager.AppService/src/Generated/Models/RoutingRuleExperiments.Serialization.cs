@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in RampUpRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RampUpRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<RampUpRule> array = new List<RampUpRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RampUpRule.DeserializeRampUpRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RampUpRule.DeserializeRampUpRule(item));
+                        }
                     }
                     rampUpRules = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.Synapse.Models
                     List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint> array = new List<SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint.DeserializeSynapseIntegrationRuntimeOutboundNetworkDependenciesEndpoint(item));
+                        }
                     }
                     endpoints = array;
                     continue;

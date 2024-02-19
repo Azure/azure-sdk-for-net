@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                ((IJsonModel<SapSshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(SshKeyPair))
             {
                 writer.WritePropertyName("sshKeyPair"u8);
-                writer.WriteObjectValue(SshKeyPair);
+                ((IJsonModel<SapSshKeyPair>)SshKeyPair).Write(writer, options);
             }
             writer.WritePropertyName("osType"u8);
             writer.WriteStringValue(OSType.ToString());

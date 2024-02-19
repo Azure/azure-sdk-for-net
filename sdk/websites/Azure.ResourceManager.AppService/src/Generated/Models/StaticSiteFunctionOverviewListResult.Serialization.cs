@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<StaticSiteFunctionOverview>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.AppService.Models
                     List<StaticSiteFunctionOverview> array = new List<StaticSiteFunctionOverview>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StaticSiteFunctionOverview.DeserializeStaticSiteFunctionOverview(item));
+                        }
                     }
                     value = array;
                     continue;

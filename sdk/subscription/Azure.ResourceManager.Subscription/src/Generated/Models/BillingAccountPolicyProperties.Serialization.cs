@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceTenants)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceTenant>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Subscription.Models
                     List<ServiceTenant> array = new List<ServiceTenant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTenant.DeserializeServiceTenant(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceTenant.DeserializeServiceTenant(item));
+                        }
                     }
                     serviceTenants = array;
                     continue;

@@ -77,22 +77,22 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(MessageServerProperties))
             {
                 writer.WritePropertyName("messageServerProperties"u8);
-                writer.WriteObjectValue(MessageServerProperties);
+                ((IJsonModel<MessageServerProperties>)MessageServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EnqueueServerProperties))
             {
                 writer.WritePropertyName("enqueueServerProperties"u8);
-                writer.WriteObjectValue(EnqueueServerProperties);
+                ((IJsonModel<EnqueueServerProperties>)EnqueueServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(GatewayServerProperties))
             {
                 writer.WritePropertyName("gatewayServerProperties"u8);
-                writer.WriteObjectValue(GatewayServerProperties);
+                ((IJsonModel<GatewayServerProperties>)GatewayServerProperties).Write(writer, options);
             }
             if (Optional.IsDefined(EnqueueReplicationServerProperties))
             {
                 writer.WritePropertyName("enqueueReplicationServerProperties"u8);
-                writer.WriteObjectValue(EnqueueReplicationServerProperties);
+                ((IJsonModel<EnqueueReplicationServerProperties>)EnqueueReplicationServerProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KernelVersion))
             {
@@ -129,7 +129,14 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in VmDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CentralServerVmDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                ((IJsonModel<SapVirtualInstanceError>)Errors).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -356,7 +363,14 @@ namespace Azure.ResourceManager.Workloads
                             List<CentralServerVmDetails> array = new List<CentralServerVmDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CentralServerVmDetails.DeserializeCentralServerVmDetails(item));
+                                }
                             }
                             vmDetails = array;
                             continue;

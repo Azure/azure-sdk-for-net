@@ -31,7 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<IntegrationRuntimeResource> array = new List<IntegrationRuntimeResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeResource.DeserializeIntegrationRuntimeResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationRuntimeResource.DeserializeIntegrationRuntimeResource(item));
+                        }
                     }
                     value = array;
                     continue;

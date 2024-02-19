@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(BuildProperties))
             {
                 writer.WritePropertyName("buildProperties"u8);
-                writer.WriteObjectValue(BuildProperties);
+                ((IJsonModel<StaticSiteBuildProperties>)BuildProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -119,7 +119,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResponseMessageEnvelopeRemotePrivateEndpointConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,7 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(TemplateProperties))
             {
                 writer.WritePropertyName("templateProperties"u8);
-                writer.WriteObjectValue(TemplateProperties);
+                ((IJsonModel<StaticSiteTemplate>)TemplateProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ContentDistributionEndpoint))
             {
@@ -154,7 +161,14 @@ namespace Azure.ResourceManager.AppService
                 writer.WriteStartArray();
                 foreach (var item in UserProvidedFunctionApps)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StaticSiteUserProvidedFunctionAppData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -360,7 +374,14 @@ namespace Azure.ResourceManager.AppService
                             List<ResponseMessageEnvelopeRemotePrivateEndpointConnection> array = new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResponseMessageEnvelopeRemotePrivateEndpointConnection.DeserializeResponseMessageEnvelopeRemotePrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -411,7 +432,14 @@ namespace Azure.ResourceManager.AppService
                             List<StaticSiteUserProvidedFunctionAppData> array = new List<StaticSiteUserProvidedFunctionAppData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StaticSiteUserProvidedFunctionAppData.DeserializeStaticSiteUserProvidedFunctionAppData(item));
+                                }
                             }
                             userProvidedFunctionApps = array;
                             continue;

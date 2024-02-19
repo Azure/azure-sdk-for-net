@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamAnalyticsQueryInput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +51,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Functions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamAnalyticsQueryFunction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +130,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryInput> array = new List<StreamAnalyticsQueryInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamAnalyticsQueryInput.DeserializeStreamAnalyticsQueryInput(item));
+                        }
                     }
                     inputs = array;
                     continue;
@@ -130,7 +151,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     List<StreamAnalyticsQueryFunction> array = new List<StreamAnalyticsQueryFunction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamAnalyticsQueryFunction.DeserializeStreamAnalyticsQueryFunction(item));
+                        }
                     }
                     functions = array;
                     continue;

@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChatTranscriptMessageProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -156,7 +163,14 @@ namespace Azure.ResourceManager.Support
                             List<ChatTranscriptMessageProperties> array = new List<ChatTranscriptMessageProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ChatTranscriptMessageProperties.DeserializeChatTranscriptMessageProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ChatTranscriptMessageProperties.DeserializeChatTranscriptMessageProperties(item));
+                                }
                             }
                             messages = array;
                             continue;

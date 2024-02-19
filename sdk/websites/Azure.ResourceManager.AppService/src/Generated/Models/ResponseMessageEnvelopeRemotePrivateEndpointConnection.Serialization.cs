@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                ((IJsonModel<AppServiceArmPlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<RemotePrivateEndpointConnection>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AppServiceSkuDescription>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Status))
             {

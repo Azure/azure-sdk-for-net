@@ -25,7 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +69,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<DWCopyCommandDefaultValue> array = new List<DWCopyCommandDefaultValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DWCopyCommandDefaultValue.DeserializeDWCopyCommandDefaultValue(item));
+                        }
                     }
                     defaultValues = array;
                     continue;

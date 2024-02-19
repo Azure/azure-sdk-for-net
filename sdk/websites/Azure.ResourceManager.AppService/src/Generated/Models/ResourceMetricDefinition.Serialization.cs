@@ -70,7 +70,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceMetricAvailability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +207,14 @@ namespace Azure.ResourceManager.AppService.Models
                             List<ResourceMetricAvailability> array = new List<ResourceMetricAvailability>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceMetricAvailability.DeserializeResourceMetricAvailability(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ResourceMetricAvailability.DeserializeResourceMetricAvailability(item));
+                                }
                             }
                             metricAvailabilities = array;
                             continue;

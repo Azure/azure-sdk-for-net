@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageMoverProjectData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.StorageMover.Models
                     List<StorageMoverProjectData> array = new List<StorageMoverProjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageMoverProjectData.DeserializeStorageMoverProjectData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StorageMoverProjectData.DeserializeStorageMoverProjectData(item));
+                        }
                     }
                     value = array;
                     continue;

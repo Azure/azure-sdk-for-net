@@ -63,7 +63,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Folder))
@@ -159,7 +166,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<NotebookCell> array = new List<NotebookCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotebookCell.DeserializeNotebookCell(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotebookCell.DeserializeNotebookCell(item));
+                        }
                     }
                     cells = array;
                     continue;

@@ -61,7 +61,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             List<CloudError> array = new List<CloudError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeCloudError(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeserializeCloudError(item));
+                                }
                             }
                             details = array;
                             continue;

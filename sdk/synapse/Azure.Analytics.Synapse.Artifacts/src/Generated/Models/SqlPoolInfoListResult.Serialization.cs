@@ -40,7 +40,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     List<SqlPool> array = new List<SqlPool>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlPool.DeserializeSqlPool(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SqlPool.DeserializeSqlPool(item));
+                        }
                     }
                     value = array;
                     continue;
