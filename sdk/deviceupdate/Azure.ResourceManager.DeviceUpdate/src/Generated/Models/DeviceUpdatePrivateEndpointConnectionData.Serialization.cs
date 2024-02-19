@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            ((IJsonModel<DeviceUpdatePrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);

@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AdvancedFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +172,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<AdvancedFilter> array = new List<AdvancedFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvancedFilter.DeserializeAdvancedFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AdvancedFilter.DeserializeAdvancedFilter(item));
+                        }
                     }
                     advancedFilters = array;
                     continue;

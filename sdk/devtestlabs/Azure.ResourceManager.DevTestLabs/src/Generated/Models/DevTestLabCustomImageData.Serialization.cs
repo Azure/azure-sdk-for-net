@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                ((IJsonModel<DevTestLabCustomImageVm>)Vm).Write(writer, options);
             }
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd);
+                ((IJsonModel<DevTestLabCustomImageVhd>)Vhd).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -104,14 +104,21 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WriteStartArray();
                 foreach (var item in DataDiskStorageInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabDataDiskStorageTypeInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CustomImagePlan))
             {
                 writer.WritePropertyName("customImagePlan"u8);
-                writer.WriteObjectValue(CustomImagePlan);
+                ((IJsonModel<DevTestLabCustomImagePlan>)CustomImagePlan).Write(writer, options);
             }
             if (Optional.IsDefined(IsPlanAuthorized))
             {
@@ -297,7 +304,14 @@ namespace Azure.ResourceManager.DevTestLabs
                             List<DevTestLabDataDiskStorageTypeInfo> array = new List<DevTestLabDataDiskStorageTypeInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabDataDiskStorageTypeInfo.DeserializeDevTestLabDataDiskStorageTypeInfo(item));
+                                }
                             }
                             dataDiskStorageInfo = array;
                             continue;

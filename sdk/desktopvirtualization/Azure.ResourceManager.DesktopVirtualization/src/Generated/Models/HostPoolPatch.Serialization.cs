@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                ((IJsonModel<HostPoolRegistrationInfoPatch>)RegistrationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(VmTemplate))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                ((IJsonModel<SessionHostAgentUpdatePatchProperties>)AgentUpdate).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

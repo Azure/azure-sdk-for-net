@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Grafana
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ManagedGrafanaSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ManagedGrafanaProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {

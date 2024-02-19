@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<NetworkInterface> array = new List<NetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkInterface.DeserializeNetworkInterface(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkInterface.DeserializeNetworkInterface(item));
+                        }
                     }
                     networkInterfaces = array;
                     continue;

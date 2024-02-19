@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisPrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisPrivateLinkResourceData> array = new List<HealthcareApisPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisPrivateLinkResourceData.DeserializeHealthcareApisPrivateLinkResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

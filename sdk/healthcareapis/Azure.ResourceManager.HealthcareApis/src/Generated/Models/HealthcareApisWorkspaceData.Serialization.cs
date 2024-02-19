@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HealthcareApis
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<HealthcareApisWorkspaceProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {

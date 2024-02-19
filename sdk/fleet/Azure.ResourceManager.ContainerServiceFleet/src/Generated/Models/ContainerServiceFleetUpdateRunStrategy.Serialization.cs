@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStartArray();
             foreach (var item in Stages)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerServiceFleetUpdateStage>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateStage> array = new List<ContainerServiceFleetUpdateStage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceFleetUpdateStage.DeserializeContainerServiceFleetUpdateStage(item));
+                        }
                     }
                     stages = array;
                     continue;

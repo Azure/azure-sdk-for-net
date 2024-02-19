@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                ((IJsonModel<SshProfile>)SshProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

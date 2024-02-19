@@ -38,7 +38,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
             writer.WritePropertyName("clinicalTrials"u8);
-            writer.WriteObjectValue(ClinicalTrials);
+            ((IJsonModel<ClinicalTrials>)ClinicalTrials).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

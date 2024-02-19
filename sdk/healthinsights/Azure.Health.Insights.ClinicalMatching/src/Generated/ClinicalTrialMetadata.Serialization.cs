@@ -70,7 +70,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Contacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContactDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +87,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteStartArray();
                 foreach (var item in Facilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClinicalTrialResearchFacility>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +212,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ContactDetails> array = new List<ContactDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContactDetails.DeserializeContactDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContactDetails.DeserializeContactDetails(item));
+                        }
                     }
                     contacts = array;
                     continue;
@@ -212,7 +233,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<ClinicalTrialResearchFacility> array = new List<ClinicalTrialResearchFacility>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClinicalTrialResearchFacility.DeserializeClinicalTrialResearchFacility(item));
+                        }
                     }
                     facilities = array;
                     continue;

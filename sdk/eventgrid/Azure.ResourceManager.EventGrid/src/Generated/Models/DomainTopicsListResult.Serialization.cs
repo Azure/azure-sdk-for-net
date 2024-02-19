@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DomainTopicData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DomainTopicData> array = new List<DomainTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainTopicData.DeserializeDomainTopicData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DomainTopicData.DeserializeDomainTopicData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                 foreach (var item in Roles)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DevCenterEnvironmentRole>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.DevCenter.Models
                     Dictionary<string, DevCenterEnvironmentRole> dictionary = new Dictionary<string, DevCenterEnvironmentRole>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DevCenterEnvironmentRole.DeserializeDevCenterEnvironmentRole(property0.Value));
+                        }
                     }
                     roles = dictionary;
                     continue;

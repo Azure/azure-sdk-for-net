@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Plugins)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SparkUserPlugin>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<SparkUserPlugin> array = new List<SparkUserPlugin>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SparkUserPlugin.DeserializeSparkUserPlugin(item));
+                        }
                     }
                     plugins = array;
                     continue;

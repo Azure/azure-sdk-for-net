@@ -28,7 +28,14 @@ namespace Azure.DigitalTwins.Core
                     List<IncomingRelationship> array = new List<IncomingRelationship>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IncomingRelationship.DeserializeIncomingRelationship(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IncomingRelationship.DeserializeIncomingRelationship(item));
+                        }
                     }
                     value = array;
                     continue;

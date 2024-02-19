@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeliveryAttributeMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<DeliveryAttributeMapping> array = new List<DeliveryAttributeMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(item));
+                        }
                     }
                     value = array;
                     continue;

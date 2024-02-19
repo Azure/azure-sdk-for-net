@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (options.Format != "W" && Optional.IsDefined(AdditionalFailureDetails))
             {
                 writer.WritePropertyName("additionalFailureDetails"u8);
-                writer.WriteObjectValue(AdditionalFailureDetails);
+                ((IJsonModel<SessionHostHealthCheckFailureDetails>)AdditionalFailureDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.FrontDoor
                 if (CustomHttpsConfiguration != null)
                 {
                     writer.WritePropertyName("customHttpsConfiguration"u8);
-                    writer.WriteObjectValue(CustomHttpsConfiguration);
+                    ((IJsonModel<CustomHttpsConfiguration>)CustomHttpsConfiguration).Write(writer, options);
                 }
                 else
                 {

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(AksClusterAgentPoolIdentityProfile))
             {
                 writer.WritePropertyName("aksClusterAgentPoolIdentityProfile"u8);
-                writer.WriteObjectValue(AksClusterAgentPoolIdentityProfile);
+                ((IJsonModel<HDInsightIdentityProfile>)AksClusterAgentPoolIdentityProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AksVersion))
             {

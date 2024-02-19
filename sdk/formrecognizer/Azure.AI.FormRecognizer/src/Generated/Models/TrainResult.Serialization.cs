@@ -32,7 +32,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TrainingDocumentInfo> array = new List<TrainingDocumentInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrainingDocumentInfo.DeserializeTrainingDocumentInfo(item));
+                        }
                     }
                     trainingDocuments = array;
                     continue;
@@ -46,7 +53,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<CustomFormModelField> array = new List<CustomFormModelField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomFormModelField.DeserializeCustomFormModelField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomFormModelField.DeserializeCustomFormModelField(item));
+                        }
                     }
                     fields = array;
                     continue;
@@ -74,7 +88,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<FormRecognizerError> array = new List<FormRecognizerError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FormRecognizerError.DeserializeFormRecognizerError(item));
+                        }
                     }
                     errors = array;
                     continue;

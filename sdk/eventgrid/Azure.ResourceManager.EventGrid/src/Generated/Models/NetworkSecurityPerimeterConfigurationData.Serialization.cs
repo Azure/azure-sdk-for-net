@@ -61,24 +61,31 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkSecurityPerimeterConfigurationIssues>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter);
+                ((IJsonModel<NetworkSecurityPerimeterInfo>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation);
+                ((IJsonModel<ResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile);
+                ((IJsonModel<NetworkSecurityPerimeterConfigurationProfile>)Profile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -183,7 +190,14 @@ namespace Azure.ResourceManager.EventGrid
                             List<NetworkSecurityPerimeterConfigurationIssues> array = new List<NetworkSecurityPerimeterConfigurationIssues>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkSecurityPerimeterConfigurationIssues.DeserializeNetworkSecurityPerimeterConfigurationIssues(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkSecurityPerimeterConfigurationIssues.DeserializeNetworkSecurityPerimeterConfigurationIssues(item));
+                                }
                             }
                             provisioningIssues = array;
                             continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComputeVmInstanceViewStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +79,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComputeDataDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +148,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeVmInstanceViewStatus> array = new List<ComputeVmInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComputeVmInstanceViewStatus.DeserializeComputeVmInstanceViewStatus(item));
+                        }
                     }
                     statuses = array;
                     continue;
@@ -182,7 +203,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<ComputeDataDisk> array = new List<ComputeDataDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComputeDataDisk.DeserializeComputeDataDisk(item));
+                        }
                     }
                     dataDisks = array;
                     continue;

@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             if (Optional.IsDefined(Assignment))
             {
                 writer.WritePropertyName("assignment"u8);
-                writer.WriteObjectValue(Assignment);
+                ((IJsonModel<GuestConfigurationAssignmentInfo>)Assignment).Write(writer, options);
             }
             if (Optional.IsDefined(Vm))
             {
                 writer.WritePropertyName("vm"u8);
-                writer.WriteObjectValue(Vm);
+                ((IJsonModel<GuestConfigurationVmInfo>)Vm).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
@@ -72,7 +72,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AssignmentReportResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +215,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceInfo> array = new List<AssignmentReportResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AssignmentReportResourceInfo.DeserializeAssignmentReportResourceInfo(item));
+                        }
                     }
                     resources = array;
                     continue;

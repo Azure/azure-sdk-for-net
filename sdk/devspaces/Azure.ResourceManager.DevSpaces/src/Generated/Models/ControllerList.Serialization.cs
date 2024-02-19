@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ControllerData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DevSpaces.Models
                     List<ControllerData> array = new List<ControllerData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ControllerData.DeserializeControllerData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ControllerData.DeserializeControllerData(item));
+                        }
                     }
                     value = array;
                     continue;

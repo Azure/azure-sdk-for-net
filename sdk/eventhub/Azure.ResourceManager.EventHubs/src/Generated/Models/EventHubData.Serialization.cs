@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.EventHubs
             if (Optional.IsDefined(CaptureDescription))
             {
                 writer.WritePropertyName("captureDescription"u8);
-                writer.WriteObjectValue(CaptureDescription);
+                ((IJsonModel<CaptureDescription>)CaptureDescription).Write(writer, options);
             }
             if (Optional.IsDefined(RetentionDescription))
             {
                 writer.WritePropertyName("retentionDescription"u8);
-                writer.WriteObjectValue(RetentionDescription);
+                ((IJsonModel<RetentionDescription>)RetentionDescription).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

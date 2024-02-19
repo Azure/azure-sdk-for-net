@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.CancerProfiling
             if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                ((IJsonModel<PatientInfo>)Info).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Data))
             {
@@ -40,7 +40,14 @@ namespace Azure.Health.Insights.CancerProfiling
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PatientDocument>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.Health.Insights.CancerProfiling
                     List<PatientDocument> array = new List<PatientDocument>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PatientDocument.DeserializePatientDocument(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PatientDocument.DeserializePatientDocument(item));
+                        }
                     }
                     data = array;
                     continue;

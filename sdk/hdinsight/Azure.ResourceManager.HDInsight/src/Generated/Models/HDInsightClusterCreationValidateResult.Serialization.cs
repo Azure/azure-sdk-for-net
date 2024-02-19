@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightClusterValidationErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightClusterValidationErrorInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +71,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in AaddsResourcesDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightClusterAaddsDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +137,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        }
                     }
                     validationErrors = array;
                     continue;
@@ -130,7 +158,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterValidationErrorInfo> array = new List<HDInsightClusterValidationErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightClusterValidationErrorInfo.DeserializeHDInsightClusterValidationErrorInfo(item));
+                        }
                     }
                     validationWarnings = array;
                     continue;
@@ -153,7 +188,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightClusterAaddsDetail> array = new List<HDInsightClusterAaddsDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightClusterAaddsDetail.DeserializeHDInsightClusterAaddsDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightClusterAaddsDetail.DeserializeHDInsightClusterAaddsDetail(item));
+                        }
                     }
                     aaddsResourcesDetails = array;
                     continue;

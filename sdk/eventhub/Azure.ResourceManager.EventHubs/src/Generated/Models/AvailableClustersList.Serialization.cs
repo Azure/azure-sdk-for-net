@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableCluster>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<AvailableCluster> array = new List<AvailableCluster>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableCluster.DeserializeAvailableCluster(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableCluster.DeserializeAvailableCluster(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisIotConnectorData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisIotConnectorData> array = new List<HealthcareApisIotConnectorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisIotConnectorData.DeserializeHealthcareApisIotConnectorData(item));
+                        }
                     }
                     value = array;
                     continue;

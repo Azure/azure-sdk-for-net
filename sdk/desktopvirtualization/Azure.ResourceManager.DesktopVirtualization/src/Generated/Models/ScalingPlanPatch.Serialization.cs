@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScalingSchedule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +82,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScalingHostPoolReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +195,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                }
                             }
                             schedules = array;
                             continue;
@@ -195,7 +216,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                }
                             }
                             hostPoolReferences = array;
                             continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisServiceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisServiceData> array = new List<HealthcareApisServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisServiceData.DeserializeHealthcareApisServiceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisServiceData.DeserializeHealthcareApisServiceData(item));
+                        }
                     }
                     value = array;
                     continue;

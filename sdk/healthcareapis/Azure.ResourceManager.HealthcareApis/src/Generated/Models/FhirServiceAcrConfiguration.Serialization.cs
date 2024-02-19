@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in OciArtifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HealthcareApisServiceOciArtifactEntry>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +120,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                     List<HealthcareApisServiceOciArtifactEntry> array = new List<HealthcareApisServiceOciArtifactEntry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HealthcareApisServiceOciArtifactEntry.DeserializeHealthcareApisServiceOciArtifactEntry(item));
+                        }
                     }
                     ociArtifacts = array;
                     continue;

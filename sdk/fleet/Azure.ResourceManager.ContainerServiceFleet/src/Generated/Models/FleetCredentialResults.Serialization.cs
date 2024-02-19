@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FleetCredentialResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<FleetCredentialResult> array = new List<FleetCredentialResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FleetCredentialResult.DeserializeFleetCredentialResult(item));
+                        }
                     }
                     kubeconfigs = array;
                     continue;

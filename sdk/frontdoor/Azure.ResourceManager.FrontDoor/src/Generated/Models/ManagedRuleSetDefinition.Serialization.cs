@@ -88,7 +88,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in RuleGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedRuleGroupDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -227,7 +234,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<ManagedRuleGroupDefinition> array = new List<ManagedRuleGroupDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedRuleGroupDefinition.DeserializeManagedRuleGroupDefinition(item));
+                                }
                             }
                             ruleGroups = array;
                             continue;

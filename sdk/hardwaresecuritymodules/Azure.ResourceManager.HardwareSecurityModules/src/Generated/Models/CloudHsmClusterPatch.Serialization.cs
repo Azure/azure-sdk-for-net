@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<CloudHsmClusterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             if (Optional.IsDefined(BackupProperties))
             {
                 writer.WritePropertyName("backupProperties"u8);
-                writer.WriteObjectValue(BackupProperties);
+                ((IJsonModel<BackupProperties>)BackupProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

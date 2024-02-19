@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<DesktopVirtualizationSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {

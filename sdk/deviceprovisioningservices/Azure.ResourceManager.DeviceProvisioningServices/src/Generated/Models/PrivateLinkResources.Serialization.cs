@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceProvisioningServicesPrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesPrivateLinkResourceData> array = new List<DeviceProvisioningServicesPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

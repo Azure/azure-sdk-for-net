@@ -28,7 +28,14 @@ namespace Azure.DigitalTwins.Core
                     List<ImportJob> array = new List<ImportJob>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImportJob.DeserializeImportJob(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImportJob.DeserializeImportJob(item));
+                        }
                     }
                     value = array;
                     continue;

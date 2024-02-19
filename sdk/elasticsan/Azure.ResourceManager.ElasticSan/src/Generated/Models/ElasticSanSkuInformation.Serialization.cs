@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticSanSkuLocationInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +71,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ElasticSanSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -158,7 +172,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuLocationInfo> array = new List<ElasticSanSkuLocationInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticSanSkuLocationInfo.DeserializeElasticSanSkuLocationInfo(item));
+                        }
                     }
                     locationInfo = array;
                     continue;
@@ -172,7 +193,14 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     List<ElasticSanSkuCapability> array = new List<ElasticSanSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ElasticSanSkuCapability.DeserializeElasticSanSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;

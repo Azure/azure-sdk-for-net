@@ -49,17 +49,17 @@ namespace Azure.ResourceManager.Grafana.Models
             if (Optional.IsDefined(GrafanaIntegrations))
             {
                 writer.WritePropertyName("grafanaIntegrations"u8);
-                writer.WriteObjectValue(GrafanaIntegrations);
+                ((IJsonModel<GrafanaIntegrations>)GrafanaIntegrations).Write(writer, options);
             }
             if (Optional.IsDefined(EnterpriseConfigurations))
             {
                 writer.WritePropertyName("enterpriseConfigurations"u8);
-                writer.WriteObjectValue(EnterpriseConfigurations);
+                ((IJsonModel<EnterpriseConfigurations>)EnterpriseConfigurations).Write(writer, options);
             }
             if (Optional.IsDefined(GrafanaConfigurations))
             {
                 writer.WritePropertyName("grafanaConfigurations"u8);
-                writer.WriteObjectValue(GrafanaConfigurations);
+                ((IJsonModel<GrafanaConfigurations>)GrafanaConfigurations).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GrafanaPlugins))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.Grafana.Models
                 foreach (var item in GrafanaPlugins)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<GrafanaPlugin>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -200,7 +207,14 @@ namespace Azure.ResourceManager.Grafana.Models
                     Dictionary<string, GrafanaPlugin> dictionary = new Dictionary<string, GrafanaPlugin>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, GrafanaPlugin.DeserializeGrafanaPlugin(property0.Value));
+                        }
                     }
                     grafanaPlugins = dictionary;
                     continue;

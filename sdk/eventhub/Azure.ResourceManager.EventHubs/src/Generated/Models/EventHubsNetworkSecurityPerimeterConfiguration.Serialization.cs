@@ -73,24 +73,31 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in ProvisioningIssues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsProvisioningIssue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(NetworkSecurityPerimeter))
             {
                 writer.WritePropertyName("networkSecurityPerimeter"u8);
-                writer.WriteObjectValue(NetworkSecurityPerimeter);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeter>)NetworkSecurityPerimeter).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceAssociation))
             {
                 writer.WritePropertyName("resourceAssociation"u8);
-                writer.WriteObjectValue(ResourceAssociation);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>)ResourceAssociation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                writer.WriteObjectValue(Profile);
+                ((IJsonModel<EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile>)Profile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -216,7 +223,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                             List<EventHubsProvisioningIssue> array = new List<EventHubsProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventHubsProvisioningIssue.DeserializeEventHubsProvisioningIssue(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventHubsProvisioningIssue.DeserializeEventHubsProvisioningIssue(item));
+                                }
                             }
                             provisioningIssues = array;
                             continue;

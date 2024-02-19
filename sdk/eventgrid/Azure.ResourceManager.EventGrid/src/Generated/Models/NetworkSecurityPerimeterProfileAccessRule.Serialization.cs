@@ -74,7 +74,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkSecurityPerimeterInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +238,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<NetworkSecurityPerimeterInfo> array = new List<NetworkSecurityPerimeterInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkSecurityPerimeterInfo.DeserializeNetworkSecurityPerimeterInfo(item));
+                                }
                             }
                             networkSecurityPerimeters = array;
                             continue;

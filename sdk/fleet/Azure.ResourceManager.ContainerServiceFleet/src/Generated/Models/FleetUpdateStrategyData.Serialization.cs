@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             if (Optional.IsDefined(Strategy))
             {
                 writer.WritePropertyName("strategy"u8);
-                writer.WriteObjectValue(Strategy);
+                ((IJsonModel<ContainerServiceFleetUpdateRunStrategy>)Strategy).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

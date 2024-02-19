@@ -33,7 +33,14 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DocumentSpan>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("confidence"u8);
@@ -93,7 +100,14 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        }
                     }
                     spans = array;
                     continue;

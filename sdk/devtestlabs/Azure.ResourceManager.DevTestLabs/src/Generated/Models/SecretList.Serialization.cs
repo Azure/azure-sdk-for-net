@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabSecretData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabSecretData> array = new List<DevTestLabSecretData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabSecretData.DeserializeDevTestLabSecretData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevTestLabSecretData.DeserializeDevTestLabSecretData(item));
+                        }
                     }
                     value = array;
                     continue;

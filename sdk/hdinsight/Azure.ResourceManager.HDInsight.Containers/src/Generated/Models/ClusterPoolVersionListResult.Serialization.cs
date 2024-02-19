@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterPoolVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterPoolVersion> array = new List<ClusterPoolVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClusterPoolVersion.DeserializeClusterPoolVersion(item));
+                        }
                     }
                     value = array;
                     continue;

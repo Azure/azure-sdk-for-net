@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(ForwardAddress))
             {
                 writer.WritePropertyName("forwardAddress"u8);
-                writer.WriteObjectValue(ForwardAddress);
+                ((IJsonModel<EdgeOrderItemAddressProperties>)ForwardAddress).Write(writer, options);
             }
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                ((IJsonModel<OrderItemPreferences>)Preferences).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(NotificationEmailList))
             {

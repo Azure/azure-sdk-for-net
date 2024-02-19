@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<CertificateVerificationCodeProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

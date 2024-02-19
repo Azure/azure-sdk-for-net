@@ -31,7 +31,14 @@ namespace Azure.Health.Insights.ClinicalMatching
             writer.WriteStartArray();
             foreach (var item in Patients)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<TrialMatcherPatientResult>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelVersion"u8);
@@ -91,7 +98,14 @@ namespace Azure.Health.Insights.ClinicalMatching
                     List<TrialMatcherPatientResult> array = new List<TrialMatcherPatientResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrialMatcherPatientResult.DeserializeTrialMatcherPatientResult(item));
+                        }
                     }
                     patients = array;
                     continue;

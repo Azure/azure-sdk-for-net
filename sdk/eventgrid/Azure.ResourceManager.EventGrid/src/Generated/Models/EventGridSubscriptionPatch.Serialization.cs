@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                ((IJsonModel<EventSubscriptionDestination>)Destination).Write(writer, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity);
+                ((IJsonModel<DeliveryWithResourceIdentity>)DeliveryWithResourceIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                ((IJsonModel<EventSubscriptionFilter>)Filter).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -64,17 +64,17 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                ((IJsonModel<EventSubscriptionRetryPolicy>)RetryPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination);
+                ((IJsonModel<DeadLetterDestination>)DeadLetterDestination).Write(writer, options);
             }
             if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterWithResourceIdentity);
+                ((IJsonModel<DeadLetterWithResourceIdentity>)DeadLetterWithResourceIdentity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

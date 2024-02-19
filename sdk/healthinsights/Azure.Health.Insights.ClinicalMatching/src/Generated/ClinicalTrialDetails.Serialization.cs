@@ -37,10 +37,10 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(Demographics))
             {
                 writer.WritePropertyName("demographics"u8);
-                writer.WriteObjectValue(Demographics);
+                ((IJsonModel<ClinicalTrialDemographics>)Demographics).Write(writer, options);
             }
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            ((IJsonModel<ClinicalTrialMetadata>)Metadata).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

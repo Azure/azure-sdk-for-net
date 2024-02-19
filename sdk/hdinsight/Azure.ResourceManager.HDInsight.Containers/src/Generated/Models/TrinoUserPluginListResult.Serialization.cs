@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Plugins)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrinoUserPlugin>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<TrinoUserPlugin> array = new List<TrinoUserPlugin>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrinoUserPlugin.DeserializeTrinoUserPlugin(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrinoUserPlugin.DeserializeTrinoUserPlugin(item));
+                        }
                     }
                     plugins = array;
                     continue;

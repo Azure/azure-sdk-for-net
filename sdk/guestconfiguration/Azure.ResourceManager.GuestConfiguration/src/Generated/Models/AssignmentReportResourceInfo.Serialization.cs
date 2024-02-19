@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WriteStartArray();
                 foreach (var item in Reasons)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AssignmentReportResourceComplianceReason>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     List<AssignmentReportResourceComplianceReason> array = new List<AssignmentReportResourceComplianceReason>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AssignmentReportResourceComplianceReason.DeserializeAssignmentReportResourceComplianceReason(item));
+                        }
                     }
                     reasons = array;
                     continue;

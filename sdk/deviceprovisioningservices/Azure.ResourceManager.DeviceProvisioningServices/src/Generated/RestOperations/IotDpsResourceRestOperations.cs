@@ -1018,7 +1018,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                         List<DeviceProvisioningServicesPrivateEndpointConnectionData> array = new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -1052,7 +1059,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                         List<DeviceProvisioningServicesPrivateEndpointConnectionData> array = new List<DeviceProvisioningServicesPrivateEndpointConnectionData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

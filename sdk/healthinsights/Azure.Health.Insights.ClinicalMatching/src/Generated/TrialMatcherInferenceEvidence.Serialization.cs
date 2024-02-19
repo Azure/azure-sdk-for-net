@@ -35,12 +35,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue(PatientDataEvidence);
+                ((IJsonModel<ClinicalNoteEvidence>)PatientDataEvidence).Write(writer, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue(PatientInfoEvidence);
+                ((IJsonModel<ClinicalCodedElement>)PatientInfoEvidence).Write(writer, options);
             }
             if (Optional.IsDefined(Importance))
             {

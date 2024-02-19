@@ -41,7 +41,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     List<DocumentTableCell> array = new List<DocumentTableCell>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentTableCell.DeserializeDocumentTableCell(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DocumentTableCell.DeserializeDocumentTableCell(item));
+                        }
                     }
                     cells = array;
                     continue;

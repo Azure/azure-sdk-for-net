@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in ManualPrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdatePrivateLinkServiceConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +74,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdatePrivateLinkServiceConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +91,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkServiceProxies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdatePrivateLinkServiceProxy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +108,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DeviceUpdatePrivateEndpointConnectionDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +216,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        }
                     }
                     manualPrivateLinkServiceConnections = array;
                     continue;
@@ -202,7 +237,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceConnection> array = new List<DeviceUpdatePrivateLinkServiceConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceUpdatePrivateLinkServiceConnection.DeserializeDeviceUpdatePrivateLinkServiceConnection(item));
+                        }
                     }
                     privateLinkServiceConnections = array;
                     continue;
@@ -216,7 +258,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateLinkServiceProxy> array = new List<DeviceUpdatePrivateLinkServiceProxy>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceUpdatePrivateLinkServiceProxy.DeserializeDeviceUpdatePrivateLinkServiceProxy(item));
+                        }
                     }
                     privateLinkServiceProxies = array;
                     continue;
@@ -230,7 +279,14 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdatePrivateEndpointConnectionDetails> array = new List<DeviceUpdatePrivateEndpointConnectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeviceUpdatePrivateEndpointConnectionDetails.DeserializeDeviceUpdatePrivateEndpointConnectionDetails(item));
+                        }
                     }
                     connectionDetails = array;
                     continue;

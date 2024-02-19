@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundNatRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabInboundNatRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabInboundNatRule> array = new List<DevTestLabInboundNatRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevTestLabInboundNatRule.DeserializeDevTestLabInboundNatRule(item));
+                        }
                     }
                     inboundNatRules = array;
                     continue;

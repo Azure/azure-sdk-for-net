@@ -31,7 +31,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRecordingChunkInfoProperties> array = new List<AcsRecordingChunkInfoProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcsRecordingChunkInfoProperties.DeserializeAcsRecordingChunkInfoProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcsRecordingChunkInfoProperties.DeserializeAcsRecordingChunkInfoProperties(item));
+                        }
                     }
                     recordingChunks = array;
                     continue;

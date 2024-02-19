@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EndpointDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<EndpointDependency> array = new List<EndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EndpointDependency.DeserializeEndpointDependency(item));
+                        }
                     }
                     endpoints = array;
                     continue;

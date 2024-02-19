@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WriteStartArray();
                 foreach (var item in HealthChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevCenterHealthCheck>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +187,14 @@ namespace Azure.ResourceManager.DevCenter
                             List<DevCenterHealthCheck> array = new List<DevCenterHealthCheck>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevCenterHealthCheck.DeserializeDevCenterHealthCheck(item));
+                                }
                             }
                             healthChecks = array;
                             continue;

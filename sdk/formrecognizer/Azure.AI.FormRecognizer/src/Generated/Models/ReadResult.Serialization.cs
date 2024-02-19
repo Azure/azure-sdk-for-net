@@ -62,7 +62,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<TextLine> array = new List<TextLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TextLine.DeserializeTextLine(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TextLine.DeserializeTextLine(item));
+                        }
                     }
                     lines = array;
                     continue;
@@ -77,7 +84,14 @@ namespace Azure.AI.FormRecognizer.Models
                     List<SelectionMark> array = new List<SelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectionMark.DeserializeSelectionMark(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SelectionMark.DeserializeSelectionMark(item));
+                        }
                     }
                     selectionMarks = array;
                     continue;

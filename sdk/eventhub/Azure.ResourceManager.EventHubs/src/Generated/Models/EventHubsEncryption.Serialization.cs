@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyVaultProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsKeyVaultProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsKeyVaultProperties> array = new List<EventHubsKeyVaultProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventHubsKeyVaultProperties.DeserializeEventHubsKeyVaultProperties(item));
+                        }
                     }
                     keyVaultProperties = array;
                     continue;

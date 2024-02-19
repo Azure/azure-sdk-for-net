@@ -55,12 +55,14 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in models)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -101,7 +103,14 @@ namespace Azure.DigitalTwins.Core
                         List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -145,7 +154,14 @@ namespace Azure.DigitalTwins.Core
                         List<DigitalTwinsModelData> array = new List<DigitalTwinsModelData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(DigitalTwinsModelData.DeserializeDigitalTwinsModelData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -360,12 +376,14 @@ namespace Azure.DigitalTwins.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in updateModel)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    content.JsonWriter.WriteObjectValue(item);
+                }
+                else
                 {
                     content.JsonWriter.WriteNullValue();
-                    continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

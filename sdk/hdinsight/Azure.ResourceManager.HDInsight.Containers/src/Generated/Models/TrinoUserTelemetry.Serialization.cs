@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(Storage))
             {
                 writer.WritePropertyName("storage"u8);
-                writer.WriteObjectValue(Storage);
+                ((IJsonModel<TrinoTelemetryConfig>)Storage).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

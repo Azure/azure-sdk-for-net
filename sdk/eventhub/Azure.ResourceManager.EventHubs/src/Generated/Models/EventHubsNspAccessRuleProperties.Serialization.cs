@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in Subscriptions)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +65,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsNetworkSecurityPerimeter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +165,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                        }
                     }
                     subscriptions = array;
                     continue;
@@ -165,7 +186,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNetworkSecurityPerimeter> array = new List<EventHubsNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventHubsNetworkSecurityPerimeter.DeserializeEventHubsNetworkSecurityPerimeter(item));
+                        }
                     }
                     networkSecurityPerimeters = array;
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                ((IJsonModel<DynatraceBillingPlanInfo>)PlanData).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

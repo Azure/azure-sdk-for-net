@@ -81,7 +81,14 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     Dictionary<string, DocumentTypeDetails> dictionary = new Dictionary<string, DocumentTypeDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DocumentTypeDetails.DeserializeDocumentTypeDetails(property0.Value));
+                        }
                     }
                     docTypes = dictionary;
                     continue;

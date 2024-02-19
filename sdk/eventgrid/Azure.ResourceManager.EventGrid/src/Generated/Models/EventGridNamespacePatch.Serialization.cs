@@ -46,14 +46,14 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<NamespaceSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue(TopicSpacesConfiguration);
+                ((IJsonModel<UpdateTopicSpacesConfigurationInfo>)TopicSpacesConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventGridInboundIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -187,7 +194,14 @@ namespace Azure.ResourceManager.EventGrid.Models
                             List<EventGridInboundIPRule> array = new List<EventGridInboundIPRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EventGridInboundIPRule.DeserializeEventGridInboundIPRule(item));
+                                }
                             }
                             inboundIPRules = array;
                             continue;

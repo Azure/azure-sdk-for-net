@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WriteStartArray();
                 foreach (var item in DnsResourceReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DnsResourceReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Dns.Models
                             List<DnsResourceReference> array = new List<DnsResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DnsResourceReference.DeserializeDnsResourceReference(item));
+                                }
                             }
                             dnsResourceReferences = array;
                             continue;

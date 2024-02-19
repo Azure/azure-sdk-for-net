@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(BulkCreationParameters))
             {
                 writer.WritePropertyName("bulkCreationParameters"u8);
-                writer.WriteObjectValue(BulkCreationParameters);
+                ((IJsonModel<BulkCreationParameters>)BulkCreationParameters).Write(writer, options);
             }
             if (Optional.IsDefined(Notes))
             {
@@ -125,14 +125,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Artifacts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabArtifactInstallInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                ((IJsonModel<DevTestLabGalleryImageReference>)GalleryImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(PlanId))
             {
@@ -142,7 +149,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                writer.WriteObjectValue(NetworkInterface);
+                ((IJsonModel<DevTestLabNetworkInterface>)NetworkInterface).Write(writer, options);
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -170,7 +177,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabDataDiskProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +194,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in ScheduleParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabScheduleCreationParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -390,7 +411,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabArtifactInstallInfo> array = new List<DevTestLabArtifactInstallInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabArtifactInstallInfo.DeserializeDevTestLabArtifactInstallInfo(item));
+                                }
                             }
                             artifacts = array;
                             continue;
@@ -455,7 +483,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabDataDiskProperties> array = new List<DevTestLabDataDiskProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabDataDiskProperties.DeserializeDevTestLabDataDiskProperties(item));
+                                }
                             }
                             dataDiskParameters = array;
                             continue;
@@ -469,7 +504,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             List<DevTestLabScheduleCreationParameter> array = new List<DevTestLabScheduleCreationParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DevTestLabScheduleCreationParameter.DeserializeDevTestLabScheduleCreationParameter(item));
+                                }
                             }
                             scheduleParameters = array;
                             continue;

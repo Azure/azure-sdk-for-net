@@ -59,7 +59,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     List<AcsRouterCommunicationError> array = new List<AcsRouterCommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeAcsRouterCommunicationError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeAcsRouterCommunicationError(item));
+                        }
                     }
                     details = array;
                     continue;

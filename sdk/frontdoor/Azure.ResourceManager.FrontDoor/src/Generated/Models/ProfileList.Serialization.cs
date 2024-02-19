@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FrontDoorNetworkExperimentProfileData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<FrontDoorNetworkExperimentProfileData> array = new List<FrontDoorNetworkExperimentProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FrontDoorNetworkExperimentProfileData.DeserializeFrontDoorNetworkExperimentProfileData(item));
+                        }
                     }
                     value = array;
                     continue;

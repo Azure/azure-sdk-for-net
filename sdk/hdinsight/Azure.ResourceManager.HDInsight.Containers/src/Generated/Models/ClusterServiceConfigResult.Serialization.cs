@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 foreach (var item in DefaultKeys)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ClusterServiceConfigValueEntity>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -193,7 +200,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                             Dictionary<string, ClusterServiceConfigValueEntity> dictionary = new Dictionary<string, ClusterServiceConfigValueEntity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ClusterServiceConfigValueEntity.DeserializeClusterServiceConfigValueEntity(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ClusterServiceConfigValueEntity.DeserializeClusterServiceConfigValueEntity(property1.Value));
+                                }
                             }
                             defaultKeys = dictionary;
                             continue;

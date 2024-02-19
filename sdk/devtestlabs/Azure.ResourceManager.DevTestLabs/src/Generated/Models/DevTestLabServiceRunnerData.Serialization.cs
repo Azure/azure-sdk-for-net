@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<DevTestLabManagedIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

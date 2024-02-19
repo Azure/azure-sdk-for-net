@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<DeviceProvisioningServiceProperties>)Properties).Write(writer, options);
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<DeviceProvisioningServicesSkuInfo>)Sku).Write(writer, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);

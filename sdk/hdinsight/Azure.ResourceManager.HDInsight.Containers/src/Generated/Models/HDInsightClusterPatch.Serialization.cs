@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                ((IJsonModel<UpdatableClusterProfile>)ClusterProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

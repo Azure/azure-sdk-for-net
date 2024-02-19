@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<EncryptionProperties>)Encryption).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

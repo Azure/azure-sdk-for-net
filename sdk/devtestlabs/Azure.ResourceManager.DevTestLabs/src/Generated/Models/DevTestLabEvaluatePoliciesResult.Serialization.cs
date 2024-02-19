@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in Results)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabPolicySetResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabPolicySetResult> array = new List<DevTestLabPolicySetResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabPolicySetResult.DeserializeDevTestLabPolicySetResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevTestLabPolicySetResult.DeserializeDevTestLabPolicySetResult(item));
+                        }
                     }
                     results = array;
                     continue;

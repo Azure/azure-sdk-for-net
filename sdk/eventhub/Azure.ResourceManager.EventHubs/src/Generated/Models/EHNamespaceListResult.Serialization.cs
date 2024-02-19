@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EventHubsNamespaceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.EventHubs.Models
                     List<EventHubsNamespaceData> array = new List<EventHubsNamespaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EventHubsNamespaceData.DeserializeEventHubsNamespaceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EventHubsNamespaceData.DeserializeEventHubsNamespaceData(item));
+                        }
                     }
                     value = array;
                     continue;

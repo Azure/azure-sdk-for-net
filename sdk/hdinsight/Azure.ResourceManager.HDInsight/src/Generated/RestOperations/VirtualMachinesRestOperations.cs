@@ -83,7 +83,14 @@ namespace Azure.ResourceManager.HDInsight
                         List<HDInsightClusterHostInfo> array = new List<HDInsightClusterHostInfo>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.HDInsight
                         List<HDInsightClusterHostInfo> array = new List<HDInsightClusterHostInfo>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

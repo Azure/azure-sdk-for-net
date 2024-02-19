@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStartArray();
                 foreach (var item in CostThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DevTestLabCostThreshold>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item));
+                        }
                     }
                     costThresholds = array;
                     continue;

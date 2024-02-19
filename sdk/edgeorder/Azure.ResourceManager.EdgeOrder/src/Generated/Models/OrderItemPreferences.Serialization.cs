@@ -32,24 +32,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NotificationPreference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                ((IJsonModel<EncryptionPreferences>)EncryptionPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(ManagementResourcePreferences))
             {
                 writer.WritePropertyName("managementResourcePreferences"u8);
-                writer.WriteObjectValue(ManagementResourcePreferences);
+                ((IJsonModel<ManagementResourcePreferences>)ManagementResourcePreferences).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationPreference.DeserializeNotificationPreference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotificationPreference.DeserializeNotificationPreference(item));
+                        }
                     }
                     notificationPreferences = array;
                     continue;

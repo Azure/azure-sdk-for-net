@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HDInsightPrivateLinkResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightPrivateLinkResourceData> array = new List<HDInsightPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HDInsightPrivateLinkResourceData.DeserializeHDInsightPrivateLinkResourceData(item));
+                        }
                     }
                     value = array;
                     continue;
