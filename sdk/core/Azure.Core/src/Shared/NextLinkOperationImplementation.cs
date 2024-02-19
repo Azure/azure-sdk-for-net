@@ -125,7 +125,7 @@ namespace Azure.Core
             _apiVersion = apiVersion;
         }
 
-        public static RehydrationToken? GetRehydrationToken(
+        public static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             Response response,
@@ -147,7 +147,7 @@ namespace Azure.Core
             return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString());
         }
 
-        public static RehydrationToken? GetRehydrationToken(
+        public static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             string nextRequestUri,
@@ -157,7 +157,7 @@ namespace Azure.Core
         {
             var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, lastKnownLocation, finalStateVia };
             var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, null, parameters, null);
-            return rehydrationToken is null ? null : (RehydrationToken)rehydrationToken;
+            return (RehydrationToken)rehydrationToken!;
         }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)

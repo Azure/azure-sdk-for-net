@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Add `GetRehydrationToken` to `Operation` for rehydration purpose.
+
 ### Breaking Changes
 
 ### Bugs Fixed
