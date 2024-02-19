@@ -40,11 +40,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Tests
         [RecordedTest]
         public async Task TestClusterPoolOperations()
         {
-            Location = "west us 2";
+            Location = "westus2";
 
             string clusterPoolName = Recording.GenerateAssetName("sdk-testpool-");
 
             HDInsightClusterPoolData clusterPoolData = new HDInsightClusterPoolData(Location);
+            clusterPoolData.ClusterPoolVersion = "1.0";
 
             string clusterPoolVmSize = "Standard_E4s_v3";
             clusterPoolData.ComputeProfile = new ClusterPoolComputeProfile(clusterPoolVmSize);
