@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<VICredential>)Credentials).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
@@ -117,7 +117,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareResourceStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -310,7 +317,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                }
                             }
                             statuses = array;
                             continue;

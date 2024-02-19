@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                ((IJsonModel<CosmosDBSqlClientEncryptionKeyProperties>)Resource).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

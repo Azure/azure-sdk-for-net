@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in CalculatedSavings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionCalculatedSavingsProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionCalculatedSavingsProperties> array = new List<ConsumptionCalculatedSavingsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item));
+                        }
                     }
                     calculatedSavings = array;
                     continue;

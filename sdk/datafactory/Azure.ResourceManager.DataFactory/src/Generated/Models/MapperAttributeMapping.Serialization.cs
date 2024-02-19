@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
-                writer.WriteObjectValue(AttributeReference);
+                ((IJsonModel<MapperAttributeReference>)AttributeReference).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AttributeReferences))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in AttributeReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapperAttributeReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +158,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperAttributeReference> array = new List<MapperAttributeReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapperAttributeReference.DeserializeMapperAttributeReference(item));
+                        }
                     }
                     attributeReferences = array;
                     continue;

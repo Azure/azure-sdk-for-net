@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeMetricDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalDimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeMetricDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +132,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        }
                     }
                     dimensionFilter = array;
                     continue;
@@ -132,7 +153,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricDimension> array = new List<DataBoxEdgeMetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxEdgeMetricDimension.DeserializeDataBoxEdgeMetricDimension(item));
+                        }
                     }
                     additionalDimensions = array;
                     continue;

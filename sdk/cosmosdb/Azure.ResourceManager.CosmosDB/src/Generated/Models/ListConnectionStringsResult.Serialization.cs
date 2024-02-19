@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectionStrings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBConnectionString>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBConnectionString> array = new List<CosmosDBConnectionString>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBConnectionString.DeserializeCosmosDBConnectionString(item));
+                        }
                     }
                     connectionStrings = array;
                     continue;

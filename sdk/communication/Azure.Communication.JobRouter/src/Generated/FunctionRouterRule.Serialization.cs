@@ -32,7 +32,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                ((IJsonModel<FunctionRouterRuleCredential>)Credential).Write(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue(AdapterPosition);
+                ((IJsonModel<DataBoxEdgeNetworkAdapterPosition>)AdapterPosition).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue(IPv4Configuration);
+                ((IJsonModel<DataBoxEdgeIPv4Config>)IPv4Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue(IPv6Configuration);
+                ((IJsonModel<DataBoxEdgeIPv6Config>)IPv6Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {

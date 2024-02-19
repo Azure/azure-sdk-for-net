@@ -32,19 +32,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BudgetFilterProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                ((IJsonModel<BudgetComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                ((IJsonModel<BudgetComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<BudgetFilterProperties> array = new List<BudgetFilterProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item));
+                        }
                     }
                     and = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in UniqueKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBUniqueKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBUniqueKey> array = new List<CosmosDBUniqueKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBUniqueKey.DeserializeCosmosDBUniqueKey(item));
+                        }
                     }
                     uniqueKeys = array;
                     continue;

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ResourceGuardProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(ETag))
             {

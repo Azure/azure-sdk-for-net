@@ -30,12 +30,12 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(ScoringRule))
             {
                 writer.WritePropertyName("scoringRule"u8);
-                writer.WriteObjectValue(ScoringRule);
+                ((IJsonModel<RouterRule>)ScoringRule).Write(writer, options);
             }
             if (Optional.IsDefined(ScoringRuleOptions))
             {
                 writer.WritePropertyName("scoringRuleOptions"u8);
-                writer.WriteObjectValue(ScoringRuleOptions);
+                ((IJsonModel<ScoringRuleOptions>)ScoringRuleOptions).Write(writer, options);
             }
             if (Optional.IsDefined(MinConcurrentOffers))
             {

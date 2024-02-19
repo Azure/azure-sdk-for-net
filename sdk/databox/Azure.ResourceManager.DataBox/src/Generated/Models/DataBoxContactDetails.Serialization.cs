@@ -53,7 +53,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NotificationPreference)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NotificationPreference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +151,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<NotificationPreference> array = new List<NotificationPreference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.NotificationPreference.DeserializeNotificationPreference(item));
+                        }
                     }
                     notificationPreference = array;
                     continue;

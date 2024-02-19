@@ -107,7 +107,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Children)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionAggregatedCostResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -310,7 +317,14 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionAggregatedCostResult> array = new List<ConsumptionAggregatedCostResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeConsumptionAggregatedCostResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeserializeConsumptionAggregatedCostResult(item));
+                                }
                             }
                             children = array;
                             continue;

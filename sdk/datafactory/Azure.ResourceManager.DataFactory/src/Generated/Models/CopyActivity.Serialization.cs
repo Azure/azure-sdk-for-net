@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatasetReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +50,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatasetReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                ((IJsonModel<PipelineActivityPolicy>)Policy).Write(writer, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -82,7 +96,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,16 +113,23 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityUserProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            ((IJsonModel<CopyActivitySource>)Source).Write(writer, options);
             writer.WritePropertyName("sink"u8);
-            writer.WriteObjectValue(Sink);
+            ((IJsonModel<CopySink>)Sink).Write(writer, options);
             if (Optional.IsDefined(Translator))
             {
                 writer.WritePropertyName("translator"u8);
@@ -122,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(StagingSettings))
             {
                 writer.WritePropertyName("stagingSettings"u8);
-                writer.WriteObjectValue(StagingSettings);
+                ((IJsonModel<StagingSettings>)StagingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(ParallelCopies))
             {
@@ -142,17 +170,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RedirectIncompatibleRowSettings))
             {
                 writer.WritePropertyName("redirectIncompatibleRowSettings"u8);
-                writer.WriteObjectValue(RedirectIncompatibleRowSettings);
+                ((IJsonModel<RedirectIncompatibleRowSettings>)RedirectIncompatibleRowSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LogStorageSettings))
             {
                 writer.WritePropertyName("logStorageSettings"u8);
-                writer.WriteObjectValue(LogStorageSettings);
+                ((IJsonModel<LogStorageSettings>)LogStorageSettings).Write(writer, options);
             }
             if (Optional.IsDefined(LogSettings))
             {
                 writer.WritePropertyName("logSettings"u8);
-                writer.WriteObjectValue(LogSettings);
+                ((IJsonModel<DataFactoryLogSettings>)LogSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PreserveRules))
             {
@@ -160,19 +188,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in PreserveRules)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -182,19 +212,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Preserve)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -206,7 +238,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipErrorFile))
             {
                 writer.WritePropertyName("skipErrorFile"u8);
-                writer.WriteObjectValue(SkipErrorFile);
+                ((IJsonModel<SkipErrorFile>)SkipErrorFile).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -283,7 +315,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        }
                     }
                     inputs = array;
                     continue;
@@ -297,7 +336,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DatasetReference> array = new List<DatasetReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatasetReference.DeserializeDatasetReference(item));
+                        }
                     }
                     outputs = array;
                     continue;
@@ -362,7 +408,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -376,7 +429,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        }
                     }
                     userProperties = array;
                     continue;

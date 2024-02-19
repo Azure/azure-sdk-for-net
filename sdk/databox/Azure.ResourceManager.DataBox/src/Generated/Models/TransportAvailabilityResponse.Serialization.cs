@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in TransportAvailabilityDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TransportAvailabilityDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<TransportAvailabilityDetails> array = new List<TransportAvailabilityDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.TransportAvailabilityDetails.DeserializeTransportAvailabilityDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.TransportAvailabilityDetails.DeserializeTransportAvailabilityDetails(item));
+                        }
                     }
                     transportAvailabilityDetails = array;
                     continue;

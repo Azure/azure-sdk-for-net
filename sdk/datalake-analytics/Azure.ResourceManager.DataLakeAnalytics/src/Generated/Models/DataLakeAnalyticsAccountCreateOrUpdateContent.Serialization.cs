@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +80,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +97,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -216,7 +244,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                }
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -230,7 +265,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                }
                             }
                             storageAccounts = array;
                             continue;
@@ -244,7 +286,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                }
                             }
                             computePolicies = array;
                             continue;
@@ -258,7 +307,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                             List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item));
+                                }
                             }
                             firewallRules = array;
                             continue;

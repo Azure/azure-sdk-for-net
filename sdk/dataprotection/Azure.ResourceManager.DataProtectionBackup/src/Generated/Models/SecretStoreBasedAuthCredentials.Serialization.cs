@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(SecretStoreResource))
             {
                 writer.WritePropertyName("secretStoreResource"u8);
-                writer.WriteObjectValue(SecretStoreResource);
+                ((IJsonModel<SecretStoreResourceInfo>)SecretStoreResource).Write(writer, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

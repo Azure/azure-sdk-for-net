@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppWritableSecret>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -48,17 +55,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
-                writer.WriteObjectValue(ManualTriggerConfig);
+                ((IJsonModel<JobConfigurationManualTriggerConfig>)ManualTriggerConfig).Write(writer, options);
             }
             if (Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
-                writer.WriteObjectValue(ScheduleTriggerConfig);
+                ((IJsonModel<JobConfigurationScheduleTriggerConfig>)ScheduleTriggerConfig).Write(writer, options);
             }
             if (Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
-                writer.WriteObjectValue(EventTriggerConfig);
+                ((IJsonModel<EventTriggerConfiguration>)EventTriggerConfig).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -66,7 +73,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppRegistryCredentials>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                        }
                     }
                     secrets = array;
                     continue;
@@ -189,7 +210,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
+                        }
                     }
                     registries = array;
                     continue;

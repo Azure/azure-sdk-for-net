@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                ((IJsonModel<BudgetComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                ((IJsonModel<BudgetComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

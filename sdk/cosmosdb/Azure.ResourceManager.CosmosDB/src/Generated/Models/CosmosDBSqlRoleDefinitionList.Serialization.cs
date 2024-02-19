@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBSqlRoleDefinitionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlRoleDefinitionData> array = new List<CosmosDBSqlRoleDefinitionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBSqlRoleDefinitionData.DeserializeCosmosDBSqlRoleDefinitionData(item));
+                        }
                     }
                     value = array;
                     continue;

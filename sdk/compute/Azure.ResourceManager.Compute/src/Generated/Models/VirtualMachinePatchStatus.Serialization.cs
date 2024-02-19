@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AvailablePatchSummary))
             {
                 writer.WritePropertyName("availablePatchSummary"u8);
-                writer.WriteObjectValue(AvailablePatchSummary);
+                ((IJsonModel<AvailablePatchSummary>)AvailablePatchSummary).Write(writer, options);
             }
             if (Optional.IsDefined(LastPatchInstallationSummary))
             {
                 writer.WritePropertyName("lastPatchInstallationSummary"u8);
-                writer.WriteObjectValue(LastPatchInstallationSummary);
+                ((IJsonModel<LastPatchInstallationSummary>)LastPatchInstallationSummary).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationStatuses))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<InstanceViewStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        }
                     }
                     configurationStatuses = array;
                     continue;

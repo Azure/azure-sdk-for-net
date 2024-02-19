@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                ((IJsonModel<ImageDiskReference>)ImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(GalleryImageReference))
             {
                 writer.WritePropertyName("galleryImageReference"u8);
-                writer.WriteObjectValue(GalleryImageReference);
+                ((IJsonModel<ImageDiskReference>)GalleryImageReference).Write(writer, options);
             }
             if (Optional.IsDefined(SourceUri))
             {

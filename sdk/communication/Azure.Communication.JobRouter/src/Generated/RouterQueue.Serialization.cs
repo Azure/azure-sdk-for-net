@@ -54,12 +54,14 @@ namespace Azure.Communication.JobRouter
                 foreach (var item in _labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteObjectValue(item.Value);
                 }
                 writer.WriteEndObject();
             }

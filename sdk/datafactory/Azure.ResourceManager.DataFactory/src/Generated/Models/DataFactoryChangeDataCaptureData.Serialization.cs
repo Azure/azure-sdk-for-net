@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                ((IJsonModel<ChangeDataCaptureFolder>)Folder).Write(writer, options);
             }
             if (Optional.IsDefined(Description))
             {
@@ -70,18 +70,32 @@ namespace Azure.ResourceManager.DataFactory
             writer.WriteStartArray();
             foreach (var item in SourceConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MapperSourceConnectionsInfo>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionsInfo"u8);
             writer.WriteStartArray();
             foreach (var item in TargetConnectionsInfo)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MapperTargetConnectionsInfo>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("policy"u8);
-            writer.WriteObjectValue(Policy);
+            ((IJsonModel<MapperPolicy>)Policy).Write(writer, options);
             if (Optional.IsDefined(AllowVnetOverride))
             {
                 writer.WritePropertyName("allowVNetOverride"u8);
@@ -205,7 +219,14 @@ namespace Azure.ResourceManager.DataFactory
                             List<MapperSourceConnectionsInfo> array = new List<MapperSourceConnectionsInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperSourceConnectionsInfo.DeserializeMapperSourceConnectionsInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MapperSourceConnectionsInfo.DeserializeMapperSourceConnectionsInfo(item));
+                                }
                             }
                             sourceConnectionsInfo = array;
                             continue;
@@ -215,7 +236,14 @@ namespace Azure.ResourceManager.DataFactory
                             List<MapperTargetConnectionsInfo> array = new List<MapperTargetConnectionsInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MapperTargetConnectionsInfo.DeserializeMapperTargetConnectionsInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MapperTargetConnectionsInfo.DeserializeMapperTargetConnectionsInfo(item));
+                                }
                             }
                             targetConnectionsInfo = array;
                             continue;

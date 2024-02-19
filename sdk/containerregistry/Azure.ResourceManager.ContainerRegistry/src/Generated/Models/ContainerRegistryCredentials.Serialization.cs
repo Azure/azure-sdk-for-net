@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
-                writer.WriteObjectValue(SourceRegistry);
+                ((IJsonModel<SourceRegistryCredentials>)SourceRegistry).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 foreach (var item in CustomRegistries)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<CustomRegistryCredentials>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Dictionary<string, CustomRegistryCredentials> dictionary = new Dictionary<string, CustomRegistryCredentials>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value));
+                        }
                     }
                     customRegistries = dictionary;
                     continue;

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                ((IJsonModel<DatadogHostMetadata>)Meta).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

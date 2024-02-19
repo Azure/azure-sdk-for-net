@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataExportDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataImportDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +122,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataExportDetails> array = new List<DataExportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataExportDetails.DeserializeDataExportDetails(item));
+                        }
                     }
                     dataExportDetails = array;
                     continue;
@@ -122,7 +143,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataImportDetails> array = new List<DataImportDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.DataImportDetails.DeserializeDataImportDetails(item));
+                        }
                     }
                     dataImportDetails = array;
                     continue;

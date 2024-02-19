@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<RunCommandDocumentBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandDocumentBase> array = new List<RunCommandDocumentBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunCommandDocumentBase.DeserializeRunCommandDocumentBase(item));
+                        }
                     }
                     value = array;
                     continue;

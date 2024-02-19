@@ -59,12 +59,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(IotDeviceDetails))
             {
                 writer.WritePropertyName("ioTDeviceDetails"u8);
-                writer.WriteObjectValue(IotDeviceDetails);
+                ((IJsonModel<EdgeIotDeviceInfo>)IotDeviceDetails).Write(writer, options);
             }
             if (Optional.IsDefined(IotEdgeDeviceDetails))
             {
                 writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-                writer.WriteObjectValue(IotEdgeDeviceDetails);
+                ((IJsonModel<EdgeIotDeviceInfo>)IotEdgeDeviceDetails).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ShareMappings))
             {
@@ -72,14 +72,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeMountPointMap>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(IotEdgeAgentInfo))
             {
                 writer.WritePropertyName("ioTEdgeAgentInfo"u8);
-                writer.WriteObjectValue(IotEdgeAgentInfo);
+                ((IJsonModel<IotEdgeAgentInfo>)IotEdgeAgentInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
@@ -89,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ComputeResource))
             {
                 writer.WritePropertyName("computeResource"u8);
-                writer.WriteObjectValue(ComputeResource);
+                ((IJsonModel<EdgeComputeResourceInfo>)ComputeResource).Write(writer, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {
@@ -226,7 +233,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                }
                             }
                             shareMappings = array;
                             continue;

@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in VmUsedMemory)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeVmMemory>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -63,7 +70,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in NumaNodesData)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NumaNodeInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +161,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        }
                     }
                     vmUsedMemory = dictionary;
                     continue;
@@ -166,7 +187,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        }
                     }
                     numaNodesData = array;
                     continue;

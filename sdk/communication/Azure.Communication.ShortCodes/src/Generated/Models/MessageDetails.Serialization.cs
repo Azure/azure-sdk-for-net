@@ -67,7 +67,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +164,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<UseCase> array = new List<UseCase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UseCase.DeserializeUseCase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(UseCase.DeserializeUseCase(item));
+                        }
                     }
                     useCases = array;
                     continue;

@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FilteringTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        }
                     }
                     filteringTags = array;
                     continue;

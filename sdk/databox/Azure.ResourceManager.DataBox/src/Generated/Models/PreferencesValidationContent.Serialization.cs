@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preference))
             {
                 writer.WritePropertyName("preference"u8);
-                writer.WriteObjectValue(Preference);
+                ((IJsonModel<DataBoxOrderPreferences>)Preference).Write(writer, options);
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());

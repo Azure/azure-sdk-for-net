@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SecretVolumeItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -131,7 +138,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        }
                     }
                     secrets = array;
                     continue;

@@ -31,7 +31,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<AcrErrorInfo> array = new List<AcrErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AcrErrorInfo.DeserializeAcrErrorInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AcrErrorInfo.DeserializeAcrErrorInfo(item));
+                        }
                     }
                     errors = array;
                     continue;

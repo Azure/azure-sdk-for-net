@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceGuardOperationDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +142,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardOperationDetails> array = new List<ResourceGuardOperationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardOperationDetails.DeserializeResourceGuardOperationDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceGuardOperationDetails.DeserializeResourceGuardOperationDetails(item));
+                        }
                     }
                     resourceGuardOperations = array;
                     continue;

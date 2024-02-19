@@ -96,7 +96,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryImageDescriptor>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -108,27 +115,27 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger);
+                ((IJsonModel<ContainerRegistryImageUpdateTrigger>)ImageUpdateTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger);
+                ((IJsonModel<ContainerRegistrySourceTriggerDescriptor>)SourceTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger);
+                ((IJsonModel<ContainerRegistryTimerTriggerDescriptor>)TimerTrigger).Write(writer, options);
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -158,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue(LogArtifact);
+                ((IJsonModel<ContainerRegistryImageDescriptor>)LogArtifact).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -345,7 +352,14 @@ namespace Azure.ResourceManager.ContainerRegistry
                             List<ContainerRegistryImageDescriptor> array = new List<ContainerRegistryImageDescriptor>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(item));
+                                }
                             }
                             outputImages = array;
                             continue;

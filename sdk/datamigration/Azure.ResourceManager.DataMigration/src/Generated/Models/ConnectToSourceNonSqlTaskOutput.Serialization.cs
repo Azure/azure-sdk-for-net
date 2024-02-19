@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(ServerProperties))
             {
                 writer.WritePropertyName("serverProperties"u8);
-                writer.WriteObjectValue(ServerProperties);
+                ((IJsonModel<ServerProperties>)ServerProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Databases))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportableException>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +157,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReportableException.DeserializeReportableException(item));
+                        }
                     }
                     validationErrors = array;
                     continue;

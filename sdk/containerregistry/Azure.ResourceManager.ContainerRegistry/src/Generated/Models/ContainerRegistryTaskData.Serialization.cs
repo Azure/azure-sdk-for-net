@@ -86,12 +86,12 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                ((IJsonModel<ContainerRegistryPlatformProperties>)Platform).Write(writer, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                ((IJsonModel<ContainerRegistryAgentProperties>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(AgentPoolName))
             {
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(Step))
             {
                 writer.WritePropertyName("step"u8);
-                writer.WriteObjectValue(Step);
+                ((IJsonModel<ContainerRegistryTaskStepProperties>)Step).Write(writer, options);
             }
             if (Optional.IsDefined(Trigger))
             {
                 writer.WritePropertyName("trigger"u8);
-                writer.WriteObjectValue(Trigger);
+                ((IJsonModel<ContainerRegistryTriggerProperties>)Trigger).Write(writer, options);
             }
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<ContainerRegistryCredentials>)Credentials).Write(writer, options);
             }
             if (Optional.IsDefined(LogTemplate))
             {

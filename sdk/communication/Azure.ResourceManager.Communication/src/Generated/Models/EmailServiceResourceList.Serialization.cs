@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EmailServiceResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Communication.Models
                     List<EmailServiceResourceData> array = new List<EmailServiceResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EmailServiceResourceData.DeserializeEmailServiceResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EmailServiceResourceData.DeserializeEmailServiceResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

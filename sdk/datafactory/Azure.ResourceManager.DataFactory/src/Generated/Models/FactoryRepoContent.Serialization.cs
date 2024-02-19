@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration);
+                ((IJsonModel<FactoryRepoConfiguration>)RepoConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

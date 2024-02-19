@@ -49,12 +49,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(FullBackupSetInfo))
             {
                 writer.WritePropertyName("fullBackupSetInfo"u8);
-                writer.WriteObjectValue(FullBackupSetInfo);
+                ((IJsonModel<BackupSetInfo>)FullBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastRestoredBackupSetInfo))
             {
                 writer.WritePropertyName("lastRestoredBackupSetInfo"u8);
-                writer.WriteObjectValue(LastRestoredBackupSetInfo);
+                ((IJsonModel<BackupSetInfo>)LastRestoredBackupSetInfo).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActiveBackupSets))
             {
@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ActiveBackupSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BackupSetInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportableException>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -212,7 +226,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<BackupSetInfo> array = new List<BackupSetInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupSetInfo.DeserializeBackupSetInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BackupSetInfo.DeserializeBackupSetInfo(item));
+                        }
                     }
                     activeBackupSets = array;
                     continue;
@@ -245,7 +266,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReportableException.DeserializeReportableException(item));
+                        }
                     }
                     exceptionsAndWarnings = array;
                     continue;

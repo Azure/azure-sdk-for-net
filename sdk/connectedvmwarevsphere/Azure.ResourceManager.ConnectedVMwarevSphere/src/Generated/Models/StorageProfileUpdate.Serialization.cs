@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareVirtualDiskUpdate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVirtualDiskUpdate> array = new List<VMwareVirtualDiskUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVirtualDiskUpdate.DeserializeVMwareVirtualDiskUpdate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareVirtualDiskUpdate.DeserializeVMwareVirtualDiskUpdate(item));
+                        }
                     }
                     disks = array;
                     continue;

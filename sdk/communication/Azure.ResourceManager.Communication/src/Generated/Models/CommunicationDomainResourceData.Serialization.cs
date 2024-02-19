@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Communication
             if (options.Format != "W" && Optional.IsDefined(VerificationStates))
             {
                 writer.WritePropertyName("verificationStates"u8);
-                writer.WriteObjectValue(VerificationStates);
+                ((IJsonModel<DomainPropertiesVerificationStates>)VerificationStates).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VerificationRecords))
             {
                 writer.WritePropertyName("verificationRecords"u8);
-                writer.WriteObjectValue(VerificationRecords);
+                ((IJsonModel<DomainPropertiesVerificationRecords>)VerificationRecords).Write(writer, options);
             }
             if (Optional.IsDefined(UserEngagementTracking))
             {

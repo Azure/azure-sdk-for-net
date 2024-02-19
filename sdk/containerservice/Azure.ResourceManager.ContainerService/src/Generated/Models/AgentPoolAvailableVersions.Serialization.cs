@@ -55,7 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AgentPoolVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AgentPoolAvailableVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +156,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                             List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
+                                }
                             }
                             agentPoolVersions = array;
                             continue;

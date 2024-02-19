@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareVirtualDisk>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in ScsiControllers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualScsiController>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareVirtualDisk> array = new List<VMwareVirtualDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareVirtualDisk.DeserializeVMwareVirtualDisk(item));
+                        }
                     }
                     disks = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VirtualScsiController> array = new List<VirtualScsiController>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualScsiController.DeserializeVirtualScsiController(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualScsiController.DeserializeVirtualScsiController(item));
+                        }
                     }
                     scsiControllers = array;
                     continue;

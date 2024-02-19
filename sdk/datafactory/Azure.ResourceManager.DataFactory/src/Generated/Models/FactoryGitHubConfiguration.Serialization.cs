@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
-                writer.WriteObjectValue(ClientSecret);
+                ((IJsonModel<FactoryGitHubClientSecret>)ClientSecret).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FactoryRepoConfigurationType);

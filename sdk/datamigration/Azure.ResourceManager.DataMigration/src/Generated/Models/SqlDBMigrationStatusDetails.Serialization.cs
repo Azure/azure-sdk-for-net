@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfCopyProgressDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CopyProgressDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CopyProgressDetails> array = new List<CopyProgressDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CopyProgressDetails.DeserializeCopyProgressDetails(item));
+                        }
                     }
                     listOfCopyProgressDetails = array;
                     continue;

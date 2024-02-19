@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail);
+            ((IJsonModel<ConfluentOfferDetail>)OfferDetail).Write(writer, options);
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail);
+            ((IJsonModel<ConfluentUserDetail>)UserDetail).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

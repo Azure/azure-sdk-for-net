@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in RemoteSupportSettingsList)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EdgeRemoteSupportSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +157,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<EdgeRemoteSupportSettings> array = new List<EdgeRemoteSupportSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
+                                }
                             }
                             remoteSupportSettingsList = array;
                             continue;

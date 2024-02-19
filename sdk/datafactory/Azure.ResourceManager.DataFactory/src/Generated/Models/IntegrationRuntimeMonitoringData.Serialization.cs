@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IntegrationRuntimeNodeMonitoringData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<IntegrationRuntimeNodeMonitoringData> array = new List<IntegrationRuntimeNodeMonitoringData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeNodeMonitoringData.DeserializeIntegrationRuntimeNodeMonitoringData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationRuntimeNodeMonitoringData.DeserializeIntegrationRuntimeNodeMonitoringData(item));
+                        }
                     }
                     nodes = array;
                     continue;

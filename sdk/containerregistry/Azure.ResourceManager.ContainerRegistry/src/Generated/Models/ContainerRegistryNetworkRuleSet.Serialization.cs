@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryIPRule> array = new List<ContainerRegistryIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistryIPRule.DeserializeContainerRegistryIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;

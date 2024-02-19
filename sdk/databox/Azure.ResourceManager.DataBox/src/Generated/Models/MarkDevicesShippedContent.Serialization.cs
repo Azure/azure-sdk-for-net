@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("deliverToDcPackageDetails"u8);
-            writer.WriteObjectValue(DeliverToDataCenterPackageDetails);
+            ((IJsonModel<PackageCarrierInfo>)DeliverToDataCenterPackageDetails).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

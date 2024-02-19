@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ConsumptionResourceProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Savings))
             {
                 writer.WritePropertyName("savings"u8);
-                writer.WriteObjectValue(Savings);
+                ((IJsonModel<ConsumptionSavingsProperties>)Savings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Scope))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                ((IJsonModel<ConsumptionUsageProperties>)Usage).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

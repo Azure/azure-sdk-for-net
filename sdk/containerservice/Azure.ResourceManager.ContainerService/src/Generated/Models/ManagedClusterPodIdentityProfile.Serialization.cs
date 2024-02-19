@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterPodIdentity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentityExceptions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedClusterPodIdentityException>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentity> array = new List<ManagedClusterPodIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedClusterPodIdentity.DeserializeManagedClusterPodIdentity(item));
+                        }
                     }
                     userAssignedIdentities = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPodIdentityException> array = new List<ManagedClusterPodIdentityException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedClusterPodIdentityException.DeserializeManagedClusterPodIdentityException(item));
+                        }
                     }
                     userAssignedIdentityExceptions = array;
                     continue;

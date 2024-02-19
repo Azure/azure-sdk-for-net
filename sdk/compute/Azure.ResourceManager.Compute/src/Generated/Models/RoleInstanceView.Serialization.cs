@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceInstanceViewStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        }
                     }
                     statuses = array;
                     continue;

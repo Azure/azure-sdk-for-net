@@ -99,7 +99,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupByMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KpiGroupByMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ParticipantProfilesMetadata)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KpiParticipantProfilesMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +135,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (Optional.IsDefined(ThresHolds))
             {
                 writer.WritePropertyName("thresHolds"u8);
-                writer.WriteObjectValue(ThresHolds);
+                ((IJsonModel<KpiThresholds>)ThresHolds).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Aliases))
             {
@@ -129,7 +143,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Aliases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KpiAlias>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +160,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Extracts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KpiExtract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -309,7 +337,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiGroupByMetadata> array = new List<KpiGroupByMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KpiGroupByMetadata.DeserializeKpiGroupByMetadata(item));
+                        }
                     }
                     groupByMetadata = array;
                     continue;
@@ -323,7 +358,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiParticipantProfilesMetadata> array = new List<KpiParticipantProfilesMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KpiParticipantProfilesMetadata.DeserializeKpiParticipantProfilesMetadata(item));
+                        }
                     }
                     participantProfilesMetadata = array;
                     continue;
@@ -355,7 +397,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiAlias> array = new List<KpiAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiAlias.DeserializeKpiAlias(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KpiAlias.DeserializeKpiAlias(item));
+                        }
                     }
                     aliases = array;
                     continue;
@@ -369,7 +418,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiExtract> array = new List<KpiExtract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiExtract.DeserializeKpiExtract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KpiExtract.DeserializeKpiExtract(item));
+                        }
                     }
                     extracts = array;
                     continue;

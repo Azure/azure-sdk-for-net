@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in ProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ParticipantProfilePropertyReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in RelatedProfilePropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ParticipantProfilePropertyReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +136,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        }
                     }
                     profilePropertyReferences = array;
                     continue;
@@ -141,7 +162,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantProfilePropertyReference> array = new List<ParticipantProfilePropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParticipantProfilePropertyReference.DeserializeParticipantProfilePropertyReference(item));
+                        }
                     }
                     relatedProfilePropertyReferences = array;
                     continue;

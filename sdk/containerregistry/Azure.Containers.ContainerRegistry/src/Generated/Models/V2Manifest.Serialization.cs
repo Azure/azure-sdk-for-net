@@ -48,7 +48,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<OciDescriptor> array = new List<OciDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OciDescriptor.DeserializeOciDescriptor(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OciDescriptor.DeserializeOciDescriptor(item));
+                        }
                     }
                     layers = array;
                     continue;

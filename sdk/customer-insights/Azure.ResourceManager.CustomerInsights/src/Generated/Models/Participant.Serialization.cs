@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ParticipantPropertyReference>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("participantName"u8);
@@ -122,7 +129,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                        }
                     }
                     participantPropertyReferences = array;
                     continue;

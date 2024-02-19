@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("sourceInfo"u8);
-            writer.WriteObjectValue(SourceInfo);
+            ((IJsonModel<PeriodicTimerSourceInfo>)SourceInfo).Write(writer, options);
             writer.WritePropertyName("sinkInfo"u8);
-            writer.WriteObjectValue(SinkInfo);
+            ((IJsonModel<DataBoxEdgeRoleSinkInfo>)SinkInfo).Write(writer, options);
             if (Optional.IsDefined(CustomContextTag))
             {
                 writer.WritePropertyName("customContextTag"u8);

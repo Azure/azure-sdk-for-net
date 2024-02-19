@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Criteria)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataProtectionBackupCriteria>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("taggingPriority"u8);
             writer.WriteNumberValue(TaggingPriority);
             writer.WritePropertyName("tagInfo"u8);
-            writer.WriteObjectValue(TagInfo);
+            ((IJsonModel<DataProtectionBackupRetentionTag>)TagInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupCriteria> array = new List<DataProtectionBackupCriteria>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProtectionBackupCriteria.DeserializeDataProtectionBackupCriteria(item));
+                        }
                     }
                     criteria = array;
                     continue;

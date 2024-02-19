@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<AvailableServiceSkuSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                ((IJsonModel<AvailableServiceSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

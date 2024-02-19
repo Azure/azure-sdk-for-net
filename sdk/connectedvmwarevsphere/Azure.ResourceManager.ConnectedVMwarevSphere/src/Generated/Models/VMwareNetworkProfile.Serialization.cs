@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareNetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     List<VMwareNetworkInterface> array = new List<VMwareNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VMwareNetworkInterface.DeserializeVMwareNetworkInterface(item));
+                        }
                     }
                     networkInterfaces = array;
                     continue;

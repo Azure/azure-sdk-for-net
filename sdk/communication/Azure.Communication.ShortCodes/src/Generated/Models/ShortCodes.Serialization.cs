@@ -32,7 +32,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<ShortCode> array = new List<ShortCode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShortCode.DeserializeShortCode(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ShortCode.DeserializeShortCode(item));
+                        }
                     }
                     shortCodes = array;
                     continue;

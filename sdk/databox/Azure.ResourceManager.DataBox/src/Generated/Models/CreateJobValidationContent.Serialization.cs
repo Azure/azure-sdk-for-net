@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStartArray();
             foreach (var item in IndividualRequestDetails)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataBoxValidationInputContent>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxValidationInputContent> array = new List<DataBoxValidationInputContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxValidationInputContent.DeserializeDataBoxValidationInputContent(item));
+                        }
                     }
                     individualRequestDetails = array;
                     continue;

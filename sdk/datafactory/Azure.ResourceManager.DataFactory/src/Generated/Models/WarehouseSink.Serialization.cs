@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CopyCommandSettings))
             {
                 writer.WritePropertyName("copyCommandSettings"u8);
-                writer.WriteObjectValue(CopyCommandSettings);
+                ((IJsonModel<DWCopyCommandSettings>)CopyCommandSettings).Write(writer, options);
             }
             if (Optional.IsDefined(TableOption))
             {

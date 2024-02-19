@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                ((IJsonModel<DataFactoryPurviewConfiguration>)PurviewConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(RepoConfiguration))
             {
                 writer.WritePropertyName("repoConfiguration"u8);
-                writer.WriteObjectValue(RepoConfiguration);
+                ((IJsonModel<FactoryRepoConfiguration>)RepoConfiguration).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GlobalParameters))
             {
@@ -107,14 +107,21 @@ namespace Azure.ResourceManager.DataFactory
                 foreach (var item in GlobalParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<DataFactoryGlobalParameterProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<DataFactoryEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -294,7 +301,14 @@ namespace Azure.ResourceManager.DataFactory
                             Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
+                                }
                             }
                             globalParameters = dictionary;
                             continue;

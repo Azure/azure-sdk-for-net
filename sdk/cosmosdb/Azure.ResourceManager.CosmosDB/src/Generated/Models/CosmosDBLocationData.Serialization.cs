@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<CosmosDBLocationProperties>)Properties).Write(writer, options);
             }
             if (options.Format != "W")
             {

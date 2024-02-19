@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskInput>)Input).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MigrateSchemaSqlServerSqlDBTaskOutput>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +71,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ODataError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +93,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Commands)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CommandProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +185,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSchemaSqlServerSqlDBTaskOutput> array = new List<MigrateSchemaSqlServerSqlDBTaskOutput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigrateSchemaSqlServerSqlDBTaskOutput.DeserializeMigrateSchemaSqlServerSqlDBTaskOutput(item));
+                        }
                     }
                     output = array;
                     continue;
@@ -202,7 +230,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ODataError> array = new List<ODataError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ODataError.DeserializeODataError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ODataError.DeserializeODataError(item));
+                        }
                     }
                     errors = array;
                     continue;
@@ -225,7 +260,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<CommandProperties> array = new List<CommandProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommandProperties.DeserializeCommandProperties(item));
+                        }
                     }
                     commands = array;
                     continue;

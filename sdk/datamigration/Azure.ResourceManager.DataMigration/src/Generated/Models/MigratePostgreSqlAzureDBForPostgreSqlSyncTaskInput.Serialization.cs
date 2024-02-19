@@ -30,13 +30,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            ((IJsonModel<PostgreSqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            ((IJsonModel<PostgreSqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> array = new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(item));
+                        }
                     }
                     selectedDatabases = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WidgetTypeResourceFormatData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<WidgetTypeResourceFormatData> array = new List<WidgetTypeResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WidgetTypeResourceFormatData.DeserializeWidgetTypeResourceFormatData(item));
+                        }
                     }
                     value = array;
                     continue;

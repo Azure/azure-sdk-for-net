@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in RegisteredFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SubscriptionRegisteredFeatures>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -215,7 +222,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
+                                }
                             }
                             registeredFeatures = array;
                             continue;

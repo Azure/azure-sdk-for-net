@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                ((IJsonModel<ContactInfo>)ContactDetails).Write(writer, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                ((IJsonModel<DataBoxShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {

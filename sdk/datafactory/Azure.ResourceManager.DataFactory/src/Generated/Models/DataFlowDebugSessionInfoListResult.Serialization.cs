@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFlowDebugSessionInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFlowDebugSessionInfo> array = new List<DataFlowDebugSessionInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFlowDebugSessionInfo.DeserializeDataFlowDebugSessionInfo(item));
+                        }
                     }
                     value = array;
                     continue;

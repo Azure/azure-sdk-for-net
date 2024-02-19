@@ -30,13 +30,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            ((IJsonModel<PostgreSqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            ((IJsonModel<OracleConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> array = new List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item));
+                        }
                     }
                     selectedDatabases = array;
                     continue;

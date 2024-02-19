@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Communication.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SuppressionListAddressResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Communication.Models
                     List<SuppressionListAddressResourceData> array = new List<SuppressionListAddressResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SuppressionListAddressResourceData.DeserializeSuppressionListAddressResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

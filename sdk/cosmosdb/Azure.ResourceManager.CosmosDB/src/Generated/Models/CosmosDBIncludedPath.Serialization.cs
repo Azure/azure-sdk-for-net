@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Indexes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBPathIndexes>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBPathIndexes> array = new List<CosmosDBPathIndexes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBPathIndexes.DeserializeCosmosDBPathIndexes(item));
+                        }
                     }
                     indexes = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Databases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MongoDBDatabaseInfo>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("supportsSharding"u8);
@@ -90,7 +97,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBDatabaseInfo> array = new List<MongoDBDatabaseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item));
+                        }
                     }
                     databases = array;
                     continue;

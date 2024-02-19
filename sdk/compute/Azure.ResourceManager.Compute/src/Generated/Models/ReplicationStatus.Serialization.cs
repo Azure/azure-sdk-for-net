@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RegionalReplicationStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        }
                     }
                     summary = array;
                     continue;

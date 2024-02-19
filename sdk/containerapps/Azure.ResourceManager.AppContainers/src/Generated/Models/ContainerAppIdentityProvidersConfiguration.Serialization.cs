@@ -29,37 +29,37 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                ((IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>)AzureActiveDirectory).Write(writer, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook);
+                ((IJsonModel<ContainerAppFacebookConfiguration>)Facebook).Write(writer, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                ((IJsonModel<ContainerAppGitHubConfiguration>)GitHub).Write(writer, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google);
+                ((IJsonModel<ContainerAppGoogleConfiguration>)Google).Write(writer, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter);
+                ((IJsonModel<ContainerAppTwitterConfiguration>)Twitter).Write(writer, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple);
+                ((IJsonModel<ContainerAppAppleConfiguration>)Apple).Write(writer, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps);
+                ((IJsonModel<ContainerAppAzureStaticWebAppsConfiguration>)AzureStaticWebApps).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -68,7 +68,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ContainerAppCustomOpenIdConnectProviderConfiguration>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -194,7 +201,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration> dictionary = new Dictionary<string, ContainerAppCustomOpenIdConnectProviderConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, ContainerAppCustomOpenIdConnectProviderConfiguration.DeserializeContainerAppCustomOpenIdConnectProviderConfiguration(property0.Value));
+                        }
                     }
                     customOpenIdConnectProviders = dictionary;
                     continue;

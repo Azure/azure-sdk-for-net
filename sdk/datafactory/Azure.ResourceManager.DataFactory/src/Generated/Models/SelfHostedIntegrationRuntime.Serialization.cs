@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                ((IJsonModel<LinkedIntegrationRuntimeType>)LinkedInfo).Write(writer, options);
             }
             if (Optional.IsDefined(IsSelfContainedInteractiveAuthoringEnabled))
             {

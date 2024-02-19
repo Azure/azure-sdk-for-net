@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxJobData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxJobData> array = new List<DataBoxJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxJobData.DeserializeDataBoxJobData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxJobData.DeserializeDataBoxJobData(item));
+                        }
                     }
                     value = array;
                     continue;

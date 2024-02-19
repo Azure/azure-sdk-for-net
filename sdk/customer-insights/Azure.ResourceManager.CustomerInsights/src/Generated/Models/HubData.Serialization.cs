@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(HubBillingInfo))
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
-                writer.WriteObjectValue(HubBillingInfo);
+                ((IJsonModel<HubBillingInfoFormat>)HubBillingInfo).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

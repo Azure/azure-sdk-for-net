@@ -39,26 +39,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                ((IJsonModel<DataFlowFolder>)Folder).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -68,7 +70,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFlowSource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +87,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFlowSink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +104,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Transformations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFlowTransformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -217,7 +240,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSource> array = new List<DataFlowSource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSource.DeserializeDataFlowSource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataFlowSource.DeserializeDataFlowSource(item));
+                                }
                             }
                             sources = array;
                             continue;
@@ -231,7 +261,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowSink> array = new List<DataFlowSink>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowSink.DeserializeDataFlowSink(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataFlowSink.DeserializeDataFlowSink(item));
+                                }
                             }
                             sinks = array;
                             continue;
@@ -245,7 +282,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DataFlowTransformation> array = new List<DataFlowTransformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataFlowTransformation.DeserializeDataFlowTransformation(item));
+                                }
                             }
                             transformations = array;
                             continue;

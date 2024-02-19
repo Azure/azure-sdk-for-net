@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(RoleInstance))
             {
                 writer.WritePropertyName("roleInstance"u8);
-                writer.WriteObjectValue(RoleInstance);
+                ((IJsonModel<InstanceViewStatusesSummary>)RoleInstance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SdkVersion))
             {
@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ResourceInstanceViewStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +146,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ResourceInstanceViewStatus> array = new List<ResourceInstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ResourceInstanceViewStatus.DeserializeResourceInstanceViewStatus(item));
+                        }
                     }
                     statuses = array;
                     continue;

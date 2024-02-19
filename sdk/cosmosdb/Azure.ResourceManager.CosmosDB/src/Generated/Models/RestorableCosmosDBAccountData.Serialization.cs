@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WriteStartArray();
                 foreach (var item in RestorableLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestorableLocationResourceInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +243,14 @@ namespace Azure.ResourceManager.CosmosDB
                             List<RestorableLocationResourceInfo> array = new List<RestorableLocationResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RestorableLocationResourceInfo.DeserializeRestorableLocationResourceInfo(item));
+                                }
                             }
                             restorableLocations = array;
                             continue;

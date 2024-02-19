@@ -47,7 +47,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<ManifestListAttributes> array = new List<ManifestListAttributes>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManifestListAttributes.DeserializeManifestListAttributes(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManifestListAttributes.DeserializeManifestListAttributes(item));
+                        }
                     }
                     manifests = array;
                     continue;
@@ -70,7 +77,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<OciDescriptor> array = new List<OciDescriptor>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OciDescriptor.DeserializeOciDescriptor(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(OciDescriptor.DeserializeOciDescriptor(item));
+                        }
                     }
                     layers = array;
                     continue;
@@ -109,7 +123,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<FsLayer> array = new List<FsLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FsLayer.DeserializeFsLayer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FsLayer.DeserializeFsLayer(item));
+                        }
                     }
                     fsLayers = array;
                     continue;
@@ -123,7 +144,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<History> array = new List<History>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistry.History.DeserializeHistory(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistry.History.DeserializeHistory(item));
+                        }
                     }
                     history = array;
                     continue;
@@ -137,7 +165,14 @@ namespace Azure.Containers.ContainerRegistry
                     List<ImageSignature> array = new List<ImageSignature>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ImageSignature.DeserializeImageSignature(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ImageSignature.DeserializeImageSignature(item));
+                        }
                     }
                     signatures = array;
                     continue;

@@ -76,7 +76,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in ServerRoleGroupConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBForPostgreSqlServerRoleGroupConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -208,7 +215,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlServerRoleGroupConfiguration> array = new List<CosmosDBForPostgreSqlServerRoleGroupConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlServerRoleGroupConfiguration.DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CosmosDBForPostgreSqlServerRoleGroupConfiguration.DeserializeCosmosDBForPostgreSqlServerRoleGroupConfiguration(item));
+                                }
                             }
                             serverRoleGroupConfigurations = array;
                             continue;

@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(GitHubActionConfiguration))
             {
                 writer.WritePropertyName("githubActionConfiguration"u8);
-                writer.WriteObjectValue(GitHubActionConfiguration);
+                ((IJsonModel<ContainerAppGitHubActionConfiguration>)GitHubActionConfiguration).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

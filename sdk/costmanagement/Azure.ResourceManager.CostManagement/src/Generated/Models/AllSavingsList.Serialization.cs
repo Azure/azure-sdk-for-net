@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AllSavingsBenefitDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<AllSavingsBenefitDetails> array = new List<AllSavingsBenefitDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AllSavingsBenefitDetails.DeserializeAllSavingsBenefitDetails(item));
+                        }
                     }
                     value = array;
                     continue;

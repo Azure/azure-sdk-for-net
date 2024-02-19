@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LogLocationSettings))
             {
                 writer.WritePropertyName("logLocationSettings"u8);
-                writer.WriteObjectValue(LogLocationSettings);
+                ((IJsonModel<LogLocationSettings>)LogLocationSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<LoadBalancerFrontendIPConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -116,7 +123,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<LoadBalancerFrontendIPConfiguration> array = new List<LoadBalancerFrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
+                                }
                             }
                             frontendIPConfigurations = array;
                             continue;

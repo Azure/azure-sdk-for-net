@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerGroupData> array = new List<ContainerGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerGroupData.DeserializeContainerGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerGroupData.DeserializeContainerGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            ((IJsonModel<DataFactoryDataFlowProperties>)Properties).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);

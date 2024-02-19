@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo);
+                ((IJsonModel<AzureActiveDirectoryApp>)AzureAuthenticationInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -92,12 +92,12 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo);
+                ((IJsonModel<ConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo);
+                ((IJsonModel<ConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -105,7 +105,14 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatabaseInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -296,7 +303,14 @@ namespace Azure.ResourceManager.DataMigration
                             List<DatabaseInfo> array = new List<DatabaseInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseInfo.DeserializeDatabaseInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DatabaseInfo.DeserializeDatabaseInfo(item));
+                                }
                             }
                             databasesInfo = array;
                             continue;

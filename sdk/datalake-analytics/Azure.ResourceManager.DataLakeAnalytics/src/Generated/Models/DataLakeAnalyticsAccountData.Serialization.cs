@@ -107,7 +107,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in DataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeStoreAccountInformationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in PublicDataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeStoreAccountInformationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +141,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeAnalyticsStorageAccountInformationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +158,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeAnalyticsComputePolicyData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +175,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in HiveMetastores)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeAnalyticsHiveMetastore>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +192,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeAnalyticsVirtualNetworkRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +209,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeAnalyticsFirewallRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -444,7 +493,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                }
                             }
                             dataLakeStoreAccounts = array;
                             continue;
@@ -458,7 +514,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeStoreAccountInformationData> array = new List<DataLakeStoreAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeStoreAccountInformationData.DeserializeDataLakeStoreAccountInformationData(item));
+                                }
                             }
                             publicDataLakeStoreAccounts = array;
                             continue;
@@ -472,7 +535,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsStorageAccountInformationData> array = new List<DataLakeAnalyticsStorageAccountInformationData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeAnalyticsStorageAccountInformationData.DeserializeDataLakeAnalyticsStorageAccountInformationData(item));
+                                }
                             }
                             storageAccounts = array;
                             continue;
@@ -486,7 +556,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsComputePolicyData> array = new List<DataLakeAnalyticsComputePolicyData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeAnalyticsComputePolicyData.DeserializeDataLakeAnalyticsComputePolicyData(item));
+                                }
                             }
                             computePolicies = array;
                             continue;
@@ -500,7 +577,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsHiveMetastore> array = new List<DataLakeAnalyticsHiveMetastore>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeAnalyticsHiveMetastore.DeserializeDataLakeAnalyticsHiveMetastore(item));
+                                }
                             }
                             hiveMetastores = array;
                             continue;
@@ -514,7 +598,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsVirtualNetworkRule> array = new List<DataLakeAnalyticsVirtualNetworkRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeAnalyticsVirtualNetworkRule.DeserializeDataLakeAnalyticsVirtualNetworkRule(item));
+                                }
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -528,7 +619,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                             List<DataLakeAnalyticsFirewallRuleData> array = new List<DataLakeAnalyticsFirewallRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataLakeAnalyticsFirewallRuleData.DeserializeDataLakeAnalyticsFirewallRuleData(item));
+                                }
                             }
                             firewallRules = array;
                             continue;

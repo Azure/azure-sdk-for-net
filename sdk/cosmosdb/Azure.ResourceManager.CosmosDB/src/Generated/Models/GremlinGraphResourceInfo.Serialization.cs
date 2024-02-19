@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy"u8);
-                writer.WriteObjectValue(IndexingPolicy);
+                ((IJsonModel<CosmosDBIndexingPolicy>)IndexingPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionKey))
             {
                 writer.WritePropertyName("partitionKey"u8);
-                writer.WriteObjectValue(PartitionKey);
+                ((IJsonModel<CosmosDBContainerPartitionKey>)PartitionKey).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultTtl))
             {
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(UniqueKeyPolicy))
             {
                 writer.WritePropertyName("uniqueKeyPolicy"u8);
-                writer.WriteObjectValue(UniqueKeyPolicy);
+                ((IJsonModel<CosmosDBUniqueKeyPolicy>)UniqueKeyPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ConflictResolutionPolicy))
             {
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
-                writer.WriteObjectValue(ConflictResolutionPolicy);
+                ((IJsonModel<ConflictResolutionPolicy>)ConflictResolutionPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(RestoreParameters))
             {
                 writer.WritePropertyName("restoreParameters"u8);
-                writer.WriteObjectValue(RestoreParameters);
+                ((IJsonModel<ResourceRestoreParameters>)RestoreParameters).Write(writer, options);
             }
             if (Optional.IsDefined(CreateMode))
             {

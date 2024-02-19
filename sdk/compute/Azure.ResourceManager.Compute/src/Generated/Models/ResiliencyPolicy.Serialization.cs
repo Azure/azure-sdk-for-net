@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ResilientVmCreationPolicy))
             {
                 writer.WritePropertyName("resilientVMCreationPolicy"u8);
-                writer.WriteObjectValue(ResilientVmCreationPolicy);
+                ((IJsonModel<ResilientVmCreationPolicy>)ResilientVmCreationPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ResilientVmDeletionPolicy))
             {
                 writer.WritePropertyName("resilientVMDeletionPolicy"u8);
-                writer.WriteObjectValue(ResilientVmDeletionPolicy);
+                ((IJsonModel<ResilientVmDeletionPolicy>)ResilientVmDeletionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AlternativeOption))
             {
                 writer.WritePropertyName("alternativeOption"u8);
-                writer.WriteObjectValue(AlternativeOption);
+                ((IJsonModel<ImageAlternativeOption>)AlternativeOption).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<VirtualMachineRunCommandScriptSource>)Source).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +67,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,12 +111,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity);
+                ((IJsonModel<RunCommandManagedIdentity>)OutputBlobManagedIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+                ((IJsonModel<RunCommandManagedIdentity>)ErrorBlobManagedIdentity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                ((IJsonModel<VirtualMachineRunCommandInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
@@ -218,7 +232,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                }
                             }
                             parameters = array;
                             continue;
@@ -232,7 +253,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                                }
                             }
                             protectedParameters = array;
                             continue;

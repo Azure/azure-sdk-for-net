@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataTransferRegionalService>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<DataTransferRegionalService> array = new List<DataTransferRegionalService>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataTransferRegionalService.DeserializeDataTransferRegionalService(item));
+                        }
                     }
                     locations = array;
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(RollbackError))
             {
                 writer.WritePropertyName("rollbackError"u8);
-                writer.WriteObjectValue(RollbackError);
+                ((IJsonModel<ComputeApiError>)RollbackError).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

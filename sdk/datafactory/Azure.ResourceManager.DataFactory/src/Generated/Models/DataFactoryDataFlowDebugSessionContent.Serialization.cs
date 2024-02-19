@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                ((IJsonModel<DataFactoryIntegrationRuntimeDebugInfo>)IntegrationRuntime).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

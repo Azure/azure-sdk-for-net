@@ -146,7 +146,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in SkuProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionSkuProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -397,7 +404,14 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionSkuProperty> array = new List<ConsumptionSkuProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConsumptionSkuProperty.DeserializeConsumptionSkuProperty(item));
+                                }
                             }
                             skuProperties = array;
                             continue;

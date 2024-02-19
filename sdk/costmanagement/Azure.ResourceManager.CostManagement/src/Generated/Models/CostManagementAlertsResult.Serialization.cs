@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CostManagementAlertData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementAlertData> array = new List<CostManagementAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementAlertData.DeserializeCostManagementAlertData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CostManagementAlertData.DeserializeCostManagementAlertData(item));
+                        }
                     }
                     value = array;
                     continue;

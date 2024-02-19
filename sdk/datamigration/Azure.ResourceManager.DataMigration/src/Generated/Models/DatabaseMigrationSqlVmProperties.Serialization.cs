@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationStatusDetails))
             {
                 writer.WritePropertyName("migrationStatusDetails"u8);
-                writer.WriteObjectValue(MigrationStatusDetails);
+                ((IJsonModel<MigrationStatusDetails>)MigrationStatusDetails).Write(writer, options);
             }
             if (Optional.IsDefined(BackupConfiguration))
             {
                 writer.WritePropertyName("backupConfiguration"u8);
-                writer.WriteObjectValue(BackupConfiguration);
+                ((IJsonModel<BackupConfiguration>)BackupConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(OfflineConfiguration))
             {
                 writer.WritePropertyName("offlineConfiguration"u8);
-                writer.WriteObjectValue(OfflineConfiguration);
+                ((IJsonModel<OfflineConfiguration>)OfflineConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                ((IJsonModel<SqlConnectionInformation>)SourceSqlConnection).Write(writer, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError);
+                ((IJsonModel<ErrorInfo>)MigrationFailureError).Write(writer, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {

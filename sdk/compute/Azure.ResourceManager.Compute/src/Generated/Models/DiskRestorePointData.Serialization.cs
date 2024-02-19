@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                ((IJsonModel<DiskPurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FamilyId))
             {
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<DiskSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

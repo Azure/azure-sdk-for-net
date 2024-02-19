@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartArray();
             foreach (var item in MetricConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataBoxEdgeMetricConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -143,7 +150,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeMetricConfiguration> array = new List<DataBoxEdgeMetricConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeMetricConfiguration.DeserializeDataBoxEdgeMetricConfiguration(item));
+                                }
                             }
                             metricConfigurations = array;
                             continue;

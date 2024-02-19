@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ShareDataSetMappingData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<ShareDataSetMappingData> array = new List<ShareDataSetMappingData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShareDataSetMappingData.DeserializeShareDataSetMappingData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ShareDataSetMappingData.DeserializeShareDataSetMappingData(item));
+                        }
                     }
                     value = array;
                     continue;

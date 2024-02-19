@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            ((IJsonModel<MySqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            ((IJsonModel<MySqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
             if (Optional.IsDefined(IsOfflineMigration))
             {
                 writer.WritePropertyName("isOfflineMigration"u8);

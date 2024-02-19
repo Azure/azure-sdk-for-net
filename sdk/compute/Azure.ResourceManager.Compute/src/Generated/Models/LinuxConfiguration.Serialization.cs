@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                ((IJsonModel<SshConfiguration>)Ssh).Write(writer, options);
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings);
+                ((IJsonModel<LinuxPatchSettings>)PatchSettings).Write(writer, options);
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {

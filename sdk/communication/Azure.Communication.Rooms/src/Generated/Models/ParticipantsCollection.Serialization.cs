@@ -28,7 +28,14 @@ namespace Azure.Communication.Rooms
                     List<RoomParticipant> array = new List<RoomParticipant>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoomParticipant.DeserializeRoomParticipant(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RoomParticipant.DeserializeRoomParticipant(item));
+                        }
                     }
                     value = array;
                     continue;

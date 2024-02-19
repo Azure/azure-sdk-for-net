@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                ((IJsonModel<GalleryImageIdentifier>)Identifier).Write(writer, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended);
+                ((IJsonModel<RecommendedMachineConfiguration>)Recommended).Write(writer, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                ((IJsonModel<Disallowed>)Disallowed).Write(writer, options);
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                ((IJsonModel<ImagePurchasePlan>)PurchasePlan).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,7 +131,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GalleryImageFeature>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -368,7 +375,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<GalleryImageFeature> array = new List<GalleryImageFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item));
+                                }
                             }
                             features = array;
                             continue;

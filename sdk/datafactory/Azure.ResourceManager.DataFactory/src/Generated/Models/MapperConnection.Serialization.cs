@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonDslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapperDslConnectorProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +145,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                        }
                     }
                     commonDslConnectorProperties = array;
                     continue;

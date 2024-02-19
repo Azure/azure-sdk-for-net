@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedIntegrationRuntimeNode>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,14 +68,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedIntegrationRuntimeError>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation);
+                ((IJsonModel<ManagedIntegrationRuntimeOperationResult>)LastOperation).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -163,7 +177,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeNode> array = new List<ManagedIntegrationRuntimeNode>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedIntegrationRuntimeNode.DeserializeManagedIntegrationRuntimeNode(item));
+                                }
                             }
                             nodes = array;
                             continue;
@@ -177,7 +198,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ManagedIntegrationRuntimeError.DeserializeManagedIntegrationRuntimeError(item));
+                                }
                             }
                             otherErrors = array;
                             continue;

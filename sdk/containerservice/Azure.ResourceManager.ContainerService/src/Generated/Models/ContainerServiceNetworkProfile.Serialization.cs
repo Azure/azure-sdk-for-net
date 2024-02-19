@@ -79,12 +79,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(LoadBalancerProfile))
             {
                 writer.WritePropertyName("loadBalancerProfile"u8);
-                writer.WriteObjectValue(LoadBalancerProfile);
+                ((IJsonModel<ManagedClusterLoadBalancerProfile>)LoadBalancerProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NatGatewayProfile))
             {
                 writer.WritePropertyName("natGatewayProfile"u8);
-                writer.WriteObjectValue(NatGatewayProfile);
+                ((IJsonModel<ManagedClusterNatGatewayProfile>)NatGatewayProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(PodCidrs))
             {

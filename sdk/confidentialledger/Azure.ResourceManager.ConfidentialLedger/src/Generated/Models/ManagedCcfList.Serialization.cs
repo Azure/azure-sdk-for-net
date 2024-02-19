@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedCcfData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     List<ManagedCcfData> array = new List<ManagedCcfData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedCcfData.DeserializeManagedCcfData(item));
+                        }
                     }
                     value = array;
                     continue;

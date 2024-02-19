@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(ResourceProperties))
             {
                 writer.WritePropertyName("resourceProperties"u8);
-                writer.WriteObjectValue(ResourceProperties);
+                ((IJsonModel<BaseResourceProperties>)ResourceProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
