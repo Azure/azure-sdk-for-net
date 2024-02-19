@@ -9,32 +9,16 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_CriticalResultSampleAsync
+    internal class Sample01_LateralityDiscrepancySampleAsync
     {
-        private const string DOC_CONTENT = "CLINICAL HISTORY:   "
-            + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
-            + "\r\n "
-            + "\r\nCOMPARISON:   "
-            + "\r\nRight upper quadrant sonographic performed 1 day prior."
-            + "\r\n "
-            + "\r\nTECHNIQUE:   "
-            + "\r\nTransabdominal grayscale pelvic sonography with duplex color Doppler "
-            + "\r\nand spectral waveform analysis of the ovaries."
-            + "\r\n "
-            + "\r\nFINDINGS:   "
-            + "\r\nThe uterus is unremarkable given the transabdominal technique with "
-            + "\r\nendometrial echo complex within physiologic normal limits. The "
-            + "\r\novaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the "
-            + "\r\nleft measuring 2.8 x 1.5 x 1.9 cm.\n \r\nOn duplex imaging, Doppler signal is symmetric."
-            + "\r\n "
-            + "\r\nIMPRESSION:   "
-            + "\r\n1. Normal pelvic sonography. Findings of testicular torsion."
-            + "\r\n\nA new US pelvis within the next 6 months is recommended."
-            + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
-            + "\r\n";
+        private const string DOC_CONTENT = "Exam:   US LT BREAST TARGETED"
+    		+ "\r\n\r\nTechnique:  Targeted imaging of the  right breast  is performed."
+    		+ "\r\n\r\nFindings:\\r\\n\\r\\nTargeted imaging of the left breast is performed from the 6:00 to the 9:00 position.  "
+    		+ "\r\n\r\nAt the 6:00 position, 5 cm from the nipple, there is a 3 x 2 x 4 mm minimally hypoechoic mass with a peripheral calcification. This may correspond to the mammographic finding. No other cystic or solid masses visualized."
+    		+ "\r\n";
 
         [Test]
-        public async Task RadiologyInsightsCriticalResultScenario()
+        public async Task RadiologyInsightsLateralityDiscrepancyScenario()
         {
             Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
             AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
@@ -43,15 +27,21 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
-                if (inference is CriticalResultInference criticalResultInference)
+                if (inference is LateralityDiscrepancyInference lateralityDiscrepancyInference)
                 {
-                    Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+                    CodeableConcept lateralityIndication = lateralityDiscrepancyInference.LateralityIndication;
+                    IList<Coding> codingList = lateralityIndication.Coding;
+                    Console.Write("Laterality Discrepancy Inference found: ");
+                    var discrepancyType = lateralityDiscrepancyInference.DiscrepancyType;
+                    foreach (Coding fhirR4Coding in codingList)
+                    {
+                        Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + "), type: " + discrepancyType);
+                    }
                 }
             }
         }
@@ -139,8 +129,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             Coding coding = new()
             {
-                Display = "US PELVIS COMPLETE",
-                Code = "USPELVIS",
+                Display = "US BREAST - LEFT LIMITED",
+                Code = "26688-1",
                 System = "Http://hl7.org/fhir/ValueSet/cpt-all"
             };
 
@@ -149,7 +139,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             OrderedProcedure orderedProcedure = new()
             {
-                Description = "US PELVIS COMPLETE",
+                Description = "US BREAST - LEFT LIMITED",
                 Code = codeableConcept
             };
 

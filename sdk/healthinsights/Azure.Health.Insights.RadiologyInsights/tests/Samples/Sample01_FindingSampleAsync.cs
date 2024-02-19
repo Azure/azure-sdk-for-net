@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_CriticalResultSampleAsync
+    internal class Sample01_FindingSampleAsync
     {
         private const string DOC_CONTENT = "CLINICAL HISTORY:   "
             + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
@@ -34,7 +34,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             + "\r\n";
 
         [Test]
-        public async Task RadiologyInsightsCriticalResultScenario()
+        public async Task RadiologyInsightsFindingScenario()
         {
             Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
             AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
@@ -43,15 +43,38 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
             Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
-                if (inference is CriticalResultInference criticalResultInference)
+                if (inference is FindingInference findingInference)
                 {
-                    Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+                    Console.Write("Finding Inference found");
+                    Observation finding = findingInference.Finding;
+                    IList<CodeableConcept> categoryList = finding.Category;
+                    foreach (CodeableConcept category in categoryList)
+                    {
+                        Console.Write("   Category: ");
+                        DisplayCodes(category);
+                    }
+                    CodeableConcept valueCodeableConcept = finding.ValueCodeableConcept;
+                    DisplayCodes(valueCodeableConcept);
+                }
+            }
+        }
+
+        private static void DisplayCodes(CodeableConcept codeableConcept)
+        {
+            if (codeableConcept != null)
+            {
+                IList<Coding> codingList = codeableConcept.Coding;
+                if (codingList != null)
+                {
+                    foreach (Coding fhirR4Coding in codingList)
+                    {
+                        Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
+                    }
                 }
             }
         }

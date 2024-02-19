@@ -4,37 +4,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Azure.Health.Insights.RadiologyInsights.Tests
 {
-    internal class Sample01_CriticalResultSampleAsync
+    internal class Sample01_LimitedOrderSample
     {
-        private const string DOC_CONTENT = "CLINICAL HISTORY:   "
-            + "\r\n20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy."
-            + "\r\n "
-            + "\r\nCOMPARISON:   "
-            + "\r\nRight upper quadrant sonographic performed 1 day prior."
-            + "\r\n "
-            + "\r\nTECHNIQUE:   "
-            + "\r\nTransabdominal grayscale pelvic sonography with duplex color Doppler "
-            + "\r\nand spectral waveform analysis of the ovaries."
-            + "\r\n "
-            + "\r\nFINDINGS:   "
-            + "\r\nThe uterus is unremarkable given the transabdominal technique with "
-            + "\r\nendometrial echo complex within physiologic normal limits. The "
-            + "\r\novaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the "
-            + "\r\nleft measuring 2.8 x 1.5 x 1.9 cm.\n \r\nOn duplex imaging, Doppler signal is symmetric."
-            + "\r\n "
-            + "\r\nIMPRESSION:   "
-            + "\r\n1. Normal pelvic sonography. Findings of testicular torsion."
-            + "\r\n\nA new US pelvis within the next 6 months is recommended."
-            + "\n\nThese results have been discussed with Dr. Jones at 3 PM on November 5 2020.\n "
-            + "\r\n";
+        private const string DOC_CONTENT = "\\nHISTORY: 49-year-old male with a history of tuberous sclerosis presenting with epigastric pain and diffuse tenderness. The patient was found to have pericholecystic haziness on CT; evaluation for acute cholecystitis.\\n\\nTECHNIQUE: Ultrasound evaluation of the abdomen was performed. Comparison is made to the prior abdominal ultrasound (2004) and to the enhanced CT of the abdomen and pelvis (2014).\\n\\nFINDINGS:\\n\\nThe liver is elongated, measuring 19.3 cm craniocaudally, and is homogeneous in echotexture without evidence of focal mass lesion. The liver contour is smooth on high resolution images. There is no appreciable intra- or extrahepatic biliary ductal dilatation, with the visualized extrahepatic bile duct measuring up to 6 mm. There are multiple shadowing gallstones, including within the gallbladder neck, which do not appear particularly mobile. In addition, there is thickening of the gallbladder wall up to approximately 7 mm with probable mild mural edema. There is no pericholecystic fluid. No sonographic Murphy's sign was elicited; however the patient reportedly received pain medications in the emergency department.\\n\\nThe pancreatic head, body and visualized portions of the tail are unremarkable. The spleen is normal in size, measuring 9.9 cm in length.\\n\\nThe kidneys are normal in size. The right kidney measures 11.5 x 5.2 x 4.3 cm and the left kidney measuring 11.8 x 5.3 x 5.1 cm. There are again multiple bilateral echogenic renal masses consistent with angiomyolipomas, in keeping with the patient's history of tuberous sclerosis. The largest echogenic mass on the right is located in the upper pole and measures 1.2 x 1.3 x 1.3 cm. The largest echogenic mass on the left is located within the renal sinus and measures approximately 2.6 x 2.7 x 4.6 cm. Additional indeterminate renal lesions are present bilaterally and are better characterized on CT. There is no hydronephrosis.\\n\\nNo ascites is identified within the upper abdomen.\\n\\nThe visualized portions of the upper abdominal aorta and IVC are normal in caliber.\\n\\nIMPRESSION:\\n\\n1. Numerous gallstones associated with gallbladder wall thickening and probable gallbladder mural edema, highly suspicious for acute cholecystitis in this patient presenting with epigastric pain and pericholecystic hazy density identified on CT. Although no sonographic Murphy sign was elicited, evaluation is limited secondary to reported prior administration of pain medication. Thus, clinical correlation is required. No evidence of biliary ductal dilation.\\n\\n2. There are again multiple bilateral echogenic renal masses consistent with angiomyolipomas, in keeping with the patient's history of tuberous sclerosis. Additional indeterminate renal lesions are present bilaterally and are better characterized on CT and MR.\\n\\nThese findings were discussed with Dr. Doe at 5:05 p.m. on 1/1/15.";
 
         [Test]
-        public async Task RadiologyInsightsCriticalResultScenario()
+        public void RadiologyInsightsLimitedOrderScenario()
         {
             Uri endpoint = new Uri("AZURE_HEALTH_INSIGHTS_ENDPOINT");
             AzureKeyCredential credential = new AzureKeyCredential("AZURE_HEALTH_INSIGHTS_KEY");
@@ -42,16 +21,41 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             RadiologyInsightsData radiologyInsightsData = GetRadiologyInsightsData();
 
-            Operation<RadiologyInsightsInferenceResult> operation = await client.InferRadiologyInsightsAsync(WaitUntil.Completed, radiologyInsightsData);
-
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
             RadiologyInsightsInferenceResult responseData = operation.Value;
             IReadOnlyList<RadiologyInsightsInference> inferences = responseData.PatientResults[0].Inferences;
 
             foreach (RadiologyInsightsInference inference in inferences)
             {
-                if (inference is CriticalResultInference criticalResultInference)
+                if (inference is LimitedOrderDiscrepancyInference limitedOrderDiscrepancyInference)
                 {
-                    Console.Write("Critical Result Inference found: " + criticalResultInference.Result.Description);
+                    Console.Write("Limited Order Discrepancy Inference found: ");
+                    CodeableConcept orderType = limitedOrderDiscrepancyInference.OrderType;
+                    DisplayCodes(orderType);
+                    IReadOnlyList<CodeableConcept> missingBodyParts = limitedOrderDiscrepancyInference.PresentBodyParts;
+                    Console.Write("   Present body parts:");
+                    foreach (CodeableConcept missingBodyPart in missingBodyParts)
+                    {
+                        DisplayCodes(missingBodyPart);
+                    }
+                    IReadOnlyList<CodeableConcept> missingBodyPartMeasurements = limitedOrderDiscrepancyInference.PresentBodyPartMeasurements;
+                    Console.Write("   Present body part measurements:");
+                    foreach (CodeableConcept missingBodyPartMeasurement in missingBodyPartMeasurements)
+                    {
+                        DisplayCodes(missingBodyPartMeasurement);
+                    }
+                }
+            }
+        }
+
+        private static void DisplayCodes(CodeableConcept codeableConcept)
+        {
+            IList<Coding> codingList = codeableConcept.Coding;
+            if (codingList != null)
+            {
+                foreach (Coding fhirR4Coding in codingList)
+                {
+                    Console.Write("   Coding: " + fhirR4Coding.Code + ", " + fhirR4Coding.Display + " (" + fhirR4Coding.System + ")");
                 }
             }
         }
@@ -139,8 +143,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             Coding coding = new()
             {
-                Display = "US PELVIS COMPLETE",
-                Code = "USPELVIS",
+                Display = "US ABDOMEN LIMITED",
+                Code = "30704-1",
                 System = "Http://hl7.org/fhir/ValueSet/cpt-all"
             };
 
@@ -149,7 +153,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
 
             OrderedProcedure orderedProcedure = new()
             {
-                Description = "US PELVIS COMPLETE",
+                Description = "US ABDOMEN LIMITED",
                 Code = codeableConcept
             };
 

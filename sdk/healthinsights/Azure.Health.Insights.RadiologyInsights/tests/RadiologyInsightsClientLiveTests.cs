@@ -43,9 +43,9 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             Response response = operation.GetRawResponse();
             Assert.IsNotNull(response);
             Assert.IsTrue(response.Status == (int)HttpStatusCode.OK);
-            RadiologyInsightsResults results = FetchResults(response);
-            Assert.IsNotEmpty(results.Patients);
-            var patient = results.Patients[0];
+            RadiologyInsightsInferenceResult results = FetchResults(response);
+            Assert.IsNotEmpty(results.PatientResults);
+            var patient = results.PatientResults[0];
             Assert.IsNotEmpty(patient.Inferences);
         }
 
@@ -58,10 +58,10 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             return RequestContent.Create(data);
         }
 
-        private TrialMatcherResults FetchResults(Response response)
+        private RadiologyInsightsInferenceResult FetchResults(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return RadiologyInsightsResults.DeserializeRadiologyInsightsResults(document.RootElement.GetProperty("results"));
+            return RadiologyInsightsInferenceResult.DeserializeRadiologyInsightsInferenceResult(document.RootElement.GetProperty("result"));
         }
     }
 }
