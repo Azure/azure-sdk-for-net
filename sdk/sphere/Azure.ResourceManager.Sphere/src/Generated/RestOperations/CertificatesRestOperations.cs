@@ -37,6 +37,37 @@ namespace Azure.ResourceManager.Sphere
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByCatalogRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByCatalogRequest(string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
         {
             var message = _pipeline.CreateMessage();
@@ -140,6 +171,22 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -228,6 +275,23 @@ namespace Azure.ResourceManager.Sphere
             }
         }
 
+        internal RequestUriBuilder CreateRetrieveCertChainRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendPath("/retrieveCertChain", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRetrieveCertChainRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber)
         {
             var message = _pipeline.CreateMessage();
@@ -311,6 +375,23 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRetrieveProofOfPossessionNonceRequestUri(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, ProofOfPossessionNonceContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureSphere/catalogs/", false);
+            uri.AppendPath(catalogName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(serialNumber, true);
+            uri.AppendPath("/retrieveProofOfPossessionNonce", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRetrieveProofOfPossessionNonceRequest(string subscriptionId, string resourceGroupName, string catalogName, string serialNumber, ProofOfPossessionNonceContent content)
@@ -404,6 +485,14 @@ namespace Azure.ResourceManager.Sphere
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCatalogNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCatalogNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string catalogName, string filter, int? top, int? skip, int? maxpagesize)
