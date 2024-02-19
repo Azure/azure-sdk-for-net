@@ -29,6 +29,7 @@ namespace System.ClientModel.Primitives
         private protected readonly string _boundary;
         internal readonly Dictionary<string, string> _headers;
         //private protected readonly string MultipartContentTypePrefix = "multipart/mixed; boundary=";
+        public readonly string ContentType;
 
         /// <summary> The list of request content parts. </summary>
         public List<MultipartBodyPart> ContentParts => _nestedContent;
@@ -38,7 +39,8 @@ namespace System.ClientModel.Primitives
         ///  </summary>
         public Multipart()
             : this("mixed", GetDefaultBoundary())
-        { }
+        {
+        }
 
         /// <summary>
         ///  Initializes a new instance of the <see cref="Multipart"/> class.
@@ -74,7 +76,7 @@ namespace System.ClientModel.Primitives
             {
                 ["Content-Type"] = $"multipart/{_subtype}; boundary={_boundary}"
             };
-
+            ContentType = $"multipart/{_subtype}; boundary={_boundary}";
             _nestedContent = nestedContent.ToList<MultipartBodyPart>();
         }
 
@@ -200,6 +202,97 @@ namespace System.ClientModel.Primitives
             }
         }
 
+        private protected void WriteToStream(Stream stream)
+        {
+            try
+            {
+                // Write start boundary.
+                EncodeStringToStream(stream, "--" + _boundary + CrLf);
+
+                // Write each nested content.
+                var output = new StringBuilder();
+                for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
+                {
+                    // Write divider, headers, and content.
+                    //BinaryData content = _nestedContent[contentIndex].Content;
+                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
+                    EncodeStringToStream(stream, SerializeHeadersToString(output, contentIndex, headers));
+                    /*
+                    byte[] buffer;
+                    switch (_nestedContent[contentIndex].Content)
+                    {
+                        case BinaryData binaryData:
+                            buffer = binaryData.ToArray();
+                            break;
+                        case string str:
+                            buffer = Encoding.UTF8.GetBytes(str);
+                            break;
+                        case byte[] bytes:
+                            buffer = bytes;
+                            break;
+                        case Int32 int32Data:
+                            buffer = BitConverter.GetBytes(int32Data);
+                            break;
+                        default:
+                            throw new InvalidOperationException("Unsupported content type");
+                    }
+                    */
+                    byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
+                    stream.Write(buffer, 0, buffer.Length);
+                }
+
+                // Write footer boundary.
+                EncodeStringToStream(stream, CrLf + "--" + _boundary + "--" + CrLf);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        // for-each content
+        //   write "--" + boundary
+        //   for-each content header
+        //     write header: header-value
+        //   write content.WriteTo[Async]
+        // write "--" + boundary + "--"
+        // Can't be canceled directly by the user.  If the overall request is canceled
+        // then the stream will be closed an exception thrown.
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="cancellation"></param>
+        /// <returns></returns>
+        private protected Task WriteToStreamAsync(Stream stream, CancellationToken cancellation) =>
+            SerializeToStreamAsync(stream, cancellation);
+        private async Task<string> SerializeToStreamAsync(Stream stream, CancellationToken cancellationToken)
+        {
+            string contentType = $"multipart/{_subtype}; boundary={_boundary}";
+            try
+            {
+                // Write start boundary.
+                await EncodeStringToStreamAsync(stream, "--" + _boundary + CrLf, cancellationToken).ConfigureAwait(false);
+
+                // Write each nested content.
+                var output = new StringBuilder();
+                for (int contentIndex = 0; contentIndex < _nestedContent.Count; contentIndex++)
+                {
+                    // Write divider, headers, and content.
+                    Dictionary<string, string> headers = _nestedContent[contentIndex].Headers;
+                    await EncodeStringToStreamAsync(stream, SerializeHeadersToString(output, contentIndex, headers), cancellationToken).ConfigureAwait(false);
+                    byte[] buffer = _nestedContent[contentIndex].Content.ToArray();
+                    await stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken).ConfigureAwait(false);
+                }
+
+                // Write footer boundary.
+                await EncodeStringToStreamAsync(stream, CrLf + "--" + _boundary + "--" + CrLf, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return contentType;
+        }
         /// <summary>
         ///  Read the content from BinaryData and parse it.
         ///  each part of BinaryData separted by boundary will be parsed as one MultipartContentPart.
@@ -306,6 +399,11 @@ namespace System.ClientModel.Primitives
             return scratch.ToString();
         }
 
+        private static Task EncodeStringToStreamAsync(Stream stream, string input, CancellationToken cancellationToken)
+        {
+            byte[] buffer = Encoding.Default.GetBytes(input);
+            return stream.WriteAsync(buffer, 0, buffer.Length, cancellationToken);
+        }
         private static void EncodeStringToStream(Stream stream, string input)
         {
             byte[] buffer = Encoding.Default.GetBytes(input);

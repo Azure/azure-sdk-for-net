@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace System.ClientModel.Primitives
     /// <summary>
     /// A request content in multipart/form-data format.
     /// </summary>
-    public class MultipartFormData : Multipart, IPersistableModel<MultipartFormData>
+    public class MultipartFormData : Multipart, IPersistableModel<MultipartFormData>, IPersistableStreamModel<MultipartFormData>
     {
         #region Fields
 
@@ -115,6 +116,33 @@ namespace System.ClientModel.Primitives
                 throw new ArgumentException("Missing boundary", nameof(data));
             }
             return new MultipartFormData(boundary, Read(data, FormData, boundary));
+        }
+        void IPersistableStreamModel<MultipartFormData>.Write(Stream stream, ModelReaderWriterOptions options)
+        {
+            if (options == null || options.Format != "MPFD")
+            {
+                throw new InvalidOperationException("The specified format is not supported.");
+            }
+            WriteToStream(stream);
+        }
+        Task IPersistableStreamModel<MultipartFormData>.WriteAsync(Stream stream, ModelReaderWriterOptions options, CancellationToken cancellation)
+        {
+            if (options == null || options.Format != "MPFD")
+            {
+                throw new InvalidOperationException("The specified format is not supported.");
+            }
+            return WriteToStreamAsync(stream, cancellation);
+        }
+
+        MultipartFormData IPersistableStreamModel<MultipartFormData>.Create(Stream stream, ModelReaderWriterOptions options)
+        {
+            //Not implemented.
+            return new MultipartFormData();
+        }
+
+        string IPersistableStreamModel<MultipartFormData>.GetMediaType(ModelReaderWriterOptions options)
+        {
+            return ContentType;
         }
         public RequestBody ToRequestBody()
         {

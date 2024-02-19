@@ -133,6 +133,16 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
+        /// </summary>
+        /// <param name="model">The model to serialize.</param>
+        /// <param name="options">The format to use for property names in the serialized content.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a serialized version of the model.</returns>
+        public static RequestContent Create<T>(IPersistableStreamModel<T> model, ModelReaderWriterOptions options)
+        {
+            return new PersistableRequestContent<T>(model, options);
+        }
+        /// <summary>
         /// Creates a RequestContent representing the UTF-8 Encoding of the given <see cref="string"/>.
         /// </summary>
         /// <param name="content">The <see cref="string"/> to use.</param>
@@ -368,6 +378,36 @@ namespace Azure.Core
             {
                 await stream.WriteAsync(Data.ToArray(), cancellation).ConfigureAwait(false);
             }
+            public override void Dispose() { }
+        }
+        private sealed class PersistableRequestContent<T> : RequestContent
+        {
+            private IPersistableStreamModel<T> _model;
+            private ModelReaderWriterOptions _options;
+
+            public PersistableRequestContent(IPersistableStreamModel<T> model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+                ContentType = model.GetMediaType(options);
+            }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _model.Write(stream, _options);
+            }
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = 0;
+                return false;
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await _model.WriteAsync(stream, _options, cancellation).ConfigureAwait(false);
+            }
+
             public override void Dispose() { }
         }
     }
