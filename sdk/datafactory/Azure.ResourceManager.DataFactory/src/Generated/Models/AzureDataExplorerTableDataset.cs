@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "AzureDataExplorerTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerTableDataset"/> for deserialization. </summary>
+        internal AzureDataExplorerTableDataset()
+        {
+        }
+
         /// <summary> The table name of the Azure Data Explorer database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Table { get; set; }
     }

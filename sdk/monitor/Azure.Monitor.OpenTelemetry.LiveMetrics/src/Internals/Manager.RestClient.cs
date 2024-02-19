@@ -102,6 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}.");
                         _etag = string.Empty;
                         SetPingState();
+                        // TODO: double check if subscribedValue is false, we should stop collecting properly: (QuickPulseTelemetryModule.OnStopCollection).
                     }
                     else
                     {

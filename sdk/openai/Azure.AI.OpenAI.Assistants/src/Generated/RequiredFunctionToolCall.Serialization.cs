@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(InternalFunctionDefinition);
+            writer.WriteObjectValue(InternalDetails);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("id"u8);
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalFunctionDefinition function = default;
+            InternalRequiredFunctionToolCallDetails function = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -80,7 +80,7 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 if (property.NameEquals("function"u8))
                 {
-                    function = Assistants.InternalFunctionDefinition.DeserializeInternalFunctionDefinition(property.Value);
+                    function = InternalRequiredFunctionToolCallDetails.DeserializeInternalRequiredFunctionToolCallDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

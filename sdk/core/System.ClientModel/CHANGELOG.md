@@ -4,11 +4,17 @@
 
 ### Features Added
 
+- Added `ExtractResponse` method to `PipelineMessage` to enable returning an undisposed `PipelineResponse` from protocol methods.
+
 ### Breaking Changes
+
+- Changed `HttpClientPipelineTransport.Shared` and `ClientRetryPolicy.Default` from static readonly fields to static properties.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Made `CancellationToken` parameter passed to `BinaryContent.WriteTo` optional.
 
 ## 1.1.0-beta.1 (2024-02-01)
 

@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MongoDb";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MongoDBLinkedService"/> for deserialization. </summary>
+        internal MongoDBLinkedService()
+        {
+        }
+
         /// <summary> The IP address or server name of the MongoDB server. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Server { get; set; }
         /// <summary> The authentication type to be used to connect to the MongoDB database. </summary>

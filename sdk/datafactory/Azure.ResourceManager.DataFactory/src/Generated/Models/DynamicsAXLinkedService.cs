@@ -62,6 +62,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "DynamicsAX";
         }
 
+        /// <summary> Initializes a new instance of <see cref="DynamicsAXLinkedService"/> for deserialization. </summary>
+        internal DynamicsAXLinkedService()
+        {
+        }
+
         /// <summary> The Dynamics AX (or Dynamics 365 Finance and Operations) instance OData endpoint. </summary>
         public DataFactoryElement<string> Uri { get; set; }
         /// <summary> Specify the application's client ID. Type: string (or Expression with resultType string). </summary>

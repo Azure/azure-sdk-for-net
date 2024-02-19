@@ -16,25 +16,25 @@ namespace Azure.AI.OpenAI.Assistants
     {
         /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <param name="internalFunctionDefinition"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="internalFunctionDefinition"/> is null. </exception>
-        internal RequiredFunctionToolCall(string id, InternalFunctionDefinition internalFunctionDefinition) : base(id)
+        /// <param name="internalDetails"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="internalDetails"/> is null. </exception>
+        internal RequiredFunctionToolCall(string id, InternalRequiredFunctionToolCallDetails internalDetails) : base(id)
         {
             Argument.AssertNotNull(id, nameof(id));
-            Argument.AssertNotNull(internalFunctionDefinition, nameof(internalFunctionDefinition));
+            Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
             Type = "function";
-            InternalFunctionDefinition = internalFunctionDefinition;
+            InternalDetails = internalDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/>. </summary>
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="internalFunctionDefinition"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
-        internal RequiredFunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalFunctionDefinition internalFunctionDefinition) : base(type, id, serializedAdditionalRawData)
+        /// <param name="internalDetails"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
+        internal RequiredFunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalRequiredFunctionToolCallDetails internalDetails) : base(type, id, serializedAdditionalRawData)
         {
-            InternalFunctionDefinition = internalFunctionDefinition;
+            InternalDetails = internalDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/> for deserialization. </summary>

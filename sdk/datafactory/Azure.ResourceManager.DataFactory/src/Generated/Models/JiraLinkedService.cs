@@ -57,6 +57,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Jira";
         }
 
+        /// <summary> Initializes a new instance of <see cref="JiraLinkedService"/> for deserialization. </summary>
+        internal JiraLinkedService()
+        {
+        }
+
         /// <summary> The IP address or host name of the Jira service. (e.g. jira.example.com). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The TCP port that the Jira server uses to listen for client connections. The default value is 443 if connecting through HTTPS, or 8080 if connecting through HTTP. </summary>

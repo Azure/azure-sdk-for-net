@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "CustomDataSource";
         }
 
+        /// <summary> Initializes a new instance of <see cref="CustomDataSourceLinkedService"/> for deserialization. </summary>
+        internal CustomDataSourceLinkedService()
+        {
+        }
+
         /// <summary>
         /// Custom linked service properties.
         /// <para>

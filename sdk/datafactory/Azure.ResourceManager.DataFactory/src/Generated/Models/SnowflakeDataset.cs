@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = datasetType ?? "SnowflakeTable";
         }
 
+        /// <summary> Initializes a new instance of <see cref="SnowflakeDataset"/> for deserialization. </summary>
+        internal SnowflakeDataset()
+        {
+        }
+
         /// <summary> The schema name of the Snowflake database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> SchemaTypePropertiesSchema { get; set; }
         /// <summary> The table name of the Snowflake database. Type: string (or Expression with resultType string). </summary>

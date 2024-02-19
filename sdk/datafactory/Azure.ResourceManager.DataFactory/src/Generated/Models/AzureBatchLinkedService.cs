@@ -61,6 +61,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureBatch";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/> for deserialization. </summary>
+        internal AzureBatchLinkedService()
+        {
+        }
+
         /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccountName { get; set; }
         /// <summary> The Azure Batch account access key. </summary>
