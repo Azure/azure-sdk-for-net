@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                ((IJsonModel<MonitoringSettings>)MonitoringSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -44,18 +44,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
             {
                 writer.WritePropertyName("resourceMoveDetails"u8);
-                writer.WriteObjectValue(ResourceMoveDetails);
+                ((IJsonModel<BackupVaultResourceMoveDetails>)ResourceMoveDetails).Write(writer, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                ((IJsonModel<BackupVaultSecuritySettings>)SecuritySettings).Write(writer, options);
             }
             writer.WritePropertyName("storageSettings"u8);
             writer.WriteStartArray();
             foreach (var item in StorageSettings)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataProtectionBackupStorageSetting>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
@@ -66,7 +73,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings);
+                ((IJsonModel<BackupVaultFeatureSettings>)FeatureSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SecureScore))
             {
@@ -185,7 +192,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupStorageSetting> array = new List<DataProtectionBackupStorageSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupStorageSetting.DeserializeDataProtectionBackupStorageSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProtectionBackupStorageSetting.DeserializeDataProtectionBackupStorageSetting(item));
+                        }
                     }
                     storageSettings = array;
                     continue;

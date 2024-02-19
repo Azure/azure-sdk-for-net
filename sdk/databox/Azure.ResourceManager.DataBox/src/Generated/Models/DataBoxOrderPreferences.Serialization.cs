@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                ((IJsonModel<TransportPreferences>)TransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue(ReverseTransportPreferences);
+                ((IJsonModel<TransportPreferences>)ReverseTransportPreferences).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                ((IJsonModel<DataBoxEncryptionPreferences>)EncryptionPreferences).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<CloudServiceRoleInstanceData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CloudServiceRoleInstanceData> array = new List<CloudServiceRoleInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CloudServiceRoleInstanceData.DeserializeCloudServiceRoleInstanceData(item));
+                        }
                     }
                     value = array;
                     continue;

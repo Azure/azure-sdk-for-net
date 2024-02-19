@@ -48,7 +48,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppScaleRuleAuth>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
+                        }
                     }
                     auth = array;
                     continue;

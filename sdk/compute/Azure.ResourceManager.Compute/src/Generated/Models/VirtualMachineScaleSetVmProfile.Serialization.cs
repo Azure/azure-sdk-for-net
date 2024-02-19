@@ -30,32 +30,32 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<VirtualMachineScaleSetOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<VirtualMachineScaleSetStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<VirtualMachineScaleSetNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<SecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(DiagnosticsProfile))
             {
                 writer.WritePropertyName("diagnosticsProfile"u8);
-                writer.WriteObjectValue(DiagnosticsProfile);
+                ((IJsonModel<DiagnosticsProfile>)DiagnosticsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ExtensionProfile))
             {
                 writer.WritePropertyName("extensionProfile"u8);
-                writer.WriteObjectValue(ExtensionProfile);
+                ((IJsonModel<VirtualMachineScaleSetExtensionProfile>)ExtensionProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(BillingProfile))
             {
                 writer.WritePropertyName("billingProfile"u8);
-                writer.WriteObjectValue(BillingProfile);
+                ((IJsonModel<BillingProfile>)BillingProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ScheduledEventsProfile))
             {
                 writer.WritePropertyName("scheduledEventsProfile"u8);
-                writer.WriteObjectValue(ScheduledEventsProfile);
+                ((IJsonModel<ComputeScheduledEventsProfile>)ScheduledEventsProfile).Write(writer, options);
             }
             if (Optional.IsDefined(UserData))
             {
@@ -90,17 +90,17 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(CapacityReservation))
             {
                 writer.WritePropertyName("capacityReservation"u8);
-                writer.WriteObjectValue(CapacityReservation);
+                ((IJsonModel<CapacityReservationProfile>)CapacityReservation).Write(writer, options);
             }
             if (Optional.IsDefined(ApplicationProfile))
             {
                 writer.WritePropertyName("applicationProfile"u8);
-                writer.WriteObjectValue(ApplicationProfile);
+                ((IJsonModel<ApplicationProfile>)ApplicationProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                ((IJsonModel<VirtualMachineScaleSetHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceArtifactReference))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityPostureReference))
             {
                 writer.WritePropertyName("securityPostureReference"u8);
-                writer.WriteObjectValue(SecurityPostureReference);
+                ((IJsonModel<ComputeSecurityPostureReference>)SecurityPostureReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {

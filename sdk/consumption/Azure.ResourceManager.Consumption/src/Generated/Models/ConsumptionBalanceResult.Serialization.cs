@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -137,7 +144,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in NewPurchasesDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionBalanceNewPurchasesDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +161,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in AdjustmentDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionBalanceAdjustmentDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -393,7 +414,14 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceNewPurchasesDetail> array = new List<ConsumptionBalanceNewPurchasesDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConsumptionBalanceNewPurchasesDetail.DeserializeConsumptionBalanceNewPurchasesDetail(item));
+                                }
                             }
                             newPurchasesDetails = array;
                             continue;
@@ -407,7 +435,14 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionBalanceAdjustmentDetail> array = new List<ConsumptionBalanceAdjustmentDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConsumptionBalanceAdjustmentDetail.DeserializeConsumptionBalanceAdjustmentDetail(item));
+                                }
                             }
                             adjustmentDetails = array;
                             continue;

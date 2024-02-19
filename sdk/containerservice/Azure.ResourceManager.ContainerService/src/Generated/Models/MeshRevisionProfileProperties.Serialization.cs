@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in MeshRevisions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MeshRevision>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<MeshRevision> array = new List<MeshRevision>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MeshRevision.DeserializeMeshRevision(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MeshRevision.DeserializeMeshRevision(item));
+                        }
                     }
                     meshRevisions = array;
                     continue;

@@ -35,7 +35,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in ReviewNotes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +52,14 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +143,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<ReviewNote> array = new List<ReviewNote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReviewNote.DeserializeReviewNote(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReviewNote.DeserializeReviewNote(item));
+                        }
                     }
                     reviewNotes = array;
                     continue;
@@ -143,7 +164,14 @@ namespace Azure.Communication.ShortCodes.Models
                     List<ShortCodeCost> array = new List<ShortCodeCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ShortCodeCost.DeserializeShortCodeCost(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ShortCodeCost.DeserializeShortCodeCost(item));
+                        }
                     }
                     costs = array;
                     continue;

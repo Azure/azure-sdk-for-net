@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Errors)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<MongoDBError>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             writer.WritePropertyName("eventsPending"u8);

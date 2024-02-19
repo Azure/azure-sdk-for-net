@@ -48,7 +48,14 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in ExceptionRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExceptionRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -122,7 +129,14 @@ namespace Azure.Communication.JobRouter
                     List<ExceptionRule> array = new List<ExceptionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExceptionRule.DeserializeExceptionRule(item));
+                        }
                     }
                     exceptionRules = array;
                     continue;

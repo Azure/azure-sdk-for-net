@@ -39,26 +39,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                ((IJsonModel<DataFlowFolder>)Folder).Write(writer, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -68,7 +70,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PowerQuerySource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -190,7 +199,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySource> array = new List<PowerQuerySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PowerQuerySource.DeserializePowerQuerySource(item));
+                                }
                             }
                             sources = array;
                             continue;

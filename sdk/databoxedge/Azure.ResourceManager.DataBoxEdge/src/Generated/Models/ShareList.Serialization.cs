@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeShareData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeShareData> array = new List<DataBoxEdgeShareData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxEdgeShareData.DeserializeDataBoxEdgeShareData(item));
+                        }
                     }
                     value = array;
                     continue;

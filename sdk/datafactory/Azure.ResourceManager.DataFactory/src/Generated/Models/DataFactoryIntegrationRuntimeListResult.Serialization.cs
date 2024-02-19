@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataFactoryIntegrationRuntimeData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryIntegrationRuntimeData> array = new List<DataFactoryIntegrationRuntimeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryIntegrationRuntimeData.DeserializeDataFactoryIntegrationRuntimeData(item));
+                        }
                     }
                     value = array;
                     continue;

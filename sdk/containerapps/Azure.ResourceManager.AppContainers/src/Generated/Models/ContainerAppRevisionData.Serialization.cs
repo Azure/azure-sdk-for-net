@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers
             if (options.Format != "W" && Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
-                writer.WriteObjectValue(Template);
+                ((IJsonModel<ContainerAppTemplate>)Template).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsActive))
             {

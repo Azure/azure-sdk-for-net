@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Compute.Models
                 JsonSerializer.Serialize(writer, SourceVault);
             }
             writer.WritePropertyName("keyUrl"u8);
-            writer.WriteStringValue(KeyUri.AbsoluteUri);
+            if (KeyUri != null)
+            {
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

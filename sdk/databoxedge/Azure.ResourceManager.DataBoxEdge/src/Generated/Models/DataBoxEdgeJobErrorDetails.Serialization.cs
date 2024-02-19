@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeJobErrorItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeJobErrorItem> array = new List<DataBoxEdgeJobErrorItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item));
+                        }
                     }
                     errorDetails = array;
                     continue;

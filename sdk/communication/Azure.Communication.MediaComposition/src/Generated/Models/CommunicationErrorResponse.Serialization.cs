@@ -16,7 +16,14 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("error"u8);
-            writer.WriteObjectValue(Error);
+            if (Error != null)
+            {
+                writer.WriteObjectValue(Error);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
         }
 

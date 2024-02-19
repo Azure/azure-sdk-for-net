@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Communication.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceId"u8);
-            writer.WriteStringValue(ResourceId);
+            if (ResourceId != null)
+            {
+                writer.WriteStringValue(ResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -61,14 +61,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Hosts)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                ((IJsonModel<DedicatedHostGroupInstanceView>)InstanceView).Write(writer, options);
             }
             if (Optional.IsDefined(SupportAutomaticPlacement))
             {
@@ -78,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(AdditionalCapabilities))
             {
                 writer.WritePropertyName("additionalCapabilities"u8);
-                writer.WriteObjectValue(AdditionalCapabilities);
+                ((IJsonModel<DedicatedHostGroupPropertiesAdditionalCapabilities>)AdditionalCapabilities).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -185,7 +192,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                }
                             }
                             hosts = array;
                             continue;

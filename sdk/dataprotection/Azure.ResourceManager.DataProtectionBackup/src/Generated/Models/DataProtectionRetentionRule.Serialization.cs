@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WriteStartArray();
             foreach (var item in Lifecycles)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<SourceLifeCycle>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("name"u8);
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<SourceLifeCycle> array = new List<SourceLifeCycle>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SourceLifeCycle.DeserializeSourceLifeCycle(item));
+                        }
                     }
                     lifecycles = array;
                     continue;

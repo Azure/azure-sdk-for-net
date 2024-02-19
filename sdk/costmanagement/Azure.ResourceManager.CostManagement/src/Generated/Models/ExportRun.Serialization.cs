@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -93,12 +100,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RunSettings))
             {
                 writer.WritePropertyName("runSettings"u8);
-                writer.WriteObjectValue(RunSettings);
+                ((IJsonModel<CommonExportProperties>)RunSettings).Write(writer, options);
             }
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ExportRunErrorDetails>)Error).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

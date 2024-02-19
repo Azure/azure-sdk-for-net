@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataLakeStoreVirtualNetworkRuleData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreVirtualNetworkRuleData> array = new List<DataLakeStoreVirtualNetworkRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataLakeStoreVirtualNetworkRuleData.DeserializeDataLakeStoreVirtualNetworkRuleData(item));
+                        }
                     }
                     value = array;
                     continue;

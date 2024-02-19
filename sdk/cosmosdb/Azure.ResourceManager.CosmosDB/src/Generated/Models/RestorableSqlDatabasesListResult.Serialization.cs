@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestorableSqlDatabase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableSqlDatabase> array = new List<RestorableSqlDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableSqlDatabase.DeserializeRestorableSqlDatabase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RestorableSqlDatabase.DeserializeRestorableSqlDatabase(item));
+                        }
                     }
                     value = array;
                     continue;

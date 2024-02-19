@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

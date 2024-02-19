@@ -33,7 +33,14 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(Content);
             }
             writer.WritePropertyName("mediaUri"u8);
-            writer.WriteStringValue(MediaUri.AbsoluteUri);
+            if (MediaUri != null)
+            {
+                writer.WriteStringValue(MediaUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("channelRegistrationId"u8);
             writer.WriteStringValue(ChannelRegistrationId);
             writer.WritePropertyName("to"u8);

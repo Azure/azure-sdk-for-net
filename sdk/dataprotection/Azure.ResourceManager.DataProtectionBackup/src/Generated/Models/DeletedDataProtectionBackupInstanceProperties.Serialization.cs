@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (options.Format != "W" && Optional.IsDefined(DeletionInfo))
             {
                 writer.WritePropertyName("deletionInfo"u8);
-                writer.WriteObjectValue(DeletionInfo);
+                ((IJsonModel<BackupInstanceDeletionInfo>)DeletionInfo).Write(writer, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -38,18 +38,32 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStringValue(FriendlyName);
             }
             writer.WritePropertyName("dataSourceInfo"u8);
-            writer.WriteObjectValue(DataSourceInfo);
+            if (DataSourceInfo != null)
+            {
+                ((IJsonModel<DataSourceInfo>)DataSourceInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DataSourceSetInfo))
             {
                 writer.WritePropertyName("dataSourceSetInfo"u8);
-                writer.WriteObjectValue(DataSourceSetInfo);
+                ((IJsonModel<DataSourceSetInfo>)DataSourceSetInfo).Write(writer, options);
             }
             writer.WritePropertyName("policyInfo"u8);
-            writer.WriteObjectValue(PolicyInfo);
+            if (PolicyInfo != null)
+            {
+                ((IJsonModel<BackupInstancePolicyInfo>)PolicyInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
             {
                 writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteObjectValue(ProtectionStatus);
+                ((IJsonModel<BackupInstanceProtectionStatusDetails>)ProtectionStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentProtectionState))
             {
@@ -69,7 +83,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(DataSourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue(DataSourceAuthCredentials);
+                ((IJsonModel<DataProtectionBackupAuthCredentials>)DataSourceAuthCredentials).Write(writer, options);
             }
             if (Optional.IsDefined(ValidationType))
             {
@@ -79,7 +93,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                ((IJsonModel<DataProtectionIdentityDetails>)IdentityDetails).Write(writer, options);
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);

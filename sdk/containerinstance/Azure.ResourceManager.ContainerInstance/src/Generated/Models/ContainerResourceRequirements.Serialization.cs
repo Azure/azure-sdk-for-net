@@ -27,11 +27,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("requests"u8);
-            writer.WriteObjectValue(Requests);
+            if (Requests != null)
+            {
+                ((IJsonModel<ContainerResourceRequestsContent>)Requests).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits);
+                ((IJsonModel<ContainerResourceLimits>)Limits).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -30,9 +30,23 @@ namespace Azure.ResourceManager.Compute.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("secretUrl"u8);
-            writer.WriteStringValue(SecretUri.AbsoluteUri);
+            if (SecretUri != null)
+            {
+                writer.WriteStringValue(SecretUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault);
+            if (SourceVault != null)
+            {
+                JsonSerializer.Serialize(writer, SourceVault);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

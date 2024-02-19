@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<DataProtectionBackupVaultPatchProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

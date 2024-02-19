@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerAppAuthConfigData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppAuthConfigData> array = new List<ContainerAppAuthConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppAuthConfigData.DeserializeContainerAppAuthConfigData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplianceNetworkConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AccountCredentialDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxAccountCredentialDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +141,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ApplianceNetworkConfiguration> array = new List<ApplianceNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceNetworkConfiguration.DeserializeApplianceNetworkConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApplianceNetworkConfiguration.DeserializeApplianceNetworkConfiguration(item));
+                        }
                     }
                     networkConfigurations = array;
                     continue;
@@ -146,7 +167,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxAccountCredentialDetails> array = new List<DataBoxAccountCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxAccountCredentialDetails.DeserializeDataBoxAccountCredentialDetails(item));
+                        }
                     }
                     accountCredentialDetails = array;
                     continue;

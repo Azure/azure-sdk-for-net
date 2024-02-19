@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportConfigFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,19 +49,26 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportConfigFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                ((IJsonModel<ReportConfigComparisonExpression>)Dimensions).Write(writer, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                ((IJsonModel<ReportConfigComparisonExpression>)Tags).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +125,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeReportConfigFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeReportConfigFilter(item));
+                        }
                     }
                     and = array;
                     continue;
@@ -125,7 +146,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<ReportConfigFilter> array = new List<ReportConfigFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeReportConfigFilter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeReportConfigFilter(item));
+                        }
                     }
                     or = array;
                     continue;

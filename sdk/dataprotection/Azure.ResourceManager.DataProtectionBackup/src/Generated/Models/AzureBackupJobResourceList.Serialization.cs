@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataProtectionBackupJobData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupJobData> array = new List<DataProtectionBackupJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProtectionBackupJobData.DeserializeDataProtectionBackupJobData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -50,7 +50,14 @@ namespace Azure.Communication.Rooms
                     List<CommunicationError> array = new List<CommunicationError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommunicationError(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeCommunicationError(item));
+                        }
                     }
                     details = array;
                     continue;

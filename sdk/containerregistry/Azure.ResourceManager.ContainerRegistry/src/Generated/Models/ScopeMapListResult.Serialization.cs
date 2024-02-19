@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScopeMapData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ScopeMapData> array = new List<ScopeMapData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeMapData.DeserializeScopeMapData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScopeMapData.DeserializeScopeMapData(item));
+                        }
                     }
                     value = array;
                     continue;

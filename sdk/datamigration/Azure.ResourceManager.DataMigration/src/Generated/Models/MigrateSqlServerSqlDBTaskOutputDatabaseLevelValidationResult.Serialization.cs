@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(DataIntegrityValidationResult))
             {
                 writer.WritePropertyName("dataIntegrityValidationResult"u8);
-                writer.WriteObjectValue(DataIntegrityValidationResult);
+                ((IJsonModel<DataIntegrityValidationResult>)DataIntegrityValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SchemaValidationResult))
             {
                 writer.WritePropertyName("schemaValidationResult"u8);
-                writer.WriteObjectValue(SchemaValidationResult);
+                ((IJsonModel<SchemaComparisonValidationResult>)SchemaValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(QueryAnalysisValidationResult))
             {
                 writer.WritePropertyName("queryAnalysisValidationResult"u8);
-                writer.WriteObjectValue(QueryAnalysisValidationResult);
+                ((IJsonModel<QueryAnalysisValidationResult>)QueryAnalysisValidationResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {

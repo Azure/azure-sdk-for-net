@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<QuotaName>)Name).Write(writer, options);
             }
             if (Optional.IsDefined(Unit))
             {

@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RunCommandInputParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +128,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RunCommandInputParameter> array = new List<RunCommandInputParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RunCommandInputParameter.DeserializeRunCommandInputParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

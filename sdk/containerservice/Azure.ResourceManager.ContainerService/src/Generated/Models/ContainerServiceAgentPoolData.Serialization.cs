@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                ((IJsonModel<AgentPoolUpgradeSettings>)UpgradeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -163,7 +170,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                ((IJsonModel<ContainerServicePowerState>)PowerState).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -240,12 +247,12 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue(KubeletConfig);
+                ((IJsonModel<KubeletConfig>)KubeletConfig).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue(LinuxOSConfig);
+                ((IJsonModel<LinuxOSConfig>)LinuxOSConfig).Write(writer, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -270,7 +277,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                ((IJsonModel<ContainerServiceCreationData>)CreationData).Write(writer, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -285,7 +292,7 @@ namespace Azure.ResourceManager.ContainerService
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<AgentPoolNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

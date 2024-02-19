@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartArray();
             foreach (var item in Counters)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataBoxEdgeMetricCounter>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeMetricCounter> array = new List<DataBoxEdgeMetricCounter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxEdgeMetricCounter.DeserializeDataBoxEdgeMetricCounter(item));
+                        }
                     }
                     counters = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            if (Properties != null)
+            {
+                ((IJsonModel<DataProtectionBackupVaultProperties>)Properties).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

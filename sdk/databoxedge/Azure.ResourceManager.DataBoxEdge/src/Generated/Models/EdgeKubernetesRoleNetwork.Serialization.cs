@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(CniConfig))
             {
                 writer.WritePropertyName("cniConfig"u8);
-                writer.WriteObjectValue(CniConfig);
+                ((IJsonModel<CniConfig>)CniConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LoadBalancerConfig))
             {
                 writer.WritePropertyName("loadBalancerConfig"u8);
-                writer.WriteObjectValue(LoadBalancerConfig);
+                ((IJsonModel<DataBoxEdgeLoadBalancerConfig>)LoadBalancerConfig).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

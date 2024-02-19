@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("packageStoreLinkedService"u8);
-            writer.WriteObjectValue(PackageStoreLinkedService);
+            if (PackageStoreLinkedService != null)
+            {
+                ((IJsonModel<EntityReference>)PackageStoreLinkedService).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

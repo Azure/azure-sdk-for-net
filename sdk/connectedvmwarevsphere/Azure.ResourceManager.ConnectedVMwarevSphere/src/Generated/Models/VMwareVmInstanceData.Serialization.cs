@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -59,37 +66,37 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             if (Optional.IsDefined(PlacementProfile))
             {
                 writer.WritePropertyName("placementProfile"u8);
-                writer.WriteObjectValue(PlacementProfile);
+                ((IJsonModel<PlacementProfile>)PlacementProfile).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<OSProfileForVmInstance>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                ((IJsonModel<VmInstanceHardwareProfile>)HardwareProfile).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<VMwareNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                ((IJsonModel<VMwareStorageProfile>)StorageProfile).Write(writer, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<SecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue(InfrastructureProfile);
+                ((IJsonModel<VCenterInfrastructureProfile>)InfrastructureProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PowerState))
             {
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VMwareResourceStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +308,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
+                                }
                             }
                             statuses = array;
                             continue;

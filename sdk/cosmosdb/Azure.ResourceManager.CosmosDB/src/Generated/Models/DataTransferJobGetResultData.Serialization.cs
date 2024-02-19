@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CosmosDB
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,12 +65,12 @@ namespace Azure.ResourceManager.CosmosDB
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<DataTransferDataSourceSink>)Source).Write(writer, options);
             }
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                ((IJsonModel<DataTransferDataSourceSink>)Destination).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ErrorResponse>)Error).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

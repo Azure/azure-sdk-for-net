@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -54,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
-                writer.WriteObjectValue(ConnectionString);
+                ((IJsonModel<AsymmetricEncryptedSecret>)ConnectionString).Write(writer, options);
             }
             if (Optional.IsDefined(ControllerEndpoint))
             {

@@ -27,9 +27,23 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo != null)
+            {
+                ((IJsonModel<MISqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("azureApp"u8);
-            writer.WriteObjectValue(AzureApp);
+            if (AzureApp != null)
+            {
+                ((IJsonModel<AzureActiveDirectoryApp>)AzureApp).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

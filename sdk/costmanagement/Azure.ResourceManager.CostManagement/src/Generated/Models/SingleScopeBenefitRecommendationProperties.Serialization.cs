@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
-                writer.WriteObjectValue(Usage);
+                ((IJsonModel<RecommendationUsageDetails>)Usage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecommendationDetails))
             {
                 writer.WritePropertyName("recommendationDetails"u8);
-                writer.WriteObjectValue(RecommendationDetails);
+                ((IJsonModel<AllSavingsBenefitDetails>)RecommendationDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllRecommendationDetails))
             {
                 writer.WritePropertyName("allRecommendationDetails"u8);
-                writer.WriteObjectValue(AllRecommendationDetails);
+                ((IJsonModel<AllSavingsList>)AllRecommendationDetails).Write(writer, options);
             }
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());

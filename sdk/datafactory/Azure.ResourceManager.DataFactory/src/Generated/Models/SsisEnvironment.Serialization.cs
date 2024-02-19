@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Variables)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SsisVariable>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +131,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<SsisVariable> array = new List<SsisVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SsisVariable.DeserializeSsisVariable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SsisVariable.DeserializeSsisVariable(item));
+                        }
                     }
                     variables = array;
                     continue;

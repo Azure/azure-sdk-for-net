@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                ((IJsonModel<DataBoxEdgeSymmetricKey>)SymmetricKey).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

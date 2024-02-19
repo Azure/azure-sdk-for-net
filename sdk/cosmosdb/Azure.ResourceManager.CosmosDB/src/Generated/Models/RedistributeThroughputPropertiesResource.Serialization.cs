@@ -32,14 +32,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteStartArray();
             foreach (var item in TargetPhysicalPartitionThroughputInfo)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PhysicalPartitionThroughputInfoResource>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("sourcePhysicalPartitionThroughputInfo"u8);
             writer.WriteStartArray();
             foreach (var item in SourcePhysicalPartitionThroughputInfo)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<PhysicalPartitionThroughputInfoResource>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +111,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        }
                     }
                     targetPhysicalPartitionThroughputInfo = array;
                     continue;
@@ -107,7 +128,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<PhysicalPartitionThroughputInfoResource> array = new List<PhysicalPartitionThroughputInfoResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PhysicalPartitionThroughputInfoResource.DeserializePhysicalPartitionThroughputInfoResource(item));
+                        }
                     }
                     sourcePhysicalPartitionThroughputInfo = array;
                     continue;

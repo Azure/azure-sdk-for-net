@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Compute
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            if (Sku != null)
+            {
+                ((IJsonModel<ComputeSku>)Sku).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -92,7 +106,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachinesAssociated)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +130,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                ((IJsonModel<CapacityReservationInstanceView>)InstanceView).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -268,7 +289,14 @@ namespace Azure.ResourceManager.Compute
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                }
                             }
                             virtualMachinesAssociated = array;
                             continue;

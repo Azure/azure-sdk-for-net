@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WriteStartArray();
             foreach (var item in Ports)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerGroupPort>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerGroupPort> array = new List<ContainerGroupPort>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerGroupPort.DeserializeContainerGroupPort(item));
+                        }
                     }
                     ports = array;
                     continue;

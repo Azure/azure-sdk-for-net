@@ -28,11 +28,18 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("functionUri"u8);
-            writer.WriteStringValue(FunctionUri.AbsoluteUri);
+            if (FunctionUri != null)
+            {
+                writer.WriteStringValue(FunctionUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                ((IJsonModel<FunctionRouterRuleCredential>)Credential).Write(writer, options);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                ((IJsonModel<CosmosDBMetricName>)Name).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MetricValues))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBMetricValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +166,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBMetricValue> array = new List<CosmosDBMetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBMetricValue.DeserializeCosmosDBMetricValue(item));
+                        }
                     }
                     metricValues = array;
                     continue;

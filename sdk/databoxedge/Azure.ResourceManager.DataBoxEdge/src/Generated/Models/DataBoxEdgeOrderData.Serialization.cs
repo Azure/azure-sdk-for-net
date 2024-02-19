@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,17 +70,17 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue(ContactInformation);
+                ((IJsonModel<DataBoxEdgeContactDetails>)ContactInformation).Write(writer, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                ((IJsonModel<DataBoxEdgeShippingAddress>)ShippingAddress).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentStatus))
             {
                 writer.WritePropertyName("currentStatus"u8);
-                writer.WriteObjectValue(CurrentStatus);
+                ((IJsonModel<DataBoxEdgeOrderStatus>)CurrentStatus).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(OrderHistory))
             {
@@ -81,7 +88,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in OrderHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeOrderStatus>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +110,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in DeliveryTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeTrackingInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +127,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ReturnTrackingInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeTrackingInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -251,7 +279,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeOrderStatus> array = new List<DataBoxEdgeOrderStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeOrderStatus.DeserializeDataBoxEdgeOrderStatus(item));
+                                }
                             }
                             orderHistory = array;
                             continue;
@@ -270,7 +305,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                }
                             }
                             deliveryTrackingInfo = array;
                             continue;
@@ -284,7 +326,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeTrackingInfo> array = new List<DataBoxEdgeTrackingInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(item));
+                                }
                             }
                             returnTrackingInfo = array;
                             continue;

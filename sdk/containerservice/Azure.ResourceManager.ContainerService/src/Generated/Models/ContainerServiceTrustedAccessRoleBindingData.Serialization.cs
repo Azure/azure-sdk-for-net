@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("sourceResourceId"u8);
-            writer.WriteStringValue(SourceResourceId);
+            if (SourceResourceId != null)
+            {
+                writer.WriteStringValue(SourceResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("roles"u8);
             writer.WriteStartArray();
             foreach (var item in Roles)

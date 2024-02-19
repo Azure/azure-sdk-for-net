@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                ((IJsonModel<ContainerAppLogAnalyticsConfiguration>)LogAnalyticsConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

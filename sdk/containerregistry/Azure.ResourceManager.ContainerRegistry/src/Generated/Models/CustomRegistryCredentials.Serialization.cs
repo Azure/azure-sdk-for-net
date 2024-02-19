@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                ((IJsonModel<ContainerRegistrySecretObject>)UserName).Write(writer, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                ((IJsonModel<ContainerRegistrySecretObject>)Password).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {

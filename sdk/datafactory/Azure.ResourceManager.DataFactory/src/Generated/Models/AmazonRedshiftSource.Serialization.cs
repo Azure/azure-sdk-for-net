@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RedshiftUnloadSettings))
             {
                 writer.WritePropertyName("redshiftUnloadSettings"u8);
-                writer.WriteObjectValue(RedshiftUnloadSettings);
+                ((IJsonModel<RedshiftUnloadSettings>)RedshiftUnloadSettings).Write(writer, options);
             }
             if (Optional.IsDefined(QueryTimeout))
             {

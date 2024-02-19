@@ -33,7 +33,14 @@ namespace Azure.Communication.Messages
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteBase64StringValue(Body.ToArray(), "D");
+            if (Body != null)
+            {
+                writer.WriteBase64StringValue(Body.ToArray(), "D");
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

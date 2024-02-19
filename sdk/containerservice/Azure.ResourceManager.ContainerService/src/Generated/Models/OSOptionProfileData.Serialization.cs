@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -54,7 +61,14 @@ namespace Azure.ResourceManager.ContainerService
             writer.WriteStartArray();
             foreach (var item in OSOptionPropertyList)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ContainerServiceOSOptionProperty>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -143,7 +157,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<ContainerServiceOSOptionProperty> array = new List<ContainerServiceOSOptionProperty>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContainerServiceOSOptionProperty.DeserializeContainerServiceOSOptionProperty(item));
+                                }
                             }
                             osOptionPropertyList = array;
                             continue;

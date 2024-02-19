@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -52,9 +59,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIPAddress.ToString());
+            if (StartIPAddress != null)
+            {
+                writer.WriteStringValue(StartIPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIPAddress.ToString());
+            if (EndIPAddress != null)
+            {
+                writer.WriteStringValue(EndIPAddress.ToString());
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

@@ -27,11 +27,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("taskId"u8);
-            writer.WriteStringValue(TaskId);
+            if (TaskId != null)
+            {
+                writer.WriteStringValue(TaskId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
-                writer.WriteObjectValue(OverrideTaskStepProperties);
+                ((IJsonModel<ContainerRegistryOverrideTaskStepProperties>)OverrideTaskStepProperties).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);

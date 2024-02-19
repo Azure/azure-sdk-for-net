@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -62,7 +69,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(AzureContainerInfo))
             {
                 writer.WritePropertyName("azureContainerInfo"u8);
-                writer.WriteObjectValue(AzureContainerInfo);
+                ((IJsonModel<DataBoxEdgeStorageContainerInfo>)AzureContainerInfo).Write(writer, options);
             }
             writer.WritePropertyName("accessProtocol"u8);
             writer.WriteStringValue(AccessProtocol.ToString());
@@ -72,7 +79,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in UserAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<UserAccessRight>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,14 +96,21 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ClientAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClientAccessRight>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                ((IJsonModel<DataBoxEdgeRefreshDetails>)RefreshDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareMappings))
             {
@@ -97,7 +118,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxEdgeMountPointMap>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -234,7 +262,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<UserAccessRight> array = new List<UserAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UserAccessRight.DeserializeUserAccessRight(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(UserAccessRight.DeserializeUserAccessRight(item));
+                                }
                             }
                             userAccessRights = array;
                             continue;
@@ -248,7 +283,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<ClientAccessRight> array = new List<ClientAccessRight>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClientAccessRight.DeserializeClientAccessRight(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ClientAccessRight.DeserializeClientAccessRight(item));
+                                }
                             }
                             clientAccessRights = array;
                             continue;
@@ -271,7 +313,14 @@ namespace Azure.ResourceManager.DataBoxEdge
                             List<DataBoxEdgeMountPointMap> array = new List<DataBoxEdgeMountPointMap>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxEdgeMountPointMap.DeserializeDataBoxEdgeMountPointMap(item));
+                                }
                             }
                             shareMappings = array;
                             continue;

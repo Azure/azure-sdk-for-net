@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -59,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                ((IJsonModel<EdgeProfile>)EdgeProfile).Write(writer, options);
             }
             if (Optional.IsDefined(RoleStatus))
             {

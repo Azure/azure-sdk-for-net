@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MigrateSqlServerSqlMIDatabaseInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StartedOn))
@@ -61,10 +68,17 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                ((IJsonModel<FileShare>)BackupFileShare).Write(writer, options);
             }
             writer.WritePropertyName("backupBlobShare"u8);
-            writer.WriteObjectValue(BackupBlobShare);
+            if (BackupBlobShare != null)
+            {
+                ((IJsonModel<BlobShare>)BackupBlobShare).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
@@ -81,9 +95,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo != null)
+            {
+                ((IJsonModel<SqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo != null)
+            {
+                ((IJsonModel<SqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -142,7 +170,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        }
                     }
                     selectedDatabases = array;
                     continue;

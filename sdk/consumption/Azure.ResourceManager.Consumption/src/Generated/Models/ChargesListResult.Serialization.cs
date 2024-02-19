@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionChargeSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionChargeSummary> array = new List<ConsumptionChargeSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConsumptionChargeSummary.DeserializeConsumptionChargeSummary(item));
+                        }
                     }
                     value = array;
                     continue;

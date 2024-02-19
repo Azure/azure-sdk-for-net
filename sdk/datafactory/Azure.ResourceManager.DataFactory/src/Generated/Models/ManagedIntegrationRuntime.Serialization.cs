@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ManagedVirtualNetwork))
             {
                 writer.WritePropertyName("managedVirtualNetwork"u8);
-                writer.WriteObjectValue(ManagedVirtualNetwork);
+                ((IJsonModel<ManagedVirtualNetworkReference>)ManagedVirtualNetwork).Write(writer, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                ((IJsonModel<IntegrationRuntimeComputeProperties>)ComputeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                ((IJsonModel<IntegrationRuntimeSsisProperties>)SsisProperties).Write(writer, options);
             }
             if (Optional.IsDefined(CustomerVirtualNetwork))
             {
                 writer.WritePropertyName("customerVirtualNetwork"u8);
-                writer.WriteObjectValue(CustomerVirtualNetwork);
+                ((IJsonModel<IntegrationRuntimeCustomerVirtualNetwork>)CustomerVirtualNetwork).Write(writer, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)

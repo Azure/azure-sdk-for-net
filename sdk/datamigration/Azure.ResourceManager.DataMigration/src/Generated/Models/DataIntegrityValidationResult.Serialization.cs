@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors);
+                ((IJsonModel<ValidationError>)ValidationErrors).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

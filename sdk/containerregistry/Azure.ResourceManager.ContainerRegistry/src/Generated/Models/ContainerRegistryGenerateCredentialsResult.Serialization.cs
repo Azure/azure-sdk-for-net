@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerRegistryTokenPassword>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryTokenPassword> array = new List<ContainerRegistryTokenPassword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerRegistryTokenPassword.DeserializeContainerRegistryTokenPassword(item));
+                        }
                     }
                     passwords = array;
                     continue;

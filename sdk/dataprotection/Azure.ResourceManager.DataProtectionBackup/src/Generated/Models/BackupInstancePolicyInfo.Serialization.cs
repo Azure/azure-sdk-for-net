@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("policyId"u8);
-            writer.WriteStringValue(PolicyId);
+            if (PolicyId != null)
+            {
+                writer.WriteStringValue(PolicyId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(PolicyVersion))
             {
                 writer.WritePropertyName("policyVersion"u8);
@@ -36,7 +43,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
-                writer.WriteObjectValue(PolicyParameters);
+                ((IJsonModel<BackupInstancePolicySettings>)PolicyParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

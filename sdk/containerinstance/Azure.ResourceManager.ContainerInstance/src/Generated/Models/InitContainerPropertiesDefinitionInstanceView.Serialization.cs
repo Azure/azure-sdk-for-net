@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
-                writer.WriteObjectValue(CurrentState);
+                ((IJsonModel<ContainerState>)CurrentState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
                 writer.WritePropertyName("previousState"u8);
-                writer.WriteObjectValue(PreviousState);
+                ((IJsonModel<ContainerState>)PreviousState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Events))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerEvent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<ContainerEvent> array = new List<ContainerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerEvent.DeserializeContainerEvent(item));
+                        }
                     }
                     events = array;
                     continue;

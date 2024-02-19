@@ -28,7 +28,14 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("queueSelector"u8);
-            writer.WriteObjectValue(QueueSelector);
+            if (QueueSelector != null)
+            {
+                ((IJsonModel<RouterQueueSelector>)QueueSelector).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

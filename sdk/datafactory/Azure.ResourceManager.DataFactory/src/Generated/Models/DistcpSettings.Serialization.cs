@@ -28,9 +28,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
+            if (ResourceManagerEndpoint != null)
+            {
+                JsonSerializer.Serialize(writer, ResourceManagerEndpoint);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("tempScriptPath"u8);
-            JsonSerializer.Serialize(writer, TempScriptPath);
+            if (TempScriptPath != null)
+            {
+                JsonSerializer.Serialize(writer, TempScriptPath);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);

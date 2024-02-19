@@ -28,7 +28,14 @@ namespace Azure.AI.ContentSafety
 
             writer.WriteStartObject();
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            if (Image != null)
+            {
+                ((IJsonModel<ContentSafetyImageData>)Image).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);

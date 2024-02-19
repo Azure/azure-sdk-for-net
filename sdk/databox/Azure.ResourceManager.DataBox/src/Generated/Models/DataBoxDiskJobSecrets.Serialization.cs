@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxDiskSecret>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                ((IJsonModel<DataCenterAccessSecurityCode>)DataCenterAccessSecurityCode).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -116,7 +123,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        }
                     }
                     diskSecrets = array;
                     continue;

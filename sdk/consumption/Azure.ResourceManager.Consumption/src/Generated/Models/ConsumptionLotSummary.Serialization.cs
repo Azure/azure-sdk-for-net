@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -58,12 +65,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount);
+                ((IJsonModel<ConsumptionAmount>)OriginalAmount).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                ((IJsonModel<ConsumptionAmount>)ClosedBalance).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -108,17 +115,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)OriginalAmountInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                ((IJsonModel<ConsumptionAmountWithExchangeRate>)ClosedBalanceInBillingCurrency).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                ((IJsonModel<ConsumptionReseller>)Reseller).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

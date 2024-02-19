@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("vaultBaseUrl"u8);
-            writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            if (VaultBaseUri != null)
+            {
+                writer.WriteStringValue(VaultBaseUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(KeyVersion))
             {
                 writer.WritePropertyName("keyVersion"u8);
@@ -38,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                ((IJsonModel<DataFactoryCmkIdentity>)Identity).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

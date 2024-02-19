@@ -28,7 +28,14 @@ namespace Azure.Communication.JobRouter
 
             writer.WriteStartObject();
             writer.WritePropertyName("rule"u8);
-            writer.WriteObjectValue(Rule);
+            if (Rule != null)
+            {
+                ((IJsonModel<RouterRule>)Rule).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

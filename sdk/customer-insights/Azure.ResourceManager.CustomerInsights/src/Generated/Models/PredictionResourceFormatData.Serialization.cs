@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -145,7 +152,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(Mappings))
             {
                 writer.WritePropertyName("mappings"u8);
-                writer.WriteObjectValue(Mappings);
+                ((IJsonModel<PredictionMappings>)Mappings).Write(writer, options);
             }
             if (Optional.IsDefined(ScoreLabel))
             {
@@ -158,14 +165,21 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Grades)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PredictionGradesItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(SystemGeneratedEntities))
             {
                 writer.WritePropertyName("systemGeneratedEntities"u8);
-                writer.WriteObjectValue(SystemGeneratedEntities);
+                ((IJsonModel<PredictionSystemGeneratedEntities>)SystemGeneratedEntities).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -409,7 +423,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PredictionGradesItem> array = new List<PredictionGradesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PredictionGradesItem.DeserializePredictionGradesItem(item));
+                                }
                             }
                             grades = array;
                             continue;

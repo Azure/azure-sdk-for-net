@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ComputeApiError>)Error).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

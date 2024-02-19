@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerServiceMaintenanceConfigurationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceMaintenanceConfigurationData> array = new List<ContainerServiceMaintenanceConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerServiceMaintenanceConfigurationData.DeserializeContainerServiceMaintenanceConfigurationData(item));
+                        }
                     }
                     value = array;
                     continue;

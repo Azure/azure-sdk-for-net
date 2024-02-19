@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceResult))
             {
                 writer.WritePropertyName("sourceResult"u8);
-                writer.WriteObjectValue(SourceResult);
+                ((IJsonModel<ExecutionStatistics>)SourceResult).Write(writer, options);
             }
             if (Optional.IsDefined(TargetResult))
             {
                 writer.WritePropertyName("targetResult"u8);
-                writer.WriteObjectValue(TargetResult);
+                ((IJsonModel<ExecutionStatistics>)TargetResult).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

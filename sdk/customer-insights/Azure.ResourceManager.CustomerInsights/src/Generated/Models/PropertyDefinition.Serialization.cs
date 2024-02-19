@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EnumValidValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProfileEnumValidValuesFormat>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +113,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in DataSourcePrecedenceRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataSourcePrecedence>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +196,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileEnumValidValuesFormat> array = new List<ProfileEnumValidValuesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        }
                     }
                     enumValidValues = array;
                     continue;
@@ -297,7 +318,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        }
                     }
                     dataSourcePrecedenceRules = array;
                     continue;

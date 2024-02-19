@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConsumptionEventSummary>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionEventSummary> array = new List<ConsumptionEventSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionEventSummary.DeserializeConsumptionEventSummary(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConsumptionEventSummary.DeserializeConsumptionEventSummary(item));
+                        }
                     }
                     value = array;
                     continue;

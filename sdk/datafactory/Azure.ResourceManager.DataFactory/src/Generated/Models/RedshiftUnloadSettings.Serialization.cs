@@ -28,9 +28,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            JsonSerializer.Serialize(writer, S3LinkedServiceName);
+            if (S3LinkedServiceName != null)
+            {
+                JsonSerializer.Serialize(writer, S3LinkedServiceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("bucketName"u8);
-            JsonSerializer.Serialize(writer, BucketName);
+            if (BucketName != null)
+            {
+                JsonSerializer.Serialize(writer, BucketName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

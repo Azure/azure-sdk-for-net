@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
-            JsonSerializer.Serialize(writer, FileExtension);
+            if (FileExtension != null)
+            {
+                JsonSerializer.Serialize(writer, FileExtension);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);

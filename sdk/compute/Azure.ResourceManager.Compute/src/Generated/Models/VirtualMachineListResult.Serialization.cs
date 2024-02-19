@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<VirtualMachineData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineData> array = new List<VirtualMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualMachineData.DeserializeVirtualMachineData(item));
+                        }
                     }
                     value = array;
                     continue;

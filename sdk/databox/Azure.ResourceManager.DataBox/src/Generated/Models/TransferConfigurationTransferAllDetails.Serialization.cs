@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
-                writer.WriteObjectValue(Include);
+                ((IJsonModel<TransferAllDetails>)Include).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

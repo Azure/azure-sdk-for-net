@@ -44,33 +44,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("parentTrigger"u8);
+            if (ParentTrigger != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ParentTrigger);
 #else
-            using (JsonDocument document = JsonDocument.Parse(ParentTrigger))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(ParentTrigger))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("requestedStartTime"u8);
             writer.WriteStringValue(RequestedStartOn, "O");
             writer.WritePropertyName("requestedEndTime"u8);

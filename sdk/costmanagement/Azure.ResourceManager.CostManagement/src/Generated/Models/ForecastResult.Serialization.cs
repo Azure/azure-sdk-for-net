@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ForecastColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,29 +111,33 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Rows)
                 {
-                    if (item == null)
+                    if (item != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartArray();
-                    foreach (var item0 in item)
-                    {
-                        if (item0 == null)
+                        writer.WriteStartArray();
+                        foreach (var item0 in item)
                         {
-                            writer.WriteNullValue();
-                            continue;
-                        }
+                            if (item0 != null)
+                            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
+                                using (JsonDocument document = JsonDocument.Parse(item0))
+                                {
+                                    JsonSerializer.Serialize(writer, document.RootElement);
+                                }
 #endif
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndArray();
                     }
-                    writer.WriteEndArray();
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -261,7 +279,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                             List<ForecastColumn> array = new List<ForecastColumn>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ForecastColumn.DeserializeForecastColumn(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ForecastColumn.DeserializeForecastColumn(item));
+                                }
                             }
                             columns = array;
                             continue;

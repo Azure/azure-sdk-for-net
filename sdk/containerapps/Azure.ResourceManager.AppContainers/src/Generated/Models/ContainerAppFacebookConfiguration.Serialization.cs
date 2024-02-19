@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                ((IJsonModel<ContainerAppRegistration>)Registration).Write(writer, options);
             }
             if (Optional.IsDefined(GraphApiVersion))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                ((IJsonModel<LoginScopes>)Login).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

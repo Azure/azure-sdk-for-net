@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBSqlUserDefinedFunctionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CosmosDBSqlUserDefinedFunctionData> array = new List<CosmosDBSqlUserDefinedFunctionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CosmosDBSqlUserDefinedFunctionData.DeserializeCosmosDBSqlUserDefinedFunctionData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<SnapshotSku>)Sku).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                ((IJsonModel<EncryptionSettingsGroup>)EncryptionSettingsGroup).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<DiskEncryption>)Encryption).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkAccessPolicy))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                ((IJsonModel<SupportedCapabilities>)SupportedCapabilities).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

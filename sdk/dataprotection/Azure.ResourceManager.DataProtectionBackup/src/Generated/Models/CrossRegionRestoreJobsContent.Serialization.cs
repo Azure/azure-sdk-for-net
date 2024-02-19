@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("sourceRegion"u8);
             writer.WriteStringValue(SourceRegion);
             writer.WritePropertyName("sourceBackupVaultId"u8);
-            writer.WriteStringValue(SourceBackupVaultId);
+            if (SourceBackupVaultId != null)
+            {
+                writer.WriteStringValue(SourceBackupVaultId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

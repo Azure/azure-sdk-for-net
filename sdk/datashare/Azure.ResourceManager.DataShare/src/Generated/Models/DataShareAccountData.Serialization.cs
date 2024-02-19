@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.DataShare
 
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            JsonSerializer.Serialize(writer, Identity);
+            if (Identity != null)
+            {
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -46,7 +53,14 @@ namespace Azure.ResourceManager.DataShare
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

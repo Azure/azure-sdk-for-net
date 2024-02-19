@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
-                writer.WriteObjectValue(ManagedOutboundIPProfile);
+                ((IJsonModel<ManagedClusterManagedOutboundIPProfile>)ManagedOutboundIPProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EffectiveOutboundIPs))
             {
@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in EffectiveOutboundIPs)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     effectiveOutboundIPs = array;
                     continue;

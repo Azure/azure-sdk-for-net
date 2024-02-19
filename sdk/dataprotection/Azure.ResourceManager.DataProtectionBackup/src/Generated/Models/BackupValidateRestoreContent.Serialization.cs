@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("restoreRequestObject"u8);
-            writer.WriteObjectValue(RestoreRequestObject);
+            if (RestoreRequestObject != null)
+            {
+                ((IJsonModel<BackupRestoreContent>)RestoreRequestObject).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

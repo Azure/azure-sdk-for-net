@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             if (Optional.IsDefined(MaintenanceWindow))
             {
                 writer.WritePropertyName("maintenanceWindow"u8);
-                writer.WriteObjectValue(MaintenanceWindow);
+                ((IJsonModel<CosmosDBForPostgreSqlMaintenanceWindow>)MaintenanceWindow).Write(writer, options);
             }
             if (Optional.IsDefined(PreferredPrimaryZone))
             {
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in ServerNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBForPostgreSqlServerNameItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -204,7 +218,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -479,7 +500,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlServerNameItem> array = new List<CosmosDBForPostgreSqlServerNameItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CosmosDBForPostgreSqlServerNameItem.DeserializeCosmosDBForPostgreSqlServerNameItem(item));
+                                }
                             }
                             serverNames = array;
                             continue;
@@ -543,7 +571,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                             List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection> array = new List<CosmosDBForPostgreSqlSimplePrivateEndpointConnection>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(CosmosDBForPostgreSqlSimplePrivateEndpointConnection.DeserializeCosmosDBForPostgreSqlSimplePrivateEndpointConnection(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;

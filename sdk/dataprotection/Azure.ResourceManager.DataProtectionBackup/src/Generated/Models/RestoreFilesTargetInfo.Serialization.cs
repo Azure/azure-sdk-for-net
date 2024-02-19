@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
+            if (TargetDetails != null)
+            {
+                ((IJsonModel<RestoreFilesTargetDetails>)TargetDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("recoveryOption"u8);

@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("idProvider"u8);
-            writer.WriteStringValue(IdProvider.AbsoluteUri);
+            if (IdProvider != null)
+            {
+                writer.WriteStringValue(IdProvider.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

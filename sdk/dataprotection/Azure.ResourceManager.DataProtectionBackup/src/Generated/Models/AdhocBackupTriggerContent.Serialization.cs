@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("backupRuleOptions"u8);
-            writer.WriteObjectValue(BackupRules);
+            if (BackupRules != null)
+            {
+                ((IJsonModel<AdhocBackupRules>)BackupRules).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

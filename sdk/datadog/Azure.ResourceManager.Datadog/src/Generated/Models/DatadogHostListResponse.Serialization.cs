@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DatadogHost>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<DatadogHost> array = new List<DatadogHost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogHost.DeserializeDatadogHost(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DatadogHost.DeserializeDatadogHost(item));
+                        }
                     }
                     value = array;
                     continue;

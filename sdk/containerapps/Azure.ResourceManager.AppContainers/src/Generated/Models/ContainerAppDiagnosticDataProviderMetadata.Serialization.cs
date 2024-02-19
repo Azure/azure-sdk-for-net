@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in PropertyBag)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> array = new List<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppDiagnosticDataProviderMetadataPropertyBagItem.DeserializeContainerAppDiagnosticDataProviderMetadataPropertyBagItem(item));
+                        }
                     }
                     propertyBag = array;
                     continue;

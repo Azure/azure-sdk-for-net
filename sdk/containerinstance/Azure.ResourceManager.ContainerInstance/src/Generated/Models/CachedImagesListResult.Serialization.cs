@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CachedImages>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     List<CachedImages> array = new List<CachedImages>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CachedImages.DeserializeCachedImages(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CachedImages.DeserializeCachedImages(item));
+                        }
                     }
                     value = array;
                     continue;

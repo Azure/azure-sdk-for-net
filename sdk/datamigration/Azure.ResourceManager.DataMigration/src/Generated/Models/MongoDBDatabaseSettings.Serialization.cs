@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Collections)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    ((IJsonModel<MongoDBCollectionSettings>)item.Value).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(TargetRUs))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBCollectionSettings> dictionary = new Dictionary<string, MongoDBCollectionSettings>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MongoDBCollectionSettings.DeserializeMongoDBCollectionSettings(property0.Value));
+                        }
                     }
                     collections = dictionary;
                     continue;

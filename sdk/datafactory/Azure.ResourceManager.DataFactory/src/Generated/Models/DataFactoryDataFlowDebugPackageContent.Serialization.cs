@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DataFlow))
             {
                 writer.WritePropertyName("dataFlow"u8);
-                writer.WriteObjectValue(DataFlow);
+                ((IJsonModel<DataFactoryDataFlowDebugInfo>)DataFlow).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataFlows))
             {
@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataFlows)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFactoryDataFlowDebugInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFactoryDatasetDebugInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,19 +76,26 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataFactoryLinkedServiceDebugInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                ((IJsonModel<DataFlowStagingInfo>)Staging).Write(writer, options);
             }
             if (Optional.IsDefined(DebugSettings))
             {
                 writer.WritePropertyName("debugSettings"u8);
-                writer.WriteObjectValue(DebugSettings);
+                ((IJsonModel<DataFlowDebugPackageDebugSettings>)DebugSettings).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -149,7 +170,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDataFlowDebugInfo> array = new List<DataFactoryDataFlowDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryDataFlowDebugInfo.DeserializeDataFactoryDataFlowDebugInfo(item));
+                        }
                     }
                     dataFlows = array;
                     continue;
@@ -163,7 +191,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryDatasetDebugInfo> array = new List<DataFactoryDatasetDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryDatasetDebugInfo.DeserializeDataFactoryDatasetDebugInfo(item));
+                        }
                     }
                     datasets = array;
                     continue;
@@ -177,7 +212,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryLinkedServiceDebugInfo> array = new List<DataFactoryLinkedServiceDebugInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryLinkedServiceDebugInfo.DeserializeDataFactoryLinkedServiceDebugInfo(item));
+                        }
                     }
                     linkedServices = array;
                     continue;

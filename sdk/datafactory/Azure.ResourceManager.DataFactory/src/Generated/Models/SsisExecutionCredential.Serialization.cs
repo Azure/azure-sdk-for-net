@@ -28,11 +28,32 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("domain"u8);
-            JsonSerializer.Serialize(writer, Domain);
+            if (Domain != null)
+            {
+                JsonSerializer.Serialize(writer, Domain);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("userName"u8);
-            JsonSerializer.Serialize(writer, UserName);
+            if (UserName != null)
+            {
+                JsonSerializer.Serialize(writer, UserName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password);
+            if (Password != null)
+            {
+                JsonSerializer.Serialize(writer, Password);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

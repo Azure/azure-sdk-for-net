@@ -24,7 +24,14 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Layers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -33,7 +40,14 @@ namespace Azure.Communication.MediaComposition
             foreach (var item in InputGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                if (item.Value != null)
+                {
+                    writer.WriteObjectValue(item.Value);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
@@ -79,7 +93,14 @@ namespace Azure.Communication.MediaComposition
                     Dictionary<string, LayoutLayer> dictionary = new Dictionary<string, LayoutLayer>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LayoutLayer.DeserializeLayoutLayer(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, LayoutLayer.DeserializeLayoutLayer(property0.Value));
+                        }
                     }
                     layers = dictionary;
                     continue;
@@ -89,7 +110,14 @@ namespace Azure.Communication.MediaComposition
                     Dictionary<string, InputGroup> dictionary = new Dictionary<string, InputGroup>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, InputGroup.DeserializeInputGroup(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, InputGroup.DeserializeInputGroup(property0.Value));
+                        }
                     }
                     inputGroups = dictionary;
                     continue;

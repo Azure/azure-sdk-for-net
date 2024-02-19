@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(MigrationReportResult))
             {
                 writer.WritePropertyName("migrationReportResult"u8);
-                writer.WriteObjectValue(MigrationReportResult);
+                ((IJsonModel<MigrationReportResult>)MigrationReportResult).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
             {
@@ -97,7 +97,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ReportableException>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -266,7 +273,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ReportableException.DeserializeReportableException(item));
+                        }
                     }
                     exceptionsAndWarnings = array;
                     continue;

@@ -30,13 +30,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MigrateSqlServerSqlDBDatabaseInput>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
-                writer.WriteObjectValue(ValidationOptions);
+                ((IJsonModel<MigrationValidationOptions>)ValidationOptions).Write(writer, options);
             }
             if (Optional.IsDefined(StartedOn))
             {
@@ -49,9 +56,23 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            if (SourceConnectionInfo != null)
+            {
+                ((IJsonModel<SqlConnectionInfo>)SourceConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            if (TargetConnectionInfo != null)
+            {
+                ((IJsonModel<SqlConnectionInfo>)TargetConnectionInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -105,7 +126,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlDBDatabaseInput> array = new List<MigrateSqlServerSqlDBDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlDBDatabaseInput.DeserializeMigrateSqlServerSqlDBDatabaseInput(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MigrateSqlServerSqlDBDatabaseInput.DeserializeMigrateSqlServerSqlDBDatabaseInput(item));
+                        }
                     }
                     selectedDatabases = array;
                     continue;

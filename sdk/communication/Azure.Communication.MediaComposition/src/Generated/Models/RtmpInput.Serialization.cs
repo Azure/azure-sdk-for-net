@@ -19,7 +19,14 @@ namespace Azure.Communication.MediaComposition
             writer.WritePropertyName("streamKey"u8);
             writer.WriteStringValue(StreamKey);
             writer.WritePropertyName("resolution"u8);
-            writer.WriteObjectValue(Resolution);
+            if (Resolution != null)
+            {
+                writer.WriteObjectValue(Resolution);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
             if (Optional.IsDefined(Mode))

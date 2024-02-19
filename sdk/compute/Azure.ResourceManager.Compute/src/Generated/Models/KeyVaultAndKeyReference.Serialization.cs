@@ -28,9 +28,23 @@ namespace Azure.ResourceManager.Compute.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault);
+            if (SourceVault != null)
+            {
+                JsonSerializer.Serialize(writer, SourceVault);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("keyUrl"u8);
-            writer.WriteStringValue(KeyUri.AbsoluteUri);
+            if (KeyUri != null)
+            {
+                writer.WriteStringValue(KeyUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

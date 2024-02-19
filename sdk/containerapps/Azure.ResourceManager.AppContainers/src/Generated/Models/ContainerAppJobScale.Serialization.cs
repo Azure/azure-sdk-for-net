@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppJobScaleRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +140,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppJobScaleRule> array = new List<ContainerAppJobScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppJobScaleRule.DeserializeContainerAppJobScaleRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppJobScaleRule.DeserializeContainerAppJobScaleRule(item));
+                        }
                     }
                     rules = array;
                     continue;

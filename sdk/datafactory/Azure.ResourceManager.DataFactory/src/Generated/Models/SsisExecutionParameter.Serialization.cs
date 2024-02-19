@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            JsonSerializer.Serialize(writer, Value);
+            if (Value != null)
+            {
+                JsonSerializer.Serialize(writer, Value);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

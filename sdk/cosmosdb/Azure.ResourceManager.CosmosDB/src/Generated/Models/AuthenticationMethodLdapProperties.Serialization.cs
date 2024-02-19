@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ServerCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CassandraCertificate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CassandraCertificate.DeserializeCassandraCertificate(item));
+                        }
                     }
                     serverCertificates = array;
                     continue;

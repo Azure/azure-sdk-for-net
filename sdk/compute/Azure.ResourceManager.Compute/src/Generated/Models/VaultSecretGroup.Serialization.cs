@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VaultCertificate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +111,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VaultCertificate> array = new List<VaultCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VaultCertificate.DeserializeVaultCertificate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VaultCertificate.DeserializeVaultCertificate(item));
+                        }
                     }
                     vaultCertificates = array;
                     continue;

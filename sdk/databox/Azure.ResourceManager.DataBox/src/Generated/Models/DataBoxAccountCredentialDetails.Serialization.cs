@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in ShareCredentialDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ShareCredentialDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<ShareCredentialDetails> array = new List<ShareCredentialDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Models.ShareCredentialDetails.DeserializeShareCredentialDetails(item));
+                        }
                     }
                     shareCredentialDetails = array;
                     continue;

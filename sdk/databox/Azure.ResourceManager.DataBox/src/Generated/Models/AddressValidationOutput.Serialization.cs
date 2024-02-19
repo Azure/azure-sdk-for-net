@@ -50,7 +50,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataBoxShippingAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -146,7 +153,14 @@ namespace Azure.ResourceManager.DataBox.Models
                             List<DataBoxShippingAddress> array = new List<DataBoxShippingAddress>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataBoxShippingAddress.DeserializeDataBoxShippingAddress(item));
+                                }
                             }
                             alternateAddresses = array;
                             continue;

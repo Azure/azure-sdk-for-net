@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PropertyDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +112,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in LookupMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RelationshipTypeMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -279,7 +300,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<PropertyDefinition> array = new List<PropertyDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(PropertyDefinition.DeserializePropertyDefinition(item));
+                                }
                             }
                             fields = array;
                             continue;
@@ -293,7 +321,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<RelationshipTypeMapping> array = new List<RelationshipTypeMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RelationshipTypeMapping.DeserializeRelationshipTypeMapping(item));
+                                }
                             }
                             lookupMappings = array;
                             continue;

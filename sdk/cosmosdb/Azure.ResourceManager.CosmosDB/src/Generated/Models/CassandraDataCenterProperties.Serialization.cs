@@ -52,7 +52,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in SeedNodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CassandraDataCenterSeedNode>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(AuthenticationMethodLdapProperties))
             {
                 writer.WritePropertyName("authenticationMethodLdapProperties"u8);
-                writer.WriteObjectValue(AuthenticationMethodLdapProperties);
+                ((IJsonModel<AuthenticationMethodLdapProperties>)AuthenticationMethodLdapProperties).Write(writer, options);
             }
             if (Optional.IsDefined(Deallocated))
             {
@@ -104,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(ProvisionError))
             {
                 writer.WritePropertyName("provisionError"u8);
-                writer.WriteObjectValue(ProvisionError);
+                ((IJsonModel<CassandraError>)ProvisionError).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -208,7 +215,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(item));
+                        }
                     }
                     seedNodes = array;
                     continue;

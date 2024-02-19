@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataBox.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
+            if (AccountDetails != null)
+            {
+                ((IJsonModel<DataAccountDetails>)AccountDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);

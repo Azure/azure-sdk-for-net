@@ -27,7 +27,14 @@ namespace Azure.Communication.Sms.Models
                     List<SmsSendResult> array = new List<SmsSendResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SmsSendResult.DeserializeSmsSendResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SmsSendResult.DeserializeSmsSendResult(item));
+                        }
                     }
                     value = array;
                     continue;

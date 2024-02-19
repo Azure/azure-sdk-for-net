@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -108,7 +115,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Mappings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TypePropertiesMapping>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +132,14 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in ParticipantPropertyReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ParticipantPropertyReference>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -309,7 +330,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<TypePropertiesMapping> array = new List<TypePropertiesMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(TypePropertiesMapping.DeserializeTypePropertiesMapping(item));
+                                }
                             }
                             mappings = array;
                             continue;
@@ -323,7 +351,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                                }
                             }
                             participantPropertyReferences = array;
                             continue;

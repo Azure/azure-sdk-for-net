@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -60,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (options.Format != "W" && Optional.IsDefined(RefreshDetails))
             {
                 writer.WritePropertyName("refreshDetails"u8);
-                writer.WriteObjectValue(RefreshDetails);
+                ((IJsonModel<DataBoxEdgeRefreshDetails>)RefreshDetails).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {

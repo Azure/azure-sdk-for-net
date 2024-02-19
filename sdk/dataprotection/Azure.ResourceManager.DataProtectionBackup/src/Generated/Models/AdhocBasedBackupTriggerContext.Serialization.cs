@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("taggingCriteria"u8);
-            writer.WriteObjectValue(AdhocBackupRetention);
+            if (AdhocBackupRetention != null)
+            {
+                ((IJsonModel<AdhocBasedBackupTaggingCriteria>)AdhocBackupRetention).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

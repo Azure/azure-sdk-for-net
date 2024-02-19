@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Distributions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PredictionDistributionDefinitionDistributionsItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<PredictionDistributionDefinitionDistributionsItem> array = new List<PredictionDistributionDefinitionDistributionsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PredictionDistributionDefinitionDistributionsItem.DeserializePredictionDistributionDefinitionDistributionsItem(item));
+                        }
                     }
                     distributions = array;
                     continue;

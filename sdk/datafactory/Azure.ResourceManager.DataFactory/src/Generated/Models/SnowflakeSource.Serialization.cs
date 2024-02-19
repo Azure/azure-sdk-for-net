@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, Query);
             }
             writer.WritePropertyName("exportSettings"u8);
-            writer.WriteObjectValue(ExportSettings);
+            if (ExportSettings != null)
+            {
+                ((IJsonModel<SnowflakeExportCopyCommand>)ExportSettings).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
             if (Optional.IsDefined(SourceRetryCount))

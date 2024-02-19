@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("resource"u8);
-            writer.WriteObjectValue(Resource);
+            if (Resource != null)
+            {
+                ((IJsonModel<CosmosDBSqlClientEncryptionKeyResourceInfo>)Resource).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

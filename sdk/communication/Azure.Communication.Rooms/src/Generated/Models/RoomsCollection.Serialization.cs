@@ -28,7 +28,14 @@ namespace Azure.Communication.Rooms
                     List<CommunicationRoom> array = new List<CommunicationRoom>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationRoom.DeserializeCommunicationRoom(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommunicationRoom.DeserializeCommunicationRoom(item));
+                        }
                     }
                     value = array;
                     continue;

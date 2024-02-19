@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataFactoryPrivateEndpointConnectionData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPrivateEndpointConnectionData> array = new List<DataFactoryPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryPrivateEndpointConnectionData.DeserializeDataFactoryPrivateEndpointConnectionData(item));
+                        }
                     }
                     value = array;
                     continue;

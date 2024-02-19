@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DaysOfMonth)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataProtectionBackupDay>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -160,7 +167,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupDay> array = new List<DataProtectionBackupDay>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProtectionBackupDay.DeserializeDataProtectionBackupDay(item));
+                        }
                     }
                     daysOfMonth = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CassandraColumn>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in PartitionKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CassandraPartitionKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +66,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CassandraClusterKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraColumn> array = new List<CassandraColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraColumn.DeserializeCassandraColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CassandraColumn.DeserializeCassandraColumn(item));
+                        }
                     }
                     columns = array;
                     continue;
@@ -124,7 +152,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraPartitionKey> array = new List<CassandraPartitionKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CassandraPartitionKey.DeserializeCassandraPartitionKey(item));
+                        }
                     }
                     partitionKeys = array;
                     continue;
@@ -138,7 +173,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<CassandraClusterKey> array = new List<CassandraClusterKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CassandraClusterKey.DeserializeCassandraClusterKey(item));
+                        }
                     }
                     clusterKeys = array;
                     continue;

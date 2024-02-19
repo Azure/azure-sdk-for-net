@@ -41,7 +41,14 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in Versions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OSVersionPropertiesBase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +212,14 @@ namespace Azure.ResourceManager.Compute
                             List<OSVersionPropertiesBase> array = new List<OSVersionPropertiesBase>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OSVersionPropertiesBase.DeserializeOSVersionPropertiesBase(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(OSVersionPropertiesBase.DeserializeOSVersionPropertiesBase(item));
+                                }
                             }
                             versions = array;
                             continue;

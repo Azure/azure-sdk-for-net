@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitoredResourceContent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<MonitoredResourceContent> array = new List<MonitoredResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitoredResourceContent.DeserializeMonitoredResourceContent(item));
+                        }
                     }
                     value = array;
                     continue;

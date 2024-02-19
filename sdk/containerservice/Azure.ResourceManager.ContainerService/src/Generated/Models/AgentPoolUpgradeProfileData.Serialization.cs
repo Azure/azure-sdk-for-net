@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.ContainerService
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -60,7 +67,14 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +186,14 @@ namespace Azure.ResourceManager.ContainerService
                             List<AgentPoolUpgradeProfilePropertiesUpgradesItem> array = new List<AgentPoolUpgradeProfilePropertiesUpgradesItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolUpgradeProfilePropertiesUpgradesItem.DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AgentPoolUpgradeProfilePropertiesUpgradesItem.DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(item));
+                                }
                             }
                             upgrades = array;
                             continue;

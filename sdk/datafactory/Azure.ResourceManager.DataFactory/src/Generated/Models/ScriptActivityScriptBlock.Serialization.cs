@@ -28,7 +28,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
-            JsonSerializer.Serialize(writer, Text);
+            if (Text != null)
+            {
+                JsonSerializer.Serialize(writer, Text);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ScriptType.ToString());
             if (Optional.IsCollectionDefined(Parameters))
@@ -37,7 +44,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptActivityParameter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +119,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<ScriptActivityParameter> array = new List<ScriptActivityParameter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ScriptActivityParameter.DeserializeScriptActivityParameter(item));
+                        }
                     }
                     parameters = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ComputeResourceSku>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeResourceSku> array = new List<ComputeResourceSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComputeResourceSku.DeserializeComputeResourceSku(item));
+                        }
                     }
                     value = array;
                     continue;

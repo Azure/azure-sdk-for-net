@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                ((IJsonModel<VirtualMachineDiskSecurityProfile>)SecurityProfile).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

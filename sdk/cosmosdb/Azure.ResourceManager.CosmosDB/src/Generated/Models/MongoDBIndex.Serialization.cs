@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                ((IJsonModel<MongoIndexKeys>)Key).Write(writer, options);
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                ((IJsonModel<MongoDBIndexConfig>)Options).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

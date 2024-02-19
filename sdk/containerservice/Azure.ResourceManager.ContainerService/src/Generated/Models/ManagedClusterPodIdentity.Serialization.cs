@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            if (Identity != null)
+            {
+                ((IJsonModel<ContainerServiceUserAssignedIdentity>)Identity).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -45,7 +52,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                ((IJsonModel<ManagedClusterPodIdentityProvisioningInfo>)ProvisioningInfo).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

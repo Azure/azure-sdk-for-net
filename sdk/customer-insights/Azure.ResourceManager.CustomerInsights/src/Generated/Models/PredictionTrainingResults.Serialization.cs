@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             if (options.Format != "W" && Optional.IsDefined(PredictionDistribution))
             {
                 writer.WritePropertyName("predictionDistribution"u8);
-                writer.WriteObjectValue(PredictionDistribution);
+                ((IJsonModel<PredictionDistributionDefinition>)PredictionDistribution).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CanonicalProfiles))
             {
@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in CanonicalProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CanonicalProfileDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -135,7 +142,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<CanonicalProfileDefinition> array = new List<CanonicalProfileDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CanonicalProfileDefinition.DeserializeCanonicalProfileDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CanonicalProfileDefinition.DeserializeCanonicalProfileDefinition(item));
+                        }
                     }
                     canonicalProfiles = array;
                     continue;

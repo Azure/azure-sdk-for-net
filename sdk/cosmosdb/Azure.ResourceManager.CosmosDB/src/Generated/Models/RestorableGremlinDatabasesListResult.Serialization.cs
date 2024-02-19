@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestorableGremlinDatabase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     List<RestorableGremlinDatabase> array = new List<RestorableGremlinDatabase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RestorableGremlinDatabase.DeserializeRestorableGremlinDatabase(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DataflowSinks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PowerQuerySink>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PowerQuerySink> array = new List<PowerQuerySink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PowerQuerySink.DeserializePowerQuerySink(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PowerQuerySink.DeserializePowerQuerySink(item));
+                        }
                     }
                     dataflowSinks = array;
                     continue;

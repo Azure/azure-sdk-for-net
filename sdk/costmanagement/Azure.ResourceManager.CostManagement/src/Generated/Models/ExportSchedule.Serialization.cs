@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(RecurrencePeriod))
             {
                 writer.WritePropertyName("recurrencePeriod"u8);
-                writer.WriteObjectValue(RecurrencePeriod);
+                ((IJsonModel<ExportRecurrencePeriod>)RecurrencePeriod).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

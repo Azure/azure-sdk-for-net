@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            if (Source != null)
+            {
+                ((IJsonModel<ContainerRegistryImportSource>)Source).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(TargetTags))
             {
                 writer.WritePropertyName("targetTags"u8);

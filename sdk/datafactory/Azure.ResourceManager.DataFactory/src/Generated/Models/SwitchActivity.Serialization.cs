@@ -51,7 +51,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityDependency>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -61,21 +68,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivityUserProperty>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("on"u8);
-            writer.WriteObjectValue(On);
+            if (On != null)
+            {
+                ((IJsonModel<DataFactoryExpression>)On).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Cases))
             {
                 writer.WritePropertyName("cases"u8);
                 writer.WriteStartArray();
                 foreach (var item in Cases)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SwitchCaseActivity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +113,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultActivities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PipelineActivity>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -181,7 +216,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        }
                     }
                     dependsOn = array;
                     continue;
@@ -195,7 +237,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        }
                     }
                     userProperties = array;
                     continue;
@@ -223,7 +272,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<SwitchCaseActivity> array = new List<SwitchCaseActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(SwitchCaseActivity.DeserializeSwitchCaseActivity(item));
+                                }
                             }
                             cases = array;
                             continue;
@@ -237,7 +293,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DeserializePipelineActivity(item));
+                                }
                             }
                             defaultActivities = array;
                             continue;

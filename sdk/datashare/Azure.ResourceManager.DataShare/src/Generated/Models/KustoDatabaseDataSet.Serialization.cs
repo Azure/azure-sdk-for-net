@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataShare.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -57,7 +64,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 writer.WriteStringValue(DataSetId.Value);
             }
             writer.WritePropertyName("kustoDatabaseResourceId"u8);
-            writer.WriteStringValue(KustoDatabaseResourceId);
+            if (KustoDatabaseResourceId != null)
+            {
+                writer.WriteStringValue(KustoDatabaseResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);

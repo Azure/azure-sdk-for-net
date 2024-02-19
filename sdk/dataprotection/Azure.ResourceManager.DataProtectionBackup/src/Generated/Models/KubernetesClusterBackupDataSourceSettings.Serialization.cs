@@ -86,7 +86,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NamespacedName>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +239,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<NamespacedName> array = new List<NamespacedName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NamespacedName.DeserializeNamespacedName(item));
+                        }
                     }
                     backupHookReferences = array;
                     continue;

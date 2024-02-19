@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("shareId"u8);
-            writer.WriteStringValue(ShareId);
+            if (ShareId != null)
+            {
+                writer.WriteStringValue(ShareId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("accessType"u8);
             writer.WriteStringValue(AccessType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

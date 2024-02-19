@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                ((IJsonModel<PurchasePlan>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                ((IJsonModel<OSDiskImage>)OSDiskImage).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(DataDiskImages))
             {
@@ -70,14 +70,21 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDiskImages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataDiskImage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AutomaticOSUpgradeProperties))
             {
                 writer.WritePropertyName("automaticOSUpgradeProperties"u8);
-                writer.WriteObjectValue(AutomaticOSUpgradeProperties);
+                ((IJsonModel<AutomaticOSUpgradeProperties>)AutomaticOSUpgradeProperties).Write(writer, options);
             }
             if (Optional.IsDefined(HyperVGeneration))
             {
@@ -87,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                ((IJsonModel<DisallowedConfiguration>)Disallowed).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Features))
             {
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualMachineImageFeature>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +121,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ImageDeprecationStatus))
             {
                 writer.WritePropertyName("imageDeprecationStatus"u8);
-                writer.WriteObjectValue(ImageDeprecationStatus);
+                ((IJsonModel<ImageDeprecationStatus>)ImageDeprecationStatus).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -244,7 +258,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<DataDiskImage> array = new List<DataDiskImage>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DataDiskImage.DeserializeDataDiskImage(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(DataDiskImage.DeserializeDataDiskImage(item));
+                                }
                             }
                             dataDiskImages = array;
                             continue;
@@ -285,7 +306,14 @@ namespace Azure.ResourceManager.Compute.Models
                             List<VirtualMachineImageFeature> array = new List<VirtualMachineImageFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualMachineImageFeature.DeserializeVirtualMachineImageFeature(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VirtualMachineImageFeature.DeserializeVirtualMachineImageFeature(item));
+                                }
                             }
                             features = array;
                             continue;

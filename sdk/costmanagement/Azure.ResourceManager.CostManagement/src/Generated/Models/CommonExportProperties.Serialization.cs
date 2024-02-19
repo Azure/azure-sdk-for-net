@@ -32,13 +32,27 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo);
+            if (DeliveryInfo != null)
+            {
+                ((IJsonModel<ExportDeliveryInfo>)DeliveryInfo).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            if (Definition != null)
+            {
+                ((IJsonModel<ExportDefinition>)Definition).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                ((IJsonModel<ExportExecutionListResult>)RunHistory).Write(writer, options);
             }
             if (Optional.IsDefined(PartitionData))
             {

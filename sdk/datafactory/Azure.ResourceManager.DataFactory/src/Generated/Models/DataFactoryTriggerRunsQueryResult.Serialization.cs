@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataFactoryTriggerRun>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ContinuationToken))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryTriggerRun> array = new List<DataFactoryTriggerRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataFactoryTriggerRun.DeserializeDataFactoryTriggerRun(item));
+                        }
                     }
                     value = array;
                     continue;

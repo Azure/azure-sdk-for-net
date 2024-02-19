@@ -32,17 +32,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStartArray();
             foreach (var item in VmPlacementQuery)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        writer.WriteStringValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteStringValue(item0);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(VmPlacementResults))
@@ -51,7 +53,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VmPlacementRequestResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +149,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<VmPlacementRequestResult> array = new List<VmPlacementRequestResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item));
+                                }
                             }
                             vmPlacementResults = array;
                             continue;

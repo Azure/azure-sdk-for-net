@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            JsonSerializer.Serialize(writer, Uri);
+            if (Uri != null)
+            {
+                JsonSerializer.Serialize(writer, Uri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

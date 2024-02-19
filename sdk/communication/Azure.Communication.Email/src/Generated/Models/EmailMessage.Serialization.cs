@@ -29,16 +29,37 @@ namespace Azure.Communication.Email
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            if (Content != null)
+            {
+                writer.WriteObjectValue(Content);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("recipients"u8);
-            writer.WriteObjectValue(Recipients);
+            if (Recipients != null)
+            {
+                writer.WriteObjectValue(Recipients);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Attachments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

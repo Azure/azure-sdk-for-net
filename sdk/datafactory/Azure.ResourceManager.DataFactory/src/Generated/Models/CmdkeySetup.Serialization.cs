@@ -32,11 +32,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("targetName"u8);
-            JsonSerializer.Serialize(writer, TargetName);
+            if (TargetName != null)
+            {
+                JsonSerializer.Serialize(writer, TargetName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("userName"u8);
-            JsonSerializer.Serialize(writer, UserName);
+            if (UserName != null)
+            {
+                JsonSerializer.Serialize(writer, UserName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password);
+            if (Password != null)
+            {
+                JsonSerializer.Serialize(writer, Password);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

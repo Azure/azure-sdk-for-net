@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -52,9 +59,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("ioTDeviceDetails"u8);
-            writer.WriteObjectValue(IotDeviceDetails);
+            if (IotDeviceDetails != null)
+            {
+                ((IJsonModel<EdgeIotDeviceInfo>)IotDeviceDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("ioTEdgeDeviceDetails"u8);
-            writer.WriteObjectValue(IotEdgeDeviceDetails);
+            if (IotEdgeDeviceDetails != null)
+            {
+                ((IJsonModel<EdgeIotDeviceInfo>)IotEdgeDeviceDetails).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);

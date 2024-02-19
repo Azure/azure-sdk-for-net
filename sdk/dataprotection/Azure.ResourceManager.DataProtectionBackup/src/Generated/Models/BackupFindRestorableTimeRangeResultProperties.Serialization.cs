@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in RestorableTimeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RestorableTimeRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<RestorableTimeRange> array = new List<RestorableTimeRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RestorableTimeRange.DeserializeRestorableTimeRange(item));
+                        }
                     }
                     restorableTimeRanges = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(NotebookReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-            JsonSerializer.Serialize(writer, ReferenceName);
+            if (ReferenceName != null)
+            {
+                JsonSerializer.Serialize(writer, ReferenceName);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

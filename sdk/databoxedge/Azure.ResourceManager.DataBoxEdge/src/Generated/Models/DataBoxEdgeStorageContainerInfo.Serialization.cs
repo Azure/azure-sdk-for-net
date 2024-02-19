@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountCredentialId"u8);
-            writer.WriteStringValue(StorageAccountCredentialId);
+            if (StorageAccountCredentialId != null)
+            {
+                writer.WriteStringValue(StorageAccountCredentialId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("dataFormat"u8);

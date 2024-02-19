@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                ((IJsonModel<ContainerRegistryWebhookEventTarget>)Target).Write(writer, options);
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                ((IJsonModel<ContainerRegistryWebhookEventRequestContent>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
-                writer.WriteObjectValue(Actor);
+                ((IJsonModel<ContainerRegistryWebhookEventActor>)Actor).Write(writer, options);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                ((IJsonModel<ContainerRegistryWebhookEventSource>)Source).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

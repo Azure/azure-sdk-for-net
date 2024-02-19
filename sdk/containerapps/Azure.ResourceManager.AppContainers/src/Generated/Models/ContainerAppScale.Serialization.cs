@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerAppScaleRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +125,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRule> array = new List<ContainerAppScaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRule.DeserializeContainerAppScaleRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerAppScaleRule.DeserializeContainerAppScaleRule(item));
+                        }
                     }
                     rules = array;
                     continue;

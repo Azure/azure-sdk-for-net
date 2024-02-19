@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<MonitorUpdateProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<ResourceSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

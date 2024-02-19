@@ -37,14 +37,21 @@ namespace Azure.Communication.Messages
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MessageTemplateValue>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Bindings))
             {
                 writer.WritePropertyName("bindings"u8);
-                writer.WriteObjectValue(Bindings);
+                ((IJsonModel<MessageTemplateBindings>)Bindings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -111,7 +118,14 @@ namespace Azure.Communication.Messages
                     List<MessageTemplateValue> array = new List<MessageTemplateValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MessageTemplateValue.DeserializeMessageTemplateValue(item));
+                        }
                     }
                     values = array;
                     continue;

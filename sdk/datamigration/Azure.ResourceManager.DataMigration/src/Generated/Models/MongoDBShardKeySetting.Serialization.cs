@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in Fields)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MongoDBShardKeyField>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(IsUnique))
@@ -87,7 +94,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBShardKeyField> array = new List<MongoDBShardKeyField>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MongoDBShardKeyField.DeserializeMongoDBShardKeyField(item));
+                        }
                     }
                     fields = array;
                     continue;

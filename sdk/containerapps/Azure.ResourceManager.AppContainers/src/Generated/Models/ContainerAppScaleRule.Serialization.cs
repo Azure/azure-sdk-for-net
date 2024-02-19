@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(AzureQueue))
             {
                 writer.WritePropertyName("azureQueue"u8);
-                writer.WriteObjectValue(AzureQueue);
+                ((IJsonModel<ContainerAppQueueScaleRule>)AzureQueue).Write(writer, options);
             }
             if (Optional.IsDefined(Custom))
             {
                 writer.WritePropertyName("custom"u8);
-                writer.WriteObjectValue(Custom);
+                ((IJsonModel<ContainerAppCustomScaleRule>)Custom).Write(writer, options);
             }
             if (Optional.IsDefined(Http))
             {
                 writer.WritePropertyName("http"u8);
-                writer.WriteObjectValue(Http);
+                ((IJsonModel<ContainerAppHttpScaleRule>)Http).Write(writer, options);
             }
             if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
-                writer.WriteObjectValue(Tcp);
+                ((IJsonModel<ContainerAppTcpScaleRule>)Tcp).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,16 +29,30 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (Uri != null)
+            {
+                writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("roles"u8);
+            if (Roles != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Roles);
 #else
-            using (JsonDocument document = JsonDocument.Parse(Roles))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(Roles))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);

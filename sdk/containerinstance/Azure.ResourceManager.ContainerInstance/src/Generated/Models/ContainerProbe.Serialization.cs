@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             if (Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
-                writer.WriteObjectValue(Exec);
+                ((IJsonModel<ContainerExec>)Exec).Write(writer, options);
             }
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                ((IJsonModel<ContainerHttpGet>)HttpGet).Write(writer, options);
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {

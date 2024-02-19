@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                ((IJsonModel<AmazonRdsForOraclePartitionSettings>)PartitionSettings).Write(writer, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {

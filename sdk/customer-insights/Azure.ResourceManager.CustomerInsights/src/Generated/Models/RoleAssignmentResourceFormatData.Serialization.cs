@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.CustomerInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -98,74 +105,81 @@ namespace Azure.ResourceManager.CustomerInsights
                 writer.WriteStartArray();
                 foreach (var item in Principals)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AssignmentPrincipal>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
-                writer.WriteObjectValue(Profiles);
+                ((IJsonModel<ResourceSetDescription>)Profiles).Write(writer, options);
             }
             if (Optional.IsDefined(Interactions))
             {
                 writer.WritePropertyName("interactions"u8);
-                writer.WriteObjectValue(Interactions);
+                ((IJsonModel<ResourceSetDescription>)Interactions).Write(writer, options);
             }
             if (Optional.IsDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
-                writer.WriteObjectValue(Links);
+                ((IJsonModel<ResourceSetDescription>)Links).Write(writer, options);
             }
             if (Optional.IsDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
-                writer.WriteObjectValue(Kpis);
+                ((IJsonModel<ResourceSetDescription>)Kpis).Write(writer, options);
             }
             if (Optional.IsDefined(SasPolicies))
             {
                 writer.WritePropertyName("sasPolicies"u8);
-                writer.WriteObjectValue(SasPolicies);
+                ((IJsonModel<ResourceSetDescription>)SasPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(Connectors))
             {
                 writer.WritePropertyName("connectors"u8);
-                writer.WriteObjectValue(Connectors);
+                ((IJsonModel<ResourceSetDescription>)Connectors).Write(writer, options);
             }
             if (Optional.IsDefined(Views))
             {
                 writer.WritePropertyName("views"u8);
-                writer.WriteObjectValue(Views);
+                ((IJsonModel<ResourceSetDescription>)Views).Write(writer, options);
             }
             if (Optional.IsDefined(RelationshipLinks))
             {
                 writer.WritePropertyName("relationshipLinks"u8);
-                writer.WriteObjectValue(RelationshipLinks);
+                ((IJsonModel<ResourceSetDescription>)RelationshipLinks).Write(writer, options);
             }
             if (Optional.IsDefined(Relationships))
             {
                 writer.WritePropertyName("relationships"u8);
-                writer.WriteObjectValue(Relationships);
+                ((IJsonModel<ResourceSetDescription>)Relationships).Write(writer, options);
             }
             if (Optional.IsDefined(WidgetTypes))
             {
                 writer.WritePropertyName("widgetTypes"u8);
-                writer.WriteObjectValue(WidgetTypes);
+                ((IJsonModel<ResourceSetDescription>)WidgetTypes).Write(writer, options);
             }
             if (Optional.IsDefined(RoleAssignments))
             {
                 writer.WritePropertyName("roleAssignments"u8);
-                writer.WriteObjectValue(RoleAssignments);
+                ((IJsonModel<ResourceSetDescription>)RoleAssignments).Write(writer, options);
             }
             if (Optional.IsDefined(ConflationPolicies))
             {
                 writer.WritePropertyName("conflationPolicies"u8);
-                writer.WriteObjectValue(ConflationPolicies);
+                ((IJsonModel<ResourceSetDescription>)ConflationPolicies).Write(writer, options);
             }
             if (Optional.IsDefined(Segments))
             {
                 writer.WritePropertyName("segments"u8);
-                writer.WriteObjectValue(Segments);
+                ((IJsonModel<ResourceSetDescription>)Segments).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -336,7 +350,14 @@ namespace Azure.ResourceManager.CustomerInsights
                             List<AssignmentPrincipal> array = new List<AssignmentPrincipal>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AssignmentPrincipal.DeserializeAssignmentPrincipal(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AssignmentPrincipal.DeserializeAssignmentPrincipal(item));
+                                }
                             }
                             principals = array;
                             continue;
