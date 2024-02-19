@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StreamingLocatorContentKey>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(StreamingLocatorContentKey.DeserializeStreamingLocatorContentKey(item));
+                        }
                     }
                     contentKeys = array;
                     continue;

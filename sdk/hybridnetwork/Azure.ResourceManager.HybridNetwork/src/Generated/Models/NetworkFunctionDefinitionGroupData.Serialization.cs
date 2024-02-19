@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HybridNetwork
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<NetworkFunctionDefinitionGroupPropertiesFormat>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

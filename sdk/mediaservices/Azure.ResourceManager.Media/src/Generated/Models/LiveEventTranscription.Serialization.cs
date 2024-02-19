@@ -37,14 +37,21 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputTrackSelection)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LiveEventInputTrackSelection>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(OutputTranscriptionTrack))
             {
                 writer.WritePropertyName("outputTranscriptionTrack"u8);
-                writer.WriteObjectValue(OutputTranscriptionTrack);
+                ((IJsonModel<LiveEventOutputTranscriptionTrack>)OutputTranscriptionTrack).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +112,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventInputTrackSelection> array = new List<LiveEventInputTrackSelection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LiveEventInputTrackSelection.DeserializeLiveEventInputTrackSelection(item));
+                        }
                     }
                     inputTrackSelection = array;
                     continue;

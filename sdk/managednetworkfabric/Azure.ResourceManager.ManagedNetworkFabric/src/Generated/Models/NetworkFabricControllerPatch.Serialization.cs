@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in InfrastructureExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in WorkloadExpressRouteConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExpressRouteConnectionInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +151,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                }
                             }
                             infrastructureExpressRouteConnections = array;
                             continue;
@@ -151,7 +172,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                             List<ExpressRouteConnectionInformation> array = new List<ExpressRouteConnectionInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ExpressRouteConnectionInformation.DeserializeExpressRouteConnectionInformation(item));
+                                }
                             }
                             workloadExpressRouteConnections = array;
                             continue;

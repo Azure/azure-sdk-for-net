@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MaterializationSettings != null)
                 {
                     writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings);
+                    ((IJsonModel<MaterializationSettings>)MaterializationSettings).Write(writer, options);
                 }
                 else
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Specification != null)
                 {
                     writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification);
+                    ((IJsonModel<FeaturesetSpecification>)Specification).Write(writer, options);
                 }
                 else
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {

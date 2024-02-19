@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<IntegrationServiceEnvironmentProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<IntegrationServiceEnvironmentSku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Identity))
             {

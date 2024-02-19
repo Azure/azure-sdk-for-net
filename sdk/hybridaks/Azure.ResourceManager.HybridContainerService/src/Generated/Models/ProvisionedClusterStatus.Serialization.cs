@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in ControlPlaneStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ProvisionedClusterAddonStatusProfile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<ProvisionedClusterAddonStatusProfile> array = new List<ProvisionedClusterAddonStatusProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ProvisionedClusterAddonStatusProfile.DeserializeProvisionedClusterAddonStatusProfile(item));
+                        }
                     }
                     controlPlaneStatus = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubEndpointHealthInfo>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubEndpointHealthInfo> array = new List<IotHubEndpointHealthInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubEndpointHealthInfo.DeserializeIotHubEndpointHealthInfo(item));
+                        }
                     }
                     value = array;
                     continue;

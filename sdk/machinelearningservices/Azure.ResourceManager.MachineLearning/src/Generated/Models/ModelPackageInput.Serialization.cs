@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("path"u8);
-            writer.WriteObjectValue(Path);
+            ((IJsonModel<PackageInputPathBase>)Path).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

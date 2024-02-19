@@ -79,7 +79,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in Statements)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutePolicyStatementProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -237,7 +244,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<RoutePolicyStatementProperties> array = new List<RoutePolicyStatementProperties>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoutePolicyStatementProperties.DeserializeRoutePolicyStatementProperties(item));
+                                }
                             }
                             statements = array;
                             continue;

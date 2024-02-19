@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                ((IJsonModel<ImageSetting>)Image).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<EnvironmentVariable>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -52,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Docker != null)
                 {
                     writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue(Docker);
+                    ((IJsonModel<DockerSetting>)Docker).Write(writer, options);
                 }
                 else
                 {
@@ -65,7 +72,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContainerEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +89,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VolumeDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +168,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, EnvironmentVariable> dictionary = new Dictionary<string, EnvironmentVariable>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value));
+                        }
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -171,7 +199,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ContainerEndpoint> array = new List<ContainerEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
+                        }
                     }
                     endpoints = array;
                     continue;
@@ -185,7 +220,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<VolumeDefinition> array = new List<VolumeDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VolumeDefinition.DeserializeVolumeDefinition(item));
+                        }
                     }
                     volumes = array;
                     continue;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(SmbCsiDriver))
             {
                 writer.WritePropertyName("smbCsiDriver"u8);
-                writer.WriteObjectValue(SmbCsiDriver);
+                ((IJsonModel<StorageProfileSmbCSIDriver>)SmbCsiDriver).Write(writer, options);
             }
             if (Optional.IsDefined(NfsCsiDriver))
             {
                 writer.WritePropertyName("nfsCsiDriver"u8);
-                writer.WriteObjectValue(NfsCsiDriver);
+                ((IJsonModel<StorageProfileNfsCSIDriver>)NfsCsiDriver).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

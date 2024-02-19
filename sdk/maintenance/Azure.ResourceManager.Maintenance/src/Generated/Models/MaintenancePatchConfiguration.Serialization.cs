@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Maintenance.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                ((IJsonModel<MaintenanceWindowsPatchSettings>)WindowsParameters).Write(writer, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                ((IJsonModel<MaintenanceLinuxPatchSettings>)LinuxParameters).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

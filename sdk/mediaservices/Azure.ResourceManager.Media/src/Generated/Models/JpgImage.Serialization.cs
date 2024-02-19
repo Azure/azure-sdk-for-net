@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<JpgLayer>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +143,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<JpgLayer> array = new List<JpgLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JpgLayer.DeserializeJpgLayer(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JpgLayer.DeserializeJpgLayer(item));
+                        }
                     }
                     layers = array;
                     continue;

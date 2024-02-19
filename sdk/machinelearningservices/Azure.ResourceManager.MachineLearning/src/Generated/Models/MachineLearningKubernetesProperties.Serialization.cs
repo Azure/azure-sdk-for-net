@@ -89,7 +89,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in InstanceTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<MachineLearningInstanceTypeSchema>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -202,7 +209,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningInstanceTypeSchema> dictionary = new Dictionary<string, MachineLearningInstanceTypeSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningInstanceTypeSchema.DeserializeMachineLearningInstanceTypeSchema(property0.Value));
+                        }
                     }
                     instanceTypes = dictionary;
                     continue;

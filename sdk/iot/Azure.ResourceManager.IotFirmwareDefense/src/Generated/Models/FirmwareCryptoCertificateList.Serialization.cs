@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirmwareCryptoCertificate>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareCryptoCertificate> array = new List<FirmwareCryptoCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FirmwareCryptoCertificate.DeserializeFirmwareCryptoCertificate(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -141,7 +141,14 @@ namespace Azure.IoT.Hub.Service
                         List<JobProperties> array = new List<JobProperties>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(JobProperties.DeserializeJobProperties(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(JobProperties.DeserializeJobProperties(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -166,7 +173,14 @@ namespace Azure.IoT.Hub.Service
                         List<JobProperties> array = new List<JobProperties>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(JobProperties.DeserializeJobProperties(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(JobProperties.DeserializeJobProperties(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(IsolationDomainProperties))
             {
                 writer.WritePropertyName("isolationDomainProperties"u8);
-                writer.WriteObjectValue(IsolationDomainProperties);
+                ((IJsonModel<IsolationDomainProperties>)IsolationDomainProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DestinationTapRuleId))
             {

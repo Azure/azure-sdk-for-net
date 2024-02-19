@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(DeploymentStatus))
             {
                 writer.WritePropertyName("deploymentStatus"u8);
-                writer.WriteObjectValue(DeploymentStatus);
+                ((IJsonModel<DeploymentStatusProperties>)DeploymentStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

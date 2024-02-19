@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EventHubDetails))
             {
                 writer.WritePropertyName("eventHubDetails"u8);
-                writer.WriteObjectValue(EventHubDetails);
+                ((IJsonModel<EdgeUsageDataEventHub>)EventHubDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

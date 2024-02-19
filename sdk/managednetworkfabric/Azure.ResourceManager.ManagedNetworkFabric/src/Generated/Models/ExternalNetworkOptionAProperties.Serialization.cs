@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                ((IJsonModel<BfdConfiguration>)BfdConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {

@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in OutboundRules)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MachineLearningOutboundRule>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -57,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<ManagedNetworkProvisionStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +136,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningOutboundRule> dictionary = new Dictionary<string, MachineLearningOutboundRule>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningOutboundRule.DeserializeMachineLearningOutboundRule(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningOutboundRule.DeserializeMachineLearningOutboundRule(property0.Value));
+                        }
                     }
                     outboundRules = dictionary;
                     continue;

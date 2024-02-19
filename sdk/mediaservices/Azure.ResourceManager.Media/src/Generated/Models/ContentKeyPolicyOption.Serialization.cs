@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            ((IJsonModel<ContentKeyPolicyConfiguration>)Configuration).Write(writer, options);
             writer.WritePropertyName("restriction"u8);
-            writer.WriteObjectValue(Restriction);
+            ((IJsonModel<ContentKeyPolicyRestriction>)Restriction).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

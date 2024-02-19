@@ -19,7 +19,14 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Features)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

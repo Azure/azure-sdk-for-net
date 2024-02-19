@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SbomComponent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<SbomComponent> array = new List<SbomComponent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SbomComponent.DeserializeSbomComponent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SbomComponent.DeserializeSbomComponent(item));
+                        }
                     }
                     value = array;
                     continue;

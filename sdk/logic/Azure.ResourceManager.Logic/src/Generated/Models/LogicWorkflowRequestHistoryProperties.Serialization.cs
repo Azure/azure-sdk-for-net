@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                ((IJsonModel<LogicWorkflowRequest>)Request).Write(writer, options);
             }
             if (Optional.IsDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
-                writer.WriteObjectValue(Response);
+                ((IJsonModel<LogicWorkflowResponse>)Response).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

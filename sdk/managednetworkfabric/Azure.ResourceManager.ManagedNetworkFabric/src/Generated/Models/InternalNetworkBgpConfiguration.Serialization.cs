@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(BfdConfiguration))
             {
                 writer.WritePropertyName("bfdConfiguration"u8);
-                writer.WriteObjectValue(BfdConfiguration);
+                ((IJsonModel<BfdConfiguration>)BfdConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DefaultRouteOriginate))
             {
@@ -82,7 +82,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv4NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NeighborAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPv6NeighborAddress)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NeighborAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -245,7 +259,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        }
                     }
                     ipv4NeighborAddress = array;
                     continue;
@@ -259,7 +280,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NeighborAddress> array = new List<NeighborAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NeighborAddress.DeserializeNeighborAddress(item));
+                        }
                     }
                     ipv6NeighborAddress = array;
                     continue;

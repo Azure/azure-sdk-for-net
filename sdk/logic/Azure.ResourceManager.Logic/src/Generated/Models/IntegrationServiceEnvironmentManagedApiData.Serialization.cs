@@ -75,26 +75,28 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in ConnectionParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                ((IJsonModel<LogicApiResourceMetadata>)Metadata).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
             {
@@ -102,19 +104,21 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteStartArray();
                 foreach (var item in RuntimeUris)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item.AbsoluteUri);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
             {
                 writer.WritePropertyName("generalInformation"u8);
-                writer.WriteObjectValue(GeneralInformation);
+                ((IJsonModel<LogicApiResourceGeneralInformation>)GeneralInformation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -129,12 +133,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(BackendService))
             {
                 writer.WritePropertyName("backendService"u8);
-                writer.WriteObjectValue(BackendService);
+                ((IJsonModel<LogicApiResourceBackendService>)BackendService).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                ((IJsonModel<LogicApiResourcePolicies>)Policies).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
             {
@@ -144,12 +148,12 @@ namespace Azure.ResourceManager.Logic
             if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
             {
                 writer.WritePropertyName("apiDefinitions"u8);
-                writer.WriteObjectValue(ApiDefinitions);
+                ((IJsonModel<LogicApiResourceDefinitions>)ApiDefinitions).Write(writer, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,7 +168,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters);
+                ((IJsonModel<IntegrationServiceEnvironmentManagedApiDeploymentParameters>)DeploymentParameters).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

@@ -26,7 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<IncidentRootCause> array = new List<IncidentRootCause>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IncidentRootCause.DeserializeIncidentRootCause(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IncidentRootCause.DeserializeIncidentRootCause(item));
+                        }
                     }
                     value = array;
                     continue;

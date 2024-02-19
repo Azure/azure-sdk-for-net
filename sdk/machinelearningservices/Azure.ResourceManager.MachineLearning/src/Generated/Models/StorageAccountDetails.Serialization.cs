@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SystemCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedStorageAccount);
+                    ((IJsonModel<SystemCreatedStorageAccount>)SystemCreatedStorageAccount).Write(writer, options);
                 }
                 else
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("userCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(UserCreatedStorageAccount);
+                    ((IJsonModel<UserCreatedStorageAccount>)UserCreatedStorageAccount).Write(writer, options);
                 }
                 else
                 {

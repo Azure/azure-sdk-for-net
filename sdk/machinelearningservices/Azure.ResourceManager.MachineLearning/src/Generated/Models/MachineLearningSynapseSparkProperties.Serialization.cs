@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties);
+                ((IJsonModel<MachineLearningAutoScaleProperties>)AutoScaleProperties).Write(writer, options);
             }
             if (Optional.IsDefined(AutoPauseProperties))
             {
                 writer.WritePropertyName("autoPauseProperties"u8);
-                writer.WriteObjectValue(AutoPauseProperties);
+                ((IJsonModel<MachineLearningAutoPauseProperties>)AutoPauseProperties).Write(writer, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {

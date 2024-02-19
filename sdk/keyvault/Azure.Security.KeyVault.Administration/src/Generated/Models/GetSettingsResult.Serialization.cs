@@ -31,7 +31,14 @@ namespace Azure.Security.KeyVault.Administration
                     List<KeyVaultSetting> array = new List<KeyVaultSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultSetting.DeserializeKeyVaultSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KeyVaultSetting.DeserializeKeyVaultSetting(item));
+                        }
                     }
                     settings = array;
                     continue;

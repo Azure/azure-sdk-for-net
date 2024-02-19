@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WriteStartArray();
                 foreach (var item in CorsRulesValue)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MapsCorsRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Maps.Models
                     List<MapsCorsRule> array = new List<MapsCorsRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MapsCorsRule.DeserializeMapsCorsRule(item));
+                        }
                     }
                     corsRules = array;
                     continue;

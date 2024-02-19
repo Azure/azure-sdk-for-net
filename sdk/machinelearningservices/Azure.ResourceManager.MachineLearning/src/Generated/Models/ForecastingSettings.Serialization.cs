@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
-                writer.WriteObjectValue(ForecastHorizon);
+                ((IJsonModel<ForecastHorizon>)ForecastHorizon).Write(writer, options);
             }
             if (Optional.IsDefined(Frequency))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Seasonality))
             {
                 writer.WritePropertyName("seasonality"u8);
-                writer.WriteObjectValue(Seasonality);
+                ((IJsonModel<ForecastingSeasonality>)Seasonality).Write(writer, options);
             }
             if (Optional.IsDefined(ShortSeriesHandlingConfig))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetLags != null)
                 {
                     writer.WritePropertyName("targetLags"u8);
-                    writer.WriteObjectValue(TargetLags);
+                    ((IJsonModel<TargetLags>)TargetLags).Write(writer, options);
                 }
                 else
                 {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TargetRollingWindowSize != null)
                 {
                     writer.WritePropertyName("targetRollingWindowSize"u8);
-                    writer.WriteObjectValue(TargetRollingWindowSize);
+                    ((IJsonModel<TargetRollingWindowSize>)TargetRollingWindowSize).Write(writer, options);
                 }
                 else
                 {

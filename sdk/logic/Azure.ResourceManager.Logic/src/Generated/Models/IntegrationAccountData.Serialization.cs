@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<IntegrationAccountSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                ((IJsonModel<LogicResourceReference>)IntegrationServiceEnvironment).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {

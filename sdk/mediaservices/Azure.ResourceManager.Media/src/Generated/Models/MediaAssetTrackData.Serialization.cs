@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Track))
             {
                 writer.WritePropertyName("track"u8);
-                writer.WriteObjectValue(Track);
+                ((IJsonModel<MediaAssetTrackBase>)Track).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

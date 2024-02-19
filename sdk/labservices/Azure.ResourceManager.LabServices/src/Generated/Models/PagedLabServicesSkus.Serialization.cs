@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableLabServicesSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        }
                     }
                     value = array;
                     continue;

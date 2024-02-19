@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.Logic.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("receiveAgreement"u8);
-            writer.WriteObjectValue(ReceiveAgreement);
+            ((IJsonModel<EdifactOneWayAgreement>)ReceiveAgreement).Write(writer, options);
             writer.WritePropertyName("sendAgreement"u8);
-            writer.WriteObjectValue(SendAgreement);
+            ((IJsonModel<EdifactOneWayAgreement>)SendAgreement).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

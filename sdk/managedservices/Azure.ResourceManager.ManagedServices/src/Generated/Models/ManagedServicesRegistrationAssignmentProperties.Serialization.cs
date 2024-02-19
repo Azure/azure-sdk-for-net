@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (options.Format != "W" && Optional.IsDefined(RegistrationDefinition))
             {
                 writer.WritePropertyName("registrationDefinition"u8);
-                writer.WriteObjectValue(RegistrationDefinition);
+                ((IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>)RegistrationDefinition).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

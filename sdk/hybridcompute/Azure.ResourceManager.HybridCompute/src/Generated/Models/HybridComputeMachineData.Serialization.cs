@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeMachineExtensionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -87,37 +94,37 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(LocationData))
             {
                 writer.WritePropertyName("locationData"u8);
-                writer.WriteObjectValue(LocationData);
+                ((IJsonModel<HybridComputeLocation>)LocationData).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                ((IJsonModel<AgentConfiguration>)AgentConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ServiceStatuses))
             {
                 writer.WritePropertyName("serviceStatuses"u8);
-                writer.WriteObjectValue(ServiceStatuses);
+                ((IJsonModel<HybridComputeServiceStatuses>)ServiceStatuses).Write(writer, options);
             }
             if (Optional.IsDefined(CloudMetadata))
             {
                 writer.WritePropertyName("cloudMetadata"u8);
-                writer.WriteObjectValue(CloudMetadata);
+                ((IJsonModel<HybridComputeCloudMetadata>)CloudMetadata).Write(writer, options);
             }
             if (Optional.IsDefined(AgentUpgrade))
             {
                 writer.WritePropertyName("agentUpgrade"u8);
-                writer.WriteObjectValue(AgentUpgrade);
+                ((IJsonModel<AgentUpgrade>)AgentUpgrade).Write(writer, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                ((IJsonModel<HybridComputeOSProfile>)OSProfile).Write(writer, options);
             }
             if (Optional.IsDefined(LicenseProfile))
             {
                 writer.WritePropertyName("licenseProfile"u8);
-                writer.WriteObjectValue(LicenseProfile);
+                ((IJsonModel<LicenseProfileMachineInstanceView>)LicenseProfile).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -140,7 +147,14 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    if (item != null)
+                    {
+                        JsonSerializer.Serialize(writer, item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +209,14 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Extensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineExtensionInstanceView>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -253,7 +274,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<HybridComputeNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -347,7 +368,14 @@ namespace Azure.ResourceManager.HybridCompute
                     List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
+                        }
                     }
                     resources = array;
                     continue;
@@ -517,7 +545,14 @@ namespace Azure.ResourceManager.HybridCompute
                             List<ResponseError> array = new List<ResponseError>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                                }
                             }
                             errorDetails = array;
                             continue;
@@ -584,7 +619,14 @@ namespace Azure.ResourceManager.HybridCompute
                             List<MachineExtensionInstanceView> array = new List<MachineExtensionInstanceView>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineExtensionInstanceView.DeserializeMachineExtensionInstanceView(item));
+                                }
                             }
                             extensions = array;
                             continue;

@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 if (Encryption != null)
                 {
                     writer.WritePropertyName("encryption"u8);
-                    writer.WriteObjectValue(Encryption);
+                    ((IJsonModel<LoadTestingCmkEncryptionProperties>)Encryption).Write(writer, options);
                 }
                 else
                 {

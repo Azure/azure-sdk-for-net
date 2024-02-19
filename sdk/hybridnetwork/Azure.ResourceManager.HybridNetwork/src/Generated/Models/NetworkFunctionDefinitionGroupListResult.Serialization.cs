@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkFunctionDefinitionGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<NetworkFunctionDefinitionGroupData> array = new List<NetworkFunctionDefinitionGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkFunctionDefinitionGroupData.DeserializeNetworkFunctionDefinitionGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

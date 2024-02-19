@@ -19,17 +19,19 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Coordinates)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        writer.WriteNumberValue(item0);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStartArray();
-                foreach (var item0 in item)
-                {
-                    writer.WriteNumberValue(item0);
-                }
-                writer.WriteEndArray();
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);

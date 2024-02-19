@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("jobDefinition"u8);
-            writer.WriteObjectValue(JobDefinition);
+            ((IJsonModel<MachineLearningJobProperties>)JobDefinition).Write(writer, options);
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)

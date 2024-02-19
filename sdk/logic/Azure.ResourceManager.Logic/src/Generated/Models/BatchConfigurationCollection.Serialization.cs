@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IntegrationAccountBatchConfigurationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Logic.Models
                     List<IntegrationAccountBatchConfigurationData> array = new List<IntegrationAccountBatchConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IntegrationAccountBatchConfigurationData.DeserializeIntegrationAccountBatchConfigurationData(item));
+                        }
                     }
                     value = array;
                     continue;

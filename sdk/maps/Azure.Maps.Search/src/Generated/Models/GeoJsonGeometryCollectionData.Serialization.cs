@@ -20,7 +20,14 @@ namespace Azure.Maps.Search.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -40,7 +47,14 @@ namespace Azure.Maps.Search.Models
                     List<GeoJsonGeometry> array = new List<GeoJsonGeometry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GeoJsonGeometry.DeserializeGeoJsonGeometry(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(GeoJsonGeometry.DeserializeGeoJsonGeometry(item));
+                        }
                     }
                     geometries = array;
                     continue;

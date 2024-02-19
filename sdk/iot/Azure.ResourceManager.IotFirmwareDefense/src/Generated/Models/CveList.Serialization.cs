@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirmwareCve>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     List<FirmwareCve> array = new List<FirmwareCve>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirmwareCve.DeserializeFirmwareCve(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FirmwareCve.DeserializeFirmwareCve(item));
+                        }
                     }
                     value = array;
                     continue;

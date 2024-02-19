@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningFqdnEndpointDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpointDetail> array = new List<MachineLearningFqdnEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item));
+                        }
                     }
                     endpointDetails = array;
                     continue;

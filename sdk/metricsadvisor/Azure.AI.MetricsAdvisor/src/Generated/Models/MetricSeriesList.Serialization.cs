@@ -37,7 +37,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                     List<MetricSeriesDefinition> array = new List<MetricSeriesDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricSeriesDefinition.DeserializeMetricSeriesDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricSeriesDefinition.DeserializeMetricSeriesDefinition(item));
+                        }
                     }
                     value = array;
                     continue;

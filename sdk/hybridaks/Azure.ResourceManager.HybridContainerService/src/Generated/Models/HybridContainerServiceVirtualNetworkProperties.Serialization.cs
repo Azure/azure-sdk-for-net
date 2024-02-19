@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
-                writer.WriteObjectValue(InfraVnetProfile);
+                ((IJsonModel<InfraVnetProfile>)InfraVnetProfile).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<KubernetesVirtualIPItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VirtualMachineIPItem>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +98,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<HybridContainerServiceNetworkStatus>)Status).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -155,7 +169,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item));
+                        }
                     }
                     vipPool = array;
                     continue;
@@ -169,7 +190,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item));
+                        }
                     }
                     vmipPool = array;
                     continue;

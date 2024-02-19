@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.IotCentral
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                ((IJsonModel<IotCentralPrivateLinkServiceConnectionState>)ConnectionState).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

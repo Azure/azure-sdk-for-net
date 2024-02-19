@@ -32,7 +32,14 @@ namespace Azure.Maps.Search.Models
                     List<SearchAddressBatchItem> array = new List<SearchAddressBatchItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchAddressBatchItem.DeserializeSearchAddressBatchItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchAddressBatchItem.DeserializeSearchAddressBatchItem(item));
+                        }
                     }
                     batchItems = array;
                     continue;

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(EsuProfile))
             {
                 writer.WritePropertyName("esuProfile"u8);
-                writer.WriteObjectValue(EsuProfile);
+                ((IJsonModel<LicenseProfileMachineInstanceViewEsuProperties>)EsuProfile).Write(writer, options);
             }
             writer.WritePropertyName("productProfile"u8);
             writer.WriteStartObject();
@@ -74,7 +74,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProductFeatures)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeProductFeature>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -225,7 +232,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                             List<HybridComputeProductFeature> array = new List<HybridComputeProductFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HybridComputeProductFeature.DeserializeHybridComputeProductFeature(item));
+                                }
                             }
                             productFeatures = array;
                             continue;

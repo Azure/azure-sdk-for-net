@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(OperationStatus))
             {
                 writer.WritePropertyName("operationStatus"u8);
-                writer.WriteObjectValue(OperationStatus);
+                ((IJsonModel<VirtualNetworkPropertiesStatusOperationStatus>)OperationStatus).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataConfiguration != null)
                 {
                     writer.WritePropertyName("dataConfiguration"u8);
-                    writer.WriteObjectValue(DataConfiguration);
+                    ((IJsonModel<LabelingDataConfiguration>)DataConfiguration).Write(writer, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (JobInstructions != null)
                 {
                     writer.WritePropertyName("jobInstructions"u8);
-                    writer.WriteObjectValue(JobInstructions);
+                    ((IJsonModel<LabelingJobInstructions>)JobInstructions).Write(writer, options);
                 }
                 else
                 {
@@ -71,7 +71,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in LabelCategories)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<LabelCategory>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -85,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LabelingJobMediaProperties != null)
                 {
                     writer.WritePropertyName("labelingJobMediaProperties"u8);
-                    writer.WriteObjectValue(LabelingJobMediaProperties);
+                    ((IJsonModel<LabelingJobMediaProperties>)LabelingJobMediaProperties).Write(writer, options);
                 }
                 else
                 {
@@ -95,14 +102,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(MlAssistConfiguration))
             {
                 writer.WritePropertyName("mlAssistConfiguration"u8);
-                writer.WriteObjectValue(MlAssistConfiguration);
+                ((IJsonModel<MachineLearningAssistConfiguration>)MlAssistConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProgressMetrics))
             {
                 if (ProgressMetrics != null)
                 {
                     writer.WritePropertyName("progressMetrics"u8);
-                    writer.WriteObjectValue(ProgressMetrics);
+                    ((IJsonModel<ProgressMetrics>)ProgressMetrics).Write(writer, options);
                 }
                 else
                 {
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in StatusMessages)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<JobStatusMessage>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -182,7 +196,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    ((IJsonModel<MachineLearningIdentityConfiguration>)Identity).Write(writer, options);
                 }
                 else
                 {
@@ -201,7 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting);
+                    ((IJsonModel<NotificationSetting>)NotificationSetting).Write(writer, options);
                 }
                 else
                 {
@@ -217,7 +231,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<SecretConfiguration>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -235,7 +256,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MachineLearningJobService>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -403,7 +431,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, LabelCategory> dictionary = new Dictionary<string, LabelCategory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, LabelCategory.DeserializeLabelCategory(property0.Value));
+                        }
                     }
                     labelCategories = dictionary;
                     continue;
@@ -465,7 +500,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<JobStatusMessage> array = new List<JobStatusMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JobStatusMessage.DeserializeJobStatusMessage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JobStatusMessage.DeserializeJobStatusMessage(item));
+                        }
                     }
                     statusMessages = array;
                     continue;
@@ -549,7 +591,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                        }
                     }
                     secretsConfiguration = dictionary;
                     continue;
@@ -564,7 +613,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
+                        }
                     }
                     services = dictionary;
                     continue;

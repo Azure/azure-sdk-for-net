@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LabVirtualMachineImageData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<LabVirtualMachineImageData> array = new List<LabVirtualMachineImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LabVirtualMachineImageData.DeserializeLabVirtualMachineImageData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotCentralAppTemplateLocation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +176,14 @@ namespace Azure.ResourceManager.IotCentral.Models
                     List<IotCentralAppTemplateLocation> array = new List<IotCentralAppTemplateLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotCentralAppTemplateLocation.DeserializeIotCentralAppTemplateLocation(item));
+                        }
                     }
                     locations = array;
                     continue;

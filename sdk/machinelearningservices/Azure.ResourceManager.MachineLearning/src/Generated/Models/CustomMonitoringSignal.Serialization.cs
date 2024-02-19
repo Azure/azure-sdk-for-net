@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in InputAssets)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MonitoringInputDataBase>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -55,7 +62,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MachineLearningJobInput>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -68,11 +82,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<CustomMetricThreshold>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("workspaceConnection"u8);
-            writer.WriteObjectValue(WorkspaceConnection);
+            ((IJsonModel<MonitoringWorkspaceConnection>)WorkspaceConnection).Write(writer, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -163,7 +184,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value));
+                        }
                     }
                     inputAssets = dictionary;
                     continue;
@@ -178,7 +206,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
+                        }
                     }
                     inputs = dictionary;
                     continue;
@@ -188,7 +223,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item));
+                        }
                     }
                     metricThresholds = array;
                     continue;

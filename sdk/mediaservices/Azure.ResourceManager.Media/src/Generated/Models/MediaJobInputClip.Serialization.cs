@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start);
+                ((IJsonModel<ClipTime>)Start).Write(writer, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End);
+                ((IJsonModel<ClipTime>)End).Write(writer, options);
             }
             if (Optional.IsDefined(Label))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaJobInputDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +172,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputDefinition> array = new List<MediaJobInputDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaJobInputDefinition.DeserializeMediaJobInputDefinition(item));
+                        }
                     }
                     inputDefinitions = array;
                     continue;

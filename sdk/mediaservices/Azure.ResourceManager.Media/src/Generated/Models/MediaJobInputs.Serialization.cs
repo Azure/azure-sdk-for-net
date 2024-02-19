@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaJobInputBasicProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +98,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaJobInputBasicProperties> array = new List<MediaJobInputBasicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeMediaJobInputBasicProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeserializeMediaJobInputBasicProperties(item));
+                        }
                     }
                     inputs = array;
                     continue;

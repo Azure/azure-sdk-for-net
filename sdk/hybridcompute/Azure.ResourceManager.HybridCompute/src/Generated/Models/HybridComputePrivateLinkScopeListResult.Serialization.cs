@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HybridComputePrivateLinkScopeData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputePrivateLinkScopeData> array = new List<HybridComputePrivateLinkScopeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputePrivateLinkScopeData.DeserializeHybridComputePrivateLinkScopeData(item));
+                        }
                     }
                     value = array;
                     continue;

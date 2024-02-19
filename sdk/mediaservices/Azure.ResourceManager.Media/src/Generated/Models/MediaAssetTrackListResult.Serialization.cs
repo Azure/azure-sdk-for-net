@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaAssetTrackData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaAssetTrackData> array = new List<MediaAssetTrackData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaAssetTrackData.DeserializeMediaAssetTrackData(item));
+                        }
                     }
                     value = array;
                     continue;

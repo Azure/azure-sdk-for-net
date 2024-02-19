@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MachineLearning
                 if (Sku != null)
                 {
                     writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku);
+                    ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<MachineLearningComputeProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

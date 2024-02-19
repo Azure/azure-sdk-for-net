@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CollectionOffersByContext>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<CollectionOffersByContext> array = new List<CollectionOffersByContext>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CollectionOffersByContext.DeserializeCollectionOffersByContext(item));
+                        }
                     }
                     value = array;
                     continue;

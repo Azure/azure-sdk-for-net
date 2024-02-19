@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                ((IJsonModel<MachineLearningInstanceTypeSchemaResources>)Resources).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Deinterlace))
             {
                 writer.WritePropertyName("deinterlace"u8);
-                writer.WriteObjectValue(Deinterlace);
+                ((IJsonModel<DeinterlaceSettings>)Deinterlace).Write(writer, options);
             }
             if (Optional.IsDefined(Rotation))
             {
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Crop))
             {
                 writer.WritePropertyName("crop"u8);
-                writer.WriteObjectValue(Crop);
+                ((IJsonModel<RectangularWindow>)Crop).Write(writer, options);
             }
             if (Optional.IsDefined(FadeIn))
             {
                 writer.WritePropertyName("fadeIn"u8);
-                writer.WriteObjectValue(FadeIn);
+                ((IJsonModel<FadeOptions>)FadeIn).Write(writer, options);
             }
             if (Optional.IsDefined(FadeOut))
             {
                 writer.WritePropertyName("fadeOut"u8);
-                writer.WriteObjectValue(FadeOut);
+                ((IJsonModel<FadeOptions>)FadeOut).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Overlays))
             {
@@ -57,7 +57,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Overlays)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MediaOverlayBase>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +170,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
+                        }
                     }
                     overlays = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MarketplaceAdminApprovalRequestData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<MarketplaceAdminApprovalRequestData> array = new List<MarketplaceAdminApprovalRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(item));
+                        }
                     }
                     value = array;
                     continue;

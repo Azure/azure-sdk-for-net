@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl);
+                ((IJsonModel<MediaAccessControl>)AccessControl).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

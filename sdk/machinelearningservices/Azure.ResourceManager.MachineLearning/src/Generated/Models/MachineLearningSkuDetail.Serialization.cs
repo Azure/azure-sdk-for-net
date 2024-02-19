@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Capacity != null)
                 {
                     writer.WritePropertyName("capacity"u8);
-                    writer.WriteObjectValue(Capacity);
+                    ((IJsonModel<MachineLearningSkuCapacity>)Capacity).Write(writer, options);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Sku != null)
                 {
                     writer.WritePropertyName("sku"u8);
-                    writer.WriteObjectValue(Sku);
+                    ((IJsonModel<MachineLearningSkuSetting>)Sku).Write(writer, options);
                 }
                 else
                 {

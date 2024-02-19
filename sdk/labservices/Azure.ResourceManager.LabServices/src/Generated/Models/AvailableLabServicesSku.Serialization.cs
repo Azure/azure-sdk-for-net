@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                ((IJsonModel<AvailableLabServicesSkuCapacity>)Capacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
@@ -62,7 +62,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableLabServicesSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +89,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableLabServicesSkuCost>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -92,7 +106,14 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AvailableLabServicesSkuRestrictions>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -195,7 +216,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCapability> array = new List<AvailableLabServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableLabServicesSkuCapability.DeserializeAvailableLabServicesSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;
@@ -223,7 +251,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuCost> array = new List<AvailableLabServicesSkuCost>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableLabServicesSkuCost.DeserializeAvailableLabServicesSkuCost(item));
+                        }
                     }
                     costs = array;
                     continue;
@@ -237,7 +272,14 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSkuRestrictions> array = new List<AvailableLabServicesSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AvailableLabServicesSkuRestrictions.DeserializeAvailableLabServicesSkuRestrictions(item));
+                        }
                     }
                     restrictions = array;
                     continue;

@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConnectorTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SupportedConnectorProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +117,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<SupportedConnectorProperties> array = new List<SupportedConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        }
                     }
                     supportedConnectorTypes = array;
                     continue;

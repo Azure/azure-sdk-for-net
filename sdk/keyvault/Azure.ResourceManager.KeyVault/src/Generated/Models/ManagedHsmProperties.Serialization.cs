@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                ((IJsonModel<ManagedHsmNetworkRuleSet>)NetworkRuleSet).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Regions))
             {
@@ -87,7 +87,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedHsmGeoReplicatedRegion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedHsmPrivateEndpointConnectionItemData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +128,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (options.Format != "W" && Optional.IsDefined(SecurityDomainProperties))
             {
                 writer.WritePropertyName("securityDomainProperties"u8);
-                writer.WriteObjectValue(SecurityDomainProperties);
+                ((IJsonModel<ManagedHSMSecurityDomainProperties>)SecurityDomainProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -273,7 +287,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmGeoReplicatedRegion> array = new List<ManagedHsmGeoReplicatedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedHsmGeoReplicatedRegion.DeserializeManagedHsmGeoReplicatedRegion(item));
+                        }
                     }
                     regions = array;
                     continue;
@@ -287,7 +308,14 @@ namespace Azure.ResourceManager.KeyVault.Models
                     List<ManagedHsmPrivateEndpointConnectionItemData> array = new List<ManagedHsmPrivateEndpointConnectionItemData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedHsmPrivateEndpointConnectionItemData.DeserializeManagedHsmPrivateEndpointConnectionItemData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;

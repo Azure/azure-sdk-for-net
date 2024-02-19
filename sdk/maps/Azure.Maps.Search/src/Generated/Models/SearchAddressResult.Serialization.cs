@@ -41,7 +41,14 @@ namespace Azure.Maps.Search.Models
                     List<SearchAddressResultItem> array = new List<SearchAddressResultItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchAddressResultItem.DeserializeSearchAddressResultItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SearchAddressResultItem.DeserializeSearchAddressResultItem(item));
+                        }
                     }
                     results = array;
                     continue;

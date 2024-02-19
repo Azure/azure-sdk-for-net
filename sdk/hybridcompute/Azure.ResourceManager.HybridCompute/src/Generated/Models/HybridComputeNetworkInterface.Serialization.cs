@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridComputeIPAddress>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeIPAddress> array = new List<HybridComputeIPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeIPAddress.DeserializeHybridComputeIPAddress(item));
+                        }
                     }
                     ipAddresses = array;
                     continue;

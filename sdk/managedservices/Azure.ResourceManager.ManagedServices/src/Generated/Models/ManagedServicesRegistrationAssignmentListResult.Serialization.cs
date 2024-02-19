@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ManagedServicesRegistrationAssignmentData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesRegistrationAssignmentData> array = new List<ManagedServicesRegistrationAssignmentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ManagedServicesRegistrationAssignmentData.DeserializeManagedServicesRegistrationAssignmentData(item));
+                        }
                     }
                     value = array;
                     continue;

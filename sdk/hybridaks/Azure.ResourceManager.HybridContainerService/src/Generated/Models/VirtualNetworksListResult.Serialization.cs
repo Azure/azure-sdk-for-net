@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridContainerServiceVirtualNetworkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceVirtualNetworkData> array = new List<HybridContainerServiceVirtualNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridContainerServiceVirtualNetworkData.DeserializeHybridContainerServiceVirtualNetworkData(item));
+                        }
                     }
                     value = array;
                     continue;

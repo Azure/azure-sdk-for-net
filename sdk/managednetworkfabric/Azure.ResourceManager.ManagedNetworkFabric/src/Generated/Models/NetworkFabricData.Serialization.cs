@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration);
+            ((IJsonModel<TerminalServerConfiguration>)TerminalServerConfiguration).Write(writer, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
-            writer.WriteObjectValue(ManagementNetworkConfiguration);
+            ((IJsonModel<ManagementNetworkConfigurationProperties>)ManagementNetworkConfiguration).Write(writer, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
             {
                 writer.WritePropertyName("racks"u8);

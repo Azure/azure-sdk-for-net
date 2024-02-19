@@ -65,27 +65,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
-                writer.WriteObjectValue(Layer2Configuration);
+                ((IJsonModel<Layer2Configuration>)Layer2Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue(OptionBLayer3Configuration);
+                ((IJsonModel<NetworkToNetworkInterconnectOptionBLayer3Configuration>)OptionBLayer3Configuration).Write(writer, options);
             }
             if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
-                writer.WriteObjectValue(NpbStaticRouteConfiguration);
+                ((IJsonModel<NpbStaticRouteConfiguration>)NpbStaticRouteConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                ((IJsonModel<ImportRoutePolicyInformation>)ImportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                ((IJsonModel<ExportRoutePolicyInformation>)ExportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(EgressAclId))
             {

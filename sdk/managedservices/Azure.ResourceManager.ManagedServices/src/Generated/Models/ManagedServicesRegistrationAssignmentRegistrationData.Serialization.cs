@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.ManagedServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<ManagedServicesRegistrationAssignmentRegistrationProperties>)Properties).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                ((IJsonModel<ManagedServicesPlan>)Plan).Write(writer, options);
             }
             if (options.Format != "W")
             {

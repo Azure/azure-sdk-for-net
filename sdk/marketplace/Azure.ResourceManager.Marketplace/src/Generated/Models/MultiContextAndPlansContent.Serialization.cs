@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                 writer.WriteStartArray();
                 foreach (var item in PlansContext)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ContextAndPlansDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +134,14 @@ namespace Azure.ResourceManager.Marketplace.Models
                             List<ContextAndPlansDetails> array = new List<ContextAndPlansDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ContextAndPlansDetails.DeserializeContextAndPlansDetails(item));
+                                }
                             }
                             plansContext = array;
                             continue;

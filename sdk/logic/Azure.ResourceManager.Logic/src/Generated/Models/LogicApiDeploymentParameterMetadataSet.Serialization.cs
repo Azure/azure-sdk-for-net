@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
-                writer.WriteObjectValue(PackageContentLink);
+                ((IJsonModel<LogicApiDeploymentParameterMetadata>)PackageContentLink).Write(writer, options);
             }
             if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
-                writer.WriteObjectValue(RedisCacheConnectionString);
+                ((IJsonModel<LogicApiDeploymentParameterMetadata>)RedisCacheConnectionString).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

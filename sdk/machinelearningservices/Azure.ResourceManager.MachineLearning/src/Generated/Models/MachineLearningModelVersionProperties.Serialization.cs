@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Flavors)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        if (item.Value != null)
+                        {
+                            ((IJsonModel<MachineLearningFlavorData>)item.Value).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndObject();
                 }
@@ -49,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {
@@ -244,7 +251,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningFlavorData> dictionary = new Dictionary<string, MachineLearningFlavorData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value));
+                        }
                     }
                     flavors = dictionary;
                     continue;

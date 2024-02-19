@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    ((IJsonModel<IntellectualProperty>)IntellectualProperty).Write(writer, options);
                 }
                 else
                 {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    ((IJsonModel<AutoDeleteSetting>)AutoDeleteSetting).Write(writer, options);
                 }
                 else
                 {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MachineLearningSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<MachineLearningEncryptionSetting>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ExistingWorkspaces))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(FeatureStoreSettings))
             {
                 writer.WritePropertyName("featureStoreSettings"u8);
-                writer.WriteObjectValue(FeatureStoreSettings);
+                ((IJsonModel<FeatureStoreSettings>)FeatureStoreSettings).Write(writer, options);
             }
             if (Optional.IsDefined(FriendlyName))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(ManagedNetwork))
             {
                 writer.WritePropertyName("managedNetwork"u8);
-                writer.WriteObjectValue(ManagedNetwork);
+                ((IJsonModel<ManagedNetworkSettings>)ManagedNetwork).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MlFlowTrackingUri))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (options.Format != "W" && Optional.IsDefined(NotebookInfo))
             {
                 writer.WritePropertyName("notebookInfo"u8);
-                writer.WriteObjectValue(NotebookInfo);
+                ((IJsonModel<MachineLearningNotebookResourceInfo>)NotebookInfo).Write(writer, options);
             }
             if (Optional.IsDefined(PrimaryUserAssignedIdentity))
             {
@@ -210,7 +210,14 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +239,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(ServiceManagedResourcesSettings))
             {
                 writer.WritePropertyName("serviceManagedResourcesSettings"u8);
-                writer.WriteObjectValue(ServiceManagedResourcesSettings);
+                ((IJsonModel<ServiceManagedResourcesSettings>)ServiceManagedResourcesSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ServiceProvisionedResourceGroup))
             {
@@ -245,7 +252,14 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WriteStartArray();
                 foreach (var item in SharedPrivateLinkResources)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineLearningSharedPrivateLinkResource>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -292,7 +306,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(WorkspaceHubConfig))
             {
                 writer.WritePropertyName("workspaceHubConfig"u8);
-                writer.WriteObjectValue(WorkspaceHubConfig);
+                ((IJsonModel<WorkspaceHubConfig>)WorkspaceHubConfig).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
@@ -654,7 +668,14 @@ namespace Azure.ResourceManager.MachineLearning
                             List<MachineLearningPrivateEndpointConnectionData> array = new List<MachineLearningPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineLearningPrivateEndpointConnectionData.DeserializeMachineLearningPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -709,7 +730,14 @@ namespace Azure.ResourceManager.MachineLearning
                             List<MachineLearningSharedPrivateLinkResource> array = new List<MachineLearningSharedPrivateLinkResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineLearningSharedPrivateLinkResource.DeserializeMachineLearningSharedPrivateLinkResource(item));
+                                }
                             }
                             sharedPrivateLinkResources = array;
                             continue;

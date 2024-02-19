@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkFabricInternetGatewayData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricInternetGatewayData> array = new List<NetworkFabricInternetGatewayData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkFabricInternetGatewayData.DeserializeNetworkFabricInternetGatewayData(item));
+                        }
                     }
                     value = array;
                     continue;

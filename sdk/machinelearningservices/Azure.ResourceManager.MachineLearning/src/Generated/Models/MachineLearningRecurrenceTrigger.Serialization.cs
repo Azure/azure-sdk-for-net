@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    ((IJsonModel<MachineLearningRecurrenceSchedule>)Schedule).Write(writer, options);
                 }
                 else
                 {

@@ -523,7 +523,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         List<MarketplaceAgreementTermData> array = new List<MarketplaceAgreementTermData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -553,7 +560,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                         List<MarketplaceAgreementTermData> array = new List<MarketplaceAgreementTermData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(MarketplaceAgreementTermData.DeserializeMarketplaceAgreementTermData(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

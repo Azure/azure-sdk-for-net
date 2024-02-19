@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (options.Format != "W" && Optional.IsDefined(ServicePrincipalConfiguration))
             {
                 writer.WritePropertyName("servicePrincipalConfiguration"u8);
-                writer.WriteObjectValue(ServicePrincipalConfiguration);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipalConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ImagePullSecretName))
             {

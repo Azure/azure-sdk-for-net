@@ -32,9 +32,9 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<IotHubSkuInfo>)Sku).Write(writer, options);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            ((IJsonModel<IotHubCapacity>)Capacity).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

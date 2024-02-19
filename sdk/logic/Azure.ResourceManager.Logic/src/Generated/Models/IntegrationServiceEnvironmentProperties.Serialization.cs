@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                ((IJsonModel<FlowEndpointsConfiguration>)EndpointsConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                ((IJsonModel<IntegrationServiceNetworkConfiguration>)NetworkConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
-                writer.WriteObjectValue(EncryptionConfiguration);
+                ((IJsonModel<IntegrationServiceEnvironmenEncryptionConfiguration>)EncryptionConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

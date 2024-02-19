@@ -27,16 +27,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold);
+            ((IJsonModel<FeatureAttributionMetricThreshold>)MetricThreshold).Write(writer, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MonitoringInputDataBase>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            ((IJsonModel<MonitoringInputDataBase>)ReferenceData).Write(writer, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -120,7 +127,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MonitoringInputDataBase> array = new List<MonitoringInputDataBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitoringInputDataBase.DeserializeMonitoringInputDataBase(item));
+                        }
                     }
                     productionData = array;
                     continue;

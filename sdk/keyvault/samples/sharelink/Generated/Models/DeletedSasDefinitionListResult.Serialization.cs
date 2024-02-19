@@ -32,7 +32,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     List<DeletedSasDefinitionItem> array = new List<DeletedSasDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeletedSasDefinitionItem.DeserializeDeletedSasDefinitionItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeletedSasDefinitionItem.DeserializeDeletedSasDefinitionItem(item));
+                        }
                     }
                     value = array;
                     continue;

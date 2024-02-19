@@ -298,7 +298,14 @@ namespace Azure.IoT.Hub.Service
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -324,7 +331,14 @@ namespace Azure.IoT.Hub.Service
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(TwinConfiguration.DeserializeTwinConfiguration(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

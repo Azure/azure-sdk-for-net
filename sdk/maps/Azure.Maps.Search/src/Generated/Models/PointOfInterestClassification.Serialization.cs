@@ -37,7 +37,14 @@ namespace Azure.Maps.Search.Models
                     List<ClassificationName> array = new List<ClassificationName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClassificationName.DeserializeClassificationName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ClassificationName.DeserializeClassificationName(item));
+                        }
                     }
                     names = array;
                     continue;

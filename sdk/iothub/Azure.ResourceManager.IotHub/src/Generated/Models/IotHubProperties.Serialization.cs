@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SharedAccessSignatureAuthorizationRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -78,14 +85,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubIPFilterRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                ((IJsonModel<IotHubNetworkRuleSetProperties>)NetworkRuleSets).Write(writer, options);
             }
             if (Optional.IsDefined(MinTlsVersion))
             {
@@ -98,7 +112,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -124,14 +145,21 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in EventHubEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<EventHubCompatibleEndpointProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Routing))
             {
                 writer.WritePropertyName("routing"u8);
-                writer.WriteObjectValue(Routing);
+                ((IJsonModel<IotHubRoutingProperties>)Routing).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(StorageEndpoints))
             {
@@ -140,7 +168,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in StorageEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<IotHubStorageEndpointProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -151,7 +186,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in MessagingEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<MessagingEndpointProperties>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -163,7 +205,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(CloudToDevice))
             {
                 writer.WritePropertyName("cloudToDevice"u8);
-                writer.WriteObjectValue(CloudToDevice);
+                ((IJsonModel<CloudToDeviceProperties>)CloudToDevice).Write(writer, options);
             }
             if (Optional.IsDefined(Comments))
             {
@@ -181,7 +223,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IotHubLocationDescription>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -265,7 +314,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<SharedAccessSignatureAuthorizationRule> array = new List<SharedAccessSignatureAuthorizationRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SharedAccessSignatureAuthorizationRule.DeserializeSharedAccessSignatureAuthorizationRule(item));
+                        }
                     }
                     authorizationPolicies = array;
                     continue;
@@ -338,7 +394,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubIPFilterRule> array = new List<IotHubIPFilterRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubIPFilterRule.DeserializeIotHubIPFilterRule(item));
+                        }
                     }
                     ipFilterRules = array;
                     continue;
@@ -366,7 +429,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubPrivateEndpointConnectionData> array = new List<IotHubPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubPrivateEndpointConnectionData.DeserializeIotHubPrivateEndpointConnectionData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -395,7 +465,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, EventHubCompatibleEndpointProperties> dictionary = new Dictionary<string, EventHubCompatibleEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, EventHubCompatibleEndpointProperties.DeserializeEventHubCompatibleEndpointProperties(property0.Value));
+                        }
                     }
                     eventHubEndpoints = dictionary;
                     continue;
@@ -418,7 +495,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, IotHubStorageEndpointProperties> dictionary = new Dictionary<string, IotHubStorageEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, IotHubStorageEndpointProperties.DeserializeIotHubStorageEndpointProperties(property0.Value));
+                        }
                     }
                     storageEndpoints = dictionary;
                     continue;
@@ -432,7 +516,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     Dictionary<string, MessagingEndpointProperties> dictionary = new Dictionary<string, MessagingEndpointProperties>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, MessagingEndpointProperties.DeserializeMessagingEndpointProperties(property0.Value));
+                        }
                     }
                     messagingEndpoints = dictionary;
                     continue;
@@ -478,7 +569,14 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubLocationDescription> array = new List<IotHubLocationDescription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IotHubLocationDescription.DeserializeIotHubLocationDescription(item));
+                        }
                     }
                     locations = array;
                     continue;

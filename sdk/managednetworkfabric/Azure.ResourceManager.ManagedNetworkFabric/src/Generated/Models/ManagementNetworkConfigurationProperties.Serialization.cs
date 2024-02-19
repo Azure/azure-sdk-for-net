@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-            writer.WriteObjectValue(InfrastructureVpnConfiguration);
+            ((IJsonModel<VpnConfigurationProperties>)InfrastructureVpnConfiguration).Write(writer, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
-            writer.WriteObjectValue(WorkloadVpnConfiguration);
+            ((IJsonModel<VpnConfigurationProperties>)WorkloadVpnConfiguration).Write(writer, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

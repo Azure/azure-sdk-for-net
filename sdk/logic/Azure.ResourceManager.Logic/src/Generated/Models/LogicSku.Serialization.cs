@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                ((IJsonModel<LogicResourceReference>)Plan).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

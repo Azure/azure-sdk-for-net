@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AmlComputeNodeInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<AmlComputeNodeInformation> array = new List<AmlComputeNodeInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(item));
+                        }
                     }
                     nodes = array;
                     continue;

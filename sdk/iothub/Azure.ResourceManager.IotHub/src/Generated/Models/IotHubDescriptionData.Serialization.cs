@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.IotHub
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<IotHubProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            ((IJsonModel<IotHubSkuInfo>)Sku).Write(writer, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);

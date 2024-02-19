@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 foreach (var item in PatchVersions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<KubernetesPatchVersions>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     Dictionary<string, KubernetesPatchVersions> dictionary = new Dictionary<string, KubernetesPatchVersions>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, KubernetesPatchVersions.DeserializeKubernetesPatchVersions(property0.Value));
+                        }
                     }
                     patchVersions = dictionary;
                     continue;

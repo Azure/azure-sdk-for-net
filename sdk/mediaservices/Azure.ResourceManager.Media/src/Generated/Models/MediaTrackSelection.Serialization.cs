@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in TrackSelections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TrackPropertyCondition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<TrackPropertyCondition> array = new List<TrackPropertyCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TrackPropertyCondition.DeserializeTrackPropertyCondition(item));
+                        }
                     }
                     trackSelections = array;
                     continue;

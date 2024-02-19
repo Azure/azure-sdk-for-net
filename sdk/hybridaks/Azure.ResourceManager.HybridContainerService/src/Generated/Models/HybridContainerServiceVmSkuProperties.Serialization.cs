@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HybridContainerServiceVmSkuCapabilities>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +124,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                     List<HybridContainerServiceVmSkuCapabilities> array = new List<HybridContainerServiceVmSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridContainerServiceVmSkuCapabilities.DeserializeHybridContainerServiceVmSkuCapabilities(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridContainerServiceVmSkuCapabilities.DeserializeHybridContainerServiceVmSkuCapabilities(item));
+                        }
                     }
                     capabilities = array;
                     continue;

@@ -66,7 +66,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv4Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectedSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WriteStartArray();
                 foreach (var item in ConnectedIPv6Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ConnectedSubnet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -93,12 +107,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                ((IJsonModel<ImportRoutePolicy>)ImportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                ((IJsonModel<ExportRoutePolicy>)ExportRoutePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(IngressAclId))
             {
@@ -125,12 +139,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             if (Optional.IsDefined(BgpConfiguration))
             {
                 writer.WritePropertyName("bgpConfiguration"u8);
-                writer.WriteObjectValue(BgpConfiguration);
+                ((IJsonModel<InternalNetworkBgpConfiguration>)BgpConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(StaticRouteConfiguration))
             {
                 writer.WritePropertyName("staticRouteConfiguration"u8);
-                writer.WriteObjectValue(StaticRouteConfiguration);
+                ((IJsonModel<InternalNetworkStaticRouteConfiguration>)StaticRouteConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ConfigurationState))
             {
@@ -268,7 +282,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                }
                             }
                             connectedIPv4Subnets = array;
                             continue;
@@ -282,7 +303,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             List<ConnectedSubnet> array = new List<ConnectedSubnet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ConnectedSubnet.DeserializeConnectedSubnet(item));
+                                }
                             }
                             connectedIPv6Subnets = array;
                             continue;

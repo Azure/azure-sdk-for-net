@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LiveEventEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +48,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    ((IJsonModel<LiveEventPreviewAccessControl>)AccessControl).Write(writer, options);
                 }
                 else
                 {
@@ -119,7 +126,14 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventEndpoint> array = new List<LiveEventEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        }
                     }
                     endpoints = array;
                     continue;

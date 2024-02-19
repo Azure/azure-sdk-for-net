@@ -32,7 +32,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                     List<SasDefinitionItem> array = new List<SasDefinitionItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SasDefinitionItem.DeserializeSasDefinitionItem(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SasDefinitionItem.DeserializeSasDefinitionItem(item));
+                        }
                     }
                     value = array;
                     continue;

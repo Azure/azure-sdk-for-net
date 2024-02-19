@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                ((IJsonModel<ServicePrincipalProperties>)ServicePrincipal).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

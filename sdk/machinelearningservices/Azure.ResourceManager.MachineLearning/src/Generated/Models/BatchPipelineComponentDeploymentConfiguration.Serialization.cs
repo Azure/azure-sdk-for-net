@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ComponentId != null)
                 {
                     writer.WritePropertyName("componentId"u8);
-                    writer.WriteObjectValue(ComponentId);
+                    ((IJsonModel<MachineLearningIdAssetReference>)ComponentId).Write(writer, options);
                 }
                 else
                 {

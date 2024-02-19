@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<HybridComputeMachineData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     List<HybridComputeMachineData> array = new List<HybridComputeMachineData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HybridComputeMachineData.DeserializeHybridComputeMachineData(item));
+                        }
                     }
                     value = array;
                     continue;

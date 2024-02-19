@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Kusto
             if (Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                ((IJsonModel<KustoDatabaseTableLevelSharingProperties>)TableLevelSharingProperties).Write(writer, options);
             }
             if (Optional.IsDefined(DatabaseNameOverride))
             {

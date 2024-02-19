@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Logic
             writer.WritePropertyName("guestPartner"u8);
             writer.WriteStringValue(GuestPartner);
             writer.WritePropertyName("hostIdentity"u8);
-            writer.WriteObjectValue(HostIdentity);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)HostIdentity).Write(writer, options);
             writer.WritePropertyName("guestIdentity"u8);
-            writer.WriteObjectValue(GuestIdentity);
+            ((IJsonModel<IntegrationAccountBusinessIdentity>)GuestIdentity).Write(writer, options);
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            ((IJsonModel<IntegrationAccountAgreementContent>)Content).Write(writer, options);
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
