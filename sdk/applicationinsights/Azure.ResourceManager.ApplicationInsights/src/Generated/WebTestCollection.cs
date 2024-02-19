@@ -91,7 +91,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = await _webTestRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApplicationInsightsArmOperation<WebTestResource>(Response.FromValue(new WebTestResource(Client, response), response.GetRawResponse()));
+                var uri = _webTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation<WebTestResource>(Response.FromValue(new WebTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             try
             {
                 var response = _webTestRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data, cancellationToken);
-                var operation = new ApplicationInsightsArmOperation<WebTestResource>(Response.FromValue(new WebTestResource(Client, response), response.GetRawResponse()));
+                var uri = _webTestRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), NextLinkOperationImplementation.HeaderSource.None.ToString(), null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApplicationInsightsArmOperation<WebTestResource>(Response.FromValue(new WebTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
