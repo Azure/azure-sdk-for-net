@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Billing
             if (Optional.IsDefined(PaymentMethod))
             {
                 writer.WritePropertyName("paymentMethod"u8);
-                writer.WriteObjectValue(PaymentMethod);
+                ((IJsonModel<PaymentMethodProjectionProperties>)PaymentMethod).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

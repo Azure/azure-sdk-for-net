@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HttpHeaderConfiguration>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<HttpHeaderConfiguration> array = new List<HttpHeaderConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HttpHeaderConfiguration.DeserializeHttpHeaderConfiguration(item));
+                        }
                     }
                     headers = array;
                     continue;

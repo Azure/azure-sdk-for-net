@@ -31,7 +31,14 @@ namespace Azure.Security.Attestation
                     List<JsonWebKey> array = new List<JsonWebKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonWebKey.DeserializeJsonWebKey(item));
+                        }
                     }
                     keys = array;
                     continue;

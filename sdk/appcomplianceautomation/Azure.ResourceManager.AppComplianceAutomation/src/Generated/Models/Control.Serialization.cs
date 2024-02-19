@@ -67,7 +67,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<Assessment>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -173,7 +180,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<Assessment> array = new List<Assessment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Assessment.DeserializeAssessment(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(Assessment.DeserializeAssessment(item));
+                        }
                     }
                     assessments = array;
                     continue;

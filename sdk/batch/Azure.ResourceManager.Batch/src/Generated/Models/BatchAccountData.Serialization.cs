@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue(KeyVaultReference);
+                ((IJsonModel<BatchKeyVaultReference>)KeyVaultReference).Write(writer, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Batch
                 if (NetworkProfile != null)
                 {
                     writer.WritePropertyName("networkProfile"u8);
-                    writer.WriteObjectValue(NetworkProfile);
+                    ((IJsonModel<BatchNetworkProfile>)NetworkProfile).Write(writer, options);
                 }
                 else
                 {
@@ -128,7 +128,14 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<BatchPrivateEndpointConnectionData>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -140,12 +147,12 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage);
+                ((IJsonModel<BatchAccountAutoStorageConfiguration>)AutoStorage).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<BatchAccountEncryptionConfiguration>)Encryption).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DedicatedCoreQuota))
             {
@@ -179,7 +186,14 @@ namespace Azure.ResourceManager.Batch
                     writer.WriteStartArray();
                     foreach (var item in DedicatedCoreQuotaPerVmFamily)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<BatchVmFamilyCoreQuota>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -419,7 +433,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchPrivateEndpointConnectionData> array = new List<BatchPrivateEndpointConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchPrivateEndpointConnectionData.DeserializeBatchPrivateEndpointConnectionData(item));
+                                }
                             }
                             privateEndpointConnections = array;
                             continue;
@@ -472,7 +493,14 @@ namespace Azure.ResourceManager.Batch
                             List<BatchVmFamilyCoreQuota> array = new List<BatchVmFamilyCoreQuota>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(BatchVmFamilyCoreQuota.DeserializeBatchVmFamilyCoreQuota(item));
+                                }
                             }
                             dedicatedCoreQuotaPerVmFamily = array;
                             continue;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue(TermsOfService);
+                ((IJsonModel<TermsOfServiceProperties>)TermsOfService).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

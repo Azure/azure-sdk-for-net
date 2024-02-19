@@ -103,7 +103,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentFavorite> array = new List<ApplicationInsightsComponentFavorite>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -141,7 +148,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentFavorite> array = new List<ApplicationInsightsComponentFavorite>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);

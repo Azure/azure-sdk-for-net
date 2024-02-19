@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

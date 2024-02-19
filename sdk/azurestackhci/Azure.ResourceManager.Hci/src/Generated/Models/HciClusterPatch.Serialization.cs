@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(DesiredProperties))
             {
                 writer.WritePropertyName("desiredProperties"u8);
-                writer.WriteObjectValue(DesiredProperties);
+                ((IJsonModel<HciClusterDesiredProperties>)DesiredProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("identity"u8);
@@ -85,7 +85,14 @@ namespace Azure.ResourceManager.Hci.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    if (item.Value != null)
+                    {
+                        JsonSerializer.Serialize(writer, item.Value);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -244,7 +251,14 @@ namespace Azure.ResourceManager.Hci.Models
                             Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property1.Value.GetRawText()));
+                                }
                             }
                             userAssignedIdentities = dictionary;
                             continue;

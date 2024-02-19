@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BillingPaymentMethodLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Billing.Models
                     List<BillingPaymentMethodLinkData> array = new List<BillingPaymentMethodLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(item));
+                        }
                     }
                     value = array;
                     continue;

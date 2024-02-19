@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
-                writer.WriteObjectValue(ConnectionType);
+                ((IJsonModel<ConnectionTypeAssociationProperty>)ConnectionType).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FieldDefinitionValues))
             {

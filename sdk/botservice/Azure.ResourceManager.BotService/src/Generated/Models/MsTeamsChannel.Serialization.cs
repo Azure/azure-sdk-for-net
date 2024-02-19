@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<MsTeamsChannelProperties>)Properties).Write(writer, options);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(RuleDefinitions))
             {
                 writer.WritePropertyName("RuleDefinitions"u8);
-                writer.WriteObjectValue(RuleDefinitions);
+                ((IJsonModel<ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>)RuleDefinitions).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

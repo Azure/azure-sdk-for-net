@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                ((IJsonModel<ErrorResponseBody>)Error).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ActionLog))
             {
@@ -85,7 +85,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ActionLog)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationResultLogItemContract>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -231,7 +238,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             List<OperationResultLogItemContract> array = new List<OperationResultLogItemContract>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(OperationResultLogItemContract.DeserializeOperationResultLogItemContract(item));
+                                }
                             }
                             actionLog = array;
                             continue;

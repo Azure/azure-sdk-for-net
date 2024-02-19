@@ -47,18 +47,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Context)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStartObject();
+                        foreach (var item0 in item)
+                        {
+                            writer.WritePropertyName(item0.Key);
+                            writer.WriteStringValue(item0.Value);
+                        }
+                        writer.WriteEndObject();
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        writer.WriteStringValue(item0.Value);
-                    }
-                    writer.WriteEndObject();
                 }
                 writer.WriteEndArray();
             }

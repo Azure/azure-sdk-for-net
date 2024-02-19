@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in ParameterSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationActivityParameterSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +66,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationActivityOutputType>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -166,7 +180,14 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityParameterSet> array = new List<AutomationActivityParameterSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AutomationActivityParameterSet.DeserializeAutomationActivityParameterSet(item));
+                                }
                             }
                             parameterSets = array;
                             continue;
@@ -180,7 +201,14 @@ namespace Azure.ResourceManager.Automation.Models
                             List<AutomationActivityOutputType> array = new List<AutomationActivityOutputType>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AutomationActivityOutputType.DeserializeAutomationActivityOutputType(item));
+                                }
                             }
                             outputTypes = array;
                             continue;

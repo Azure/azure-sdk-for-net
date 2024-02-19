@@ -35,7 +35,14 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DeliveryRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +99,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<DeliveryRule> array = new List<DeliveryRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeliveryRule.DeserializeDeliveryRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DeliveryRule.DeserializeDeliveryRule(item));
+                        }
                     }
                     rules = array;
                     continue;

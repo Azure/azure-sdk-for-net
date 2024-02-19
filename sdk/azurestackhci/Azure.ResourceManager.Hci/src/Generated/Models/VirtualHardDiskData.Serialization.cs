@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                ((IJsonModel<ArcVmExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<VirtualHardDiskStatus>)Status).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

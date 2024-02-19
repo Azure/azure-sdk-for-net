@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Blueprint
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                ((IJsonModel<BlueprintStatus>)Status).Write(writer, options);
             }
             if (Optional.IsDefined(TargetScope))
             {
@@ -77,7 +77,14 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ParameterDefinition>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Blueprint
                 foreach (var item in ResourceGroups)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    if (item.Value != null)
+                    {
+                        ((IJsonModel<ResourceGroupDefinition>)item.Value).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
@@ -241,7 +255,14 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ParameterDefinition.DeserializeParameterDefinition(property1.Value));
+                                }
                             }
                             parameters = dictionary;
                             continue;
@@ -255,7 +276,14 @@ namespace Azure.ResourceManager.Blueprint
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, ResourceGroupDefinition.DeserializeResourceGroupDefinition(property1.Value));
+                                }
                             }
                             resourceGroups = dictionary;
                             continue;

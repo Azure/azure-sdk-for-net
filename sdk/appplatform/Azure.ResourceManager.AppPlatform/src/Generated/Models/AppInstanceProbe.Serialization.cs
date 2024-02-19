@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction);
+                ((IJsonModel<AppInstanceProbeAction>)ProbeAction).Write(writer, options);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);

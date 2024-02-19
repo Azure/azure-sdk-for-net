@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStartArray();
             foreach (var item in ConnectivityStatus)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<ConnectivityStatusContract>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +106,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ConnectivityStatusContract> array = new List<ConnectivityStatusContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ConnectivityStatusContract.DeserializeConnectivityStatusContract(item));
+                        }
                     }
                     connectivityStatus = array;
                     continue;

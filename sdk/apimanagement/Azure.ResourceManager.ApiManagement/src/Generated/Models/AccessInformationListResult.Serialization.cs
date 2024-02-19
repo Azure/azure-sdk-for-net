@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<TenantAccessInfoData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +108,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<TenantAccessInfoData> array = new List<TenantAccessInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item));
+                        }
                     }
                     value = array;
                     continue;

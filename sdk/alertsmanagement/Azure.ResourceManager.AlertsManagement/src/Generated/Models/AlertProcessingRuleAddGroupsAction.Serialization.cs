@@ -30,12 +30,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in ActionGroupIds)
             {
-                if (item == null)
+                if (item != null)
+                {
+                    writer.WriteStringValue(item);
+                }
+                else
                 {
                     writer.WriteNullValue();
-                    continue;
                 }
-                writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("actionType"u8);

@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in IPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchIPRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +103,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchIPRule> array = new List<BatchIPRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchIPRule.DeserializeBatchIPRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchIPRule.DeserializeBatchIPRule(item));
+                        }
                     }
                     ipRules = array;
                     continue;

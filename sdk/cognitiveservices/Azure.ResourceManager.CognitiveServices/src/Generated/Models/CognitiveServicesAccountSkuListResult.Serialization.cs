@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesAccountSku>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesAccountSku> array = new List<CognitiveServicesAccountSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesAccountSku.DeserializeCognitiveServicesAccountSku(item));
+                        }
                     }
                     value = array;
                     continue;

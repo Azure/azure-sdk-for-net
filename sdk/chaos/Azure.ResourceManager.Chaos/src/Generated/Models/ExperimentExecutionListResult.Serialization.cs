@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChaosExperimentExecutionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentExecutionData> array = new List<ChaosExperimentExecutionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(item));
+                        }
                     }
                     value = array;
                     continue;

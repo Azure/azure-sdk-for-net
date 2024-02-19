@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApiManagementSkuZoneDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementSkuZoneDetails> array = new List<ApiManagementSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ApiManagementSkuZoneDetails.DeserializeApiManagementSkuZoneDetails(item));
+                        }
                     }
                     zoneDetails = array;
                     continue;

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (SharedPrivateLinkResource != null)
                 {
                     writer.WritePropertyName("sharedPrivateLinkResource"u8);
-                    writer.WriteObjectValue(SharedPrivateLinkResource);
+                    ((IJsonModel<SharedPrivateLinkResourceProperties>)SharedPrivateLinkResource).Write(writer, options);
                 }
                 else
                 {

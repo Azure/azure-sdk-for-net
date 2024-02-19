@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesSkuCapability>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +67,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(SkuChangeInfo))
             {
                 writer.WritePropertyName("skuChangeInfo"u8);
-                writer.WriteObjectValue(SkuChangeInfo);
+                ((IJsonModel<CognitiveServicesSkuChangeInfo>)SkuChangeInfo).Write(writer, options);
             }
             if (Optional.IsDefined(CustomSubDomainName))
             {
@@ -70,12 +77,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                ((IJsonModel<CognitiveServicesNetworkRuleSet>)NetworkAcls).Write(writer, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                ((IJsonModel<ServiceAccountEncryptionProperties>)Encryption).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(UserOwnedStorage))
             {
@@ -83,7 +90,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in UserOwnedStorage)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ServiceAccountUserOwnedStorage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +107,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesPrivateEndpointConnectionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -105,7 +126,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties"u8);
-                writer.WriteObjectValue(ApiProperties);
+                ((IJsonModel<ServiceAccountApiProperties>)ApiProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -115,7 +136,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(CallRateLimit))
             {
                 writer.WritePropertyName("callRateLimit"u8);
-                writer.WriteObjectValue(CallRateLimit);
+                ((IJsonModel<ServiceAccountCallRateLimit>)CallRateLimit).Write(writer, options);
             }
             if (Optional.IsDefined(EnableDynamicThrottling))
             {
@@ -125,7 +146,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (options.Format != "W" && Optional.IsDefined(QuotaLimit))
             {
                 writer.WritePropertyName("quotaLimit"u8);
-                writer.WriteObjectValue(QuotaLimit);
+                ((IJsonModel<ServiceAccountQuotaLimit>)QuotaLimit).Write(writer, options);
             }
             if (Optional.IsDefined(RestrictOutboundNetworkAccess))
             {
@@ -176,7 +197,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             if (Optional.IsDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
-                writer.WriteObjectValue(Locations);
+                ((IJsonModel<CognitiveServicesMultiRegionSettings>)Locations).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CommitmentPlanAssociations))
             {
@@ -184,14 +205,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in CommitmentPlanAssociations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CommitmentPlanAssociation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(AbusePenalty))
             {
                 writer.WritePropertyName("abusePenalty"u8);
-                writer.WriteObjectValue(AbusePenalty);
+                ((IJsonModel<AbusePenalty>)AbusePenalty).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -285,7 +313,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesSkuCapability> array = new List<CognitiveServicesSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesSkuCapability.DeserializeCognitiveServicesSkuCapability(item));
+                        }
                     }
                     capabilities = array;
                     continue;
@@ -345,7 +380,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<ServiceAccountUserOwnedStorage> array = new List<ServiceAccountUserOwnedStorage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ServiceAccountUserOwnedStorage.DeserializeServiceAccountUserOwnedStorage(item));
+                        }
                     }
                     userOwnedStorage = array;
                     continue;
@@ -359,7 +401,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesPrivateEndpointConnectionData> array = new List<CognitiveServicesPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesPrivateEndpointConnectionData.DeserializeCognitiveServicesPrivateEndpointConnectionData(item));
+                        }
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -505,7 +554,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommitmentPlanAssociation.DeserializeCommitmentPlanAssociation(item));
+                        }
                     }
                     commitmentPlanAssociations = array;
                     continue;

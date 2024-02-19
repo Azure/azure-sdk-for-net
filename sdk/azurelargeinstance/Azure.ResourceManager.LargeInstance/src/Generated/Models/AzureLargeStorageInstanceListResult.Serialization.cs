@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<LargeStorageInstanceData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.LargeInstance.Models
                     List<LargeStorageInstanceData> array = new List<LargeStorageInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LargeStorageInstanceData.DeserializeLargeStorageInstanceData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -54,7 +54,14 @@ namespace Azure.Communication.CallAutomation
                     List<CommunicationIdentifierModel> array = new List<CommunicationIdentifierModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(item));
+                        }
                     }
                     targets = array;
                     continue;

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                ((IJsonModel<AppPlatformDeploymentResourceRequirements>)ResourceRequests).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -49,47 +49,51 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 foreach (var item in AddonConfigs)
                 {
                     writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
+                    if (item.Value != null)
                     {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStartObject();
-                    foreach (var item0 in item.Value)
-                    {
-                        writer.WritePropertyName(item0.Key);
-                        if (item0.Value == null)
+                        writer.WriteStartObject();
+                        foreach (var item0 in item.Value)
                         {
-                            writer.WriteNullValue();
-                            continue;
-                        }
+                            writer.WritePropertyName(item0.Key);
+                            if (item0.Value != null)
+                            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item0.Value);
 #else
-                        using (JsonDocument document = JsonDocument.Parse(item0.Value))
-                        {
-                            JsonSerializer.Serialize(writer, document.RootElement);
-                        }
+                                using (JsonDocument document = JsonDocument.Parse(item0.Value))
+                                {
+                                    JsonSerializer.Serialize(writer, document.RootElement);
+                                }
 #endif
+                            }
+                            else
+                            {
+                                writer.WriteNullValue();
+                            }
+                        }
+                        writer.WriteEndObject();
                     }
-                    writer.WriteEndObject();
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe);
+                ((IJsonModel<AppInstanceProbe>)LivenessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe);
+                ((IJsonModel<AppInstanceProbe>)ReadinessProbe).Write(writer, options);
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe);
+                ((IJsonModel<AppInstanceProbe>)StartupProbe).Write(writer, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -99,7 +103,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue(ContainerProbeSettings);
+                ((IJsonModel<ContainerProbeSettings>)ContainerProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

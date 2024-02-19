@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DscReportResourceNavigation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +159,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResourceNavigation> array = new List<DscReportResourceNavigation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DscReportResourceNavigation.DeserializeDscReportResourceNavigation(item));
+                        }
                     }
                     dependsOn = array;
                     continue;

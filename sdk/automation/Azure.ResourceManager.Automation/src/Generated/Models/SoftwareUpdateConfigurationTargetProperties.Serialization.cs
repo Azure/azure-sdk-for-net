@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AzureQueryProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in NonAzureQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NonAzureQueryProperties>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +113,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AzureQueryProperties> array = new List<AzureQueryProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureQueryProperties.DeserializeAzureQueryProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureQueryProperties.DeserializeAzureQueryProperties(item));
+                        }
                     }
                     azureQueries = array;
                     continue;
@@ -113,7 +134,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<NonAzureQueryProperties> array = new List<NonAzureQueryProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NonAzureQueryProperties.DeserializeNonAzureQueryProperties(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NonAzureQueryProperties.DeserializeNonAzureQueryProperties(item));
+                        }
                     }
                     nonAzureQueries = array;
                     continue;

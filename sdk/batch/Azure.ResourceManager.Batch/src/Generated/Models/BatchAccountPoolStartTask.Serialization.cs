@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchResourceFile>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,14 +54,21 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<BatchEnvironmentSetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(UserIdentity))
             {
                 writer.WritePropertyName("userIdentity"u8);
-                writer.WriteObjectValue(UserIdentity);
+                ((IJsonModel<BatchUserIdentity>)UserIdentity).Write(writer, options);
             }
             if (Optional.IsDefined(MaxTaskRetryCount))
             {
@@ -69,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(ContainerSettings))
             {
                 writer.WritePropertyName("containerSettings"u8);
-                writer.WriteObjectValue(ContainerSettings);
+                ((IJsonModel<BatchTaskContainerSettings>)ContainerSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -134,7 +148,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchResourceFile.DeserializeBatchResourceFile(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchResourceFile.DeserializeBatchResourceFile(item));
+                        }
                     }
                     resourceFiles = array;
                     continue;
@@ -148,7 +169,14 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BatchEnvironmentSetting.DeserializeBatchEnvironmentSetting(item));
+                        }
                     }
                     environmentSettings = array;
                     continue;

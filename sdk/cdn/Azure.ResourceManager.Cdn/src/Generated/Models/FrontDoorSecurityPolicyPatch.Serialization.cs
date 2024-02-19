@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Cdn.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Properties);
+                ((IJsonModel<SecurityPolicyProperties>)Properties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

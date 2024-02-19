@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                ((IJsonModel<DscConfigurationAssociationProperty>)Configuration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {

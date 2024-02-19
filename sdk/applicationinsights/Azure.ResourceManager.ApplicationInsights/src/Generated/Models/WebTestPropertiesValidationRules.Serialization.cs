@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             if (Optional.IsDefined(ContentValidation))
             {
                 writer.WritePropertyName("ContentValidation"u8);
-                writer.WriteObjectValue(ContentValidation);
+                ((IJsonModel<WebTestPropertiesValidationRulesContentValidation>)ContentValidation).Write(writer, options);
             }
             if (Optional.IsDefined(CheckSsl))
             {

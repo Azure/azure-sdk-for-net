@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AutomationConnectionTypeData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationConnectionTypeData> array = new List<AutomationConnectionTypeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AutomationConnectionTypeData.DeserializeAutomationConnectionTypeData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SnapshotResourceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                     List<SnapshotResourceData> array = new List<SnapshotResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SnapshotResourceData.DeserializeSnapshotResourceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SnapshotResourceData.DeserializeSnapshotResourceData(item));
+                        }
                     }
                     value = array;
                     continue;

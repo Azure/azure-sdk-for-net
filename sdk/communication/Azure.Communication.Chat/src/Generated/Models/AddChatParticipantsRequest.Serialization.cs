@@ -19,7 +19,14 @@ namespace Azure.Communication.Chat
             writer.WriteStartArray();
             foreach (var item in Participants)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

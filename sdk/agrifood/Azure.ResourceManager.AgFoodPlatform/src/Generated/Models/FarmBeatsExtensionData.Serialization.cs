@@ -101,7 +101,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 writer.WriteStartArray();
                 foreach (var item in DetailedInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DetailedInformation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -249,7 +256,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                             List<DetailedInformation> array = new List<DetailedInformation>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(Models.DetailedInformation.DeserializeDetailedInformation(item));
+                                }
                             }
                             detailedInformation = array;
                             continue;

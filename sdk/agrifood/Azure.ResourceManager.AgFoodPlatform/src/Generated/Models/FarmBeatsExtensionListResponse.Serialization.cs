@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FarmBeatsExtensionData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<FarmBeatsExtensionData> array = new List<FarmBeatsExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FarmBeatsExtensionData.DeserializeFarmBeatsExtensionData(item));
+                        }
                     }
                     value = array;
                     continue;

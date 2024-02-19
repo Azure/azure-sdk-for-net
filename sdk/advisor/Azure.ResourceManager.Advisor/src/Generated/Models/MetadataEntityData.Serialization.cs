@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Advisor
                 writer.WriteStartArray();
                 foreach (var item in SupportedValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetadataSupportedValueDetail>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -211,7 +218,14 @@ namespace Azure.ResourceManager.Advisor
                             List<MetadataSupportedValueDetail> array = new List<MetadataSupportedValueDetail>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MetadataSupportedValueDetail.DeserializeMetadataSupportedValueDetail(item));
+                                }
                             }
                             supportedValues = array;
                             continue;

@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AccountAccess))
             {
                 writer.WritePropertyName("accountAccess"u8);
-                writer.WriteObjectValue(AccountAccess);
+                ((IJsonModel<BatchEndpointAccessProfile>)AccountAccess).Write(writer, options);
             }
             if (Optional.IsDefined(NodeManagementAccess))
             {
                 writer.WritePropertyName("nodeManagementAccess"u8);
-                writer.WriteObjectValue(NodeManagementAccess);
+                ((IJsonModel<BatchEndpointAccessProfile>)NodeManagementAccess).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

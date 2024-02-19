@@ -102,7 +102,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<GeoFilter>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    ((IJsonModel<EndpointPropertiesUpdateParametersDefaultOriginGroup>)DefaultOriginGroup).Write(writer, options);
                 }
                 else
                 {
@@ -126,7 +133,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        if (item != null)
+                        {
+                            ((IJsonModel<UriSigningKey>)item).Write(writer, options);
+                        }
+                        else
+                        {
+                            writer.WriteNullValue();
+                        }
                     }
                     writer.WriteEndArray();
                 }
@@ -140,7 +154,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    ((IJsonModel<EndpointDeliveryPolicy>)DeliveryPolicy).Write(writer, options);
                 }
                 else
                 {
@@ -152,7 +166,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    ((IJsonModel<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>)WebApplicationFirewallPolicyLink).Write(writer, options);
                 }
                 else
                 {
@@ -324,7 +338,14 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<GeoFilter> array = new List<GeoFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(GeoFilter.DeserializeGeoFilter(item));
+                                }
                             }
                             geoFilters = array;
                             continue;
@@ -349,7 +370,14 @@ namespace Azure.ResourceManager.Cdn.Models
                             List<UriSigningKey> array = new List<UriSigningKey>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(UriSigningKey.DeserializeUriSigningKey(item));
+                                }
                             }
                             uriSigningKeys = array;
                             continue;

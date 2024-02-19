@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (options.Format != "W" && Optional.IsDefined(CloudCapacity))
             {
                 writer.WritePropertyName("cloudCapacity"u8);
-                writer.WriteObjectValue(CloudCapacity);
+                ((IJsonModel<CloudCapacity>)CloudCapacity).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(StorageQoSPolicies))
             {
@@ -97,7 +97,14 @@ namespace Azure.ResourceManager.ArcScVmm
                 writer.WriteStartArray();
                 foreach (var item in StorageQoSPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageQoSPolicy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -258,7 +265,14 @@ namespace Azure.ResourceManager.ArcScVmm
                             List<StorageQoSPolicy> array = new List<StorageQoSPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageQoSPolicy.DeserializeStorageQoSPolicy(item));
+                                }
                             }
                             storageQoSPolicies = array;
                             continue;

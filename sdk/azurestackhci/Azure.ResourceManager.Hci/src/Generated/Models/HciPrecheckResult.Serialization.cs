@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                ((IJsonModel<HciPrecheckResultTags>)Tags).Write(writer, options);
             }
             if (Optional.IsDefined(Title))
             {

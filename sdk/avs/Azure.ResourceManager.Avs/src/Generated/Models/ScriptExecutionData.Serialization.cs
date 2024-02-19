@@ -61,7 +61,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptExecutionParameterDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.Avs
                 writer.WriteStartArray();
                 foreach (var item in HiddenParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ScriptExecutionParameterDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -275,7 +289,14 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                }
                             }
                             parameters = array;
                             continue;
@@ -289,7 +310,14 @@ namespace Azure.ResourceManager.Avs
                             List<ScriptExecutionParameterDetails> array = new List<ScriptExecutionParameterDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ScriptExecutionParameterDetails.DeserializeScriptExecutionParameterDetails(item));
+                                }
                             }
                             hiddenParameters = array;
                             continue;

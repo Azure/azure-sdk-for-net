@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ArcScVmm
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                ((IJsonModel<VmmServerPropertiesCredentials>)Credentials).Write(writer, options);
             }
             writer.WritePropertyName("fqdn"u8);
             writer.WriteStringValue(Fqdn);

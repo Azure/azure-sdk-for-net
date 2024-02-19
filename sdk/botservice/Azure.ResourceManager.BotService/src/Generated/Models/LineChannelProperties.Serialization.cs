@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<LineRegistration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(CallbackUri))
@@ -93,7 +100,14 @@ namespace Azure.ResourceManager.BotService.Models
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        }
                     }
                     lineRegistrations = array;
                     continue;

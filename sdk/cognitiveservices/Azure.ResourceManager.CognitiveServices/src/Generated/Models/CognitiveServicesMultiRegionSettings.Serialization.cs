@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<CognitiveServicesRegionSetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +110,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     List<CognitiveServicesRegionSetting> array = new List<CognitiveServicesRegionSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CognitiveServicesRegionSetting.DeserializeCognitiveServicesRegionSetting(item));
+                        }
                     }
                     regions = array;
                     continue;

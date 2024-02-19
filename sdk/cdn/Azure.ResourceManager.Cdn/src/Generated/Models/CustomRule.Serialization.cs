@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStartArray();
             foreach (var item in MatchConditions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<CustomRuleMatchCondition>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("action"u8);
@@ -115,7 +122,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<CustomRuleMatchCondition> array = new List<CustomRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(CustomRuleMatchCondition.DeserializeCustomRuleMatchCondition(item));
+                        }
                     }
                     matchConditions = array;
                     continue;

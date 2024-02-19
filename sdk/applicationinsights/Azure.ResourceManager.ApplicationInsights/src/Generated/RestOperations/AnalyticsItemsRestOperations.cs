@@ -100,7 +100,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentAnalyticsItem> array = new List<ApplicationInsightsComponentAnalyticsItem>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -138,7 +145,14 @@ namespace Azure.ResourceManager.ApplicationInsights
                         List<ApplicationInsightsComponentAnalyticsItem> array = new List<ApplicationInsightsComponentAnalyticsItem>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(item));
+                            if (item.ValueKind == JsonValueKind.Null)
+                            {
+                                array.Add(null);
+                            }
+                            else
+                            {
+                                array.Add(ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(item));
+                            }
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
