@@ -15,12 +15,12 @@ namespace Azure.Provisioning.KeyVaults
         /// Adds a <see cref="KeyVault"/> to the construct.
         /// </summary>
         /// <param name="construct">The construct.</param>
-        /// <param name="parent">The parent.</param>
+        /// <param name="resourceGroup">The parent.</param>
         /// <param name="name">The name.</param>
         /// <returns></returns>
-        public static KeyVault AddKeyVault(this IConstruct construct, ResourceGroup? parent = null, string name = "kv")
+        public static KeyVault AddKeyVault(this IConstruct construct, ResourceGroup? resourceGroup = null, string name = "kv")
         {
-            return new KeyVault(construct, name);
+            return new KeyVault(construct, name, resourceGroup: resourceGroup);
         }
 
         /// <summary>

@@ -1,3 +1,6 @@
+@description('')
+param LOCATION string
+
 
 resource appServicePlan_viooTTlOI 'Microsoft.Web/serverfarms@2021-02-01' = {
   name: 'appServicePlan-TEST'
@@ -40,6 +43,37 @@ resource webSite_dOTaZfna6 'Microsoft.Web/sites@2021-02-01' = {
 resource applicationSettingsResource_MAMFSSuFs 'Microsoft.Web/sites/config@2021-02-01' = {
   parent: webSite_dOTaZfna6
   name: 'appsettings'
+}
+
+resource keyVault_BRsYQF4qT 'Microsoft.KeyVault/vaults@2023-02-01' = {
+  name: 'kv-TEST'
+  location: LOCATION
+  properties: {
+    tenantId: '00000000-0000-0000-0000-000000000000'
+    sku: {
+      name: 'standard'
+      family: 'A'
+    }
+  }
+}
+
+resource keyVaultAddAccessPolicy_lQ2z7dHpX 'Microsoft.KeyVault/vaults/accessPolicies@2023-02-01' = {
+  parent: keyVault_BRsYQF4qT
+  name: 'add'
+  properties: {
+    accessPolicies: [
+      {
+        tenantId: '00000000-0000-0000-0000-000000000000'
+        objectId: webSite_Y34mQ7HgU.identity.principalId
+        permissions: {
+          secrets: [
+            'get'
+            'list'
+          ]
+        }
+      }
+    ]
+  }
 }
 
 output STORAGE_PRINCIPAL_ID string = webSite_dOTaZfna6.identity.principalId

@@ -31,7 +31,11 @@ namespace Azure.Provisioning
         internal string? Value { get; }
         internal IConstruct? Source { get; }
 
-        internal Parameter(Output output)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="output"></param>
+        public Parameter(Output output)
         {
             Name = output.Name;
             IsSecure = output.IsSecure;
