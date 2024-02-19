@@ -19,6 +19,7 @@ namespace Azure.ResourceManager
     public class ArmOperation<T> : Operation<T> where T : notnull
     {
         private readonly OperationInternal<T>? _operation;
+        private readonly RehydrationToken? _rehydrationToken;
 
         /// <summary> Initializes a new instance of ArmOperation. </summary>
         public ArmOperation(ArmClient client, RehydrationToken? rehydrationToken)
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager
             // TODO: Do we need more specific OptionsNamespace, ProviderNamespace and OperationTypeName and possibly from id?
             var clientDiagnostics = new ClientDiagnostics("Azure.ResourceManager", "Microsoft.Resources", client.Diagnostics);
             _operation = new OperationInternal<T>(nextLinkOperation!, clientDiagnostics, null);
+            _rehydrationToken = rehydrationToken;
         }
 
         /// <summary> Initializes a new instance of ArmOperation for mocking. </summary>
@@ -54,6 +56,9 @@ namespace Azure.ResourceManager
             var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             _operation = new OperationInternal<T>(nextLinkOperation, clientDiagnostics, response);
         }
+
+        /// <inheritdoc />
+        public override RehydrationToken? GetRehydrationToken() => _rehydrationToken;
 
 #pragma warning disable CA1822
         /// <inheritdoc />
