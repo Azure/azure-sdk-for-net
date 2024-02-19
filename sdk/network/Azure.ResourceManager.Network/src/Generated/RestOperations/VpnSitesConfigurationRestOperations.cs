@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDownloadRequestUri(string subscriptionId, string resourceGroupName, string virtualWanName, GetVpnSitesConfigurationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualWans/", false);
+            uri.AppendPath(virtualWanName, true);
+            uri.AppendPath("/vpnConfiguration", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDownloadRequest(string subscriptionId, string resourceGroupName, string virtualWanName, GetVpnSitesConfigurationContent content)
         {
             var message = _pipeline.CreateMessage();

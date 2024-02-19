@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.ProviderHub
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGenerateManifestRequestUri(string subscriptionId, string providerNamespace)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/generateManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGenerateManifestRequest(string subscriptionId, string providerNamespace)
         {
             var message = _pipeline.CreateMessage();
@@ -108,6 +121,19 @@ namespace Azure.ResourceManager.ProviderHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCheckinManifestRequestUri(string subscriptionId, string providerNamespace, CheckinManifestContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.ProviderHub/providerRegistrations/", false);
+            uri.AppendPath(providerNamespace, true);
+            uri.AppendPath("/checkinManifest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCheckinManifestRequest(string subscriptionId, string providerNamespace, CheckinManifestContent content)

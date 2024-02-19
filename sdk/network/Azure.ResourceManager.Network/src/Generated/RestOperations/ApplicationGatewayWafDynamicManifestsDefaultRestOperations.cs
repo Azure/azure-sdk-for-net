@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.Network
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/applicationGatewayWafDynamicManifests/dafault", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
