@@ -28,14 +28,35 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("slice"u8);
-            JsonSerializer.Serialize(writer, Slice);
+            if (Slice != null)
+            {
+                JsonSerializer.Serialize(writer, Slice);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("defaultDataNetwork"u8);
-            JsonSerializer.Serialize(writer, DefaultDataNetwork);
+            if (DefaultDataNetwork != null)
+            {
+                JsonSerializer.Serialize(writer, DefaultDataNetwork);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("dataNetworkConfigurations"u8);
             writer.WriteStartArray();
             foreach (var item in DataNetworkConfigurations)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataNetworkConfiguration>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +119,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<DataNetworkConfiguration> array = new List<DataNetworkConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataNetworkConfiguration.DeserializeDataNetworkConfiguration(item));
+                        }
                     }
                     dataNetworkConfigurations = array;
                     continue;

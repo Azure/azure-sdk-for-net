@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -102,7 +109,14 @@ namespace Azure.ResourceManager.Monitor
             }
             writer.WriteEndArray();
             writer.WritePropertyName("retentionPolicy"u8);
-            writer.WriteObjectValue(RetentionPolicy);
+            if (RetentionPolicy != null)
+            {
+                ((IJsonModel<RetentionPolicy>)RetentionPolicy).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

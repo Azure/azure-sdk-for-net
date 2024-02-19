@@ -29,7 +29,14 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WritePropertyName("networkSiblingSetId"u8);
             writer.WriteStringValue(NetworkSiblingSetId);
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("networkSiblingSetStateId"u8);
             writer.WriteStringValue(NetworkSiblingSetStateId);
             writer.WritePropertyName("networkFeatures"u8);

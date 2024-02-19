@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
+            if (Id != null)
+            {
+                writer.WriteStringValue(Id);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
             if (options.Format != "W" && _serializedAdditionalRawData != null)

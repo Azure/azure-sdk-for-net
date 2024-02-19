@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchCriteria)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteCriterion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RouteMapAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +130,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteCriterion> array = new List<RouteCriterion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteCriterion.DeserializeRouteCriterion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteCriterion.DeserializeRouteCriterion(item));
+                        }
                     }
                     matchCriteria = array;
                     continue;
@@ -130,7 +151,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<RouteMapAction> array = new List<RouteMapAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouteMapAction.DeserializeRouteMapAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(RouteMapAction.DeserializeRouteMapAction(item));
+                        }
                     }
                     actions = array;
                     continue;

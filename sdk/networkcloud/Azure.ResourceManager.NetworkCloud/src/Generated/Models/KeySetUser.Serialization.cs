@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("sshPublicKey"u8);
-            writer.WriteObjectValue(SshPublicKey);
+            if (SshPublicKey != null)
+            {
+                ((IJsonModel<NetworkCloudSshPublicKey>)SshPublicKey).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-                writer.WriteObjectValue(AggregatorOrSingleRackDefinition);
+                ((IJsonModel<NetworkCloudRackDefinition>)AggregatorOrSingleRackDefinition).Write(writer, options);
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
                 writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue(ClusterServicePrincipal);
+                ((IJsonModel<ServicePrincipalInformation>)ClusterServicePrincipal).Write(writer, options);
             }
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
                 writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue(ComputeDeploymentThreshold);
+                ((IJsonModel<ValidationThreshold>)ComputeDeploymentThreshold).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkCloudRackDefinition>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +189,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<NetworkCloudRackDefinition> array = new List<NetworkCloudRackDefinition>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(item));
+                                }
                             }
                             computeRackDefinitions = array;
                             continue;

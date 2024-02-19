@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HubRoute>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -197,7 +204,14 @@ namespace Azure.ResourceManager.Network
                             List<HubRoute> array = new List<HubRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HubRoute.DeserializeHubRoute(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(HubRoute.DeserializeHubRoute(item));
+                                }
                             }
                             routes = array;
                             continue;

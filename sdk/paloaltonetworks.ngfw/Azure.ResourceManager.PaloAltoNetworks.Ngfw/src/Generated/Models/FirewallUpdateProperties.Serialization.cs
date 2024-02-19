@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                ((IJsonModel<FirewallNetworkProfile>)NetworkProfile).Write(writer, options);
             }
             if (Optional.IsDefined(IsPanoramaManaged))
             {
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue(PanoramaConfig);
+                ((IJsonModel<FirewallPanoramaConfiguration>)PanoramaConfig).Write(writer, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue(AssociatedRulestack);
+                ((IJsonModel<RulestackDetails>)AssociatedRulestack).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                ((IJsonModel<FirewallDnsSettings>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
@@ -63,19 +63,26 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<FirewallFrontendSetting>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                ((IJsonModel<FirewallBillingPlanInfo>)PlanData).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails);
+                ((IJsonModel<PanFirewallMarketplaceDetails>)MarketplaceDetails).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -191,7 +198,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<FirewallFrontendSetting> array = new List<FirewallFrontendSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(FirewallFrontendSetting.DeserializeFirewallFrontendSetting(item));
+                        }
                     }
                     frontEndSettings = array;
                     continue;

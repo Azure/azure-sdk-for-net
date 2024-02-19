@@ -50,14 +50,21 @@ namespace Azure.ResourceManager.Network.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("publicCertData"u8);
+            if (PublicCertData != null)
+            {
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PublicCertData);
 #else
-            using (JsonDocument document = JsonDocument.Parse(PublicCertData))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                using (JsonDocument document = JsonDocument.Parse(PublicCertData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);

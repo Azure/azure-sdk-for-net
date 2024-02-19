@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("workspace"u8);
-            writer.WriteObjectValue(Workspace);
+            if (Workspace != null)
+            {
+                ((IJsonModel<DataContainerWorkspace>)Workspace).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.NetApp.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("newPoolResourceId"u8);
-            writer.WriteStringValue(NewPoolResourceId);
+            if (NewPoolResourceId != null)
+            {
+                writer.WriteStringValue(NewPoolResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

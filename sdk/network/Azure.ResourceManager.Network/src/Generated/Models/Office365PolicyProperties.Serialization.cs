@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BreakOutCategories))
             {
                 writer.WritePropertyName("breakOutCategories"u8);
-                writer.WriteObjectValue(BreakOutCategories);
+                ((IJsonModel<BreakOutCategoryPolicies>)BreakOutCategories).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

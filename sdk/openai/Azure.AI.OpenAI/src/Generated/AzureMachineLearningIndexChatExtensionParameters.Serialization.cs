@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                ((IJsonModel<OnYourDataAuthenticationOptions>)Authentication).Write(writer, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {

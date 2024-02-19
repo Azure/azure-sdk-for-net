@@ -60,7 +60,14 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -96,7 +103,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                ((IJsonModel<VolumePropertiesExportPolicy>)ExportPolicy).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -148,7 +155,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStringValue(BaremetalTenantId);
             }
             writer.WritePropertyName("subnetId"u8);
-            writer.WriteStringValue(SubnetId);
+            if (SubnetId != null)
+            {
+                writer.WriteStringValue(SubnetId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(NetworkFeatures))
             {
                 writer.WritePropertyName("networkFeatures"u8);
@@ -170,7 +184,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppVolumeMountTarget>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -182,7 +203,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection);
+                ((IJsonModel<NetAppVolumeDataProtection>)DataProtection).Write(writer, options);
             }
             if (Optional.IsDefined(IsRestoring))
             {
@@ -318,12 +339,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in DataStoreResourceId)
                 {
-                    if (item == null)
+                    if (item != null)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    else
                     {
                         writer.WriteNullValue();
-                        continue;
                     }
-                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -383,7 +406,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppVolumePlacementRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -732,7 +762,14 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeMountTarget> array = new List<NetAppVolumeMountTarget>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetAppVolumeMountTarget.DeserializeNetAppVolumeMountTarget(item));
+                                }
                             }
                             mountTargets = array;
                             continue;
@@ -1043,7 +1080,14 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                                }
                             }
                             placementRules = array;
                             continue;

@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ExclusionManagedRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ExclusionManagedRuleSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -112,7 +119,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<ExclusionManagedRuleSet> array = new List<ExclusionManagedRuleSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ExclusionManagedRuleSet.DeserializeExclusionManagedRuleSet(item));
+                        }
                     }
                     exclusionManagedRuleSets = array;
                     continue;

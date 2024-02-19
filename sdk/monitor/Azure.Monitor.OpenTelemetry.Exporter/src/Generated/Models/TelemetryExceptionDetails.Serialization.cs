@@ -48,7 +48,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedStack)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }

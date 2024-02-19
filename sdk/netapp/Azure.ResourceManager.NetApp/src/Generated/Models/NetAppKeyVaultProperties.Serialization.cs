@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(KeyVaultId);
             }
             writer.WritePropertyName("keyVaultUri"u8);
-            writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            if (KeyVaultUri != null)
+            {
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("keyName"u8);
             writer.WriteStringValue(KeyName);
             writer.WritePropertyName("keyVaultResourceId"u8);

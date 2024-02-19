@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ComputeMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineSkuSlot>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +80,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ControllerMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MachineSkuSlot>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +117,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in StorageAppliances)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<StorageApplianceSkuSlot>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -207,7 +235,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                }
                             }
                             computeMachines = array;
                             continue;
@@ -221,7 +256,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<MachineSkuSlot> array = new List<MachineSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MachineSkuSlot.DeserializeMachineSkuSlot(item));
+                                }
                             }
                             controllerMachines = array;
                             continue;
@@ -267,7 +309,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<StorageApplianceSkuSlot> array = new List<StorageApplianceSkuSlot>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(StorageApplianceSkuSlot.DeserializeStorageApplianceSkuSlot(item));
+                                }
                             }
                             storageAppliances = array;
                             continue;

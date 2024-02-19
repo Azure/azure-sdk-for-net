@@ -31,7 +31,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetricsBatchResultValues> array = new List<MetricsBatchResultValues>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsBatchResultValues.DeserializeMetricsBatchResultValues(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricsBatchResultValues.DeserializeMetricsBatchResultValues(item));
+                        }
                     }
                     values = array;
                     continue;

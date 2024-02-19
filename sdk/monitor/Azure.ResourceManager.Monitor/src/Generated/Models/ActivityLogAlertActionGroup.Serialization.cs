@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("actionGroupId"u8);
-            writer.WriteStringValue(ActionGroupId);
+            if (ActionGroupId != null)
+            {
+                writer.WriteStringValue(ActionGroupId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsCollectionDefined(WebhookProperties))
             {
                 writer.WritePropertyName("webhookProperties"u8);

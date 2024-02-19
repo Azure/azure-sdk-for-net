@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EnergyServiceData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +107,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<EnergyServiceData> array = new List<EnergyServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnergyServiceData.DeserializeEnergyServiceData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EnergyServiceData.DeserializeEnergyServiceData(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ChatResponseMessage>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.AI.OpenAI
                     List<ChatResponseMessage> array = new List<ChatResponseMessage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item));
+                        }
                     }
                     messages = array;
                     continue;

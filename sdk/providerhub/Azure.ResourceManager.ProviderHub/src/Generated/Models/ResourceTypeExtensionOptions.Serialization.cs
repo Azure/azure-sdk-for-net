@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             if (Optional.IsDefined(ResourceCreationBegin))
             {
                 writer.WritePropertyName("resourceCreationBegin"u8);
-                writer.WriteObjectValue(ResourceCreationBegin);
+                ((IJsonModel<ExtensionOptions>)ResourceCreationBegin).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

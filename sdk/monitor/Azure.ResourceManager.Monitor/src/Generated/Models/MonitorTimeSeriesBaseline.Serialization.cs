@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorMetricSingleDimension>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +56,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MonitorSingleBaseline>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(MetadataValues))
@@ -58,7 +72,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetadataValues)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MonitorBaselineMetadata>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +144,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorMetricSingleDimension> array = new List<MonitorMetricSingleDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorMetricSingleDimension.DeserializeMonitorMetricSingleDimension(item));
+                        }
                     }
                     dimensions = array;
                     continue;
@@ -143,7 +171,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorSingleBaseline> array = new List<MonitorSingleBaseline>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorSingleBaseline.DeserializeMonitorSingleBaseline(item));
+                        }
                     }
                     data = array;
                     continue;
@@ -157,7 +192,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorBaselineMetadata> array = new List<MonitorBaselineMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorBaselineMetadata.DeserializeMonitorBaselineMetadata(item));
+                        }
                     }
                     metadataValues = array;
                     continue;

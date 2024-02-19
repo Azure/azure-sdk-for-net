@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                writer.WriteObjectValue(BackendAddressPool);
+                ((IJsonModel<ApplicationGatewayBackendAddressPool>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHealthHttpSettings))
             {
                 writer.WritePropertyName("backendHealthHttpSettings"u8);
-                writer.WriteObjectValue(BackendHealthHttpSettings);
+                ((IJsonModel<ApplicationGatewayBackendHealthHttpSettings>)BackendHealthHttpSettings).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

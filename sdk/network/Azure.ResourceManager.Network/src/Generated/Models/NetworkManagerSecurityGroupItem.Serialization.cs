@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.Network.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
-            writer.WriteStringValue(NetworkGroupId);
+            if (NetworkGroupId != null)
+            {
+                writer.WriteStringValue(NetworkGroupId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

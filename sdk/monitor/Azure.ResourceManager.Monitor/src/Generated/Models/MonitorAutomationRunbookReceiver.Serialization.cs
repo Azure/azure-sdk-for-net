@@ -27,11 +27,25 @@ namespace Azure.ResourceManager.Monitor.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("automationAccountId"u8);
-            writer.WriteStringValue(AutomationAccountId);
+            if (AutomationAccountId != null)
+            {
+                writer.WriteStringValue(AutomationAccountId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("runbookName"u8);
             writer.WriteStringValue(RunbookName);
             writer.WritePropertyName("webhookResourceId"u8);
-            writer.WriteStringValue(WebhookResourceId);
+            if (WebhookResourceId != null)
+            {
+                writer.WriteStringValue(WebhookResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("isGlobalRunbook"u8);
             writer.WriteBooleanValue(IsGlobalRunbook);
             if (Optional.IsDefined(Name))

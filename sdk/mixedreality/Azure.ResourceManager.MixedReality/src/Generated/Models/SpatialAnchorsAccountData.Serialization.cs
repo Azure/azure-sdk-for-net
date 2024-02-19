@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<MixedRealitySku>)Sku).Write(writer, options);
             }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteObjectValue(Kind);
+                ((IJsonModel<MixedRealitySku>)Kind).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -64,7 +64,14 @@ namespace Azure.ResourceManager.MixedReality
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {

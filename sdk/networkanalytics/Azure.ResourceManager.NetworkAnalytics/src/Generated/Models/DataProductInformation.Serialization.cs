@@ -34,7 +34,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProductVersions)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataProductVersion>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +104,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductVersion> array = new List<DataProductVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductVersion.DeserializeDataProductVersion(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProductVersion.DeserializeDataProductVersion(item));
+                        }
                     }
                     dataProductVersions = array;
                     continue;

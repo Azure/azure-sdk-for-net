@@ -43,7 +43,14 @@ namespace Azure.ResourceManager.NetApp.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -75,7 +82,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                ((IJsonModel<VolumePatchPropertiesExportPolicy>)ExportPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
@@ -85,7 +92,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection);
+                ((IJsonModel<NetAppVolumePatchDataProtection>)DataProtection).Write(writer, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {

@@ -37,7 +37,14 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Polygon)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AzureGroundingEnhancementCoordinatePoint>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -106,7 +113,14 @@ namespace Azure.AI.OpenAI
                     List<AzureGroundingEnhancementCoordinatePoint> array = new List<AzureGroundingEnhancementCoordinatePoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureGroundingEnhancementCoordinatePoint.DeserializeAzureGroundingEnhancementCoordinatePoint(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AzureGroundingEnhancementCoordinatePoint.DeserializeAzureGroundingEnhancementCoordinatePoint(item));
+                        }
                     }
                     polygon = array;
                     continue;

@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicySignaturesOverridesForIdpsData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<PolicySignaturesOverridesForIdpsData> array = new List<PolicySignaturesOverridesForIdpsData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolicySignaturesOverridesForIdpsData.DeserializePolicySignaturesOverridesForIdpsData(item));
+                        }
                     }
                     value = array;
                     continue;

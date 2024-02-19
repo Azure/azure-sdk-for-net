@@ -30,14 +30,28 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in VirtualNetworkRule)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NetworkAnalyticsVirtualNetworkRule>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("ipRules"u8);
             writer.WriteStartArray();
             foreach (var item in IPRules)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<NetworkAnalyticsIPRules>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("allowedQueryIpRangeList"u8);
@@ -100,7 +114,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<NetworkAnalyticsVirtualNetworkRule> array = new List<NetworkAnalyticsVirtualNetworkRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAnalyticsVirtualNetworkRule.DeserializeNetworkAnalyticsVirtualNetworkRule(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkAnalyticsVirtualNetworkRule.DeserializeNetworkAnalyticsVirtualNetworkRule(item));
+                        }
                     }
                     virtualNetworkRule = array;
                     continue;
@@ -110,7 +131,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<NetworkAnalyticsIPRules> array = new List<NetworkAnalyticsIPRules>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkAnalyticsIPRules.DeserializeNetworkAnalyticsIPRules(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkAnalyticsIPRules.DeserializeNetworkAnalyticsIPRules(item));
+                        }
                     }
                     ipRules = array;
                     continue;

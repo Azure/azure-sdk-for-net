@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EndpointServiceResult>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<EndpointServiceResult> array = new List<EndpointServiceResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointServiceResult.DeserializeEndpointServiceResult(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(EndpointServiceResult.DeserializeEndpointServiceResult(item));
+                        }
                     }
                     value = array;
                     continue;

@@ -37,7 +37,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Interfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<HardwareInventoryNetworkInterface>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +54,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in Nics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetworkCloudNic>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +124,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<HardwareInventoryNetworkInterface> array = new List<HardwareInventoryNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item));
+                        }
                     }
                     interfaces = array;
                     continue;
@@ -124,7 +145,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudNic> array = new List<NetworkCloudNic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
+                        }
                     }
                     nics = array;
                     continue;

@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in AppSeenList)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<AppSeenInfo>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     List<AppSeenInfo> array = new List<AppSeenInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppSeenInfo.DeserializeAppSeenInfo(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AppSeenInfo.DeserializeAppSeenInfo(item));
+                        }
                     }
                     appSeenList = array;
                     continue;

@@ -30,7 +30,14 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("prompt_index"u8);
             writer.WriteNumberValue(PromptIndex);
             writer.WritePropertyName("content_filter_results"u8);
-            writer.WriteObjectValue(ContentFilterResults);
+            if (ContentFilterResults != null)
+            {
+                ((IJsonModel<ContentFilterResultDetailsForPrompt>)ContentFilterResults).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

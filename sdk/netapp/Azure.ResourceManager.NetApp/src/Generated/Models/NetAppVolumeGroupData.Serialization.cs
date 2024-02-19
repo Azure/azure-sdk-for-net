@@ -36,7 +36,14 @@ namespace Azure.ResourceManager.NetApp
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(GroupMetaData))
             {
                 writer.WritePropertyName("groupMetaData"u8);
-                writer.WriteObjectValue(GroupMetaData);
+                ((IJsonModel<NetAppVolumeGroupMetadata>)GroupMetaData).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Volumes))
             {
@@ -71,7 +78,14 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NetAppVolumeGroupVolume>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -191,7 +205,14 @@ namespace Azure.ResourceManager.NetApp
                             List<NetAppVolumeGroupVolume> array = new List<NetAppVolumeGroupVolume>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(NetAppVolumeGroupVolume.DeserializeNetAppVolumeGroupVolume(item));
+                                }
                             }
                             volumes = array;
                             continue;

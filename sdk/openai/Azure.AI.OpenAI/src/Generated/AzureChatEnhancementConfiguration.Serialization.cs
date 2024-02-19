@@ -30,12 +30,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Grounding))
             {
                 writer.WritePropertyName("grounding"u8);
-                writer.WriteObjectValue(Grounding);
+                ((IJsonModel<AzureChatGroundingEnhancementConfiguration>)Grounding).Write(writer, options);
             }
             if (Optional.IsDefined(Ocr))
             {
                 writer.WritePropertyName("ocr"u8);
-                writer.WriteObjectValue(Ocr);
+                ((IJsonModel<AzureChatOCREnhancementConfiguration>)Ocr).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

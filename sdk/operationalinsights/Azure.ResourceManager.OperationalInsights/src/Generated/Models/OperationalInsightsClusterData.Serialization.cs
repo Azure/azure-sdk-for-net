@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<OperationalInsightsClusterSku>)Sku).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -54,7 +54,14 @@ namespace Azure.ResourceManager.OperationalInsights
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -101,7 +108,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                ((IJsonModel<OperationalInsightsKeyVaultProperties>)KeyVaultProperties).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -119,14 +126,21 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStartArray();
                 foreach (var item in AssociatedWorkspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<OperationalInsightsClusterAssociatedWorkspace>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CapacityReservationProperties))
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
-                writer.WriteObjectValue(CapacityReservationProperties);
+                ((IJsonModel<OperationalInsightsCapacityReservationProperties>)CapacityReservationProperties).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -340,7 +354,14 @@ namespace Azure.ResourceManager.OperationalInsights
                             List<OperationalInsightsClusterAssociatedWorkspace> array = new List<OperationalInsightsClusterAssociatedWorkspace>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsClusterAssociatedWorkspace.DeserializeOperationalInsightsClusterAssociatedWorkspace(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(OperationalInsightsClusterAssociatedWorkspace.DeserializeOperationalInsightsClusterAssociatedWorkspace(item));
+                                }
                             }
                             associatedWorkspaces = array;
                             continue;

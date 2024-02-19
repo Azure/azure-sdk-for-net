@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionStateOverrideActions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<SubscriptionStateOverrideAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +101,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<SubscriptionStateOverrideAction> array = new List<SubscriptionStateOverrideAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionStateOverrideAction.DeserializeSubscriptionStateOverrideAction(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(SubscriptionStateOverrideAction.DeserializeSubscriptionStateOverrideAction(item));
+                        }
                     }
                     subscriptionStateOverrideActions = array;
                     continue;

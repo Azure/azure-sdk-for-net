@@ -32,7 +32,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProducts)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataProductInformation>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -89,7 +96,14 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductInformation> array = new List<DataProductInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductInformation.DeserializeDataProductInformation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataProductInformation.DeserializeDataProductInformation(item));
+                        }
                     }
                     dataProducts = array;
                     continue;

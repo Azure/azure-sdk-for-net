@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -76,7 +83,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<MetricSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +100,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Logs)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<LogSettings>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +256,14 @@ namespace Azure.ResourceManager.Monitor
                             List<MetricSettings> array = new List<MetricSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MetricSettings.DeserializeMetricSettings(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(MetricSettings.DeserializeMetricSettings(item));
+                                }
                             }
                             metrics = array;
                             continue;
@@ -249,7 +277,14 @@ namespace Azure.ResourceManager.Monitor
                             List<LogSettings> array = new List<LogSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LogSettings.DeserializeLogSettings(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(LogSettings.DeserializeLogSettings(item));
+                                }
                             }
                             logs = array;
                             continue;

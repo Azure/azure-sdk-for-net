@@ -182,7 +182,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ComponentEventDetails>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -447,7 +454,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<ComponentEventDetails> array = new List<ComponentEventDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComponentEventDetails.DeserializeComponentEventDetails(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ComponentEventDetails.DeserializeComponentEventDetails(item));
+                        }
                     }
                     components = array;
                     continue;

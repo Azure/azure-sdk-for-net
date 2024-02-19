@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email);
+                ((IJsonModel<EmailNotification>)Email).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
@@ -39,7 +39,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<WebhookNotification>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -111,7 +118,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<WebhookNotification> array = new List<WebhookNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebhookNotification.DeserializeWebhookNotification(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(WebhookNotification.DeserializeWebhookNotification(item));
+                        }
                     }
                     webhooks = array;
                     continue;

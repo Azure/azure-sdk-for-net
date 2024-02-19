@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<DataCollectionRuleAssociationData>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -88,7 +95,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<DataCollectionRuleAssociationData> array = new List<DataCollectionRuleAssociationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataCollectionRuleAssociationData.DeserializeDataCollectionRuleAssociationData(item));
+                        }
                     }
                     value = array;
                     continue;

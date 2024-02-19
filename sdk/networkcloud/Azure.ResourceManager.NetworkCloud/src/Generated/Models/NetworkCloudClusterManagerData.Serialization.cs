@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.NetworkCloud
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -84,7 +91,14 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ClusterVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ClusterAvailableVersion>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -99,16 +113,23 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStringValue(DetailedStatusMessage);
             }
             writer.WritePropertyName("fabricControllerId"u8);
-            writer.WriteStringValue(FabricControllerId);
+            if (FabricControllerId != null)
+            {
+                writer.WriteStringValue(FabricControllerId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<ManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                writer.WriteObjectValue(ManagerExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ManagerExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -263,7 +284,14 @@ namespace Azure.ResourceManager.NetworkCloud
                             List<ClusterAvailableVersion> array = new List<ClusterAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ClusterAvailableVersion.DeserializeClusterAvailableVersion(item));
+                                }
                             }
                             clusterVersions = array;
                             continue;

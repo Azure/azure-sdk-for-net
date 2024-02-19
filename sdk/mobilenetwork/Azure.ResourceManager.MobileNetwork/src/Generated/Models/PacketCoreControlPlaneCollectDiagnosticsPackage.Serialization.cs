@@ -27,7 +27,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("storageAccountBlobUrl"u8);
-            writer.WriteStringValue(StorageAccountBlobUri.AbsoluteUri);
+            if (StorageAccountBlobUri != null)
+            {
+                writer.WriteStringValue(StorageAccountBlobUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

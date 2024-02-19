@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AdminRuleGroupData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<AdminRuleGroupData> array = new List<AdminRuleGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdminRuleGroupData.DeserializeAdminRuleGroupData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AdminRuleGroupData.DeserializeAdminRuleGroupData(item));
+                        }
                     }
                     value = array;
                     continue;

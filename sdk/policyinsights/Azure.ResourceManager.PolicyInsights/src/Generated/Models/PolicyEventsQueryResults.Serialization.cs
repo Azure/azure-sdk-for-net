@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<PolicyEvent>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     List<PolicyEvent> array = new List<PolicyEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyEvent.DeserializePolicyEvent(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(PolicyEvent.DeserializePolicyEvent(item));
+                        }
                     }
                     value = array;
                     continue;

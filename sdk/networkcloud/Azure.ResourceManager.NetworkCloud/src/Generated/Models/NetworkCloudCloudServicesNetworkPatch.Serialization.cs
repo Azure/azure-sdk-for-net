@@ -45,7 +45,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<EgressEndpoint>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -132,7 +139,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             List<EgressEndpoint> array = new List<EgressEndpoint>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(EgressEndpoint.DeserializeEgressEndpoint(item));
+                                }
                             }
                             additionalEgressEndpoints = array;
                             continue;

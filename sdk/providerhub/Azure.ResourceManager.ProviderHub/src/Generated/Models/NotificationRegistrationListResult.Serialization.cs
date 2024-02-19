@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<NotificationRegistrationData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<NotificationRegistrationData> array = new List<NotificationRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NotificationRegistrationData.DeserializeNotificationRegistrationData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(NotificationRegistrationData.DeserializeNotificationRegistrationData(item));
+                        }
                     }
                     value = array;
                     continue;

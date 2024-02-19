@@ -81,7 +81,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PathRules)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationGatewayPathRule>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -239,7 +246,14 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayPathRule> array = new List<ApplicationGatewayPathRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item));
+                                }
                             }
                             pathRules = array;
                             continue;

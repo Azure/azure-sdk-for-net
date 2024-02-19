@@ -29,11 +29,25 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("functionAppResourceId"u8);
-            writer.WriteStringValue(FunctionAppResourceId);
+            if (FunctionAppResourceId != null)
+            {
+                writer.WriteStringValue(FunctionAppResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("functionName"u8);
             writer.WriteStringValue(FunctionName);
             writer.WritePropertyName("httpTriggerUrl"u8);
-            writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
+            if (HttpTriggerUri != null)
+            {
+                writer.WriteStringValue(HttpTriggerUri.AbsoluteUri);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(UseCommonAlertSchema))
             {
                 writer.WritePropertyName("useCommonAlertSchema"u8);

@@ -28,7 +28,14 @@ namespace Azure.AI.OpenAI.Assistants
 
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
-            writer.WriteBase64StringValue(Data.ToArray(), "D");
+            if (Data != null)
+            {
+                writer.WriteBase64StringValue(Data.ToArray(), "D");
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("purpose"u8);
             writer.WriteStringValue(Purpose.ToString());
             if (Optional.IsDefined(Filename))

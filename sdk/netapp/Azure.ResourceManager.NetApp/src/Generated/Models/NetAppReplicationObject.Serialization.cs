@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStringValue(ReplicationSchedule.Value.ToString());
             }
             writer.WritePropertyName("remoteVolumeResourceId"u8);
-            writer.WriteStringValue(RemoteVolumeResourceId);
+            if (RemoteVolumeResourceId != null)
+            {
+                writer.WriteStringValue(RemoteVolumeResourceId);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(RemoteVolumeRegion))
             {
                 writer.WritePropertyName("remoteVolumeRegion"u8);

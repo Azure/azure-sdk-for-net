@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(BackendIPConfiguration))
             {
                 writer.WritePropertyName("backendIPConfiguration"u8);
-                writer.WriteObjectValue(BackendIPConfiguration);
+                ((IJsonModel<NetworkInterfaceIPConfigurationData>)BackendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(Protocol))
             {

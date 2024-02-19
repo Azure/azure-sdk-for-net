@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                ((IJsonModel<PublicIPAddressSku>)Sku).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -100,17 +100,17 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IPConfiguration);
+                ((IJsonModel<NetworkIPConfiguration>)IPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                ((IJsonModel<PublicIPAddressDnsSettings>)DnsSettings).Write(writer, options);
             }
             if (Optional.IsDefined(DdosSettings))
             {
                 writer.WritePropertyName("ddosSettings"u8);
-                writer.WriteObjectValue(DdosSettings);
+                ((IJsonModel<DdosSettings>)DdosSettings).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -118,7 +118,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<IPTag>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -150,12 +157,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ServicePublicIPAddress))
             {
                 writer.WritePropertyName("servicePublicIPAddress"u8);
-                writer.WriteObjectValue(ServicePublicIPAddress);
+                ((IJsonModel<PublicIPAddressData>)ServicePublicIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                writer.WriteObjectValue(NatGateway);
+                ((IJsonModel<NatGatewayData>)NatGateway).Write(writer, options);
             }
             if (Optional.IsDefined(MigrationPhase))
             {
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LinkedPublicIPAddress))
             {
                 writer.WritePropertyName("linkedPublicIPAddress"u8);
-                writer.WriteObjectValue(LinkedPublicIPAddress);
+                ((IJsonModel<PublicIPAddressData>)LinkedPublicIPAddress).Write(writer, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -390,7 +397,14 @@ namespace Azure.ResourceManager.Network
                             List<IPTag> array = new List<IPTag>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPTag.DeserializeIPTag(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(IPTag.DeserializeIPTag(item));
+                                }
                             }
                             ipTags = array;
                             continue;

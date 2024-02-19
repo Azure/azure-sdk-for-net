@@ -28,9 +28,23 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
-            JsonSerializer.Serialize(writer, DataNetwork);
+            if (DataNetwork != null)
+            {
+                JsonSerializer.Serialize(writer, DataNetwork);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue(SessionAmbr);
+            if (SessionAmbr != null)
+            {
+                ((IJsonModel<Ambr>)SessionAmbr).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
@@ -70,7 +84,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteStartArray();
             foreach (var item in AllowedServices)
             {
-                JsonSerializer.Serialize(writer, item);
+                if (item != null)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(MaximumNumberOfBufferedPackets))
@@ -204,7 +225,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        }
                     }
                     allowedServices = array;
                     continue;

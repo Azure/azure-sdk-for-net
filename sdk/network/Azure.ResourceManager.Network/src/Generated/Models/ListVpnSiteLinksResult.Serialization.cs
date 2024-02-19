@@ -33,7 +33,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<VpnSiteLinkData>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +102,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<VpnSiteLinkData> array = new List<VpnSiteLinkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(VpnSiteLinkData.DeserializeVpnSiteLinkData(item));
+                        }
                     }
                     value = array;
                     continue;

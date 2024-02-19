@@ -30,7 +30,14 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in MatchVariables)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MatchVariable>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             writer.WritePropertyName("operator"u8);
@@ -109,7 +116,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<MatchVariable> array = new List<MatchVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MatchVariable.DeserializeMatchVariable(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MatchVariable.DeserializeMatchVariable(item));
+                        }
                     }
                     matchVariables = array;
                     continue;

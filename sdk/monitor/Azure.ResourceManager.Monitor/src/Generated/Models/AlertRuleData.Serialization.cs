@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.Monitor
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -78,11 +85,18 @@ namespace Azure.ResourceManager.Monitor
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            if (Condition != null)
+            {
+                ((IJsonModel<AlertRuleCondition>)Condition).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                ((IJsonModel<AlertRuleAction>)Action).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Actions))
             {
@@ -90,7 +104,14 @@ namespace Azure.ResourceManager.Monitor
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AlertRuleAction>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -251,7 +272,14 @@ namespace Azure.ResourceManager.Monitor
                             List<AlertRuleAction> array = new List<AlertRuleAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(AlertRuleAction.DeserializeAlertRuleAction(item));
+                                }
                             }
                             actions = array;
                             continue;

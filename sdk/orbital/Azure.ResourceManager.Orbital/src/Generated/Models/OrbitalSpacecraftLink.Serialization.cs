@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<AuthorizedGroundStation>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +135,14 @@ namespace Azure.ResourceManager.Orbital.Models
                     List<AuthorizedGroundStation> array = new List<AuthorizedGroundStation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(AuthorizedGroundStation.DeserializeAuthorizedGroundStation(item));
+                        }
                     }
                     authorizations = array;
                     continue;

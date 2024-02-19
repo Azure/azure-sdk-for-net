@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -56,7 +63,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in AvailableRuleSets)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<ApplicationGatewayFirewallManifestRuleSet>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +179,14 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationGatewayFirewallManifestRuleSet> array = new List<ApplicationGatewayFirewallManifestRuleSet>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(ApplicationGatewayFirewallManifestRuleSet.DeserializeApplicationGatewayFirewallManifestRuleSet(item));
+                                }
                             }
                             availableRuleSets = array;
                             continue;

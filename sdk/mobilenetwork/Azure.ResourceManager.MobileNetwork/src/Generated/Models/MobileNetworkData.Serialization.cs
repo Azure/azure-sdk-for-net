@@ -44,7 +44,14 @@ namespace Azure.ResourceManager.MobileNetwork
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -69,7 +76,14 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("publicLandMobileNetworkIdentifier"u8);
-            writer.WriteObjectValue(PublicLandMobileNetworkIdentifier);
+            if (PublicLandMobileNetworkIdentifier != null)
+            {
+                ((IJsonModel<MobileNetworkPlmnId>)PublicLandMobileNetworkIdentifier).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (options.Format != "W" && Optional.IsDefined(ServiceKey))
             {
                 writer.WritePropertyName("serviceKey"u8);

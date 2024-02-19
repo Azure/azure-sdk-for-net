@@ -49,7 +49,14 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -136,17 +143,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (Optional.IsDefined(CustomerEncryptionKey))
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
-                writer.WriteObjectValue(CustomerEncryptionKey);
+                ((IJsonModel<EncryptionKeyDetails>)CustomerEncryptionKey).Write(writer, options);
             }
             if (Optional.IsDefined(Networkacls))
             {
                 writer.WritePropertyName("networkacls"u8);
-                writer.WriteObjectValue(Networkacls);
+                ((IJsonModel<DataProductNetworkAcls>)Networkacls).Write(writer, options);
             }
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                ((IJsonModel<NetworkAnalyticsManagedResourceGroupConfiguration>)ManagedResourceGroupConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
             {
@@ -171,7 +178,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
-                writer.WriteObjectValue(ConsumptionEndpoints);
+                ((IJsonModel<ConsumptionEndpointsProperties>)ConsumptionEndpoints).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {

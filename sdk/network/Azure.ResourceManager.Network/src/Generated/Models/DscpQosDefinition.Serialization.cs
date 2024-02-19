@@ -42,7 +42,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceIPRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosIPRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -52,7 +59,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DestinationIPRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosIPRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +76,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in SourcePortRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosPortRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +93,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in DestinationPortRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<QosPortRange>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -152,7 +180,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        }
                     }
                     sourceIPRanges = array;
                     continue;
@@ -166,7 +201,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosIPRange> array = new List<QosIPRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QosIPRange.DeserializeQosIPRange(item));
+                        }
                     }
                     destinationIPRanges = array;
                     continue;
@@ -180,7 +222,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        }
                     }
                     sourcePortRanges = array;
                     continue;
@@ -194,7 +243,14 @@ namespace Azure.ResourceManager.Network.Models
                     List<QosPortRange> array = new List<QosPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(QosPortRange.DeserializeQosPortRange(item));
+                        }
                     }
                     destinationPortRanges = array;
                     continue;

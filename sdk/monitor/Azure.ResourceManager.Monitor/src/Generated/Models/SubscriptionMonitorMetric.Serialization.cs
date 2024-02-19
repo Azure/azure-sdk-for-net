@@ -31,7 +31,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SubscriptionScopeMetricType);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            if (Name != null)
+            {
+                ((IJsonModel<MonitorLocalizableString>)Name).Write(writer, options);
+            }
+            else
+            {
+                writer.WriteNullValue();
+            }
             if (Optional.IsDefined(DisplayDescription))
             {
                 writer.WritePropertyName("displayDescription"u8);
@@ -53,7 +60,14 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Timeseries)
             {
-                writer.WriteObjectValue(item);
+                if (item != null)
+                {
+                    ((IJsonModel<MonitorTimeSeriesElement>)item).Write(writer, options);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +160,14 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<MonitorTimeSeriesElement> array = new List<MonitorTimeSeriesElement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MonitorTimeSeriesElement.DeserializeMonitorTimeSeriesElement(item));
+                        }
                     }
                     timeseries = array;
                     continue;

@@ -56,7 +56,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in RoutingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<RoutingPolicy>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +171,14 @@ namespace Azure.ResourceManager.Network
                             List<RoutingPolicy> array = new List<RoutingPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingPolicy.DeserializeRoutingPolicy(item));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(RoutingPolicy.DeserializeRoutingPolicy(item));
+                                }
                             }
                             routingPolicies = array;
                             continue;

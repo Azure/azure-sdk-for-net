@@ -33,7 +33,14 @@ namespace Azure.Monitor.Query.Models
                     List<LogsTableColumn> array = new List<LogsTableColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogsTableColumn.DeserializeLogsTableColumn(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(LogsTableColumn.DeserializeLogsTableColumn(item));
+                        }
                     }
                     columns = array;
                     continue;

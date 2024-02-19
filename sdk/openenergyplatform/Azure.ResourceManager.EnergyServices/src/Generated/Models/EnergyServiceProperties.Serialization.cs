@@ -47,7 +47,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionNames)
                 {
-                    writer.WriteObjectValue(item);
+                    if (item != null)
+                    {
+                        ((IJsonModel<DataPartitionName>)item).Write(writer, options);
+                    }
+                    else
+                    {
+                        writer.WriteNullValue();
+                    }
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +132,14 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<DataPartitionName> array = new List<DataPartitionName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataPartitionName.DeserializeDataPartitionName(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(DataPartitionName.DeserializeDataPartitionName(item));
+                        }
                     }
                     dataPartitionNames = array;
                     continue;

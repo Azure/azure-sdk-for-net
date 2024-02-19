@@ -38,7 +38,14 @@ namespace Azure.ResourceManager.Orbital
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
+                if (Id != null)
+                {
+                    writer.WriteStringValue(Id);
+                }
+                else
+                {
+                    writer.WriteNullValue();
+                }
             }
             if (options.Format != "W")
             {
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.Orbital
             if (options.Format != "W" && Optional.IsDefined(AntennaConfiguration))
             {
                 writer.WritePropertyName("antennaConfiguration"u8);
-                writer.WriteObjectValue(AntennaConfiguration);
+                ((IJsonModel<OrbitalContactAntennaConfiguration>)AntennaConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(ContactProfile))
             {

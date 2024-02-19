@@ -32,7 +32,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetadataValue> array = new List<MetadataValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataValue.DeserializeMetadataValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetadataValue.DeserializeMetadataValue(item));
+                        }
                     }
                     metadatavalues = array;
                     continue;
@@ -46,7 +53,14 @@ namespace Azure.Monitor.Query.Models
                     List<MetricValue> array = new List<MetricValue>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricValue.DeserializeMetricValue(item));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(MetricValue.DeserializeMetricValue(item));
+                        }
                     }
                     data = array;
                     continue;
