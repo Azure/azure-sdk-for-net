@@ -1,4 +1,4 @@
-# Azure.Health.Insights.RadiologyInsights client library for .NET
+# Azure HealthInsights RadiologyInsights client library for .NET
 
 Azure.Health.Insights.RadiologyInsights is a managed service that helps developers get secret simply and securely.
 
