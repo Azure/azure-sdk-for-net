@@ -276,6 +276,7 @@ rename-mapping:
   NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
   CommunityGalleryInfo.publisherUri: PublisherUriString
+  GalleryArtifactVersionFullSource.virtualMachineId: -|arm-id
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
