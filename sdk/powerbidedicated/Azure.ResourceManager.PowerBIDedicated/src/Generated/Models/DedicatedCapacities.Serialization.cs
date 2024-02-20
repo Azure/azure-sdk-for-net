@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<DedicatedCapacityData> array = new List<DedicatedCapacityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedCapacityData.DeserializeDedicatedCapacityData(item));
+                        array.Add(DedicatedCapacityData.DeserializeDedicatedCapacityData(item, options));
                     }
                     value = array;
                     continue;

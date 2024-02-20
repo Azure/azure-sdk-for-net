@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
+                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))

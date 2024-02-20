@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<ScheduledQueryRuleCondition> array = new List<ScheduledQueryRuleCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScheduledQueryRuleCondition.DeserializeScheduledQueryRuleCondition(item));
+                        array.Add(ScheduledQueryRuleCondition.DeserializeScheduledQueryRuleCondition(item, options));
                     }
                     allOf = array;
                     continue;

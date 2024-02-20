@@ -71,12 +71,12 @@ namespace Azure.AI.OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "Endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element);
-                    case "DeploymentName": return OnYourDataDeploymentNameVectorizationSource.DeserializeOnYourDataDeploymentNameVectorizationSource(element);
-                    case "ModelId": return OnYourDataModelIdVectorizationSource.DeserializeOnYourDataModelIdVectorizationSource(element);
+                    case "Endpoint": return OnYourDataEndpointVectorizationSource.DeserializeOnYourDataEndpointVectorizationSource(element, options);
+                    case "DeploymentName": return OnYourDataDeploymentNameVectorizationSource.DeserializeOnYourDataDeploymentNameVectorizationSource(element, options);
+                    case "ModelId": return OnYourDataModelIdVectorizationSource.DeserializeOnYourDataModelIdVectorizationSource(element, options);
                 }
             }
-            return UnknownOnYourDataVectorizationSource.DeserializeUnknownOnYourDataVectorizationSource(element);
+            return UnknownOnYourDataVectorizationSource.DeserializeUnknownOnYourDataVectorizationSource(element, options);
         }
 
         BinaryData IPersistableModel<OnYourDataVectorizationSource>.Write(ModelReaderWriterOptions options)

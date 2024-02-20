@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableDelegation> array = new List<AvailableDelegation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableDelegation.DeserializeAvailableDelegation(item));
+                        array.Add(AvailableDelegation.DeserializeAvailableDelegation(item, options));
                     }
                     value = array;
                     continue;

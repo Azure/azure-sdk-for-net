@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SubnetData> array = new List<SubnetData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubnetData.DeserializeSubnetData(item));
+                        array.Add(SubnetData.DeserializeSubnetData(item, options));
                     }
                     value = array;
                     continue;

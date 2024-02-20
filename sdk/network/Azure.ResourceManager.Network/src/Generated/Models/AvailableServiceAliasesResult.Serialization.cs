@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<AvailableServiceAlias> array = new List<AvailableServiceAlias>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableServiceAlias.DeserializeAvailableServiceAlias(item));
+                        array.Add(AvailableServiceAlias.DeserializeAvailableServiceAlias(item, options));
                     }
                     value = array;
                     continue;

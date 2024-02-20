@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Monitor
                             {
                                 continue;
                             }
-                            metadata = DataCollectionRuleAssociationMetadata.DeserializeDataCollectionRuleAssociationMetadata(property0.Value);
+                            metadata = DataCollectionRuleAssociationMetadata.DeserializeDataCollectionRuleAssociationMetadata(property0.Value, options);
                             continue;
                         }
                     }

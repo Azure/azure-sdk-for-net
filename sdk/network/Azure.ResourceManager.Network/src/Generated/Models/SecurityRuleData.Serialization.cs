@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                             }
                             sourceApplicationSecurityGroups = array;
                             continue;
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Network
                             List<ApplicationSecurityGroupData> array = new List<ApplicationSecurityGroupData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item));
+                                array.Add(ApplicationSecurityGroupData.DeserializeApplicationSecurityGroupData(item, options));
                             }
                             destinationApplicationSecurityGroups = array;
                             continue;

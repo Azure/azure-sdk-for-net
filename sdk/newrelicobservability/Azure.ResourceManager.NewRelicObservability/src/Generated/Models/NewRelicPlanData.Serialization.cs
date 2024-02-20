@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                             {
                                 continue;
                             }
-                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value);
+                            planData = NewRelicPlanDetails.DeserializeNewRelicPlanDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("orgCreationSource"u8))

@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    association = EffectiveNetworkSecurityGroupAssociation.DeserializeEffectiveNetworkSecurityGroupAssociation(property.Value);
+                    association = EffectiveNetworkSecurityGroupAssociation.DeserializeEffectiveNetworkSecurityGroupAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("effectiveSecurityRules"u8))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item));
+                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item, options));
                     }
                     effectiveSecurityRules = array;
                     continue;

@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Monitor
                         }
                         if (property0.NameEquals("retentionPolicy"u8))
                         {
-                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value);
+                            retentionPolicy = RetentionPolicy.DeserializeRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }

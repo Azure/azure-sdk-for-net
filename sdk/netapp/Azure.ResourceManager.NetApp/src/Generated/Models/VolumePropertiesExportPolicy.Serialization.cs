@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumeExportPolicyRule> array = new List<NetAppVolumeExportPolicyRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item));
+                        array.Add(NetAppVolumeExportPolicyRule.DeserializeNetAppVolumeExportPolicyRule(item, options));
                     }
                     rules = array;
                     continue;

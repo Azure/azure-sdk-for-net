@@ -129,7 +129,7 @@ namespace Azure.AI.OpenAI
                     List<ChatCompletionsToolCall> array = new List<ChatCompletionsToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item));
+                        array.Add(ChatCompletionsToolCall.DeserializeChatCompletionsToolCall(item, options));
                     }
                     toolCalls = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value);
+                    functionCall = FunctionCall.DeserializeFunctionCall(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -149,7 +149,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    context = AzureChatExtensionsMessageContext.DeserializeAzureChatExtensionsMessageContext(property.Value);
+                    context = AzureChatExtensionsMessageContext.DeserializeAzureChatExtensionsMessageContext(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnNatRuleMapping> array = new List<VpnNatRuleMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item));
+                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item, options));
                             }
                             internalMappings = array;
                             continue;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Network
                             List<VpnNatRuleMapping> array = new List<VpnNatRuleMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item));
+                                array.Add(VpnNatRuleMapping.DeserializeVpnNatRuleMapping(item, options));
                             }
                             externalMappings = array;
                             continue;

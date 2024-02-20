@@ -77,7 +77,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = AzureMachineLearningIndexChatExtensionParameters.DeserializeAzureMachineLearningIndexChatExtensionParameters(property.Value);
+                    parameters = AzureMachineLearningIndexChatExtensionParameters.DeserializeAzureMachineLearningIndexChatExtensionParameters(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))

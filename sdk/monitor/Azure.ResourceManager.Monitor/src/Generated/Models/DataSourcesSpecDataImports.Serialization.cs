@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value);
+                    eventHub = DataImportSourcesEventHub.DeserializeDataImportSourcesEventHub(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

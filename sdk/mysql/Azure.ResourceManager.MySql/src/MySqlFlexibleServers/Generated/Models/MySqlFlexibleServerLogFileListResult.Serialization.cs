@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerLogFile> array = new List<MySqlFlexibleServerLogFile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerLogFile.DeserializeMySqlFlexibleServerLogFile(item));
+                        array.Add(MySqlFlexibleServerLogFile.DeserializeMySqlFlexibleServerLogFile(item, options));
                     }
                     value = array;
                     continue;

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerConfigurationForBatchUpdate> array = new List<MySqlFlexibleServerConfigurationForBatchUpdate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerConfigurationForBatchUpdate.DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(item));
+                        array.Add(MySqlFlexibleServerConfigurationForBatchUpdate.DeserializeMySqlFlexibleServerConfigurationForBatchUpdate(item, options));
                     }
                     value = array;
                     continue;

@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value);
+                            microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("stats"u8))
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value);
+                            stats = ExpressRouteCircuitStats.DeserializeExpressRouteCircuitStats(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value);
+                            ipv6PeeringConfig = IPv6ExpressRouteCircuitPeeringConfig.DeserializeIPv6ExpressRouteCircuitPeeringConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expressRouteConnection"u8))
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.Network
                             List<ExpressRouteCircuitConnectionData> array = new List<ExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item));
+                                array.Add(ExpressRouteCircuitConnectionData.DeserializeExpressRouteCircuitConnectionData(item, options));
                             }
                             connections = array;
                             continue;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Network
                             List<PeerExpressRouteCircuitConnectionData> array = new List<PeerExpressRouteCircuitConnectionData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item));
+                                array.Add(PeerExpressRouteCircuitConnectionData.DeserializePeerExpressRouteCircuitConnectionData(item, options));
                             }
                             peeredConnections = array;
                             continue;

@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                     List<EnergyServiceData> array = new List<EnergyServiceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EnergyServiceData.DeserializeEnergyServiceData(item));
+                        array.Add(EnergyServiceData.DeserializeEnergyServiceData(item, options));
                     }
                     value = array;
                     continue;
