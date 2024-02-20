@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Azure.ResourceManager.Resources" />
     <PackageReference Include="Azure.ResourceManager.KeyVault" />
     <PackageReference Include="Azure.ResourceManager.Sql" />

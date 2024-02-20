@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Azure.Core;
@@ -84,26 +83,21 @@ namespace Azure.Provisioning
                 }
                 else if (lambda.Body is UnaryExpression { NodeType: ExpressionType.Convert, Operand: MemberExpression member2 })
                 {
+                    GetBicepExpression(member2, ref expression);
                     body = member2.Expression;
                     name = member2.Member.Name;
                 }
-                else if (lambda.Body is IndexExpression { Arguments.Count: 1 } indexer)
+                else
                 {
-                    throw new InvalidOperationException("Indexer expressions are not supported");
-                }
-                else if (lambda.Body is MethodCallExpression { Method.Name: "get_Item", Arguments.Count: 1 } call)
-                {
-                    body = call.Object;
-                    name = Expression.Lambda(call.Arguments[0], root).Compile().DynamicInvoke(Properties) as string;
+                    throw new InvalidOperationException("Invalid expression type.");
                 }
             }
-
-            if (body is null || name is null || root is null || expression == null)
+            else
             {
-                throw new NotSupportedException();
+                throw new InvalidOperationException("Invalid expression type.");
             }
 
-            object instance = Expression.Lambda(body, root).Compile().DynamicInvoke(Properties)!;
+            object instance = Expression.Lambda(body!, root).Compile().DynamicInvoke(Properties)!;
             return (instance, name, expression);
         }
 
@@ -112,8 +106,9 @@ namespace Azure.Provisioning
             switch (expression)
             {
                 case MemberExpression memberExpression:
-                    var attrib = memberExpression.Member.GetCustomAttributes(false).First(a => a.GetType().Name == "WirePathAttribute");
-                    result = result == string.Empty ? attrib!.ToString()! : $"{memberExpression.Member.GetCustomAttributes(false).First(a => a.GetType().Name == "WirePathAttribute")}.{result}";
+                    var attrib = memberExpression.Member.GetCustomAttributes(false).FirstOrDefault(a => a.GetType().Name == "WirePathAttribute");
+                    string nodeString = attrib?.ToString() ?? memberExpression.Member.Name.ToCamelCase();
+                    result = result == string.Empty ? nodeString : $"{nodeString}.{result}";
                     if (memberExpression.Expression is not null)
                     {
                         GetBicepExpression(memberExpression.Expression, ref result);
@@ -124,35 +119,6 @@ namespace Azure.Provisioning
                 default:
                     throw new InvalidOperationException($"Unsupported expression type {expression.GetType().Name}");
             }
-        }
-
-        private Stack<string> GetBicepExpression(Expression body)
-        {
-            //We get two different results from body.ToString()
-            // - "Convert(website.Identity.PrincipalId, Object)"
-            // - "store.Endpoint"
-            var span = body.ToString().AsSpan();
-            var start = span.IndexOf('.');
-            span = span.Slice(start + 1);
-            var end = span.IndexOf(',');
-            span = span.Slice(0, end == -1 ? span.Length : end);
-
-            Stack<string> stack = new Stack<string>();
-            while (true)
-            {
-                int index = span.LastIndexOf('.');
-                if (index == -1)
-                {
-                    stack.Push(span.ToString());
-                    break;
-                }
-                else
-                {
-                    stack.Push(span.Slice(index + 1).ToString());
-                    span = span.Slice(0, index);
-                }
-            }
-            return stack;
         }
     }
 }
