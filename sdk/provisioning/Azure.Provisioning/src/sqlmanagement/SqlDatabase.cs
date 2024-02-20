@@ -19,11 +19,12 @@ namespace Azure.Provisioning.Sql
         /// Initializes a new instance of the <see cref="SqlDatabase"/>.
         /// </summary>
         /// <param name="scope">The scope.</param>
+        /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
         /// <param name="version">The version.</param>
         /// <param name="location">The location.</param>
-        public SqlDatabase(IConstruct scope, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default)
-            : base(scope, null, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlDatabaseData(
+        public SqlDatabase(IConstruct scope, SqlServer? parent = null, string name = "db", string version = "2022-08-01-preview", AzureLocation? location = default)
+            : base(scope, parent, name, ResourceTypeName, version, (name) => ArmSqlModelFactory.SqlDatabaseData(
                 name: name,
                 resourceType: ResourceTypeName,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))

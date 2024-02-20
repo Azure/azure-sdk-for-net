@@ -169,7 +169,7 @@ namespace Azure.Provisioning.Tests
             var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
             infra.Build(GetOutputPath());
 
-            Assert.AreEqual(3, infra.GetParameters().Count());
+            Assert.AreEqual(4, infra.GetParameters().Count());
             Assert.AreEqual(3, infra.GetOutputs().Count());
 
             Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
