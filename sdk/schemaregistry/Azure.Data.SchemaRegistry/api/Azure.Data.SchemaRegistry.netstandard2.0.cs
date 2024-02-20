@@ -96,11 +96,3 @@ namespace Azure.Data.SchemaRegistry.Serialization
         public Azure.Core.Serialization.ObjectSerializer Serializer { get { throw null; } set { } }
     }
 }
-namespace Microsoft.Extensions.Azure
-{
-    public static partial class DataSchemaRegistryClientBuilderExtensions
-    {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.SchemaRegistry.SchemaRegistryClient, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.Data.SchemaRegistry.SchemaRegistryClient, Azure.Data.SchemaRegistry.SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
-    }
-}
