@@ -3,11 +3,12 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace Azure.Core
 {
-    public partial struct RehydrationToken : IJsonModel<RehydrationToken>
+    public partial struct RehydrationToken : IJsonModel<RehydrationToken>, IJsonModel<object>
     {
         internal RehydrationToken DeserializeRehydrationToken(JsonElement element, ModelReaderWriterOptions options)
         {
@@ -43,27 +44,37 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString()!;
+                    var versionString = property.Value.GetString();
+                    Debug.Assert(versionString is not null);
+                    version = versionString!;
                     continue;
                 }
                 if (property.NameEquals("headerSource"u8))
                 {
-                    headerSource = property.Value.GetString()!;
+                    var headerSourceString = property.Value.GetString();
+                    Debug.Assert(headerSourceString is not null);
+                    headerSource = headerSourceString!;
                     continue;
                 }
                 if (property.NameEquals("nextRequestUri"u8))
                 {
-                    nextRequestUri = property.Value.GetString()!;
+                    var nextRequestUriString = property.Value.GetString();
+                    Debug.Assert(nextRequestUriString is not null);
+                    nextRequestUri = nextRequestUriString!;
                     continue;
                 }
                 if (property.NameEquals("initialUri"u8))
                 {
-                    initialUri = property.Value.GetString()!;
+                    var initialUriString = property.Value.GetString();
+                    Debug.Assert(initialUriString is not null);
+                    initialUri = initialUriString!;
                     continue;
                 }
                 if (property.NameEquals("requestMethod"u8))
                 {
-                    requestMethod = new RequestMethod(property.Value.GetString()!);
+                    var requestMethodString = property.Value.GetString();
+                    Debug.Assert(requestMethodString is not null);
+                    requestMethod = new RequestMethod(requestMethodString!);
                     continue;
                 }
                 if (property.NameEquals("lastKnownLocation"u8))
@@ -77,7 +88,9 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("finalStateVia"u8))
                 {
-                    finalStateVia = property.Value.GetString()!;
+                    var finalStateViaString = property.Value.GetString();
+                    Debug.Assert(finalStateViaString is not null);
+                    finalStateVia = finalStateViaString!;
                     continue;
                 }
             }
@@ -108,19 +121,59 @@ namespace Azure.Core
 
         RehydrationToken IJsonModel<RehydrationToken>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.ParseValue(ref reader);
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRehydrationToken(document.RootElement, options);
         }
 
         BinaryData IPersistableModel<RehydrationToken>.Write(ModelReaderWriterOptions options)
-            => ModelReaderWriter.Write(this, options);
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
+            }
+        }
 
         RehydrationToken IPersistableModel<RehydrationToken>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeRehydrationToken(document.RootElement, options);
+            var format = options.Format == "W" ? ((IPersistableModel<RehydrationToken>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRehydrationToken(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
+            }
         }
 
         string IPersistableModel<RehydrationToken>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options)
+            => ((IPersistableModel<RehydrationToken>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options)
+            => ((IPersistableModel<RehydrationToken>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => ((IJsonModel<RehydrationToken>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            => ((IJsonModel<RehydrationToken>)this).Create(ref reader, options);
     }
 }
